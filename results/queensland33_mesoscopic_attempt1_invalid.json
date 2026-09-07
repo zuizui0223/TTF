@@ -1,0 +1,18 @@
+{
+  "schema": "ttf_queensland33_mesoscopic_attempt_invalid_v0.1",
+  "workflow_run_id": 34124819256,
+  "head_sha": "5cec173a0287d59e9c6ca94310817c6200c0ddb7",
+  "workflow_run_number": 1,
+  "status": "INVALID_PRECOMPUTE",
+  "statistical_result_available": false,
+  "cells_started": 96,
+  "cells_with_statistical_output": 0,
+  "failure_stage": "layout loading before synthetic-world generation",
+  "error": "RuntimeError: unexpected feasible-layout schema",
+  "cause": "The mesoscopic runner reused the legacy layout loader, which accepted the generator artifact schemas but not the compact frozen snapshot schema ttf_queensland33_topology_layouts_frozen_v0.2.",
+  "remedy": "Read the compact frozen snapshot directly while preserving the same 12 layouts, 10/11 split, synthetic parameters, estimator, thresholds, and random seeds.",
+  "selection_or_outcome_information_seen": false,
+  "genetic_outcomes_used": false,
+  "named_Mary_Brisbane_boundary_used": false,
+  "interpretation": "This run is an implementation-invalid attempt and must not be counted as a statistical Gate failure or success."
+}
