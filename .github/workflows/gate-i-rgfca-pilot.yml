@@ -1,0 +1,162 @@
+name: gate-i-b-rgfca-pilot
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - ".github/workflows/gate-i-rgfca-pilot.yml"
+      - "scripts/freeze_rgfca_gate_i_b_geometry.py"
+      - "scripts/run_geometry_calibration_batch_cell.py"
+      - "src/ttf/batch.py"
+      - "src/ttf/geometry_batch.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  freeze-and-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e . pandas
+
+      - name: Checkout exact pre-inference RGFCA source
+        run: |
+          rm -rf /tmp/fcp
+          git clone --filter=blob:none --no-checkout https://github.com/zuizui0223/fcp.git /tmp/fcp
+          git -C /tmp/fcp checkout --detach e6ad7aa76261906b6f757ffc324ea6cd062a0917
+          test "$(git -C /tmp/fcp rev-parse HEAD)" = "e6ad7aa76261906b6f757ffc324ea6cd062a0917"
+
+      - name: Freeze intended RGFCA outer-0 sampling geometry only
+        run: >-
+          python scripts/freeze_rgfca_gate_i_b_geometry.py
+          --fcp-root /tmp/fcp
+          --expected-fcp-commit e6ad7aa76261906b6f757ffc324ea6cd062a0917
+          --outer-index 0
+          --output benchmarks/frozen/gate_i_b_rgfca_outer0_geometry.csv
+          --ledger benchmarks/frozen/gate_i_b_rgfca_outer0_source.json
+
+      - name: Run zero-shared Gate-I-B execution pilot
+        run: >-
+          python scripts/run_geometry_calibration_batch_cell.py
+          --input benchmarks/frozen/gate_i_b_rgfca_outer0_geometry.csv
+          --coordinate-columns x_km,y_km,z_km
+          --min-records 20
+          --shared-fraction 0.0
+          --amplitude 2.0
+          --replicates 5
+          --resamples 199
+          --k 3
+          --bandwidth 500.0
+          --world-batch-size 5
+          --seed 20260907
+          --output results/gate_i_b_rgfca_pilot_zero.json
+
+      - name: Run fully shared Gate-I-B execution pilot
+        run: >-
+          python scripts/run_geometry_calibration_batch_cell.py
+          --input benchmarks/frozen/gate_i_b_rgfca_outer0_geometry.csv
+          --coordinate-columns x_km,y_km,z_km
+          --min-records 20
+          --shared-fraction 1.0
+          --amplitude 2.0
+          --replicates 5
+          --resamples 199
+          --k 3
+          --bandwidth 500.0
+          --world-batch-size 5
+          --seed 20260907
+          --output results/gate_i_b_rgfca_pilot_full.json
+
+      - name: Freeze pilot lineage and non-claim boundary
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          zero = json.loads(Path("results/gate_i_b_rgfca_pilot_zero.json").read_text())
+          full = json.loads(Path("results/gate_i_b_rgfca_pilot_full.json").read_text())
+          if zero["geometry"] != full["geometry"] or zero["split"] != full["split"]:
+              raise SystemExit("Gate-I-B pilot geometry/split drift")
+          payload = {
+              "schema": "ttf_gate_i_b_rgfca_pilot_v0.1",
+              "gate": "I-B intended empirical TTF sampling geometry",
+              "qualification_scope": "pipeline_pilot_only",
+              "claim_ready": False,
+              "source": json.loads(Path("benchmarks/frozen/gate_i_b_rgfca_outer0_source.json").read_text()),
+              "geometry": zero["geometry"],
+              "split": zero["split"],
+              "design": {
+                  "rgfca_outer_index": 0,
+                  "rgfca_pre_inference_source_commit": "e6ad7aa76261906b6f757ffc324ea6cd062a0917",
+                  "k": 3,
+                  "bandwidth_km": 500.0,
+                  "world_batch_size": 5,
+                  "pilot_worlds_per_arm": 5,
+                  "bootstrap_resamples": 199,
+              },
+              "zero_shared_amplitude_2": zero["cell"],
+              "full_shared_amplitude_2": full["cell"],
+              "lineage": {
+                  "workflow_run_id": int(os.environ["GITHUB_RUN_ID"]),
+                  "workflow_head_sha": os.environ["GITHUB_SHA"],
+              },
+              "claim_boundary": (
+                  "Five worlds per arm test only the exact-batched RGFCA geometry execution path. "
+                  "They cannot pass Gate I-B. The frozen five-cell 500-world/1,999-resample "
+                  "Wilson-bound qualification remains required."
+              ),
+          }
+          Path("results/gate_i_b_rgfca_pilot_v0.1.json").write_text(
+              json.dumps(payload, indent=2, sort_keys=True) + "\n"
+          )
+          print(json.dumps({
+              "zero_rejection": zero["cell"]["rejection_rate"],
+              "full_rejection": full["cell"]["rejection_rate"],
+              "geometry_fingerprint": zero["geometry"]["fingerprint_sha256"],
+          }, sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gate-i-b-rgfca-pilot
+          if-no-files-found: error
+          path: |
+            benchmarks/frozen/gate_i_b_rgfca_outer0_geometry.csv
+            benchmarks/frozen/gate_i_b_rgfca_outer0_source.json
+            results/gate_i_b_rgfca_pilot_zero.json
+            results/gate_i_b_rgfca_pilot_full.json
+            results/gate_i_b_rgfca_pilot_v0.1.json
+
+      - name: Freeze Gate-I-B geometry and pilot on branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            benchmarks/frozen/gate_i_b_rgfca_outer0_geometry.csv \
+            benchmarks/frozen/gate_i_b_rgfca_outer0_source.json \
+            results/gate_i_b_rgfca_pilot_zero.json \
+            results/gate_i_b_rgfca_pilot_full.json \
+            results/gate_i_b_rgfca_pilot_v0.1.json
+          if git diff --cached --quiet; then
+            echo "No Gate-I-B pilot outputs to commit"
+            exit 0
+          fi
+          git commit -m "Freeze Gate-I-B pre-inference RGFCA geometry pilot"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt * 2))
+          done
+          exit 1
