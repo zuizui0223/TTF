@@ -46,10 +46,16 @@ def _pearson(x: np.ndarray, y: np.ndarray) -> float:
         raise ValueError("x and y must be equal-length vectors with n >= 3")
     dx = xx - xx.mean()
     dy = yy - yy.mean()
-    den = float(np.sqrt(np.dot(dx, dx) * np.dot(dy, dy)))
-    if den <= np.finfo(float).tiny:
+    nx = float(np.linalg.norm(dx))
+    ny = float(np.linalg.norm(dy))
+    scale_x = max(1.0, float(np.linalg.norm(xx)))
+    scale_y = max(1.0, float(np.linalg.norm(yy)))
+    # Rank-space least squares can leave residuals at ~1e-14 when the
+    # predictor is exactly explained by geometry.  Treat those as constant
+    # rather than turning round-off into an arbitrary correlation.
+    if nx <= 1e-12 * scale_x or ny <= 1e-12 * scale_y:
         return 0.0
-    return float(np.dot(dx, dy) / den)
+    return float(np.dot(dx, dy) / (nx * ny))
 
 
 def orthogonalize_rank_predictor(
