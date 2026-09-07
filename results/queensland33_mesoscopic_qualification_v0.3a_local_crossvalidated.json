@@ -1,0 +1,80 @@
+{
+  "schema": "ttf_queensland33_mesoscopic_qualification_v0.3a_local_crossvalidated",
+  "status": "FAIL_TYPE1_POWER_PASS",
+  "provenance": {
+    "frozen_layout_artifact_id": 10018554276,
+    "frozen_layout_artifact_zip_sha256": "56735590be27068af3615fd6080020a2625db0ccc9e501ed1c1a636d0d138e38",
+    "github_actions_reference_run_id": 34125943918,
+    "github_actions_reference_head_sha": "4f48301a28dce84c514cc053970e3d58cfb4c84c",
+    "independent_completed_cell": {
+      "layout": 2,
+      "shared_fraction": 0.0,
+      "amplitude": 3.0,
+      "rejection_rate": 0.04,
+      "mean_statistic": -0.00027000400882359605,
+      "mean_max_field_probability": 0.159900934077116,
+      "artifact_id": 10020101371,
+      "artifact_zip_sha256": "35e34d7e1d3a8b05c6c8153fd91c4b69f045cb5aab3e52dbee64e2e1cc54bd67"
+    },
+    "local_reproduction_check": "The independently materialized frozen-layout artifact and exact repository algorithms/seeds reproduced the completed GitHub Actions reference cell exactly to the displayed floating-point values before the 96-cell local aggregate was accepted."
+  },
+  "design": {
+    "n_layouts": 12,
+    "n_eligible_species": 21,
+    "n_candidate_interbasin_cuts": 7,
+    "split": "10 train / 11 evaluation species",
+    "split_seed": 20260907,
+    "k": 2,
+    "worlds_per_cell_per_layout": 100,
+    "bootstrap_resamples": 999,
+    "noise_sd": 0.8,
+    "transition_width": 0.2,
+    "prior_strength": 1.0,
+    "master_seed": 20260910,
+    "private_amplitudes": [0.5, 1.0, 2.0, 3.0, 4.0],
+    "shared_fraction_A2": [0.25, 0.5, 1.0],
+    "genetic_outcomes_used": false,
+    "named_Mary_Brisbane_boundary_used": false,
+    "exact_frozen_layout_envelope": true
+  },
+  "prospective_gate": {
+    "max_private_rejection_ceiling": 0.10,
+    "full_shared_A2_power_floor": 0.80,
+    "all_layouts_must_pass": true
+  },
+  "qualification": {
+    "passed": false,
+    "worst_layout_max_zero_shared_rejection": 0.13,
+    "worst_layout_full_shared_A2_power": 0.81,
+    "type1_pass": false,
+    "power_pass": true
+  },
+  "per_layout": {
+    "0": {"max_zero_shared_rejection": 0.08, "full_shared_A2_power": 0.87, "passed": true},
+    "1": {"max_zero_shared_rejection": 0.10, "full_shared_A2_power": 0.89, "passed": true},
+    "2": {"max_zero_shared_rejection": 0.12, "full_shared_A2_power": 0.87, "passed": false},
+    "3": {"max_zero_shared_rejection": 0.13, "full_shared_A2_power": 0.90, "passed": false},
+    "4": {"max_zero_shared_rejection": 0.10, "full_shared_A2_power": 0.87, "passed": true},
+    "5": {"max_zero_shared_rejection": 0.11, "full_shared_A2_power": 0.89, "passed": false},
+    "6": {"max_zero_shared_rejection": 0.07, "full_shared_A2_power": 0.88, "passed": true},
+    "7": {"max_zero_shared_rejection": 0.12, "full_shared_A2_power": 0.87, "passed": false},
+    "8": {"max_zero_shared_rejection": 0.12, "full_shared_A2_power": 0.81, "passed": false},
+    "9": {"max_zero_shared_rejection": 0.07, "full_shared_A2_power": 0.85, "passed": true},
+    "10": {"max_zero_shared_rejection": 0.10, "full_shared_A2_power": 0.88, "passed": true},
+    "11": {"max_zero_shared_rejection": 0.10, "full_shared_A2_power": 0.90, "passed": true}
+  },
+  "response_to_shared_fraction_A2": {
+    "0.0": {"mean_rejection_rate_across_layouts": 0.075, "min": 0.03, "max": 0.12, "mean_statistic": 0.00017212151757520789},
+    "0.25": {"mean_rejection_rate_across_layouts": 0.1025, "min": 0.07, "max": 0.15, "mean_statistic": 0.0007674141032460315},
+    "0.5": {"mean_rejection_rate_across_layouts": 0.285, "min": 0.21, "max": 0.37, "mean_statistic": 0.0034963188378016943},
+    "1.0": {"mean_rejection_rate_across_layouts": 0.8733333333333334, "min": 0.81, "max": 0.90, "mean_statistic": 0.012760611027737614}
+  },
+  "comparison_to_v0.2": {
+    "v0.2_worst_full_shared_A2_power": 0.42,
+    "v0.3a_worst_full_shared_A2_power": 0.81,
+    "power_gain": 0.39,
+    "v0.2_worst_private_rejection": 0.10,
+    "v0.3a_worst_private_rejection": 0.13
+  },
+  "interpretation": "The discrete boundary-location representation repairs the main power failure of continuous v0.2 on coarse basin topology, but the centered held-out-species bootstrap remains slightly anti-conservative under strong private finite-cut alignment. Retain the v0.3a predictive score and replace only the chance-alignment inferential null in the next candidate."
+}
