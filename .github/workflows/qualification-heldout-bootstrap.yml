@@ -1,9 +1,6 @@
 name: qualification-heldout-bootstrap
 
 on:
-  push:
-    branches:
-      - "method/heldout-species-inference"
   workflow_dispatch:
 
 jobs:
