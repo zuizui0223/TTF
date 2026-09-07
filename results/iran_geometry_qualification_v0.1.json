@@ -1,0 +1,44 @@
+{
+  "cells": [
+    {"alpha": 0.05, "amplitude": 0.5, "mean_null_statistic": 0.00030646664251791596, "mean_statistic": 0.01183663762372691, "median_p_value": 0.4425, "n_replicates": 100, "rejection_rate": 0.03, "shared_fraction": 0.0},
+    {"alpha": 0.05, "amplitude": 1.0, "mean_null_statistic": 0.00010789441889489916, "mean_statistic": 0.003106116096928039, "median_p_value": 0.50175, "n_replicates": 100, "rejection_rate": 0.07, "shared_fraction": 0.0},
+    {"alpha": 0.05, "amplitude": 2.0, "mean_null_statistic": -0.00019964116403914245, "mean_statistic": 0.06131603615229901, "median_p_value": 0.24875, "n_replicates": 100, "rejection_rate": 0.15, "shared_fraction": 0.0},
+    {"alpha": 0.05, "amplitude": 3.0, "mean_null_statistic": -0.00021591117242491782, "mean_statistic": 0.0908891583627552, "median_p_value": 0.2085, "n_replicates": 100, "rejection_rate": 0.12, "shared_fraction": 0.0},
+    {"alpha": 0.05, "amplitude": 2.0, "mean_null_statistic": -0.00027747749458830134, "mean_statistic": 0.2097337523275991, "median_p_value": 0.061, "n_replicates": 100, "rejection_rate": 0.48, "shared_fraction": 1.0}
+  ],
+  "design": {
+    "alpha": 0.05,
+    "bandwidth": 0.5978680507131755,
+    "bandwidth_rule": "pooled median species-local kNN edge length after normalization",
+    "bootstrap_resamples": 1999,
+    "coordinate_projection": "local equirectangular km; pooled RMS normalization inside TTF",
+    "eval_species": ["Allium scabriscapum", "Phlomis olivieri", "Tanacetum kotschyi", "Didymophysa aucheri", "Physoptychis gnaphalodes", "Dielsiocharis kotschyi"],
+    "geometry_schema": "ttf_iran_plateau_geometry_v0.1",
+    "inference": "heldout_species_bootstrap",
+    "k": 4,
+    "known_boundary_labels_used": false,
+    "master_seed": 20260907,
+    "min_shared_crossing_species": 6,
+    "moderate_amplitude": 2.0,
+    "noise_sd": 0.8,
+    "outcome_values_used": false,
+    "point_power_floor": 0.8,
+    "point_type1_ceiling": 0.1,
+    "precision_power_lower_floor": 0.8,
+    "precision_type1_upper_ceiling": 0.1,
+    "replicates_per_cell": 100,
+    "split_seed": 20260907,
+    "train_species": ["Onosma microcarpa", "Helichrysum oligocephalum", "Crepis heterotricha"],
+    "transition_width": 0.2,
+    "workflow_run": 34114549280,
+    "workflow_head": "4b7ac284f72297bce6df1e8027778e5e17e5d76a"
+  },
+  "interpretation": {
+    "empirical_genetic_outcomes_may_be_opened_only_after_precision_pass": true,
+    "point_pass_is_pilot_only": true,
+    "failure_class": "actual_geometry_single_split_not_qualified"
+  },
+  "point_qualification": {"full_shared_moderate_power": 0.48, "max_zero_shared_rejection": 0.15, "moderate_amplitude": 2.0, "passed": false, "power_floor": 0.8, "power_pass": false, "type1_ceiling": 0.1, "type1_pass": false},
+  "precision_qualification": {"full_shared_moderate_estimate": 0.48, "full_shared_moderate_lower95": 0.384645517580519, "max_zero_shared_estimate": 0.15, "max_zero_shared_upper95": 0.23283559590832364, "moderate_amplitude": 2.0, "passed": false, "power_lower_floor": 0.8, "power_pass": false, "type1_pass": false, "type1_upper_ceiling": 0.1},
+  "schema": "ttf_iran_geometry_qualification_v0.1"
+}
