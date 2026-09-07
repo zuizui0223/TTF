@@ -79,13 +79,14 @@ def main() -> int:
         "bandwidth",
         "alpha",
         "seed",
+        "inference",
     ]
     common = {}
     for key in invariant_keys:
-        values = {json.dumps(cfg[key], sort_keys=True) for cfg in configs}
+        values = {json.dumps(cfg.get(key, "trait_permutation" if key == "inference" else None), sort_keys=True) for cfg in configs}
         if len(values) != 1:
             raise RuntimeError(f"calibration config drift for {key}: {sorted(values)}")
-        common[key] = configs[0][key]
+        common[key] = configs[0].get(key, "trait_permutation" if key == "inference" else None)
 
     payload = {
         "schema": "ttf_qualification_pilot_v0.1",
