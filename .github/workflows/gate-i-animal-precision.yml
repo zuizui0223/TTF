@@ -1,0 +1,138 @@
+name: gate-i-a-animal-precision
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - ".github/workflows/gate-i-animal-precision.yml"
+      - "scripts/run_geometry_calibration_cell.py"
+      - "scripts/aggregate_geometry_precision.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[test]"
+      - run: pytest -q
+
+  cell:
+    needs: invariants
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - shared: 0.0
+            amplitude: 0.5
+          - shared: 0.0
+            amplitude: 1.0
+          - shared: 0.0
+            amplitude: 2.0
+          - shared: 0.0
+            amplitude: 3.0
+          - shared: 1.0
+            amplitude: 2.0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Run frozen Gate-I-A precision cell
+        run: >-
+          python scripts/run_geometry_calibration_cell.py
+          --input benchmarks/frozen/gate_i_a_animal_geometry.csv
+          --coordinate-columns x_km,y_km,z_km
+          --min-records 80
+          --shared-fraction ${{ matrix.shared }}
+          --amplitude ${{ matrix.amplitude }}
+          --replicates 500
+          --resamples 1999
+          --k 4
+          --bandwidth 71.89344849809788
+          --seed 20260907
+          --output "results/gate_i_a_precision_cells/cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: "gate-i-a-cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}"
+          path: "results/gate_i_a_precision_cells/cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}.json"
+          if-no-files-found: error
+
+  aggregate:
+    needs: cell
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: gate-i-a-cell-*
+          path: results/gate_i_a_precision_cells
+          merge-multiple: true
+      - name: Require exactly the five frozen precision cells
+        run: test "$(find results/gate_i_a_precision_cells -maxdepth 1 -name 'cell-*.json' | wc -l)" -eq 5
+      - name: Aggregate confidence-bound Gate-I-A qualification
+        run: >-
+          python scripts/aggregate_geometry_precision.py
+          --input-dir results/gate_i_a_precision_cells
+          --moderate-amplitude 2.0
+          --type1-upper-ceiling 0.10
+          --power-lower-floor 0.80
+          --gate "I-A external non-flower geometry stress"
+          --output results/gate_i_a_animal_precision_v0.1.json
+      - name: Freeze workflow lineage and claim boundary
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          path = Path("results/gate_i_a_animal_precision_v0.1.json")
+          data = json.loads(path.read_text())
+          data["lineage"] = {
+              "workflow_run_id": int(os.environ["GITHUB_RUN_ID"]),
+              "workflow_head_sha": os.environ["GITHUB_SHA"],
+              "frozen_geometry_pilot_commit": "76ef7ec3a98de7e3dd6d26116c295da5c2445d7f",
+              "frozen_geometry_pilot_result": "results/gate_i_a_animal_pilot.json",
+              "frozen_bandwidth_km": 71.89344849809788,
+          }
+          path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n")
+          PY
+      - name: Print Gate-I-A decision
+        run: cat results/gate_i_a_animal_precision_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gate-i-a-animal-precision
+          path: results/gate_i_a_animal_precision_v0.1.json
+          if-no-files-found: error
+      - name: Freeze precision result on branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/gate_i_a_animal_precision_v0.1.json
+          if git diff --cached --quiet; then
+            echo "No precision-result change to commit"
+            exit 0
+          fi
+          git commit -m "Freeze Gate-I-A animal geometry precision result"
+          git fetch origin "$GITHUB_REF_NAME"
+          git rebase "origin/$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
