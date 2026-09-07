@@ -10,7 +10,7 @@ import numpy as np
 
 from run_queensland33_topology_calibration import (
     BASINS,
-    load_layout,
+    load_layout as load_legacy_layout,
     simulate_ordered_world,
 )
 from ttf.calibration import CalibrationCell, seed_for
@@ -18,6 +18,41 @@ from ttf.core import SpeciesSample, split_species
 from ttf.mesoscopic import mesoscopic_bootstrap_test
 from ttf.nulls import edges_on_fixed_graphs, fixed_graphs
 from ttf.semisynthetic import normalize_geometry
+
+
+def load_mesoscopic_layout(path: Path, layout_index: int) -> tuple[dict[str, np.ndarray], dict]:
+    """Read either the generator artifact schema or the compact frozen snapshot."""
+
+    payload = json.loads(path.read_text())
+    if payload.get("schema") != "ttf_queensland33_topology_layouts_frozen_v0.2":
+        return load_legacy_layout(path, layout_index)
+    if tuple(payload.get("basin_column_order", ())) != BASINS:
+        raise RuntimeError("frozen basin-column order drift")
+    matches = [layout for layout in payload["layouts"] if int(layout["i"]) == int(layout_index)]
+    if len(matches) != 1:
+        raise RuntimeError(f"expected one frozen layout {layout_index}, got {len(matches)}")
+    layout = matches[0]
+    geometry: dict[str, np.ndarray] = {}
+    for code, counts in layout["c"].items():
+        if len(counts) != len(BASINS):
+            raise RuntimeError(f"basin-count length drift for {code}")
+        supported_ids = [i for i, count in enumerate(counts) if int(count) >= 3]
+        if len(supported_ids) < 4:
+            raise RuntimeError(f"eligibility drift for {code}")
+        x = np.asarray(supported_ids, dtype=float)
+        geometry[str(code)] = np.column_stack([x, np.zeros_like(x)])
+    expected = set(payload.get("eligibility", {}).get("eligible_codes", ()))
+    if expected and set(geometry) != expected:
+        raise RuntimeError("frozen eligible-species set drift")
+    if len(geometry) != 21:
+        raise RuntimeError(f"expected 21 eligible species, got {len(geometry)}")
+    return geometry, {
+        "layout_schema": payload["schema"],
+        "layout_mode": payload.get("layout_mode", "ordered_nonzero_counts"),
+        "solver": {},
+        "source_schema": payload.get("source_schema"),
+        "lineage": payload.get("lineage", {}),
+    }
 
 
 def candidate_cuts(geometry: dict[str, np.ndarray]) -> np.ndarray:
@@ -63,7 +98,7 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    geometry, layout_meta = load_layout(args.layouts, args.layout_index)
+    geometry, layout_meta = load_mesoscopic_layout(args.layouts, args.layout_index)
     labels = tuple(sorted(geometry))
     train, evaluation = split_species(
         labels,
