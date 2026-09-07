@@ -1,0 +1,82 @@
+name: v04-propensity-seed-lock-audit
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - "src/ttf/geometry_batch_v04.py"
+      - "tests/test_geometry_batch_v04.py"
+      - "scripts/audit_v04_propensity_seed_lock.py"
+      - ".github/workflows/v04-propensity-seed-lock-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[test]"
+      - run: pytest -q
+      - name: Require frozen selection and unopened confirmatory layers
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s = json.loads(Path('results/v04_candidate_selection_v0.1.json').read_text())
+          r = json.loads(Path('benchmarks/frozen/v03_rgfca_reserve_geometry_source.json').read_text())
+          assert s['selected_candidate'] == 'eval_geometry_partial'
+          assert s['locked_definition']['private_propensity_seed'] == 20260908
+          assert s['failed_development_panel_cannot_qualify_v04'] is True
+          assert r['synthetic_worlds_run_at_freeze'] == 0
+          assert r['candidate_performance_evaluated_at_freeze'] is False
+          assert not Path('docs/supporting/v03_reserve_qualification_authorization.json').exists()
+          print({'selection_locked': True, 'reserve_opened': False})
+          PY
+      - name: Re-audit formal candidate seed on failed development panel
+        run: >-
+          python scripts/audit_v04_propensity_seed_lock.py
+          --input benchmarks/frozen/v03_fresh_animal_geometry.csv
+          --v03-result results/v03_fresh_external_precision_v0.1.json
+          --diagnostic results/v04_private_geometry_diagnostic_v0.1.json
+          --selection results/v04_candidate_selection_v0.1.json
+          --reserve-ledger benchmarks/frozen/v03_rgfca_reserve_geometry_source.json
+          --coordinate-columns x_km,y_km,z_km
+          --min-records 80
+          --k 4
+          --bandwidth 125.29246372510903
+          --replicates 500
+          --resamples 1999
+          --propensity-directions 2048
+          --formal-propensity-seed 20260908
+          --transition-width 0.2
+          --seed 20260908
+          --output results/v04_propensity_seed_lock_audit_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v04-propensity-seed-lock-audit
+          path: results/v04_propensity_seed_lock_audit_v0.1.json
+          if-no-files-found: error
+      - name: Commit seed audit regardless of pass/fail
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/v04_propensity_seed_lock_audit_v0.1.json
+          git commit -m "Freeze v0.4 propensity seed audit"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt * 2))
+          done
+          exit 1
