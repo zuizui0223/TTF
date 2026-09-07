@@ -1,0 +1,162 @@
+{
+  "claim_ready": false,
+  "config": {
+    "bandwidth": 500.0,
+    "batch_size": 25,
+    "eval_species": 125,
+    "k": 3,
+    "replicates": 500,
+    "resamples": 999,
+    "seed": 20260907,
+    "train_species": 125
+  },
+  "failed_panel_cannot_qualify_selected_candidate": true,
+  "fresh_external_qualification_required": true,
+  "lineage": {
+    "failed_gate_i_b_result": "results/gate_i_b_rgfca_precision_v0.1.json",
+    "parent_length_diagnostic": "results/v03_gate_i_b_edge_length_diagnostic.json",
+    "workflow_head_sha": "b324b888fe6fe9b8f6208ea65a1f112e8ba63304",
+    "workflow_run_id": 34139896659
+  },
+  "schema": "ttf_v03_length_control_ablation_v0.1",
+  "selected_candidate": "train_orthogonalized_only",
+  "selection_rule_frozen_in_code_before_ablation_outcome": {
+    "candidate_preference_order": [
+      "eval_partial_only",
+      "train_orthogonalized_only",
+      "train_and_eval_conditioned"
+    ],
+    "interpretation": "select the least invasive listed correction that satisfies both development point criteria",
+    "max_private_rejection_ceiling": 0.1,
+    "positive_cell": [
+      1.0,
+      2.0
+    ],
+    "power_floor": 0.8,
+    "private_cells": [
+      [
+        0.0,
+        2.0
+      ],
+      [
+        0.0,
+        3.0
+      ]
+    ]
+  },
+  "status": "development_only_on_failed_gate_i_b_geometry",
+  "variants": {
+    "eval_partial_only": {
+      "cells": [
+        {
+          "amplitude": 2.0,
+          "mean_statistic": 0.004258308718341503,
+          "median_p": 0.4245,
+          "rejection_rate": 0.068,
+          "shared_fraction": 0.0
+        },
+        {
+          "amplitude": 3.0,
+          "mean_statistic": 0.004756692766586885,
+          "median_p": 0.3945,
+          "rejection_rate": 0.09,
+          "shared_fraction": 0.0
+        },
+        {
+          "amplitude": 2.0,
+          "mean_statistic": 0.04943530851237199,
+          "median_p": 0.008,
+          "rejection_rate": 0.772,
+          "shared_fraction": 1.0
+        }
+      ],
+      "development_max_private_rejection": 0.09,
+      "development_pass": false,
+      "development_power": 0.772
+    },
+    "original": {
+      "cells": [
+        {
+          "amplitude": 2.0,
+          "mean_statistic": 0.010127883387711532,
+          "median_p": 0.31,
+          "rejection_rate": 0.126,
+          "shared_fraction": 0.0
+        },
+        {
+          "amplitude": 3.0,
+          "mean_statistic": 0.01577085549848151,
+          "median_p": 0.207,
+          "rejection_rate": 0.2,
+          "shared_fraction": 0.0
+        },
+        {
+          "amplitude": 2.0,
+          "mean_statistic": 0.057190475826133666,
+          "median_p": 0.004,
+          "rejection_rate": 0.85,
+          "shared_fraction": 1.0
+        }
+      ],
+      "development_max_private_rejection": 0.2,
+      "development_pass": false,
+      "development_power": 0.85
+    },
+    "train_and_eval_conditioned": {
+      "cells": [
+        {
+          "amplitude": 2.0,
+          "mean_statistic": 0.0018452605896787507,
+          "median_p": 0.4445,
+          "rejection_rate": 0.044,
+          "shared_fraction": 0.0
+        },
+        {
+          "amplitude": 3.0,
+          "mean_statistic": 0.003945849354756936,
+          "median_p": 0.4085,
+          "rejection_rate": 0.08,
+          "shared_fraction": 0.0
+        },
+        {
+          "amplitude": 2.0,
+          "mean_statistic": 0.04930001002203531,
+          "median_p": 0.008,
+          "rejection_rate": 0.77,
+          "shared_fraction": 1.0
+        }
+      ],
+      "development_max_private_rejection": 0.08,
+      "development_pass": false,
+      "development_power": 0.77
+    },
+    "train_orthogonalized_only": {
+      "cells": [
+        {
+          "amplitude": 2.0,
+          "mean_statistic": 0.0021768678584114295,
+          "median_p": 0.4705,
+          "rejection_rate": 0.064,
+          "shared_fraction": 0.0
+        },
+        {
+          "amplitude": 3.0,
+          "mean_statistic": 0.0039408568550625,
+          "median_p": 0.427,
+          "rejection_rate": 0.092,
+          "shared_fraction": 0.0
+        },
+        {
+          "amplitude": 2.0,
+          "mean_statistic": 0.05325107093615448,
+          "median_p": 0.007,
+          "rejection_rate": 0.824,
+          "shared_fraction": 1.0
+        }
+      ],
+      "development_max_private_rejection": 0.092,
+      "development_pass": true,
+      "development_power": 0.824
+    }
+  }
+}
