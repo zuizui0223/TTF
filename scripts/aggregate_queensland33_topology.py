@@ -9,10 +9,14 @@ from ttf.calibration import CalibrationCell, qualify_calibration
 
 EXPECTED_CELLS = {(0.0, 0.5), (0.0, 1.0), (0.0, 2.0), (0.0, 3.0), (1.0, 2.0)}
 N_LAYOUTS = 12
+VALID_CELL_SCHEMAS = {
+    "ttf_queensland33_topology_cell_v0.1",
+    "ttf_queensland33_topology_cell_v0.2",
+}
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Aggregate Queensland topology qualification across all feasible table layouts.")
+    parser = argparse.ArgumentParser(description="Aggregate Queensland topology qualification across the frozen layout envelope.")
     parser.add_argument("--input-dir", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
@@ -22,7 +26,7 @@ def main() -> int:
     designs: dict[int, dict] = {}
     for path in sorted(args.input_dir.rglob("*.json")):
         payload = json.loads(path.read_text())
-        if payload.get("schema") != "ttf_queensland33_topology_cell_v0.1":
+        if payload.get("schema") not in VALID_CELL_SCHEMAS:
             continue
         layout = int(payload["layout_index"])
         if layout not in grouped:
@@ -38,6 +42,7 @@ def main() -> int:
     per_layout = {}
     max_type1 = -1.0
     min_power = 2.0
+    layout_modes = set()
     for layout in range(N_LAYOUTS):
         if seen[layout] != EXPECTED_CELLS:
             raise RuntimeError(f"layout {layout} grid drift: {sorted(seen[layout])}")
@@ -45,6 +50,7 @@ def main() -> int:
         report = qualify_calibration(cells, moderate_amplitude=2.0, type1_ceiling=0.10, power_floor=0.80)
         max_type1 = max(max_type1, float(report.max_zero_shared_rejection))
         min_power = min(min_power, float(report.full_shared_moderate_power))
+        layout_modes.add(str(designs[layout].get("layout_mode", "unknown")))
         per_layout[str(layout)] = {
             "cells": [cell.to_dict() for cell in cells],
             "point_qualification": report.to_dict(),
@@ -53,7 +59,7 @@ def main() -> int:
 
     passed = bool(max_type1 <= 0.10 and min_power >= 0.80)
     payload = {
-        "schema": "ttf_queensland33_topology_qualification_v0.1",
+        "schema": "ttf_queensland33_topology_qualification_v0.2",
         "qualification": {
             "passed": passed,
             "worst_layout_max_zero_shared_rejection": max_type1,
@@ -61,12 +67,14 @@ def main() -> int:
             "type1_ceiling": 0.10,
             "power_floor": 0.80,
             "n_layouts": N_LAYOUTS,
+            "layout_modes": sorted(layout_modes),
             "worlds_per_cell_per_layout": 50,
             "pilot_only": True,
         },
         "selection_rule": {
             "all_layouts_must_pass": True,
-            "if_pass": "validate on an independent layout-objective seed and higher world count before empirical genetic outcomes",
+            "layout_envelope_selected_without_genetic_outcomes": True,
+            "if_pass": "validate on an independent solver/layout seed and higher world count before empirical genetic outcomes",
             "if_fail": "do not open empirical genetic outcomes; record whether failure is type-I, power, or both",
             "genetic_outcomes_used": False,
             "named_Mary_Brisbane_boundary_used": False,
