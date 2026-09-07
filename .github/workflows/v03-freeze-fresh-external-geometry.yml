@@ -6,6 +6,7 @@ on:
       - "analysis/gate-i-geometry-calibration"
     paths:
       - "benchmarks/v03_fresh_animal_geometry_manifest.csv"
+      - "scripts/freeze_gbif_animal_geometry.py"
       - ".github/workflows/v03-freeze-fresh-external-geometry.yml"
   workflow_dispatch:
 
@@ -35,6 +36,7 @@ jobs:
           --cap-per-species 100
           --minimum-records 80
           --seed 20260908
+          --allow-canonical-fuzzy
       - name: Enforce disjoint panel and freeze geometry-only execution scale
         run: |
           python - <<'PY'
