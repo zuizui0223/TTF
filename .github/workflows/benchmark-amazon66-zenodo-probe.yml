@@ -1,0 +1,32 @@
+name: benchmark-amazon66-zenodo-probe
+
+on:
+  push:
+    branches:
+      - "benchmark/independent-biogeography"
+    paths:
+      - "scripts/probe_amazon66_zenodo.py"
+      - ".github/workflows/benchmark-amazon66-zenodo-probe.yml"
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Probe associated Zenodo records without downloading files
+        run: >-
+          python scripts/probe_amazon66_zenodo.py
+          --output results/amazon66-zenodo-probe.json
+      - name: Print probe result
+        run: cat results/amazon66-zenodo-probe.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: amazon66-zenodo-probe-v0.1
+          path: results/amazon66-zenodo-probe.json
+          if-no-files-found: error
+          retention-days: 90
