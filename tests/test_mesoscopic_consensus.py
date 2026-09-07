@@ -100,6 +100,27 @@ def test_geometry_private_soft_label_has_nonpositive_expected_log_gain() -> None
     assert np.isclose(score, expected, atol=1e-12, rtol=0.0)
 
 
+def test_geometry_private_score_is_nonpositive_on_observable_subset() -> None:
+    cuts = np.arange(4, dtype=float) + 0.5
+    field = ConsensusBoundaryField(
+        cuts=cuts,
+        probability=np.asarray([0.55, 0.10, 0.25, 0.10]),
+        logits=np.log(np.asarray([0.55, 0.10, 0.25, 0.10])),
+        prior_strength=1.0,
+        n_training_species=8,
+        n_informative_species=8,
+        iterations=10,
+    )
+    private = _posterior("heldout-subset", [0, 2, 3], [1 / 3, 1 / 3, 1 / 3])
+    score = consensus_species_score_from_posterior(field, private)
+    restricted = field.probability[[0, 2, 3]]
+    restricted = restricted / restricted.sum()
+    uniform = np.full(3, 1 / 3)
+    expected = -np.sum(uniform * np.log(uniform / restricted))
+    assert score <= 0.0
+    assert np.isclose(score, expected, atol=1e-12, rtol=0.0)
+
+
 def test_uniform_consensus_scores_zero_for_any_heldout_soft_label() -> None:
     cuts = np.arange(4, dtype=float) + 0.5
     field = ConsensusBoundaryField(
