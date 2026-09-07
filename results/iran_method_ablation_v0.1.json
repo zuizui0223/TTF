@@ -1,0 +1,37 @@
+{
+  "schema": "ttf_iran_method_ablation_v0.1",
+  "source": {
+    "workflow_run": 34115289761,
+    "workflow_head": "0cce964f376a8951c1f9d6efc25601658979401e",
+    "empirical_genetic_outcomes_used": false,
+    "known_boundary_labels_used": false,
+    "worlds_paired_across_variants": true
+  },
+  "selection_rule": {
+    "eligible_for_followup": "variant must pass both point type-I <= 0.10 and power >= 0.80 on all frozen cells",
+    "if_none_pass": "do not open empirical SNP outcomes; redesign estimator/null"
+  },
+  "variants": {
+    "crossfit_raw": {
+      "zero_shared_rejection": {"0.5": 0.15, "1": 0.14, "2": 0.20, "3": 0.32},
+      "full_shared_amplitude_2_power": 0.68,
+      "max_zero_shared_rejection": 0.32,
+      "passed": false
+    },
+    "crossfit_ibd": {
+      "zero_shared_rejection": {"0.5": 0.14, "1": 0.11, "2": 0.16, "3": 0.25},
+      "full_shared_amplitude_2_power": 0.74,
+      "max_zero_shared_rejection": 0.25,
+      "passed": false
+    },
+    "single_ibd": {
+      "zero_shared_rejection": {"0.5": 0.04, "1": 0.06, "2": 0.07, "3": 0.08},
+      "full_shared_amplitude_2_power": 0.50,
+      "max_zero_shared_rejection": 0.08,
+      "type1_pass": true,
+      "power_pass": false,
+      "passed": false
+    }
+  },
+  "conclusion": "No tested small-panel variant qualifies. Cross-fit increases power but invalidates point type-I control on the frozen Iranian geometry; single-split edge-length IBD residualization controls point type I but is underpowered. Empirical SNP outcomes remain sealed."
+}
