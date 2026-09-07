@@ -67,7 +67,9 @@ Frozen results and workflow lineage are under `results/`, including `results/qua
 - geometry-only kernel precomputation numerically checked against direct scoring;
 - synthetic shared-fraction × amplitude calibration worlds;
 - confidence-bound qualification gates;
-- generic held-out predictor-space competition with paired incremental skill.
+- generic held-out predictor-space competition with paired incremental skill;
+- **Gate-I fixed-geometry semi-synthetic calibration**, which retains empirical species identities, coordinates, record counts and optional dependence blocks while replacing all trait values with synthetic transitions;
+- SHA-256 fingerprinting of the exact empirical sampling frame used for Gate-I qualification.
 
 See [`docs/METHOD_SPEC.md`](docs/METHOD_SPEC.md) and [`docs/QUALIFICATION_PROTOCOL.md`](docs/QUALIFICATION_PROTOCOL.md).
 
@@ -89,6 +91,27 @@ python scripts/run_calibration.py \
   --inference heldout_species_bootstrap \
   --output calibration.json
 ```
+
+## Gate I — qualify the intended empirical geometry
+
+Gate I keeps the empirical sampling frame fixed and simulates only the trait. The CSV may contain empirical trait columns, but `run_geometry_calibration.py` never reads them. Coordinates should already be in the coordinate system intended for TTF graph construction and bandwidth selection.
+
+```bash
+python scripts/run_geometry_calibration.py \
+  --input benchmark_geometry.csv \
+  --species-column species \
+  --coordinate-columns x,y \
+  --bandwidth 25 \
+  --shared-fractions 0,1 \
+  --amplitudes 0.5,1,2,3 \
+  --replicates 500 \
+  --resamples 1999 \
+  --output results/gate_i_benchmark.json
+```
+
+The output freezes the geometry fingerprint, per-species record counts, the prospective train/evaluation split, all simulation/inference settings, point estimates, and Wilson-bound qualification. An independent non-flower empirical sampling geometry should be preferred for the first claim-bearing Gate-I run.
+
+**Current status:** the Gate-I engine is implemented, but no independent empirical geometry has yet been frozen and passed at high precision. The method therefore remains qualified only for its idealized synthetic scope until that run is completed.
 
 Empirical deployment should not precede qualification on both synthetic worlds and the intended sampling geometry.
 
