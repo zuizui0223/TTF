@@ -100,7 +100,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin "$GITHUB_REF_NAME"
           git add \
             benchmarks/frozen/gate_i_a_animal_geometry.csv \
             benchmarks/frozen/gate_i_a_animal_geometry_source.json \
@@ -110,4 +109,6 @@ jobs:
             exit 0
           fi
           git commit -m "Freeze Gate-I-A external animal geometry pilot"
+          git fetch origin "$GITHUB_REF_NAME"
+          git rebase "origin/$GITHUB_REF_NAME"
           git push origin "HEAD:$GITHUB_REF_NAME"
