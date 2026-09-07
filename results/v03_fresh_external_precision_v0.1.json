@@ -1,0 +1,327 @@
+{
+  "authorization": {
+    "authorization_rule": "Run the locked v0.3 candidate once on the prospectively frozen fresh external geometry. Preserve the result regardless of sign; do not tune the candidate, bandwidth, split, cell grid, world count, bootstrap count, or thresholds after opening performance.",
+    "bandwidth_km": 125.29246372510903,
+    "bootstrap_resamples": 1999,
+    "candidate": "train_orthogonalized_only",
+    "development_result_blob_sha": "110ac0102b464055c5583046b38d4f6ddff1e97e",
+    "eval_fraction": 0.5,
+    "failed_panels_remain_failed": true,
+    "fresh_geometry_artifact_id": 10026000189,
+    "fresh_geometry_blob_sha": "ccee1e09fb7a0e4e5bc0d695016a79adb9de25c3",
+    "fresh_geometry_freeze_workflow_run_id": 34140674194,
+    "fresh_source_ledger_blob_sha": "c10537a2e661787351be3c42b680b8d29faa100c",
+    "k": 4,
+    "mandatory_cells": [
+      [
+        0.0,
+        0.5
+      ],
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        2.0
+      ],
+      [
+        0.0,
+        3.0
+      ],
+      [
+        1.0,
+        2.0
+      ]
+    ],
+    "power_wilson_lower_floor": 0.8,
+    "reserve_gate_requires_fresh_external_pass": true,
+    "schema": "ttf_v03_fresh_qualification_authorization_v0.1",
+    "seed": 20260908,
+    "status": "authorize_exactly_one_locked_v03_fresh_external_precision_run",
+    "type1_wilson_upper_ceiling": 0.1,
+    "worlds_per_cell": 500
+  },
+  "candidate": "train_orthogonalized_only",
+  "cells": [
+    {
+      "alpha": 0.05,
+      "amplitude": 0.5,
+      "mean_null_statistic": -2.9218978711977775e-05,
+      "mean_statistic": -9.642878210751049e-06,
+      "median_p_value": 0.50475,
+      "n_replicates": 500,
+      "rejection_rate": 0.046,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 1.0,
+      "mean_null_statistic": 1.112118581729307e-05,
+      "mean_statistic": 0.003024242656140184,
+      "median_p_value": 0.44,
+      "n_replicates": 500,
+      "rejection_rate": 0.086,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 2.0,
+      "mean_null_statistic": -2.5661134832534375e-06,
+      "mean_statistic": 0.015610614869980435,
+      "median_p_value": 0.23475000000000001,
+      "n_replicates": 500,
+      "rejection_rate": 0.202,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 3.0,
+      "mean_null_statistic": -1.0279028475530627e-05,
+      "mean_statistic": 0.03117115991874363,
+      "median_p_value": 0.09725,
+      "n_replicates": 500,
+      "rejection_rate": 0.398,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 2.0,
+      "mean_null_statistic": 1.5840939987948983e-05,
+      "mean_statistic": 0.08857710020558157,
+      "median_p_value": 0.0005,
+      "n_replicates": 500,
+      "rejection_rate": 0.894,
+      "shared_fraction": 1.0
+    }
+  ],
+  "claim_boundary": "A pass qualifies the locked v0.3 train-only edge-length correction on this prospectively frozen fresh external geometry. It does not retroactively change the frozen v0.2 Gate-I failures or by itself validate RGFCA deployment.",
+  "claim_ready": false,
+  "design": {
+    "alpha": 0.05,
+    "bandwidth": 125.29246372510903,
+    "confidence_interval": "two-sided Wilson score 95%",
+    "eval_fraction": 0.5,
+    "evaluation_score": "unchanged_raw_spearman",
+    "execution": "exact_dense_projection_batched_worlds",
+    "inference": "heldout_species_bootstrap",
+    "k": 4,
+    "mandatory_cells": [
+      [
+        0.0,
+        0.5
+      ],
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        2.0
+      ],
+      [
+        0.0,
+        3.0
+      ],
+      [
+        1.0,
+        2.0
+      ]
+    ],
+    "moderate_amplitude": 2.0,
+    "noise_sd": 0.8,
+    "power_lower_floor": 0.8,
+    "prior_mean": 0.0,
+    "prior_strength": 0.25,
+    "replicates": 500,
+    "resamples": 1999,
+    "seed": 20260908,
+    "segment_points": 5,
+    "training_response": "within_species_turnover_rank_orthogonalized_against_edge_length_rank",
+    "transition_width": 0.2,
+    "type1_upper_ceiling": 0.1,
+    "world_batch_size": 25
+  },
+  "fresh_geometry": {
+    "coordinate_columns": [
+      "x_km",
+      "y_km",
+      "z_km"
+    ],
+    "fingerprint_sha256": "6bd0dfd34794e21adcafb686c0f67d8fd920fda48f303c6de8858cbf546e232b",
+    "input": "benchmarks/frozen/v03_fresh_animal_geometry.csv",
+    "input_sha256": "2cc16614ee66c7ebea2d61d9bf4f87dbd14f6b483c5a0d39709e756039874a67",
+    "min_records": 80,
+    "record_count": 4000,
+    "records_per_species": {
+      "Accipiter cooperii": 100,
+      "Agelaius phoeniceus": 100,
+      "Alces alces": 100,
+      "Ardea herodias": 100,
+      "Bombycilla cedrorum": 100,
+      "Branta canadensis": 100,
+      "Buteo jamaicensis": 100,
+      "Canis latrans": 100,
+      "Cardinalis cardinalis": 100,
+      "Castor canadensis": 100,
+      "Cathartes aura": 100,
+      "Colaptes auratus": 100,
+      "Corvus brachyrhynchos": 100,
+      "Cyanocitta cristata": 100,
+      "Didelphis virginiana": 100,
+      "Dryobates pubescens": 100,
+      "Erethizon dorsatus": 100,
+      "Falco sparverius": 100,
+      "Lontra canadensis": 100,
+      "Lynx rufus": 100,
+      "Marmota monax": 100,
+      "Megaceryle alcyon": 100,
+      "Melanerpes carolinus": 100,
+      "Melospiza melodia": 100,
+      "Mephitis mephitis": 100,
+      "Mimus polyglottos": 100,
+      "Odocoileus virginianus": 100,
+      "Ondatra zibethicus": 100,
+      "Passer domesticus": 100,
+      "Poecile atricapillus": 100,
+      "Procyon lotor": 100,
+      "Quiscalus quiscula": 100,
+      "Sciurus carolinensis": 100,
+      "Spinus tristis": 100,
+      "Sturnus vulgaris": 100,
+      "Sylvilagus floridanus": 100,
+      "Tamiasciurus hudsonicus": 100,
+      "Turdus migratorius": 100,
+      "Ursus americanus": 100,
+      "Zenaida macroura": 100
+    },
+    "source_ledger": "benchmarks/frozen/v03_fresh_animal_geometry_source.json",
+    "source_ledger_sha256": "684dc5fcfb189ecf0eaa96f98b9424ed2dae0306f2a0c6cabd835b6cd9f27fd5",
+    "species_count": 40
+  },
+  "lineage": {
+    "development_result": "results/v03_length_control_ablation.json",
+    "fresh_source_ledger": "benchmarks/frozen/v03_fresh_animal_geometry_source.json",
+    "workflow_head_sha": "a6d41e1b2226713c0c5ad235e0e01b94a0195437",
+    "workflow_run_id": 34168844646
+  },
+  "point_qualification": {
+    "full_shared_moderate_power": 0.894,
+    "max_zero_shared_rejection": 0.398,
+    "moderate_amplitude": 2.0,
+    "passed": false,
+    "power_floor": 0.8,
+    "power_pass": true,
+    "type1_ceiling": 0.1,
+    "type1_pass": false
+  },
+  "precision_qualification": {
+    "full_shared_interval": {
+      "amplitude": 2.0,
+      "estimate": 0.894,
+      "high": 0.9180429497270297,
+      "low": 0.8639490699892671,
+      "shared_fraction": 1.0,
+      "successes": 447,
+      "trials": 500
+    },
+    "full_shared_moderate_estimate": 0.894,
+    "full_shared_moderate_lower95": 0.8639490699892671,
+    "max_zero_shared_estimate": 0.398,
+    "max_zero_shared_upper95": 0.4415253875502624,
+    "moderate_amplitude": 2.0,
+    "passed": false,
+    "power_lower_floor": 0.8,
+    "power_pass": true,
+    "type1_pass": false,
+    "type1_upper_ceiling": 0.1,
+    "zero_shared_intervals": [
+      {
+        "amplitude": 0.5,
+        "estimate": 0.046,
+        "high": 0.06807779276827323,
+        "low": 0.030845108370816204,
+        "shared_fraction": 0.0,
+        "successes": 23,
+        "trials": 500
+      },
+      {
+        "amplitude": 1.0,
+        "estimate": 0.086,
+        "high": 0.11383981149855754,
+        "low": 0.06447314240360771,
+        "shared_fraction": 0.0,
+        "successes": 43,
+        "trials": 500
+      },
+      {
+        "amplitude": 2.0,
+        "estimate": 0.202,
+        "high": 0.23940288623950645,
+        "low": 0.16914122067557874,
+        "shared_fraction": 0.0,
+        "successes": 101,
+        "trials": 500
+      },
+      {
+        "amplitude": 3.0,
+        "estimate": 0.398,
+        "high": 0.4415253875502624,
+        "low": 0.35602997790389446,
+        "shared_fraction": 0.0,
+        "successes": 199,
+        "trials": 500
+      }
+    ]
+  },
+  "qualification_scope": "fresh_external_animal_geometry_only",
+  "schema": "ttf_v03_fresh_external_precision_v0.1",
+  "split": {
+    "eval_species": [
+      "Colaptes auratus",
+      "Poecile atricapillus",
+      "Quiscalus quiscula",
+      "Spinus tristis",
+      "Branta canadensis",
+      "Procyon lotor",
+      "Passer domesticus",
+      "Corvus brachyrhynchos",
+      "Agelaius phoeniceus",
+      "Ardea herodias",
+      "Megaceryle alcyon",
+      "Melospiza melodia",
+      "Cardinalis cardinalis",
+      "Turdus migratorius",
+      "Sturnus vulgaris",
+      "Marmota monax",
+      "Zenaida macroura",
+      "Didelphis virginiana",
+      "Accipiter cooperii",
+      "Canis latrans"
+    ],
+    "split_seed": 14006500804840742732,
+    "train_species": [
+      "Erethizon dorsatus",
+      "Lynx rufus",
+      "Sylvilagus floridanus",
+      "Dryobates pubescens",
+      "Lontra canadensis",
+      "Odocoileus virginianus",
+      "Falco sparverius",
+      "Mimus polyglottos",
+      "Alces alces",
+      "Sciurus carolinensis",
+      "Tamiasciurus hudsonicus",
+      "Buteo jamaicensis",
+      "Bombycilla cedrorum",
+      "Melanerpes carolinus",
+      "Ursus americanus",
+      "Ondatra zibethicus",
+      "Castor canadensis",
+      "Mephitis mephitis",
+      "Cyanocitta cristata",
+      "Cathartes aura"
+    ]
+  },
+  "v03_fresh_external_pass": false
+}
