@@ -22,6 +22,7 @@ from ttf.private_geometry_control import (
 from ttf.transfer import prepare_transfer
 
 VARIANTS = (
+    "v03_raw",
     "prediction_propensity_only",
     "prediction_length_and_propensity",
     "target_propensity_only",
@@ -164,6 +165,13 @@ def main() -> int:
             target = turnover[name]
             length = eval_length[name]
             propensity = eval_propensity[name]
+            scores["v03_raw"].append(
+                residual_rank_correlation(
+                    prediction, target,
+                    prediction_nuisances=[],
+                    target_nuisances=[],
+                )
+            )
             scores["prediction_propensity_only"].append(
                 residual_rank_correlation(
                     prediction, target,
@@ -269,6 +277,7 @@ def main() -> int:
             "noise_sd": args.noise_sd,
         },
         "variants": variants,
+        "v03_raw_is_nonselectable_benchmark": True,
         "baseline_reproduced_exactly": True,
         "claim_ready": False,
         "rgfca_reserve_opened": False,
