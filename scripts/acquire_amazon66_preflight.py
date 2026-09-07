@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 import shutil
 import urllib.parse
 import urllib.request
@@ -67,28 +68,52 @@ def absolute(url_or_path: str) -> str:
     return urllib.parse.urljoin("https://datadryad.org", url_or_path)
 
 
+def version_id_from_href(href: str) -> int | None:
+    match = re.search(r"/versions/(\d+)(?:$|[/?#])", href)
+    return None if match is None else int(match.group(1))
+
+
 def select_latest_version(dataset: dict) -> tuple[int, dict]:
-    # Prefer a singular version relation if Dryad exposes one.
+    # Prefer the dataset's singular stash:version relation.  Published Dryad
+    # version payloads do not always expose their numeric version resource ID as
+    # an `id` field, so the relation href is the authoritative API locator.
     for key, href in hrefs_from_links(dataset):
         if "version" in key.lower() and not href.rstrip("/").endswith("versions"):
+            parsed_id = version_id_from_href(href)
             candidate = request_json(absolute(href))
+            if parsed_id is not None:
+                return parsed_id, candidate
             if isinstance(candidate.get("id"), int):
                 return int(candidate["id"]), candidate
 
     encoded = urllib.parse.quote(DOI_ID, safe="")
     versions_url = f"{API}/datasets/{encoded}/versions"
     payload = request_json(versions_url)
-    candidates = []
+    candidates: list[tuple[int, dict]] = []
     for item in collect_dicts(payload):
-        if isinstance(item.get("id"), int) and (
-            "versionNumber" in item or "versionStatus" in item or "version" in item
-        ):
-            candidates.append(item)
+        numeric_id = item.get("id") if isinstance(item.get("id"), int) else None
+        if numeric_id is None:
+            for _key, href in hrefs_from_links(item):
+                numeric_id = version_id_from_href(href)
+                if numeric_id is not None:
+                    break
+        if numeric_id is not None:
+            candidates.append((numeric_id, item))
     if not candidates:
+        # Last-resort parsing of href strings anywhere in the versions response;
+        # this remains metadata-only and does not select on biological outcomes.
+        ids = []
+        for item in collect_dicts(payload):
+            for _key, href in hrefs_from_links(item):
+                parsed = version_id_from_href(href)
+                if parsed is not None:
+                    ids.append(parsed)
+        if ids:
+            chosen_id = max(ids)
+            return chosen_id, request_json(f"{API}/versions/{chosen_id}")
         raise RuntimeError(f"could not resolve a Dryad version from {versions_url}")
-    candidates.sort(key=lambda item: (int(item.get("versionNumber", 0)), int(item["id"])))
-    chosen = candidates[-1]
-    return int(chosen["id"]), chosen
+    candidates.sort(key=lambda pair: (int(pair[1].get("versionNumber", 0)), pair[0]))
+    return candidates[-1]
 
 
 def file_inventory(files_payload: dict) -> list[dict]:
@@ -160,7 +185,7 @@ def try_download(row: dict, destination: Path) -> dict:
                 "sha256": sha256(destination),
                 "attempts": attempts,
             }
-        except Exception as exc:  # retain exact failure and try only equivalent Dryad links
+        except Exception as exc:
             attempts.append({"url": url, "error": f"{type(exc).__name__}: {exc}"})
             if destination.exists():
                 destination.unlink()
@@ -204,7 +229,6 @@ def main() -> int:
         }
 
     vcf_matches = by_name.get(GENETIC_ARCHIVE, [])
-    # Deliberately do not download genetic outcomes during geometry preflight.
     vcf_status = {
         "present_exactly_once": len(vcf_matches) == 1,
         "matches": vcf_matches,
