@@ -1,0 +1,189 @@
+name: v03-rgfca-reserve-precision
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - "docs/supporting/v03_reserve_qualification_authorization.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[test]"
+      - run: pytest -q
+      - name: Require external pass and exact reserve authorization
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          from ttf.geometry_batch_v03 import V03_LOCKED_CANDIDATE
+
+          auth = json.loads(Path('docs/supporting/v03_reserve_qualification_authorization.json').read_text())
+          source = json.loads(Path('benchmarks/frozen/v03_rgfca_reserve_geometry_source.json').read_text())
+          external = json.loads(Path('results/v03_fresh_external_precision_v0.1.json').read_text())
+          development = json.loads(Path('results/v03_length_control_ablation.json').read_text())
+
+          assert auth['schema'] == 'ttf_v03_reserve_qualification_authorization_v0.1'
+          assert auth['status'] == 'authorize_exactly_one_locked_v03_reserve_precision_run'
+          assert auth['candidate'] == V03_LOCKED_CANDIDATE == 'train_orthogonalized_only'
+          assert development['selected_candidate'] == auth['candidate']
+          assert external['candidate'] == auth['candidate']
+          assert external['v03_fresh_external_pass'] is True
+          assert external['precision_qualification']['passed'] is True
+
+          external_blob = subprocess.check_output(['git','rev-parse','HEAD:results/v03_fresh_external_precision_v0.1.json'], text=True).strip()
+          dev_blob = subprocess.check_output(['git','rev-parse','HEAD:results/v03_length_control_ablation.json'], text=True).strip()
+          geo_blob = subprocess.check_output(['git','rev-parse','HEAD:benchmarks/frozen/v03_rgfca_reserve_geometry.csv'], text=True).strip()
+          source_blob = subprocess.check_output(['git','rev-parse','HEAD:benchmarks/frozen/v03_rgfca_reserve_geometry_source.json'], text=True).strip()
+          assert auth['fresh_external_result_blob_sha'] == external_blob
+          assert auth['development_result_blob_sha'] == dev_blob
+          assert auth['reserve_geometry_blob_sha'] == geo_blob
+          assert auth['reserve_source_ledger_blob_sha'] == source_blob
+
+          assert source['validation_role'] == 'prospectively_frozen_fresh_intended_domain_geometry_for_v03'
+          assert source['empirical_trait_or_colour_fields_read'] is False
+          assert source['synthetic_worlds_run_at_freeze'] == 0
+          assert source['candidate_performance_evaluated_at_freeze'] is False
+          assert source['source_audit']['discovery_taxon_overlap'] == 0
+          assert source['source_audit']['candidate_pixels_opened_by_audit'] is False
+          assert source['source_audit']['colour_fields_parsed'] is False
+          assert source['source_audit']['measurement_authorized'] is False
+          assert source['output']['species'] == 250
+          assert source['output']['records'] == 5000
+
+          execution = source['prospective_execution']
+          assert auth['k'] == execution['k'] == 3
+          assert auth['bandwidth_km'] == execution['bandwidth_km'] == 500.0
+          assert auth['seed'] == execution['seed'] == 20260908
+          assert auth['eval_fraction'] == execution['eval_fraction'] == 0.5
+          assert auth['worlds_per_cell'] == 500
+          assert auth['bootstrap_resamples'] == 1999
+          assert auth['mandatory_cells'] == [[0.0,0.5],[0.0,1.0],[0.0,2.0],[0.0,3.0],[1.0,2.0]]
+          assert auth['type1_wilson_upper_ceiling'] == 0.10
+          assert auth['power_wilson_lower_floor'] == 0.80
+          print({'reserve_authorization':'pass','candidate':auth['candidate']})
+          PY
+
+  cell:
+    needs: invariants
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - shared: 0.0
+            amplitude: 0.5
+          - shared: 0.0
+            amplitude: 1.0
+          - shared: 0.0
+            amplitude: 2.0
+          - shared: 0.0
+            amplitude: 3.0
+          - shared: 1.0
+            amplitude: 2.0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Run locked v0.3 reserve precision cell
+        run: >-
+          python scripts/run_v03_reserve_geometry_cell.py
+          --input benchmarks/frozen/v03_rgfca_reserve_geometry.csv
+          --source-ledger benchmarks/frozen/v03_rgfca_reserve_geometry_source.json
+          --coordinate-columns x_km,y_km,z_km
+          --min-records 20
+          --shared-fraction ${{ matrix.shared }}
+          --amplitude ${{ matrix.amplitude }}
+          --replicates 500
+          --resamples 1999
+          --eval-fraction 0.5
+          --k 3
+          --bandwidth 500
+          --world-batch-size 25
+          --seed 20260908
+          --output "results/v03_reserve_precision_cells/cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: "v03-reserve-cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}"
+          path: "results/v03_reserve_precision_cells/cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}.json"
+          if-no-files-found: error
+
+  aggregate:
+    needs: cell
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: v03-reserve-cell-*
+          path: results/v03_reserve_precision_cells
+          merge-multiple: true
+      - name: Require exact five reserve cells
+        run: test "$(find results/v03_reserve_precision_cells -maxdepth 1 -name 'cell-*.json' | wc -l)" -eq 5
+      - name: Aggregate locked v0.3 reserve Wilson qualification
+        run: >-
+          python scripts/aggregate_v03_reserve_precision.py
+          --input-dir results/v03_reserve_precision_cells
+          --output results/v03_rgfca_reserve_precision_v0.1.json
+      - name: Freeze reserve authorization lineage
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p = Path('results/v03_rgfca_reserve_precision_v0.1.json')
+          d = json.loads(p.read_text())
+          d['authorization'] = json.loads(Path('docs/supporting/v03_reserve_qualification_authorization.json').read_text())
+          d['lineage'] = {
+              'workflow_run_id': int(os.environ['GITHUB_RUN_ID']),
+              'workflow_head_sha': os.environ['GITHUB_SHA'],
+              'fresh_external_result': 'results/v03_fresh_external_precision_v0.1.json',
+              'development_result': 'results/v03_length_control_ablation.json',
+              'reserve_source_ledger': 'benchmarks/frozen/v03_rgfca_reserve_geometry_source.json',
+          }
+          p.write_text(json.dumps(d, indent=2, sort_keys=True) + '\n')
+          PY
+      - name: Print v0.3 two-stage decision
+        run: cat results/v03_rgfca_reserve_precision_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v03-rgfca-reserve-precision
+          path: results/v03_rgfca_reserve_precision_v0.1.json
+          if-no-files-found: error
+      - name: Commit immutable reserve qualification result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/v03_rgfca_reserve_precision_v0.1.json
+          git commit -m "Freeze v0.3 RGFCA reserve precision result"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt * 2))
+          done
+          exit 1
