@@ -1,0 +1,73 @@
+name: benchmark-queensland33-mesoscopic-consensus-compact
+
+on:
+  push:
+    branches:
+      - "benchmark/independent-biogeography"
+    paths:
+      - "benchmarks/START_QUEENSLAND33_MESOSCOPIC_CONSENSUS_COMPACT"
+  workflow_dispatch:
+
+jobs:
+  qualification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Run all 96 prospective v0.3b cells without repeated setup
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results/cells
+          for layout in $(seq 0 11); do
+            while read -r shared amplitude slug; do
+              python scripts/run_queensland33_mesoscopic_consensus_calibration.py \
+                --layouts benchmarks/queensland33_topology_layouts_frozen_v0.2.json \
+                --layout-index "$layout" \
+                --shared-fraction "$shared" \
+                --amplitude "$amplitude" \
+                --replicates 100 \
+                --bootstrap 999 \
+                --alpha 0.05 \
+                --k 2 \
+                --noise-sd 0.8 \
+                --transition-width 0.20 \
+                --min-shared-crossing-species 14 \
+                --prior-strength 1.0 \
+                --evidence-temperature 1.0 \
+                --split-seed 20260907 \
+                --seed 20260911 \
+                --output "results/cells/layout-${layout}-${slug}.json"
+            done <<'EOF'
+          0 0.5 s0-a0.5
+          0 1 s0-a1
+          0 2 s0-a2
+          0 3 s0-a3
+          0 4 s0-a4
+          0.25 2 s0.25-a2
+          0.5 2 s0.5-a2
+          1 2 s1-a2
+          EOF
+          done
+      - name: Aggregate v0.3b Gate
+        run: >-
+          python scripts/aggregate_queensland33_mesoscopic_consensus.py
+          --input-dir results/cells
+          --type1-ceiling 0.10
+          --power-floor 0.80
+          --output results/queensland33-mesoscopic-consensus-qualification.json
+      - name: Print v0.3b Gate
+        run: cat results/queensland33-mesoscopic-consensus-qualification.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: queensland33-mesoscopic-consensus-qualification-v0.3b-compact
+          path: |
+            results/queensland33-mesoscopic-consensus-qualification.json
+            results/cells/*.json
+          if-no-files-found: error
+          retention-days: 90
