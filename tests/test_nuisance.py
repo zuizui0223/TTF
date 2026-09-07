@@ -30,7 +30,9 @@ def test_residualization_preserves_geometry_and_reranks_turnover():
     assert np.allclose(out.end, edges.end)
     assert np.allclose(out.length, edges.length)
     assert np.all((out.turnover > 0) & (out.turnover < 1))
-    assert len(np.unique(out.turnover)) == edges.n_edges
+    # Average ranks deliberately retain exact residual ties rather than breaking
+    # them by edge order.  Rank-standardized turnover remains centered at 0.5.
+    assert np.isclose(out.turnover.mean(), 0.5, atol=1e-12)
 
 
 def test_residualization_removes_dominant_monotone_edge_length_signal():
