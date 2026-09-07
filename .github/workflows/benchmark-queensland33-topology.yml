@@ -15,23 +15,27 @@ on:
 jobs:
   layouts:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python -m pip install --upgrade pip scipy
-      - name: Generate twelve feasible Table-1 layouts
+      - run: python -m pip install --upgrade pip ortools
+      - name: Generate twelve Table-1 layout-envelope members
         run: >-
           python scripts/generate_queensland33_layouts.py
           --support benchmarks/queensland33_table1_support.json
           --n-layouts 12
           --seed 20260907
+          --per-solve-seconds 25
           --output prepared/queensland33-layouts.json
+      - name: Print layout solver contract
+        run: >-
+          python -c "import json; p=json.load(open('prepared/queensland33-layouts.json')); print(json.dumps({'schema':p['schema'],'layout_mode':p['layout_mode'],'n_layouts':p['n_layouts'],'solver':p['solver']}, sort_keys=True))"
       - uses: actions/upload-artifact@v4
         with:
-          name: queensland33-feasible-layouts-v0.1
+          name: queensland33-feasible-layouts-v0.2
           path: prepared/queensland33-layouts.json
           if-no-files-found: error
           retention-days: 90
@@ -42,6 +46,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       fail-fast: false
+      max-parallel: 20
       matrix:
         layout: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
         signal:
@@ -59,7 +64,7 @@ jobs:
       - run: python -m pip install -e .
       - uses: actions/download-artifact@v4
         with:
-          name: queensland33-feasible-layouts-v0.1
+          name: queensland33-feasible-layouts-v0.2
           path: prepared
       - name: Run topology calibration cell
         run: >-
@@ -110,7 +115,7 @@ jobs:
         run: cat results/queensland33-topology-qualification.json
       - uses: actions/upload-artifact@v4
         with:
-          name: queensland33-topology-qualification-v0.1
+          name: queensland33-topology-qualification-v0.2
           path: results/queensland33-topology-qualification.json
           if-no-files-found: error
           retention-days: 90
