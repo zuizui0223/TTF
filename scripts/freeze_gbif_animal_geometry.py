@@ -56,12 +56,46 @@ def xyz_km(latitude: float, longitude: float) -> tuple[float, float, float]:
     )
 
 
+def normalized_name(value: object) -> str:
+    return " ".join(str(value or "").strip().split()).casefold()
+
+
+def accepted_taxon_match(
+    species: str,
+    match: dict[str, object],
+    *,
+    allow_canonical_fuzzy: bool,
+) -> tuple[bool, str]:
+    """Return whether a GBIF match is admissible and the frozen acceptance rule.
+
+    The historical Gate-I-A default remains unchanged: only EXACT/CONFIDENCE
+    matches are accepted. A fresh prospective panel may explicitly opt into a
+    narrow fallback for GBIF ``FUZZY`` records only when GBIF's canonical name is
+    exactly the requested species name and the matched rank is SPECIES. This
+    handles matcher metadata quirks without silently substituting a different
+    taxon.
+    """
+    match_type = str(match.get("matchType") or "").upper()
+    if match_type in {"EXACT", "CONFIDENCE"}:
+        return True, "exact_or_confidence"
+    if not allow_canonical_fuzzy or match_type != "FUZZY":
+        return False, "rejected_match_type"
+
+    canonical = normalized_name(match.get("canonicalName"))
+    requested = normalized_name(species)
+    rank = str(match.get("rank") or "").upper()
+    if canonical == requested and rank == "SPECIES":
+        return True, "canonical_name_exact_species_rank_fuzzy"
+    return False, "rejected_fuzzy_without_exact_canonical_species_match"
+
+
 def fetch_species(
     row: dict[str, str],
     *,
     fetch_limit: int,
     cap: int,
     seed: int,
+    allow_canonical_fuzzy: bool = False,
 ) -> tuple[list[dict[str, object]], dict[str, object]]:
     species = row["scientific_name"].strip()
     match = get_json("species/match", {"name": species, "strict": "true"})
@@ -69,9 +103,17 @@ def fetch_species(
     if not usage_key:
         raise RuntimeError(f"GBIF exact taxon match failed for {species}")
     match_type = str(match.get("matchType") or "")
-    if match_type not in {"EXACT", "CONFIDENCE"}:
+    accepted, acceptance_rule = accepted_taxon_match(
+        species,
+        match,
+        allow_canonical_fuzzy=allow_canonical_fuzzy,
+    )
+    if not accepted:
         raise RuntimeError(
-            f"GBIF taxon match for {species} is not exact/confident: {match_type!r}"
+            "GBIF taxon match for "
+            f"{species} is not admissible: matchType={match_type!r}, "
+            f"canonicalName={match.get('canonicalName')!r}, rank={match.get('rank')!r}, "
+            f"rule={acceptance_rule!r}"
         )
 
     records: list[dict[str, object]] = []
@@ -140,6 +182,9 @@ def fetch_species(
         "group": row.get("group", ""),
         "gbif_usage_key": usage_key,
         "gbif_match_type": match_type,
+        "gbif_matched_canonical_name": match.get("canonicalName"),
+        "gbif_matched_rank": match.get("rank"),
+        "gbif_match_acceptance_rule": acceptance_rule,
         "query_geometry": polygon(row),
         "fetched_coordinate_rows": len(records),
         "unique_exact_coordinates": len(unique),
@@ -180,6 +225,15 @@ def main() -> int:
     parser.add_argument("--cap-per-species", type=int, default=120)
     parser.add_argument("--minimum-records", type=int, default=80)
     parser.add_argument("--seed", type=int, default=20260907)
+    parser.add_argument(
+        "--allow-canonical-fuzzy",
+        action="store_true",
+        help=(
+            "Also accept GBIF FUZZY matches only when canonicalName exactly equals "
+            "the requested name and rank is SPECIES. Default false preserves the "
+            "historical Gate-I-A acquisition rule."
+        ),
+    )
     args = parser.parse_args()
     if args.fetch_limit < args.cap_per_species:
         raise ValueError("fetch-limit must be >= cap-per-species")
@@ -201,6 +255,7 @@ def main() -> int:
             fetch_limit=args.fetch_limit,
             cap=args.cap_per_species,
             seed=args.seed,
+            allow_canonical_fuzzy=args.allow_canonical_fuzzy,
         )
         species_ledgers.append(ledger)
         if len(records) < args.minimum_records:
@@ -241,6 +296,7 @@ def main() -> int:
         "fetch_limit": args.fetch_limit,
         "cap_per_species": args.cap_per_species,
         "minimum_records": args.minimum_records,
+        "allow_canonical_fuzzy": bool(args.allow_canonical_fuzzy),
         "species_count": len(species_ledgers),
         "record_count": len(all_records),
         "source_key_pairs_sha256": canonical_sha256(source_key_pairs),
