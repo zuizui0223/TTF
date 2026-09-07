@@ -1,0 +1,32 @@
+name: benchmark-amazon66-preflight
+
+on:
+  push:
+    branches:
+      - "benchmark/independent-biogeography"
+    paths:
+      - "scripts/acquire_amazon66_preflight.py"
+      - ".github/workflows/benchmark-amazon66-preflight.yml"
+  workflow_dispatch:
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Acquire Dryad metadata and small non-genetic files
+        run: >-
+          python scripts/acquire_amazon66_preflight.py
+          --output-dir benchmark_artifacts/amazon66_preflight
+      - name: Print preflight manifest
+        run: cat benchmark_artifacts/amazon66_preflight/preflight_manifest.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: amazon66-metadata-preflight-v0.1
+          path: benchmark_artifacts/amazon66_preflight/
+          if-no-files-found: error
+          retention-days: 90
