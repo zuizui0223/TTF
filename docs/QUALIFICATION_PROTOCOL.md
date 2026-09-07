@@ -63,6 +63,8 @@ Geometry-only kernel precomputation is accepted only if it reproduces direct edg
 
 This prevents estimator drift from applying opportunity correction after averaging along an edge rather than at each integration point.
 
+The fixed-geometry Gate-I runner extends the same rule one level upward: because coordinates and the train/evaluation split are identical across semi-synthetic worlds, kNN graphs and the complete edge-integrated kernel projection are prepared once. Each world changes only synthetic trait values, turnover ranks, and species-bootstrap draws. A dedicated equivalence test requires this prepared path to reproduce the direct held-out-species pipeline.
+
 ## Gate G — adversarial type-I control
 
 Mandatory null cells include:
@@ -117,26 +119,49 @@ In the same 500-world qualification, the fully shared amplitude-2 cell rejected 
 
 A method that controls type I but has essentially no recovery of a moderate fully shared signal is uninformative, not validated.
 
-## Gate I — actual-geometry calibration
+## Gate I — empirical-geometry calibration
 
-After idealized worlds pass, repeat semi-synthetic calibration using the intended empirical:
+After idealized worlds pass, semi-synthetic calibration must be repeated on real sampling geometries. Trait values remain synthetic. This is the bridge between an abstractly functioning estimator and the identifiability available under empirical sampling.
 
-- species counts;
+Gate I is deliberately split into two stages because they answer different failure modes.
+
+### Gate I-A — independent non-flower geometry stress
+
+Purpose: show that qualification is not an artefact of the flower-colour sampling geometry used by the motivating research programme.
+
+The first frozen source manifest uses 16 widespread European bird and mammal taxa. The acquisition path:
+
+- uses coordinate-bearing GBIF occurrences in a prospectively declared European bounding box;
+- rejects unresolved taxon matches and records with geospatial issues;
+- removes only literal duplicate coordinate pairs;
+- applies a deterministic SHA-256 source-key priority when a species exceeds the frozen cap;
+- converts latitude/longitude to 3-D Earth-centred kilometre coordinates so Euclidean graph distances are meaningful over the continental domain;
+- freezes retained GBIF occurrence-key fingerprints and the resulting TTF geometry fingerprint;
+- selects the smoothing bandwidth from geometry only, before synthetic trait outcomes are generated.
+
+The small external workflow pilot validates acquisition and execution only. It does **not** count as a high-precision qualification.
+
+### Gate I-B — intended empirical geometry
+
+Purpose: establish identifiability on the exact sampling frame intended for the eventual TTF empirical claim.
+
+The following must be retained exactly from that intended frame:
+
+- species counts and identities;
 - coordinates;
 - graph geometry;
-- record counts;
+- record counts after prospectively declared QC/capping;
 - train/evaluation constraints;
-- opportunity structure.
+- opportunity structure;
+- dependence blocks when required.
 
-Trait values remain synthetic. This is the bridge between an abstractly functioning estimator and the identifiability available in a real dataset.
-
-For TTF method validation, Gate I should use geometry from an independent non-flower benchmark where possible rather than reusing RGFCA flower-colour sampling as the sole stress fixture.
+A successful I-A result cannot substitute for I-B. Conversely, I-B should not be used as the only cross-domain stress test when an independent geometry is available.
 
 ### Gate-I implementation contract
 
-The fixed-geometry engine is now implemented in `ttf.geometry` and `run_geometry_calibration`.
+The fixed-geometry engine is implemented in `ttf.geometry` and `run_geometry_calibration`.
 
-A Gate-I run must satisfy all of the following:
+Every Gate-I run must satisfy all of the following:
 
 - empirical trait values are not passed into the simulator; the input object stores only species identity, coordinates and optional dependence blocks;
 - raw coordinates, species identities and record counts are copied unchanged into every synthetic world;
@@ -144,11 +169,13 @@ A Gate-I run must satisfy all of the following:
 - synthetic shared transitions use one common geographic hyperplane, while zero-shared controls use species-private transition hyperplanes;
 - affine standardization is used only to define synthetic transition strength in unit-free coordinates; graph construction, distances, bandwidth and boundary-field estimation continue to use the original empirical coordinates;
 - the exact sampling frame is frozen with a SHA-256 geometry fingerprint and per-species record-count ledger;
+- kNN graphs and the edge-integrated kernel projection are geometry-only objects prepared once and reused across worlds;
+- the prepared fast path must reproduce direct inference numerically;
 - the primary inference remains the held-out-species bootstrap; trait permutation is not substituted for Gate-I sharedness inference.
 
-The claim-bearing Gate-I run should use the same high-precision confidence-bound criteria as Gates G/H: 500 worlds per mandatory arm and 1,999 bootstrap resamples, with every zero-shared positive-amplitude Wilson 95% upper bound <= 0.10 and the fully shared moderate-amplitude Wilson 95% lower bound >= 0.80.
+The claim-bearing I-A and I-B qualification runs use the same high-precision confidence-bound criteria as Gates G/H: 500 worlds per mandatory cell and 1,999 bootstrap resamples, with every zero-shared positive-amplitude Wilson 95% upper bound <= 0.10 and the fully shared moderate-amplitude Wilson 95% lower bound >= 0.80.
 
-**Implementation status:** engine and CI smoke tests exist. **Qualification status:** no independent empirical sampling geometry has yet been frozen and passed at high precision. Gate I therefore remains open.
+**Implementation status:** fixed-geometry engine, fast path, CI smoke tests, external animal manifest, and external acquisition/pilot workflow exist. **Qualification status:** neither I-A nor I-B has yet passed a 500-world high-precision run. Gate I therefore remains open.
 
 ## Gate J — predictor attribution
 
@@ -178,11 +205,14 @@ Before a broad geographic claim:
 
 **Implemented but not yet empirically qualified:**
 
-- fixed empirical-geometry semi-synthetic Gate-I engine and lineage fingerprinting.
+- fixed empirical-geometry semi-synthetic engine and lineage fingerprinting;
+- Gate-I geometry-only fast path;
+- Gate-I-A external non-flower acquisition/pilot path.
 
 Still downstream and explicitly unqualified:
 
-- a completed independent empirical sampling-geometry Gate-I qualification;
+- a completed high-precision Gate-I-A external geometry qualification;
+- a completed high-precision Gate-I-B intended-geometry qualification;
 - genetic-distance isolation-by-distance residualization;
 - environmental/resistance feature builders;
 - full observation-bias stress suite;
