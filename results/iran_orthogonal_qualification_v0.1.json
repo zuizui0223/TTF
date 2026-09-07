@@ -1,0 +1,63 @@
+{
+  "lineage": {
+    "workflow_run_id": 34117186566,
+    "head_sha": "a229b436b5ccce384607af95d187a29ef33068e6",
+    "artifact_id": 10016750273,
+    "artifact_digest": "sha256:fce24008f2428e60b47f50dda4c51c2f02e3420ecdbae6bc51ed7bea401c8509"
+  },
+  "schema": "ttf_iran_orthogonal_qualification_v0.1",
+  "selection_rule": {
+    "empirical_genetic_outcomes_used": false,
+    "eligible_for_independent_seed_validation": "point type-I <= 0.10 and power >= 0.80 on all frozen cells",
+    "eligible_variants": [],
+    "if_none_pass": "do not open empirical SNP outcomes; treat this panel as a small-panel applicability stress test rather than tune until positive"
+  },
+  "variants": {
+    "orthogonal_opportunity": {
+      "point_qualification": {
+        "passed": false,
+        "type1_pass": true,
+        "power_pass": false,
+        "max_zero_shared_rejection": 0.10,
+        "full_shared_moderate_power": 0.45,
+        "moderate_amplitude": 2.0,
+        "type1_ceiling": 0.10,
+        "power_floor": 0.80
+      },
+      "cells": [
+        {"shared_fraction": 0.0, "amplitude": 0.5, "n_replicates": 100, "alpha": 0.05, "rejection_rate": 0.07, "mean_statistic": -0.0015768722257011787, "mean_null_statistic": 0.0, "median_p_value": 0.55925},
+        {"shared_fraction": 0.0, "amplitude": 1.0, "n_replicates": 100, "alpha": 0.05, "rejection_rate": 0.06, "mean_statistic": 0.004268258248242962, "mean_null_statistic": 0.0, "median_p_value": 0.487},
+        {"shared_fraction": 0.0, "amplitude": 2.0, "n_replicates": 100, "alpha": 0.05, "rejection_rate": 0.10, "mean_statistic": 0.04509289025703003, "mean_null_statistic": 0.0, "median_p_value": 0.28800000000000003},
+        {"shared_fraction": 0.0, "amplitude": 3.0, "n_replicates": 100, "alpha": 0.05, "rejection_rate": 0.05, "mean_statistic": 0.02958432318602642, "mean_null_statistic": 0.0, "median_p_value": 0.3255},
+        {"shared_fraction": 1.0, "amplitude": 2.0, "n_replicates": 100, "alpha": 0.05, "rejection_rate": 0.45, "mean_statistic": 0.19269155981241506, "mean_null_statistic": 0.0, "median_p_value": 0.067}
+      ],
+      "nuisance_covariates": ["training opportunity/support"]
+    },
+    "orthogonal_geometry": {
+      "point_qualification": {
+        "passed": false,
+        "type1_pass": true,
+        "power_pass": false,
+        "max_zero_shared_rejection": 0.07,
+        "full_shared_moderate_power": 0.33,
+        "moderate_amplitude": 2.0,
+        "type1_ceiling": 0.10,
+        "power_floor": 0.80
+      },
+      "cells": [
+        {"shared_fraction": 0.0, "amplitude": 0.5, "n_replicates": 100, "alpha": 0.05, "rejection_rate": 0.07, "mean_statistic": 0.0003399281412121613, "mean_null_statistic": 0.0, "median_p_value": 0.548},
+        {"shared_fraction": 0.0, "amplitude": 1.0, "n_replicates": 100, "alpha": 0.05, "rejection_rate": 0.05, "mean_statistic": -0.0004569107689182109, "mean_null_statistic": 0.0, "median_p_value": 0.4905},
+        {"shared_fraction": 0.0, "amplitude": 2.0, "n_replicates": 100, "alpha": 0.05, "rejection_rate": 0.04, "mean_statistic": 0.029102380137758153, "mean_null_statistic": 0.0, "median_p_value": 0.38475000000000004},
+        {"shared_fraction": 0.0, "amplitude": 3.0, "n_replicates": 100, "alpha": 0.05, "rejection_rate": 0.02, "mean_statistic": 0.0034582571511317306, "mean_null_statistic": 0.0, "median_p_value": 0.41325},
+        {"shared_fraction": 1.0, "amplitude": 2.0, "n_replicates": 100, "alpha": 0.05, "rejection_rate": 0.33, "mean_statistic": 0.15078711769157327, "mean_null_statistic": 0.0, "median_p_value": 0.092}
+      ],
+      "nuisance_covariates": ["training opportunity/support", "held-out edge length"]
+    }
+  },
+  "interpretation": {
+    "small_panel_species_count": 9,
+    "frozen_train_eval_split": "3 train / 6 evaluation species",
+    "conclusion": "geometry-control variants can control type I but do not recover the pre-specified moderate fully shared signal with adequate power; empirical SNP sharedness remains unopened",
+    "recommended_use": "small-panel stress / applicability benchmark, not primary empirical TTF validation"
+  }
+}
