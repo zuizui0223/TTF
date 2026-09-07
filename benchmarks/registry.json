@@ -1,0 +1,111 @@
+{
+  "schema": "ttf_independent_biogeography_registry_v0.1",
+  "principle": "TTF learns from training species without seeing the named boundary. External biogeographic boundary geometry is frozen prospectively and used only after held-out transfer scoring.",
+  "admissibility": [
+    "important biogeographic boundary defined independently of the focal trait",
+    "multiple replicate species or systems when used for a cross-species TTF claim",
+    "georeferenced observations spanning the relevant spatial domain",
+    "trait measurement not selected or tuned using TTF response",
+    "species inclusion frozen before TTF outcomes are inspected",
+    "external boundary geometry frozen before final scoring",
+    "primary TTF field is fit blind to the named boundary",
+    "source license and provenance retained",
+    "pairwise genetic distance matrix cells are never shuffled"
+  ],
+  "benchmarks": [
+    {
+      "id": "iran_plateau_radseq_9plants",
+      "role": "primary_executable_positive",
+      "boundary_system": "Iranian Plateau mountain areas of endemism",
+      "external_breaks": [
+        "Alborz-Zagros",
+        "Azerbaijan Plateau-Zagros"
+      ],
+      "trait_domain": "population genetic distance from RADseq SNPs",
+      "replicate_units": "9 endemic mountain plant species",
+      "sampling": "8-15 localities per species across at least 3 mountain regions",
+      "source": {
+        "citation": "Noroozi et al. 2026, Molecular Ecology 35:e70355",
+        "doi": "10.1111/mec.70355",
+        "pmcid": "PMC13126619",
+        "sra_bioproject": "PRJNA1357660",
+        "license": "CC BY 4.0"
+      },
+      "input_plan": "population coordinates from Table S1; SNP data from Appendix S1/S2; prospectively compute population-level Nei and Rogers distances",
+      "ttf_plan": "fit species-disjoint TTF to genetic-distance turnover without boundary labels; test transfer first; compare learned transition support to frozen biogeographic breaks second",
+      "attribution_caveat": "raw genetic distance can contain isolation by distance; boundary attribution requires a separately qualified cross-fitted distance nuisance or paired D/G predictor comparison",
+      "status": "acquisition_preflight"
+    },
+    {
+      "id": "amazon_white_sand_uce_7birds",
+      "role": "independent_replication_positive",
+      "boundary_system": "Amazonian white-sand ecosystems and major rivers",
+      "external_breaks": ["Amazon River"],
+      "trait_domain": "genomic genetic distance / ancestry from UCE data",
+      "replicate_units": "7 codistributed bird species",
+      "source": {
+        "citation": "Capurucho et al. 2023, Journal of Biogeography",
+        "dryad_doi": "10.5061/dryad.47d7wm3f9"
+      },
+      "ttf_plan": "independent replication after the Iran benchmark; boundary label held out from training",
+      "status": "source_registered"
+    },
+    {
+      "id": "amazon_uce_66birds",
+      "role": "discovery_robustness_panel",
+      "boundary_system": "Amazon Basin riverine and habitat structure",
+      "trait_domain": "genomic differentiation from UCE data",
+      "replicate_units": "66 bird species, 587 samples in source dataset",
+      "source": {
+        "citation": "Johnson et al. 2023, Molecular Ecology",
+        "doi": "10.1111/mec.16886",
+        "dryad_doi": "10.5061/dryad.rxwdbrvc1",
+        "code_repository": "https://github.com/henicorhina/Riverine_islands_code"
+      },
+      "ttf_plan": "use only after coordinate/sample preflight; do not select species based on observed transfer skill",
+      "status": "source_registered"
+    },
+    {
+      "id": "pnw_herbarium_phenology_39plants",
+      "role": "trait_domain_replication",
+      "boundary_system": "Pacific Northwest maritime-interior climatic transition",
+      "trait_domain": "flowering phenology residual or breakpoint",
+      "replicate_units": "39 native plant species in published herbarium study",
+      "ttf_plan": "remove prospectively specified year, temperature and elevation expectation within species, then test transferability of residual phenology transitions",
+      "status": "design_only"
+    },
+    {
+      "id": "great_plains_hybrid_morphometrics",
+      "role": "secondary_system_level",
+      "boundary_system": "Great Plains suture zone",
+      "trait_domain": "body size and multivariate morphometrics",
+      "replicate_units": "multiple avian hybrid-zone systems rather than strict single-species populations",
+      "ttf_plan": "requires a system-level adapter before it can support the same claim as species-disjoint TTF",
+      "status": "design_only"
+    },
+    {
+      "id": "andean_song_dialects",
+      "role": "mechanism_prototype",
+      "boundary_system": "Andean ridge / Quijos Valley",
+      "trait_domain": "location-blind acoustic embedding distance",
+      "replicate_units": "currently strongest public example is single-species",
+      "ttf_plan": "do not call cross-species validation until a multi-species audio panel is frozen",
+      "status": "needs_multispecies_panel"
+    },
+    {
+      "id": "point_conception_phylogeography",
+      "role": "negative_control",
+      "boundary_system": "Point Conception marine biogeographic transition",
+      "trait_domain": "intraspecific genetic breaks",
+      "expectation": "important species-turnover boundary need not produce a shared intraspecific transition",
+      "status": "source_registered"
+    },
+    {
+      "id": "wallace_line_scope_negative",
+      "role": "scope_negative",
+      "boundary_system": "Wallace Line",
+      "expectation": "strong interspecific faunal turnover alone is outside the TTF target unless multiple species themselves span the boundary",
+      "status": "conceptual_control"
+    }
+  ]
+}
