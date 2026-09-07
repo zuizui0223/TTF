@@ -1,0 +1,93 @@
+{
+  "schema": "ttf_queensland33_mesoscopic_qualification_frozen_v0.3",
+  "lineage": {
+    "workflow_run_id": 34126798911,
+    "workflow": "benchmark-queensland33-mesoscopic-compact",
+    "head_sha": "6a7c5a680ae6d4d4078f6816cb8b2e75fa5b7bf4",
+    "artifact_id": 10021188360,
+    "artifact_name": "queensland33-mesoscopic-qualification-v0.3-compact",
+    "artifact_zip_sha256": "a85525a846944f269ed9a718852d242de7635835738f7facf3773e96fac4c3dd"
+  },
+  "design": {
+    "n_layouts": 12,
+    "n_eligible_species": 21,
+    "n_candidate_interbasin_cuts": 7,
+    "split": "10 train / 11 evaluation",
+    "k": 2,
+    "worlds_per_cell_per_layout": 100,
+    "bootstrap_resamples": 999,
+    "noise_sd": 0.8,
+    "transition_width": 0.2,
+    "prior_strength": 1.0,
+    "master_seed": 20260910,
+    "exact_frozen_layout_envelope": true,
+    "genetic_outcomes_used": false,
+    "named_Mary_Brisbane_boundary_used": false
+  },
+  "prospective_gate": {
+    "type1_ceiling": 0.10,
+    "full_shared_A2_power_floor": 0.80,
+    "all_layouts_must_pass": true
+  },
+  "qualification": {
+    "passed": false,
+    "pilot_only": true,
+    "status": "FAIL_TYPE1",
+    "worst_layout_full_shared_A2_power": 0.81,
+    "worst_layout_max_zero_shared_rejection": 0.13
+  },
+  "comparison_to_v0.2": {
+    "v0.2_worst_A2_power": 0.42,
+    "v0.3_worst_A2_power": 0.81,
+    "delta_worst_A2_power": 0.39,
+    "v0.2_worst_type1": 0.10,
+    "v0.3_worst_type1": 0.13,
+    "delta_worst_type1": 0.03
+  },
+  "response_to_shared_fraction_A2": {
+    "0.0": {
+      "mean_rejection_rate_across_layouts": 0.075,
+      "min_rejection_rate_across_layouts": 0.03,
+      "max_rejection_rate_across_layouts": 0.12,
+      "mean_statistic_across_layouts": 0.00017212151757520686
+    },
+    "0.25": {
+      "mean_rejection_rate_across_layouts": 0.1025,
+      "min_rejection_rate_across_layouts": 0.07,
+      "max_rejection_rate_across_layouts": 0.15,
+      "mean_statistic_across_layouts": 0.0007674141032460283
+    },
+    "0.5": {
+      "mean_rejection_rate_across_layouts": 0.285,
+      "min_rejection_rate_across_layouts": 0.21,
+      "max_rejection_rate_across_layouts": 0.37,
+      "mean_statistic_across_layouts": 0.0034963188378016913
+    },
+    "1.0": {
+      "mean_rejection_rate_across_layouts": 0.8733333333333334,
+      "min_rejection_rate_across_layouts": 0.81,
+      "max_rejection_rate_across_layouts": 0.90,
+      "mean_statistic_across_layouts": 0.012760611027737614
+    }
+  },
+  "per_layout": {
+    "0": {"max_zero_shared_rejection": 0.08, "full_shared_A2_power": 0.87, "passed": true},
+    "1": {"max_zero_shared_rejection": 0.10, "full_shared_A2_power": 0.89, "passed": true},
+    "2": {"max_zero_shared_rejection": 0.12, "full_shared_A2_power": 0.87, "passed": false},
+    "3": {"max_zero_shared_rejection": 0.13, "full_shared_A2_power": 0.90, "passed": false},
+    "4": {"max_zero_shared_rejection": 0.10, "full_shared_A2_power": 0.87, "passed": true},
+    "5": {"max_zero_shared_rejection": 0.11, "full_shared_A2_power": 0.89, "passed": false},
+    "6": {"max_zero_shared_rejection": 0.07, "full_shared_A2_power": 0.88, "passed": true},
+    "7": {"max_zero_shared_rejection": 0.12, "full_shared_A2_power": 0.87, "passed": false},
+    "8": {"max_zero_shared_rejection": 0.12, "full_shared_A2_power": 0.81, "passed": false},
+    "9": {"max_zero_shared_rejection": 0.07, "full_shared_A2_power": 0.85, "passed": true},
+    "10": {"max_zero_shared_rejection": 0.10, "full_shared_A2_power": 0.88, "passed": true},
+    "11": {"max_zero_shared_rejection": 0.10, "full_shared_A2_power": 0.90, "passed": true}
+  },
+  "interpretation": {
+    "status": "POWER_RECOVERED_TYPE1_REMAINS",
+    "power": "The mesoscopic boundary-location representation removed the principal continuous-field learning bottleneck: worst-layout A=2 power increased from 0.42 to 0.81 and therefore clears the prospective 0.80 point floor.",
+    "type1": "The geometry-conditioned uniform private-cut baseline improved the null substantially but did not fully control it across the frozen layout envelope; worst private rejection remained 0.13 versus the prospective 0.10 ceiling.",
+    "next_step": "Evaluate the independently preregistered v0.3b species-normalized observability-conditioned consensus score on fresh seed 20260911. Do not open empirical genetic outcomes."
+  }
+}
