@@ -7,6 +7,7 @@ from typing import Iterable, Sequence
 import numpy as np
 
 from .core import split_species
+from .geometry import SpeciesGeometry, simulate_fixed_geometry_boundary_world
 from .inference import heldout_species_bootstrap_test
 from .nulls import permutation_test
 from .simulate import simulate_circular_boundary_world
@@ -141,6 +142,126 @@ def run_calibration(
                     shared_fraction=shared,
                     amplitude=amplitude,
                     n_replicates=n_replicates,
+                    alpha=float(alpha),
+                    rejection_rate=float(np.mean(p <= alpha)),
+                    mean_statistic=float(np.mean(observed)),
+                    mean_null_statistic=float(np.mean(null_means)),
+                    median_p_value=float(np.median(p)),
+                )
+            )
+    return tuple(cells)
+
+
+def run_geometry_calibration(
+    geometries: Sequence[SpeciesGeometry],
+    *,
+    shared_fractions: Sequence[float],
+    amplitudes: Sequence[float],
+    n_replicates: int,
+    n_bootstrap: int,
+    train_species: Sequence[str] | None = None,
+    eval_species: Sequence[str] | None = None,
+    eval_fraction: float = 0.5,
+    split_seed: int | None = None,
+    k: int = 4,
+    max_distance: float | None = None,
+    bandwidth: float = 0.2,
+    prior_strength: float = 0.25,
+    prior_mean: float = 0.5,
+    segment_points: int = 5,
+    noise_sd: float = 0.8,
+    transition_width: float = 0.2,
+    alpha: float = 0.05,
+    seed: int = 20260907,
+) -> tuple[CalibrationCell, ...]:
+    """Gate-I semi-synthetic calibration on a frozen empirical sampling frame.
+
+    The empirical coordinates and record counts never change and no empirical
+    trait values enter the simulation.  Unless explicit train/evaluation species
+    are supplied, one species-disjoint split is frozen prospectively and reused
+    across every calibration world so the test conditions on the same intended
+    deployment split.
+    """
+    if n_replicates < 1:
+        raise ValueError("n_replicates must be >= 1")
+    if n_bootstrap < 99:
+        raise ValueError("heldout species bootstrap requires at least 99 resamples")
+    if not 0.0 < alpha < 1.0:
+        raise ValueError("alpha must lie in (0, 1)")
+
+    data = tuple(geometries)
+    labels = tuple(sorted(item.species for item in data))
+    if len(set(labels)) != len(labels):
+        raise ValueError("species labels must be unique")
+
+    if (train_species is None) != (eval_species is None):
+        raise ValueError("train_species and eval_species must be supplied together")
+    if train_species is None:
+        use_split_seed = (
+            seed_for(seed, "fixed_geometry_split")
+            if split_seed is None
+            else int(split_seed)
+        )
+        train, evaluation = split_species(
+            labels,
+            eval_fraction=eval_fraction,
+            seed=use_split_seed,
+        )
+    else:
+        train = tuple(map(str, train_species))
+        evaluation = tuple(map(str, eval_species or ()))
+        if not train or not evaluation or set(train) & set(evaluation):
+            raise ValueError("non-empty species-disjoint train/evaluation sets required")
+        missing = (set(train) | set(evaluation)) - set(labels)
+        if missing:
+            raise ValueError(f"unknown species in split: {sorted(missing)}")
+    if len(evaluation) < 6:
+        raise ValueError("Gate-I calibration requires at least six held-out species")
+
+    cells: list[CalibrationCell] = []
+    for shared in map(float, shared_fractions):
+        for amplitude in map(float, amplitudes):
+            p_values: list[float] = []
+            observed: list[float] = []
+            null_means: list[float] = []
+            for replicate in range(int(n_replicates)):
+                world_seed = seed_for(
+                    seed, "fixed_geometry_world", shared, amplitude, replicate
+                )
+                null_seed = seed_for(
+                    seed, "fixed_geometry_bootstrap", shared, amplitude, replicate
+                )
+                world = simulate_fixed_geometry_boundary_world(
+                    data,
+                    shared_fraction=shared,
+                    amplitude=amplitude,
+                    noise_sd=noise_sd,
+                    transition_width=transition_width,
+                    seed=world_seed,
+                )
+                result = heldout_species_bootstrap_test(
+                    world.samples,
+                    train_species=train,
+                    eval_species=evaluation,
+                    k=k,
+                    max_distance=max_distance,
+                    bandwidth=bandwidth,
+                    prior_strength=prior_strength,
+                    prior_mean=prior_mean,
+                    segment_points=segment_points,
+                    n_bootstrap=n_bootstrap,
+                    seed=null_seed,
+                )
+                p_values.append(result.p_value)
+                observed.append(result.observed.statistic)
+                null_means.append(result.null_mean)
+
+            p = np.asarray(p_values, dtype=float)
+            cells.append(
+                CalibrationCell(
+                    shared_fraction=shared,
+                    amplitude=amplitude,
+                    n_replicates=int(n_replicates),
                     alpha=float(alpha),
                     rejection_rate=float(np.mean(p <= alpha)),
                     mean_statistic=float(np.mean(observed)),
