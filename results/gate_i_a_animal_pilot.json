@@ -1,0 +1,152 @@
+{
+  "cells": [
+    {
+      "alpha": 0.05,
+      "amplitude": 2.0,
+      "mean_null_statistic": -0.0011574814748125193,
+      "mean_statistic": 0.015151972606922337,
+      "median_p_value": 0.43,
+      "n_replicates": 5,
+      "rejection_rate": 0.0,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 2.0,
+      "mean_null_statistic": 0.0002530203886878529,
+      "mean_statistic": 0.04236654085369679,
+      "median_p_value": 0.025,
+      "n_replicates": 5,
+      "rejection_rate": 0.6,
+      "shared_fraction": 1.0
+    }
+  ],
+  "claim_boundary": "Five worlds per arm validate the external-geometry execution path only. They are not the 500-world high-precision qualification. Gate I-B on the intended empirical TTF geometry also remains required.",
+  "claim_ready": false,
+  "config": {
+    "alpha": 0.05,
+    "amplitudes": [
+      2.0
+    ],
+    "bandwidth": 71.89344849809788,
+    "inference": "heldout_species_bootstrap",
+    "k": 4,
+    "max_distance": null,
+    "moderate_amplitude": 2.0,
+    "noise_sd": 0.8,
+    "power_lower_floor": 0.8,
+    "prior_mean": 0.5,
+    "prior_strength": 0.25,
+    "replicates": 5,
+    "resamples": 199,
+    "seed": 20260907,
+    "segment_points": 5,
+    "shared_fractions": [
+      0.0,
+      1.0
+    ],
+    "transition_width": 0.2,
+    "type1_upper_ceiling": 0.1
+  },
+  "gate": "I-A external non-flower geometry stress",
+  "geometry": {
+    "block_column": null,
+    "coordinate_columns": [
+      "x_km",
+      "y_km",
+      "z_km"
+    ],
+    "excluded_below_min_records": [],
+    "fingerprint_sha256": "9a88e6ba1119648a033f829ae6f7541d541d9a4ad520737e53f4ff3818600018",
+    "input": "benchmarks/frozen/gate_i_a_animal_geometry.csv",
+    "min_records": 80,
+    "record_count": 1920,
+    "records_per_species": {
+      "Anas platyrhynchos": 120,
+      "Buteo buteo": 120,
+      "Capreolus capreolus": 120,
+      "Cervus elaphus": 120,
+      "Columba palumbus": 120,
+      "Corvus corone": 120,
+      "Cygnus olor": 120,
+      "Erinaceus europaeus": 120,
+      "Lepus europaeus": 120,
+      "Meles meles": 120,
+      "Parus major": 120,
+      "Picus viridis": 120,
+      "Sciurus vulgaris": 120,
+      "Sus scrofa": 120,
+      "Turdus merula": 120,
+      "Vulpes vulpes": 120
+    },
+    "species_column": "species",
+    "species_count": 16
+  },
+  "point_qualification": {
+    "full_shared_moderate_power": 0.6,
+    "max_zero_shared_rejection": 0.0,
+    "moderate_amplitude": 2.0,
+    "passed": false,
+    "power_floor": 0.8,
+    "power_pass": false,
+    "type1_ceiling": 0.1,
+    "type1_pass": true
+  },
+  "precision_qualification": {
+    "full_shared_interval": {
+      "amplitude": 2.0,
+      "estimate": 0.6,
+      "high": 0.882379225767352,
+      "low": 0.2307242812760128,
+      "shared_fraction": 1.0,
+      "successes": 3,
+      "trials": 5
+    },
+    "full_shared_moderate_estimate": 0.6,
+    "full_shared_moderate_lower95": 0.2307242812760128,
+    "max_zero_shared_estimate": 0.0,
+    "max_zero_shared_upper95": 0.43448246478317476,
+    "moderate_amplitude": 2.0,
+    "passed": false,
+    "power_lower_floor": 0.8,
+    "power_pass": false,
+    "type1_pass": false,
+    "type1_upper_ceiling": 0.1,
+    "zero_shared_intervals": [
+      {
+        "amplitude": 2.0,
+        "estimate": 0.0,
+        "high": 0.43448246478317476,
+        "low": 0.0,
+        "shared_fraction": 0.0,
+        "successes": 0,
+        "trials": 5
+      }
+    ]
+  },
+  "qualification_scope": "pipeline_pilot_only",
+  "schema": "ttf_gate_i_geometry_calibration_v0.1",
+  "split": {
+    "eval_species": [
+      "Vulpes vulpes",
+      "Buteo buteo",
+      "Sciurus vulgaris",
+      "Corvus corone",
+      "Turdus merula",
+      "Sus scrofa",
+      "Meles meles",
+      "Anas platyrhynchos"
+    ],
+    "split_seed": 6723391324861235453,
+    "train_species": [
+      "Lepus europaeus",
+      "Erinaceus europaeus",
+      "Picus viridis",
+      "Cygnus olor",
+      "Columba palumbus",
+      "Cervus elaphus",
+      "Capreolus capreolus",
+      "Parus major"
+    ]
+  }
+}
