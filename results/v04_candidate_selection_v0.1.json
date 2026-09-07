@@ -1,0 +1,75 @@
+{
+  "schema": "ttf_v04_candidate_selection_v0.1",
+  "status": "development_candidate_selected_from_precommitted_rule",
+  "claim_ready": false,
+  "qualification_status": "not_yet_tested_on_untouched_confirmatory_geometry",
+  "rule": {
+    "path": "docs/supporting/v04_private_geometry_candidate_rule.json",
+    "blob_sha": "9ac1a6ce400859964ddba622044556a70327c219",
+    "frozen_before_outcome_inspection": true,
+    "candidate_preference_order": [
+      "eval_geometry_partial",
+      "train_geometry_residualized",
+      "train_and_eval_geometry"
+    ],
+    "max_private_rejection_ceiling": 0.10,
+    "shared_amplitude_2_power_floor": 0.80
+  },
+  "diagnosis": {
+    "path": "results/v04_private_geometry_diagnostic_v0.1.json",
+    "blob_sha": "a1009bd85ed7df9487ec800df79a18c4760a5039",
+    "panel_role": "development_only_after_v03_fresh_failure"
+  },
+  "candidates": {
+    "eval_geometry_partial": {
+      "private_rejection": {
+        "0.5": 0.052,
+        "1.0": 0.058,
+        "2.0": 0.070,
+        "3.0": 0.080
+      },
+      "max_private_rejection": 0.080,
+      "shared_amplitude_2_power": 0.874,
+      "development_pass": true
+    },
+    "train_geometry_residualized": {
+      "private_rejection": {
+        "0.5": 0.058,
+        "1.0": 0.074,
+        "2.0": 0.140,
+        "3.0": 0.198
+      },
+      "max_private_rejection": 0.198,
+      "shared_amplitude_2_power": 0.884,
+      "development_pass": false
+    },
+    "train_and_eval_geometry": {
+      "private_rejection": {
+        "0.5": 0.064,
+        "1.0": 0.076,
+        "2.0": 0.078,
+        "3.0": 0.088
+      },
+      "max_private_rejection": 0.088,
+      "shared_amplitude_2_power": 0.870,
+      "development_pass": true
+    }
+  },
+  "selected_candidate": "eval_geometry_partial",
+  "selection_reason": "first candidate in the prospectively frozen preference order satisfying both development thresholds",
+  "locked_definition": {
+    "training_response": "v03 train-only edge-length-rank orthogonalized turnover, unchanged",
+    "field_projection": "v03 exact opportunity-corrected dense kernel projection, unchanged",
+    "evaluation_target": "raw held-out turnover ranks",
+    "evaluation_score": "partial Spearman between predicted field exposure and raw held-out turnover after projecting both rank vectors off held-out edge-length rank and geometry-only random-private transition propensity rank",
+    "private_propensity": "expected absolute tanh edge contrast over 2048 random hyperplane normals, each passing through the species median projection in the exact pooled affine frame used by Gate-I",
+    "private_propensity_seed": 20260908,
+    "private_propensity_directions": 2048,
+    "private_propensity_transition_width": 0.2,
+    "amplitude_used_in_propensity": false
+  },
+  "failed_v03_remains_failed": true,
+  "failed_development_panel_cannot_qualify_v04": true,
+  "reserve_opened": false,
+  "next_gate": "one locked high-precision run on untouched v04 fresh external geometry; RGFCA reserve remains closed until that external gate passes"
+}
