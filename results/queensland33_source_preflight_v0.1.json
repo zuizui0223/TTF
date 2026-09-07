@@ -1,0 +1,157 @@
+{
+  "inventory": [
+    {
+      "digest": "e2ca197cda27d6f4c10b02f5a20f41da",
+      "digest_type": "md5",
+      "download_candidates": [
+        "https://datadryad.org/api/v2/files/46189/download"
+      ],
+      "file_id": 46189,
+      "name": "Arlequin input files.zip",
+      "path": "Arlequin input files.zip",
+      "size": 31162
+    },
+    {
+      "digest": "3d88ba99506e6638fc9322eba14b8f08",
+      "digest_type": "md5",
+      "download_candidates": [
+        "https://datadryad.org/api/v2/files/46190/download"
+      ],
+      "file_id": 46190,
+      "name": "MTML-msbayes input files.zip",
+      "path": "MTML-msbayes input files.zip",
+      "size": 34561
+    },
+    {
+      "digest": "0bade2e0f2dfac9a61db478ae86a4dad",
+      "digest_type": "md5",
+      "download_candidates": [
+        "https://datadryad.org/api/v2/files/46188/download"
+      ],
+      "file_id": 46188,
+      "name": "TCS input files.zip",
+      "path": "TCS input files.zip",
+      "size": 23481
+    }
+  ],
+  "lineage": {
+    "artifact_id": 10017510864,
+    "artifact_sha256": "af35b83ec3789fd4bf4aa2385b327e33fba2ef0ef0bf326284670a668f12b4ac",
+    "head_sha": "4b12d2e83c6343a4d459cfe1bd3c64d34b006b0b",
+    "job_id": 101733267077,
+    "workflow_run_id": 34119263738
+  },
+  "ready_for_header_only_parser": false,
+  "schema": "ttf_queensland33_source_preflight_v0.1",
+  "selection": {
+    "downloaded_files_persisted": false,
+    "genetic_distances_computed": false,
+    "known_Mary_Brisbane_boundary_used_for_filtering": false,
+    "published_divergence_used_for_species_filtering": false,
+    "sequence_contents_reported": false
+  },
+  "source": {
+    "dataset_api": "https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.m7rc3",
+    "dataset_doi": "10.5061/dryad.m7rc3",
+    "dataset_title": "Data from: Contrasting insights provided by single and multispecies data in a regional comparative phylogeographic study",
+    "files_api": "https://datadryad.org/api/v2/versions/11222/files?per_page=100",
+    "landing_page": "https://datadryad.org/dataset/doi:10.5061/dryad.m7rc3",
+    "version_id": 11222,
+    "version_number": 1
+  },
+  "targets": {
+    "Arlequin input files.zip": {
+      "download_probe": {
+        "attempts": [
+          {
+            "error": "HTTPError: HTTP Error 401: Unauthorized",
+            "url": "https://datadryad.org/api/v2/files/46189/download"
+          },
+          {
+            "error": "HTTPError: HTTP Error 403: Forbidden",
+            "url": "https://datadryad.org/stash/downloads/file_stream/46189"
+          }
+        ],
+        "bytes": null,
+        "content_persisted": false,
+        "downloaded": false,
+        "sha256": null,
+        "url": null
+      },
+      "file": {
+        "digest": "e2ca197cda27d6f4c10b02f5a20f41da",
+        "digest_type": "md5",
+        "download_candidates": [
+          "https://datadryad.org/api/v2/files/46189/download"
+        ],
+        "file_id": 46189,
+        "name": "Arlequin input files.zip",
+        "path": "Arlequin input files.zip",
+        "size": 31162
+      },
+      "present": true
+    },
+    "MTML-msbayes input files.zip": {
+      "download_probe": {
+        "attempts": [
+          {
+            "error": "HTTPError: HTTP Error 401: Unauthorized",
+            "url": "https://datadryad.org/api/v2/files/46190/download"
+          },
+          {
+            "error": "HTTPError: HTTP Error 403: Forbidden",
+            "url": "https://datadryad.org/stash/downloads/file_stream/46190"
+          }
+        ],
+        "bytes": null,
+        "content_persisted": false,
+        "downloaded": false,
+        "sha256": null,
+        "url": null
+      },
+      "file": {
+        "digest": "3d88ba99506e6638fc9322eba14b8f08",
+        "digest_type": "md5",
+        "download_candidates": [
+          "https://datadryad.org/api/v2/files/46190/download"
+        ],
+        "file_id": 46190,
+        "name": "MTML-msbayes input files.zip",
+        "path": "MTML-msbayes input files.zip",
+        "size": 34561
+      },
+      "present": true
+    },
+    "TCS input files.zip": {
+      "download_probe": {
+        "attempts": [
+          {
+            "error": "HTTPError: HTTP Error 401: Unauthorized",
+            "url": "https://datadryad.org/api/v2/files/46188/download"
+          },
+          {
+            "error": "HTTPError: HTTP Error 403: Forbidden",
+            "url": "https://datadryad.org/stash/downloads/file_stream/46188"
+          }
+        ],
+        "bytes": null,
+        "content_persisted": false,
+        "downloaded": false,
+        "sha256": null,
+        "url": null
+      },
+      "file": {
+        "digest": "0bade2e0f2dfac9a61db478ae86a4dad",
+        "digest_type": "md5",
+        "download_candidates": [
+          "https://datadryad.org/api/v2/files/46188/download"
+        ],
+        "file_id": 46188,
+        "name": "TCS input files.zip",
+        "path": "TCS input files.zip",
+        "size": 23481
+      },
+      "present": true
+    }
+  }
+}
