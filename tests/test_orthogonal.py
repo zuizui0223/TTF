@@ -1,6 +1,6 @@
 import numpy as np
 
-from ttf.core import SpeciesEdges, average_ranks
+from ttf.core import average_ranks
 from ttf.orthogonal import orthogonalize_rank_predictor, semi_partial_rank_score
 
 
@@ -19,12 +19,12 @@ def test_rank_predictor_is_orthogonal_to_active_geometry_covariates():
         assert abs(float(np.dot(out.residual, centered))) < 1e-9
 
 
-def test_semi_partial_score_removes_geometry_only_association():
+def test_semi_partial_score_removes_pure_geometry_only_association():
     opportunity = np.linspace(0.0, 1.0, 40)
     predictor = opportunity + 0.02 * np.sin(np.arange(40))
-    target = opportunity + 0.02 * np.cos(np.arange(40))
+    target = opportunity.copy()
     score, _ = semi_partial_rank_score(predictor, target, opportunity)
-    assert abs(score) < 0.25
+    assert abs(score) < 1e-12
 
 
 def test_semi_partial_score_retains_component_not_explained_by_geometry():
