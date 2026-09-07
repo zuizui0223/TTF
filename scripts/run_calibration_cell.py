@@ -13,12 +13,17 @@ def main() -> int:
     parser.add_argument("--shared-fraction", type=float, required=True)
     parser.add_argument("--amplitude", type=float, required=True)
     parser.add_argument("--replicates", type=int, default=50)
-    parser.add_argument("--permutations", type=int, default=199)
+    parser.add_argument("--permutations", "--resamples", dest="permutations", type=int, default=199)
     parser.add_argument("--species", type=int, default=40)
     parser.add_argument("--records-per-species", type=int, default=60)
     parser.add_argument("--bandwidth", type=float, default=0.2)
     parser.add_argument("--alpha", type=float, default=0.05)
     parser.add_argument("--seed", type=int, default=20260907)
+    parser.add_argument(
+        "--inference",
+        choices=["trait_permutation", "heldout_species_bootstrap"],
+        default="trait_permutation",
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
@@ -32,6 +37,7 @@ def main() -> int:
         bandwidth=args.bandwidth,
         alpha=args.alpha,
         seed=args.seed,
+        inference=args.inference,
     )
     if len(cells) != 1:
         raise RuntimeError("single-cell runner produced an unexpected number of cells")
@@ -48,6 +54,7 @@ def main() -> int:
             "bandwidth": args.bandwidth,
             "alpha": args.alpha,
             "seed": args.seed,
+            "inference": args.inference,
         },
         "cell": cells[0].to_dict(),
     }
