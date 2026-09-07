@@ -72,31 +72,48 @@ Mandatory null cells include:
 
 Every species may have a strong spatial transition, but transition locations are private.
 
-Prospective provisional criterion:
+The first prospective point-estimate criterion was:
 
 - nominal alpha = 0.05;
 - maximum rejection rate across zero-shared positive-amplitude cells <= 0.10.
 
-### Frozen v0.1 result
+The high-precision v0.2 criterion is stricter:
 
-Trait-permutation sharedness inference failed this gate: maximum rejection reached **0.14** while fully shared moderate-signal power was 1.00. The failure is retained in `results/qualification_trait_permutation_pilot_v0.1.json`.
+- 500 independently simulated worlds per mandatory cell;
+- 1,999 held-out-species bootstrap resamples per world;
+- the **two-sided Wilson 95% upper bound** for every zero-shared positive-amplitude rejection rate must be <= 0.10.
 
-### Frozen v0.2 pilot result
+### Frozen v0.1 result — failed
 
-Held-out-species bootstrap inference used 100 worlds per cell and 1,999 bootstrap resamples. Zero-shared rejection at amplitudes 0.5, 1, 2, 3 was **0.01, 0.07, 0.05, 0.07**; maximum = **0.07**, passing the provisional point-estimate ceiling. The result is retained in `results/qualification_heldout_species_bootstrap_v0.2.json`.
+Trait-permutation sharedness inference failed the original gate: maximum rejection reached **0.14** while fully shared moderate-signal power was 1.00. The failure is retained in `results/qualification_trait_permutation_pilot_v0.1.json`.
 
-This is still a pilot: Wilson 95% upper bounds for a 0.07 rate with 100 worlds reach about 0.137. Higher-replicate type-I calibration is therefore required before calling the method publication-grade.
+### Frozen v0.2 pilot — passed provisionally
+
+Held-out-species bootstrap inference used 100 worlds per cell and 1,999 bootstrap resamples. Zero-shared rejection at amplitudes 0.5, 1, 2, 3 was **0.01, 0.07, 0.05, 0.07**; maximum = **0.07**. The pilot established that type I no longer increased with private-boundary amplitude, but 100 worlds were not sufficient for a narrow confidence bound.
+
+### Frozen v0.2 high-precision result — passed
+
+Workflow run `34107193204`, frozen head `cac260855e7846cb69e79ab2f79944132d721c11`, evaluated 500 worlds per key cell. Zero-shared rejection rates at amplitudes 0.5, 1, 2, 3 were:
+
+- **0.040**, Wilson 95% = [0.0260, 0.0610];
+- **0.050**, Wilson 95% = [0.0341, 0.0728];
+- **0.040**, Wilson 95% = [0.0260, 0.0610];
+- **0.054**, Wilson 95% = [0.0374, 0.0774].
+
+The worst upper confidence bound was **0.07743**, below the prospectively frozen ceiling of 0.10. Gate G therefore **passes at high precision under the idealized calibration design**.
+
+The complete result and workflow lineage are frozen in `results/qualification_heldout_species_precision_v0.2.json`.
 
 ## Gate H — positive-control power
 
 Mandatory positive control:
 
 - shared fraction = 1;
-- prospectively defined moderate amplitude.
+- prospectively defined moderate amplitude = 2.
 
-Provisional target: power >= 0.80.
+The high-precision criterion requires the **two-sided Wilson 95% lower bound** on power to be >= 0.80.
 
-The v0.2 pilot gives **0.96 power at amplitude 2**, passing this gate.
+In the same 500-world qualification, the fully shared amplitude-2 cell rejected in **489/500 = 0.978** worlds, Wilson 95% = **[0.9610, 0.9877]**. Gate H therefore **passes at high precision**.
 
 A method that controls type I but has essentially no recovery of a moderate fully shared signal is uninformative, not validated.
 
@@ -111,7 +128,9 @@ After idealized worlds pass, repeat semi-synthetic calibration using the intende
 - train/evaluation constraints;
 - opportunity structure.
 
-Trait values remain synthetic. This is the bridge between an abstractly functioning estimator and the identifiability available in a real opportunistic dataset.
+Trait values remain synthetic. This is the bridge between an abstractly functioning estimator and the identifiability available in a real dataset.
+
+For TTF method validation, Gate I should use geometry from an independent non-flower benchmark where possible rather than reusing RGFCA flower-colour sampling as the sole stress fixture.
 
 ## Gate J — predictor attribution
 
@@ -131,21 +150,20 @@ Before a broad geographic claim:
 
 ## Current v0.2 status
 
-Passed provisionally on idealized circular worlds:
+**Passed at high precision on idealized circular worlds:**
 
 - species isolation and estimator invariants;
 - species-disjoint edge-level transfer;
 - held-out-species inferential-unit tests;
-- strong-private-boundary point-estimate type-I gate;
-- fully shared moderate-signal power gate.
+- strong-private-boundary type-I gate, including Wilson uncertainty;
+- fully shared moderate-signal power gate, including Wilson uncertainty.
 
-Not yet qualified:
+Still downstream and explicitly unqualified:
 
-- publication-grade type-I precision;
-- actual opportunistic sampling geometry;
-- genetic-distance IBD residualization;
+- actual independent empirical sampling geometry;
+- genetic-distance isolation-by-distance residualization;
 - environmental/resistance feature builders;
 - full observation-bias stress suite;
-- a publication-grade detection floor.
+- a cross-domain empirical detection floor.
 
-These remain explicit downstream gates rather than being hidden inside an empirical analysis.
+The method-core sharedness inference is therefore qualified for its **idealized synthetic scope**, not yet for an arbitrary empirical dataset.
