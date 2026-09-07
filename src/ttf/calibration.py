@@ -6,11 +6,15 @@ from typing import Iterable, Sequence
 
 import numpy as np
 
-from .core import split_species
+from .core import SpeciesSample, edge_turnover, split_species
 from .geometry import SpeciesGeometry, simulate_fixed_geometry_boundary_world
-from .inference import heldout_species_bootstrap_test
-from .nulls import permutation_test
+from .inference import (
+    heldout_species_bootstrap_from_prepared,
+    heldout_species_bootstrap_test,
+)
+from .nulls import edges_on_fixed_graphs, fixed_graphs, permutation_test
 from .simulate import simulate_circular_boundary_world
+from .transfer import prepare_transfer
 
 
 def seed_for(master_seed: int, *parts: object) -> int:
@@ -177,10 +181,15 @@ def run_geometry_calibration(
     """Gate-I semi-synthetic calibration on a frozen empirical sampling frame.
 
     The empirical coordinates and record counts never change and no empirical
-    trait values enter the simulation.  Unless explicit train/evaluation species
+    trait values enter the simulation. Unless explicit train/evaluation species
     are supplied, one species-disjoint split is frozen prospectively and reused
     across every calibration world so the test conditions on the same intended
     deployment split.
+
+    Because the sampling geometry is identical in every world, kNN graphs and
+    the edge-integrated kernel projection are constructed once and reused. Only
+    synthetic traits, edge-turnover ranks and held-out species bootstrap draws
+    vary across calibration replicates.
     """
     if n_replicates < 1:
         raise ValueError("n_replicates must be >= 1")
@@ -218,6 +227,32 @@ def run_geometry_calibration(
     if len(evaluation) < 6:
         raise ValueError("Gate-I calibration requires at least six held-out species")
 
+    geometry_map = {item.species: item for item in data}
+    used_names = train + evaluation
+    template_samples = [
+        SpeciesSample(
+            species=name,
+            coordinates=geometry_map[name].coordinates,
+            trait=np.arange(len(geometry_map[name].coordinates), dtype=float),
+            blocks=geometry_map[name].blocks,
+        )
+        for name in used_names
+    ]
+    graphs = fixed_graphs(
+        template_samples,
+        k=k,
+        max_distance=max_distance,
+    )
+    template_edges = edges_on_fixed_graphs(template_samples, graphs)
+    prepared = prepare_transfer(
+        [template_edges[name] for name in train],
+        [template_edges[name] for name in evaluation],
+        bandwidth=bandwidth,
+        prior_strength=prior_strength,
+        prior_mean=prior_mean,
+        segment_points=segment_points,
+    )
+
     cells: list[CalibrationCell] = []
     for shared in map(float, shared_fractions):
         for amplitude in map(float, amplitudes):
@@ -239,16 +274,15 @@ def run_geometry_calibration(
                     transition_width=transition_width,
                     seed=world_seed,
                 )
-                result = heldout_species_bootstrap_test(
-                    world.samples,
-                    train_species=train,
-                    eval_species=evaluation,
-                    k=k,
-                    max_distance=max_distance,
-                    bandwidth=bandwidth,
-                    prior_strength=prior_strength,
-                    prior_mean=prior_mean,
-                    segment_points=segment_points,
+                sample_map = {sample.species: sample for sample in world.samples}
+                turnover = {
+                    name: edge_turnover(sample_map[name], graphs[name])
+                    for name in used_names
+                }
+                result = heldout_species_bootstrap_from_prepared(
+                    prepared,
+                    train_turnover={name: turnover[name] for name in train},
+                    eval_turnover={name: turnover[name] for name in evaluation},
                     n_bootstrap=n_bootstrap,
                     seed=null_seed,
                 )
