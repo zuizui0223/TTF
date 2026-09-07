@@ -27,6 +27,7 @@ def make_geometries(n_species: int = 12, n_records: int = 18):
 
 def test_fixed_geometry_world_preserves_sampling_frame_exactly():
     geometries = make_geometries()
+    assert all(not hasattr(item, "trait") for item in geometries)
     world = simulate_fixed_geometry_boundary_world(
         geometries,
         shared_fraction=0.5,
