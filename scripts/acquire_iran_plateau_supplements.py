@@ -3,16 +3,18 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-from html.parser import HTMLParser
 import json
 from pathlib import Path
 import shutil
-import urllib.parse
+import tempfile
 import urllib.request
+import zipfile
 
 PMCID = "PMC13126619"
 DOI = "10.1111/mec.70355"
-ARTICLE_URL = f"https://pmc.ncbi.nlm.nih.gov/articles/{PMCID}/"
+SUPPLEMENT_ARCHIVE_URL = (
+    f"https://www.ebi.ac.uk/europepmc/webservices/rest/{PMCID}/supplementaryFiles"
+)
 EXPECTED = {
     "MEC-35-e70355-s001.zip": "Figures S1-S4 and Table S1",
     "MEC-35-e70355-s002.zip": "Appendix S1 NEXUS RADseq SNP data",
@@ -28,114 +30,99 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def request_bytes(url: str, *, timeout: int = 120) -> bytes:
+def download(url: str, destination: Path, *, timeout: int = 180) -> None:
     request = urllib.request.Request(
         url,
         headers={
-            "User-Agent": "TTF independent-biogeography benchmark acquisition/0.2",
-            "Accept": "text/html,application/xhtml+xml,application/zip,*/*;q=0.8",
+            "User-Agent": "TTF independent-biogeography benchmark acquisition/0.3",
+            "Accept": "application/zip,application/octet-stream,*/*;q=0.8",
         },
     )
-    with urllib.request.urlopen(request, timeout=timeout) as response:
-        return response.read()
+    with urllib.request.urlopen(request, timeout=timeout) as response, destination.open("wb") as out:
+        shutil.copyfileobj(response, out)
+    if destination.stat().st_size < 1024:
+        raise RuntimeError(
+            f"supplement archive was unexpectedly small: {destination.stat().st_size} bytes"
+        )
 
 
-class LinkCollector(HTMLParser):
-    def __init__(self) -> None:
-        super().__init__()
-        self.hrefs: list[str] = []
-
-    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
-        if tag.lower() != "a":
-            return
-        for key, value in attrs:
-            if key.lower() == "href" and value:
-                self.hrefs.append(value)
-
-
-def supplement_urls() -> dict[str, str]:
-    html = request_bytes(ARTICLE_URL, timeout=60).decode("utf-8", errors="replace")
-    parser = LinkCollector()
-    parser.feed(html)
-    resolved = [urllib.parse.urljoin(ARTICLE_URL, href) for href in parser.hrefs]
-
-    found: dict[str, str] = {}
-    for expected_name in EXPECTED:
-        matches = []
-        for url in resolved:
-            path_name = Path(urllib.parse.urlparse(url).path).name
-            if path_name.lower() == expected_name.lower():
-                matches.append(url)
-        matches = sorted(set(matches))
+def select_members(archive: Path) -> dict[str, str]:
+    with zipfile.ZipFile(archive) as zf:
+        inventory = [name for name in zf.namelist() if not name.endswith("/")]
+    selected: dict[str, str] = {}
+    for expected in EXPECTED:
+        matches = [name for name in inventory if Path(name).name.lower() == expected.lower()]
         if len(matches) != 1:
-            zip_names = sorted(
-                {
-                    Path(urllib.parse.urlparse(url).path).name
-                    for url in resolved
-                    if urllib.parse.urlparse(url).path.lower().endswith(".zip")
-                }
-            )
             raise RuntimeError(
-                f"expected exactly one article link for {expected_name}; "
-                f"found {matches}; article zip inventory={zip_names}"
+                f"expected exactly one {expected} in Europe PMC supplementary archive; "
+                f"found {matches}; inventory={inventory}"
             )
-        found[expected_name] = matches[0]
-    return found
+        selected[expected] = matches[0]
+    return selected
 
 
-def download(url: str, destination: Path) -> None:
-    payload = request_bytes(url)
-    if len(payload) < 1024:
-        raise RuntimeError(f"download for {destination.name} was unexpectedly small: {len(payload)} bytes")
-    destination.write_bytes(payload)
+def safe_extract_member(archive: Path, member: str, destination: Path) -> None:
+    with zipfile.ZipFile(archive) as zf:
+        info = zf.getinfo(member)
+        if info.is_dir():
+            raise RuntimeError(f"expected file member, got directory: {member}")
+        with zf.open(info) as src, destination.open("wb") as out:
+            shutil.copyfileobj(src, out)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Acquire and freeze the open-access supplements for the Iranian Plateau TTF benchmark."
+        description="Acquire and freeze open-access supplements for the Iranian Plateau TTF benchmark."
     )
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args()
     output = args.output_dir
     output.mkdir(parents=True, exist_ok=True)
 
-    urls = supplement_urls()
-    frozen = []
-    for name, description in EXPECTED.items():
-        destination = output / name
-        download(urls[name], destination)
-        frozen.append(
-            {
-                "name": name,
-                "description": description,
-                "url": urls[name],
-                "bytes": destination.stat().st_size,
-                "sha256": sha256(destination),
-            }
-        )
+    with tempfile.TemporaryDirectory(prefix="ttf_iran_epmc_") as tmp:
+        outer = Path(tmp) / "europepmc-supplementary-files.zip"
+        download(SUPPLEMENT_ARCHIVE_URL, outer)
+        selected = select_members(outer)
 
-    manifest = {
-        "schema": "ttf_iran_plateau_acquisition_v0.2",
-        "source": {
-            "pmcid": PMCID,
-            "doi": DOI,
-            "article_url": ARTICLE_URL,
-            "acquisition_mode": "supplement links parsed from the public PMC article HTML",
-        },
-        "supplements": frozen,
-        "selection": {
-            "expected_files": list(EXPECTED),
-            "published_roles": EXPECTED,
-            "outcome_values_used": False,
-            "boundary_labels_used_for_selection": False,
-            "fallback_source_used": False,
-        },
-    }
-    (output / "manifest.json").write_text(
-        json.dumps(manifest, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
-    print(json.dumps(manifest, indent=2, sort_keys=True))
+        frozen = []
+        for name, description in EXPECTED.items():
+            destination = output / name
+            safe_extract_member(outer, selected[name], destination)
+            if not zipfile.is_zipfile(destination):
+                raise RuntimeError(f"published supplement is not a valid ZIP: {name}")
+            frozen.append(
+                {
+                    "name": name,
+                    "description": description,
+                    "archive_member": selected[name],
+                    "bytes": destination.stat().st_size,
+                    "sha256": sha256(destination),
+                }
+            )
+
+        manifest = {
+            "schema": "ttf_iran_plateau_acquisition_v0.3",
+            "source": {
+                "pmcid": PMCID,
+                "doi": DOI,
+                "supplement_archive_url": SUPPLEMENT_ARCHIVE_URL,
+                "supplement_archive_sha256": sha256(outer),
+                "acquisition_mode": "Europe PMC REST supplementaryFiles endpoint",
+            },
+            "supplements": frozen,
+            "selection": {
+                "expected_files": list(EXPECTED),
+                "published_roles": EXPECTED,
+                "outcome_values_used": False,
+                "boundary_labels_used_for_selection": False,
+                "fallback_source_used": False,
+            },
+        }
+        (output / "manifest.json").write_text(
+            json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        print(json.dumps(manifest, indent=2, sort_keys=True))
     return 0
 
 
