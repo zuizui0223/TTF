@@ -1,0 +1,62 @@
+{
+  "schema": "ttf_queensland33_topology_qualification_frozen_v0.2",
+  "source_result_schema": "ttf_queensland33_topology_qualification_v0.2",
+  "lineage": {
+    "workflow_run_id": 34122005954,
+    "head_sha": "c7d3aaf21e8b332aa6debafbe7127094bc352ee9",
+    "layout_artifact_id": 10018554276,
+    "layout_artifact_zip_sha256": "56735590be27068af3615fd6080020a2625db0ccc9e501ed1c1a636d0d138e38",
+    "aggregate_artifact_id": 10018603012,
+    "aggregate_artifact_zip_sha256": "b6ccd2c2af20251dea3d6c7c2e1f3322447ca3e81dc6c93a5c5ea37a22c4598e"
+  },
+  "design": {
+    "n_layouts": 12,
+    "layout_mode": "ordered_nonzero_counts",
+    "n_eligible_species": 21,
+    "split": "10 train / 11 evaluation",
+    "k": 2,
+    "worlds_per_cell_per_layout": 50,
+    "bootstrap_resamples": 999,
+    "noise_sd": 0.8,
+    "transition_width": 0.2,
+    "min_shared_crossing_species": 14,
+    "genetic_outcomes_used": false,
+    "named_Mary_Brisbane_boundary_used": false
+  },
+  "frozen_gate": {
+    "type1_ceiling": 0.1,
+    "full_shared_A2_power_floor": 0.8,
+    "all_layouts_must_pass": true
+  },
+  "qualification": {
+    "layout_modes": ["ordered_nonzero_counts"],
+    "n_layouts": 12,
+    "passed": false,
+    "pilot_only": true,
+    "power_floor": 0.8,
+    "type1_ceiling": 0.1,
+    "worlds_per_cell_per_layout": 50,
+    "worst_layout_full_shared_A2_power": 0.42,
+    "worst_layout_max_zero_shared_rejection": 0.1
+  },
+  "per_layout": {
+    "0": {"max_zero_shared_rejection": 0.08, "full_shared_A2_power": 0.54, "passed": false},
+    "1": {"max_zero_shared_rejection": 0.08, "full_shared_A2_power": 0.62, "passed": false},
+    "2": {"max_zero_shared_rejection": 0.08, "full_shared_A2_power": 0.76, "passed": false},
+    "3": {"max_zero_shared_rejection": 0.08, "full_shared_A2_power": 0.66, "passed": false},
+    "4": {"max_zero_shared_rejection": 0.06, "full_shared_A2_power": 0.42, "passed": false},
+    "5": {"max_zero_shared_rejection": 0.06, "full_shared_A2_power": 0.66, "passed": false},
+    "6": {"max_zero_shared_rejection": 0.08, "full_shared_A2_power": 0.8, "passed": true},
+    "7": {"max_zero_shared_rejection": 0.06, "full_shared_A2_power": 0.66, "passed": false},
+    "8": {"max_zero_shared_rejection": 0.04, "full_shared_A2_power": 0.58, "passed": false},
+    "9": {"max_zero_shared_rejection": 0.04, "full_shared_A2_power": 0.74, "passed": false},
+    "10": {"max_zero_shared_rejection": 0.1, "full_shared_A2_power": 0.64, "passed": false},
+    "11": {"max_zero_shared_rejection": 0.06, "full_shared_A2_power": 0.74, "passed": false}
+  },
+  "interpretation": {
+    "status": "FAIL_POWER_ONLY",
+    "type1": "PASS at the prospective point ceiling across the 12-layout envelope",
+    "power": "FAIL: the worst layout recovered only 0.42 power at fully shared amplitude 2",
+    "next_step": "Keep the estimator, split, topology, and thresholds fixed; estimate the detection floor at stronger fully shared amplitudes before any empirical DNA outcome is opened."
+  }
+}
