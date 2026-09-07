@@ -1,0 +1,128 @@
+name: benchmark-iran-geometry
+
+on:
+  push:
+    branches:
+      - "benchmark/independent-biogeography"
+    paths:
+      - "src/ttf/semisynthetic.py"
+      - "tests/test_semisynthetic.py"
+      - "scripts/acquire_iran_plateau_supplements.py"
+      - "scripts/prepare_iran_plateau_benchmark.py"
+      - "scripts/run_iran_geometry_calibration.py"
+      - "scripts/aggregate_iran_geometry_calibration.py"
+      - ".github/workflows/benchmark-iran-geometry.yml"
+  workflow_dispatch:
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Acquire frozen supplements once
+        run: >-
+          python scripts/acquire_iran_plateau_supplements.py
+          --output-dir benchmark_artifacts/iran_plateau
+      - name: Audit inputs and freeze geometry
+        run: >-
+          python scripts/prepare_iran_plateau_benchmark.py
+          --supplement-dir benchmark_artifacts/iran_plateau
+          --output-dir prepared/iran_plateau
+      - name: Print input audit
+        run: cat prepared/iran_plateau/input_audit.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iran-geometry-prepared
+          path: prepared/iran_plateau/
+          if-no-files-found: error
+          retention-days: 90
+
+  cell:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - shared: "0"
+            amplitude: "0.5"
+            slug: s0-a0.5
+          - shared: "0"
+            amplitude: "1"
+            slug: s0-a1
+          - shared: "0"
+            amplitude: "2"
+            slug: s0-a2
+          - shared: "0"
+            amplitude: "3"
+            slug: s0-a3
+          - shared: "1"
+            amplitude: "2"
+            slug: s1-a2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: iran-geometry-prepared
+          path: prepared/iran_plateau
+      - name: Run actual-geometry calibration cell
+        run: >-
+          python scripts/run_iran_geometry_calibration.py
+          --geometry prepared/iran_plateau/geometry.json
+          --shared-fraction ${{ matrix.shared }}
+          --amplitude ${{ matrix.amplitude }}
+          --replicates 100
+          --bootstrap 1999
+          --alpha 0.05
+          --k 4
+          --noise-sd 0.8
+          --transition-width 0.20
+          --min-crossing-species 6
+          --split-seed 20260907
+          --seed 20260907
+          --output results/cell-${{ matrix.slug }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iran-geometry-cell-${{ matrix.slug }}
+          path: results/cell-${{ matrix.slug }}.json
+          if-no-files-found: error
+          retention-days: 90
+
+  aggregate:
+    needs: cell
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: iran-geometry-cell-*
+          path: results/cells
+          merge-multiple: true
+      - name: Aggregate geometry qualification
+        run: >-
+          python scripts/aggregate_iran_geometry_calibration.py
+          --input-dir results/cells
+          --output results/iran-geometry-qualification.json
+      - name: Print qualification
+        run: cat results/iran-geometry-qualification.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iran-geometry-qualification-v0.1
+          path: results/iran-geometry-qualification.json
+          if-no-files-found: error
+          retention-days: 90
