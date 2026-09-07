@@ -11,6 +11,7 @@ from .calibration import (
     QualificationReport,
     qualify_calibration,
     run_calibration,
+    run_geometry_calibration,
 )
 from .core import (
     SpeciesEdges,
@@ -23,6 +24,12 @@ from .core import (
     rank01,
     spearman_rho,
     split_species,
+)
+from .geometry import (
+    GeometrySyntheticWorld,
+    SpeciesGeometry,
+    geometry_fingerprint,
+    simulate_fixed_geometry_boundary_world,
 )
 from .inference import (
     MeanBootstrapResult,
@@ -56,6 +63,7 @@ from .transfer import (
 __all__ = [
     "CalibrationCell",
     "FieldEstimate",
+    "GeometrySyntheticWorld",
     "KernelBoundaryModel",
     "MeanBootstrapResult",
     "PermutationResult",
@@ -66,6 +74,7 @@ __all__ = [
     "RecurrenceEstimate",
     "SpeciesBootstrapResult",
     "SpeciesEdges",
+    "SpeciesGeometry",
     "SpeciesSample",
     "SyntheticWorld",
     "TransferResult",
@@ -76,6 +85,7 @@ __all__ = [
     "compete_predictor_spaces",
     "fit_boundary_model",
     "fixed_graphs",
+    "geometry_fingerprint",
     "heldout_species_bootstrap_test",
     "inclusion_counts",
     "knn_edges",
@@ -87,7 +97,9 @@ __all__ = [
     "recurrence_probability",
     "ridge_predictor_transfer",
     "run_calibration",
+    "run_geometry_calibration",
     "simulate_circular_boundary_world",
+    "simulate_fixed_geometry_boundary_world",
     "spearman_rho",
     "split_species",
     "transfer_statistic",
