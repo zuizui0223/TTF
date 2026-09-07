@@ -24,6 +24,12 @@ from .core import (
     spearman_rho,
     split_species,
 )
+from .inference import (
+    MeanBootstrapResult,
+    SpeciesBootstrapResult,
+    centered_species_bootstrap_mean_test,
+    heldout_species_bootstrap_test,
+)
 from .nulls import (
     PermutationResult,
     fixed_graphs,
@@ -51,22 +57,26 @@ __all__ = [
     "CalibrationCell",
     "FieldEstimate",
     "KernelBoundaryModel",
+    "MeanBootstrapResult",
     "PermutationResult",
     "PredictorCompetitionResult",
     "PredictorTransferResult",
     "PreparedTransfer",
     "QualificationReport",
     "RecurrenceEstimate",
+    "SpeciesBootstrapResult",
     "SpeciesEdges",
     "SpeciesSample",
     "SyntheticWorld",
     "TransferResult",
     "balanced_schedule",
     "build_species_edges",
+    "centered_species_bootstrap_mean_test",
     "edge_turnover",
     "compete_predictor_spaces",
     "fit_boundary_model",
     "fixed_graphs",
+    "heldout_species_bootstrap_test",
     "inclusion_counts",
     "knn_edges",
     "permutation_test",
@@ -83,4 +93,4 @@ __all__ = [
     "transfer_statistic",
 ]
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"

@@ -1,0 +1,54 @@
+{
+  "schema": "ttf_qualification_trait_permutation_pilot_v0.1",
+  "lineage": {
+    "workflow_run_id": 34105214555,
+    "head_sha": "59143881cfcb880195c6cc4f5d81bcb45f6f42ef",
+    "aggregate_artifact_id": 10012226880,
+    "aggregate_artifact_sha256": "ea45d0c4f66d130a7919cb848d179f5a52b6dc34772db31bffe0fd22d7c5a24c"
+  },
+  "design": {
+    "shared_fractions": [0.0, 0.25, 0.5, 1.0],
+    "amplitudes": [0.0, 0.5, 1.0, 2.0, 3.0],
+    "replicates_per_cell": 50,
+    "permutations_per_replicate": 199,
+    "species": 40,
+    "records_per_species": 60,
+    "bandwidth": 0.2,
+    "alpha": 0.05,
+    "seed": 20260907,
+    "moderate_amplitude": 2.0,
+    "type1_ceiling": 0.10,
+    "power_floor": 0.80,
+    "inference": "within-species trait-location permutation with full train-field refit"
+  },
+  "cells": [
+    {"shared_fraction":0.0,"amplitude":0.0,"rejection_rate":0.02,"mean_statistic":-0.0008171435516111273,"median_p_value":0.4975},
+    {"shared_fraction":0.0,"amplitude":0.5,"rejection_rate":0.02,"mean_statistic":0.0004169423160948052,"median_p_value":0.4575},
+    {"shared_fraction":0.0,"amplitude":1.0,"rejection_rate":0.08,"mean_statistic":-0.008933877386637493,"median_p_value":0.7175},
+    {"shared_fraction":0.0,"amplitude":2.0,"rejection_rate":0.10,"mean_statistic":0.004541728563581416,"median_p_value":0.4225},
+    {"shared_fraction":0.0,"amplitude":3.0,"rejection_rate":0.14,"mean_statistic":0.003296878266847833,"median_p_value":0.51},
+    {"shared_fraction":0.25,"amplitude":0.0,"rejection_rate":0.00,"mean_statistic":-0.0011638806995426354,"median_p_value":0.47},
+    {"shared_fraction":0.25,"amplitude":0.5,"rejection_rate":0.02,"mean_statistic":0.0037124837895555927,"median_p_value":0.42},
+    {"shared_fraction":0.25,"amplitude":1.0,"rejection_rate":0.10,"mean_statistic":0.007698431151930224,"median_p_value":0.335},
+    {"shared_fraction":0.25,"amplitude":2.0,"rejection_rate":0.16,"mean_statistic":0.011013362052347238,"median_p_value":0.3775},
+    {"shared_fraction":0.25,"amplitude":3.0,"rejection_rate":0.50,"mean_statistic":0.02856990857565633,"median_p_value":0.06},
+    {"shared_fraction":0.5,"amplitude":0.0,"rejection_rate":0.04,"mean_statistic":0.000008839196705516285,"median_p_value":0.4825},
+    {"shared_fraction":0.5,"amplitude":0.5,"rejection_rate":0.08,"mean_statistic":0.00382558856978967,"median_p_value":0.47},
+    {"shared_fraction":0.5,"amplitude":1.0,"rejection_rate":0.10,"mean_statistic":0.005198906113686842,"median_p_value":0.435},
+    {"shared_fraction":0.5,"amplitude":2.0,"rejection_rate":0.60,"mean_statistic":0.04043084854841103,"median_p_value":0.0225},
+    {"shared_fraction":0.5,"amplitude":3.0,"rejection_rate":0.96,"mean_statistic":0.07633343595015117,"median_p_value":0.005},
+    {"shared_fraction":1.0,"amplitude":0.0,"rejection_rate":0.06,"mean_statistic":0.0006162311222361994,"median_p_value":0.5225},
+    {"shared_fraction":1.0,"amplitude":0.5,"rejection_rate":0.06,"mean_statistic":0.0030576269091035736,"median_p_value":0.445},
+    {"shared_fraction":1.0,"amplitude":1.0,"rejection_rate":0.22,"mean_statistic":0.018979969882876094,"median_p_value":0.245},
+    {"shared_fraction":1.0,"amplitude":2.0,"rejection_rate":1.00,"mean_statistic":0.10062548180632282,"median_p_value":0.005},
+    {"shared_fraction":1.0,"amplitude":3.0,"rejection_rate":1.00,"mean_statistic":0.17121753868630443,"median_p_value":0.005}
+  ],
+  "qualification": {
+    "passed": false,
+    "type1_pass": false,
+    "max_zero_shared_rejection": 0.14,
+    "power_pass": true,
+    "full_shared_moderate_power": 1.0
+  },
+  "diagnosis": "The edge-level transfer statistic has strong positive-control recovery, but the trait-permutation null destroys species-specific spatial structure. Under strong private boundaries this makes the null narrower than the scientific no-sharedness null and produces anti-conservative rejection. Trait permutation therefore remains a test of trait-location exchangeability, not the primary sharedness null."
+}

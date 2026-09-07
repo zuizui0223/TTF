@@ -1,0 +1,99 @@
+name: qualification-precision
+
+on:
+  push:
+    branches:
+      - "method/heldout-species-inference"
+    paths:
+      - ".github/workflows/qualification-precision.yml"
+  workflow_dispatch:
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[test]"
+      - run: pytest -q
+
+  cell:
+    needs: invariants
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - shared: 0.0
+            amplitude: 0.5
+          - shared: 0.0
+            amplitude: 1.0
+          - shared: 0.0
+            amplitude: 2.0
+          - shared: 0.0
+            amplitude: 3.0
+          - shared: 1.0
+            amplitude: 2.0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Run high-precision calibration cell
+        run: >-
+          python scripts/run_calibration_cell.py
+          --shared-fraction ${{ matrix.shared }}
+          --amplitude ${{ matrix.amplitude }}
+          --replicates 500
+          --resamples 1999
+          --species 40
+          --records-per-species 60
+          --bandwidth 0.2
+          --alpha 0.05
+          --seed 20260907
+          --inference heldout_species_bootstrap
+          --output "results/cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: "precision-cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}"
+          path: "results/cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}.json"
+          if-no-files-found: error
+
+  aggregate:
+    needs: cell
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: precision-cell-*
+          path: results
+          merge-multiple: true
+      - name: Check targeted grid
+        run: test "$(find results -maxdepth 1 -name 'cell-*.json' | wc -l)" -eq 5
+      - name: Aggregate confidence-bound qualification
+        run: >-
+          python scripts/aggregate_precision_calibration.py
+          --input-dir results
+          --moderate-amplitude 2.0
+          --type1-upper-ceiling 0.10
+          --power-lower-floor 0.80
+          --output results/qualification-precision.json
+      - name: Print qualification
+        run: cat results/qualification-precision.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qualification-precision
+          path: results/qualification-precision.json
+          if-no-files-found: error

@@ -1,0 +1,108 @@
+{
+  "schema": "ttf_precision_qualification_v0.2_frozen",
+  "lineage": {
+    "workflow_run_id": 34107193204,
+    "workflow_head_sha": "cac260855e7846cb69e79ab2f79944132d721c11",
+    "workflow_name": "qualification-precision",
+    "workflow_conclusion": "success",
+    "aggregate_artifact_id": 10013318573,
+    "aggregate_artifact_digest": "sha256:8f54ef75c731db27d69bbf59392238c87c92a9355d19aa2f53ff2ebde441266c"
+  },
+  "design": {
+    "alpha": 0.05,
+    "bandwidth": 0.2,
+    "confidence_interval": "two-sided Wilson score 95%",
+    "inference": "heldout_species_bootstrap",
+    "moderate_amplitude": 2.0,
+    "resamples": 1999,
+    "power_lower_floor": 0.8,
+    "records_per_species": 60,
+    "replicates": 500,
+    "seed": 20260907,
+    "species": 40,
+    "type1_upper_ceiling": 0.1
+  },
+  "cells": [
+    {
+      "shared_fraction": 0.0,
+      "amplitude": 0.5,
+      "n_replicates": 500,
+      "alpha": 0.05,
+      "rejection_rate": 0.04,
+      "mean_statistic": 0.00021065689877516224,
+      "mean_null_statistic": -1.9934802479072643e-05,
+      "median_p_value": 0.50425,
+      "wilson95_low": 0.026040797389777257,
+      "wilson95_high": 0.060973595834850805
+    },
+    {
+      "shared_fraction": 0.0,
+      "amplitude": 1.0,
+      "n_replicates": 500,
+      "alpha": 0.05,
+      "rejection_rate": 0.05,
+      "mean_statistic": 0.00031336668700335447,
+      "mean_null_statistic": -1.9502498034857167e-05,
+      "median_p_value": 0.52075,
+      "wilson95_low": 0.034093745243849435,
+      "wilson95_high": 0.0727681611715476
+    },
+    {
+      "shared_fraction": 0.0,
+      "amplitude": 2.0,
+      "n_replicates": 500,
+      "alpha": 0.05,
+      "rejection_rate": 0.04,
+      "mean_statistic": -0.0013287293462683975,
+      "mean_null_statistic": 1.642445234617247e-05,
+      "median_p_value": 0.556,
+      "wilson95_low": 0.026040797389777257,
+      "wilson95_high": 0.060973595834850805
+    },
+    {
+      "shared_fraction": 0.0,
+      "amplitude": 3.0,
+      "n_replicates": 500,
+      "alpha": 0.05,
+      "rejection_rate": 0.054,
+      "mean_statistic": 0.0011027152168987353,
+      "mean_null_statistic": 1.9273424750027022e-06,
+      "median_p_value": 0.49224999999999997,
+      "wilson95_low": 0.03737435018105752,
+      "wilson95_high": 0.07742656151064709
+    },
+    {
+      "shared_fraction": 1.0,
+      "amplitude": 2.0,
+      "n_replicates": 500,
+      "alpha": 0.05,
+      "rejection_rate": 0.978,
+      "mean_statistic": 0.10072807897849764,
+      "mean_null_statistic": 8.344592461250129e-06,
+      "median_p_value": 0.001,
+      "wilson95_low": 0.9610391387886836,
+      "wilson95_high": 0.9876719917300725
+    }
+  ],
+  "qualification": {
+    "max_zero_shared_estimate": 0.054,
+    "max_zero_shared_upper95": 0.07742656151064709,
+    "full_shared_moderate_estimate": 0.978,
+    "full_shared_moderate_lower95": 0.9610391387886836,
+    "type1_upper_ceiling": 0.1,
+    "power_lower_floor": 0.8,
+    "type1_pass": true,
+    "power_pass": true,
+    "passed": true
+  },
+  "interpretation": {
+    "qualified_scope": "idealized circular worlds with 40 species and 60 records per species",
+    "primary_claim": "held-out species bootstrap distinguishes strong private spatial turnover from transferable shared turnover under the frozen calibration design",
+    "not_yet_qualified": [
+      "actual opportunistic sampling geometry",
+      "genetic-distance isolation-by-distance residualization",
+      "environmental or resistance attribution",
+      "observation-bias stress suite"
+    ]
+  }
+}

@@ -1,0 +1,85 @@
+name: qualification-heldout-bootstrap
+
+on:
+  workflow_dispatch:
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[test]"
+      - run: pytest -q
+
+  cell:
+    needs: invariants
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shared: [0.0, 0.25, 0.5, 1.0]
+        amplitude: [0.0, 0.5, 1.0, 2.0, 3.0]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Run held-out species calibration cell
+        run: >-
+          python scripts/run_calibration_cell.py
+          --shared-fraction ${{ matrix.shared }}
+          --amplitude ${{ matrix.amplitude }}
+          --replicates 100
+          --resamples 1999
+          --species 40
+          --records-per-species 60
+          --bandwidth 0.2
+          --alpha 0.05
+          --seed 20260907
+          --inference heldout_species_bootstrap
+          --output "results/cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: "hb-cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}"
+          path: "results/cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}.json"
+          if-no-files-found: error
+
+  aggregate:
+    needs: cell
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: hb-cell-*
+          path: results
+          merge-multiple: true
+      - name: Check complete grid
+        run: test "$(find results -maxdepth 1 -name 'cell-*.json' | wc -l)" -eq 20
+      - name: Aggregate qualification
+        run: >-
+          python scripts/aggregate_calibration.py
+          --input-dir results
+          --moderate-amplitude 2.0
+          --type1-ceiling 0.10
+          --power-floor 0.80
+          --output results/qualification-heldout-bootstrap.json
+      - name: Print qualification
+        run: cat results/qualification-heldout-bootstrap.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qualification-heldout-bootstrap
+          path: results/qualification-heldout-bootstrap.json
+          if-no-files-found: error

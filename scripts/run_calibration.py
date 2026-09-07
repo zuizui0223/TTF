@@ -21,14 +21,20 @@ def main() -> int:
     )
     parser.add_argument("--shared-fractions", type=floats, default=[0.0, 0.25, 0.5, 1.0])
     parser.add_argument("--amplitudes", type=floats, default=[0.0, 1.0, 2.0, 3.0])
-    parser.add_argument("--replicates", type=int, default=25)
-    parser.add_argument("--permutations", type=int, default=199)
+    parser.add_argument("--replicates", type=int, default=100)
+    parser.add_argument("--resamples", "--permutations", dest="resamples", type=int, default=1999)
     parser.add_argument("--species", type=int, default=40)
     parser.add_argument("--records-per-species", type=int, default=60)
     parser.add_argument("--bandwidth", type=float, default=0.2)
     parser.add_argument("--moderate-amplitude", type=float, default=2.0)
     parser.add_argument("--alpha", type=float, default=0.05)
     parser.add_argument("--seed", type=int, default=20260907)
+    parser.add_argument(
+        "--inference",
+        choices=["heldout_species_bootstrap", "trait_permutation"],
+        default="heldout_species_bootstrap",
+        help="Primary sharedness inference defaults to held-out species bootstrap; trait permutation is diagnostic.",
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
@@ -36,30 +42,32 @@ def main() -> int:
         shared_fractions=args.shared_fractions,
         amplitudes=args.amplitudes,
         n_replicates=args.replicates,
-        n_permutations=args.permutations,
+        n_permutations=args.resamples,
         n_species=args.species,
         records_per_species=args.records_per_species,
         bandwidth=args.bandwidth,
         alpha=args.alpha,
         seed=args.seed,
+        inference=args.inference,
     )
     qualification = qualify_calibration(
         cells,
         moderate_amplitude=args.moderate_amplitude,
     )
     payload = {
-        "schema": "ttf_calibration_v0.1",
+        "schema": "ttf_calibration_v0.2",
         "config": {
             "shared_fractions": args.shared_fractions,
             "amplitudes": args.amplitudes,
             "replicates": args.replicates,
-            "permutations": args.permutations,
+            "resamples": args.resamples,
             "species": args.species,
             "records_per_species": args.records_per_species,
             "bandwidth": args.bandwidth,
             "moderate_amplitude": args.moderate_amplitude,
             "alpha": args.alpha,
             "seed": args.seed,
+            "inference": args.inference,
         },
         "cells": [cell.to_dict() for cell in cells],
         "qualification": qualification.to_dict(),
