@@ -1,0 +1,110 @@
+name: v03-freeze-fresh-external-geometry
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - "benchmarks/v03_fresh_animal_geometry_manifest.csv"
+      - ".github/workflows/v03-freeze-fresh-external-geometry.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Freeze fresh disjoint North American animal geometry
+        run: >-
+          python scripts/freeze_gbif_animal_geometry.py
+          --manifest benchmarks/v03_fresh_animal_geometry_manifest.csv
+          --output benchmarks/frozen/v03_fresh_animal_geometry.csv
+          --ledger benchmarks/frozen/v03_fresh_animal_geometry_source.json
+          --fetch-limit 1000
+          --cap-per-species 100
+          --minimum-records 80
+          --seed 20260908
+      - name: Enforce disjoint panel and freeze geometry-only execution scale
+        run: |
+          python - <<'PY'
+          import csv, json
+          from collections import defaultdict
+          from pathlib import Path
+          import numpy as np
+          from ttf import knn_edges
+
+          old = set()
+          with open('benchmarks/gate_i_animal_geometry_manifest.csv', newline='') as h:
+              old = {r['scientific_name'].strip() for r in csv.DictReader(h)}
+          fresh = set()
+          grouped = defaultdict(list)
+          with open('benchmarks/frozen/v03_fresh_animal_geometry.csv', newline='') as h:
+              for r in csv.DictReader(h):
+                  fresh.add(r['species'])
+                  grouped[r['species']].append([float(r['x_km']), float(r['y_km']), float(r['z_km'])])
+          overlap = sorted(old & fresh)
+          if overlap:
+              raise SystemExit(f'fresh v0.3 panel overlaps failed I-A taxa: {overlap}')
+          if len(fresh) != 40:
+              raise SystemExit(f'expected 40 fresh taxa, found {len(fresh)}')
+
+          medians = []
+          for name in sorted(grouped):
+              coords = np.asarray(grouped[name], dtype=float)
+              edges = knn_edges(coords, k=4)
+              lengths = np.linalg.norm(coords[edges[:,0]] - coords[edges[:,1]], axis=1)
+              medians.append(float(np.median(lengths)))
+          bandwidth = float(np.median(medians))
+
+          p = Path('benchmarks/frozen/v03_fresh_animal_geometry_source.json')
+          d = json.loads(p.read_text())
+          d['validation_role'] = 'prospectively_frozen_fresh_external_geometry_for_v03_only'
+          d['confirmatory_holdout'] = True
+          d['failed_i_a_taxa_overlap'] = overlap
+          d['candidate_performance_evaluated_at_freeze'] = False
+          d['synthetic_worlds_run_at_freeze'] = 0
+          d['prospective_execution'] = {
+              'k': 4,
+              'bandwidth_rule': 'median_of_species_median_kNN_edge_length',
+              'bandwidth_km': bandwidth,
+              'eval_fraction': 0.5,
+              'seed': 20260908,
+          }
+          d['claim_boundary'] = (
+              'This file freezes a fresh external sampling geometry before v0.3 candidate '
+              'performance is inspected. No v0.3 synthetic calibration world is run here.'
+          )
+          p.write_text(json.dumps(d, indent=2, sort_keys=True) + '\n')
+          print({'fresh_species': len(fresh), 'bandwidth_km': bandwidth, 'overlap': overlap})
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v03-fresh-external-geometry
+          path: |
+            benchmarks/frozen/v03_fresh_animal_geometry.csv
+            benchmarks/frozen/v03_fresh_animal_geometry_source.json
+          if-no-files-found: error
+      - name: Commit untouched confirmatory geometry
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/v03_fresh_animal_geometry.csv benchmarks/frozen/v03_fresh_animal_geometry_source.json
+          git commit -m "Freeze untouched v0.3 external validation geometry"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt * 2))
+          done
+          exit 1
