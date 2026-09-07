@@ -1,0 +1,81 @@
+name: benchmark-queensland33-structural-ceiling
+
+on:
+  push:
+    branches:
+      - "benchmark/independent-biogeography"
+    paths:
+      - "benchmarks/queensland33_topology_layouts_frozen_v0.2.json"
+      - "scripts/run_queensland33_structural_ceiling.py"
+      - "scripts/aggregate_queensland33_structural_ceiling.py"
+      - ".github/workflows/benchmark-queensland33-structural-ceiling.yml"
+  workflow_dispatch:
+
+jobs:
+  cell:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        layout: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        shared: ["0", "1"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Run noise-free structural ceiling cell
+        run: >-
+          python scripts/run_queensland33_structural_ceiling.py
+          --layouts benchmarks/queensland33_topology_layouts_frozen_v0.2.json
+          --layout-index ${{ matrix.layout }}
+          --shared-fraction ${{ matrix.shared }}
+          --replicates 100
+          --bootstrap 1999
+          --alpha 0.05
+          --k 2
+          --transition-width 0.20
+          --min-shared-crossing-species 14
+          --split-seed 20260907
+          --seed 20260909
+          --output results/layout-${{ matrix.layout }}-s${{ matrix.shared }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: queensland33-ceiling-${{ matrix.layout }}-s${{ matrix.shared }}
+          path: results/layout-${{ matrix.layout }}-s${{ matrix.shared }}.json
+          if-no-files-found: error
+          retention-days: 90
+
+  aggregate:
+    needs: cell
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: queensland33-ceiling-*
+          path: results/cells
+          merge-multiple: true
+      - name: Aggregate structural ceiling
+        run: >-
+          python scripts/aggregate_queensland33_structural_ceiling.py
+          --input-dir results/cells
+          --output results/queensland33-structural-ceiling.json
+      - name: Print structural ceiling
+        run: cat results/queensland33-structural-ceiling.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: queensland33-structural-ceiling-v0.1
+          path: results/queensland33-structural-ceiling.json
+          if-no-files-found: error
+          retention-days: 90
