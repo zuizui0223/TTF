@@ -9,6 +9,7 @@ from ttf.calibration import CalibrationCell
 from ttf.precision import qualify_calibration_precision
 
 PANELS = ("v03", "v04")
+RAW_BENCHMARK = "v03_raw"
 VARIANTS = (
     "prediction_propensity_only",
     "prediction_length_and_propensity",
@@ -16,14 +17,19 @@ VARIANTS = (
     "two_sided_propensity_only",
     "v04_two_sided_length_and_propensity",
 )
-PREFERENCE = (
-    "prediction_propensity_only",
-    "prediction_length_and_propensity",
-    "target_propensity_only",
-    "two_sided_propensity_only",
-    "v04_two_sided_length_and_propensity",
-)
+PREFERENCE = VARIANTS
 MANDATORY = {(0.0,0.5),(0.0,1.0),(0.0,2.0),(0.0,3.0),(1.0,2.0)}
+
+
+def precision_for(data: dict, panel: str, variant: str) -> tuple[list[CalibrationCell], dict]:
+    cells=[CalibrationCell(**data[panel][key]["variants"][variant]) for key in sorted(MANDATORY)]
+    precision=qualify_calibration_precision(
+        cells,
+        moderate_amplitude=2.0,
+        type1_upper_ceiling=0.10,
+        power_lower_floor=0.80,
+    )
+    return cells, precision.to_dict()
 
 
 def main() -> int:
@@ -52,6 +58,8 @@ def main() -> int:
             raise RuntimeError(f"unexpected schema in {path}")
         if payload.get("status") != "development_only" or payload.get("baseline_reproduced_exactly") is not True:
             raise RuntimeError(f"development/baseline firewall failed in {path}")
+        if payload.get("v03_raw_is_nonselectable_benchmark") is not True:
+            raise RuntimeError(f"raw benchmark firewall missing in {path}")
         panel = payload["panel"]
         if panel not in PANELS:
             raise RuntimeError(f"unexpected panel {panel}")
@@ -63,26 +71,27 @@ def main() -> int:
         if set(data[panel]) != MANDATORY:
             raise RuntimeError(f"{panel} mandatory cells drifted")
 
+    raw_benchmark = {}
+    for panel in PANELS:
+        cells, precision = precision_for(data, panel, RAW_BENCHMARK)
+        raw_benchmark[panel] = {
+            "cells":[cell.to_dict() for cell in cells],
+            "precision":precision,
+            "passed":bool(precision["passed"]),
+        }
+
     candidates = {}
     for variant in VARIANTS:
         panel_reports = {}
         all_pass = True
         for panel in PANELS:
-            cells=[]
-            for key in sorted(MANDATORY):
-                cells.append(CalibrationCell(**data[panel][key]["variants"][variant]))
-            precision = qualify_calibration_precision(
-                cells,
-                moderate_amplitude=2.0,
-                type1_upper_ceiling=0.10,
-                power_lower_floor=0.80,
-            )
+            cells, precision = precision_for(data, panel, variant)
             panel_reports[panel] = {
                 "cells": [cell.to_dict() for cell in cells],
-                "precision": precision.to_dict(),
-                "passed": bool(precision.passed),
+                "precision": precision,
+                "passed": bool(precision["passed"]),
             }
-            all_pass = all_pass and bool(precision.passed)
+            all_pass = all_pass and bool(precision["passed"])
         candidates[variant] = {
             "panels": panel_reports,
             "passes_both_development_panels": all_pass,
@@ -99,6 +108,7 @@ def main() -> int:
         "status":"development_only_after_v03_v04_external_failures",
         "rule":str(args.rule),
         "candidate_preference_order":list(PREFERENCE),
+        "nonselectable_v03_raw_benchmark":raw_benchmark,
         "candidates":candidates,
         "selected_candidate":selected,
         "selection_rule_applied_mechanically":True,
@@ -106,12 +116,13 @@ def main() -> int:
         "failed_panels_cannot_qualify_v05":True,
         "confirmation_requires_predeclared_birds_and_butterflies":True,
         "rgfca_reserve_opened":False,
-        "interpretation_boundary":"Both failed external panels are development-only. A selected candidate, if any, must be locked before the predeclared bird and butterfly confirmation panels are opened; both confirmations must pass Wilson precision before the RGFCA reserve can be authorized."
+        "interpretation_boundary":"Both failed external panels are development-only. The raw v0.3 statistic is reported only to diagnose geometry-limited power and is not eligible for selection. A selected candidate, if any, must be locked before the predeclared bird and butterfly confirmation panels are opened; both confirmations must pass Wilson precision before the RGFCA reserve can be authorized."
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(out, indent=2, sort_keys=True)+"\n")
     print(json.dumps({
         "selected_candidate":selected,
+        "raw_benchmark":{p:raw_benchmark[p]["precision"] for p in PANELS},
         "passes":{v:candidates[v]["passes_both_development_panels"] for v in VARIANTS},
         "panel_precision":{
             v:{p:candidates[v]["panels"][p]["precision"] for p in PANELS}
