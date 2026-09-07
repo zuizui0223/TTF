@@ -1,0 +1,54 @@
+{
+  "schema": "ttf_queensland33_mesoscopic_consensus_v0.3b_early_stop",
+  "status": "FAIL_POWER_EARLY_STOP",
+  "candidate_registration": {
+    "registered_before_valid_v0.3a_aggregate": true,
+    "master_seed": 20260911,
+    "prior_strength": 1.0,
+    "evidence_temperature": 1.0,
+    "type1_ceiling": 0.10,
+    "full_shared_A2_power_floor": 0.80,
+    "all_12_layouts_must_pass": true,
+    "genetic_outcomes_used": false,
+    "named_Mary_Brisbane_boundary_used": false
+  },
+  "early_stop_logic": "The all-layout Gate is irreversibly failed once any frozen layout has full-shared A=2 power below 0.80. Completing the remaining cells cannot convert the candidate into a pass.",
+  "decisive_completed_cells": {
+    "layout_0_full_shared_A2": {
+      "n_worlds": 100,
+      "bootstrap_resamples": 999,
+      "power": 0.32,
+      "mean_statistic": 0.1409381871104736,
+      "mean_max_field_probability": 0.3793303939048585
+    },
+    "layout_1_full_shared_A2": {
+      "n_worlds": 100,
+      "bootstrap_resamples": 999,
+      "power": 0.40,
+      "mean_statistic": 0.14374973427132376,
+      "mean_max_field_probability": 0.3444093226195285
+    }
+  },
+  "private_cells_seen_before_stop": {
+    "layout_0": {
+      "A0.5": 0.01,
+      "A1": 0.00,
+      "A2": 0.00,
+      "A3": 0.00,
+      "A4": 0.01
+    },
+    "layout_1": {
+      "A0.5": 0.00,
+      "A1": 0.00,
+      "A2": 0.03,
+      "A3": 0.00,
+      "A4": 0.01
+    }
+  },
+  "partial_execution": {
+    "completed_cells_before_local_runtime_limit": 22,
+    "total_planned_cells": 96,
+    "full_profile_claimed": false
+  },
+  "interpretation": "The species-normalized consensus/KL score strongly suppresses private false positives in the completed cells, but it discards too much shared-signal power. It is therefore not adopted. The next candidate should retain v0.3a's high-power predictive score while replacing its zero-centered bootstrap with an explicit geometry-conditioned randomization of cross-species boundary alignment."
+}
