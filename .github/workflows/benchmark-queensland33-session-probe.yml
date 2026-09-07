@@ -1,0 +1,30 @@
+name: benchmark-queensland33-session-probe
+
+on:
+  push:
+    branches:
+      - "benchmark/independent-biogeography"
+    paths:
+      - "scripts/probe_queensland33_session_download.py"
+      - ".github/workflows/benchmark-queensland33-session-probe.yml"
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Probe frozen Arlequin file through a public browser session
+        run: >-
+          python scripts/probe_queensland33_session_download.py
+          --output results/queensland33-session-download-probe.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: queensland33-session-download-probe-v0.1
+          path: results/queensland33-session-download-probe.json
+          if-no-files-found: error
+          retention-days: 90
