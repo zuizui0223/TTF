@@ -1,0 +1,76 @@
+{
+  "schema": "ttf_queensland33_mesoscopic_randomization_qualification_v0.3c_pilot",
+  "status": "FAIL_TYPE1_NARROW_POWER_PASS",
+  "design": {
+    "n_layouts": 12,
+    "n_eligible_species": 21,
+    "n_candidate_interbasin_cuts": 7,
+    "split": "10 train / 11 evaluation",
+    "split_seed": 20260907,
+    "k": 2,
+    "worlds_per_cell_per_layout": 100,
+    "alignment_randomizations": 199,
+    "noise_sd": 0.8,
+    "transition_width": 0.2,
+    "prior_strength": 1.0,
+    "master_seed": 20260912,
+    "private_amplitudes": [0.5, 1.0, 2.0, 3.0, 4.0],
+    "shared_fraction_A2": [0.25, 0.5, 1.0],
+    "exact_frozen_layout_envelope": true,
+    "genetic_outcomes_used": false,
+    "named_Mary_Brisbane_boundary_used": false
+  },
+  "prospective_gate": {
+    "max_private_rejection_ceiling": 0.10,
+    "full_shared_A2_power_floor": 0.80,
+    "all_layouts_must_pass": true
+  },
+  "qualification": {
+    "passed": false,
+    "type1_pass": false,
+    "power_pass": true,
+    "worst_layout_max_zero_shared_rejection": 0.11,
+    "worst_layout_full_shared_A2_power": 0.83,
+    "single_gate_failure": {
+      "layout": 10,
+      "amplitude": 3.0,
+      "rejections": 11,
+      "n_worlds": 100,
+      "rejection_rate": 0.11
+    }
+  },
+  "per_layout": {
+    "0": {"max_zero_shared_rejection": 0.06, "full_shared_A2_power": 0.94, "passed": true},
+    "1": {"max_zero_shared_rejection": 0.07, "full_shared_A2_power": 0.93, "passed": true},
+    "2": {"max_zero_shared_rejection": 0.07, "full_shared_A2_power": 0.96, "passed": true},
+    "3": {"max_zero_shared_rejection": 0.10, "full_shared_A2_power": 0.92, "passed": true},
+    "4": {"max_zero_shared_rejection": 0.06, "full_shared_A2_power": 0.83, "passed": true},
+    "5": {"max_zero_shared_rejection": 0.09, "full_shared_A2_power": 0.95, "passed": true},
+    "6": {"max_zero_shared_rejection": 0.06, "full_shared_A2_power": 0.90, "passed": true},
+    "7": {"max_zero_shared_rejection": 0.10, "full_shared_A2_power": 0.95, "passed": true},
+    "8": {"max_zero_shared_rejection": 0.07, "full_shared_A2_power": 0.89, "passed": true},
+    "9": {"max_zero_shared_rejection": 0.08, "full_shared_A2_power": 0.96, "passed": true},
+    "10": {"max_zero_shared_rejection": 0.11, "full_shared_A2_power": 0.94, "passed": false},
+    "11": {"max_zero_shared_rejection": 0.10, "full_shared_A2_power": 0.95, "passed": true}
+  },
+  "response_to_shared_fraction_A2": {
+    "0.0": {"mean_rejection_rate_across_layouts": 0.0625, "min": 0.03, "max": 0.10, "mean_statistic": -0.000006116544913367586, "mean_null_statistic": -0.000010360561693980142},
+    "0.25": {"mean_rejection_rate_across_layouts": 0.10833333333333334, "min": 0.08, "max": 0.16, "mean_statistic": 0.0008353486455879659, "mean_null_statistic": -0.00006474673753778224},
+    "0.5": {"mean_rejection_rate_across_layouts": 0.3333333333333333, "min": 0.25, "max": 0.41, "mean_statistic": 0.003570368416517551, "mean_null_statistic": -0.00002479691756666342},
+    "1.0": {"mean_rejection_rate_across_layouts": 0.9266666666666666, "min": 0.83, "max": 0.96, "mean_statistic": 0.012935772265143836, "mean_null_statistic": 0.0006785041140056139}
+  },
+  "comparison": {
+    "v0.2_worst_power": 0.42,
+    "v0.3a_worst_power": 0.81,
+    "v0.3c_worst_power": 0.83,
+    "v0.3a_worst_type1": 0.13,
+    "v0.3c_worst_type1": 0.11
+  },
+  "pilot_multiple_cell_note": {
+    "n_private_cells": 60,
+    "probability_single_100_world_cell_has_at_least_11_rejections_if_true_rate_is_0.05": 0.01147241006748466,
+    "probability_at_least_one_of_60_independent_cells_reaches_11_or_more_if_all_true_rates_are_0.05": 0.49958801567244193,
+    "interpretation": "The frozen pilot Gate still fails and is not relabeled as a pass. However, a one-cell 0.11 maximum among sixty 100-world cells is not sufficient evidence that the inferential null is structurally anti-conservative. The estimator and null remain unchanged for a higher-replicate precision validation."
+  },
+  "next_step": "Run precision validation without modifying the method: increase world count for zero-shared cells and confirm full-shared A=2 power on the same frozen layouts, then judge type-I with binomial confidence bounds rather than tuning the estimator to the single 0.11 cell."
+}
