@@ -1,0 +1,80 @@
+name: benchmark-queensland33-oracle-diagnostic
+
+on:
+  push:
+    branches:
+      - "benchmark/independent-biogeography"
+    paths:
+      - "benchmarks/queensland33_topology_layouts_frozen_v0.2.json"
+      - "scripts/run_queensland33_oracle_diagnostic.py"
+      - "scripts/aggregate_queensland33_oracle_diagnostic.py"
+      - ".github/workflows/benchmark-queensland33-oracle-diagnostic.yml"
+  workflow_dispatch:
+
+jobs:
+  cell:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        layout: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        shared: ["0", "1"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Run oracle diagnostic cell
+        run: >-
+          python scripts/run_queensland33_oracle_diagnostic.py
+          --layouts benchmarks/queensland33_topology_layouts_frozen_v0.2.json
+          --layout-index ${{ matrix.layout }}
+          --shared-fraction ${{ matrix.shared }}
+          --replicates 100
+          --bootstrap 1999
+          --alpha 0.05
+          --k 2
+          --transition-width 0.20
+          --split-seed 20260907
+          --seed 20260910
+          --output results/layout-${{ matrix.layout }}-s${{ matrix.shared }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: queensland33-oracle-${{ matrix.layout }}-s${{ matrix.shared }}
+          path: results/layout-${{ matrix.layout }}-s${{ matrix.shared }}.json
+          if-no-files-found: error
+          retention-days: 90
+
+  aggregate:
+    needs: cell
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: queensland33-oracle-*
+          path: results/cells
+          merge-multiple: true
+      - name: Aggregate oracle diagnostic
+        run: >-
+          python scripts/aggregate_queensland33_oracle_diagnostic.py
+          --input-dir results/cells
+          --output results/queensland33-oracle-diagnostic.json
+      - name: Print oracle diagnostic
+        run: cat results/queensland33-oracle-diagnostic.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: queensland33-oracle-diagnostic-v0.1
+          path: results/queensland33-oracle-diagnostic.json
+          if-no-files-found: error
+          retention-days: 90
