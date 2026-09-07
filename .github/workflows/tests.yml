@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - "method/**"
+      - "benchmark/**"
   pull_request:
 
 jobs:
