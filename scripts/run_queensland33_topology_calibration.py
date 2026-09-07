@@ -16,9 +16,12 @@ from ttf.semisynthetic import geometry_bandwidth, normalize_geometry
 BASINS = ("GOL", "LOG", "BRI", "PIN", "MCY", "NOO", "TCB", "MRY")
 
 
-def load_layout(path: Path, layout_index: int) -> dict[str, np.ndarray]:
+def load_layout(path: Path, layout_index: int) -> tuple[dict[str, np.ndarray], dict]:
     payload = json.loads(path.read_text())
-    if payload.get("schema") != "ttf_queensland33_feasible_layouts_v0.1":
+    if payload.get("schema") not in {
+        "ttf_queensland33_feasible_layouts_v0.1",
+        "ttf_queensland33_feasible_layouts_v0.2",
+    }:
         raise RuntimeError("unexpected feasible-layout schema")
     layout = payload["layouts"][int(layout_index)]
     geometry: dict[str, np.ndarray] = {}
@@ -32,7 +35,12 @@ def load_layout(path: Path, layout_index: int) -> dict[str, np.ndarray]:
         geometry[str(row["code"])] = np.column_stack([x, np.zeros_like(x)])
     if len(geometry) != 21:
         raise RuntimeError(f"expected 21 eligible species, got {len(geometry)}")
-    return geometry
+    meta = {
+        "layout_schema": payload["schema"],
+        "layout_mode": payload.get("layout_mode", "ordered_nonzero_counts"),
+        "solver": payload.get("solver", {}),
+    }
+    return geometry, meta
 
 
 def crossing_species(geometry: dict[str, np.ndarray], cut: float) -> tuple[str, ...]:
@@ -60,14 +68,16 @@ def simulate_ordered_world(
     names = tuple(sorted(coords))
     rng = np.random.default_rng(int(seed))
 
-    # Published basin order is the only topology supplied.  Boundaries live
-    # between adjacent basin positions; Mary-Brisbane is never privileged.
     raw_cuts = np.arange(0.5, len(BASINS) - 0.5, 1.0)
     normalized_cuts = (raw_cuts - float(normalized.center[0])) / float(normalized.scale)
-    cut_crossings = [crossing_species({s: np.column_stack([
-        (geometry[s][:, 0] - normalized.center[0]) / normalized.scale,
-        np.zeros(len(geometry[s]))
-    ]) for s in geometry}, float(cut)) for cut in normalized_cuts]
+    normalized_geometry = {
+        s: np.column_stack([
+            (geometry[s][:, 0] - normalized.center[0]) / normalized.scale,
+            np.zeros(len(geometry[s])),
+        ])
+        for s in geometry
+    }
+    cut_crossings = [crossing_species(normalized_geometry, float(cut)) for cut in normalized_cuts]
 
     shared_cut = None
     shared_crossing: tuple[str, ...] = ()
@@ -96,10 +106,6 @@ def simulate_ordered_world(
             assert shared_cut is not None
             cut = shared_cut
         else:
-            # Private worlds retain strong within-species transitions but choose
-            # their break independently among global inter-basin cuts that the
-            # species actually spans.  This is deliberately adversarial under
-            # uneven sampling support.
             valid = [float(cut) for cut in normalized_cuts if float(x.min()) < cut < float(x.max())]
             if not valid:
                 raise RuntimeError(f"no private cut available for {name}")
@@ -129,7 +135,7 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    geometry = load_layout(args.layouts, args.layout_index)
+    geometry, layout_meta = load_layout(args.layouts, args.layout_index)
     labels = tuple(sorted(geometry))
     train, evaluation = split_species(labels, eval_fraction=11.0 / len(labels), seed=args.split_seed)
     if len(train) != 10 or len(evaluation) != 11:
@@ -178,7 +184,7 @@ def main() -> int:
         median_p_value=float(np.median(p)),
     )
     payload = {
-        "schema": "ttf_queensland33_topology_cell_v0.1",
+        "schema": "ttf_queensland33_topology_cell_v0.2",
         "layout_index": int(args.layout_index),
         "cell": asdict(cell),
         "design": {
@@ -187,7 +193,9 @@ def main() -> int:
             "eval_species": list(evaluation),
             "split": "10 train / 11 evaluation species",
             "split_seed": int(args.split_seed),
-            "geometry": "ordered_basin_topology_v0.1: x=published south-to-north basin column index, y=0",
+            "geometry": "ordered basin-axis topology: x=published basin column index, y=0; sampling-cell assignment may come from a conservative layout envelope",
+            "layout_schema": layout_meta["layout_schema"],
+            "layout_mode": layout_meta["layout_mode"],
             "named_Mary_Brisbane_boundary_used": False,
             "genetic_outcomes_used": False,
             "layout_selected_by_outcome": False,
@@ -208,7 +216,7 @@ def main() -> int:
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
-    print(json.dumps({"layout": args.layout_index, "cell": payload["cell"], "diagnostics": payload["diagnostics"]}, sort_keys=True))
+    print(json.dumps({"layout": args.layout_index, "cell": payload["cell"], "diagnostics": payload["diagnostics"], "layout_mode": layout_meta["layout_mode"]}, sort_keys=True))
     return 0
 
 
