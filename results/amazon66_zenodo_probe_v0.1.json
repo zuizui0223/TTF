@@ -1,0 +1,74 @@
+{
+  "records": [
+    {
+      "conceptdoi": "10.5281/zenodo.7626792",
+      "doi": "10.5281/zenodo.7626793",
+      "files": [
+        {
+          "checksum": "md5:6a1d222ed6fd3d46a2fd9a0b4f08ff6d",
+          "key": "zenodo.7626736.svg",
+          "links": {
+            "self": "https://zenodo.org/api/records/7626793/files/zenodo.7626736.svg/content"
+          },
+          "size": 1191
+        }
+      ],
+      "publication_date": "2023-02-19",
+      "record_id": 7626793,
+      "resource_type": {
+        "title": "Software",
+        "type": "software"
+      },
+      "title": "Data for: Amazonian birds in more dynamic habitats have less population genetic structure and higher gene flow"
+    },
+    {
+      "conceptdoi": "10.5281/zenodo.7626735",
+      "doi": "10.5281/zenodo.7626736",
+      "files": [
+        {
+          "checksum": "md5:b8fe9ddfedc5d903e4a2874e9b8a921f",
+          "key": "henicorhina/Riverine_islands_code-v1.0.zip",
+          "links": {
+            "self": "https://zenodo.org/api/records/7626736/files/henicorhina/Riverine_islands_code-v1.0.zip/content"
+          },
+          "size": 4437657
+        }
+      ],
+      "publication_date": "2023-02-09",
+      "record_id": 7626736,
+      "resource_type": {
+        "title": "Software",
+        "type": "software"
+      },
+      "title": "henicorhina/Riverine_islands_code: Publication release"
+    }
+  ],
+  "schema": "ttf_amazon66_zenodo_probe_v0.1",
+  "selection": {
+    "empirical_genetic_outcomes_used": false,
+    "file_contents_downloaded": false,
+    "known_boundary_labels_used": false
+  },
+  "summary": [
+    {
+      "doi": "10.5281/zenodo.7626793",
+      "n_files": 1,
+      "record_id": 7626793,
+      "target_files_present": [],
+      "title": "Data for: Amazonian birds in more dynamic habitats have less population genetic structure and higher gene flow"
+    },
+    {
+      "doi": "10.5281/zenodo.7626736",
+      "n_files": 1,
+      "record_id": 7626736,
+      "target_files_present": [],
+      "title": "henicorhina/Riverine_islands_code: Publication release"
+    }
+  ],
+  "lineage": {
+    "workflow_run_id": 34118483992,
+    "head_sha": "17f721c5be16b5bc30fa77f50723bc61934c1382",
+    "artifact_id": 10017217131,
+    "artifact_sha256": "ac3a8ddd7363189fa979ab8d45ca10cb8eaa840d19fe17a143626061fdfaddcd"
+  }
+}
