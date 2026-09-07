@@ -1,0 +1,90 @@
+{
+  "cells": [
+    {
+      "amplitude": 2.0,
+      "geometry_diagnostic": {
+        "mean_conditioned_prediction_vs_edge_length_spearman": 0.005158948677913852,
+        "mean_eval_turnover_vs_edge_length_spearman": 0.08315802705620576,
+        "mean_original_prediction_vs_edge_length_spearman": 0.046862544370322404
+      },
+      "length_conditioned_v03_candidate": {
+        "mean_statistic": 0.0018452605896787512,
+        "median_p": 0.448,
+        "rejection_rate": 0.048
+      },
+      "original": {
+        "mean_statistic": 0.010127883387711532,
+        "median_p": 0.306,
+        "rejection_rate": 0.128
+      },
+      "shared_fraction": 0.0,
+      "worlds": 500
+    },
+    {
+      "amplitude": 3.0,
+      "geometry_diagnostic": {
+        "mean_conditioned_prediction_vs_edge_length_spearman": 0.002161345686957577,
+        "mean_eval_turnover_vs_edge_length_spearman": 0.1280813813682397,
+        "mean_original_prediction_vs_edge_length_spearman": 0.05901142181534246
+      },
+      "length_conditioned_v03_candidate": {
+        "mean_statistic": 0.003945849354756936,
+        "median_p": 0.413,
+        "rejection_rate": 0.074
+      },
+      "original": {
+        "mean_statistic": 0.01577085549848151,
+        "median_p": 0.201,
+        "rejection_rate": 0.206
+      },
+      "shared_fraction": 0.0,
+      "worlds": 500
+    },
+    {
+      "amplitude": 2.0,
+      "geometry_diagnostic": {
+        "mean_conditioned_prediction_vs_edge_length_spearman": 0.01436082317280582,
+        "mean_eval_turnover_vs_edge_length_spearman": 0.06960700803560685,
+        "mean_original_prediction_vs_edge_length_spearman": 0.04140755735590119
+      },
+      "length_conditioned_v03_candidate": {
+        "mean_statistic": 0.04930001002203531,
+        "median_p": 0.007,
+        "rejection_rate": 0.758
+      },
+      "original": {
+        "mean_statistic": 0.057190475826133666,
+        "median_p": 0.004,
+        "rejection_rate": 0.862
+      },
+      "shared_fraction": 1.0,
+      "worlds": 500
+    }
+  ],
+  "claim_ready": false,
+  "config": {
+    "bandwidth": 500.0,
+    "batch_size": 25,
+    "bootstrap_resamples": 999,
+    "candidate": "train_length_orthogonalized_turnover_plus_eval_partial_spearman_given_edge_length_rank",
+    "candidate_prior_mean": 0.0,
+    "candidate_prior_strength": 0.25,
+    "k": 3,
+    "seed": 20260907,
+    "worlds_per_cell": 500
+  },
+  "eval_species": 125,
+  "failed_geometry_reuse_rule": "The failed Gate-I-B panel may diagnose and develop a successor but may not provide confirmatory qualification for that successor. Any selected v0.3 statistic requires prospectively frozen validation on fresh geometry.",
+  "geometry_input": "benchmarks/frozen/gate_i_b_rgfca_outer0_geometry.csv",
+  "lineage": {
+    "failed_gate_i_b_result": "results/gate_i_b_rgfca_precision_v0.1.json",
+    "workflow_head_sha": "20d60bfb7dd8f90942c4dc5899ef5149fcc4419b",
+    "workflow_run_id": 34139624024
+  },
+  "may_qualify_successor": false,
+  "may_select_successor_candidate": true,
+  "schema": "ttf_v03_gate_i_b_length_nuisance_diagnostic_v0.1",
+  "split_seed": 6723391324861235453,
+  "status": "development_only_on_failed_gate_i_b_geometry",
+  "train_species": 125
+}
