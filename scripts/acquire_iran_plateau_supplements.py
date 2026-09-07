@@ -13,7 +13,7 @@ import xml.etree.ElementTree as ET
 
 PMCID = "PMC13126619"
 DOI = "10.1111/mec.70355"
-OA_API = f"https://www.ncbi.nlm.nih.gov/pmc/utils/oa/oa.fcgi?id={PMCID}"
+OA_API = f"https://pmc.ncbi.nlm.nih.gov/utils/oa/oa.fcgi?id={PMCID}"
 EXPECTED_SUFFIXES = ("s001.zip", "s002.zip", "s003.zip")
 
 
