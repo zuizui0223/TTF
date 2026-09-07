@@ -1,0 +1,52 @@
+{
+  "schema": "ttf_v04_candidate_lock_v0.1",
+  "status": "locked_before_any_v04_confirmatory_performance",
+  "claim_ready": false,
+  "candidate": "eval_geometry_partial",
+  "selection": {
+    "path": "results/v04_candidate_selection_v0.1.json",
+    "blob_sha": "9709363d89c3f325dfc0640fd1b60cea0bc456b8",
+    "development_point_rule_pass": true
+  },
+  "formal_seed_audit": {
+    "path": "results/v04_propensity_seed_lock_audit_v0.1.json",
+    "blob_sha": "7dd2b07c20907da354dde97dc85afdf1a3f103fc",
+    "formal_propensity_seed": 20260908,
+    "propensity_directions": 2048,
+    "propensity_transition_width": 0.2,
+    "propensity_rank_agreement_mean": 0.9989139172694479,
+    "development_max_private_rejection": 0.076,
+    "development_shared_amplitude_2_power": 0.872,
+    "development_point_rule_pass": true,
+    "development_wilson_precision_pass": false,
+    "development_max_private_upper95": 0.10259641367396849,
+    "development_shared_power_lower95": 0.8398543146918417
+  },
+  "locked_definition": {
+    "training_response": "v03_length_rank_orthogonalized_turnover",
+    "field_projection": "v03_exact_opportunity_corrected_dense_kernel_projection",
+    "evaluation_target": "raw_heldout_turnover_rank",
+    "evaluation_score": "partial_spearman_control_edge_length_and_random_private_geometry_propensity",
+    "private_propensity": "expected absolute tanh edge contrast over 2048 random private median-hyperplane normals in the exact pooled affine Gate-I frame",
+    "private_propensity_seed": 20260908,
+    "private_propensity_directions": 2048,
+    "private_propensity_transition_width": 0.2,
+    "amplitude_used_in_propensity": false,
+    "prior_mean": 0.0,
+    "prior_strength": 0.25,
+    "segment_points": 5
+  },
+  "confirmatory_decision_rule": {
+    "mandatory_cells": [[0.0,0.5],[0.0,1.0],[0.0,2.0],[0.0,3.0],[1.0,2.0]],
+    "worlds_per_cell": 500,
+    "bootstrap_resamples": 1999,
+    "alpha": 0.05,
+    "type1_requirement": "maximum two-sided Wilson 95% upper bound across zero-shared cells <= 0.10",
+    "power_requirement": "two-sided Wilson 95% lower bound for full-shared amplitude-2 cell >= 0.80"
+  },
+  "failed_v02_v03_results_remain_immutable": true,
+  "development_panel_cannot_qualify_candidate": true,
+  "second_external_geometry_performance_opened": false,
+  "rgfca_reserve_opened": false,
+  "next_gate": "second prospectively frozen external animal geometry; only a Wilson precision pass permits RGFCA-reserve authorization"
+}
