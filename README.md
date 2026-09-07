@@ -42,14 +42,17 @@ The v0.1 trait-permutation null failed that adversarial test:
 
 The edge-level transfer statistic itself stayed centered near zero under no sharing. The failure came from a null that destroyed each species' private spatial structure.
 
-The v0.2 held-out-species inference preserves that structure. In a 20-cell idealized calibration with 100 worlds per cell and 1,999 bootstrap resamples:
+The v0.2 held-out-species inference preserves that structure.
 
-- zero-shared rejection at amplitudes 0.5, 1, 2, 3 = **0.01, 0.07, 0.05, 0.07**;
-- fully shared, moderate amplitude 2 power = **0.96**.
+### High-precision idealized qualification
 
-This passes the prospectively defined **provisional** point-estimate gates. High-replicate confidence-bound qualification and actual-geometry calibration remain required.
+A frozen 500-world qualification used 1,999 held-out-species bootstrap resamples per world, 40 species and 60 records per species. For zero-shared worlds, rejection rates at amplitudes 0.5, 1, 2 and 3 were **0.040, 0.050, 0.040 and 0.054**. The worst two-sided Wilson 95% upper bound was **0.0774**, below the prospective ceiling of 0.10.
 
-Frozen results are under `results/`.
+For the fully shared moderate-signal control (shared fraction 1, amplitude 2), power was **0.978** and the Wilson 95% lower bound was **0.9610**, above the prospective floor of 0.80.
+
+Thus v0.2 **passes the high-precision type-I and power gates for its idealized synthetic scope**. This is not yet a blanket qualification for arbitrary empirical sampling geometries.
+
+Frozen results and workflow lineage are under `results/`, including `results/qualification_heldout_species_precision_v0.2.json`.
 
 ## Implemented
 
