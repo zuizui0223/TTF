@@ -1,0 +1,98 @@
+name: benchmark-queensland33-mesoscopic-randomization-precision
+
+on:
+  push:
+    branches:
+      - "benchmark/independent-biogeography"
+    paths:
+      - ".github/workflows/benchmark-queensland33-mesoscopic-randomization-precision.yml"
+      - "scripts/aggregate_queensland33_mesoscopic_randomization_precision.py"
+  workflow_dispatch:
+
+jobs:
+  layout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      max-parallel: 12
+      matrix:
+        layout: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Run unchanged v0.3c precision cells
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results/precision-cells
+          for spec in \
+            "0 0.5 s0-a0.5" \
+            "0 1 s0-a1" \
+            "0 2 s0-a2" \
+            "0 3 s0-a3" \
+            "0 4 s0-a4" \
+            "1 2 s1-a2"
+          do
+            read -r shared amplitude slug <<< "$spec"
+            python scripts/run_queensland33_mesoscopic_randomization_calibration.py \
+              --layouts benchmarks/queensland33_topology_layouts_frozen_v0.2.json \
+              --layout-index ${{ matrix.layout }} \
+              --shared-fraction "$shared" \
+              --amplitude "$amplitude" \
+              --replicates 1000 \
+              --randomizations 199 \
+              --alpha 0.05 \
+              --k 2 \
+              --noise-sd 0.8 \
+              --transition-width 0.20 \
+              --min-shared-crossing-species 14 \
+              --prior-strength 1.0 \
+              --split-seed 20260907 \
+              --seed 20260913 \
+              --output "results/precision-cells/layout-${{ matrix.layout }}-${slug}.json"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: queensland33-v0.3c-precision-layout-${{ matrix.layout }}
+          path: results/precision-cells/*.json
+          if-no-files-found: error
+          retention-days: 90
+
+  aggregate:
+    needs: layout
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: queensland33-v0.3c-precision-layout-*
+          path: results/precision-cells
+          merge-multiple: true
+      - name: Aggregate confidence-bound qualification
+        run: >-
+          python scripts/aggregate_queensland33_mesoscopic_randomization_precision.py
+          --input-dir results/precision-cells
+          --type1-upper-ceiling 0.10
+          --power-lower-floor 0.80
+          --output results/queensland33-mesoscopic-randomization-precision-v0.3c.json
+      - name: Print precision qualification
+        run: cat results/queensland33-mesoscopic-randomization-precision-v0.3c.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: queensland33-mesoscopic-randomization-precision-v0.3c
+          path: |
+            results/queensland33-mesoscopic-randomization-precision-v0.3c.json
+            results/precision-cells/*.json
+          if-no-files-found: error
+          retention-days: 90
