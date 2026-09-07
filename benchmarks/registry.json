@@ -1,10 +1,10 @@
 {
-  "schema": "ttf_independent_biogeography_registry_v0.2",
+  "schema": "ttf_independent_biogeography_registry_v0.3",
   "principle": "TTF learns from training species without seeing the named boundary. External biogeographic boundary geometry is frozen prospectively and used only after held-out transfer scoring.",
   "admissibility": [
     "important biogeographic boundary defined independently of the focal trait",
     "multiple replicate species or systems when used for a cross-species TTF claim",
-    "georeferenced observations spanning the relevant spatial domain",
+    "georeferenced observations or prospectively frozen geographic population units spanning the relevant domain",
     "trait measurement not selected or tuned using TTF response",
     "species inclusion frozen before TTF outcomes are inspected",
     "external boundary geometry frozen before final scoring",
@@ -14,8 +14,29 @@
   ],
   "benchmarks": [
     {
+      "id": "seq_queensland_33freshwater",
+      "role": "primary_executable_genetic_candidate",
+      "boundary_system": "south-east Queensland freshwater river-basin biogeographic frontiers",
+      "external_breaks": ["Mary-Brisbane"],
+      "trait_domain": "mitochondrial sequence genetic distance among basin populations",
+      "replicate_units": "33 freshwater species (23 fishes, 10 crustaceans); 1814 source sequences across 8 basins",
+      "source": {
+        "citation": "Page & Hughes 2014, Biological Journal of the Linnean Society 111:554-569",
+        "doi": "10.1111/bij.12231",
+        "dryad_doi": "10.5061/dryad.m7rc3",
+        "dryad_files": ["Arlequin input files.zip", "MTML-msbayes input files.zip", "TCS input files.zip"]
+      },
+      "geographic_units": ["Gold Coast", "Logan-Albert", "Brisbane", "Pine", "Maroochy", "Noosa", "Mary", "Tin Can Bay"],
+      "observation_contract": "aggregate source sequences within species x basin; each populated basin is one geographic observation for that species; graph construction is within species only",
+      "distance_contract": "prospectively compute basin-population genetic dissimilarity from archived aligned mitochondrial sequences; exact metric is frozen before empirical TTF scoring, with raw p-distance as a transparent candidate and source-compatible genetic distance as robustness if reconstructable",
+      "geometry_contract": "basin locations/centroids are frozen independently of genetic outcomes; Mary-Brisbane is not supplied to field fitting and is used only for later external concordance",
+      "eligibility_draft": "species retained solely by basin support: enough non-empty basin populations to construct at least 3 unique geographic edges; no filtering by lineage depth, published divergence, PhiST, or TTF score",
+      "qualification_plan": "first run shared/private semi-synthetic worlds on the exact retained species-by-basin geometry; only a type-I/power-qualified design may open empirical sequence-distance TTF outcomes",
+      "status": "source_acquisition_preflight"
+    },
+    {
       "id": "amazon_uce_66birds",
-      "role": "primary_genetic_geometry_candidate",
+      "role": "large_panel_secondary_candidate",
       "boundary_system": "Amazon Basin riverine and habitat structure",
       "trait_domain": "genomic differentiation from UCE SNPs",
       "replicate_units": "66 bird species, 587 source samples before downstream QC",
@@ -23,33 +44,19 @@
         "citation": "Johnson et al. 2023, Molecular Ecology 32:2186-2205",
         "doi": "10.1111/mec.16886",
         "dryad_doi": "10.5061/dryad.rxwdbrvc1",
-        "code_repository": "https://github.com/henicorhina/Riverine_islands_code",
-        "dryad_files_of_interest": [
-          "README.md",
-          "River_islands_sampling_masked.csv",
-          "Variable_key.csv",
-          "trait.database.formatted.final.csv",
-          "vcf_files.zip"
-        ]
+        "code_repository": "https://github.com/henicorhina/Riverine_islands_code"
       },
-      "preflight_contract": [
-        "download/list only metadata and coordinate-bearing small files before any VCF outcome is opened",
-        "determine per-species sample counts and coordinate coverage without using published Fst, Dxy, clustering or TTF outcomes",
-        "freeze an eligibility rule before genetic distances are computed",
-        "run semi-synthetic shared/private worlds on the retained real specimen geometry before acquiring VCFs for TTF"
-      ],
-      "eligibility_draft": "valid coordinates; species-local graph possible; minimum support chosen prospectively from geometry only; no inclusion or exclusion based on genetic differentiation",
-      "ttf_plan": "if actual-geometry type-I and power gates pass with a sufficiently large held-out species set, acquire the 32.48 MB VCF archive and only then compute prospectively frozen genetic dissimilarities",
-      "status": "metadata_preflight"
+      "preflight_result": "Dryad version 16/resource 221232 and 16-file inventory frozen; coordinate-bearing River_islands_sampling_masked.csv is present (17119 bytes, SHA-256 7c2bf931946bc63c413d1dff5255d667abbe018a0b15daf161510dcf35363b87) but automated public download returned API 401 and UI stream 403 from CI; associated Zenodo records contain no sampling-file mirror",
+      "genetic_archive_status": "vcf_files.zip present, 32478348 bytes, SHA-256 8f20ef2343a1fcd966745b9bd1fc3353147ca6770d0ed51a7b6faa38ee56e042; not downloaded for TTF",
+      "empirical_outcome_status": "sealed",
+      "ttf_plan": "resume if coordinate metadata becomes reproducibly retrievable without using genetic results for species selection",
+      "status": "blocked_on_geometry_metadata_distribution"
     },
     {
       "id": "iran_plateau_radseq_9plants",
       "role": "small_panel_stress_benchmark",
       "boundary_system": "Iranian Plateau mountain areas of endemism",
-      "external_breaks": [
-        "Alborz-Zagros",
-        "Azerbaijan Plateau-Zagros"
-      ],
+      "external_breaks": ["Alborz-Zagros", "Azerbaijan Plateau-Zagros"],
       "trait_domain": "population genetic distance from RADseq SNPs",
       "replicate_units": "9 endemic mountain plant species",
       "sampling": "113 populations total; 8-15 localities per species",
@@ -95,7 +102,8 @@
       "role": "trait_domain_replication",
       "boundary_system": "Pacific Northwest maritime-interior climatic transition",
       "trait_domain": "flowering phenology residual or breakpoint",
-      "replicate_units": "39 native plant species in published herbarium study",
+      "replicate_units": "39 native plant species; 8540 flowering specimens in source study",
+      "source": {"citation": "Kopp et al. 2020, International Journal of Biometeorology", "pmid": "32112132"},
       "ttf_plan": "remove prospectively specified year, temperature and elevation expectation within species, then test transferability of residual phenology transitions",
       "status": "design_only"
     },
@@ -129,7 +137,7 @@
       "id": "wallace_line_scope_negative",
       "role": "scope_negative",
       "boundary_system": "Wallace Line",
-      "expectation": "strong interspecific faunal turnover alone is outside the TTF target unless multiple species themselves span the boundary",
+      "expectation": "strong interspecific faunal turnover alone is outside the TTF target unless multiple species themselves span the line and exhibit transferable within-species transitions",
       "status": "conceptual_control"
     }
   ]
