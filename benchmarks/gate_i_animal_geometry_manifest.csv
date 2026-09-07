@@ -1,0 +1,17 @@
+scientific_name,min_lon,min_lat,max_lon,max_lat,group
+Vulpes vulpes,-10,35,40,70,mammal
+Capreolus capreolus,-10,35,40,70,mammal
+Cervus elaphus,-10,35,40,70,mammal
+Sus scrofa,-10,35,40,70,mammal
+Sciurus vulgaris,-10,35,40,70,mammal
+Erinaceus europaeus,-10,35,40,70,mammal
+Lepus europaeus,-10,35,40,70,mammal
+Meles meles,-10,35,40,70,mammal
+Turdus merula,-10,35,40,70,bird
+Parus major,-10,35,40,70,bird
+Buteo buteo,-10,35,40,70,bird
+Anas platyrhynchos,-10,35,40,70,bird
+Columba palumbus,-10,35,40,70,bird
+Corvus corone,-10,35,40,70,bird
+Picus viridis,-10,35,40,70,bird
+Cygnus olor,-10,35,40,70,bird
