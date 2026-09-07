@@ -3,18 +3,21 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+from html.parser import HTMLParser
 import json
 from pathlib import Path
 import shutil
-import tarfile
-import tempfile
+import urllib.parse
 import urllib.request
-import xml.etree.ElementTree as ET
 
 PMCID = "PMC13126619"
 DOI = "10.1111/mec.70355"
-OA_API = f"https://pmc.ncbi.nlm.nih.gov/utils/oa/oa.fcgi?id={PMCID}"
-EXPECTED_SUFFIXES = ("s001.zip", "s002.zip", "s003.zip")
+ARTICLE_URL = f"https://pmc.ncbi.nlm.nih.gov/articles/{PMCID}/"
+EXPECTED = {
+    "MEC-35-e70355-s001.zip": "Figures S1-S4 and Table S1",
+    "MEC-35-e70355-s002.zip": "Appendix S1 NEXUS RADseq SNP data",
+    "MEC-35-e70355-s003.zip": "Appendix S2 STRUCTURE RADseq SNP data",
+}
 
 
 def sha256(path: Path) -> str:
@@ -25,58 +28,66 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def download(url: str, destination: Path) -> None:
+def request_bytes(url: str, *, timeout: int = 120) -> bytes:
     request = urllib.request.Request(
         url,
-        headers={"User-Agent": "TTF benchmark acquisition/0.1"},
+        headers={
+            "User-Agent": "TTF independent-biogeography benchmark acquisition/0.2",
+            "Accept": "text/html,application/xhtml+xml,application/zip,*/*;q=0.8",
+        },
     )
-    with urllib.request.urlopen(request, timeout=120) as response, destination.open("wb") as out:
-        shutil.copyfileobj(response, out)
+    with urllib.request.urlopen(request, timeout=timeout) as response:
+        return response.read()
 
 
-def oa_package_url() -> str:
-    request = urllib.request.Request(
-        OA_API,
-        headers={"User-Agent": "TTF benchmark acquisition/0.1"},
-    )
-    with urllib.request.urlopen(request, timeout=60) as response:
-        xml = response.read()
-    root = ET.fromstring(xml)
-    links = root.findall(".//link")
-    candidates = [link.attrib.get("href", "") for link in links if link.attrib.get("format") == "tgz"]
-    candidates = [url for url in candidates if url]
-    if len(candidates) != 1:
-        raise RuntimeError(f"expected one PMC OA tgz link, found {candidates}")
-    url = candidates[0]
-    if url.startswith("ftp://ftp.ncbi.nlm.nih.gov/"):
-        url = "https://ftp.ncbi.nlm.nih.gov/" + url[len("ftp://ftp.ncbi.nlm.nih.gov/"):]
-    if not url.startswith("https://"):
-        raise RuntimeError(f"unexpected OA package URL scheme: {url}")
-    return url
+class LinkCollector(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.hrefs: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag.lower() != "a":
+            return
+        for key, value in attrs:
+            if key.lower() == "href" and value:
+                self.hrefs.append(value)
 
 
-def safe_extract(archive: Path, destination: Path) -> None:
-    destination = destination.resolve()
-    with tarfile.open(archive, "r:gz") as tar:
-        for member in tar.getmembers():
-            target = (destination / member.name).resolve()
-            if destination not in target.parents and target != destination:
-                raise RuntimeError(f"unsafe archive path: {member.name}")
-        tar.extractall(destination)
+def supplement_urls() -> dict[str, str]:
+    html = request_bytes(ARTICLE_URL, timeout=60).decode("utf-8", errors="replace")
+    parser = LinkCollector()
+    parser.feed(html)
+    resolved = [urllib.parse.urljoin(ARTICLE_URL, href) for href in parser.hrefs]
 
-
-def find_supplements(root: Path) -> list[Path]:
-    zips = sorted(path for path in root.rglob("*.zip") if path.is_file())
-    selected: list[Path] = []
-    for suffix in EXPECTED_SUFFIXES:
-        matches = [path for path in zips if path.name.lower().endswith(suffix)]
+    found: dict[str, str] = {}
+    for expected_name in EXPECTED:
+        matches = []
+        for url in resolved:
+            path_name = Path(urllib.parse.urlparse(url).path).name
+            if path_name.lower() == expected_name.lower():
+                matches.append(url)
+        matches = sorted(set(matches))
         if len(matches) != 1:
-            inventory = [str(path.relative_to(root)) for path in zips]
-            raise RuntimeError(
-                f"expected exactly one *{suffix}; found {len(matches)}; zip inventory={inventory}"
+            zip_names = sorted(
+                {
+                    Path(urllib.parse.urlparse(url).path).name
+                    for url in resolved
+                    if urllib.parse.urlparse(url).path.lower().endswith(".zip")
+                }
             )
-        selected.append(matches[0])
-    return selected
+            raise RuntimeError(
+                f"expected exactly one article link for {expected_name}; "
+                f"found {matches}; article zip inventory={zip_names}"
+            )
+        found[expected_name] = matches[0]
+    return found
+
+
+def download(url: str, destination: Path) -> None:
+    payload = request_bytes(url)
+    if len(payload) < 1024:
+        raise RuntimeError(f"download for {destination.name} was unexpectedly small: {len(payload)} bytes")
+    destination.write_bytes(payload)
 
 
 def main() -> int:
@@ -88,49 +99,43 @@ def main() -> int:
     output = args.output_dir
     output.mkdir(parents=True, exist_ok=True)
 
-    package_url = oa_package_url()
-    with tempfile.TemporaryDirectory(prefix="ttf_iran_oa_") as tmp:
-        tmpdir = Path(tmp)
-        package = tmpdir / "oa_package.tar.gz"
-        extracted = tmpdir / "extracted"
-        extracted.mkdir()
-        download(package_url, package)
-        safe_extract(package, extracted)
-        supplements = find_supplements(extracted)
-
-        frozen = []
-        for source in supplements:
-            destination = output / source.name
-            shutil.copy2(source, destination)
-            frozen.append(
-                {
-                    "name": destination.name,
-                    "bytes": destination.stat().st_size,
-                    "sha256": sha256(destination),
-                }
-            )
-
-        manifest = {
-            "schema": "ttf_iran_plateau_acquisition_v0.1",
-            "source": {
-                "pmcid": PMCID,
-                "doi": DOI,
-                "oa_api": OA_API,
-                "oa_package_url": package_url,
-                "oa_package_sha256": sha256(package),
-            },
-            "supplements": frozen,
-            "selection": {
-                "expected_suffixes": list(EXPECTED_SUFFIXES),
-                "outcome_values_used": False,
-                "boundary_labels_used_for_selection": False,
-            },
-        }
-        (output / "manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True) + "\n",
-            encoding="utf-8",
+    urls = supplement_urls()
+    frozen = []
+    for name, description in EXPECTED.items():
+        destination = output / name
+        download(urls[name], destination)
+        frozen.append(
+            {
+                "name": name,
+                "description": description,
+                "url": urls[name],
+                "bytes": destination.stat().st_size,
+                "sha256": sha256(destination),
+            }
         )
-        print(json.dumps(manifest, indent=2, sort_keys=True))
+
+    manifest = {
+        "schema": "ttf_iran_plateau_acquisition_v0.2",
+        "source": {
+            "pmcid": PMCID,
+            "doi": DOI,
+            "article_url": ARTICLE_URL,
+            "acquisition_mode": "supplement links parsed from the public PMC article HTML",
+        },
+        "supplements": frozen,
+        "selection": {
+            "expected_files": list(EXPECTED),
+            "published_roles": EXPECTED,
+            "outcome_values_used": False,
+            "boundary_labels_used_for_selection": False,
+            "fallback_source_used": False,
+        },
+    }
+    (output / "manifest.json").write_text(
+        json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    print(json.dumps(manifest, indent=2, sort_keys=True))
     return 0
 
 
