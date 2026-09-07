@@ -1,0 +1,44 @@
+{
+  "schema": "ttf_queensland33_structural_ceiling_frozen_v0.1",
+  "lineage": {
+    "workflow_run_id": 34123301714,
+    "head_sha": "115de216c1b734145f10c5d53013df270624c8bf",
+    "artifact_id": 10019080791,
+    "artifact_zip_sha256": "6f943769e2d8c1178e48c0f744122d827b51976877dbdd5523b6ec0f8beb67f1"
+  },
+  "design": {
+    "exact_frozen_layout_envelope": true,
+    "n_layouts": 12,
+    "worlds_per_cell_per_layout": 100,
+    "bootstrap_resamples": 1999,
+    "same_10_train_11_eval_split": true,
+    "same_estimator": true,
+    "same_k": 2,
+    "same_transition_width": 0.2,
+    "same_min_shared_crossing_species": 14,
+    "noise_sd": 0.0,
+    "amplitude": 1.0,
+    "amplitude_interpretation": "scale cancels under within-species ranks at zero noise; practical infinite-SNR ceiling",
+    "genetic_outcomes_used": false,
+    "named_Mary_Brisbane_boundary_used": false
+  },
+  "summary": {
+    "worst_layout_full_shared_noise_free_power": 0.75,
+    "worst_layout_private_noise_free_rejection": 0.12,
+    "minimum_mean_eval_crossing_fraction_across_layouts": 0.7681818181818183,
+    "structurally_qualified_at_0.80": false
+  },
+  "selected_layout_diagnostics": {
+    "layout_1": {"power": 0.84, "private_rejection": 0.11, "mean_eval_crossing_fraction": 0.8854545454545453, "mean_train_crossing_species": 8.47},
+    "layout_4": {"power": 0.75, "private_rejection": 0.02, "mean_eval_crossing_fraction": 0.8554545454545454, "mean_train_crossing_species": 7.49},
+    "layout_8": {"power": 1.00, "private_rejection": 0.04, "mean_eval_crossing_fraction": 0.7681818181818183, "mean_train_crossing_species": 8.04},
+    "layout_10": {"power": 1.00, "private_rejection": 0.12, "mean_eval_crossing_fraction": 0.9090909090909087, "mean_train_crossing_species": 7.92}
+  },
+  "interpretation": {
+    "status": "STRUCTURAL_CEILING_FAIL",
+    "power": "At least one frozen topology remains below 0.80 even with zero measurement noise, so increasing trait amplitude cannot rescue the current estimator on this benchmark.",
+    "type1": "Private zero-noise worlds reach 0.12 point rejection in some layouts. With only seven possible inter-basin cut positions, independent private transitions can coincide by chance; a zero-centered held-out-species null can therefore be too narrow on coarse discrete geography.",
+    "coverage": "Simple boundary crossing is not sufficient to explain the failure: layout 8 has the lowest mean held-out crossing fraction but power 1.00, whereas layout 4 has higher crossing coverage but power 0.75.",
+    "next_step": "Use oracle-boundary diagnostics to separate training-field learning from held-out scoring/inference, then design a geometry-conditioned chance-commonness null if required. Empirical DNA remains sealed."
+  }
+}
