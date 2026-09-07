@@ -1,0 +1,34 @@
+{
+  "schema": "ttf_queensland33_oracle_diagnostic_frozen_v0.1",
+  "lineage": {
+    "workflow_run_id": 34123658048,
+    "head_sha": "345539e68b3b94d7343226f415bfe818c23f3ea1",
+    "artifact_id": 10019211410,
+    "artifact_zip_sha256": "41bea1e0f390680319a7ff17f41ba936404cb9b172653dfabbc5182cf860814c"
+  },
+  "design": {
+    "diagnostic_only": true,
+    "n_layouts": 12,
+    "worlds_per_cell_per_layout": 100,
+    "bootstrap_resamples": 1999,
+    "noise_sd": 0.0,
+    "shared_world_oracle": "true simulated shared cut",
+    "private_world_oracle": "geometry-only cut drawn independently of every private transition",
+    "oracle_all": "score all 11 held-out species",
+    "oracle_crossing": "score only held-out species whose sampling geometry spans the oracle cut",
+    "genetic_outcomes_used": false,
+    "named_Mary_Brisbane_boundary_used": false
+  },
+  "worst_layout_summary": {
+    "oracle_all_private_rejection": 0.11,
+    "oracle_crossing_private_rejection": 0.12,
+    "oracle_all_shared_power": 0.80,
+    "oracle_crossing_shared_power": 0.78
+  },
+  "interpretation": {
+    "field_learning": "The held-out scorer reaches the prospective 0.80 power floor when handed the true boundary (oracle-all). The learned training field is therefore the main power bottleneck in the current Queensland topology benchmark.",
+    "observability": "Restricting evaluation to species that geometrically span the oracle cut does not improve the worst-layout power (0.78 vs 0.80), so simple crossing-only filtering is not the primary remedy.",
+    "null": "Even a geometry-only oracle cut independent of private trait transitions produces 0.11-0.12 worst point rejection under the zero-centered species bootstrap. Coarse geography has non-zero chance commonness, so the sharedness null must condition on geometry rather than assume E[C_s]=0.",
+    "next_step": "Develop and calibrate a geometry-conditioned chance-commonness null on the frozen Queensland topology before changing the field learner or opening empirical DNA."
+  }
+}
