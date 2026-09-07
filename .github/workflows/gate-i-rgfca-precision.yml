@@ -6,6 +6,7 @@ on:
       - "analysis/gate-i-geometry-calibration"
     paths:
       - "results/gate_i_b_rgfca_pilot_v0.1.json"
+      - ".github/workflows/gate-i-rgfca-precision.yml"
   workflow_dispatch:
 
 permissions:
@@ -146,23 +147,35 @@ jobs:
           }
           path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n")
           PY
-      - name: Print Gate-I-B decision
-        run: cat results/gate_i_b_rgfca_precision_v0.1.json
+      - name: Jointly reduce Gate-I-A and Gate-I-B
+        run: >-
+          python scripts/finalize_gate_i.py
+          --gate-i-a results/gate_i_a_animal_precision_v0.1.json
+          --gate-i-b results/gate_i_b_rgfca_precision_v0.1.json
+          --output results/gate_i_joint_qualification_v0.1.json
+      - name: Print Gate-I-B and joint decisions
+        run: |
+          cat results/gate_i_b_rgfca_precision_v0.1.json
+          cat results/gate_i_joint_qualification_v0.1.json
       - uses: actions/upload-artifact@v4
         with:
           name: gate-i-b-rgfca-precision
-          path: results/gate_i_b_rgfca_precision_v0.1.json
           if-no-files-found: error
-      - name: Freeze Gate-I-B precision result on branch
+          path: |
+            results/gate_i_b_rgfca_precision_v0.1.json
+            results/gate_i_joint_qualification_v0.1.json
+      - name: Freeze Gate-I-B and joint precision results on branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add results/gate_i_b_rgfca_precision_v0.1.json
+          git add \
+            results/gate_i_b_rgfca_precision_v0.1.json \
+            results/gate_i_joint_qualification_v0.1.json
           if git diff --cached --quiet; then
             echo "No Gate-I-B precision result change to commit"
             exit 0
           fi
-          git commit -m "Freeze Gate-I-B RGFCA geometry precision result"
+          git commit -m "Freeze Gate-I-B and joint Gate-I precision results"
           for attempt in 1 2 3 4; do
             git fetch origin "$GITHUB_REF_NAME"
             git rebase "origin/$GITHUB_REF_NAME"
