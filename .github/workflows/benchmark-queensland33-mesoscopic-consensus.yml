@@ -1,0 +1,92 @@
+name: benchmark-queensland33-mesoscopic-consensus
+
+on:
+  push:
+    branches:
+      - "benchmark/independent-biogeography"
+    paths:
+      - "benchmarks/START_QUEENSLAND33_MESOSCOPIC_CONSENSUS"
+  workflow_dispatch:
+
+jobs:
+  cell:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        layout: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        signal:
+          - {shared: "0", amplitude: "0.5", slug: "s0-a0.5"}
+          - {shared: "0", amplitude: "1", slug: "s0-a1"}
+          - {shared: "0", amplitude: "2", slug: "s0-a2"}
+          - {shared: "0", amplitude: "3", slug: "s0-a3"}
+          - {shared: "0", amplitude: "4", slug: "s0-a4"}
+          - {shared: "0.25", amplitude: "2", slug: "s0.25-a2"}
+          - {shared: "0.5", amplitude: "2", slug: "s0.5-a2"}
+          - {shared: "1", amplitude: "2", slug: "s1-a2"}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Run prospective consensus calibration cell
+        run: >-
+          python scripts/run_queensland33_mesoscopic_consensus_calibration.py
+          --layouts benchmarks/queensland33_topology_layouts_frozen_v0.2.json
+          --layout-index ${{ matrix.layout }}
+          --shared-fraction ${{ matrix.signal.shared }}
+          --amplitude ${{ matrix.signal.amplitude }}
+          --replicates 100
+          --bootstrap 999
+          --alpha 0.05
+          --k 2
+          --noise-sd 0.8
+          --transition-width 0.20
+          --min-shared-crossing-species 14
+          --prior-strength 1.0
+          --evidence-temperature 1.0
+          --split-seed 20260907
+          --seed 20260911
+          --output results/layout-${{ matrix.layout }}-${{ matrix.signal.slug }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: queensland33-consensus-${{ matrix.layout }}-${{ matrix.signal.slug }}
+          path: results/layout-${{ matrix.layout }}-${{ matrix.signal.slug }}.json
+          if-no-files-found: error
+          retention-days: 90
+
+  aggregate:
+    needs: cell
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: queensland33-consensus-*
+          path: results/cells
+          merge-multiple: true
+      - name: Aggregate prospective consensus Gate
+        run: >-
+          python scripts/aggregate_queensland33_mesoscopic_consensus.py
+          --input-dir results/cells
+          --type1-ceiling 0.10
+          --power-floor 0.80
+          --output results/queensland33-mesoscopic-consensus-qualification.json
+      - name: Print prospective consensus Gate
+        run: cat results/queensland33-mesoscopic-consensus-qualification.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: queensland33-mesoscopic-consensus-qualification-v0.3b
+          path: results/queensland33-mesoscopic-consensus-qualification.json
+          if-no-files-found: error
+          retention-days: 90
