@@ -1,0 +1,44 @@
+{
+  "attempts": [
+    {
+      "bytes": 4322,
+      "content_type": "text/html; charset=utf-8",
+      "md5": "ee8a5e14c4210155a4c462c9a28e2919",
+      "status": 200,
+      "url": "https://datadryad.org/stash/downloads/file_stream/46189"
+    },
+    {
+      "bytes": 4322,
+      "content_type": "text/html; charset=utf-8",
+      "md5": "e9139919592e3feca8872e66d95dc6a2",
+      "status": 200,
+      "url": "https://datadryad.org/stash/downloads/file_stream/46189?download=1"
+    }
+  ],
+  "content_persisted": false,
+  "landing": {
+    "cookie_names": ["AWSALB", "AWSALBCORS", "AWSALBTG", "AWSALBTGCORS", "_dash2_session", "techaro.lol-anubis-cookie-verification"],
+    "error": null,
+    "status": 200,
+    "url": "https://datadryad.org/dataset/doi:10.5061/dryad.m7rc3"
+  },
+  "lineage": {
+    "artifact_id": 10017822594,
+    "artifact_sha256": "5488f7f2ae7e2aadca44a48cb1d6546e4629100bafb427da54adc35af274f53e",
+    "head_sha": "7d9420731a38446095d07c00d18c3b075ba29a95",
+    "job_id": 101735915955,
+    "workflow_run_id": 34120089048
+  },
+  "matched_frozen_file": false,
+  "schema": "ttf_queensland33_session_download_probe_v0.1",
+  "selection": {
+    "genetic_distances_computed": false,
+    "known_boundary_labels_used": false,
+    "sequence_contents_reported": false
+  },
+  "target": {
+    "expected_md5": "e2ca197cda27d6f4c10b02f5a20f41da",
+    "expected_size": 31162,
+    "file_id": 46189
+  }
+}
