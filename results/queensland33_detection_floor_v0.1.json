@@ -1,0 +1,51 @@
+{
+  "schema": "ttf_queensland33_detection_floor_frozen_v0.1",
+  "lineage": {
+    "workflow_run_id": 34122919738,
+    "head_sha": "b0ef9b5a348ca2a2c347eccc6c7dc209808ffea0",
+    "artifact_id": 10018940180,
+    "artifact_zip_sha256": "2a3d6feb02cc6342e6dfe498b71f71376c881cc223440ff0cbb05eccdb8439eb"
+  },
+  "design": {
+    "exact_frozen_layout_envelope": true,
+    "n_layouts": 12,
+    "same_10_train_11_eval_split": true,
+    "same_estimator": true,
+    "same_k": 2,
+    "same_noise_sd": 0.8,
+    "same_transition_width": 0.2,
+    "same_min_shared_crossing_species": 14,
+    "new_worlds_per_cell_per_layout": 50,
+    "bootstrap_resamples": 999,
+    "genetic_outcomes_used": false,
+    "named_Mary_Brisbane_boundary_used": false
+  },
+  "worst_layout_power_curve": {
+    "2.0": 0.42,
+    "2.5": 0.52,
+    "3.0": 0.52,
+    "4.0": 0.44
+  },
+  "worst_layout_private_A4_rejection": 0.06,
+  "detection_floor_amplitude": null,
+  "per_layout": {
+    "0": {"power_A2": 0.54, "power_A2.5": 0.52, "power_A3": 0.66, "power_A4": 0.64, "private_A4": 0.02},
+    "1": {"power_A2": 0.62, "power_A2.5": 0.62, "power_A3": 0.70, "power_A4": 0.68, "private_A4": 0.06},
+    "2": {"power_A2": 0.76, "power_A2.5": 0.66, "power_A3": 0.66, "power_A4": 0.66, "private_A4": 0.02},
+    "3": {"power_A2": 0.66, "power_A2.5": 0.66, "power_A3": 0.74, "power_A4": 0.74, "private_A4": 0.06},
+    "4": {"power_A2": 0.42, "power_A2.5": 0.52, "power_A3": 0.52, "power_A4": 0.44, "private_A4": 0.00},
+    "5": {"power_A2": 0.66, "power_A2.5": 0.84, "power_A3": 0.80, "power_A4": 0.84, "private_A4": 0.04},
+    "6": {"power_A2": 0.80, "power_A2.5": 0.90, "power_A3": 0.78, "power_A4": 0.96, "private_A4": 0.04},
+    "7": {"power_A2": 0.66, "power_A2.5": 0.64, "power_A3": 0.76, "power_A4": 0.76, "private_A4": 0.04},
+    "8": {"power_A2": 0.58, "power_A2.5": 0.62, "power_A3": 0.80, "power_A4": 0.64, "private_A4": 0.04},
+    "9": {"power_A2": 0.74, "power_A2.5": 0.70, "power_A3": 0.80, "power_A4": 0.72, "private_A4": 0.06},
+    "10": {"power_A2": 0.64, "power_A2.5": 0.84, "power_A3": 0.82, "power_A4": 0.80, "private_A4": 0.04},
+    "11": {"power_A2": 0.74, "power_A2.5": 0.86, "power_A3": 0.92, "power_A4": 0.92, "private_A4": 0.02}
+  },
+  "interpretation": {
+    "status": "NO_ROBUST_DETECTION_FLOOR_THROUGH_A4",
+    "type1": "Private structure remains controlled at A=4 (worst point rejection 0.06).",
+    "power": "No amplitude from A=2 through A=4 gives >=0.80 power in every frozen layout; the worst layout remains layout 4.",
+    "next_step": "Estimate a noise-free structural identifiability ceiling on the exact same layout envelope. Do not increase amplitude further and do not open empirical DNA."
+  }
+}
