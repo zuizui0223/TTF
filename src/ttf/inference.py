@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Sequence
+from typing import Mapping, Sequence
 
 import numpy as np
 
 from .core import Dissimilarity, SpeciesSample
 from .nulls import edges_on_fixed_graphs, fixed_graphs
-from .transfer import TransferResult, prepare_transfer
+from .transfer import PreparedTransfer, TransferResult, prepare_transfer
 
 
 @dataclass(frozen=True)
@@ -92,6 +92,59 @@ def centered_species_bootstrap_mean_test(
     )
 
 
+def heldout_species_bootstrap_from_prepared(
+    prepared: PreparedTransfer,
+    *,
+    train_turnover: Mapping[str, np.ndarray],
+    eval_turnover: Mapping[str, np.ndarray],
+    n_bootstrap: int = 1999,
+    seed: int = 0,
+) -> SpeciesBootstrapResult:
+    """Run sharedness inference when the geometry projection is already frozen.
+
+    Gate-I reuses one empirical sampling geometry across hundreds of synthetic
+    trait worlds.  The kNN graphs and kernel projection therefore belong to the
+    fixed design, not to any one simulated response.  This helper keeps those
+    geometry-only quantities frozen while allowing every world's turnover ranks
+    to change.
+    """
+    observed = prepared.score(train_turnover, eval_turnover)
+    scores = np.asarray(
+        [
+            observed.species_scores[s]
+            for s in prepared.eval_species
+            if np.isfinite(observed.species_scores[s])
+        ],
+        dtype=float,
+    )
+    if len(scores) < 6:
+        raise ValueError("fewer than six finite held-out species scores")
+
+    bootstrap = centered_species_bootstrap_mean_test(
+        scores,
+        n_bootstrap=n_bootstrap,
+        seed=seed,
+    )
+    if not np.isclose(
+        bootstrap.observed_mean,
+        observed.statistic,
+        atol=1e-12,
+        rtol=0.0,
+    ):
+        raise RuntimeError("species-score mean drifted from primary transfer statistic")
+
+    return SpeciesBootstrapResult(
+        observed=observed,
+        species_scores=scores,
+        null_statistics=bootstrap.null_means,
+        null_studentized=bootstrap.null_studentized,
+        p_value=bootstrap.p_value,
+        null_mean=float(bootstrap.null_means.mean()),
+        null_sd=float(bootstrap.null_means.std(ddof=1)),
+        observed_studentized=bootstrap.observed_studentized,
+    )
+
+
 def heldout_species_bootstrap_test(
     samples: Sequence[SpeciesSample],
     *,
@@ -142,32 +195,10 @@ def heldout_species_bootstrap_test(
         prior_mean=prior_mean,
         segment_points=segment_points,
     )
-    observed = prepared.score(
-        {s: edge_map[s].turnover for s in train},
-        {s: edge_map[s].turnover for s in evaluation},
-    )
-    scores = np.asarray(
-        [observed.species_scores[s] for s in evaluation if np.isfinite(observed.species_scores[s])],
-        dtype=float,
-    )
-    if len(scores) < 6:
-        raise ValueError("fewer than six finite held-out species scores")
-
-    bootstrap = centered_species_bootstrap_mean_test(
-        scores,
+    return heldout_species_bootstrap_from_prepared(
+        prepared,
+        train_turnover={s: edge_map[s].turnover for s in train},
+        eval_turnover={s: edge_map[s].turnover for s in evaluation},
         n_bootstrap=n_bootstrap,
         seed=seed,
-    )
-    if not np.isclose(bootstrap.observed_mean, observed.statistic, atol=1e-12, rtol=0.0):
-        raise RuntimeError("species-score mean drifted from primary transfer statistic")
-
-    return SpeciesBootstrapResult(
-        observed=observed,
-        species_scores=scores,
-        null_statistics=bootstrap.null_means,
-        null_studentized=bootstrap.null_studentized,
-        p_value=bootstrap.p_value,
-        null_mean=float(bootstrap.null_means.mean()),
-        null_sd=float(bootstrap.null_means.std(ddof=1)),
-        observed_studentized=bootstrap.observed_studentized,
     )
