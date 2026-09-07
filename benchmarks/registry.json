@@ -1,5 +1,5 @@
 {
-  "schema": "ttf_independent_biogeography_registry_v0.1",
+  "schema": "ttf_independent_biogeography_registry_v0.2",
   "principle": "TTF learns from training species without seeing the named boundary. External biogeographic boundary geometry is frozen prospectively and used only after held-out transfer scoring.",
   "admissibility": [
     "important biogeographic boundary defined independently of the focal trait",
@@ -14,8 +14,37 @@
   ],
   "benchmarks": [
     {
+      "id": "amazon_uce_66birds",
+      "role": "primary_genetic_geometry_candidate",
+      "boundary_system": "Amazon Basin riverine and habitat structure",
+      "trait_domain": "genomic differentiation from UCE SNPs",
+      "replicate_units": "66 bird species, 587 source samples before downstream QC",
+      "source": {
+        "citation": "Johnson et al. 2023, Molecular Ecology 32:2186-2205",
+        "doi": "10.1111/mec.16886",
+        "dryad_doi": "10.5061/dryad.rxwdbrvc1",
+        "code_repository": "https://github.com/henicorhina/Riverine_islands_code",
+        "dryad_files_of_interest": [
+          "README.md",
+          "River_islands_sampling_masked.csv",
+          "Variable_key.csv",
+          "trait.database.formatted.final.csv",
+          "vcf_files.zip"
+        ]
+      },
+      "preflight_contract": [
+        "download/list only metadata and coordinate-bearing small files before any VCF outcome is opened",
+        "determine per-species sample counts and coordinate coverage without using published Fst, Dxy, clustering or TTF outcomes",
+        "freeze an eligibility rule before genetic distances are computed",
+        "run semi-synthetic shared/private worlds on the retained real specimen geometry before acquiring VCFs for TTF"
+      ],
+      "eligibility_draft": "valid coordinates; species-local graph possible; minimum support chosen prospectively from geometry only; no inclusion or exclusion based on genetic differentiation",
+      "ttf_plan": "if actual-geometry type-I and power gates pass with a sufficiently large held-out species set, acquire the 32.48 MB VCF archive and only then compute prospectively frozen genetic dissimilarities",
+      "status": "metadata_preflight"
+    },
+    {
       "id": "iran_plateau_radseq_9plants",
-      "role": "primary_executable_positive",
+      "role": "small_panel_stress_benchmark",
       "boundary_system": "Iranian Plateau mountain areas of endemism",
       "external_breaks": [
         "Alborz-Zagros",
@@ -23,7 +52,7 @@
       ],
       "trait_domain": "population genetic distance from RADseq SNPs",
       "replicate_units": "9 endemic mountain plant species",
-      "sampling": "8-15 localities per species across at least 3 mountain regions",
+      "sampling": "113 populations total; 8-15 localities per species",
       "source": {
         "citation": "Noroozi et al. 2026, Molecular Ecology 35:e70355",
         "doi": "10.1111/mec.70355",
@@ -31,14 +60,25 @@
         "sra_bioproject": "PRJNA1357660",
         "license": "CC BY 4.0"
       },
-      "input_plan": "population coordinates from Table S1; SNP data from Appendix S1/S2; prospectively compute population-level Nei and Rogers distances",
-      "ttf_plan": "fit species-disjoint TTF to genetic-distance turnover without boundary labels; test transfer first; compare learned transition support to frozen biogeographic breaks second",
-      "attribution_caveat": "raw genetic distance can contain isolation by distance; boundary attribution requires a separately qualified cross-fitted distance nuisance or paired D/G predictor comparison",
-      "status": "acquisition_preflight"
+      "input_audit": "Table S1 population counts and Appendix S1 NEXUS individual identifiers match across all 9 species; acquisition and geometry were frozen before empirical genetic TTF outcomes",
+      "geometry_qualification": {
+        "raw_v0.2": "FAIL: max private-null rejection 0.15; full-shared A=2 power 0.48",
+        "crossfit_raw": "FAIL: max type-I 0.32; power 0.68",
+        "crossfit_ibd": "FAIL: max type-I 0.25; power 0.74",
+        "single_ibd": "FAIL: max type-I 0.08; power 0.50",
+        "paired_opportunity_raw": "FAIL on power: max type-I 0.05; power 0.24",
+        "paired_opportunity_ibd": "FAIL on power: max type-I 0.02; power 0.11",
+        "orthogonal_opportunity": "FAIL on power: max type-I 0.10; power 0.45",
+        "orthogonal_geometry": "FAIL on power: max type-I 0.07; power 0.33"
+      },
+      "interpretation": "when type I is controlled in the frozen 3-train/6-evaluation design, moderate fully shared signal recovery is inadequate; do not tune this dataset until positive",
+      "empirical_outcome_status": "sealed_for_ttf_sharedness",
+      "recommended_use": "small-panel applicability/detection-floor stress benchmark",
+      "status": "geometry_qualification_failed_power"
     },
     {
       "id": "amazon_white_sand_uce_7birds",
-      "role": "independent_replication_positive",
+      "role": "external_biological_positive",
       "boundary_system": "Amazonian white-sand ecosystems and major rivers",
       "external_breaks": ["Amazon River"],
       "trait_domain": "genomic genetic distance / ancestry from UCE data",
@@ -47,22 +87,7 @@
         "citation": "Capurucho et al. 2023, Journal of Biogeography",
         "dryad_doi": "10.5061/dryad.47d7wm3f9"
       },
-      "ttf_plan": "independent replication after the Iran benchmark; boundary label held out from training",
-      "status": "source_registered"
-    },
-    {
-      "id": "amazon_uce_66birds",
-      "role": "discovery_robustness_panel",
-      "boundary_system": "Amazon Basin riverine and habitat structure",
-      "trait_domain": "genomic differentiation from UCE data",
-      "replicate_units": "66 bird species, 587 samples in source dataset",
-      "source": {
-        "citation": "Johnson et al. 2023, Molecular Ecology",
-        "doi": "10.1111/mec.16886",
-        "dryad_doi": "10.5061/dryad.rxwdbrvc1",
-        "code_repository": "https://github.com/henicorhina/Riverine_islands_code"
-      },
-      "ttf_plan": "use only after coordinate/sample preflight; do not select species based on observed transfer skill",
+      "ttf_plan": "use as external biological concordance/replication rather than the primary species-level p-test because seven species provide limited inferential units",
       "status": "source_registered"
     },
     {
