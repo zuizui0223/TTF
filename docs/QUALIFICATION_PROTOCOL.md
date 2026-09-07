@@ -132,6 +132,24 @@ Trait values remain synthetic. This is the bridge between an abstractly function
 
 For TTF method validation, Gate I should use geometry from an independent non-flower benchmark where possible rather than reusing RGFCA flower-colour sampling as the sole stress fixture.
 
+### Gate-I implementation contract
+
+The fixed-geometry engine is now implemented in `ttf.geometry` and `run_geometry_calibration`.
+
+A Gate-I run must satisfy all of the following:
+
+- empirical trait values are not passed into the simulator; the input object stores only species identity, coordinates and optional dependence blocks;
+- raw coordinates, species identities and record counts are copied unchanged into every synthetic world;
+- the train/evaluation split is frozen prospectively and reused across worlds unless the intended deployment protocol explicitly specifies another split schedule;
+- synthetic shared transitions use one common geographic hyperplane, while zero-shared controls use species-private transition hyperplanes;
+- affine standardization is used only to define synthetic transition strength in unit-free coordinates; graph construction, distances, bandwidth and boundary-field estimation continue to use the original empirical coordinates;
+- the exact sampling frame is frozen with a SHA-256 geometry fingerprint and per-species record-count ledger;
+- the primary inference remains the held-out-species bootstrap; trait permutation is not substituted for Gate-I sharedness inference.
+
+The claim-bearing Gate-I run should use the same high-precision confidence-bound criteria as Gates G/H: 500 worlds per mandatory arm and 1,999 bootstrap resamples, with every zero-shared positive-amplitude Wilson 95% upper bound <= 0.10 and the fully shared moderate-amplitude Wilson 95% lower bound >= 0.80.
+
+**Implementation status:** engine and CI smoke tests exist. **Qualification status:** no independent empirical sampling geometry has yet been frozen and passed at high precision. Gate I therefore remains open.
+
 ## Gate J — predictor attribution
 
 Geographic, environmental, and resistance predictor spaces must be compared on identical held-out species. Report paired held-out increments such as `T_GE - T_G` rather than winner-take-all labels.
@@ -158,9 +176,13 @@ Before a broad geographic claim:
 - strong-private-boundary type-I gate, including Wilson uncertainty;
 - fully shared moderate-signal power gate, including Wilson uncertainty.
 
+**Implemented but not yet empirically qualified:**
+
+- fixed empirical-geometry semi-synthetic Gate-I engine and lineage fingerprinting.
+
 Still downstream and explicitly unqualified:
 
-- actual independent empirical sampling geometry;
+- a completed independent empirical sampling-geometry Gate-I qualification;
 - genetic-distance isolation-by-distance residualization;
 - environmental/resistance feature builders;
 - full observation-bias stress suite;
