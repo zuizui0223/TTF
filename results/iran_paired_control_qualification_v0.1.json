@@ -1,0 +1,94 @@
+{
+  "lineage": {
+    "artifact_digest": "sha256:d9084f30583c054529ce26bde66c47b79622fe3a40b875322f7b3a0e604c2fdc",
+    "artifact_id": 10016461946,
+    "head_sha": "64f2bd0dd73d5d8ecd03abb4295c8443f4fc5c73",
+    "workflow_run_id": 34116414950
+  },
+  "schema": "ttf_iran_paired_control_qualification_v0.1",
+  "selection_rule": {
+    "eligible_for_independent_seed_validation": "point type-I <= 0.10 and power >= 0.80 on all frozen cells",
+    "eligible_variants": [],
+    "empirical_genetic_outcomes_used": false,
+    "if_multiple_pass": "validate all passing variants on an independent world/bootstrap seed before choosing",
+    "if_none_pass": "do not open empirical SNP outcomes; redesign the estimator/null"
+  },
+  "variants": {
+    "paired_ibd": {
+      "cells": [
+        {"alpha": 0.05, "amplitude": 0.5, "mean_null_statistic": 0.0, "mean_statistic": -0.023018475661489738, "median_p_value": 0.5585, "n_replicates": 100, "rejection_rate": 0.02, "shared_fraction": 0.0},
+        {"alpha": 0.05, "amplitude": 1.0, "mean_null_statistic": 0.0, "mean_statistic": -0.0660032023622918, "median_p_value": 0.6932499999999999, "n_replicates": 100, "rejection_rate": 0.02, "shared_fraction": 0.0},
+        {"alpha": 0.05, "amplitude": 2.0, "mean_null_statistic": 0.0, "mean_statistic": -0.08364434892971544, "median_p_value": 0.7295, "n_replicates": 100, "rejection_rate": 0.01, "shared_fraction": 0.0},
+        {"alpha": 0.05, "amplitude": 3.0, "mean_null_statistic": 0.0, "mean_statistic": -0.1416493876637128, "median_p_value": 0.8660000000000001, "n_replicates": 100, "rejection_rate": 0.0, "shared_fraction": 0.0},
+        {"alpha": 0.05, "amplitude": 2.0, "mean_null_statistic": 0.0, "mean_statistic": 0.0298714968353688, "median_p_value": 0.38375000000000004, "n_replicates": 100, "rejection_rate": 0.11, "shared_fraction": 1.0}
+      ],
+      "design": {
+        "bandwidth": 0.5978680507131755,
+        "bandwidth_rule": "pooled median species-local kNN edge length after normalization",
+        "bootstrap_resamples": 1999,
+        "empirical_genetic_outcomes_used": false,
+        "eval_species": ["Allium scabriscapum", "Phlomis olivieri", "Tanacetum kotschyi", "Didymophysa aucheri", "Physoptychis gnaphalodes", "Dielsiocharis kotschyi"],
+        "geometry_schema": "ttf_iran_plateau_geometry_v0.1",
+        "ibd_degree": 1,
+        "ibd_residualization": "leave-one-edge-out rank-linear edge-length nuisance",
+        "k": 4,
+        "known_boundary_labels_used": false,
+        "master_seed": 20260907,
+        "min_shared_crossing_species": 6,
+        "noise_sd": 0.8,
+        "opportunity_control_trait_free": true,
+        "statistic": "mean_s[Spearman(boundary_exposure, turnover) - Spearman(opportunity_exposure, turnover)]",
+        "train_species": ["Onosma microcarpa", "Helichrysum oligocephalum", "Crepis heterotricha"],
+        "transition_width": 0.2,
+        "world_seed_family": "iran-ablation-world",
+        "worlds_paired_to_previous_ablation": true
+      },
+      "diagnostics": [
+        {"amplitude": 0.5, "boundary_transfer": -0.002235731368446339, "increment": -0.023018475661489738, "opportunity_transfer": 0.0207827442930434, "shared_fraction": 0.0},
+        {"amplitude": 1.0, "boundary_transfer": 0.006997405484228859, "increment": -0.0660032023622918, "opportunity_transfer": 0.07300060784652065, "shared_fraction": 0.0},
+        {"amplitude": 2.0, "boundary_transfer": 0.05474162637468465, "increment": -0.08364434892971544, "opportunity_transfer": 0.1383859753044001, "shared_fraction": 0.0},
+        {"amplitude": 3.0, "boundary_transfer": 0.0307066856153918, "increment": -0.1416493876637128, "opportunity_transfer": 0.17235607327910457, "shared_fraction": 0.0},
+        {"amplitude": 2.0, "boundary_transfer": 0.19268230281727736, "increment": 0.0298714968353688, "opportunity_transfer": 0.16281080598190856, "shared_fraction": 1.0}
+      ],
+      "point_qualification": {"full_shared_moderate_power": 0.11, "max_zero_shared_rejection": 0.02, "moderate_amplitude": 2.0, "passed": false, "power_floor": 0.8, "power_pass": false, "type1_ceiling": 0.1, "type1_pass": true}
+    },
+    "paired_raw": {
+      "cells": [
+        {"alpha": 0.05, "amplitude": 0.5, "mean_null_statistic": 0.0, "mean_statistic": -0.02762748918912781, "median_p_value": 0.5774999999999999, "n_replicates": 100, "rejection_rate": 0.02, "shared_fraction": 0.0},
+        {"alpha": 0.05, "amplitude": 1.0, "mean_null_statistic": 0.0, "mean_statistic": -0.046382076009073424, "median_p_value": 0.675, "n_replicates": 100, "rejection_rate": 0.05, "shared_fraction": 0.0},
+        {"alpha": 0.05, "amplitude": 2.0, "mean_null_statistic": 0.0, "mean_statistic": -0.031834590105856216, "median_p_value": 0.58175, "n_replicates": 100, "rejection_rate": 0.03, "shared_fraction": 0.0},
+        {"alpha": 0.05, "amplitude": 3.0, "mean_null_statistic": 0.0, "mean_statistic": -0.06817124133610825, "median_p_value": 0.683, "n_replicates": 100, "rejection_rate": 0.0, "shared_fraction": 0.0},
+        {"alpha": 0.05, "amplitude": 2.0, "mean_null_statistic": 0.0, "mean_statistic": 0.09017938162271154, "median_p_value": 0.3005, "n_replicates": 100, "rejection_rate": 0.24, "shared_fraction": 1.0}
+      ],
+      "design": {
+        "bandwidth": 0.5978680507131755,
+        "bandwidth_rule": "pooled median species-local kNN edge length after normalization",
+        "bootstrap_resamples": 1999,
+        "empirical_genetic_outcomes_used": false,
+        "eval_species": ["Allium scabriscapum", "Phlomis olivieri", "Tanacetum kotschyi", "Didymophysa aucheri", "Physoptychis gnaphalodes", "Dielsiocharis kotschyi"],
+        "geometry_schema": "ttf_iran_plateau_geometry_v0.1",
+        "ibd_degree": null,
+        "ibd_residualization": null,
+        "k": 4,
+        "known_boundary_labels_used": false,
+        "master_seed": 20260907,
+        "min_shared_crossing_species": 6,
+        "noise_sd": 0.8,
+        "opportunity_control_trait_free": true,
+        "statistic": "mean_s[Spearman(boundary_exposure, turnover) - Spearman(opportunity_exposure, turnover)]",
+        "train_species": ["Onosma microcarpa", "Helichrysum oligocephalum", "Crepis heterotricha"],
+        "transition_width": 0.2,
+        "world_seed_family": "iran-ablation-world",
+        "worlds_paired_to_previous_ablation": true
+      },
+      "diagnostics": [
+        {"amplitude": 0.5, "boundary_transfer": -0.005871575318144782, "increment": -0.02762748918912781, "opportunity_transfer": 0.021755913870983027, "shared_fraction": 0.0},
+        {"amplitude": 1.0, "boundary_transfer": 0.009743431138998152, "increment": -0.046382076009073424, "opportunity_transfer": 0.056125507148071574, "shared_fraction": 0.0},
+        {"amplitude": 2.0, "boundary_transfer": 0.06662666828060566, "increment": -0.031834590105856216, "opportunity_transfer": 0.09846125838646187, "shared_fraction": 0.0},
+        {"amplitude": 3.0, "boundary_transfer": 0.061680657290764156, "increment": -0.06817124133610825, "opportunity_transfer": 0.12985189862687238, "shared_fraction": 0.0},
+        {"amplitude": 2.0, "boundary_transfer": 0.21227557131021377, "increment": 0.09017938162271154, "opportunity_transfer": 0.12209618968750224, "shared_fraction": 1.0}
+      ],
+      "point_qualification": {"full_shared_moderate_power": 0.24, "max_zero_shared_rejection": 0.05, "moderate_amplitude": 2.0, "passed": false, "power_floor": 0.8, "power_pass": false, "type1_ceiling": 0.1, "type1_pass": true}
+    }
+  }
+}
