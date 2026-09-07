@@ -30,12 +30,16 @@ jobs:
           auth = json.loads(Path('docs/supporting/v04_fresh_qualification_authorization.json').read_text())
           selection = json.loads(Path('results/v04_candidate_selection_v0.1.json').read_text())
           audit = json.loads(Path('results/v04_propensity_seed_lock_audit_v0.1.json').read_text())
+          lock = json.loads(Path('results/v04_candidate_lock_v0.1.json').read_text())
           ledger = json.loads(Path('benchmarks/frozen/v04_fresh_animal_geometry_source.json').read_text())
           reserve = json.loads(Path('benchmarks/frozen/v03_rgfca_reserve_geometry_source.json').read_text())
           assert auth['status'] == 'authorize_exactly_one_locked_v04_fresh_external_precision_run'
           assert auth['candidate'] == 'eval_geometry_partial'
           assert selection['selected_candidate'] == auth['candidate']
           assert audit['candidate_lock_valid_on_development_rule'] is True
+          assert lock['candidate'] == auth['candidate']
+          assert lock['second_external_geometry_performance_opened'] is False
+          assert lock['rgfca_reserve_opened'] is False
           assert ledger['confirmatory_holdout'] is True
           assert ledger['candidate_performance_evaluated_at_freeze'] is False
           assert ledger['synthetic_worlds_run_at_freeze'] == 0
@@ -45,6 +49,7 @@ jobs:
           for path, key in (
               ('results/v04_candidate_selection_v0.1.json', 'selection_blob_sha'),
               ('results/v04_propensity_seed_lock_audit_v0.1.json', 'seed_audit_blob_sha'),
+              ('results/v04_candidate_lock_v0.1.json', 'candidate_lock_blob_sha'),
               ('benchmarks/frozen/v04_fresh_animal_geometry.csv', 'fresh_geometry_blob_sha'),
               ('benchmarks/frozen/v04_fresh_animal_geometry_source.json', 'fresh_source_ledger_blob_sha'),
           ):
@@ -57,7 +62,7 @@ jobs:
           assert auth['propensity_directions'] == 2048
           assert auth['propensity_transition_width'] == 0.2
           assert not Path('docs/supporting/v04_reserve_qualification_authorization.json').exists()
-          print({'authorized': True, 'reserve_opened': False})
+          print({'authorized': True, 'candidate_lock': True, 'reserve_opened': False})
           PY
 
   cell:
@@ -152,6 +157,7 @@ jobs:
               'workflow_run_id': int(os.environ['GITHUB_RUN_ID']),
               'workflow_head_sha': os.environ['GITHUB_SHA'],
               'candidate_selection': 'results/v04_candidate_selection_v0.1.json',
+              'candidate_lock': 'results/v04_candidate_lock_v0.1.json',
               'seed_audit': 'results/v04_propensity_seed_lock_audit_v0.1.json',
               'fresh_source_ledger': 'benchmarks/frozen/v04_fresh_animal_geometry_source.json',
           }
