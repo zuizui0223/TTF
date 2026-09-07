@@ -1,0 +1,32 @@
+name: benchmark-iran-acquisition
+
+on:
+  push:
+    branches:
+      - "benchmark/independent-biogeography"
+    paths:
+      - "scripts/acquire_iran_plateau_supplements.py"
+      - ".github/workflows/benchmark-iran-acquisition.yml"
+  workflow_dispatch:
+
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Acquire frozen open-access supplements
+        run: >-
+          python scripts/acquire_iran_plateau_supplements.py
+          --output-dir benchmark_artifacts/iran_plateau
+      - name: Print acquisition manifest
+        run: cat benchmark_artifacts/iran_plateau/manifest.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iran-plateau-supplements-v0.1
+          path: benchmark_artifacts/iran_plateau/
+          if-no-files-found: error
+          retention-days: 90
