@@ -74,14 +74,16 @@ def average_ranks(values: np.ndarray) -> np.ndarray:
     if not np.isfinite(x).all():
         raise ValueError("rank inputs must be finite")
     order = np.argsort(x, kind="stable")
+    sorted_x = x[order]
     ranks = np.empty(len(x), dtype=float)
-    i = 0
-    while i < len(x):
-        j = i + 1
-        while j < len(x) and x[order[j]] == x[order[i]]:
-            j += 1
-        ranks[order[i:j]] = 0.5 * ((i + 1) + j)
-        i = j
+    if len(x) == 1 or np.all(sorted_x[1:] != sorted_x[:-1]):
+        ranks[order] = np.arange(1, len(x) + 1, dtype=float)
+        return ranks
+
+    starts = np.r_[0, 1 + np.flatnonzero(sorted_x[1:] != sorted_x[:-1])]
+    stops = np.r_[starts[1:], len(x)]
+    for start, stop in zip(starts, stops):
+        ranks[order[start:stop]] = 0.5 * ((start + 1) + stop)
     return ranks
 
 
@@ -155,6 +157,39 @@ def _validate_edge_nodes(nodes: np.ndarray, n: int) -> np.ndarray:
     return canonical
 
 
+def edge_turnover(
+    sample: SpeciesSample,
+    edge_nodes: np.ndarray,
+    *,
+    dissimilarity: Dissimilarity | None = None,
+) -> np.ndarray:
+    """Rank-standardized turnover on fixed within-species edge nodes."""
+    nodes = _validate_edge_nodes(edge_nodes, len(sample.coordinates))
+    if dissimilarity is None:
+        trait = np.asarray(sample.trait)
+        try:
+            left = np.asarray(trait[nodes[:, 0]], dtype=float)
+            right = np.asarray(trait[nodes[:, 1]], dtype=float)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(
+                "non-numeric traits require an explicit dissimilarity function"
+            ) from exc
+        delta = left - right
+        if delta.ndim == 1:
+            raw = np.abs(delta)
+        else:
+            axes = tuple(range(1, delta.ndim))
+            raw = np.sqrt(np.sum(delta * delta, axis=axes))
+    else:
+        raw = np.empty(len(nodes), dtype=float)
+        for i, (a, b) in enumerate(nodes):
+            raw[i] = float(dissimilarity(sample.trait[a], sample.trait[b]))
+    raw = np.asarray(raw, dtype=float)
+    if raw.shape != (len(nodes),) or not np.isfinite(raw).all():
+        raise ValueError("dissimilarity produced non-finite edge values")
+    return rank01(raw)
+
+
 def build_species_edges(
     sample: SpeciesSample,
     *,
@@ -169,12 +204,11 @@ def build_species_edges(
         if edge_nodes is None
         else _validate_edge_nodes(edge_nodes, len(sample.coordinates))
     )
-    metric = default_dissimilarity if dissimilarity is None else dissimilarity
-    raw = np.empty(len(nodes), dtype=float)
-    for i, (a, b) in enumerate(nodes):
-        raw[i] = float(metric(sample.trait[a], sample.trait[b]))
-    if not np.isfinite(raw).all():
-        raise ValueError("dissimilarity produced non-finite values")
+    turnover = edge_turnover(
+        sample,
+        nodes,
+        dissimilarity=dissimilarity,
+    )
 
     start = sample.coordinates[nodes[:, 0]]
     end = sample.coordinates[nodes[:, 1]]
@@ -187,7 +221,7 @@ def build_species_edges(
         end=end,
         midpoint=midpoint,
         length=length,
-        turnover=rank01(raw),
+        turnover=turnover,
     )
 
 

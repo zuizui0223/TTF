@@ -10,6 +10,7 @@ from .core import (
     SpeciesEdges,
     SpeciesSample,
     build_species_edges,
+    edge_turnover,
     knn_edges,
 )
 from .transfer import PreparedTransfer, TransferResult, prepare_transfer
@@ -143,14 +144,17 @@ def permutation_test(
             permute_trait_within_species(sample_map[s], rng)
             for s in train + evaluation
         ]
-        perm_edges = edges_on_fixed_graphs(
-            permuted,
-            graphs,
-            dissimilarity=dissimilarity,
-        )
+        turnover = {
+            sample.species: edge_turnover(
+                sample,
+                graphs[sample.species],
+                dissimilarity=dissimilarity,
+            )
+            for sample in permuted
+        }
         result = prepared.score(
-            {s: perm_edges[s].turnover for s in train},
-            {s: perm_edges[s].turnover for s in evaluation},
+            {s: turnover[s] for s in train},
+            {s: turnover[s] for s in evaluation},
         )
         null_statistics[b] = result.statistic
 

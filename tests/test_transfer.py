@@ -2,6 +2,7 @@ import numpy as np
 
 from ttf import (
     build_species_edges,
+    edge_turnover,
     fixed_graphs,
     permutation_test,
     permute_trait_within_species,
@@ -10,6 +11,21 @@ from ttf import (
     split_species,
     transfer_statistic,
 )
+
+
+def test_fast_turnover_path_matches_full_edge_object():
+    world = simulate_circular_boundary_world(
+        n_species=4,
+        records_per_species=20,
+        shared_fraction=0.5,
+        amplitude=2.0,
+        seed=77,
+    )
+    graphs = fixed_graphs(world.samples, k=3)
+    for sample in world.samples:
+        full = build_species_edges(sample, edge_nodes=graphs[sample.species])
+        fast = edge_turnover(sample, graphs[sample.species])
+        assert np.array_equal(full.turnover, fast)
 
 
 def test_null_permutation_preserves_coordinates_and_graph_geometry():
