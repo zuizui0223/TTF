@@ -69,7 +69,9 @@ Frozen results and workflow lineage are under `results/`, including `results/qua
 - confidence-bound qualification gates;
 - generic held-out predictor-space competition with paired incremental skill;
 - **Gate-I fixed-geometry semi-synthetic calibration**, which retains empirical species identities, coordinates, record counts and optional dependence blocks while replacing all trait values with synthetic transitions;
-- SHA-256 fingerprinting of the exact empirical sampling frame used for Gate-I qualification.
+- one-time geometry-only kNN/kernel preparation reused across all Gate-I worlds;
+- SHA-256 fingerprinting of the exact empirical sampling frame used for Gate-I qualification;
+- a fail-closed external-animal geometry acquisition path for the Gate-I-A cross-domain stress test.
 
 See [`docs/METHOD_SPEC.md`](docs/METHOD_SPEC.md) and [`docs/QUALIFICATION_PROTOCOL.md`](docs/QUALIFICATION_PROTOCOL.md).
 
@@ -92,9 +94,16 @@ python scripts/run_calibration.py \
   --output calibration.json
 ```
 
-## Gate I — qualify the intended empirical geometry
+## Gate I — empirical-geometry qualification
 
-Gate I keeps the empirical sampling frame fixed and simulates only the trait. The CSV may contain empirical trait columns, but `run_geometry_calibration.py` never reads them. Coordinates should already be in the coordinate system intended for TTF graph construction and bandwidth selection.
+Gate I keeps a sampling frame fixed and simulates only the trait. The CSV may contain empirical trait columns, but `run_geometry_calibration.py` never reads them. Coordinates should already be in the coordinate system intended for TTF graph construction and bandwidth selection.
+
+Gate I is now split into two non-substitutable stages:
+
+- **Gate I-A — external non-flower geometry stress.** Test the estimator on a real sampling geometry from another biological domain so success cannot be attributed only to flower-colour sampling peculiarities. The frozen manifest currently declares 16 widespread European bird/mammal taxa. `scripts/freeze_gbif_animal_geometry.py` retrieves coordinate-bearing GBIF records, removes only literal coordinate duplicates, applies a deterministic source-key cap, converts latitude/longitude to 3-D Earth-centred kilometre coordinates, and freezes the source-key lineage.
+- **Gate I-B — intended empirical geometry.** Repeat the same semi-synthetic qualification on the exact sampling frame intended for the eventual TTF empirical claim. I-A cannot substitute for I-B.
+
+For either claim-bearing stage, the high-precision run remains:
 
 ```bash
 python scripts/run_geometry_calibration.py \
@@ -109,11 +118,11 @@ python scripts/run_geometry_calibration.py \
   --output results/gate_i_benchmark.json
 ```
 
-The output freezes the geometry fingerprint, per-species record counts, the prospective train/evaluation split, all simulation/inference settings, point estimates, and Wilson-bound qualification. An independent non-flower empirical sampling geometry should be preferred for the first claim-bearing Gate-I run.
+The output freezes the geometry fingerprint, per-species record counts, the prospective train/evaluation split, all simulation/inference settings, point estimates, and Wilson-bound qualification. Because geometry is unchanged across synthetic worlds, TTF constructs the kNN graphs and edge-integrated kernel projection once and reuses them across all replicates; only synthetic traits and turnover ranks change.
 
-**Current status:** the Gate-I engine is implemented, but no independent empirical geometry has yet been frozen and passed at high precision. The method therefore remains qualified only for its idealized synthetic scope until that run is completed.
+**Current status:** the Gate-I engine and external-animal acquisition/pilot workflow are implemented. The external Gate-I-A geometry has not yet completed its high-precision 500-world qualification, and Gate I-B on the eventual target sampling frame is also still open. The method therefore remains qualified only for its idealized synthetic scope.
 
-Empirical deployment should not precede qualification on both synthetic worlds and the intended sampling geometry.
+Empirical deployment should not precede qualification on the intended sampling geometry even if the external I-A stress test passes.
 
 ## Claim ceiling
 
