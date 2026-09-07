@@ -1,0 +1,32 @@
+name: benchmark-queensland33-preflight
+
+on:
+  push:
+    branches:
+      - "benchmark/independent-biogeography"
+    paths:
+      - "scripts/acquire_queensland33_preflight.py"
+      - ".github/workflows/benchmark-queensland33-preflight.yml"
+  workflow_dispatch:
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Probe Page-Hughes Dryad source without reporting sequence contents
+        run: >-
+          python scripts/acquire_queensland33_preflight.py
+          --output results/queensland33-source-preflight.json
+      - name: Print source preflight
+        run: cat results/queensland33-source-preflight.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: queensland33-source-preflight-v0.1
+          path: results/queensland33-source-preflight.json
+          if-no-files-found: error
+          retention-days: 90
