@@ -7,6 +7,7 @@ from typing import Iterable, Sequence
 import numpy as np
 
 from .core import split_species
+from .inference import heldout_species_bootstrap_test
 from .nulls import permutation_test
 from .simulate import simulate_circular_boundary_world
 
@@ -68,10 +69,21 @@ def run_calibration(
     transition_width: float = 0.2,
     alpha: float = 0.05,
     seed: int = 20260907,
+    inference: str = "trait_permutation",
 ) -> tuple[CalibrationCell, ...]:
-    """Estimate type-I and power over the sharedness x amplitude plane."""
+    """Estimate type-I and power over the sharedness x amplitude plane.
+
+    ``trait_permutation`` is retained as a diagnostic test of trait-location
+    exchangeability. ``heldout_species_bootstrap`` is the sharedness-specific
+    conditional test: it leaves every species' spatial structure untouched and
+    resamples held-out species scores under a centered null mean.
+    """
     if n_replicates < 1 or n_permutations < 1:
         raise ValueError("n_replicates and n_permutations must be >= 1")
+    if inference not in {"trait_permutation", "heldout_species_bootstrap"}:
+        raise ValueError("unknown inference method")
+    if inference == "heldout_species_bootstrap" and n_permutations < 99:
+        raise ValueError("heldout species bootstrap requires at least 99 resamples")
     if not 0.0 < alpha < 1.0:
         raise ValueError("alpha must lie in (0, 1)")
 
@@ -84,7 +96,7 @@ def run_calibration(
             for replicate in range(n_replicates):
                 world_seed = seed_for(seed, "world", shared, amplitude, replicate)
                 split_seed = seed_for(seed, "split", shared, amplitude, replicate)
-                null_seed = seed_for(seed, "null", shared, amplitude, replicate)
+                null_seed = seed_for(seed, inference, shared, amplitude, replicate)
                 world = simulate_circular_boundary_world(
                     n_species=n_species,
                     records_per_species=records_per_species,
@@ -99,17 +111,26 @@ def run_calibration(
                     eval_fraction=eval_fraction,
                     seed=split_seed,
                 )
-                result = permutation_test(
-                    world.samples,
+                common = dict(
+                    samples=world.samples,
                     train_species=train,
                     eval_species=evaluation,
                     k=k,
                     bandwidth=bandwidth,
                     prior_strength=prior_strength,
                     segment_points=segment_points,
-                    n_permutations=n_permutations,
                     seed=null_seed,
                 )
+                if inference == "trait_permutation":
+                    result = permutation_test(
+                        **common,
+                        n_permutations=n_permutations,
+                    )
+                else:
+                    result = heldout_species_bootstrap_test(
+                        **common,
+                        n_bootstrap=n_permutations,
+                    )
                 p_values.append(result.p_value)
                 observed.append(result.observed.statistic)
                 null_means.append(result.null_mean)
