@@ -1,0 +1,212 @@
+name: v12-actual-geometry-requalification
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - "docs/supporting/v12_actual_geometry_requalification_authorization.json"
+
+permissions:
+  contents: write
+
+env:
+  V12_RULE: docs/supporting/v12_classifiability_actual_geometry_rule.json
+  V12_GEOMETRY: benchmarks/frozen/v12_actual_geometry.csv
+  V12_SOURCE: benchmarks/frozen/v12_actual_geometry_source.json
+  V11_AUDIT: results/v11_execution_geometry_audit_v0.1.json
+  V12_AUTH: docs/supporting/v12_actual_geometry_requalification_authorization.json
+
+concurrency:
+  group: v12-actual-geometry-requalification
+  cancel-in-progress: false
+
+jobs:
+  invariants:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: |
+          python -m pip install -e ".[test]"
+          pytest -q
+      - name: Require exact classifiability pass and synthetic authorization
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          auth=json.loads(Path('docs/supporting/v12_actual_geometry_requalification_authorization.json').read_text())
+          rule=json.loads(Path('docs/supporting/v12_classifiability_actual_geometry_rule.json').read_text())
+          src=json.loads(Path('benchmarks/frozen/v12_actual_geometry_source.json').read_text())
+          assert auth['schema']=='ttf_v12_actual_geometry_requalification_authorization_v0.1'
+          assert auth['status']=='authorize_exactly_one_v12_actual_geometry_synthetic_requalification'
+          assert src['classifiability_gate_pass'] is True
+          assert src['retained_geometry']['species']==250
+          assert src['retained_geometry']['records']==10000
+          assert src['retained_geometry']['records_per_species']==40
+          assert src['retained_geometry']['k']==6
+          assert src['colour_vector_values_read_by_ttf'] is False
+          assert src['pairwise_colour_distances_computed'] is False
+          assert src['ttf_empirical_statistic_computed'] is False
+          assert auth['empirical_colour_values_may_open'] is False
+          assert auth['master_seed']==20260925
+          assert auth['k']==6 and auth['bandwidth_km']==500.0
+          assert auth['reference_worlds_per_configuration']==1999
+          assert auth['observed_worlds_per_cell']==500
+          def blob(path): return subprocess.check_output(['git','rev-parse',f'HEAD:{path}'],text=True).strip()
+          for path,key in [
+            ('docs/supporting/v12_classifiability_actual_geometry_rule.json','rule_blob_sha'),
+            ('benchmarks/frozen/v12_actual_geometry.csv','geometry_blob_sha'),
+            ('benchmarks/frozen/v12_actual_geometry_source.json','source_blob_sha'),
+            ('results/v11_execution_geometry_audit_v0.1.json','v11_audit_blob_sha'),
+            ('scripts/run_v12_actual_geometry_statistics.py','runner_blob_sha'),
+            ('scripts/aggregate_v12_actual_geometry.py','aggregator_blob_sha'),
+            ('.github/workflows/v12-actual-geometry-requalification.yml','workflow_blob_sha'),
+          ]:
+            assert blob(path)==auth[key], (path,blob(path),auth[key])
+          assert not Path('results/v12_actual_geometry_requalification_v0.1.json').exists()
+          print({'v12_requalification_authorized':True,'empirical_colour_values_open':False})
+          PY
+
+  reference:
+    needs: invariants
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        label: [A0, A0p5, A1, A2, A3, A5, A10, infinite_snr]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e .
+      - name: Run frozen v0.12 private reference
+        run: |
+          python scripts/run_v12_actual_geometry_statistics.py \
+            --mode reference \
+            --input "$V12_GEOMETRY" \
+            --source-ledger "$V12_SOURCE" \
+            --rule "$V12_RULE" \
+            --v11-execution-audit "$V11_AUDIT" \
+            --configuration-label "${{ matrix.label }}" \
+            --output "/tmp/v12_reference_${{ matrix.label }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v12-reference-${{ matrix.label }}
+          retention-days: 90
+          if-no-files-found: error
+          path: /tmp/v12_reference_${{ matrix.label }}.json
+
+  observed:
+    needs: invariants
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {index: 0, shared: 0.0, amplitude: 0.5}
+          - {index: 1, shared: 0.0, amplitude: 1.0}
+          - {index: 2, shared: 0.0, amplitude: 2.0}
+          - {index: 3, shared: 0.0, amplitude: 3.0}
+          - {index: 4, shared: 1.0, amplitude: 2.0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e .
+      - name: Run frozen v0.12 observed cell
+        run: |
+          python scripts/run_v12_actual_geometry_statistics.py \
+            --mode observed \
+            --input "$V12_GEOMETRY" \
+            --source-ledger "$V12_SOURCE" \
+            --rule "$V12_RULE" \
+            --v11-execution-audit "$V11_AUDIT" \
+            --shared-fraction "${{ matrix.shared }}" \
+            --amplitude "${{ matrix.amplitude }}" \
+            --output "/tmp/v12_observed_${{ matrix.index }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v12-observed-${{ matrix.index }}
+          retention-days: 90
+          if-no-files-found: error
+          path: /tmp/v12_observed_${{ matrix.index }}.json
+
+  aggregate:
+    needs: [reference, observed]
+    if: ${{ needs.reference.result == 'success' && needs.observed.result == 'success' }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: v12-*
+          path: /tmp/v12-inputs
+          merge-multiple: true
+      - name: Require exact 13-file input set
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          files=list(Path('/tmp/v12-inputs').glob('*.json'))
+          refs=list(Path('/tmp/v12-inputs').glob('v12_reference_*.json'))
+          obs=list(Path('/tmp/v12-inputs').glob('v12_observed_*.json'))
+          assert len(refs)==8 and len(obs)==5 and len(files)==13, (len(refs),len(obs),len(files))
+          PY
+      - name: Apply frozen v0.12 qualification rule
+        run: |
+          python scripts/aggregate_v12_actual_geometry.py \
+            --input-dir /tmp/v12-inputs \
+            --rule "$V12_RULE" \
+            --source-ledger "$V12_SOURCE" \
+            --v11-execution-audit "$V11_AUDIT" \
+            --output results/v12_actual_geometry_requalification_v0.1.json
+      - name: Freeze authorization lineage and outcome firewall
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path('results/v12_actual_geometry_requalification_v0.1.json')
+          d=json.loads(p.read_text())
+          auth=json.loads(Path('docs/supporting/v12_actual_geometry_requalification_authorization.json').read_text())
+          d['authorization']=auth
+          d['lineage']={'workflow_run_id':int(os.environ['GITHUB_RUN_ID']),'workflow_head_sha':os.environ['GITHUB_SHA']}
+          assert d['empirical_colour_values_read'] is False
+          assert d['pairwise_colour_distances_computed'] is False
+          assert d['empirical_ttf_statistic_computed'] is False
+          p.write_text(json.dumps(d,indent=2,sort_keys=True)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v12-actual-geometry-requalification-result
+          retention-days: 90
+          if-no-files-found: error
+          path: results/v12_actual_geometry_requalification_v0.1.json
+      - name: Commit immutable v0.12 requalification result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/v12_actual_geometry_requalification_v0.1.json
+          git commit -m "Freeze v0.12 actual geometry requalification result"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt*2))
+          done
+          exit 1
