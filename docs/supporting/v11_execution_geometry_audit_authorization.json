@@ -1,0 +1,40 @@
+{
+  "schema": "ttf_v11_execution_geometry_audit_authorization_v0.1",
+  "status": "authorize_exactly_one_v11_geometry_only_execution_audit",
+  "branch": "analysis/gate-i-geometry-calibration",
+  "purpose": "Measure the deterministic k=15 graph/operator size and verify memory-safe exact execution after the fresh 250x100 geometry froze, before any v0.11 synthetic response world is generated.",
+  "pinned_blobs": {
+    "benchmarks/frozen/v11_fresh_plant_geometry.csv": "568ed9cc805cbca0abe5ca26312c651e4c82a01f",
+    "benchmarks/frozen/v11_fresh_plant_geometry_source.json": "4ee997cad58d9464b9aa58d9252f9292616aebb7",
+    "docs/supporting/v11_fresh_density_scaled_graph_rule.json": "017f347cc09092baa0c5393545cc3f0da315ee82",
+    "src/ttf/chunked_transfer.py": "bc513c4da4a1327613edc5437b44144c436a0105",
+    "tests/test_chunked_transfer.py": "b0e50100ea0f737766dad5dc8e12a37a81a31ded",
+    "scripts/audit_v11_execution_geometry.py": "a20e662c9f0e2f90e33c2485ce8c0a60e4f88361",
+    ".github/workflows/v11-execution-geometry-audit.yml": "549f875543488e3db7612f9b2431fb908297848e"
+  },
+  "equivalence_ci": {
+    "commit": "ecaad7f295cf601e262d83afa01143dc9a0d14de",
+    "workflow_run": 34190487239,
+    "conclusion": "success"
+  },
+  "execution_constants": {
+    "k": 15,
+    "bandwidth_km": 500.0,
+    "segment_points": 5,
+    "edge_chunk_size": 32,
+    "train_chunk_size": 4096,
+    "reference_worlds_per_configuration": 1999,
+    "observed_worlds_per_cell": 500,
+    "master_seed": 20260923,
+    "eval_fraction": 0.5
+  },
+  "synthetic_worlds_may_run": false,
+  "candidate_performance_may_open": false,
+  "empirical_colour_or_pixels_may_open": false,
+  "distance_cutoff_allowed": false,
+  "kernel_approximation_allowed": false,
+  "dtype_reduction_allowed": false,
+  "response_dependent_pruning_allowed": false,
+  "scientific_rule_change_allowed": false,
+  "claim_boundary": "This authorization permits only an outcome-free graph/operator execution audit. It cannot qualify v0.11 or authorize empirical colour analysis."
+}
