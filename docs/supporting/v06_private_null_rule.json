@@ -1,0 +1,80 @@
+{
+  "schema": "ttf_v06_private_null_rule_v0.1",
+  "status": "frozen_before_v06_private_null_diagnostic_outcomes",
+  "scientific_problem": "The v0.2-v0.5 centered held-out-species null tests E[C_s|B_train] <= 0, but strong species-private spatial transitions can induce a positive geometry-conditioned transfer baseline. Residualizing that baseline can remove genuine shared signal. v0.6 therefore keeps the raw transfer statistic and changes only the inferential null.",
+  "development_panels": [
+    {
+      "name": "v03",
+      "geometry": "benchmarks/frozen/v03_fresh_animal_geometry.csv",
+      "split_result": "results/v03_fresh_external_precision_v0.1.json",
+      "world_seed": 20260908,
+      "k": 4,
+      "bandwidth_km": 125.29246372510903
+    },
+    {
+      "name": "v04",
+      "geometry": "benchmarks/frozen/v04_fresh_animal_geometry.csv",
+      "split_result": "results/v04_fresh_external_precision_v0.1.json",
+      "world_seed": 20260909,
+      "k": 4,
+      "bandwidth_km": 81.44335899069378
+    }
+  ],
+  "base_statistic": {
+    "name": "v03_raw_transfer",
+    "training_response": "within-species turnover rank orthogonalized against within-species edge-length rank",
+    "field_projection": "exact opportunity-corrected dense kernel projection",
+    "evaluation_score": "raw held-out within-species Spearman",
+    "macro_statistic": "equal-species mean held-out Spearman",
+    "centered_species_bootstrap_used_for_v06_decision": false
+  },
+  "private_null_family_v0.1": {
+    "shared_fraction": 0.0,
+    "transition_width": 0.2,
+    "private_offset": "within-species median projection",
+    "private_orientation": "independent isotropic random normal per species in the pooled affine-standardized active coordinate dimensions",
+    "configurations": [
+      {"label": "A0", "amplitude": 0.0, "noise_sd": 0.8},
+      {"label": "A0p5", "amplitude": 0.5, "noise_sd": 0.8},
+      {"label": "A1", "amplitude": 1.0, "noise_sd": 0.8},
+      {"label": "A2", "amplitude": 2.0, "noise_sd": 0.8},
+      {"label": "A3", "amplitude": 3.0, "noise_sd": 0.8},
+      {"label": "A5", "amplitude": 5.0, "noise_sd": 0.8},
+      {"label": "A10", "amplitude": 10.0, "noise_sd": 0.8},
+      {"label": "infinite_snr", "amplitude": 1.0, "noise_sd": 0.0}
+    ],
+    "reference_worlds_per_configuration": 1999,
+    "reference_seed_rule": "seed_for(panel_world_seed, 'v06_private_reference', configuration_label, replicate)",
+    "rationale": "The envelope includes no spatial signal, the original qualification amplitudes, stronger finite signal, and a noise-free limiting private transition. It is deliberately broader than the observed mandatory private controls."
+  },
+  "diagnostic_tests": {
+    "oracle_same_configuration": {
+      "selectable": false,
+      "definition": "For a mandatory synthetic cell, compare the observed raw transfer statistic to an independent private-null reference with the same amplitude/noise configuration when available. This only diagnoses whether the statistic contains shared/private information when nuisance strength is known."
+    },
+    "private_envelope": {
+      "selectable": true,
+      "definition": "For each observed raw transfer statistic T, compute the one-sided Monte Carlo p-value separately under every private-null configuration and take p_envelope(T) = max_config p_config(T).",
+      "interpretation": "A rejection means transfer exceeds every private-transition baseline in the frozen null family; it does not assume E[C_s]=0."
+    }
+  },
+  "observed_mandatory_cells": [[0.0,0.5],[0.0,1.0],[0.0,2.0],[0.0,3.0],[1.0,2.0]],
+  "observed_worlds_per_cell": 500,
+  "observed_world_seed_rule": "reuse exactly the previously frozen Gate-I fixed_geometry_world seeds for each panel/cell/replicate",
+  "alpha": 0.05,
+  "precision_requirements": {
+    "type1_wilson_upper_ceiling": 0.10,
+    "power_wilson_lower_floor": 0.80,
+    "confidence_interval": "two-sided Wilson score 95%",
+    "selection_rule": "The private-envelope inference is a v0.6 development candidate only if it passes both precision gates on BOTH development panels. The oracle test is never selectable."
+  },
+  "confirmation_firewall": {
+    "birds_and_butterflies_remain_unopened": true,
+    "rgfca_reserve_remains_unopened": true,
+    "if_envelope_passes_development": "Do not open confirmation yet. First broaden the private-null nuisance family prospectively across boundary width and offset before locking any v0.6 confirmatory method.",
+    "if_envelope_fails_development": "Select no v0.6 candidate from this null family and preserve the failure."
+  },
+  "observability_use": "The shared-geometry observability audit is interpretation-only. It may explain low power but cannot relax the power floor, remove a panel, tune this null family after outcomes, or authorize confirmation.",
+  "failed_v02_v03_v04_v05_results_remain_immutable": true,
+  "claim_ready": false
+}
