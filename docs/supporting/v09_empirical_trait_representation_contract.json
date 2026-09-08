@@ -1,0 +1,73 @@
+{
+  "schema": "ttf_v09_empirical_trait_representation_contract_v0.1",
+  "status": "frozen_before_any_v09_empirical_colour_vector_is_opened",
+  "scope": "Defines only how an already-admitted four-component soft flower-colour vector would become the TTF within-species edge-turnover response. It does not authorize measurement, colour access, TTF empirical inference, or interpretation.",
+  "preconditions_for_use": [
+    "v0.9 synthetic Gate-D must pass",
+    "the separately frozen v0.9 postmeasurement support gate must pass",
+    "the exact postmeasurement classifiable geometry must pass the separately authorized synthetic requalification",
+    "a separate colour-unseal and empirical-TTF authorization must exist"
+  ],
+  "measurement_representation": {
+    "source": "The unchanged FCP qualified ROI-v4 + EfficientSAM fixed-palette measurement collapsed to the pre-existing four-component probability vector.",
+    "components_in_fixed_order": [
+      "colour_white",
+      "colour_yellow_orange",
+      "colour_red_pink",
+      "colour_blue_purple"
+    ],
+    "required_domain": "each component finite and >=0; vector sum equals one within absolute tolerance 1e-8",
+    "categorical_argmax_forbidden": true,
+    "renormalization_after_failed_validation_forbidden": true,
+    "missing_or_unclassifiable_rows": "remain missing and are governed by the separately frozen support/missingness firewall; never impute, replace, or assign a colour class"
+  },
+  "primary_edge_dissimilarity": {
+    "name": "jensen_shannon_divergence_four_component_soft_colour",
+    "definition": "For probability vectors p and q, let m=(p+q)/2 and JSD(p,q)=0.5*KL(p||m)+0.5*KL(q||m), using natural logarithms and the convention 0*log(0/x)=0.",
+    "properties_used_for_preregistration": [
+      "symmetric in the two photographs",
+      "finite and bounded for probability vectors, including zero components",
+      "uses the complete soft colour composition rather than a post-hoc categorical threshold",
+      "matches the already frozen FCP reserve measurement/replication representation without using any reserve outcome"
+    ],
+    "square_root_variant": "not a separate sensitivity: sqrt(JSD) is a strictly increasing transform on nonnegative JSD, and TTF rank-normalizes edge dissimilarities within species, so it produces the same within-species turnover ranks apart from exact numerical ties",
+    "log_base": "natural log; another fixed log base would only multiply JSD by a positive constant and therefore would not change TTF within-species edge ranks",
+    "alternative_colour_distances": "not selectable after colour opening. Hellinger, Euclidean, categorical mismatch, hue-axis embeddings, or learned distances require a new pre-outcome study and cannot rescue a failed empirical TTF result."
+  },
+  "ttf_mapping": {
+    "edge_graph": "the exact frozen kNN graph of the postmeasurement classifiable geometry under the separately qualified deployment contract",
+    "raw_edge_value": "JSD between the two endpoint four-component colour vectors",
+    "within_species_response": "rank01(raw_edge_value), identical to the existing TTF edge_turnover rank convention",
+    "training_response": "apply the frozen training-side edge-length rank orthogonalization to the within-species turnover ranks",
+    "evaluation_response": "leave the within-species turnover ranks unchanged, preserving the frozen raw held-out Spearman estimand",
+    "private_strength": "compute only from the frozen training response using the existing training-only edge-midpoint neighbour coherence statistic",
+    "heldout_transfer_used_for_nuisance_selection": false
+  },
+  "empirical_primary_estimand": {
+    "question": "Does a colour-turnover field learned from the frozen training species predict within-species colour turnover in unseen held-out species beyond the species-private baseline compatible with training-only private spatial strength?",
+    "statistic": "the same frozen raw held-out macro transfer statistic T used by the v0.8/v0.9 synthetic qualification",
+    "inference": "the same frozen profiled-private reference procedure; no empirical-data threshold tuning",
+    "species_split": "must remain the postmeasurement-qualified seed-20260920 125/125 species split if all 250 species pass the support gate",
+    "bandwidth_km": 500.0,
+    "k": 3
+  },
+  "claim_ceiling": {
+    "pass_can_support": "Evidence that soft flower-colour turnover contains a cross-species transferable spatial component within the exact admitted iNaturalist reserve frame and frozen measurement/design pipeline.",
+    "pass_cannot_by_itself_support": [
+      "one universal geographic flower-colour boundary",
+      "global prevalence across plants",
+      "genetic adaptation",
+      "pollinator causation",
+      "climate or environmental causation",
+      "independence from all systematic photographic or habitat structure"
+    ],
+    "non_rejection": "does not establish absence of shared colour structure; interpretation remains conditional on the frozen design adequacy and measurement-support gates"
+  },
+  "firewall": {
+    "colour_values_opened_at_contract_freeze": false,
+    "pixels_opened_at_contract_freeze": false,
+    "empirical_ttf_run_at_contract_freeze": false,
+    "candidate_metric_performance_compared_at_contract_freeze": false,
+    "postoutcome_metric_switching_forbidden": true
+  }
+}
