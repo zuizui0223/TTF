@@ -71,8 +71,8 @@ def main()->int:
         intervals=[]
         for c in cells:
             successes=int(round(c.rejection_rate*c.n_replicates))
-            low,high=wilson_interval(successes,c.n_replicates)
-            intervals.append({'amplitude':c.amplitude,'estimate':c.rejection_rate,'low':low,'high':high,'successes':successes,'trials':c.n_replicates})
+            interval=wilson_interval(successes,c.n_replicates)
+            intervals.append({'amplitude':c.amplitude,'estimate':c.rejection_rate,'low':interval.low,'high':interval.high,'successes':successes,'trials':c.n_replicates})
         max_high=max(x['high'] for x in intervals); max_est=max(x['estimate'] for x in intervals)
         passed=bool(max_high<=0.10); both=both and passed
         reports[p]={'cells':[c.to_dict() for c in cells],'zero_shared_intervals':intervals,'max_zero_shared_estimate':max_est,'max_zero_shared_upper95':max_high,'type1_upper_ceiling':0.10,'passed':passed,'matching_private_label_recovery':recovery,'selected_pair_counts':selected_counts,'shared_positive_control_opened':False}
