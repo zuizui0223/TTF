@@ -1,0 +1,147 @@
+name: v05-shared-geometry-observability
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - ".github/workflows/v05-shared-geometry-observability.yml"
+      - "scripts/audit_shared_geometry_observability.py"
+      - "src/ttf/shared_geometry_observability.py"
+      - "tests/test_shared_geometry_observability.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      - run: pytest -q
+      - name: Require interpretation-only firewall
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          panels=json.loads(Path('benchmarks/frozen/v05_confirmation_panels_source.json').read_text())
+          v05=json.loads(Path('results/v05_one_sided_diagnostic_v0.1.json').read_text())
+          reserve=json.loads(Path('benchmarks/frozen/v03_rgfca_reserve_geometry_source.json').read_text())
+          assert v05['selected_candidate'] is None
+          assert panels['candidate_performance_evaluated_at_freeze'] is False
+          assert panels['synthetic_worlds_run_at_freeze']==0
+          assert reserve['candidate_performance_evaluated_at_freeze'] is False
+          assert reserve['synthetic_worlds_run_at_freeze']==0
+          assert not Path('docs/supporting/v05_confirmation_authorization.json').exists()
+          print({'interpretation_only':True,'selected_candidate':None,'confirmatory_unopened':True,'reserve_opened':False})
+          PY
+
+  panel:
+    needs: invariants
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - panel: v03
+            input: benchmarks/frozen/v03_fresh_animal_geometry.csv
+            min_records: 80
+          - panel: v04
+            input: benchmarks/frozen/v04_fresh_animal_geometry.csv
+            min_records: 80
+          - panel: birds
+            input: benchmarks/frozen/v05_fresh_birds_geometry.csv
+            min_records: 80
+          - panel: butterflies
+            input: benchmarks/frozen/v05_fresh_butterflies_geometry.csv
+            min_records: 80
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Audit shared geometry observability
+        run: >-
+          python scripts/audit_shared_geometry_observability.py
+          --panel "${{ matrix.panel }}"
+          --input "${{ matrix.input }}"
+          --coordinate-columns x_km,y_km,z_km
+          --min-records "${{ matrix.min_records }}"
+          --k 4
+          --directions 2048
+          --seed 20260912
+          --transition-width 0.2
+          --nontrivial-edge-contrast 0.25
+          --output "results/shared_observability/panel-${{ matrix.panel }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shared-observability-${{ matrix.panel }}
+          path: results/shared_observability/panel-${{ matrix.panel }}.json
+          if-no-files-found: error
+
+  aggregate:
+    needs: panel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: shared-observability-*
+          path: results/shared_observability
+          merge-multiple: true
+      - name: Aggregate interpretation-only four-panel audit
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          expected={'v03','v04','birds','butterflies'}
+          data={}
+          for p in Path('results/shared_observability').glob('panel-*.json'):
+              d=json.loads(p.read_text())
+              assert d['schema']=='ttf_shared_geometry_observability_v0.1'
+              assert d['candidate_selectable'] is False
+              assert d['qualification_gate'] is False
+              assert d['config']['directions']==2048
+              assert d['config']['seed']==20260912
+              assert d['config']['transition_width']==0.2
+              data[d['panel']]=d
+          assert set(data)==expected,set(data)
+          out={
+              'schema':'ttf_shared_geometry_observability_four_panel_v0.1',
+              'status':'interpretation_only_not_candidate_selection',
+              'panels':{name:data[name] for name in sorted(data)},
+              'candidate_selected':False,
+              'qualification_gate':False,
+              'confirmatory_performance_opened':False,
+              'rgfca_reserve_opened':False,
+              'interpretation_boundary':'Compare outcome-free latent shared-transition visibility across fixed geometries. This result cannot select candidates, relax thresholds, exclude panels, or authorize the RGFCA reserve.'
+          }
+          Path('results/shared_geometry_observability_v0.1.json').write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
+          print(json.dumps({name:data[name]['summary'] for name in sorted(data)},sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shared-geometry-observability-four-panel
+          path: results/shared_geometry_observability_v0.1.json
+          if-no-files-found: error
+      - name: Commit interpretation-only audit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/shared_geometry_observability_v0.1.json
+          git commit -m "Freeze shared geometry observability audit"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt * 2))
+          done
+          exit 1
