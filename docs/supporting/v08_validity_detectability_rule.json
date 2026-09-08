@@ -1,0 +1,64 @@
+{
+  "schema": "ttf_v08_validity_detectability_rule_v0.1",
+  "status": "frozen_before_v08_external_validity_panels_are_declared",
+  "parent_result": "results/v07_profiled_private_null_diagnostic_v0.1.json",
+  "parent_conclusion": "Training-only private-strength profiling controls strong-private type-I error on both failed development geometries, but the old universal power gate fails because positive-control detectability is strongly geometry-dependent and remains near the matched-oracle ceiling.",
+  "inferential_candidate": {
+    "name": "profiled_private_raw_transfer_v07",
+    "raw_transfer_statistic_unchanged": true,
+    "nuisance_strength": "training-only equal-species edge-midpoint neighbour coherence",
+    "private_reference_labels": ["A0", "A0p5", "A1", "A2", "A3", "A5", "A10", "infinite_snr"],
+    "private_reference_worlds_per_configuration": 1999,
+    "profile_strength_draws": 999,
+    "calibration_statistic_draws": 1000,
+    "selected_private_configurations": 2,
+    "heldout_transfer_used_for_nuisance_selection": false
+  },
+  "qualification_architecture": {
+    "principle": "Separate inferential validity from finite-design detectability. Type-I validity is a method property to confirm across fresh external geometries. Power is a property of a specific sampling design and must be checked prospectively on each deployment geometry before empirical trait outcomes are opened.",
+    "no_threshold_relaxation": true,
+    "type1_wilson_upper_ceiling": 0.10,
+    "power_wilson_lower_floor": 0.80,
+    "confidence_interval": "two-sided Wilson score 95%"
+  },
+  "gate_v_external_validity": {
+    "purpose": "Confirm that the profiled-private inference controls false sharedness under strong species-private transitions on fresh geometry, without selecting or excluding geometries by their power.",
+    "fresh_panels_required": 2,
+    "fresh_panel_declaration_must_follow_this_rule": true,
+    "taxa_must_be_disjoint_from_all_prior_gate_i_and_v03_v05_panels": true,
+    "records_per_species": 100,
+    "species_per_panel": 48,
+    "train_species": 24,
+    "eval_species": 24,
+    "k": 4,
+    "bandwidth_rule": "median_of_species_median_kNN_edge_length",
+    "mandatory_private_cells": [[0.0, 0.5], [0.0, 1.0], [0.0, 2.0], [0.0, 3.0]],
+    "worlds_per_cell": 500,
+    "shared_positive_control_forbidden_in_gate_v": true,
+    "pass_rule": "BOTH fresh validity panels must have maximum zero-shared Wilson 95% upper bound <= 0.10. No power or observability result may be used to drop, replace, or exempt a declared panel."
+  },
+  "gate_d_deployment_adequacy": {
+    "purpose": "Before any empirical trait outcome is opened on a deployment geometry, verify that this exact design both remains locally calibrated and has enough power for the prespecified moderate shared transition.",
+    "may_run_only_after_gate_v_passes": true,
+    "mandatory_cells": [[0.0, 0.5], [0.0, 1.0], [0.0, 2.0], [0.0, 3.0], [1.0, 2.0]],
+    "worlds_per_cell": 500,
+    "pass_rule": "On the deployment geometry, maximum zero-shared Wilson 95% upper bound <= 0.10 AND full-shared A=2 Wilson 95% lower bound >= 0.80.",
+    "failure_interpretation": "The design is non-qualifying / underpowered for this estimand. Do not interpret absence of rejection as evidence of no sharedness and do not open the empirical trait outcome under TTF.",
+    "geometry_only_or_synthetic_information_only": true
+  },
+  "legacy_holdout_firewall": {
+    "v05_birds_and_butterflies_were_frozen_under_an_older_conjunctive_type1_plus_power_policy": true,
+    "their_geometry_observability_has_already_been_inspected": true,
+    "eligible_as_v08_external_validity_confirmation": false,
+    "candidate_performance_remains_unopened": true,
+    "reason": "Do not retroactively change their qualification role after seeing v07 power failures."
+  },
+  "rgfca_reserve_firewall": {
+    "current_state": "performance_unopened_zero_worlds",
+    "may_become_gate_d_deployment_geometry_only_after_gate_v_passes": true,
+    "empirical_colour_outcome_must_remain_unopened_until_gate_d_passes": true
+  },
+  "claim_boundary": "A Gate-V pass establishes false-positive validity of the v07 profiled-private inference on fresh external geometries. It does not establish universal power. A Gate-D pass is additionally required for each concrete deployment geometry before empirical sharedness inference is permitted.",
+  "failed_v02_v03_v04_v05_v06_v07_results_remain_immutable": true,
+  "claim_ready": false
+}
