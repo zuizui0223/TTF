@@ -28,7 +28,9 @@
     "worlds_per_configuration": 1999,
     "transition_width": 0.2,
     "private_offset": "within-species median projection",
-    "orientation": "independent isotropic random per species"
+    "orientation": "independent isotropic random per species",
+    "reference_seed_rule": "seed_for(panel_world_seed, 'v07_private_reference', configuration_label, replicate)",
+    "reference_worlds_independent_of_v06": true
   },
   "reference_partition": {
     "ordering": "replicate index ascending within panel and private configuration",
@@ -48,6 +50,7 @@
   },
   "observed_cells": [[0.0,0.5],[0.0,1.0],[0.0,2.0],[0.0,3.0],[1.0,2.0]],
   "observed_worlds_per_cell": 500,
+  "observed_seed_rule": "reuse exactly the previously frozen fixed_geometry_world seeds for each panel/cell/replicate",
   "alpha": 0.05,
   "precision_gate": {
     "type1_wilson_upper_ceiling": 0.10,
