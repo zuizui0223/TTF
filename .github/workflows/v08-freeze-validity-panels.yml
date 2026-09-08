@@ -1,0 +1,250 @@
+name: v08-freeze-validity-panels
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - "benchmarks/v08_validity_europe_birds_manifest.csv"
+      - "benchmarks/v08_validity_na_waterbirds_manifest.csv"
+      - ".github/workflows/v08-freeze-validity-panels.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: analysis/gate-i-geometry-calibration
+  V08_RULE_COMMIT: 85e9d12892525e4d443972640a3dc18022a8fac3
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Require v0.8 architecture predates both panel declarations
+        run: |
+          git merge-base --is-ancestor "$V08_RULE_COMMIT" "$(git log -1 --format=%H -- benchmarks/v08_validity_europe_birds_manifest.csv)"
+          git merge-base --is-ancestor "$V08_RULE_COMMIT" "$(git log -1 --format=%H -- benchmarks/v08_validity_na_waterbirds_manifest.csv)"
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          rule=json.loads(Path('docs/supporting/v08_validity_detectability_rule.json').read_text())
+          v07=json.loads(Path('results/v07_profiled_private_null_diagnostic_v0.1.json').read_text())
+          old=json.loads(Path('benchmarks/frozen/v05_confirmation_panels_source.json').read_text())
+          reserve=json.loads(Path('benchmarks/frozen/v03_rgfca_reserve_geometry_source.json').read_text())
+          assert rule['status']=='frozen_before_v08_external_validity_panels_are_declared'
+          assert v07['selected_development_candidate'] is None
+          assert old['candidate_performance_evaluated_at_freeze'] is False
+          assert old['synthetic_worlds_run_at_freeze']==0
+          assert reserve['candidate_performance_evaluated_at_freeze'] is False
+          assert reserve['synthetic_worlds_run_at_freeze']==0
+
+          prior=set()
+          for path in (
+              'benchmarks/gate_i_animal_geometry_manifest.csv',
+              'benchmarks/v03_fresh_animal_geometry_manifest.csv',
+              'benchmarks/v04_fresh_animal_geometry_manifest.csv',
+              'benchmarks/v05_fresh_birds_geometry_manifest.csv',
+              'benchmarks/v05_fresh_butterflies_geometry_manifest.csv',
+          ):
+              with open(path, newline='') as h:
+                  prior |= {r['scientific_name'].strip() for r in csv.DictReader(h)}
+          declared={}
+          for panel,path in {
+              'europe_birds':'benchmarks/v08_validity_europe_birds_manifest.csv',
+              'na_waterbirds':'benchmarks/v08_validity_na_waterbirds_manifest.csv',
+          }.items():
+              with open(path, newline='') as h:
+                  names=[r['scientific_name'].strip() for r in csv.DictReader(h)]
+              assert len(names)==48 and len(set(names))==48
+              assert not (set(names)&prior), (panel, sorted(set(names)&prior))
+              declared[panel]=set(names)
+          assert not (declared['europe_birds'] & declared['na_waterbirds'])
+          print({'rule_predates_panels':True,'panels':{k:len(v) for k,v in declared.items()},'legacy_holdouts_opened':False,'reserve_opened':False})
+          PY
+
+  freeze:
+    needs: preflight
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - panel: europe_birds
+            manifest: benchmarks/v08_validity_europe_birds_manifest.csv
+            freeze_seed: 20260913
+          - panel: na_waterbirds
+            manifest: benchmarks/v08_validity_na_waterbirds_manifest.csv
+            freeze_seed: 20260914
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Freeze outcome-free external validity geometry
+        run: >-
+          python scripts/freeze_gbif_animal_geometry.py
+          --manifest "${{ matrix.manifest }}"
+          --output "benchmarks/frozen/v08_validity_${{ matrix.panel }}_geometry.csv"
+          --ledger "benchmarks/frozen/v08_validity_${{ matrix.panel }}_geometry_source.json"
+          --fetch-limit 1000
+          --cap-per-species 100
+          --minimum-records 80
+          --seed "${{ matrix.freeze_seed }}"
+          --allow-canonical-fuzzy
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v08-freeze-${{ matrix.panel }}
+          path: |
+            benchmarks/frozen/v08_validity_${{ matrix.panel }}_geometry.csv
+            benchmarks/frozen/v08_validity_${{ matrix.panel }}_geometry_source.json
+          if-no-files-found: error
+
+  seal:
+    needs: freeze
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: v08-freeze-europe_birds
+          path: artifacts/europe_birds
+      - uses: actions/download-artifact@v4
+        with:
+          name: v08-freeze-na_waterbirds
+          path: artifacts/na_waterbirds
+      - name: Restore frozen paths
+        run: |
+          mkdir -p benchmarks/frozen
+          cp artifacts/europe_birds/v08_validity_europe_birds_geometry.csv benchmarks/frozen/
+          cp artifacts/europe_birds/v08_validity_europe_birds_geometry_source.json benchmarks/frozen/
+          cp artifacts/na_waterbirds/v08_validity_na_waterbirds_geometry.csv benchmarks/frozen/
+          cp artifacts/na_waterbirds/v08_validity_na_waterbirds_geometry_source.json benchmarks/frozen/
+      - name: Freeze disjointness, bandwidths, and 24/24 splits
+        run: |
+          python - <<'PY'
+          import csv, json
+          from collections import defaultdict
+          from pathlib import Path
+          import numpy as np
+          from ttf import knn_edges
+          from ttf.calibration import seed_for
+          from ttf.core import split_species
+
+          prior=set()
+          for path in (
+              'benchmarks/gate_i_animal_geometry_manifest.csv',
+              'benchmarks/v03_fresh_animal_geometry_manifest.csv',
+              'benchmarks/v04_fresh_animal_geometry_manifest.csv',
+              'benchmarks/v05_fresh_birds_geometry_manifest.csv',
+              'benchmarks/v05_fresh_butterflies_geometry_manifest.csv',
+          ):
+              with open(path,newline='') as h:
+                  prior |= {r['scientific_name'].strip() for r in csv.DictReader(h)}
+
+          specs={
+              'europe_birds': {'freeze_seed':20260913,'world_seed':20260917},
+              'na_waterbirds': {'freeze_seed':20260914,'world_seed':20260918},
+          }
+          names_by_panel={}
+          summary={}
+          for panel,cfg in specs.items():
+              csv_path=Path(f'benchmarks/frozen/v08_validity_{panel}_geometry.csv')
+              ledger_path=Path(f'benchmarks/frozen/v08_validity_{panel}_geometry_source.json')
+              grouped=defaultdict(list)
+              with csv_path.open(newline='') as h:
+                  for r in csv.DictReader(h):
+                      grouped[r['species']].append([float(r['x_km']),float(r['y_km']),float(r['z_km'])])
+              names=set(grouped)
+              if len(names)!=48: raise RuntimeError((panel,'species',len(names)))
+              if names & prior: raise RuntimeError((panel,'prior overlap',sorted(names&prior)))
+              if not all(len(v)==100 for v in grouped.values()):
+                  raise RuntimeError((panel,'not exactly 100 records/species'))
+              medians=[]
+              for name in sorted(grouped):
+                  coords=np.asarray(grouped[name],dtype=float)
+                  edges=knn_edges(coords,k=4)
+                  lengths=np.linalg.norm(coords[edges[:,0]]-coords[edges[:,1]],axis=1)
+                  medians.append(float(np.median(lengths)))
+              bandwidth=float(np.median(medians))
+              split_seed=seed_for(cfg['world_seed'],'v08_validity_split')
+              train,evaluation=split_species(sorted(names),eval_fraction=0.5,seed=split_seed)
+              if len(train)!=24 or len(evaluation)!=24 or set(train)&set(evaluation):
+                  raise RuntimeError((panel,'split failure'))
+              d=json.loads(ledger_path.read_text())
+              d['validation_role']='prospectively_frozen_v08_external_type1_validity_panel'
+              d['qualification_architecture']='v08_validity_separate_from_deployment_detectability'
+              d['prior_gate_i_taxa_overlap']=[]
+              d['candidate_performance_evaluated_at_freeze']=False
+              d['synthetic_worlds_run_at_freeze']=0
+              d['prospective_execution']={
+                  'k':4,
+                  'bandwidth_rule':'median_of_species_median_kNN_edge_length',
+                  'bandwidth_km':bandwidth,
+                  'world_seed':cfg['world_seed'],
+                  'split_seed':split_seed,
+                  'train_species':list(train),
+                  'eval_species':list(evaluation),
+                  'mandatory_private_cells':[[0.0,0.5],[0.0,1.0],[0.0,2.0],[0.0,3.0]],
+                  'worlds_per_cell':500,
+                  'shared_positive_control_forbidden_in_gate_v':True,
+              }
+              d['claim_boundary']='Fresh external geometry for v0.8 Gate-V false-positive validity only. Power may not be used to drop or exempt this panel.'
+              ledger_path.write_text(json.dumps(d,indent=2,sort_keys=True)+'\n')
+              names_by_panel[panel]=names
+              summary[panel]={
+                  'species':48,'records':4800,'bandwidth_km':bandwidth,
+                  'world_seed':cfg['world_seed'],'split_seed':split_seed,
+                  'train_species':list(train),'eval_species':list(evaluation),
+              }
+          if names_by_panel['europe_birds'] & names_by_panel['na_waterbirds']:
+              raise RuntimeError('v08 panels overlap each other')
+          Path('benchmarks/frozen/v08_validity_panels_source.json').write_text(json.dumps({
+              'schema':'ttf_v08_validity_panels_v0.1',
+              'status':'two_fresh_external_validity_panels_frozen_after_v08_rule',
+              'rule_commit':'85e9d12892525e4d443972640a3dc18022a8fac3',
+              'panels':summary,
+              'prior_taxa_overlap':[],
+              'panel_taxa_overlap':[],
+              'candidate_performance_evaluated_at_freeze':False,
+              'synthetic_worlds_run_at_freeze':0,
+              'shared_positive_control_opened':False,
+              'legacy_birds_butterflies_opened':False,
+              'rgfca_reserve_opened':False,
+          },indent=2,sort_keys=True)+'\n')
+          print({p:{'bandwidth':v['bandwidth_km'],'train':24,'eval':24} for p,v in summary.items()})
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v08-validity-panels
+          path: |
+            benchmarks/frozen/v08_validity_europe_birds_geometry.csv
+            benchmarks/frozen/v08_validity_europe_birds_geometry_source.json
+            benchmarks/frozen/v08_validity_na_waterbirds_geometry.csv
+            benchmarks/frozen/v08_validity_na_waterbirds_geometry_source.json
+            benchmarks/frozen/v08_validity_panels_source.json
+          if-no-files-found: error
+      - name: Commit untouched v0.8 external validity geometries
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/v08_validity_europe_birds_geometry.csv benchmarks/frozen/v08_validity_europe_birds_geometry_source.json benchmarks/frozen/v08_validity_na_waterbirds_geometry.csv benchmarks/frozen/v08_validity_na_waterbirds_geometry_source.json benchmarks/frozen/v08_validity_panels_source.json
+          git commit -m "Freeze untouched v0.8 external validity panels"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt*2))
+          done
+          exit 1
