@@ -1,0 +1,49 @@
+{
+  "schema": "ttf_v09_reserve_b_max_density_rule_v0.1",
+  "status": "frozen_before_v09_reserve_b_geometry_is_materialized",
+  "parent_gate_v_result": "results/v08_external_validity_v0.1.json",
+  "parent_gate_v_result_blob_sha": "8b504aef5b8780a3292c62a2bffd37100032d0d0",
+  "parent_gate_d_result": "results/v08_gate_d_rgfca_reserve_v0.1.json",
+  "parent_gate_d_result_blob_sha": "71e6f791274d9ce9afdcbd59d8095f3420094fd6",
+  "parent_gate_d_conclusion": "The exact 250-species x 20-record RGFCA reserve design controlled private type-I error but failed the frozen moderate-sharedness power criterion: shared A2 power 0.666 with Wilson lower 0.62353.",
+  "successor_design": {
+    "role": "new_outcome_unopened_deployment_design_layer_after_failed_gate_d",
+    "source_cohort": "the exact metadata-only 500-species x 100-photo FCP RGFCA reserve cohort frozen before reserve pixels",
+    "species_rule": "use exactly the 250 reserve species not present in the failed v0.8 Gate-D geometry; no failed-panel species may be reused",
+    "photo_rule": "use all 100 frozen metadata rows for every complement species; no photo-density grid search or within-species outcome-based selection is permitted",
+    "species_count": 250,
+    "records_per_species": 100,
+    "records_total": 25000,
+    "species_disjoint_from_failed_gate_d": true,
+    "photo_disjoint_from_failed_gate_d": true,
+    "reason_for_max_density": "Use the maximal already-frozen metadata support as a single monotone design candidate instead of tuning record count against the failed reserve.",
+    "k": 3,
+    "bandwidth_km": 500.0,
+    "eval_fraction": 0.5,
+    "train_species": 125,
+    "eval_species": 125,
+    "split_and_world_seed": 20260920
+  },
+  "qualification": {
+    "architecture": "same_v08_profiled_private_gate_d_inference",
+    "private_reference_labels": ["A0", "A0p5", "A1", "A2", "A3", "A5", "A10", "infinite_snr"],
+    "profile_strength_draws": 999,
+    "calibration_statistic_draws": 1000,
+    "selected_private_configurations": 2,
+    "observed_worlds_per_cell": 500,
+    "reference_worlds_per_configuration": 1999,
+    "mandatory_cells": [[0.0, 0.5], [0.0, 1.0], [0.0, 2.0], [0.0, 3.0], [1.0, 2.0]],
+    "type1_wilson_upper_ceiling": 0.10,
+    "power_wilson_lower_floor": 0.80,
+    "may_run_only_after_geometry_freeze_and_separate_authorization": true
+  },
+  "firewall": {
+    "failed_v08_gate_d_panel_is_not_retuned": true,
+    "failed_v08_gate_d_panel_is_not_reused_as_confirmation": true,
+    "empirical_colour_or_pixel_outcomes_must_remain_unopened": true,
+    "v09_geometry_freeze_runs_zero_synthetic_worlds": true,
+    "v09_geometry_freeze_evaluates_no_candidate_performance": true,
+    "if_v09_gate_d_fails": "Freeze the failure. Do not open empirical colour outcomes and do not tune this v0.9 panel.",
+    "if_v09_gate_d_passes": "The new species-disjoint max-density design is adequate for the predeclared estimand; separately freeze an empirical measurement/analysis authorization before opening colour or pixels."
+  }
+}
