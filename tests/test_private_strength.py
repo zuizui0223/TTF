@@ -2,7 +2,9 @@ import numpy as np
 
 from ttf.private_strength import (
     edge_midpoint_neighbor_coherence,
+    edge_midpoint_neighbor_indices,
     training_private_strength,
+    training_private_strength_from_indices,
 )
 
 
@@ -39,3 +41,26 @@ def test_training_strength_is_equal_species_mean_and_deterministic():
     )
     assert value == again
     assert per_species == again_species
+
+
+def test_precomputed_neighbour_fast_path_is_exact():
+    midpoint = {
+        "a": np.column_stack([np.arange(9, dtype=float), np.zeros(9)]),
+        "b": np.column_stack([np.arange(9, dtype=float), np.ones(9)]),
+    }
+    responses = {
+        "a": np.linspace(-0.4, 0.6, 9),
+        "b": np.r_[np.zeros(4), np.ones(5)],
+    }
+    direct = training_private_strength(
+        responses, midpoint, ["a", "b"], k=3
+    )
+    indices = {
+        name: edge_midpoint_neighbor_indices(points, k=3)
+        for name, points in midpoint.items()
+    }
+    fast = training_private_strength_from_indices(
+        responses, indices, ["a", "b"]
+    )
+    assert direct[0] == fast[0]
+    assert direct[1] == fast[1]
