@@ -1,0 +1,116 @@
+name: v09-freeze-rgfca-reserve-b-max-density
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - "scripts/freeze_v09_rgfca_reserve_b_geometry.py"
+      - ".github/workflows/v09-freeze-rgfca-reserve-b-max-density.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  RULE_COMMIT: 5d6639f1ab79f31002376b4dc36beb1c09bfa15a
+  FCP_COMMIT: 9a3dbd1c433356c4235de87553f9cb9963c11943
+
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Require v0.9 rule predates geometry and predecessor failure is frozen
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          rule=json.loads(Path('docs/supporting/v09_reserve_b_max_density_rule.json').read_text())
+          gate_v=json.loads(Path('results/v08_external_validity_v0.1.json').read_text())
+          gate_d=json.loads(Path('results/v08_gate_d_rgfca_reserve_v0.1.json').read_text())
+          old=json.loads(Path('benchmarks/frozen/v03_rgfca_reserve_geometry_source.json').read_text())
+          assert rule['status']=='frozen_before_v09_reserve_b_geometry_is_materialized'
+          assert subprocess.run(['git','merge-base','--is-ancestor','5d6639f1ab79f31002376b4dc36beb1c09bfa15a','HEAD']).returncode==0
+          assert gate_v['gate_v_pass'] is True
+          assert gate_d['gate_d_pass'] is False
+          assert gate_d['empirical_colour_outcome_opened'] is False
+          assert old['empirical_trait_or_colour_fields_read'] is False
+          assert old['output']['species']==250 and old['output']['records']==5000
+          print({'gate_v_pass':True,'failed_gate_d_frozen':True,'empirical_colour_opened':False})
+          PY
+      - name: Checkout exact pre-reserve-pixel FCP state
+        run: |
+          rm -rf /tmp/fcp
+          git clone --filter=blob:none --no-checkout https://github.com/zuizui0223/fcp.git /tmp/fcp
+          git -C /tmp/fcp fetch origin "$FCP_COMMIT"
+          git -C /tmp/fcp checkout --detach "$FCP_COMMIT"
+          git -C /tmp/fcp sparse-checkout init --no-cone
+          cat >/tmp/fcp/.git/info/sparse-checkout <<'EOF'
+          /data/frozen/global_monte_carlo_candidate_photos_v1.csv
+          /data/frozen/rgfca_reserve_geometry_audit_v1.csv
+          /docs/supporting/rgfca_reserve_metadata_audit_v1.json
+          /docs/supporting/rgfca_reserve_replication_contract_v1.json
+          EOF
+          git -C /tmp/fcp read-tree -mu HEAD
+      - name: Freeze species-disjoint max-density reserve-B geometry
+        run: >-
+          python scripts/freeze_v09_rgfca_reserve_b_geometry.py
+          --fcp-root /tmp/fcp
+          --source-commit "$FCP_COMMIT"
+          --rule docs/supporting/v09_reserve_b_max_density_rule.json
+          --failed-reserve-ledger benchmarks/frozen/v03_rgfca_reserve_geometry_source.json
+          --failed-gate-d-result results/v08_gate_d_rgfca_reserve_v0.1.json
+          --output benchmarks/frozen/v09_rgfca_reserve_b_max_density_geometry.csv
+          --ledger benchmarks/frozen/v09_rgfca_reserve_b_max_density_geometry_source.json
+      - name: Enforce v0.9 outcome-unopened design firewall
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('benchmarks/frozen/v09_rgfca_reserve_b_max_density_geometry_source.json').read_text())
+          assert d['schema']=='ttf_v09_rgfca_reserve_b_max_density_geometry_v0.1'
+          assert d['output']['species']==250
+          assert d['output']['records']==25000
+          assert d['selection']['records_per_species']==100
+          assert d['predecessor']['species_overlap']==[]
+          assert d['predecessor']['photo_overlap']==[]
+          assert d['empirical_trait_or_colour_fields_read'] is False
+          assert d['synthetic_worlds_run_at_freeze']==0
+          assert d['candidate_performance_evaluated_at_freeze'] is False
+          assert d['source_audit']['candidate_pixels_opened_by_audit'] is False
+          assert d['source_audit']['colour_fields_parsed'] is False
+          assert d['source_audit']['measurement_authorized'] is False
+          assert d['prospective_execution']=={
+              'k':3,'bandwidth_km':500.0,'eval_fraction':0.5,
+              'seed':20260920,'train_species':125,'eval_species':125,
+          }
+          print({'v09_reserve_b':'frozen','species':250,'records':25000,'synthetic_worlds':0})
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v09-rgfca-reserve-b-max-density-geometry
+          path: |
+            benchmarks/frozen/v09_rgfca_reserve_b_max_density_geometry.csv
+            benchmarks/frozen/v09_rgfca_reserve_b_max_density_geometry_source.json
+          if-no-files-found: error
+      - name: Commit untouched v0.9 reserve-B geometry
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/v09_rgfca_reserve_b_max_density_geometry.csv benchmarks/frozen/v09_rgfca_reserve_b_max_density_geometry_source.json
+          git commit -m "Freeze v0.9 species-disjoint max-density RGFCA reserve-B geometry"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt*2))
+          done
+          exit 1
