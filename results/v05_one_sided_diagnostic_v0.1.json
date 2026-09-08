@@ -1,0 +1,1468 @@
+{
+  "authorization": {
+    "aggregator_blob_sha": "324c25578aadc608cf544a30cbd06948f4b3ebb7",
+    "authorization_rule": "Run the prospectively specified v0.5 side-specific candidate family exactly once on the two already failed external development panels. Do not open the predeclared birds or butterflies confirmation performance, and do not open the RGFCA reserve. Apply the frozen Wilson selection rule mechanically; if no candidate passes both development panels, select none.",
+    "bootstrap_resamples": 1999,
+    "cell_runner_blob_sha": "2a2e89053ecd8f0d7bf88d38a445889b820b60e0",
+    "confirmation_panels_blob_sha": "a1571090c905db59051a9fb357e5f69d15b7de9a",
+    "confirmation_policy": "Only a mechanically selected candidate may later be locked and tested on both predeclared confirmation panels; both must pass Wilson precision before any RGFCA reserve authorization.",
+    "confirmatory_panels_remain_unopened": [
+      "birds",
+      "butterflies"
+    ],
+    "development_panels": [
+      "v03",
+      "v04"
+    ],
+    "failed_v02_v03_v04_results_remain_immutable": true,
+    "mandatory_cells": [
+      [
+        0.0,
+        0.5
+      ],
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        2.0
+      ],
+      [
+        0.0,
+        3.0
+      ],
+      [
+        1.0,
+        2.0
+      ]
+    ],
+    "power_wilson_lower_floor": 0.8,
+    "replicates_per_cell": 500,
+    "rgfca_reserve_opened_at_authorization": false,
+    "rule_blob_sha": "af33407ab91a4b83954589d985ee3448ded3647c",
+    "schema": "ttf_v05_diagnostic_authorization_v0.1",
+    "status": "authorize_exactly_one_v05_two_development_panel_diagnostic",
+    "type1_wilson_upper_ceiling": 0.1,
+    "v03_result_blob_sha": "8a820e4f13a93e69dcc016e7c701ef1ca995efba",
+    "v04_result_blob_sha": "0d426293534cfe27c7e3010043a3854c3d1bd64c"
+  },
+  "candidate_preference_order": [
+    "prediction_propensity_only",
+    "prediction_length_and_propensity",
+    "target_propensity_only",
+    "two_sided_propensity_only",
+    "v04_two_sided_length_and_propensity"
+  ],
+  "candidates": {
+    "prediction_length_and_propensity": {
+      "panels": {
+        "v03": {
+          "cells": [
+            {
+              "alpha": 0.05,
+              "amplitude": 0.5,
+              "mean_null_statistic": -2.045267078525376e-05,
+              "mean_statistic": -0.0005993560159797611,
+              "median_p_value": 0.50925,
+              "n_replicates": 500,
+              "rejection_rate": 0.054,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 1.0,
+              "mean_null_statistic": 1.296880427452752e-05,
+              "mean_statistic": 0.0011173962158535753,
+              "median_p_value": 0.48575,
+              "n_replicates": 500,
+              "rejection_rate": 0.05,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 4.166297530691101e-06,
+              "mean_statistic": 0.00463772798129148,
+              "median_p_value": 0.435,
+              "n_replicates": 500,
+              "rejection_rate": 0.074,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 3.0,
+              "mean_null_statistic": -1.4674057596395316e-06,
+              "mean_statistic": 0.00672350391029525,
+              "median_p_value": 0.3575,
+              "n_replicates": 500,
+              "rejection_rate": 0.078,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 1.8100416253883344e-05,
+              "mean_statistic": 0.07627344243888948,
+              "median_p_value": 0.001,
+              "n_replicates": 500,
+              "rejection_rate": 0.872,
+              "shared_fraction": 1.0
+            }
+          ],
+          "passed": false,
+          "precision": {
+            "full_shared_interval": {
+              "amplitude": 2.0,
+              "estimate": 0.872,
+              "high": 0.8984731760047634,
+              "low": 0.8398543146918417,
+              "shared_fraction": 1.0,
+              "successes": 436,
+              "trials": 500
+            },
+            "full_shared_moderate_estimate": 0.872,
+            "full_shared_moderate_lower95": 0.8398543146918417,
+            "max_zero_shared_estimate": 0.078,
+            "max_zero_shared_upper95": 0.10485354987338852,
+            "moderate_amplitude": 2.0,
+            "passed": false,
+            "power_lower_floor": 0.8,
+            "power_pass": true,
+            "type1_pass": false,
+            "type1_upper_ceiling": 0.1,
+            "zero_shared_intervals": [
+              {
+                "amplitude": 0.5,
+                "estimate": 0.054,
+                "high": 0.07742656151064709,
+                "low": 0.03737435018105752,
+                "shared_fraction": 0.0,
+                "successes": 27,
+                "trials": 500
+              },
+              {
+                "amplitude": 1.0,
+                "estimate": 0.05,
+                "high": 0.0727681611715476,
+                "low": 0.034093745243849435,
+                "shared_fraction": 0.0,
+                "successes": 25,
+                "trials": 500
+              },
+              {
+                "amplitude": 2.0,
+                "estimate": 0.074,
+                "high": 0.10033475332223055,
+                "low": 0.054161184751011976,
+                "shared_fraction": 0.0,
+                "successes": 37,
+                "trials": 500
+              },
+              {
+                "amplitude": 3.0,
+                "estimate": 0.078,
+                "high": 0.10485354987338852,
+                "low": 0.05758139347616159,
+                "shared_fraction": 0.0,
+                "successes": 39,
+                "trials": 500
+              }
+            ]
+          }
+        },
+        "v04": {
+          "cells": [
+            {
+              "alpha": 0.05,
+              "amplitude": 0.5,
+              "mean_null_statistic": -4.336771518401479e-06,
+              "mean_statistic": -0.0005184369265266029,
+              "median_p_value": 0.54775,
+              "n_replicates": 500,
+              "rejection_rate": 0.052,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 1.0,
+              "mean_null_statistic": -4.000253017494724e-06,
+              "mean_statistic": 0.0015308406847493333,
+              "median_p_value": 0.47224999999999995,
+              "n_replicates": 500,
+              "rejection_rate": 0.064,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 2.5705711537755103e-05,
+              "mean_statistic": 0.0013052025455208718,
+              "median_p_value": 0.4865,
+              "n_replicates": 500,
+              "rejection_rate": 0.06,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 3.0,
+              "mean_null_statistic": -6.582015434724281e-06,
+              "mean_statistic": 0.0011501579696366934,
+              "median_p_value": 0.48624999999999996,
+              "n_replicates": 500,
+              "rejection_rate": 0.068,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 1.728298386463371e-05,
+              "mean_statistic": 0.030326247498833038,
+              "median_p_value": 0.05925,
+              "n_replicates": 500,
+              "rejection_rate": 0.478,
+              "shared_fraction": 1.0
+            }
+          ],
+          "passed": false,
+          "precision": {
+            "full_shared_interval": {
+              "amplitude": 2.0,
+              "estimate": 0.478,
+              "high": 0.5217845105864325,
+              "low": 0.43455096039387586,
+              "shared_fraction": 1.0,
+              "successes": 239,
+              "trials": 500
+            },
+            "full_shared_moderate_estimate": 0.478,
+            "full_shared_moderate_lower95": 0.43455096039387586,
+            "max_zero_shared_estimate": 0.068,
+            "max_zero_shared_upper95": 0.0935209227338743,
+            "moderate_amplitude": 2.0,
+            "passed": false,
+            "power_lower_floor": 0.8,
+            "power_pass": false,
+            "type1_pass": true,
+            "type1_upper_ceiling": 0.1,
+            "zero_shared_intervals": [
+              {
+                "amplitude": 0.5,
+                "estimate": 0.052,
+                "high": 0.07510114393784553,
+                "low": 0.035730265115705276,
+                "shared_fraction": 0.0,
+                "successes": 26,
+                "trials": 500
+              },
+              {
+                "amplitude": 1.0,
+                "estimate": 0.064,
+                "high": 0.08895240883768415,
+                "low": 0.04569601604478943,
+                "shared_fraction": 0.0,
+                "successes": 32,
+                "trials": 500
+              },
+              {
+                "amplitude": 2.0,
+                "estimate": 0.06,
+                "high": 0.08436106312521979,
+                "low": 0.0423483564809462,
+                "shared_fraction": 0.0,
+                "successes": 30,
+                "trials": 500
+              },
+              {
+                "amplitude": 3.0,
+                "estimate": 0.068,
+                "high": 0.0935209227338743,
+                "low": 0.04906650742490687,
+                "shared_fraction": 0.0,
+                "successes": 34,
+                "trials": 500
+              }
+            ]
+          }
+        }
+      },
+      "passes_both_development_panels": false
+    },
+    "prediction_propensity_only": {
+      "panels": {
+        "v03": {
+          "cells": [
+            {
+              "alpha": 0.05,
+              "amplitude": 0.5,
+              "mean_null_statistic": -2.511109811996927e-05,
+              "mean_statistic": -0.00039513741484366826,
+              "median_p_value": 0.50225,
+              "n_replicates": 500,
+              "rejection_rate": 0.052,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 1.0,
+              "mean_null_statistic": 1.4722852778361274e-05,
+              "mean_statistic": 0.0012092969719764333,
+              "median_p_value": 0.492,
+              "n_replicates": 500,
+              "rejection_rate": 0.06,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 3.459555266899365e-06,
+              "mean_statistic": 0.0047501855112477625,
+              "median_p_value": 0.4235,
+              "n_replicates": 500,
+              "rejection_rate": 0.068,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 3.0,
+              "mean_null_statistic": -4.834710010691613e-06,
+              "mean_statistic": 0.008421812833591625,
+              "median_p_value": 0.3285,
+              "n_replicates": 500,
+              "rejection_rate": 0.092,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 1.422337011833185e-05,
+              "mean_statistic": 0.07781979588361913,
+              "median_p_value": 0.001,
+              "n_replicates": 500,
+              "rejection_rate": 0.876,
+              "shared_fraction": 1.0
+            }
+          ],
+          "passed": false,
+          "precision": {
+            "full_shared_interval": {
+              "amplitude": 2.0,
+              "estimate": 0.876,
+              "high": 0.9020539088606966,
+              "low": 0.8442125871122163,
+              "shared_fraction": 1.0,
+              "successes": 438,
+              "trials": 500
+            },
+            "full_shared_moderate_estimate": 0.876,
+            "full_shared_moderate_lower95": 0.8442125871122163,
+            "max_zero_shared_estimate": 0.092,
+            "max_zero_shared_upper95": 0.12053873813617456,
+            "moderate_amplitude": 2.0,
+            "passed": false,
+            "power_lower_floor": 0.8,
+            "power_pass": true,
+            "type1_pass": false,
+            "type1_upper_ceiling": 0.1,
+            "zero_shared_intervals": [
+              {
+                "amplitude": 0.5,
+                "estimate": 0.052,
+                "high": 0.07510114393784553,
+                "low": 0.035730265115705276,
+                "shared_fraction": 0.0,
+                "successes": 26,
+                "trials": 500
+              },
+              {
+                "amplitude": 1.0,
+                "estimate": 0.06,
+                "high": 0.08436106312521979,
+                "low": 0.0423483564809462,
+                "shared_fraction": 0.0,
+                "successes": 30,
+                "trials": 500
+              },
+              {
+                "amplitude": 2.0,
+                "estimate": 0.068,
+                "high": 0.0935209227338743,
+                "low": 0.04906650742490687,
+                "shared_fraction": 0.0,
+                "successes": 34,
+                "trials": 500
+              },
+              {
+                "amplitude": 3.0,
+                "estimate": 0.092,
+                "high": 0.12053873813617456,
+                "low": 0.06968272368045207,
+                "shared_fraction": 0.0,
+                "successes": 46,
+                "trials": 500
+              }
+            ]
+          }
+        },
+        "v04": {
+          "cells": [
+            {
+              "alpha": 0.05,
+              "amplitude": 0.5,
+              "mean_null_statistic": -1.2794042994442849e-06,
+              "mean_statistic": -0.0005970562267287545,
+              "median_p_value": 0.55175,
+              "n_replicates": 500,
+              "rejection_rate": 0.05,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 1.0,
+              "mean_null_statistic": 3.012413893437669e-06,
+              "mean_statistic": 0.0016184680290522939,
+              "median_p_value": 0.478,
+              "n_replicates": 500,
+              "rejection_rate": 0.054,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 2.7467293367572693e-05,
+              "mean_statistic": 0.0009436911774649493,
+              "median_p_value": 0.47575,
+              "n_replicates": 500,
+              "rejection_rate": 0.058,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 3.0,
+              "mean_null_statistic": -7.718184658600029e-06,
+              "mean_statistic": 0.0018012709315948212,
+              "median_p_value": 0.46075,
+              "n_replicates": 500,
+              "rejection_rate": 0.072,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 1.1510109546807841e-05,
+              "mean_statistic": 0.032652743172710615,
+              "median_p_value": 0.05,
+              "n_replicates": 500,
+              "rejection_rate": 0.5,
+              "shared_fraction": 1.0
+            }
+          ],
+          "passed": false,
+          "precision": {
+            "full_shared_interval": {
+              "amplitude": 2.0,
+              "estimate": 0.5,
+              "high": 0.5436587346975157,
+              "low": 0.4563412653024843,
+              "shared_fraction": 1.0,
+              "successes": 250,
+              "trials": 500
+            },
+            "full_shared_moderate_estimate": 0.5,
+            "full_shared_moderate_lower95": 0.4563412653024843,
+            "max_zero_shared_estimate": 0.072,
+            "max_zero_shared_upper95": 0.09806840401696253,
+            "moderate_amplitude": 2.0,
+            "passed": false,
+            "power_lower_floor": 0.8,
+            "power_pass": false,
+            "type1_pass": true,
+            "type1_upper_ceiling": 0.1,
+            "zero_shared_intervals": [
+              {
+                "amplitude": 0.5,
+                "estimate": 0.05,
+                "high": 0.0727681611715476,
+                "low": 0.034093745243849435,
+                "shared_fraction": 0.0,
+                "successes": 25,
+                "trials": 500
+              },
+              {
+                "amplitude": 1.0,
+                "estimate": 0.054,
+                "high": 0.07742656151064709,
+                "low": 0.03737435018105752,
+                "shared_fraction": 0.0,
+                "successes": 27,
+                "trials": 500
+              },
+              {
+                "amplitude": 2.0,
+                "estimate": 0.058,
+                "high": 0.08205618785625499,
+                "low": 0.0406837291117572,
+                "shared_fraction": 0.0,
+                "successes": 29,
+                "trials": 500
+              },
+              {
+                "amplitude": 3.0,
+                "estimate": 0.072,
+                "high": 0.09806840401696253,
+                "low": 0.0524580314181262,
+                "shared_fraction": 0.0,
+                "successes": 36,
+                "trials": 500
+              }
+            ]
+          }
+        }
+      },
+      "passes_both_development_panels": false
+    },
+    "target_propensity_only": {
+      "panels": {
+        "v03": {
+          "cells": [
+            {
+              "alpha": 0.05,
+              "amplitude": 0.5,
+              "mean_null_statistic": -2.3796443947651817e-05,
+              "mean_statistic": -0.00041080250658292485,
+              "median_p_value": 0.50725,
+              "n_replicates": 500,
+              "rejection_rate": 0.052,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 1.0,
+              "mean_null_statistic": 1.507212522081958e-05,
+              "mean_statistic": 0.0012084731046392244,
+              "median_p_value": 0.49624999999999997,
+              "n_replicates": 500,
+              "rejection_rate": 0.068,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 3.443839520044108e-06,
+              "mean_statistic": 0.004756297846805,
+              "median_p_value": 0.4235,
+              "n_replicates": 500,
+              "rejection_rate": 0.066,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 3.0,
+              "mean_null_statistic": -5.021974761457439e-06,
+              "mean_statistic": 0.008534024415438022,
+              "median_p_value": 0.32425000000000004,
+              "n_replicates": 500,
+              "rejection_rate": 0.09,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 1.2888968478058423e-05,
+              "mean_statistic": 0.07697759857598524,
+              "median_p_value": 0.001,
+              "n_replicates": 500,
+              "rejection_rate": 0.878,
+              "shared_fraction": 1.0
+            }
+          ],
+          "passed": false,
+          "precision": {
+            "full_shared_interval": {
+              "amplitude": 2.0,
+              "estimate": 0.878,
+              "high": 0.9038407216849063,
+              "low": 0.8463952769261602,
+              "shared_fraction": 1.0,
+              "successes": 439,
+              "trials": 500
+            },
+            "full_shared_moderate_estimate": 0.878,
+            "full_shared_moderate_lower95": 0.8463952769261602,
+            "max_zero_shared_estimate": 0.09,
+            "max_zero_shared_upper95": 0.11830941128933344,
+            "moderate_amplitude": 2.0,
+            "passed": false,
+            "power_lower_floor": 0.8,
+            "power_pass": true,
+            "type1_pass": false,
+            "type1_upper_ceiling": 0.1,
+            "zero_shared_intervals": [
+              {
+                "amplitude": 0.5,
+                "estimate": 0.052,
+                "high": 0.07510114393784553,
+                "low": 0.035730265115705276,
+                "shared_fraction": 0.0,
+                "successes": 26,
+                "trials": 500
+              },
+              {
+                "amplitude": 1.0,
+                "estimate": 0.068,
+                "high": 0.0935209227338743,
+                "low": 0.04906650742490687,
+                "shared_fraction": 0.0,
+                "successes": 34,
+                "trials": 500
+              },
+              {
+                "amplitude": 2.0,
+                "estimate": 0.066,
+                "high": 0.09123940116085351,
+                "low": 0.04737852635977387,
+                "shared_fraction": 0.0,
+                "successes": 33,
+                "trials": 500
+              },
+              {
+                "amplitude": 3.0,
+                "estimate": 0.09,
+                "high": 0.11830941128933344,
+                "low": 0.0679425478891394,
+                "shared_fraction": 0.0,
+                "successes": 45,
+                "trials": 500
+              }
+            ]
+          }
+        },
+        "v04": {
+          "cells": [
+            {
+              "alpha": 0.05,
+              "amplitude": 0.5,
+              "mean_null_statistic": -8.482827322572467e-07,
+              "mean_statistic": -0.0006240014279073223,
+              "median_p_value": 0.5525,
+              "n_replicates": 500,
+              "rejection_rate": 0.054,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 1.0,
+              "mean_null_statistic": 3.1286257894625798e-06,
+              "mean_statistic": 0.001573835584682281,
+              "median_p_value": 0.48024999999999995,
+              "n_replicates": 500,
+              "rejection_rate": 0.054,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 2.7167709154814514e-05,
+              "mean_statistic": 0.000973367045124653,
+              "median_p_value": 0.47624999999999995,
+              "n_replicates": 500,
+              "rejection_rate": 0.06,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 3.0,
+              "mean_null_statistic": -7.714413840358759e-06,
+              "mean_statistic": 0.001814546392147665,
+              "median_p_value": 0.463,
+              "n_replicates": 500,
+              "rejection_rate": 0.07,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 1.13812111648575e-05,
+              "mean_statistic": 0.03223392208490271,
+              "median_p_value": 0.04925,
+              "n_replicates": 500,
+              "rejection_rate": 0.502,
+              "shared_fraction": 1.0
+            }
+          ],
+          "passed": false,
+          "precision": {
+            "full_shared_interval": {
+              "amplitude": 2.0,
+              "estimate": 0.502,
+              "high": 0.5456431394082917,
+              "low": 0.45832636322986225,
+              "shared_fraction": 1.0,
+              "successes": 251,
+              "trials": 500
+            },
+            "full_shared_moderate_estimate": 0.502,
+            "full_shared_moderate_lower95": 0.45832636322986225,
+            "max_zero_shared_estimate": 0.07,
+            "max_zero_shared_upper95": 0.09579718985191686,
+            "moderate_amplitude": 2.0,
+            "passed": false,
+            "power_lower_floor": 0.8,
+            "power_pass": false,
+            "type1_pass": true,
+            "type1_upper_ceiling": 0.1,
+            "zero_shared_intervals": [
+              {
+                "amplitude": 0.5,
+                "estimate": 0.054,
+                "high": 0.07742656151064709,
+                "low": 0.03737435018105752,
+                "shared_fraction": 0.0,
+                "successes": 27,
+                "trials": 500
+              },
+              {
+                "amplitude": 1.0,
+                "estimate": 0.054,
+                "high": 0.07742656151064709,
+                "low": 0.03737435018105752,
+                "shared_fraction": 0.0,
+                "successes": 27,
+                "trials": 500
+              },
+              {
+                "amplitude": 2.0,
+                "estimate": 0.06,
+                "high": 0.08436106312521979,
+                "low": 0.0423483564809462,
+                "shared_fraction": 0.0,
+                "successes": 30,
+                "trials": 500
+              },
+              {
+                "amplitude": 3.0,
+                "estimate": 0.07,
+                "high": 0.09579718985191686,
+                "low": 0.0507597429450181,
+                "shared_fraction": 0.0,
+                "successes": 35,
+                "trials": 500
+              }
+            ]
+          }
+        }
+      },
+      "passes_both_development_panels": false
+    },
+    "two_sided_propensity_only": {
+      "panels": {
+        "v03": {
+          "cells": [
+            {
+              "alpha": 0.05,
+              "amplitude": 0.5,
+              "mean_null_statistic": -2.5116543326412424e-05,
+              "mean_statistic": -0.00039945047590561974,
+              "median_p_value": 0.5035,
+              "n_replicates": 500,
+              "rejection_rate": 0.052,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 1.0,
+              "mean_null_statistic": 1.4709117973063306e-05,
+              "mean_statistic": 0.001207721504026476,
+              "median_p_value": 0.49224999999999997,
+              "n_replicates": 500,
+              "rejection_rate": 0.06,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 3.5790458626684213e-06,
+              "mean_statistic": 0.004816249223539825,
+              "median_p_value": 0.4245,
+              "n_replicates": 500,
+              "rejection_rate": 0.07,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 3.0,
+              "mean_null_statistic": -4.877524120621533e-06,
+              "mean_statistic": 0.008712994702452416,
+              "median_p_value": 0.32075,
+              "n_replicates": 500,
+              "rejection_rate": 0.092,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 1.4372989288515865e-05,
+              "mean_statistic": 0.0786084668739254,
+              "median_p_value": 0.001,
+              "n_replicates": 500,
+              "rejection_rate": 0.878,
+              "shared_fraction": 1.0
+            }
+          ],
+          "passed": false,
+          "precision": {
+            "full_shared_interval": {
+              "amplitude": 2.0,
+              "estimate": 0.878,
+              "high": 0.9038407216849063,
+              "low": 0.8463952769261602,
+              "shared_fraction": 1.0,
+              "successes": 439,
+              "trials": 500
+            },
+            "full_shared_moderate_estimate": 0.878,
+            "full_shared_moderate_lower95": 0.8463952769261602,
+            "max_zero_shared_estimate": 0.092,
+            "max_zero_shared_upper95": 0.12053873813617456,
+            "moderate_amplitude": 2.0,
+            "passed": false,
+            "power_lower_floor": 0.8,
+            "power_pass": true,
+            "type1_pass": false,
+            "type1_upper_ceiling": 0.1,
+            "zero_shared_intervals": [
+              {
+                "amplitude": 0.5,
+                "estimate": 0.052,
+                "high": 0.07510114393784553,
+                "low": 0.035730265115705276,
+                "shared_fraction": 0.0,
+                "successes": 26,
+                "trials": 500
+              },
+              {
+                "amplitude": 1.0,
+                "estimate": 0.06,
+                "high": 0.08436106312521979,
+                "low": 0.0423483564809462,
+                "shared_fraction": 0.0,
+                "successes": 30,
+                "trials": 500
+              },
+              {
+                "amplitude": 2.0,
+                "estimate": 0.07,
+                "high": 0.09579718985191686,
+                "low": 0.0507597429450181,
+                "shared_fraction": 0.0,
+                "successes": 35,
+                "trials": 500
+              },
+              {
+                "amplitude": 3.0,
+                "estimate": 0.092,
+                "high": 0.12053873813617456,
+                "low": 0.06968272368045207,
+                "shared_fraction": 0.0,
+                "successes": 46,
+                "trials": 500
+              }
+            ]
+          }
+        },
+        "v04": {
+          "cells": [
+            {
+              "alpha": 0.05,
+              "amplitude": 0.5,
+              "mean_null_statistic": -1.221884083775388e-06,
+              "mean_statistic": -0.0006014101401909739,
+              "median_p_value": 0.55125,
+              "n_replicates": 500,
+              "rejection_rate": 0.05,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 1.0,
+              "mean_null_statistic": 2.9205136568551537e-06,
+              "mean_statistic": 0.0016187269229716507,
+              "median_p_value": 0.47775,
+              "n_replicates": 500,
+              "rejection_rate": 0.054,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 2.7993516111534564e-05,
+              "mean_statistic": 0.000958050125509329,
+              "median_p_value": 0.47775,
+              "n_replicates": 500,
+              "rejection_rate": 0.058,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 3.0,
+              "mean_null_statistic": -7.3625368235391234e-06,
+              "mean_statistic": 0.001842277746883001,
+              "median_p_value": 0.4605,
+              "n_replicates": 500,
+              "rejection_rate": 0.07,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 1.1842586143173585e-05,
+              "mean_statistic": 0.03287802790127153,
+              "median_p_value": 0.04925,
+              "n_replicates": 500,
+              "rejection_rate": 0.502,
+              "shared_fraction": 1.0
+            }
+          ],
+          "passed": false,
+          "precision": {
+            "full_shared_interval": {
+              "amplitude": 2.0,
+              "estimate": 0.502,
+              "high": 0.5456431394082917,
+              "low": 0.45832636322986225,
+              "shared_fraction": 1.0,
+              "successes": 251,
+              "trials": 500
+            },
+            "full_shared_moderate_estimate": 0.502,
+            "full_shared_moderate_lower95": 0.45832636322986225,
+            "max_zero_shared_estimate": 0.07,
+            "max_zero_shared_upper95": 0.09579718985191686,
+            "moderate_amplitude": 2.0,
+            "passed": false,
+            "power_lower_floor": 0.8,
+            "power_pass": false,
+            "type1_pass": true,
+            "type1_upper_ceiling": 0.1,
+            "zero_shared_intervals": [
+              {
+                "amplitude": 0.5,
+                "estimate": 0.05,
+                "high": 0.0727681611715476,
+                "low": 0.034093745243849435,
+                "shared_fraction": 0.0,
+                "successes": 25,
+                "trials": 500
+              },
+              {
+                "amplitude": 1.0,
+                "estimate": 0.054,
+                "high": 0.07742656151064709,
+                "low": 0.03737435018105752,
+                "shared_fraction": 0.0,
+                "successes": 27,
+                "trials": 500
+              },
+              {
+                "amplitude": 2.0,
+                "estimate": 0.058,
+                "high": 0.08205618785625499,
+                "low": 0.0406837291117572,
+                "shared_fraction": 0.0,
+                "successes": 29,
+                "trials": 500
+              },
+              {
+                "amplitude": 3.0,
+                "estimate": 0.07,
+                "high": 0.09579718985191686,
+                "low": 0.0507597429450181,
+                "shared_fraction": 0.0,
+                "successes": 35,
+                "trials": 500
+              }
+            ]
+          }
+        }
+      },
+      "passes_both_development_panels": false
+    },
+    "v04_two_sided_length_and_propensity": {
+      "panels": {
+        "v03": {
+          "cells": [
+            {
+              "alpha": 0.05,
+              "amplitude": 0.5,
+              "mean_null_statistic": -2.0466790822722042e-05,
+              "mean_statistic": -0.0005982543005925938,
+              "median_p_value": 0.5077499999999999,
+              "n_replicates": 500,
+              "rejection_rate": 0.054,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 1.0,
+              "mean_null_statistic": 1.3001751115683795e-05,
+              "mean_statistic": 0.0011170328809664456,
+              "median_p_value": 0.4875,
+              "n_replicates": 500,
+              "rejection_rate": 0.05,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 4.1001043644695935e-06,
+              "mean_statistic": 0.004704508669410068,
+              "median_p_value": 0.432,
+              "n_replicates": 500,
+              "rejection_rate": 0.074,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 3.0,
+              "mean_null_statistic": -1.465974022089431e-06,
+              "mean_statistic": 0.006972628313429226,
+              "median_p_value": 0.354,
+              "n_replicates": 500,
+              "rejection_rate": 0.076,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 1.83721584276533e-05,
+              "mean_statistic": 0.07738186681651621,
+              "median_p_value": 0.001,
+              "n_replicates": 500,
+              "rejection_rate": 0.872,
+              "shared_fraction": 1.0
+            }
+          ],
+          "passed": false,
+          "precision": {
+            "full_shared_interval": {
+              "amplitude": 2.0,
+              "estimate": 0.872,
+              "high": 0.8984731760047634,
+              "low": 0.8398543146918417,
+              "shared_fraction": 1.0,
+              "successes": 436,
+              "trials": 500
+            },
+            "full_shared_moderate_estimate": 0.872,
+            "full_shared_moderate_lower95": 0.8398543146918417,
+            "max_zero_shared_estimate": 0.076,
+            "max_zero_shared_upper95": 0.10259641367396849,
+            "moderate_amplitude": 2.0,
+            "passed": false,
+            "power_lower_floor": 0.8,
+            "power_pass": true,
+            "type1_pass": false,
+            "type1_upper_ceiling": 0.1,
+            "zero_shared_intervals": [
+              {
+                "amplitude": 0.5,
+                "estimate": 0.054,
+                "high": 0.07742656151064709,
+                "low": 0.03737435018105752,
+                "shared_fraction": 0.0,
+                "successes": 27,
+                "trials": 500
+              },
+              {
+                "amplitude": 1.0,
+                "estimate": 0.05,
+                "high": 0.0727681611715476,
+                "low": 0.034093745243849435,
+                "shared_fraction": 0.0,
+                "successes": 25,
+                "trials": 500
+              },
+              {
+                "amplitude": 2.0,
+                "estimate": 0.074,
+                "high": 0.10033475332223055,
+                "low": 0.054161184751011976,
+                "shared_fraction": 0.0,
+                "successes": 37,
+                "trials": 500
+              },
+              {
+                "amplitude": 3.0,
+                "estimate": 0.076,
+                "high": 0.10259641367396849,
+                "low": 0.055869027037427826,
+                "shared_fraction": 0.0,
+                "successes": 38,
+                "trials": 500
+              }
+            ]
+          }
+        },
+        "v04": {
+          "cells": [
+            {
+              "alpha": 0.05,
+              "amplitude": 0.5,
+              "mean_null_statistic": -4.319740249698752e-06,
+              "mean_statistic": -0.0005307326292796464,
+              "median_p_value": 0.54725,
+              "n_replicates": 500,
+              "rejection_rate": 0.05,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 1.0,
+              "mean_null_statistic": -4.110402487047684e-06,
+              "mean_statistic": 0.001542363757158956,
+              "median_p_value": 0.47424999999999995,
+              "n_replicates": 500,
+              "rejection_rate": 0.064,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 2.6269329444399673e-05,
+              "mean_statistic": 0.0013276188759213168,
+              "median_p_value": 0.4875,
+              "n_replicates": 500,
+              "rejection_rate": 0.062,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 3.0,
+              "mean_null_statistic": -6.051364094116555e-06,
+              "mean_statistic": 0.0011861489441553727,
+              "median_p_value": 0.49075,
+              "n_replicates": 500,
+              "rejection_rate": 0.07,
+              "shared_fraction": 0.0
+            },
+            {
+              "alpha": 0.05,
+              "amplitude": 2.0,
+              "mean_null_statistic": 1.7649622318883562e-05,
+              "mean_statistic": 0.030676463071157244,
+              "median_p_value": 0.05925,
+              "n_replicates": 500,
+              "rejection_rate": 0.48,
+              "shared_fraction": 1.0
+            }
+          ],
+          "passed": false,
+          "precision": {
+            "full_shared_interval": {
+              "amplitude": 2.0,
+              "estimate": 0.48,
+              "high": 0.5237765470447299,
+              "low": 0.43652842657373225,
+              "shared_fraction": 1.0,
+              "successes": 240,
+              "trials": 500
+            },
+            "full_shared_moderate_estimate": 0.48,
+            "full_shared_moderate_lower95": 0.43652842657373225,
+            "max_zero_shared_estimate": 0.07,
+            "max_zero_shared_upper95": 0.09579718985191686,
+            "moderate_amplitude": 2.0,
+            "passed": false,
+            "power_lower_floor": 0.8,
+            "power_pass": false,
+            "type1_pass": true,
+            "type1_upper_ceiling": 0.1,
+            "zero_shared_intervals": [
+              {
+                "amplitude": 0.5,
+                "estimate": 0.05,
+                "high": 0.0727681611715476,
+                "low": 0.034093745243849435,
+                "shared_fraction": 0.0,
+                "successes": 25,
+                "trials": 500
+              },
+              {
+                "amplitude": 1.0,
+                "estimate": 0.064,
+                "high": 0.08895240883768415,
+                "low": 0.04569601604478943,
+                "shared_fraction": 0.0,
+                "successes": 32,
+                "trials": 500
+              },
+              {
+                "amplitude": 2.0,
+                "estimate": 0.062,
+                "high": 0.08665971310163822,
+                "low": 0.044019209142681565,
+                "shared_fraction": 0.0,
+                "successes": 31,
+                "trials": 500
+              },
+              {
+                "amplitude": 3.0,
+                "estimate": 0.07,
+                "high": 0.09579718985191686,
+                "low": 0.0507597429450181,
+                "shared_fraction": 0.0,
+                "successes": 35,
+                "trials": 500
+              }
+            ]
+          }
+        }
+      },
+      "passes_both_development_panels": false
+    }
+  },
+  "claim_ready": false,
+  "confirmation_requires_predeclared_birds_and_butterflies": true,
+  "failed_panels_cannot_qualify_v05": true,
+  "interpretation_boundary": "Both failed external panels are development-only. The raw v0.3 statistic is reported only to diagnose geometry-limited power and is not eligible for selection. A selected candidate, if any, must be locked before the predeclared bird and butterfly confirmation panels are opened; both confirmations must pass Wilson precision before the RGFCA reserve can be authorized.",
+  "lineage": {
+    "workflow_head_sha": "b1bdd1774ab8871573487d50ea01f639da4762f4",
+    "workflow_run_id": 34174519966
+  },
+  "nonselectable_v03_raw_benchmark": {
+    "v03": {
+      "cells": [
+        {
+          "alpha": 0.05,
+          "amplitude": 0.5,
+          "mean_null_statistic": -2.9218978711977775e-05,
+          "mean_statistic": -9.642878210750717e-06,
+          "median_p_value": 0.50475,
+          "n_replicates": 500,
+          "rejection_rate": 0.046,
+          "shared_fraction": 0.0
+        },
+        {
+          "alpha": 0.05,
+          "amplitude": 1.0,
+          "mean_null_statistic": 1.112118581729307e-05,
+          "mean_statistic": 0.0030242426561401838,
+          "median_p_value": 0.44,
+          "n_replicates": 500,
+          "rejection_rate": 0.086,
+          "shared_fraction": 0.0
+        },
+        {
+          "alpha": 0.05,
+          "amplitude": 2.0,
+          "mean_null_statistic": -2.5661134832534375e-06,
+          "mean_statistic": 0.015610614869980435,
+          "median_p_value": 0.23475000000000001,
+          "n_replicates": 500,
+          "rejection_rate": 0.202,
+          "shared_fraction": 0.0
+        },
+        {
+          "alpha": 0.05,
+          "amplitude": 3.0,
+          "mean_null_statistic": -1.0279028475530627e-05,
+          "mean_statistic": 0.03117115991874363,
+          "median_p_value": 0.09725,
+          "n_replicates": 500,
+          "rejection_rate": 0.398,
+          "shared_fraction": 0.0
+        },
+        {
+          "alpha": 0.05,
+          "amplitude": 2.0,
+          "mean_null_statistic": 1.5840939987948983e-05,
+          "mean_statistic": 0.08857710020558156,
+          "median_p_value": 0.0005,
+          "n_replicates": 500,
+          "rejection_rate": 0.894,
+          "shared_fraction": 1.0
+        }
+      ],
+      "passed": false,
+      "precision": {
+        "full_shared_interval": {
+          "amplitude": 2.0,
+          "estimate": 0.894,
+          "high": 0.9180429497270297,
+          "low": 0.8639490699892671,
+          "shared_fraction": 1.0,
+          "successes": 447,
+          "trials": 500
+        },
+        "full_shared_moderate_estimate": 0.894,
+        "full_shared_moderate_lower95": 0.8639490699892671,
+        "max_zero_shared_estimate": 0.398,
+        "max_zero_shared_upper95": 0.4415253875502624,
+        "moderate_amplitude": 2.0,
+        "passed": false,
+        "power_lower_floor": 0.8,
+        "power_pass": true,
+        "type1_pass": false,
+        "type1_upper_ceiling": 0.1,
+        "zero_shared_intervals": [
+          {
+            "amplitude": 0.5,
+            "estimate": 0.046,
+            "high": 0.06807779276827323,
+            "low": 0.030845108370816204,
+            "shared_fraction": 0.0,
+            "successes": 23,
+            "trials": 500
+          },
+          {
+            "amplitude": 1.0,
+            "estimate": 0.086,
+            "high": 0.11383981149855754,
+            "low": 0.06447314240360771,
+            "shared_fraction": 0.0,
+            "successes": 43,
+            "trials": 500
+          },
+          {
+            "amplitude": 2.0,
+            "estimate": 0.202,
+            "high": 0.23940288623950645,
+            "low": 0.16914122067557874,
+            "shared_fraction": 0.0,
+            "successes": 101,
+            "trials": 500
+          },
+          {
+            "amplitude": 3.0,
+            "estimate": 0.398,
+            "high": 0.4415253875502624,
+            "low": 0.35602997790389446,
+            "shared_fraction": 0.0,
+            "successes": 199,
+            "trials": 500
+          }
+        ]
+      }
+    },
+    "v04": {
+      "cells": [
+        {
+          "alpha": 0.05,
+          "amplitude": 0.5,
+          "mean_null_statistic": -4.278535822559113e-06,
+          "mean_statistic": -0.0007269337330999528,
+          "median_p_value": 0.5545,
+          "n_replicates": 500,
+          "rejection_rate": 0.052,
+          "shared_fraction": 0.0
+        },
+        {
+          "alpha": 0.05,
+          "amplitude": 1.0,
+          "mean_null_statistic": 9.401041375375704e-06,
+          "mean_statistic": 0.001654811586123291,
+          "median_p_value": 0.47675,
+          "n_replicates": 500,
+          "rejection_rate": 0.056,
+          "shared_fraction": 0.0
+        },
+        {
+          "alpha": 0.05,
+          "amplitude": 2.0,
+          "mean_null_statistic": 3.0845960936640725e-05,
+          "mean_statistic": 0.002945964945195447,
+          "median_p_value": 0.4645,
+          "n_replicates": 500,
+          "rejection_rate": 0.074,
+          "shared_fraction": 0.0
+        },
+        {
+          "alpha": 0.05,
+          "amplitude": 3.0,
+          "mean_null_statistic": -1.4197238991486318e-05,
+          "mean_statistic": 0.005569218163361808,
+          "median_p_value": 0.40275000000000005,
+          "n_replicates": 500,
+          "rejection_rate": 0.1,
+          "shared_fraction": 0.0
+        },
+        {
+          "alpha": 0.05,
+          "amplitude": 2.0,
+          "mean_null_statistic": 1.681664687990431e-05,
+          "mean_statistic": 0.0351831523362834,
+          "median_p_value": 0.04375,
+          "n_replicates": 500,
+          "rejection_rate": 0.528,
+          "shared_fraction": 1.0
+        }
+      ],
+      "passed": false,
+      "precision": {
+        "full_shared_interval": {
+          "amplitude": 2.0,
+          "estimate": 0.528,
+          "high": 0.5713772652699372,
+          "low": 0.48419577166421596,
+          "shared_fraction": 1.0,
+          "successes": 264,
+          "trials": 500
+        },
+        "full_shared_moderate_estimate": 0.528,
+        "full_shared_moderate_lower95": 0.48419577166421596,
+        "max_zero_shared_estimate": 0.1,
+        "max_zero_shared_upper95": 0.1294219096319401,
+        "moderate_amplitude": 2.0,
+        "passed": false,
+        "power_lower_floor": 0.8,
+        "power_pass": false,
+        "type1_pass": false,
+        "type1_upper_ceiling": 0.1,
+        "zero_shared_intervals": [
+          {
+            "amplitude": 0.5,
+            "estimate": 0.052,
+            "high": 0.07510114393784553,
+            "low": 0.035730265115705276,
+            "shared_fraction": 0.0,
+            "successes": 26,
+            "trials": 500
+          },
+          {
+            "amplitude": 1.0,
+            "estimate": 0.056,
+            "high": 0.0797447936467069,
+            "low": 0.03902562068315149,
+            "shared_fraction": 0.0,
+            "successes": 28,
+            "trials": 500
+          },
+          {
+            "amplitude": 2.0,
+            "estimate": 0.074,
+            "high": 0.10033475332223055,
+            "low": 0.054161184751011976,
+            "shared_fraction": 0.0,
+            "successes": 37,
+            "trials": 500
+          },
+          {
+            "amplitude": 3.0,
+            "estimate": 0.1,
+            "high": 0.1294219096319401,
+            "low": 0.07667756273730172,
+            "shared_fraction": 0.0,
+            "successes": 50,
+            "trials": 500
+          }
+        ]
+      }
+    }
+  },
+  "rgfca_reserve_opened": false,
+  "rule": "docs/supporting/v05_one_sided_geometry_candidate_rule.json",
+  "schema": "ttf_v05_one_sided_diagnostic_v0.1",
+  "selected_candidate": null,
+  "selection_rule_applied_mechanically": true,
+  "status": "development_only_after_v03_v04_external_failures"
+}
