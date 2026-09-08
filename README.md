@@ -71,12 +71,31 @@ Frozen results and workflow lineage are under `results/`, including `results/qua
 
 See [`docs/METHOD_SPEC.md`](docs/METHOD_SPEC.md) and [`docs/QUALIFICATION_PROTOCOL.md`](docs/QUALIFICATION_PROTOCOL.md).
 
-## Install and test
+## PAYOFF mechanistic spatial projection
 
-```bash
-python -m pip install -e ".[test]"
-pytest -q
+TTF can also be used as the **cross-species spatial-projection layer** for an independently specified architecture-payoff mechanism.
+
+The current bridge assigns complementary roles:
+
+```text
+Campanula microdonta
+individual-system anchor
+        |
+        v
+PAYOFF local architecture margin
+        |
+        v
+spatial payoff projection
+        |
+        v
+TTF held-out cross-species transfer
 ```
+
+A PAYOFF-derived predictor space `P` can be compared against geography/environment baselines using the existing generic predictor-space competition, provided the evaluation species' trait outcomes are not used to tune the mechanism predictor.
+
+The Izu *C. microdonta* populations are treated as one deeply resolved anchor species, not as multiple held-out species for TTF's superpopulation claim.
+
+See [`docs/PAYOFF_SPATIAL_PROJECTION_HANDOFF.md`](docs/PAYOFF_SPATIAL_PROJECTION_HANDOFF.md) for the feature contract, leakage rules, paired increments, directional caveat, and claim boundary.
 
 ## Run a calibration grid
 
