@@ -1,0 +1,218 @@
+name: v08-external-validity
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - "docs/supporting/v08_validity_authorization.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: analysis/gate-i-geometry-calibration
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      - run: pytest -q
+      - name: Require exact Gate-V authorization and unopened future layers
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          auth=json.loads(Path('docs/supporting/v08_validity_authorization.json').read_text())
+          rule=json.loads(Path('docs/supporting/v08_validity_detectability_rule.json').read_text())
+          panels=json.loads(Path('benchmarks/frozen/v08_validity_panels_source.json').read_text())
+          legacy=json.loads(Path('benchmarks/frozen/v05_confirmation_panels_source.json').read_text())
+          reserve=json.loads(Path('benchmarks/frozen/v03_rgfca_reserve_geometry_source.json').read_text())
+          v07=json.loads(Path('results/v07_profiled_private_null_diagnostic_v0.1.json').read_text())
+          assert auth['status']=='authorize_exactly_one_v08_fresh_external_type1_validity_run'
+          assert rule['status']=='frozen_before_v08_external_validity_panels_are_declared'
+          assert panels['status']=='two_fresh_external_validity_panels_frozen_after_v08_rule'
+          assert panels['synthetic_worlds_run_at_freeze']==0
+          assert panels['shared_positive_control_opened'] is False
+          assert legacy['synthetic_worlds_run_at_freeze']==0
+          assert reserve['synthetic_worlds_run_at_freeze']==0
+          assert v07['selected_development_candidate'] is None
+          assert auth['shared_positive_control_forbidden'] is True
+          def blob(path): return subprocess.check_output(['git','rev-parse',f'HEAD:{path}'],text=True).strip()
+          expected={
+              'rule_blob_sha': 'docs/supporting/v08_validity_detectability_rule.json',
+              'panel_source_blob_sha': 'benchmarks/frozen/v08_validity_panels_source.json',
+              'runner_blob_sha': 'scripts/run_v08_validity_statistics.py',
+              'aggregator_blob_sha': 'scripts/aggregate_v08_external_validity.py',
+              'v07_result_blob_sha': 'results/v07_profiled_private_null_diagnostic_v0.1.json',
+              'legacy_holdout_blob_sha': 'benchmarks/frozen/v05_confirmation_panels_source.json',
+              'reserve_source_blob_sha': 'benchmarks/frozen/v03_rgfca_reserve_geometry_source.json',
+          }
+          for key,path in expected.items(): assert auth[key]==blob(path),(key,auth[key],blob(path))
+          print({'authorized':True,'shared_positive_opened':False,'legacy_opened':False,'reserve_opened':False})
+          PY
+
+  observed:
+    needs: invariants
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - panel: europe_birds
+            amplitude: 0.5
+          - panel: europe_birds
+            amplitude: 1
+          - panel: europe_birds
+            amplitude: 2
+          - panel: europe_birds
+            amplitude: 3
+          - panel: na_waterbirds
+            amplitude: 0.5
+          - panel: na_waterbirds
+            amplitude: 1
+          - panel: na_waterbirds
+            amplitude: 2
+          - panel: na_waterbirds
+            amplitude: 3
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Generate fresh private observed validity worlds
+        run: >-
+          python scripts/run_v08_validity_statistics.py
+          --mode observed
+          --panel "${{ matrix.panel }}"
+          --input "benchmarks/frozen/v08_validity_${{ matrix.panel }}_geometry.csv"
+          --source-ledger "benchmarks/frozen/v08_validity_${{ matrix.panel }}_geometry_source.json"
+          --amplitude "${{ matrix.amplitude }}"
+          --noise-sd 0.8
+          --replicates 500
+          --k 4
+          --world-batch-size 25
+          --strength-neighbours 4
+          --transition-width 0.2
+          --output "results/v08_validity_cells/observed-${{ matrix.panel }}-a${{ matrix.amplitude }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v08-validity-observed-${{ matrix.panel }}-a${{ matrix.amplitude }}
+          path: results/v08_validity_cells/*.json
+          if-no-files-found: error
+
+  reference:
+    needs: invariants
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {panel: europe_birds, label: A0, amplitude: 0, noise: 0.8}
+          - {panel: europe_birds, label: A0p5, amplitude: 0.5, noise: 0.8}
+          - {panel: europe_birds, label: A1, amplitude: 1, noise: 0.8}
+          - {panel: europe_birds, label: A2, amplitude: 2, noise: 0.8}
+          - {panel: europe_birds, label: A3, amplitude: 3, noise: 0.8}
+          - {panel: europe_birds, label: A5, amplitude: 5, noise: 0.8}
+          - {panel: europe_birds, label: A10, amplitude: 10, noise: 0.8}
+          - {panel: europe_birds, label: infinite_snr, amplitude: 1, noise: 0}
+          - {panel: na_waterbirds, label: A0, amplitude: 0, noise: 0.8}
+          - {panel: na_waterbirds, label: A0p5, amplitude: 0.5, noise: 0.8}
+          - {panel: na_waterbirds, label: A1, amplitude: 1, noise: 0.8}
+          - {panel: na_waterbirds, label: A2, amplitude: 2, noise: 0.8}
+          - {panel: na_waterbirds, label: A3, amplitude: 3, noise: 0.8}
+          - {panel: na_waterbirds, label: A5, amplitude: 5, noise: 0.8}
+          - {panel: na_waterbirds, label: A10, amplitude: 10, noise: 0.8}
+          - {panel: na_waterbirds, label: infinite_snr, amplitude: 1, noise: 0}
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Generate fresh private reference profile/calibration worlds
+        run: >-
+          python scripts/run_v08_validity_statistics.py
+          --mode reference
+          --panel "${{ matrix.panel }}"
+          --input "benchmarks/frozen/v08_validity_${{ matrix.panel }}_geometry.csv"
+          --source-ledger "benchmarks/frozen/v08_validity_${{ matrix.panel }}_geometry_source.json"
+          --amplitude "${{ matrix.amplitude }}"
+          --noise-sd "${{ matrix.noise }}"
+          --configuration-label "${{ matrix.label }}"
+          --replicates 1999
+          --k 4
+          --world-batch-size 25
+          --strength-neighbours 4
+          --transition-width 0.2
+          --output "results/v08_validity_cells/reference-${{ matrix.panel }}-${{ matrix.label }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v08-validity-reference-${{ matrix.panel }}-${{ matrix.label }}
+          path: results/v08_validity_cells/*.json
+          if-no-files-found: error
+
+  aggregate:
+    needs: [observed, reference]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: v08-validity-*
+          path: results/v08_validity_cells
+          merge-multiple: true
+      - name: Require exact Gate-V input set
+        run: test "$(find results/v08_validity_cells -name '*.json' | wc -l)" -eq 24
+      - name: Apply frozen fresh type-I validity rule
+        run: >-
+          python scripts/aggregate_v08_external_validity.py
+          --input-dir results/v08_validity_cells
+          --rule docs/supporting/v08_validity_detectability_rule.json
+          --panel-source benchmarks/frozen/v08_validity_panels_source.json
+          --output results/v08_external_validity_v0.1.json
+      - name: Freeze authorization lineage
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('results/v08_external_validity_v0.1.json'); d=json.loads(p.read_text())
+          d['authorization']=json.loads(Path('docs/supporting/v08_validity_authorization.json').read_text())
+          d['lineage']={'workflow_run_id':int('${{ github.run_id }}'),'workflow_head_sha':'${{ github.sha }}'}
+          p.write_text(json.dumps(d,indent=2,sort_keys=True)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v08-external-validity-result
+          path: results/v08_external_validity_v0.1.json
+          if-no-files-found: error
+      - name: Commit immutable Gate-V result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/v08_external_validity_v0.1.json
+          git commit -m "Freeze v0.8 fresh external validity result"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt*2))
+          done
+          exit 1
