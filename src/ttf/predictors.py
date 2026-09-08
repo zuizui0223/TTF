@@ -108,10 +108,14 @@ def compete_predictor_spaces(
     increments: Mapping[str, tuple[str, str]] | None = None,
     ridge: float = 1.0,
 ) -> PredictorCompetitionResult:
-    """Compare D/G/E/R feature spaces on identical held-out species.
+    """Compare arbitrary named predictor spaces on identical held-out species.
+
+    ``spaces`` maps each user-defined space name to feature columns. This keeps
+    the competition layer open to geography/environment spaces such as G/GE
+    and to prospectively specified mechanistic spaces such as PAYOFF-derived P.
 
     ``increments`` maps a contrast name to ``(larger_space, baseline_space)``.
-    For example ``{"E|G": ("GE", "G")}`` returns T_GE - T_G.
+    For example ``{"P|GE": ("GEP", "GE")}`` returns T_GEP - T_GE.
     """
     scores: dict[str, float] = {}
     for name, columns in spaces.items():
