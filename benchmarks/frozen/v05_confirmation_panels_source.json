@@ -1,0 +1,34 @@
+{
+  "candidate_performance_evaluated_at_freeze": false,
+  "conjunctive_confirmation_required": true,
+  "panel_taxa_overlap": [],
+  "panels": {
+    "birds": {
+      "bandwidth_km": 109.6169436519445,
+      "raw_csv_sha256": "ef54bfa76da5eb91a191b99cf0d404896b221329e23959210b724ae73ae356ff",
+      "raw_ledger_sha256": "cf2b9603083f084740647ec50a708ae1e814af051d832b336e394c1f94670474",
+      "records": 4800,
+      "seed": 20260910,
+      "source_artifact_id": 10035464049,
+      "source_run_id": 34169920175,
+      "species": 48
+    },
+    "butterflies": {
+      "bandwidth_km": 77.89721310217503,
+      "raw_csv_sha256": "e063786e41186c22b3a1f5669ac256f7bdf1c9c75a542281978aa1b3d8cbac9b",
+      "raw_ledger_sha256": "f4f40eee566b6dcfe321124711ef2167dcef7f9833965859fe8b9940614d64da",
+      "records": 4800,
+      "seed": 20260911,
+      "source_artifact_id": 10035457778,
+      "source_run_id": 34169920175,
+      "species": 48
+    }
+  },
+  "prior_gate_i_taxa_overlap": [],
+  "rgfca_reserve_opened": false,
+  "schema": "ttf_v05_confirmation_panels_v0.1",
+  "seal_reused_existing_artifacts_without_reacquisition": true,
+  "source_freeze_run_id": 34169920175,
+  "status": "both_panels_frozen_before_v05_candidate_confirmation",
+  "synthetic_worlds_run_at_freeze": 0
+}
