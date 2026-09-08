@@ -1,0 +1,546 @@
+{
+  "authorization": {
+    "additional_pages_allowed": false,
+    "alpha": 0.05,
+    "bandwidth_km": 500.0,
+    "branch": "analysis/gate-i-geometry-calibration",
+    "calibration_statistic_draws": 1000,
+    "claim_boundary": "This authorization cannot establish an empirical flower-colour shared boundary, biological prevalence, environmental cause, or pollinator mechanism.",
+    "distance_cutoff_allowed": false,
+    "dtype_reduction_allowed": false,
+    "edge_chunk_size": 32,
+    "empirical_colour_or_pixels_may_open": false,
+    "eval_fraction": 0.5,
+    "eval_species": 125,
+    "execution_operator": "exact_dense_gaussian_opportunity_corrected_segment_integrated_field_with_chunked_storage_only",
+    "failed_panel_reuse_allowed": false,
+    "geometry_fingerprint_sha256": "dc2aa6538f83ec5cb84f970829c2c4518de89bd49a154a8e39466bc3541c24f6",
+    "geometry_sha256": "16a61e1cb2fd9596ff983310be2f1670aa7c954546b389d6fd2c5c6266d41fc9",
+    "if_fail": "Freeze the failure. Do not tune k, bandwidth, species membership, record target, profiling rule, thresholds, or reuse this panel for another confirmatory attempt. Keep empirical colour/pixels unopened.",
+    "if_pass": "Freeze the pass as synthetic adequacy of this fresh 250x100 k=15 architecture only. Keep empirical colour values unopened and proceed only to the separately frozen classifiability-only actual-geometry gate and requalification.",
+    "k": 15,
+    "kernel_approximation_allowed": false,
+    "mandatory_cells": [
+      [
+        0.0,
+        0.5
+      ],
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        2.0
+      ],
+      [
+        0.0,
+        3.0
+      ],
+      [
+        1.0,
+        2.0
+      ]
+    ],
+    "master_seed": 20260923,
+    "neighbor_fraction": 0.15,
+    "observed_noise_sd": 0.8,
+    "observed_seed_namespace": "v11_fresh_density_scaled_observed",
+    "observed_worlds_per_cell": 500,
+    "pinned_blobs": {
+      ".github/workflows/v11-fresh-density-scaled-qualification.yml": "0c02835ae28b97dddbfdb7bfdc03aeda7b0a0644",
+      "benchmarks/frozen/v11_fresh_plant_geometry.csv": "568ed9cc805cbca0abe5ca26312c651e4c82a01f",
+      "benchmarks/frozen/v11_fresh_plant_geometry_source.json": "4ee997cad58d9464b9aa58d9252f9292616aebb7",
+      "docs/supporting/v11_fresh_density_scaled_graph_rule.json": "017f347cc09092baa0c5393545cc3f0da315ee82",
+      "results/v08_gate_d_rgfca_reserve_v0.1.json": "71e6f791274d9ce9afdcbd59d8095f3420094fd6",
+      "results/v09_gate_d_rgfca_reserve_b_v0.1.json": "84333b5b7707402ed525d350a42699e259b6a1f7",
+      "results/v10_density_edge_scale_diagnostic_v0.1.json": "40cdcedc903d21c4751a156ef9b0753f18307853",
+      "results/v11_execution_geometry_audit_v0.1.json": "038920c2a49362ecf773419f5c20bb1bd5a49412",
+      "scripts/aggregate_v11_fresh_density_scaled.py": "c95aac602f43839bedc16f5183079b31fc416d5b",
+      "scripts/run_v11_fresh_density_scaled_statistics.py": "7396ba8f31c39d56297934b91f13fd6e648c4bb5",
+      "src/ttf/chunked_transfer.py": "bc513c4da4a1327613edc5437b44144c436a0105",
+      "tests/test_chunked_transfer.py": "b0e50100ea0f737766dad5dc8e12a37a81a31ded"
+    },
+    "post_result_tuning_allowed": false,
+    "power_wilson_lower_floor": 0.8,
+    "prequalification_ci": {
+      "chunked_dense_equivalence_atol": 1e-12,
+      "commit": "c4483da5a0299033e69782c3cd1c269ae7980eb9",
+      "conclusion": "success",
+      "workflow_run": 34190880284
+    },
+    "profile_strength_draws": 999,
+    "purpose": "Run exactly the prospectively frozen v0.11 synthetic qualification on the fresh species-disjoint 250x100 plant geometry using the single density-scaled k=15 graph architecture and unchanged training-only profiled-private inference.",
+    "records": 25000,
+    "records_per_species": 100,
+    "reference_labels": [
+      "A0",
+      "A0p5",
+      "A1",
+      "A2",
+      "A3",
+      "A5",
+      "A10",
+      "infinite_snr"
+    ],
+    "reference_seed_namespace": "v11_fresh_density_scaled_private_reference",
+    "reference_worlds_per_configuration": 1999,
+    "response_dependent_pruning_allowed": false,
+    "schema": "ttf_v11_synthetic_qualification_authorization_v0.1",
+    "segment_points": 5,
+    "selected_private_configurations": 2,
+    "species": 250,
+    "species_replacement_allowed": false,
+    "status": "authorize_exactly_one_v11_fresh_density_scaled_synthetic_qualification",
+    "strength_neighbours": 4,
+    "target_relaxation_allowed": false,
+    "train_chunk_size": 4096,
+    "train_species": 125,
+    "transition_width": 0.2,
+    "type1_wilson_upper_ceiling": 0.1
+  },
+  "candidate_image_pixels_opened": false,
+  "cells": [
+    {
+      "alpha": 0.05,
+      "amplitude": 0.5,
+      "mean_null_statistic": NaN,
+      "mean_statistic": 0.0006732455992541599,
+      "median_p_value": 0.5304695304695304,
+      "n_replicates": 500,
+      "rejection_rate": 0.046,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 1.0,
+      "mean_null_statistic": NaN,
+      "mean_statistic": 0.002596819062647449,
+      "median_p_value": 0.46853146853146854,
+      "n_replicates": 500,
+      "rejection_rate": 0.07,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 2.0,
+      "mean_null_statistic": NaN,
+      "mean_statistic": 0.007340633267565339,
+      "median_p_value": 0.5879120879120878,
+      "n_replicates": 500,
+      "rejection_rate": 0.02,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 3.0,
+      "mean_null_statistic": NaN,
+      "mean_statistic": 0.010816055402164931,
+      "median_p_value": 0.5134865134865135,
+      "n_replicates": 500,
+      "rejection_rate": 0.05,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 2.0,
+      "mean_null_statistic": NaN,
+      "mean_statistic": 0.05550777230773319,
+      "median_p_value": 0.000999000999000999,
+      "n_replicates": 500,
+      "rejection_rate": 0.998,
+      "shared_fraction": 1.0
+    }
+  ],
+  "claim_ready": false,
+  "empirical_colour_outcome_opened": false,
+  "execution_audit": "results/v11_execution_geometry_audit_v0.1.json",
+  "failed_v08_or_v09_panel_reused": false,
+  "geometry_fingerprint_sha256": "dc2aa6538f83ec5cb84f970829c2c4518de89bd49a154a8e39466bc3541c24f6",
+  "interpretation_boundary": "This is a synthetic adequacy test on one prospectively frozen fresh plant geometry with the single predeclared density-scaled k=15 architecture. A pass qualifies only that synthetic fresh-geometry architecture and does not establish an empirical flower-colour boundary. Before empirical inference, the separately frozen classifiability-only actual-geometry gate and requalification must still be applied. A failure freezes the k=15 design on this panel; it may not be tuned on these outcomes.",
+  "lineage": {
+    "workflow_head_sha": "9d53765080e319938c816e4a4e4b9f637b03bc9e",
+    "workflow_run_id": 34190966117
+  },
+  "locked_architecture": {
+    "bandwidth_km": 500.0,
+    "eval_species": 125,
+    "k": 15,
+    "master_seed": 20260923,
+    "neighbor_fraction": 0.15,
+    "records_per_species": 100,
+    "species": 250,
+    "train_species": 125
+  },
+  "matching_private_label_recovery": {
+    "s0.0-a0.5": 1.0,
+    "s0.0-a1.0": 0.96,
+    "s0.0-a2.0": 1.0,
+    "s0.0-a3.0": 1.0,
+    "s1.0-a2.0": null
+  },
+  "next_gate": "If v11_pass is true, keep empirical colour values unopened and execute the already-frozen classifiability-only actual-geometry gate before any empirical TTF conclusion. If false, stop this design without k/bandwidth/species/record/profiling/threshold tuning.",
+  "precision_qualification": {
+    "full_shared_interval": {
+      "amplitude": 2.0,
+      "estimate": 0.998,
+      "high": 0.9996468636054407,
+      "low": 0.9887592932948532,
+      "shared_fraction": 1.0,
+      "successes": 499,
+      "trials": 500
+    },
+    "full_shared_moderate_estimate": 0.998,
+    "full_shared_moderate_lower95": 0.9887592932948532,
+    "max_zero_shared_estimate": 0.07,
+    "max_zero_shared_upper95": 0.09579718985191686,
+    "moderate_amplitude": 2.0,
+    "passed": true,
+    "power_lower_floor": 0.8,
+    "power_pass": true,
+    "type1_pass": true,
+    "type1_upper_ceiling": 0.1,
+    "zero_shared_intervals": [
+      {
+        "amplitude": 0.5,
+        "estimate": 0.046,
+        "high": 0.06807779276827323,
+        "low": 0.030845108370816204,
+        "shared_fraction": 0.0,
+        "successes": 23,
+        "trials": 500
+      },
+      {
+        "amplitude": 1.0,
+        "estimate": 0.07,
+        "high": 0.09579718985191686,
+        "low": 0.0507597429450181,
+        "shared_fraction": 0.0,
+        "successes": 35,
+        "trials": 500
+      },
+      {
+        "amplitude": 2.0,
+        "estimate": 0.02,
+        "high": 0.036420183246879345,
+        "low": 0.010899183596210813,
+        "shared_fraction": 0.0,
+        "successes": 10,
+        "trials": 500
+      },
+      {
+        "amplitude": 3.0,
+        "estimate": 0.05,
+        "high": 0.0727681611715476,
+        "low": 0.034093745243849435,
+        "shared_fraction": 0.0,
+        "successes": 25,
+        "trials": 500
+      }
+    ]
+  },
+  "private_reference_summary": {
+    "A0": {
+      "mean_T": -5.6225181844600006e-06,
+      "strength_mad": 0.004640299393281616,
+      "strength_median": 0.13565924190308065,
+      "strength_q05": 0.12416128742649378,
+      "strength_q95": 0.14662055822055828
+    },
+    "A0p5": {
+      "mean_T": 0.00013103828950075777,
+      "strength_mad": 0.0046763013686945964,
+      "strength_median": 0.14153113343913898,
+      "strength_q05": 0.1301641206713646,
+      "strength_q95": 0.15287553718861616
+    },
+    "A1": {
+      "mean_T": 0.002103773903538313,
+      "strength_mad": 0.004679941227854034,
+      "strength_median": 0.15974008274978974,
+      "strength_q05": 0.14820602392351093,
+      "strength_q95": 0.17090257377540186
+    },
+    "A10": {
+      "mean_T": 0.029936030710349854,
+      "strength_mad": 0.0052233343915399355,
+      "strength_median": 0.4318418682783156,
+      "strength_q05": 0.41830640432921673,
+      "strength_q95": 0.44437484876807126
+    },
+    "A2": {
+      "mean_T": 0.007216005216507965,
+      "strength_mad": 0.004727964217186131,
+      "strength_median": 0.2074768935695762,
+      "strength_q05": 0.19536369893632205,
+      "strength_q95": 0.21879139513506518
+    },
+    "A3": {
+      "mean_T": 0.01087597941295126,
+      "strength_mad": 0.00495321733219925,
+      "strength_median": 0.25087772753566245,
+      "strength_q05": 0.23898914317497158,
+      "strength_q95": 0.26306577635701084
+    },
+    "A5": {
+      "mean_T": 0.017775430842777055,
+      "strength_mad": 0.004984057227269356,
+      "strength_median": 0.3217935152464938,
+      "strength_q05": 0.30973177689919984,
+      "strength_q95": 0.3330639530556352
+    },
+    "infinite_snr": {
+      "mean_T": 0.0621853589929694,
+      "strength_mad": 0.003555541510215643,
+      "strength_median": 0.7513552063509186,
+      "strength_q05": 0.7427015858090512,
+      "strength_q95": 0.7608397962645053
+    }
+  },
+  "profile_distance_summary": {
+    "s0.0-a0.5": {
+      "A0": {
+        "median": 0.9152734567111559,
+        "q05": 0.0844876629384209,
+        "q95": 2.5271175617597588
+      },
+      "A0p5": {
+        "median": 0.6607311598521308,
+        "q05": 0.05945474168639467,
+        "q95": 1.818787926100793
+      },
+      "A1": {
+        "median": 2.6821211669139275,
+        "q05": 0.9773653471469337,
+        "q95": 4.240799061446467
+      },
+      "A10": {
+        "median": 36.91388840702479,
+        "q05": 35.4442230394015,
+        "q95": 38.25762039157819
+      },
+      "A2": {
+        "median": 9.340171532144309,
+        "q05": 7.715589769573514,
+        "q95": 10.825545362119506
+      },
+      "A3": {
+        "median": 14.70385878703696,
+        "q05": 13.151874520341474,
+        "q95": 16.12285588979575
+      },
+      "A5": {
+        "median": 23.95762929035856,
+        "q05": 22.422897494453167,
+        "q95": 25.360852260227002
+      },
+      "infinite_snr": {
+        "median": 113.76778154287231,
+        "q05": 111.61051565593363,
+        "q95": 115.74019460731932
+      }
+    },
+    "s0.0-a1.0": {
+      "A0": {
+        "median": 3.5182653995947533,
+        "q05": 1.8243961392776382,
+        "q95": 5.280906163947956
+      },
+      "A0p5": {
+        "median": 2.5214572378175277,
+        "q05": 0.8591041171035061,
+        "q95": 4.251302299632828
+      },
+      "A1": {
+        "median": 0.7148723280877203,
+        "q05": 0.05022431598586459,
+        "q95": 2.0171770561357816
+      },
+      "A10": {
+        "median": 34.58545276102732,
+        "q05": 33.05823003794322,
+        "q95": 36.0530890920407
+      },
+      "A2": {
+        "median": 6.766297118865735,
+        "q05": 5.078090920390425,
+        "q95": 8.388635965501603
+      },
+      "A3": {
+        "median": 12.24500279967366,
+        "q05": 10.63223727482535,
+        "q95": 13.794844379357187
+      },
+      "A5": {
+        "median": 21.52610691842511,
+        "q05": 19.931269532866484,
+        "q95": 23.058719846274624
+      },
+      "infinite_snr": {
+        "median": 110.34995943200258,
+        "q05": 108.10820729246969,
+        "q95": 112.50424697328631
+      }
+    },
+    "s0.0-a2.0": {
+      "A0": {
+        "median": 10.458388620305538,
+        "q05": 8.908711273797655,
+        "q95": 12.068238334351104
+      },
+      "A0p5": {
+        "median": 9.33245249250947,
+        "q05": 7.811608450162941,
+        "q95": 10.912349335033912
+      },
+      "A1": {
+        "median": 6.993859900966617,
+        "q05": 5.436375974401865,
+        "q95": 8.611819316493298
+      },
+      "A10": {
+        "median": 28.57225137704456,
+        "q05": 27.177412954058802,
+        "q95": 29.914954045051882
+      },
+      "A2": {
+        "median": 0.7330026402856082,
+        "q05": 0.0744061523242729,
+        "q95": 1.7926004252196364
+      },
+      "A3": {
+        "median": 5.89498996953879,
+        "q05": 4.422023854431206,
+        "q95": 7.312900101671371
+      },
+      "A5": {
+        "median": 15.246683341815277,
+        "q05": 13.79009130047959,
+        "q95": 16.648831424252805
+      },
+      "infinite_snr": {
+        "median": 101.52340986314621,
+        "q05": 99.47597960181761,
+        "q95": 103.49431203299048
+      }
+    },
+    "s0.0-a3.0": {
+      "A0": {
+        "median": 16.985292984490727,
+        "q05": 15.339282836104067,
+        "q95": 18.629200037283972
+      },
+      "A0p5": {
+        "median": 15.737917242707454,
+        "q05": 14.12253276705716,
+        "q95": 17.35123775297106
+      },
+      "A1": {
+        "median": 13.553643884614107,
+        "q05": 11.899341874681719,
+        "q95": 15.205832204499888
+      },
+      "A10": {
+        "median": 22.917079399878723,
+        "q05": 21.49273233129988,
+        "q95": 24.34324867491281
+      },
+      "A2": {
+        "median": 6.132031289079582,
+        "q05": 4.5555305116910025,
+        "q95": 7.706517782509348
+      },
+      "A3": {
+        "median": 0.6335641849232359,
+        "q05": 0.07592376616122336,
+        "q95": 1.7138788009682295
+      },
+      "A5": {
+        "median": 9.341140191740703,
+        "q05": 7.853733069881579,
+        "q95": 10.830450194518962
+      },
+      "infinite_snr": {
+        "median": 93.22239804108733,
+        "q05": 91.13165316140403,
+        "q95": 95.31581766830938
+      }
+    },
+    "s1.0-a2.0": {
+      "A0": {
+        "median": 9.748296582144597,
+        "q05": 6.724116235781695,
+        "q95": 12.034844481664674
+      },
+      "A0p5": {
+        "median": 8.635572430225308,
+        "q05": 5.667659997929787,
+        "q95": 10.879576808531153
+      },
+      "A1": {
+        "median": 6.28019073731169,
+        "q05": 3.240775925507649,
+        "q95": 8.578257240540914
+      },
+      "A10": {
+        "median": 29.187503627016454,
+        "q05": 27.206346728691404,
+        "q95": 31.807774891061882
+      },
+      "A2": {
+        "median": 1.1080108655094714,
+        "q05": 0.0811470950789923,
+        "q95": 3.6958261740819154
+      },
+      "A3": {
+        "median": 6.544703729583065,
+        "q05": 4.452578267697768,
+        "q95": 9.311741632129033
+      },
+      "A5": {
+        "median": 15.889174626794805,
+        "q05": 13.820306058806535,
+        "q95": 18.625453041881272
+      },
+      "infinite_snr": {
+        "median": 102.42651523663204,
+        "q05": 99.51845038895758,
+        "q95": 106.27271174978266
+      }
+    }
+  },
+  "rule": "docs/supporting/v11_fresh_density_scaled_graph_rule.json",
+  "schema": "ttf_v11_fresh_density_scaled_qualification_v0.1",
+  "selected_pair_counts": {
+    "s0.0-a0.5": {
+      "A0+A0p5": 168,
+      "A0p5+A0": 234,
+      "A0p5+A1": 56,
+      "A1+A0p5": 42
+    },
+    "s0.0-a1.0": {
+      "A0p5+A0": 20,
+      "A0p5+A1": 31,
+      "A1+A0p5": 442,
+      "A1+A2": 7
+    },
+    "s0.0-a2.0": {
+      "A2+A1": 159,
+      "A2+A3": 341
+    },
+    "s0.0-a3.0": {
+      "A3+A2": 482,
+      "A3+A5": 18
+    },
+    "s1.0-a2.0": {
+      "A1+A0p5": 4,
+      "A1+A2": 31,
+      "A2+A1": 229,
+      "A2+A3": 234,
+      "A3+A2": 2
+    }
+  },
+  "source_ledger": "benchmarks/frozen/v11_fresh_plant_geometry_source.json",
+  "status": "synthetic_qualification_on_fresh_species_disjoint_250x100_density_scaled_graph",
+  "v11_pass": true
+}
