@@ -44,6 +44,54 @@ def test_predictor_space_increments_are_paired_on_same_species_split():
     assert result.scores["GE"] > result.scores["G"]
 
 
+def test_payoff_predictor_space_uses_generic_named_space_contract():
+    world = simulate_circular_boundary_world(
+        n_species=12,
+        records_per_species=30,
+        shared_fraction=1.0,
+        amplitude=2.0,
+        noise_sd=0.5,
+        transition_width=0.15,
+        seed=91,
+    )
+    train, evaluation = split_species(
+        [s.species for s in world.samples], eval_fraction=0.5, seed=5
+    )
+    edge_map = {s.species: build_species_edges(s, k=4) for s in world.samples}
+    features = {}
+    for name, edges in edge_map.items():
+        geography = edges.length
+        environment = np.linspace(-1.0, 1.0, edges.n_edges)
+        payoff = edges.turnover + 0.01 * np.arange(edges.n_edges)
+        features[name] = np.column_stack((geography, environment, payoff))
+
+    result = compete_predictor_spaces(
+        [edge_map[s] for s in train],
+        [edge_map[s] for s in evaluation],
+        features,
+        spaces={
+            "GE": [0, 1],
+            "P": [2],
+            "GEP": [0, 1, 2],
+        },
+        increments={
+            "P|GE": ("GEP", "GE"),
+            "GE|P": ("GEP", "P"),
+        },
+        ridge=0.1,
+    )
+
+    assert np.isclose(
+        result.increments["P|GE"],
+        result.scores["GEP"] - result.scores["GE"],
+    )
+    assert np.isclose(
+        result.increments["GE|P"],
+        result.scores["GEP"] - result.scores["P"],
+    )
+    assert set(result.scores) == {"GE", "P", "GEP"}
+
+
 def test_qualification_requires_zero_shared_adversarial_arm_and_power():
     cells = (
         CalibrationCell(0.0, 1.0, 100, 0.05, 0.04, 0.0, 0.0, 0.5),
