@@ -1,0 +1,60 @@
+{
+  "schema": "ttf_v09_empirical_opening_firewall_v0.1",
+  "status": "frozen_while_v09_synthetic_gate_d_is_running_before_any_empirical_colour_opening",
+  "scope": "Applies only if the separately authorized v0.9 max-density synthetic Gate-D passes. This file does not authorize pixel acquisition, measurement, colour access, or empirical TTF inference.",
+  "measurement_contract": {
+    "source_repository": "zuizui0223/fcp",
+    "source_commit": "9a3dbd1c433356c4235de87553f9cb9963c11943",
+    "reserve_replication_contract": "docs/supporting/rgfca_reserve_replication_contract_v1.json",
+    "reserve_replication_contract_git_blob_sha": "62141ef764321c8d1fd8e5f5a85816256b047512",
+    "measurement_execution_contract": "docs/supporting/global_monte_carlo_measurement_execution_contract_v1.json",
+    "measurement_execution_contract_git_blob_sha": "5b19ca68610e25cfe37b2510bf33792838b17506",
+    "measurement_method_must_remain_unchanged": "qualified ROI-v4 detector + EfficientSAM + fixed palette; no replacement after download or measurement failure",
+    "pixel_or_measurement_execution_requires_separate_future_authorization": true
+  },
+  "postmeasurement_support_gate": {
+    "purpose": "Prevent the premeasurement 100-record synthetic adequacy result from being applied to a sparser classifiable empirical geometry.",
+    "allowed_fields_before_colour_unseal": [
+      "measurement_id",
+      "terminal_measurement_status",
+      "global_classifiable_boolean"
+    ],
+    "forbidden_fields_before_colour_unseal": [
+      "flower palette counts",
+      "flower colour fractions",
+      "four-component colour vector",
+      "background palette counts",
+      "any colour-derived statistic"
+    ],
+    "metadata_join": "Join terminal status/classifiable only to the already frozen v0.9 reserve-B metadata coordinates. Colour values remain sealed.",
+    "minimum_classifiable_photos_per_species": 40,
+    "required_inferential_species": 250,
+    "consequence_for_exact_v09_panel": "Because v0.9 contains exactly 250 species, every one of the 250 species must retain at least 40 classifiable records. Otherwise label the empirical TTF design not_evaluable; do not relax the threshold or replace species/photos.",
+    "species_split": "Retain the same seed-20260920 125/125 species split; missing records may not move species between train and evaluation.",
+    "actual_geometry": "Freeze the exact coordinates of classifiable terminal records only, with per-species counts and all missing/failure reasons, before any colour vector is accessible to TTF inference.",
+    "synthetic_requalification_on_actual_geometry": {
+      "required": true,
+      "inference": "same profiled-private raw-transfer procedure as v0.8/v0.9",
+      "k": 3,
+      "bandwidth_km": 500.0,
+      "mandatory_cells": [[0.0, 0.5], [0.0, 1.0], [0.0, 2.0], [0.0, 3.0], [1.0, 2.0]],
+      "observed_worlds_per_cell": 500,
+      "private_reference_worlds_per_configuration": 1999,
+      "profile_strength_draws": 999,
+      "calibration_statistic_draws": 1000,
+      "selected_private_configurations": 2,
+      "type1_wilson_upper_ceiling": 0.10,
+      "power_wilson_lower_floor": 0.80,
+      "requires_separate_exact_authorization": true
+    }
+  },
+  "colour_unseal_gate": {
+    "all_terminal_measurement_receipts_required": true,
+    "support_gate_must_pass": true,
+    "actual_geometry_synthetic_requalification_must_pass": true,
+    "separate_empirical_ttf_analysis_contract_must_be_frozen": true,
+    "separate_colour_unseal_authorization_must_be_created": true,
+    "otherwise_colour_values_remain_unopened": true
+  },
+  "claim_boundary": "A premeasurement synthetic adequacy pass is necessary but not sufficient for empirical TTF. Measurement attrition changes graph support and therefore must be requalified without colour values before empirical sharedness is tested."
+}
