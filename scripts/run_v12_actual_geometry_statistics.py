@@ -215,18 +215,18 @@ def main() -> int:
             "storage": "chunked_exact_only",
             "edge_chunk_size": int(args.edge_chunk_size),
             "train_chunk_size": int(args.train_chunk_size),
-            "kernel_approximation": false,
-            "distance_cutoff": null,
-            "dtype_reduction": false,
-            "response_dependent_pruning": false
+            "kernel_approximation": False,
+            "distance_cutoff": None,
+            "dtype_reduction": False,
+            "response_dependent_pruning": False
         },
         "statistics": statistic.tolist(),
         "training_strength": strengths.tolist(),
-        "empirical_colour_values_read": false,
-        "pairwise_colour_distances_computed": false,
-        "empirical_ttf_statistic_computed": false,
-        "heldout_transfer_used_for_nuisance_selection": false,
-        "claim_ready": false
+        "empirical_colour_values_read": False,
+        "pairwise_colour_distances_computed": False,
+        "empirical_ttf_statistic_computed": False,
+        "heldout_transfer_used_for_nuisance_selection": False,
+        "claim_ready": False
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
