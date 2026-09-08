@@ -2,6 +2,7 @@
   "schema": "ttf_v12_classifiability_measurement_authorization_v0.1",
   "status": "authorize_exactly_one_v12_location_blind_classifiability_measurement",
   "branch": "analysis/gate-i-geometry-calibration",
+  "activation": "activate_once_after_measurement_and_requalification_workflows_frozen",
   "purpose": "Measure only photo-level evaluability on the exact frozen v0.11 25,000-photo denominator using the independently frozen FCP location-blind ROI-v4 plus fixed-palette pipeline, then freeze an actual 250x40 geometry if and only if all 250 species have at least 40 evaluable photos. Do not inspect colour values or any empirical TTF statistic.",
   "v11_acquisition_run": 34188366497,
   "candidate_rows": 25000,
