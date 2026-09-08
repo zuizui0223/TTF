@@ -53,7 +53,7 @@ def test_chunked_batch_matches_dense_prepared_transfer():
         chunked,
         train_turnover,
         eval_turnover,
-        query_chunk_size=3,
+        edge_chunk_size=2,
         train_chunk_size=5,
     )
 
@@ -69,6 +69,49 @@ def test_chunked_batch_matches_dense_prepared_transfer():
         )
 
 
+def test_chunked_batch_matches_dense_with_nonzero_prior_mean():
+    train = [_edge_set("train_a", 21), _edge_set("train_b", 22)]
+    evaluation = [_edge_set("eval_a", 23)]
+    dense = prepare_transfer(
+        train,
+        evaluation,
+        bandwidth=350.0,
+        prior_strength=0.4,
+        prior_mean=0.5,
+        segment_points=3,
+    )
+    chunked = prepare_chunked_transfer(
+        train,
+        evaluation,
+        bandwidth=350.0,
+        prior_strength=0.4,
+        prior_mean=0.5,
+        segment_points=3,
+    )
+    rng = np.random.default_rng(101)
+    train_turnover = {
+        edges.species: rng.normal(size=(edges.n_edges, 4)) for edges in train
+    }
+    eval_turnover = {
+        evaluation[0].species: rng.normal(size=(evaluation[0].n_edges, 4))
+    }
+    expected = score_prepared_batch(dense, train_turnover, eval_turnover)
+    actual = score_chunked_batch(
+        chunked,
+        train_turnover,
+        eval_turnover,
+        edge_chunk_size=3,
+        train_chunk_size=7,
+    )
+    np.testing.assert_allclose(actual.statistics, expected.statistics, atol=1e-12, rtol=0.0)
+    np.testing.assert_allclose(
+        actual.species_scores[evaluation[0].species],
+        expected.species_scores[evaluation[0].species],
+        atol=1e-12,
+        rtol=0.0,
+    )
+
+
 def test_chunked_batch_rejects_invalid_chunk_sizes():
     train = [_edge_set("train_a", 11)]
     evaluation = [_edge_set("eval_a", 12)]
@@ -76,13 +119,13 @@ def test_chunked_batch_rejects_invalid_chunk_sizes():
     train_turnover = {train[0].species: np.ones((train[0].n_edges, 2))}
     eval_turnover = {evaluation[0].species: np.ones((evaluation[0].n_edges, 2))}
 
-    for q, p in ((0, 1), (1, 0)):
+    for e, p in ((0, 1), (1, 0)):
         try:
             score_chunked_batch(
                 prepared,
                 train_turnover,
                 eval_turnover,
-                query_chunk_size=q,
+                edge_chunk_size=e,
                 train_chunk_size=p,
             )
         except ValueError:
