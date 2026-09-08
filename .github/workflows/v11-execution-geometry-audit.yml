@@ -1,0 +1,73 @@
+name: v11-execution-geometry-audit
+
+on:
+  push:
+    paths:
+      - docs/supporting/v11_execution_geometry_audit_authorization.json
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analysis/gate-i-geometry-calibration
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e '.[test]'
+      - name: Verify exact outcome-free authorization
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          auth = json.loads(Path('docs/supporting/v11_execution_geometry_audit_authorization.json').read_text())
+          if auth.get('status') != 'authorize_exactly_one_v11_geometry_only_execution_audit':
+              raise SystemExit('bad execution-audit authorization status')
+          if auth.get('synthetic_worlds_may_run') is not False:
+              raise SystemExit('execution audit unexpectedly authorizes synthetic worlds')
+          if auth.get('empirical_colour_or_pixels_may_open') is not False:
+              raise SystemExit('execution audit unexpectedly opens outcomes')
+          for path, expected in auth['pinned_blobs'].items():
+              actual = subprocess.check_output(['git','rev-parse',f'HEAD:{path}'], text=True).strip()
+              if actual != expected:
+                  raise SystemExit(f'blob drift for {path}: {actual} != {expected}')
+          if Path('docs/supporting/v11_synthetic_qualification_authorization.json').exists():
+              raise SystemExit('synthetic authorization must not exist before execution audit')
+          PY
+      - name: Run geometry-only execution audit
+        run: |
+          python scripts/audit_v11_execution_geometry.py \
+            --input benchmarks/frozen/v11_fresh_plant_geometry.csv \
+            --source-ledger benchmarks/frozen/v11_fresh_plant_geometry_source.json \
+            --rule docs/supporting/v11_fresh_density_scaled_graph_rule.json \
+            --edge-chunk-size 32 \
+            --train-chunk-size 4096 \
+            --reference-worlds 1999 \
+            --observed-worlds 500 \
+            --output results/v11_execution_geometry_audit_v0.1.json
+      - name: Enforce firewall
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('results/v11_execution_geometry_audit_v0.1.json').read_text())
+          assert d['schema']=='ttf_v11_execution_geometry_audit_v0.1'
+          assert d['status']=='geometry_only_before_v11_synthetic_qualification'
+          assert d['synthetic_worlds_run']==0
+          assert d['empirical_colour_or_pixels_opened'] is False
+          assert d['candidate_selectable'] is False
+          assert d['geometry']['species']==250 and d['geometry']['records']==25000
+          assert d['graph']['k']==15
+          PY
+      - name: Commit immutable audit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/v11_execution_geometry_audit_v0.1.json
+          git commit -m 'Freeze v0.11 execution geometry audit'
+          git push origin HEAD:analysis/gate-i-geometry-calibration
