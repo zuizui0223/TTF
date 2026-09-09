@@ -56,9 +56,10 @@ def simulate_paired_transition_world(
         magnitude and relative coupling both carry a shared transition.
 
     shared_relational_rotation
-        The relative vector A-B rotates from e1 to e2 across one common
-        boundary while keeping unit norm. Mismatch magnitude is exactly
-        constant when noise_sd=0, but the coupling relation changes.
+        The relative vector A-B switches between two orthogonal directions
+        across one common boundary while keeping identical norm. With
+        ``noise_sd=0`` this construction is numerically exact, so mismatch
+        magnitude is constant and only the coupling relation changes.
     """
 
     allowed = {
@@ -107,12 +108,20 @@ def simulate_paired_transition_world(
             )
 
         else:  # shared_relational_rotation
-            # phi moves from 0 to pi/2 across the shared boundary. Angular
-            # noise preserves ||A-B||=amplitude exactly.
-            phi = 0.5 * np.pi * h
+            side = h >= 0.5
+            state_a = np.zeros((records_per_species, 2), dtype=float)
+            state_a[~side, 0] = float(amplitude)
+            state_a[side, 1] = float(amplitude)
             if noise_sd:
-                phi = phi + rng.normal(0.0, float(noise_sd), records_per_species)
-            state_a = float(amplitude) * np.column_stack((np.cos(phi), np.sin(phi)))
+                # Optional angular perturbation preserves the intended relation
+                # family but is not used by the exact constant-magnitude control.
+                angle = rng.normal(0.0, float(noise_sd), records_per_species)
+                c = np.cos(angle)
+                s = np.sin(angle)
+                x = state_a[:, 0].copy()
+                y = state_a[:, 1].copy()
+                state_a[:, 0] = c * x - s * y
+                state_a[:, 1] = s * x + c * y
             state_b = np.zeros_like(state_a)
 
         samples.append(
