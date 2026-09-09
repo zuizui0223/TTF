@@ -1,0 +1,30 @@
+{
+  "claim_boundary": "This result uses only evaluability plus pre-existing source/species/coordinate metadata. No colour-vector value, palette fraction, colour distance, edge turnover, empirical TTF statistic, shared-boundary map, or environmental association was inspected.",
+  "classifiability_gate_pass": true,
+  "colour_vector_values_read_by_ttf": false,
+  "firewall_sha256": "8930f3e4919c4fce9b0eb3b35976e736c9f47a33242c940ca663b55b0525561a",
+  "frozen_records": 25000,
+  "frozen_species": 250,
+  "minimum_evaluable_records_per_species": 15,
+  "minimum_observed_evaluable_records": 15,
+  "new_image_acquisition_performed": false,
+  "next_gate": "Run the separately authorized frozen v0.13 synthetic requalification on this exact retained geometry before any empirical colour TTF statistic.",
+  "pairwise_colour_distances_computed": false,
+  "palette_fractions_read_by_ttf": false,
+  "retained_geometry": {
+    "bandwidth_km": 500.0,
+    "k": 2,
+    "path": "benchmarks/frozen/v13_minimum_classifiability_geometry.csv",
+    "records": 3750,
+    "records_per_species": 15,
+    "selection_seed": 20260926,
+    "sha256": "63330e2e0ac54a28263af3bf3c36b121fec4804ae7a7788fe1de4c110f3b147f",
+    "species": 250
+  },
+  "schema": "ttf_v13_minimum_classifiability_geometry_result_v0.1",
+  "species_meeting_minimum": 250,
+  "species_replacement_performed": false,
+  "species_specific_classifiability_counts_persisted": false,
+  "status": "minimum_classifiability_geometry_frozen",
+  "ttf_empirical_statistic_computed": false
+}
