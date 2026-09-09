@@ -1,0 +1,160 @@
+name: v13-freeze-minimum-classifiability-geometry
+
+on:
+  push:
+    branches:
+      - "analysis/v13-minimum-classifiability-geometry"
+    paths:
+      - "docs/supporting/v13_minimum_geometry_authorization.json"
+
+permissions:
+  contents: write
+  actions: read
+
+env:
+  V12_RUN: "34232013047"
+  V12_SOURCE: benchmarks/frozen/v12_actual_geometry_source.json
+  V13_RULE: docs/supporting/v13_minimum_classifiability_geometry_rule.json
+  V13_AUTH: docs/supporting/v13_minimum_geometry_authorization.json
+  V13_GEOMETRY: benchmarks/frozen/v13_minimum_classifiability_geometry.csv
+  V13_SOURCE: benchmarks/frozen/v13_minimum_classifiability_geometry_source.json
+
+concurrency:
+  group: v13-freeze-minimum-classifiability-geometry
+  cancel-in-progress: false
+
+jobs:
+  freeze-minimum-geometry:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install TTF and run tests
+        run: |
+          python -m pip install -e ".[test]" pandas
+          pytest -q
+      - name: Require exact v0.13 authorization and unopened predecessor
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+
+          auth=json.loads(Path('docs/supporting/v13_minimum_geometry_authorization.json').read_text())
+          rule=json.loads(Path('docs/supporting/v13_minimum_classifiability_geometry_rule.json').read_text())
+          v12=json.loads(Path('benchmarks/frozen/v12_actual_geometry_source.json').read_text())
+
+          assert auth['schema']=='ttf_v13_minimum_geometry_authorization_v0.1'
+          assert auth['status']=='authorize_exactly_one_v13_minimum_classifiability_geometry_freeze'
+          assert auth['predecessor_result_commit']=='3e4b221f2951aaf940d4695288254e27404fe2fb'
+          assert auth['v12_terminal_run']==34232013047
+          assert auth['new_image_acquisition_allowed'] is False
+          assert auth['species_specific_classifiability_counts_may_be_reported'] is False
+          assert auth['colour_values_may_be_opened'] is False
+          assert auth['empirical_ttf_may_be_computed'] is False
+
+          assert rule['schema']=='ttf_v13_minimum_classifiability_geometry_rule_v0.1'
+          assert rule['geometry_gate']['frozen_species']==250
+          assert rule['geometry_gate']['minimum_evaluable_records_per_species']==15
+          assert rule['geometry_gate']['retained_records_per_species']==15
+          assert rule['actual_geometry_architecture']['records']==3750
+          assert rule['actual_geometry_architecture']['k']==2
+          assert rule['actual_geometry_architecture']['bandwidth_km']==500.0
+
+          # Read only the four aggregate scientific surfaces already authorized for reporting.
+          assert v12['classifiability_gate_pass'] is False
+          assert v12['species_meeting_minimum']==189
+          assert v12['minimum_observed_evaluable_records']==15
+          assert v12['retained_geometry']['records']==0
+          assert v12['colour_vector_values_read_by_ttf'] is False
+          assert v12['pairwise_colour_distances_computed'] is False
+          assert v12['ttf_empirical_statistic_computed'] is False
+
+          pred=auth['predecessor_result_commit']
+          subprocess.run(['git','merge-base','--is-ancestor',pred,'HEAD'],check=True)
+          def blob(ref,path):
+              return subprocess.check_output(['git','rev-parse',f'{ref}:{path}'],text=True).strip()
+          assert blob(pred,'benchmarks/frozen/v12_actual_geometry_source.json')==blob('HEAD','benchmarks/frozen/v12_actual_geometry_source.json')
+          for path,key in [
+              ('docs/supporting/v13_minimum_classifiability_geometry_rule.json','rule_blob_sha'),
+              ('scripts/freeze_v13_minimum_classifiability_geometry.py','freezer_blob_sha'),
+              ('.github/workflows/v13-freeze-minimum-classifiability-geometry.yml','workflow_blob_sha'),
+          ]:
+              assert blob('HEAD',path)==auth[key], (path,blob('HEAD',path),auth[key])
+          assert not Path('benchmarks/frozen/v13_minimum_classifiability_geometry.csv').exists()
+          assert not Path('benchmarks/frozen/v13_minimum_classifiability_geometry_source.json').exists()
+          print({'v13_minimum_geometry_authorized':True,'records_per_species':15,'colour_values_open':False})
+          PY
+      - name: Download exact inherited classifiability firewall
+        uses: actions/download-artifact@v4
+        with:
+          name: v12-classifiability-firewall
+          path: /tmp/firewall
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ env.V12_RUN }}
+      - name: Download exact 128 inherited terminal partitions
+        uses: actions/download-artifact@v4
+        with:
+          pattern: v12-terminal-*
+          path: /tmp/terminal
+          merge-multiple: true
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ env.V12_RUN }}
+      - name: Freeze response-blind 250x15 geometry
+        run: |
+          python scripts/freeze_v13_minimum_classifiability_geometry.py \
+            --results-dir /tmp/terminal \
+            --firewall-dir /tmp/firewall \
+            --rule "$V13_RULE" \
+            --output-geometry "$V13_GEOMETRY" \
+            --output-ledger "$V13_SOURCE"
+      - name: Enforce v0.13 outcome firewall and aggregate-only result surface
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('benchmarks/frozen/v13_minimum_classifiability_geometry_source.json').read_text())
+          assert d['classifiability_gate_pass'] is True
+          assert d['species_meeting_minimum']==250
+          assert d['minimum_observed_evaluable_records']==15
+          assert d['species_specific_classifiability_counts_persisted'] is False
+          assert d['new_image_acquisition_performed'] is False
+          assert d['species_replacement_performed'] is False
+          assert d['colour_vector_values_read_by_ttf'] is False
+          assert d['palette_fractions_read_by_ttf'] is False
+          assert d['pairwise_colour_distances_computed'] is False
+          assert d['ttf_empirical_statistic_computed'] is False
+          assert d['retained_geometry']['species']==250
+          assert d['retained_geometry']['records']==3750
+          assert d['retained_geometry']['records_per_species']==15
+          assert d['retained_geometry']['k']==2
+          assert Path('benchmarks/frozen/v13_minimum_classifiability_geometry.csv').exists()
+          print({'classifiability_gate_pass':True,'species_meeting_minimum':250,'minimum_observed_evaluable_records':15,'retained_geometry_present':True})
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v13-minimum-classifiability-geometry
+          retention-days: 90
+          if-no-files-found: error
+          path: |
+            benchmarks/frozen/v13_minimum_classifiability_geometry.csv
+            benchmarks/frozen/v13_minimum_classifiability_geometry_source.json
+      - name: Commit immutable v0.13 minimum geometry
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/v13_minimum_classifiability_geometry.csv benchmarks/frozen/v13_minimum_classifiability_geometry_source.json
+          git commit -m "Freeze v0.13 minimum classifiability geometry"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt*2))
+          done
+          exit 1
