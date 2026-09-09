@@ -1,0 +1,119 @@
+{
+  "schema": "ttfm_idealized_qualification_rule_v0.1",
+  "status": "frozen_before_formal_qualification_outcomes",
+  "frozen_date": "2026-09-09",
+  "purpose": "formal idealized qualification of TTF-M mismatch-magnitude transfer and TTF-C coupling-relation transfer before any empirical application",
+  "development_diagnostic_outcomes_may_not_change_this_rule": true,
+  "core_estimand": "equal-system mean held-out Spearman transfer of within-system edge-turnover ranks",
+  "inference": {
+    "method": "heldout_species_bootstrap",
+    "alpha": 0.05,
+    "bootstrap_resamples": 1999,
+    "confidence_interval": "two-sided Wilson score 95%",
+    "type1_wilson_upper_ceiling": 0.10,
+    "power_wilson_lower_floor": 0.80,
+    "replicates_per_cell": 500
+  },
+  "geometry": {
+    "n_systems": 40,
+    "records_per_system": 60,
+    "eval_fraction": 0.5,
+    "graph_rule": "density-scaled k/n inherited from TTF v0.10-v0.11",
+    "graph_k": 9,
+    "graph_k_fraction": 0.15,
+    "bandwidth": 0.2,
+    "prior_strength": 0.25,
+    "prior_mean": 0.5,
+    "segment_points": 5
+  },
+  "world_parameters": {
+    "transition_width": 0.2,
+    "scalar_noise_sd": 0.8,
+    "rotation_noise_sd": 0.0,
+    "master_seed": 20260925
+  },
+  "mandatory_cells": [
+    {
+      "id": "Q0_hard_shared_components_no_relation_front",
+      "mode": "coupled_shared_transition_independent_noise",
+      "amplitude": 3.0,
+      "noise_sd": 0.8,
+      "roles": ["ttf_m_type1", "ttf_c_type1"]
+    },
+    {
+      "id": "Q1_private_mismatch_A0p5",
+      "mode": "private_mismatch_transition",
+      "amplitude": 0.5,
+      "noise_sd": 0.8,
+      "roles": ["ttf_m_type1", "ttf_c_type1"]
+    },
+    {
+      "id": "Q1_private_mismatch_A1",
+      "mode": "private_mismatch_transition",
+      "amplitude": 1.0,
+      "noise_sd": 0.8,
+      "roles": ["ttf_m_type1", "ttf_c_type1"]
+    },
+    {
+      "id": "Q1_private_mismatch_A2",
+      "mode": "private_mismatch_transition",
+      "amplitude": 2.0,
+      "noise_sd": 0.8,
+      "roles": ["ttf_m_type1", "ttf_c_type1"]
+    },
+    {
+      "id": "Q1_private_mismatch_A3",
+      "mode": "private_mismatch_transition",
+      "amplitude": 3.0,
+      "noise_sd": 0.8,
+      "roles": ["ttf_m_type1", "ttf_c_type1"]
+    },
+    {
+      "id": "Q1C_private_relation_rotation_A2",
+      "mode": "private_relational_rotation",
+      "amplitude": 2.0,
+      "noise_sd": 0.0,
+      "roles": ["ttf_c_type1"]
+    },
+    {
+      "id": "Q2_shared_mismatch_A2",
+      "mode": "shared_mismatch_transition",
+      "amplitude": 2.0,
+      "noise_sd": 0.8,
+      "roles": ["ttf_m_power", "ttf_c_power"]
+    },
+    {
+      "id": "Q3_shared_relation_rotation_constant_mismatch_A2",
+      "mode": "shared_relational_rotation",
+      "amplitude": 2.0,
+      "noise_sd": 0.0,
+      "roles": ["ttf_m_type1", "ttf_c_power"]
+    }
+  ],
+  "pass_rules": {
+    "TTF_M": {
+      "all_cells_with_role_ttf_m_type1": "Wilson95 upper rejection bound <= 0.10",
+      "all_cells_with_role_ttf_m_power": "Wilson95 lower rejection bound >= 0.80",
+      "interpretation": "qualified only for mismatch-magnitude transition transfer on this idealized world family"
+    },
+    "TTF_C": {
+      "all_cells_with_role_ttf_c_type1": "Wilson95 upper rejection bound <= 0.10",
+      "all_cells_with_role_ttf_c_power": "Wilson95 lower rejection bound >= 0.80",
+      "interpretation": "qualified only for direction-free coupling-relation transition transfer on this idealized world family"
+    }
+  },
+  "future_required_but_not_part_of_this_gate": {
+    "Q4_direction_or_recoupling_side_rule": true,
+    "Q5_heterogeneous_real_geometry_stress": true,
+    "private_structure_profiled_inference_on_irregular_geometry": true,
+    "empirical_observation_support_gate": true
+  },
+  "claim_firewall": {
+    "no_empirical_data": true,
+    "no_flower_colour_outcome": true,
+    "no_causal_mismatch_claim": true,
+    "no_breakdown_direction_claim": true,
+    "no_real_geometry_qualification_claim": true,
+    "no_retroactive_change_to_ttf_v0_1_through_v0_12": true
+  }
+}
