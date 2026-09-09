@@ -97,15 +97,35 @@ jobs:
           github-token: ${{ github.token }}
           repository: ${{ github.repository }}
           run-id: ${{ env.V12_RUN }}
-      - name: Download exact 128 inherited terminal partitions
-        uses: actions/download-artifact@v4
-        with:
-          pattern: v12-terminal-*
-          path: /tmp/terminal
-          merge-multiple: true
-          github-token: ${{ github.token }}
-          repository: ${{ github.repository }}
-          run-id: ${{ env.V12_RUN }}
+      - name: Download exact 128 inherited terminal partitions across all artifact pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rm -rf /tmp/terminal /tmp/v12-artifacts
+          mkdir -p /tmp/terminal /tmp/v12-artifacts
+          gh api --paginate \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/${GITHUB_REPOSITORY}/actions/runs/${V12_RUN}/artifacts?per_page=100" \
+            --jq '.artifacts[] | select(.expired == false and (.name | startswith("v12-terminal-"))) | [.id,.name] | @tsv' \
+            > /tmp/v12-artifacts/terminal.tsv
+          test "$(wc -l < /tmp/v12-artifacts/terminal.tsv)" -eq 128
+          test "$(cut -f2 /tmp/v12-artifacts/terminal.tsv | sort -u | wc -l)" -eq 128
+          for s in $(seq 0 31); do
+            for p in $(seq 0 3); do
+              grep -qx $'.*\tv12-terminal-s'"${s}"'-p'"${p}" /tmp/v12-artifacts/terminal.tsv
+            done
+          done
+          while IFS=$'\t' read -r artifact_id artifact_name; do
+            zip="/tmp/v12-artifacts/${artifact_name}.zip"
+            gh api \
+              -H "Accept: application/vnd.github+json" \
+              "/repos/${GITHUB_REPOSITORY}/actions/artifacts/${artifact_id}/zip" \
+              > "$zip"
+            unzip -oq "$zip" -d /tmp/terminal
+          done < /tmp/v12-artifacts/terminal.tsv
+          test "$(find /tmp/terminal -maxdepth 1 -type f -name 'partition_s*_p*.csv' | wc -l)" -eq 128
+          test "$(find /tmp/terminal -maxdepth 1 -type f -name 'partition_s*_p*.json' | wc -l)" -eq 128
+          rm -rf /tmp/v12-artifacts
       - name: Freeze response-blind 250x15 geometry
         run: |
           python scripts/freeze_v13_minimum_classifiability_geometry.py \
