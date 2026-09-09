@@ -1,0 +1,20 @@
+{
+  "schema": "ttf_v13_minimum_geometry_authorization_v0.1",
+  "status": "authorize_exactly_one_v13_minimum_classifiability_geometry_freeze",
+  "predecessor_result_commit": "3e4b221f2951aaf940d4695288254e27404fe2fb",
+  "v12_terminal_run": 34232013047,
+  "rule_blob_sha": "a1a559732d842ade35c77514cc400fdc1b966635",
+  "freezer_blob_sha": "748bb96a5d6f23f6f434c493e14f99062019fc56",
+  "workflow_blob_sha": "56a4765d9c3d035c78c98020c46c2d3baac47a41",
+  "frozen_species": 250,
+  "retained_records_per_species": 15,
+  "retained_records": 3750,
+  "k": 2,
+  "bandwidth_km": 500.0,
+  "new_image_acquisition_allowed": false,
+  "species_replacement_allowed": false,
+  "species_specific_classifiability_counts_may_be_reported": false,
+  "colour_values_may_be_opened": false,
+  "empirical_ttf_may_be_computed": false,
+  "next_step_if_geometry_freezes": "Create a separate blob-pinned authorization for the pre-frozen v0.13 synthetic requalification before any empirical colour TTF statistic is computed."
+}
