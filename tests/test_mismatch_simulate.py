@@ -23,6 +23,25 @@ def test_q0_coupled_transition_has_no_mismatch_or_coupling_signal() -> None:
         assert np.allclose(coupling_edges.turnover, 0.5)
 
 
+def test_q0_hard_keeps_shared_component_transition_but_only_noise_in_relation() -> None:
+    world = simulate_paired_transition_world(
+        mode="coupled_shared_transition_independent_noise",
+        n_species=6,
+        records_per_species=50,
+        amplitude=3.0,
+        noise_sd=0.8,
+        transition_width=0.15,
+        seed=11,
+    )
+    for sample in world.samples:
+        # The common latent component is present in both A and B, but the
+        # projected relation is only their independent measurement-noise
+        # difference. A/B therefore need not be identical pointwise.
+        assert not np.allclose(sample.state_a, sample.state_b)
+        relation = np.asarray(sample.state_a) - np.asarray(sample.state_b)
+        assert np.std(relation) > 0.0
+
+
 def test_q3_rotation_keeps_mismatch_constant_but_changes_relation() -> None:
     world = simulate_paired_transition_world(
         mode="shared_relational_rotation",
@@ -34,6 +53,26 @@ def test_q3_rotation_keeps_mismatch_constant_but_changes_relation() -> None:
     )
     for sample in world.samples:
         assert np.allclose(pointwise_mismatch(sample), 3.0)
+        mismatch_edges = build_mismatch_edges(sample, k=4)
+        coupling_edges = build_coupling_edges(sample, k=4)
+        assert np.allclose(mismatch_edges.turnover, 0.5)
+        assert np.ptp(coupling_edges.turnover) > 0.0
+
+
+def test_private_relation_rotation_keeps_mismatch_constant_and_phases_private() -> None:
+    world = simulate_paired_transition_world(
+        mode="private_relational_rotation",
+        n_species=12,
+        records_per_species=40,
+        amplitude=2.0,
+        noise_sd=0.0,
+        transition_width=0.15,
+        seed=12,
+    )
+    phases = np.array(list(world.boundary_phase.values()), dtype=float)
+    assert np.ptp(phases) > 1.0
+    for sample in world.samples:
+        assert np.allclose(pointwise_mismatch(sample), 2.0)
         mismatch_edges = build_mismatch_edges(sample, k=4)
         coupling_edges = build_coupling_edges(sample, k=4)
         assert np.allclose(mismatch_edges.turnover, 0.5)
