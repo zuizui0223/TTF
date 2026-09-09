@@ -47,6 +47,10 @@ from .mismatch import (
     pointwise_relative_state,
     relative_species_sample,
 )
+from .mismatch_inference import (
+    PairedHeldoutInferenceResult,
+    paired_heldout_species_bootstrap_test,
+)
 from .nulls import (
     PermutationResult,
     fixed_graphs,
@@ -76,6 +80,7 @@ __all__ = [
     "GeometrySyntheticWorld",
     "KernelBoundaryModel",
     "MeanBootstrapResult",
+    "PairedHeldoutInferenceResult",
     "PairedSpeciesSample",
     "PermutationResult",
     "PredictorCompetitionResult",
@@ -105,6 +110,7 @@ __all__ = [
     "inclusion_counts",
     "knn_edges",
     "mismatch_species_sample",
+    "paired_heldout_species_bootstrap_test",
     "permutation_test",
     "permute_trait_within_species",
     "pointwise_mismatch",
