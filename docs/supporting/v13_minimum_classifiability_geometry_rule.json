@@ -1,0 +1,102 @@
+{
+  "schema": "ttf_v13_minimum_classifiability_geometry_rule_v0.1",
+  "status": "frozen_after_v12_classifiability_fail_before_any_empirical_colour_values_are_opened",
+  "purpose": "Define a new prospective response-blind geometry after the v0.12 250x40 classifiability stop, using only the already frozen aggregate classifiability fact that every frozen species has at least 15 evaluable records. No species-specific classifiability count, colour vector, pairwise colour distance, or empirical TTF statistic may be used to define this design.",
+  "adaptive_provenance": {
+    "predecessor": "benchmarks/frozen/v12_actual_geometry_source.json",
+    "predecessor_classifiability_gate_pass": false,
+    "predecessor_species_meeting_40": 189,
+    "predecessor_minimum_observed_evaluable_records": 15,
+    "predecessor_retained_geometry_present": false,
+    "information_used_to_choose_v13": [
+      "classifiability_gate_pass",
+      "species_meeting_minimum",
+      "minimum_observed_evaluable_records",
+      "retained geometry presence"
+    ],
+    "species_specific_classifiability_counts_used": false,
+    "colour_values_used": false,
+    "empirical_ttf_used": false
+  },
+  "measurement_firewall": {
+    "reuse_only_existing_terminal_artifacts_from_run": 34232013047,
+    "new_image_acquisition_allowed": false,
+    "species_replacement_allowed": false,
+    "additional_photos_allowed": false,
+    "permitted_fields_for_geometry_freeze": [
+      "measurement_id",
+      "measurement_evaluable boolean/status",
+      "photo_id",
+      "species",
+      "latitude",
+      "longitude",
+      "precomputed Cartesian coordinates"
+    ],
+    "forbidden_before_v13_synthetic_requalification_pass": [
+      "continuous colour-vector component values",
+      "palette fractions",
+      "Jensen-Shannon or other pairwise colour distances",
+      "edge colour turnover",
+      "TTF transfer statistics",
+      "shared-boundary maps",
+      "environmental associations"
+    ]
+  },
+  "geometry_gate": {
+    "frozen_species": 250,
+    "minimum_evaluable_records_per_species": 15,
+    "all_250_species_must_meet_minimum": true,
+    "retained_records_per_species": 15,
+    "retained_record_selection": "Among evaluable records within each frozen species, select the 15 smallest SHA256 keys of '20260926\\x1f' + photo_id. This selection uses no colour value.",
+    "selection_seed": 20260926,
+    "if_any_species_below_15": "stop_without_replacement_or_empirical_ttf"
+  },
+  "actual_geometry_architecture": {
+    "records": 3750,
+    "records_per_species": 15,
+    "train_species": 125,
+    "eval_species": 125,
+    "species_split": "reuse exactly the v0.11/v0.12 125/125 species split; do not redraw",
+    "neighbor_fraction": 0.15,
+    "k": 2,
+    "bandwidth_km": 500.0,
+    "execution_operator": "same Gaussian opportunity-corrected segment-integrated transfer operator family as v0.11/v0.12, with k changed prospectively to 2 because 0.15 x 15 = 2.25 and the frozen integer neighbor count is two",
+    "training_response": "same frozen training-side edge-length orthogonalized turnover",
+    "inference": "same frozen training-only profiled-private inference"
+  },
+  "synthetic_requalification": {
+    "must_finish_before_any_empirical_colour_ttf_statistic": true,
+    "master_seed": 20260927,
+    "reference_seed_namespace": "v13_minimum_geometry_private_reference",
+    "observed_seed_namespace": "v13_minimum_geometry_observed",
+    "reference_configurations": [
+      "A0",
+      "A0p5",
+      "A1",
+      "A2",
+      "A3",
+      "A5",
+      "A10",
+      "infinite_snr"
+    ],
+    "reference_worlds_per_configuration": 1999,
+    "profile_strength_draws": 999,
+    "calibration_statistic_draws": 1000,
+    "selected_private_configurations": 2,
+    "observed_worlds_per_cell": 500,
+    "mandatory_cells": [
+      [0.0, 0.5],
+      [0.0, 1.0],
+      [0.0, 2.0],
+      [0.0, 3.0],
+      [1.0, 2.0]
+    ],
+    "alpha": 0.05,
+    "type1_wilson_upper_ceiling": 0.1,
+    "power_wilson_lower_floor": 0.8,
+    "pass_rule": "maximum Wilson 95% upper bound across the four private cells <= 0.10 AND Wilson 95% lower bound for shared A2 >= 0.80",
+    "if_fail": "Freeze failure and stop empirical TTF. Do not tune k, bandwidth, record count, species membership, profiling, thresholds, or synthetic cells on this geometry.",
+    "if_pass": "Only then may a separately authorized empirical TTF run read the frozen colour representation for these exact 3,750 retained records."
+  },
+  "claim_boundary": "A v0.13 synthetic pass would establish only adequacy of the predeclared 250x15 actual geometry. It would not establish an empirical shared flower-colour boundary, prevalence, cause, history, or pollinator mechanism."
+}
