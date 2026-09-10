@@ -1,0 +1,137 @@
+{
+  "schema": "ttfm_q5_geometry_stress_rule_v0.1",
+  "status": "frozen_before_q5_outcomes",
+  "purpose": "Qualify TTF-M and TTF-C under a finite predeclared family of heterogeneous response-blind sampling geometries, including train/evaluation geometry shift.",
+  "prerequisites": {
+    "idealized_result_path": "results/ttfm_idealized_qualification_v0.1.json",
+    "required_joint_extension_pass": true,
+    "q4_v0_1_result_path": "results/ttfm_q4_directionality_v0.1.json",
+    "q4_v0_1_must_remain_fail": true,
+    "q4_1_result_path": "results/ttfm_q4_1_strict_private_v0.1.json",
+    "required_q4_1_pass": true,
+    "frozen_ttf_v0_1_through_v0_12_unchanged": true
+  },
+  "split": {
+    "n_systems": 40,
+    "train_systems": 20,
+    "eval_systems": 20,
+    "rule": "sp_000_through_sp_019_train_sp_020_through_sp_039_eval"
+  },
+  "geometry": {
+    "nominal_n_levels": [30, 45, 60, 90, 120],
+    "matched_nominal_n_counts_per_split": [4, 4, 4, 4, 4],
+    "shifted_train_nominal_n_counts": [2, 3, 4, 5, 6],
+    "shifted_eval_nominal_n_counts": [6, 5, 4, 3, 2],
+    "clustering_levels": ["uniform", "moderate", "strong"],
+    "matched_clustering_counts_per_split": [8, 7, 5],
+    "shifted_train_clustering_counts": [12, 6, 2],
+    "shifted_eval_clustering_counts": [3, 7, 10],
+    "moderate_cluster_fraction": 0.60,
+    "moderate_vonmises_kappa": 2.0,
+    "strong_cluster_fraction": 0.85,
+    "strong_vonmises_kappa": 8.0,
+    "truncation_levels": ["full", "one_sided", "interior_gap"],
+    "truncation_counts_per_split": [10, 5, 5],
+    "one_sided_rule": "retain_angles_with_signed_relative_angle_le_0.75pi_around_random_geometry_anchor",
+    "interior_gap_rule": "exclude_abs_signed_relative_angle_lt_0.35_around_random_geometry_anchor",
+    "missingness_levels": [0.0, 0.10, 0.25],
+    "missingness_counts_per_split": [8, 7, 5],
+    "missingness_rule": "response_blind_independent_row_loss_after_geometry_generation_before_state_evaluation",
+    "assignment_rule": "exact_counts_with_independent_within_split_random_shuffle_for_each_geometry_dimension_and_world",
+    "geometry_generated_before_response_phases": true,
+    "graph_fraction": 0.15,
+    "graph_rule": "k_s=min(n_s-1,max(2,floor(0.15*n_s+0.5)))_using_effective_post_missingness_n_s",
+    "bandwidth": 0.2,
+    "prior_strength": 0.25,
+    "prior_mean": 0.5,
+    "segment_points": 5
+  },
+  "world_parameters": {
+    "transition_width": 0.2,
+    "default_amplitude": 2.0,
+    "default_noise_sd": 0.8,
+    "master_seed": 20260915
+  },
+  "mandatory_cells": [
+    {
+      "id": "Q5_NULL_COMPONENT",
+      "response_mode": "null_component",
+      "geometry_profile": "matched",
+      "amplitude": 3.0,
+      "noise_sd": 0.8,
+      "roles": ["ttf_m_type1", "ttf_c_type1"]
+    },
+    {
+      "id": "Q5_NULL_PRIVATE_M",
+      "response_mode": "null_private_mismatch",
+      "geometry_profile": "matched",
+      "amplitude": 3.0,
+      "noise_sd": 0.8,
+      "roles": ["ttf_m_type1", "ttf_c_type1"]
+    },
+    {
+      "id": "Q5_NULL_PRIVATE_C",
+      "response_mode": "null_private_relation",
+      "geometry_profile": "matched",
+      "amplitude": 2.0,
+      "noise_sd": 0.0,
+      "roles": ["ttf_m_type1", "ttf_c_type1"]
+    },
+    {
+      "id": "Q5_POWER_M",
+      "response_mode": "power_shared_mismatch",
+      "geometry_profile": "matched",
+      "amplitude": 2.0,
+      "noise_sd": 0.8,
+      "roles": ["ttf_m_power", "ttf_c_power"]
+    },
+    {
+      "id": "Q5_POWER_C",
+      "response_mode": "power_shared_relation",
+      "geometry_profile": "matched",
+      "amplitude": 2.0,
+      "noise_sd": 0.0,
+      "roles": ["ttf_m_type1", "ttf_c_power"]
+    },
+    {
+      "id": "Q5_SHIFT_M",
+      "response_mode": "power_shared_mismatch",
+      "geometry_profile": "shifted",
+      "amplitude": 2.0,
+      "noise_sd": 0.8,
+      "roles": ["ttf_m_power", "ttf_c_power"]
+    },
+    {
+      "id": "Q5_SHIFT_C",
+      "response_mode": "power_shared_relation",
+      "geometry_profile": "shifted",
+      "amplitude": 2.0,
+      "noise_sd": 0.0,
+      "roles": ["ttf_m_type1", "ttf_c_power"]
+    }
+  ],
+  "inference": {
+    "replicates_per_cell": 500,
+    "bootstrap_resamples": 1999,
+    "alpha": 0.05,
+    "wilson_confidence": 0.95,
+    "type1_wilson_upper_ceiling": 0.10,
+    "power_wilson_lower_floor": 0.80,
+    "batch_size": 25,
+    "formal_pass_requires_every_declared_role_to_pass": true,
+    "ttf_m_and_ttf_c_reported_separately": true,
+    "joint_q5_pass_requires_both_estimands_to_pass": true
+  },
+  "claim_firewall": {
+    "q5_is_finite_geometry_family_not_universal_robustness_theorem": true,
+    "no_untested_spatial_bias_claim": true,
+    "no_taxonomic_or_temporal_bias_claim": true,
+    "no_missing_not_at_random_claim": true,
+    "no_empirical_dataset_validity_claim": true,
+    "real_data_still_requires_independent_observation_support_gate": true,
+    "q4_v0_1_remains_immutable_fail": true,
+    "q4_1_pass_not_reinterpreted_as_causal": true,
+    "no_empirical_data": true,
+    "no_flower_colour_outcome": true
+  }
+}
