@@ -1,0 +1,291 @@
+{
+  "Q4_pass": false,
+  "cells": [
+    {
+      "breakdown_label": {
+        "count": 500,
+        "rate": 1.0,
+        "wilson95_high": 1.0,
+        "wilson95_low": 0.9923756595384479
+      },
+      "id": "Q4_BREAK_shared_breakdown",
+      "mean_front_center": -0.0008350307042281515,
+      "mean_negative_fraction": 0.0,
+      "mean_oriented_delta": 1.519778680948103,
+      "mean_positive_fraction": 1.0,
+      "mode": "shared_breakdown",
+      "n_replicates": 500,
+      "noise_sd": 0.25,
+      "recoupling_label": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95_high": 0.007624340461552241,
+        "wilson95_low": 4.336808689942018e-19
+      },
+      "relation_detection": {
+        "count": 500,
+        "rate": 1.0,
+        "wilson95_high": 1.0,
+        "wilson95_low": 0.9923756595384479
+      },
+      "roles": [
+        "relation_power",
+        "breakdown_power",
+        "recoupling_type1"
+      ]
+    },
+    {
+      "breakdown_label": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95_high": 0.007624340461552241,
+        "wilson95_low": 4.336808689942018e-19
+      },
+      "id": "Q4_RECOUPLE_shared_recoupling",
+      "mean_front_center": -0.00023504250167875984,
+      "mean_negative_fraction": 1.0,
+      "mean_oriented_delta": -1.5206453773411486,
+      "mean_positive_fraction": 0.0,
+      "mode": "shared_recoupling",
+      "n_replicates": 500,
+      "noise_sd": 0.25,
+      "recoupling_label": {
+        "count": 500,
+        "rate": 1.0,
+        "wilson95_high": 1.0,
+        "wilson95_low": 0.9923756595384479
+      },
+      "relation_detection": {
+        "count": 500,
+        "rate": 1.0,
+        "wilson95_high": 1.0,
+        "wilson95_low": 0.9923756595384479
+      },
+      "roles": [
+        "relation_power",
+        "recoupling_power",
+        "breakdown_type1"
+      ]
+    },
+    {
+      "breakdown_label": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95_high": 0.007624340461552241,
+        "wilson95_low": 4.336808689942018e-19
+      },
+      "id": "Q4_ROTATE_neutral_relation_change",
+      "mean_front_center": 0.0004438882766260719,
+      "mean_negative_fraction": 0.0,
+      "mean_oriented_delta": 0.0,
+      "mean_positive_fraction": 0.0,
+      "mode": "shared_neutral_rotation",
+      "n_replicates": 500,
+      "noise_sd": 0.0,
+      "recoupling_label": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95_high": 0.007624340461552241,
+        "wilson95_low": 4.336808689942018e-19
+      },
+      "relation_detection": {
+        "count": 500,
+        "rate": 1.0,
+        "wilson95_high": 1.0,
+        "wilson95_low": 0.9923756595384479
+      },
+      "roles": [
+        "relation_power",
+        "breakdown_type1",
+        "recoupling_type1"
+      ]
+    },
+    {
+      "breakdown_label": {
+        "count": 58,
+        "rate": 0.116,
+        "wilson95_high": 0.1470418369634342,
+        "wilson95_low": 0.09081365651103794
+      },
+      "id": "Q4_PRIVATE_private_directional_change",
+      "mean_front_center": 0.0012031881688606754,
+      "mean_negative_fraction": 0.21030994152046784,
+      "mean_oriented_delta": 0.46817114497380974,
+      "mean_positive_fraction": 0.7896900584795321,
+      "mode": "private_directional_change",
+      "n_replicates": 500,
+      "noise_sd": 0.25,
+      "recoupling_label": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95_high": 0.007624340461552241,
+        "wilson95_low": 4.336808689942018e-19
+      },
+      "relation_detection": {
+        "count": 73,
+        "rate": 0.146,
+        "wilson95_high": 0.1796492662203097,
+        "wilson95_low": 0.11774876682646929
+      },
+      "roles": [
+        "relation_type1",
+        "breakdown_type1",
+        "recoupling_type1"
+      ]
+    },
+    {
+      "breakdown_label": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95_high": 0.007624340461552241,
+        "wilson95_low": 4.336808689942018e-19
+      },
+      "id": "Q4_FLIP_shared_front_conflicting_sign",
+      "mean_front_center": -0.0004154386425130513,
+      "mean_negative_fraction": 0.49994152046783624,
+      "mean_oriented_delta": -0.0013525775503163875,
+      "mean_positive_fraction": 0.5000584795321638,
+      "mode": "shared_sign_flip",
+      "n_replicates": 500,
+      "noise_sd": 0.25,
+      "recoupling_label": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95_high": 0.007624340461552241,
+        "wilson95_low": 4.336808689942018e-19
+      },
+      "relation_detection": {
+        "count": 500,
+        "rate": 1.0,
+        "wilson95_high": 1.0,
+        "wilson95_low": 0.9923756595384479
+      },
+      "roles": [
+        "relation_power",
+        "breakdown_type1",
+        "recoupling_type1"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "cell_id": "Q4_BREAK_shared_breakdown",
+      "observed_bound": 0.9923756595384479,
+      "pass": true,
+      "required": ">= 0.8",
+      "role": "relation_power"
+    },
+    {
+      "cell_id": "Q4_BREAK_shared_breakdown",
+      "observed_bound": 0.9923756595384479,
+      "pass": true,
+      "required": ">= 0.8",
+      "role": "breakdown_power"
+    },
+    {
+      "cell_id": "Q4_BREAK_shared_breakdown",
+      "observed_bound": 0.007624340461552241,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "recoupling_type1"
+    },
+    {
+      "cell_id": "Q4_RECOUPLE_shared_recoupling",
+      "observed_bound": 0.9923756595384479,
+      "pass": true,
+      "required": ">= 0.8",
+      "role": "relation_power"
+    },
+    {
+      "cell_id": "Q4_RECOUPLE_shared_recoupling",
+      "observed_bound": 0.9923756595384479,
+      "pass": true,
+      "required": ">= 0.8",
+      "role": "recoupling_power"
+    },
+    {
+      "cell_id": "Q4_RECOUPLE_shared_recoupling",
+      "observed_bound": 0.007624340461552241,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "breakdown_type1"
+    },
+    {
+      "cell_id": "Q4_ROTATE_neutral_relation_change",
+      "observed_bound": 0.9923756595384479,
+      "pass": true,
+      "required": ">= 0.8",
+      "role": "relation_power"
+    },
+    {
+      "cell_id": "Q4_ROTATE_neutral_relation_change",
+      "observed_bound": 0.007624340461552241,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "breakdown_type1"
+    },
+    {
+      "cell_id": "Q4_ROTATE_neutral_relation_change",
+      "observed_bound": 0.007624340461552241,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "recoupling_type1"
+    },
+    {
+      "cell_id": "Q4_PRIVATE_private_directional_change",
+      "observed_bound": 0.1796492662203097,
+      "pass": false,
+      "required": "<= 0.1",
+      "role": "relation_type1"
+    },
+    {
+      "cell_id": "Q4_PRIVATE_private_directional_change",
+      "observed_bound": 0.1470418369634342,
+      "pass": false,
+      "required": "<= 0.1",
+      "role": "breakdown_type1"
+    },
+    {
+      "cell_id": "Q4_PRIVATE_private_directional_change",
+      "observed_bound": 0.007624340461552241,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "recoupling_type1"
+    },
+    {
+      "cell_id": "Q4_FLIP_shared_front_conflicting_sign",
+      "observed_bound": 0.9923756595384479,
+      "pass": true,
+      "required": ">= 0.8",
+      "role": "relation_power"
+    },
+    {
+      "cell_id": "Q4_FLIP_shared_front_conflicting_sign",
+      "observed_bound": 0.007624340461552241,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "breakdown_type1"
+    },
+    {
+      "cell_id": "Q4_FLIP_shared_front_conflicting_sign",
+      "observed_bound": 0.007624340461552241,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "recoupling_type1"
+    }
+  ],
+  "claim_firewall": {
+    "breakdown_means_transferable_increase_in_predeclared_mismatch_only": true,
+    "direction_free_ttf_c_front_alone_is_not_breakdown": true,
+    "no_empirical_data": true,
+    "no_fitness_loss_claim": true,
+    "no_flower_colour_outcome": true,
+    "no_mechanism_failure_claim": true,
+    "orientation_is_not_causal_identification": true,
+    "q5_geometry_stress_not_authorized": true
+  },
+  "next_required_if_pass": "Q5_heterogeneous_geometry_stress",
+  "rule_schema": "ttfm_q4_directionality_qualification_rule_v0.1",
+  "schema": "ttfm_q4_directionality_result_v0.1",
+  "status": "formal_q4_directionality_complete"
+}
