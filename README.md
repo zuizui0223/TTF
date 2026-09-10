@@ -62,9 +62,32 @@ Therefore v0.12 is a **measurement-support / observational-admissibility failure
 
 The terminal ledger is `benchmarks/frozen/v12_actual_geometry_source.json`, frozen by commit `3e4b221f2951aaf940d4695288254e27404fe2fb`.
 
-## Why this distinction matters
+## Paired-state extension: TTF-M and TTF-C
 
-TTF now separates three claims that must not be collapsed:
+The separate branch `method/ttfm-mismatch-decoupling` extends the same held-out-system transfer idea to paired ecological states without altering the frozen v0.1-v0.12 history.
+
+- **TTF-M:** transfer turnover of a predeclared mismatch magnitude `M_s(x)=m(A_s(x),B_s(x))`.
+- **TTF-C:** transfer turnover of a predeclared relation state `R_s(x)=r(A_s(x),B_s(x))`.
+
+The direction-free idealized qualification passed for both estimands. Under a shared relation rotation with exactly constant mismatch magnitude, TTF-M rejected `0/500` while TTF-C rejected `500/500`, showing that mismatch-magnitude and relation-transition fronts are distinct implemented targets.
+
+### Q4 directionality
+
+A first bounded-center Q4 v0.1 protocol is preserved as an **immutable formal FAIL**. The exact private front locations were independent but restricted to a common central zone, which created transferable turnover-intensity structure. That failure motivated a new protocol rather than threshold retuning.
+
+Q4.1 uses system-private phase anchors uniformly over a periodic domain while retaining a separate outcome-independent local orientation coordinate. Q4.1 **passed** its frozen gate: shared breakdown and recoupling were labelled in `500/500` worlds, neutral rotation and cross-system sign conflict produced no directional label, and the strict-private cell had relation/breakdown rejection `24/500 = 0.048` with Wilson upper `0.07043`.
+
+`breakdown` remains a bounded statistical label: transferable increase in the predeclared mismatch coordinate across a predeclared signed orientation. It is not by itself causality, fitness loss, or mechanism failure.
+
+### Q5 heterogeneous geometry stress — ACTIVE FORMAL GATE
+
+Q5 is now authorized and running on a finite predeclared family of response-blind geometries. It varies nominal records per system (`30/45/60/90/120`), clustering, domain truncation, `0/10/25%` missingness, and matched versus shifted train/evaluation geometry. The graph degree is selected separately for each realized system by the frozen rule `k_s=max(2, round(0.15*n_s))` using post-missingness effective `n_s`.
+
+Seven mandatory cells test component-only nulls, private mismatch fronts, private relation rotations, shared mismatch/relation power, and lower-density/more-clustered evaluation shifts. Formal outcomes remain unopened until all batches aggregate. Q5 PASS would qualify only this finite geometry family and would still require an independent application-specific observation-support gate before any empirical use.
+
+## Why the observation-support distinction matters
+
+TTF separates three claims that must not be collapsed:
 
 ```text
 method validity on declared worlds
@@ -76,33 +99,6 @@ actual observational admissibility
 
 A method may be statistically valid and powerful on a prospectively qualified geometry while the realized measurement process fails to preserve enough support to instantiate that geometry empirically. In that case the correct endpoint is **not evaluable / abstain**, not a biological negative.
 
-Equivalently, empirical TTF requires all three layers:
-
-```text
-valid inference rule
-    + adequate deployment geometry
-    + measurement-admissible support
-    -> empirical TTF may be opened
-```
-
-The present flower-colour line stops at the third layer.
-
-## Implemented
-
-- within-species-only kNN graphs;
-- generic scalar/vector trait dissimilarity and within-species rank standardization;
-- species-disjoint edge-level transfer statistic;
-- held-out-species and profiled-private inference machinery;
-- fixed-geometry semi-synthetic qualification with SHA-256 lineage;
-- empirical-geometry nuisance diagnostics;
-- density-scaled graph qualification;
-- chunked exact kernel scoring numerically equivalent to dense execution;
-- Wilson-bound type-I and power gates;
-- fail-closed location-blind classifiability / observation-support firewall;
-- immutable qualification and non-evaluability ledgers.
-
-See `docs/METHOD_SPEC.md`, `docs/QUALIFICATION_PROTOCOL.md`, `docs/IDENTIFIABILITY_LIMIT.md`, `results/`, and `benchmarks/frozen/`.
-
 ## Install and test
 
 ```bash
@@ -112,9 +108,4 @@ pytest -q
 
 ## Claim ceiling
 
-TTF currently supports the following bounded statements:
-
-1. On the prospectively frozen v0.11 fresh synthetic/semi-synthetic geometry, density-scaled TTF distinguished shared from strong species-private transitions with the frozen type-I and power guarantees above.
-2. Successful method qualification does **not** imply empirical admissibility: the independently frozen v0.12 measurement-support gate failed before any empirical TTF statistic was opened.
-
-TTF does **not** currently support an empirical flower-colour sharedness or no-sharedness conclusion. It also does not by itself prove a universal causal barrier, eliminate observation bias, identify a biological mechanism, or empirically validate any broader theory repository.
+TTF currently supports bounded method statements only. The original flower-colour route remains non-evaluable before any empirical TTF statistic was opened. The TTF-M/TTF-C extension is qualified on its declared balanced idealized family and Q4.1 directionality family; Q5 heterogeneous geometry qualification is still active. No empirical flower-colour, pollinator, island, fitness, causal mismatch, or universal robustness conclusion is licensed.
