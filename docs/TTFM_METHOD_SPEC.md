@@ -1,10 +1,10 @@
 # TTF-M / TTF-C — Transferable Mismatch and Coupling Fields
 
-Status: **prospective method-development specification**. This extension begins after the frozen TTF v0.1–v0.12 history and does not reinterpret any earlier failure or PASS. It opens no empirical flower-colour outcome.
+Status: **method development with idealized direction-free qualification passed; Q4 directionality v0.1 failed and is under a new prospective strict-private qualification design**. This extension begins after the frozen TTF v0.1–v0.12 history and does not reinterpret any earlier failure or PASS. It opens no empirical flower-colour outcome.
 
 ## 1. Purpose
 
-Core TTF asks whether locations of strong within-system state turnover learned from training systems predict turnover in entirely unseen systems.
+Core TTF asks whether a field of strong within-system state turnover learned from training systems predicts turnover in entirely unseen systems.
 
 TTF-M generalizes the state being transferred from one field `Y_s(x)` to a declared relationship between two co-located fields `A_s(x)` and `B_s(x)`.
 
@@ -13,9 +13,23 @@ The extension separates two questions that must not be conflated:
 1. **Mismatch-magnitude transition** — where does the amount of mismatch between A and B change?
 2. **Coupling-relation transition** — where does the A–B relationship itself change, even when mismatch magnitude is unchanged?
 
-The primary scientific principle remains unchanged:
+The primary scientific principle is:
 
-> A transition is system-general only to the extent that a field learned without the evaluation systems predicts within-system transition in those unseen systems.
+> A transition structure is system-general only to the extent that a turnover-intensity field learned without the evaluation systems predicts within-system turnover in those unseen systems.
+
+This is deliberately broader than “the same exact boundary occurs in every system.” TTF can detect a non-uniform **distribution of transition locations** when that distribution induces a transferable turnover-intensity field. Exact-front sharing is a special case.
+
+A useful semantic hierarchy is therefore
+
+```text
+exact deterministic front sharing
+    subset of
+shared front-density / turnover-intensity structure
+    subset of
+transferable transition structure detected by TTF
+```
+
+Independent exact front locations are not automatically a TTF null. If those locations are drawn from a common non-uniform spatial density, their expected turnover field can remain predictable in held-out systems.
 
 ## 2. Paired observation support
 
@@ -51,13 +65,13 @@ then apply the same within-system rank standardization as core TTF:
 u^M_{se}=\operatorname{rank}_s(q^M_{se}).
 \]
 
-The ordinary TTF boundary learner and held-out transfer statistic are then applied to `u^M` without modification.
+The ordinary TTF field learner and held-out transfer statistic are then applied to `u^M` without modification.
 
 ### Interpretation
 
-A positive TTF-M transfer result means that locations where mismatch magnitude changes in training systems predict mismatch-transition locations in unseen systems.
+A positive TTF-M transfer result means that the mismatch-turnover intensity learned in training systems predicts mismatch turnover in unseen systems.
 
-Because core TTF uses undirected edges, TTF-M detects a **mismatch-transition front**, not by itself the direction `low -> high mismatch`. Calling a front a mismatch *rise* or *breakdown* requires a separately frozen side-label or orientation rule.
+Because core TTF uses undirected edges, TTF-M detects a **mismatch-transition field**, not by itself the direction `low -> high mismatch`. Calling a transition a mismatch *rise* or *breakdown* requires a separately frozen orientation rule.
 
 ## 4. TTF-C: coupling-relation field
 
@@ -111,17 +125,11 @@ Thus TTF-C is not a residualized version of TTF-M. It changes the target represe
 
 TTF-C measures **coupling change**, not automatically deterioration.
 
-A coupling-change boundary may represent:
+A coupling-change field may represent decoupling, recoupling, a rotation or qualitative relation change, asymmetric movement of A and B, or opposite movement of A and B.
 
-- decoupling;
-- recoupling;
-- a rotation or qualitative change in relation;
-- asymmetric movement of A and B;
-- opposite movement of A and B.
+To claim specifically a *breakdown*, an application must additionally predeclare how the transition is oriented by coupling quality, mismatch level, compatibility, fitness, or another biologically justified criterion.
 
-To claim specifically a *breakdown front*, an application must additionally predeclare how the sides of the front are ordered by coupling quality, mismatch level, compatibility, fitness, or another biologically justified criterion.
-
-This prevents direction-free turnover from being overinterpreted as deterioration.
+Q4 formalizes one such design with a signed orientation coordinate `g_s(x)` fixed independently of observed mismatch outcomes. Its v0.1 qualification failed and remains failed; see `Q4_DIRECTIONALITY_FAILURE_DIAGNOSIS.md`.
 
 ## 6. Difference from SDM and ordinary mismatch regression
 
@@ -153,7 +161,7 @@ Target:
 \text{held-out transfer of } \Delta M_s(e).
 \]
 
-Question: do mismatch-transition locations learned in some systems predict where mismatch changes in unseen systems?
+Question: does a mismatch-turnover field learned in some systems predict mismatch turnover in unseen systems?
 
 ### TTF-C
 
@@ -163,99 +171,79 @@ Target:
 \text{held-out transfer of } \Delta R_s(e).
 \]
 
-Question: do locations where the A–B relation changes transfer to unseen systems?
+Question: does an A–B relation-turnover field learned in some systems predict relation turnover in unseen systems?
 
-TTF-M/TTF-C are therefore not replacements for SDMs. They address cross-system reproducibility of transition geometry rather than the response surface itself.
+TTF-M/TTF-C are therefore not replacements for SDMs. They address cross-system reproducibility of transition geometry/intensity rather than the response surface itself.
 
-## 7. Prospective synthetic qualification families
-
-No empirical application should be opened before the following families are implemented and frozen.
+## 7. Qualification families and current state
 
 ### Q0 — coupled shared component transition, no mismatch/coupling transition
 
 A and B share the same spatial transition in every system. Both component fields have a highly transferable boundary, but `A-B` and mismatch magnitude remain constant.
 
-Required behavior:
+Required behavior: TTF-M and TTF-C type-I remain controlled. **Passed** in the frozen idealized qualification.
 
-- core component TTF may be positive;
-- TTF-M type-I must remain controlled;
-- TTF-C type-I must remain controlled.
+### Q1 — strict-private mismatch/relation transitions
 
-This is the critical protection against calling ordinary shared turnover "decoupling".
+A valid TTF private null must contain strong system-specific transitions while making the population expected turnover-intensity field spatially constant on the transfer domain. The idealized circular full-phase construction has this property by rotational symmetry.
 
-### Q1 — private mismatch transitions, no shared front
+Required behavior: held-out TTF-M and TTF-C type-I remain controlled despite strong within-system structure. **Passed** in the frozen idealized qualification.
 
-Each system has a strong mismatch/coupling transition at an independently sampled location.
+A finite-line construction with front centers restricted to a common central band is **not** equivalent to this strict-private null; it creates a shared front-density zone.
 
-Required behavior: held-out TTF-M and TTF-C type-I remain controlled despite strong within-system structure.
+### Q2 — shared mismatch-magnitude transition field
 
-### Q2 — shared mismatch-magnitude front
+A and B decouple at a shared spatial transition so that mismatch magnitude changes across systems.
 
-A and B decouple at a common boundary so that mismatch magnitude changes across systems.
-
-Required behavior: TTF-M has predeclared power while preserving Q0/Q1 validity.
+Required behavior: TTF-M has predeclared power while preserving Q0/Q1 validity. **Passed** in the frozen idealized qualification.
 
 ### Q3 — shared relational rotation at constant mismatch magnitude
 
 The relative state `R=A-B` changes orientation across a common boundary while `||R||` remains constant.
 
-Required behavior:
+Required behavior: TTF-M stays null while TTF-C detects relation turnover. **Passed**: the frozen gate produced TTF-M 0/500 versus TTF-C 500/500.
 
-- TTF-M remains null or low-power by construction;
-- TTF-C detects the shared coupling transition.
+### Q4 — directionality: breakdown versus recoupling
 
-This is the discriminating qualification for the added TTF-C estimand.
+Q4 requires both a transferable TTF-C relation field and a held-out oriented mismatch sign. Q4 v0.1 **failed formally** because its declared PRIVATE cell exceeded the type-I ceiling.
 
-### Q4 — shared recoupling / reverse-side control
-
-The same coupling-change geometry occurs but the high-quality/low-mismatch side is reversed relative to a breakdown scenario.
-
-Required behavior: direction-free TTF-C may detect the boundary, but no generic "breakdown" claim is licensed without the separate side-label rule.
+Post-outcome diagnosis showed that this PRIVATE cell drew independent exact front locations only from a central subdomain. It therefore contained a non-uniform transferable front-density field and was not a clean null for TTF's actual estimand. The failure remains immutable; a new strict-private protocol is required rather than threshold retuning.
 
 ### Q5 — density and geometry stress
 
-Repeat Q0–Q4 on heterogeneous opportunistic geometries and density-scaled graph rules, preserving the lessons of TTF v0.8–v0.11. A PASS on idealized regular coordinates cannot substitute for this stress layer.
+Repeat the required estimand/direction controls on heterogeneous opportunistic geometries and density-scaled graph rules, preserving the lessons of TTF v0.8–v0.11. Q5 remains blocked until Q4 directionality semantics are resolved and prospectively requalified.
 
-## 8. Planned primary endpoints
+## 8. Primary endpoint and inference status
 
-For each estimand, retain the core TTF primary endpoint:
+For each direction-free estimand, retain the core TTF primary endpoint:
 
 \[
 T=|S_{eval}|^{-1}\sum_s
 \operatorname{Spearman}(\hat b_{se},u_{se}).
 \]
 
-Use completely system-disjoint training/evaluation sets. Null construction must preserve strong system-private mismatch/coupling structure rather than erase it by naive pointwise permutation.
+Use completely system-disjoint training/evaluation sets. Null construction must preserve strong system-private mismatch/coupling structure without creating a non-constant population turnover-intensity field unless that field is intentionally being tested as an alternative.
 
-Numerical type-I/power thresholds are **not set by this specification**. They must be frozen in a later qualification protocol before synthetic outcomes are opened.
+The frozen idealized qualification used 40 systems × 60 records, 20/20 train/evaluation, density-scaled `k=9`, 500 worlds per cell, 1,999 held-out-system bootstrap resamples, alpha 0.05, Wilson 95% type-I upper ceiling 0.10, and power lower floor 0.80. TTF-M and TTF-C both passed that declared family.
+
+Q4 directionality has a separate failed formal result and is not licensed by the idealized direction-free PASS.
 
 ## 9. Application classes
 
-Potential applications include:
+Potential applications include plant flowering vs pollinator activity phenological mismatch; floral phenotype vs local pollinator functional composition; phenotype vs environmental optimum; consumer vs resource trait matching; realized occurrence vs independently estimated suitability; host–symbiont or mutualist compatibility; genotype/phenotype vs local selective environment; and spatial or spatiotemporal coupling fronts under climate change.
 
-- plant flowering vs pollinator activity phenological mismatch;
-- floral phenotype vs local pollinator functional composition;
-- phenotype vs environmental optimum;
-- consumer vs resource trait matching;
-- realized occurrence vs independently estimated suitability;
-- host–symbiont or mutualist compatibility;
-- genotype/phenotype vs local selective environment;
-- spatial or spatiotemporal coupling fronts under climate change.
-
-These are examples, not validated use cases.
+These are examples, not validated empirical use cases.
 
 ## 10. Claim ceiling
 
-TTF-M/TTF-C currently establish only software-level estimand definitions and prospective qualification targets.
+The current branch supports the following bounded statements only:
 
-They do not yet establish:
+- TTF-M and TTF-C have distinct implemented estimands;
+- their frozen balanced idealized qualification passed its declared type-I/power criteria;
+- TTF-C detects relation change that can be invisible to mismatch magnitude;
+- Q4 v0.1 directionality qualification failed and does not license breakdown/recoupling use;
+- exact-front independence is not sufficient to define a TTF null when front-location density itself creates transferable turnover intensity.
 
-- calibrated type-I or power for mismatch/coupling transfer;
-- empirical validity in any ecological system;
-- that a coupling transition is causal;
-- that a detected coupling-change front is deterioration rather than recoupling;
-- that `A-B` is appropriate for heterogeneous state spaces without a justified adapter;
-- that a shared transition implies one shared environmental driver;
-- that TTF-M/TTF-C supersede SDMs, mismatch regressions, joint species models, or causal interaction models.
+It does **not** establish empirical validity in any ecological system, causal mismatch mechanisms, directional breakdown qualification, heterogeneous-geometry robustness, fitness consequences, or any flower-colour/pollination conclusion. It also does not imply that `A-B` is appropriate for heterogeneous state spaces without a justified adapter, that a transferable transition field has one shared environmental driver, or that TTF-M/TTF-C supersede SDMs, mismatch regressions, joint species models, or causal interaction models.
 
 Frozen TTF v0.1–v0.12 results remain unchanged and are not evidence for this extension.
