@@ -7,7 +7,7 @@ import numpy as np
 
 from .core import knn_edges
 from .inference import MeanBootstrapResult, centered_species_bootstrap_mean_test
-from .mismatch import PairedSpeciesSample, build_coupling_edges, pointwise_mismatch
+from .mismatch import PairedSpeciesSample, pointwise_mismatch, pointwise_relative_state
 from .mismatch_inference import PairedHeldoutInferenceResult, paired_heldout_species_bootstrap_test
 
 
@@ -70,6 +70,22 @@ def _weighted_median(values: np.ndarray, weights: np.ndarray) -> float:
     return float(xs[np.searchsorted(np.cumsum(ws), cutoff, side="left")])
 
 
+def _raw_relation_edge_dissimilarity(sample: PairedSpeciesSample, nodes: np.ndarray) -> np.ndarray:
+    """Raw edge distance in the declared relation state, before TTF rank scaling."""
+
+    relation = np.asarray(pointwise_relative_state(sample), dtype=float)
+    left = relation[nodes[:, 0]]
+    right = relation[nodes[:, 1]]
+    delta = left - right
+    if delta.ndim == 1:
+        raw = np.abs(delta)
+    else:
+        raw = np.linalg.norm(delta.reshape(len(delta), -1), axis=1)
+    if not np.isfinite(raw).all():
+        raise ValueError("non-finite raw relation edge dissimilarity")
+    return np.asarray(raw, dtype=float)
+
+
 def estimate_training_front_center(
     samples: Sequence[OrientedPairedSpeciesSample],
     *,
@@ -79,10 +95,10 @@ def estimate_training_front_center(
 ) -> float:
     """Estimate one orientation coordinate for the transferable relation front.
 
-    The estimate uses training-system relation turnover only. For each training
-    system it retains the highest-turnover fixed-graph edges and takes their
-    orientation-midpoint weighted median, then takes the equal-system median.
-    Mismatch magnitudes and held-out outcomes are never used for localization.
+    Localization uses training-system relation states only. Raw relation edge
+    dissimilarity is used here deliberately rather than rank-standardized TTF-C
+    turnover: tied zero-change edges must not acquire artificial localization
+    weight. The inferential TTF-C statistic itself remains unchanged.
     """
 
     if not (0.0 < float(front_edge_fraction) <= 0.5):
@@ -92,13 +108,13 @@ def estimate_training_front_center(
     for name in map(str, train_species):
         oriented = sample_map[name]
         nodes = knn_edges(oriented.sample.coordinates, k=int(k))
-        edges = build_coupling_edges(oriented.sample, edge_nodes=nodes)
+        raw = _raw_relation_edge_dissimilarity(oriented.sample, nodes)
         gmid = 0.5 * (
             oriented.orientation[nodes[:, 0]] + oriented.orientation[nodes[:, 1]]
         )
         n_top = max(3, int(np.ceil(float(front_edge_fraction) * len(nodes))))
-        order = np.argsort(edges.turnover, kind="stable")[-n_top:]
-        centers.append(_weighted_median(gmid[order], edges.turnover[order]))
+        order = np.argsort(raw, kind="stable")[-n_top:]
+        centers.append(_weighted_median(gmid[order], raw[order]))
     if len(centers) < 2:
         raise ValueError("at least two training systems required for front localization")
     return float(np.median(np.asarray(centers, dtype=float)))
