@@ -89,3 +89,56 @@ def test_directional_coupling_requires_front_and_heldout_sign():
     assert result.breakdown_label
     assert not result.recoupling_label
     assert result.positive_fraction >= 0.9
+
+
+def test_strict_private_periodic_world_separates_absolute_space_from_local_direction():
+    world = simulate_directional_world(
+        mode="strict_private_periodic_directional_change",
+        n_species=20,
+        records_per_species=60,
+        noise_sd=0.0,
+        strict_private_arc_halfwidth=1.0,
+        seed=41,
+    )
+    phases = np.asarray(list(world.front_by_species.values()), dtype=float)
+    assert np.all((phases >= 0.0) & (phases < 2.0 * np.pi))
+    assert np.ptp(phases) > np.pi
+    assert all(x.sample.coordinates.shape == (60, 2) for x in world.samples)
+    assert all(np.min(x.orientation) < 0.0 < np.max(x.orientation) for x in world.samples)
+
+    # Directional mismatch is common in each system's predeclared local
+    # orientation even though the absolute spatial phase differs by system.
+    labels = [x.species for x in world.samples]
+    deltas = heldout_oriented_mismatch_deltas(
+        world.samples,
+        eval_species=labels,
+        front_center=0.0,
+        front_window=0.35,
+    )
+    vec = np.asarray([deltas[s] for s in labels if s in deltas], dtype=float)
+    assert len(vec) >= 18
+    assert np.mean(vec > 0.0) >= 0.9
+    assert vec.mean() > 1.0
+
+
+def test_shared_front_zone_is_old_bounded_private_world_with_new_semantics_only():
+    old = simulate_directional_world(
+        mode="private_directional_change",
+        n_species=12,
+        records_per_species=40,
+        noise_sd=0.25,
+        seed=73,
+    )
+    zone = simulate_directional_world(
+        mode="shared_front_zone_directional_change",
+        n_species=12,
+        records_per_species=40,
+        noise_sd=0.25,
+        seed=73,
+    )
+    assert old.front_by_species == zone.front_by_species
+    for a, b in zip(old.samples, zone.samples, strict=True):
+        np.testing.assert_array_equal(a.sample.coordinates, b.sample.coordinates)
+        np.testing.assert_array_equal(a.orientation, b.orientation)
+        np.testing.assert_array_equal(a.sample.state_a, b.sample.state_a)
+        np.testing.assert_array_equal(a.sample.state_b, b.sample.state_b)
