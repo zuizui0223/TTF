@@ -25,7 +25,7 @@ def test_q51_preserves_frozen_ttf_m_and_reports_raw_coupling_audit():
         eval_species=evaluation,
         graph_fraction=0.15,
         bandwidth=0.2,
-        n_bootstrap=49,
+        n_bootstrap=99,
         seed=1505,
         edge_chunk_size=32,
         train_chunk_size=2048,
@@ -40,7 +40,7 @@ def test_q51_preserves_frozen_ttf_m_and_reports_raw_coupling_audit():
     assert q51.graph_k == base.graph_k
     assert q51.effective_n == base.effective_n
     assert np.isfinite(q51.coupling_statistic)
-    assert np.isfinite(q51.coupling_bootstrap.pvalue)
+    assert np.isfinite(q51.coupling_bootstrap.p_value)
 
 
 def test_q51_coupling_candidate_runs_on_private_relation_shifted_geometry():
@@ -58,11 +58,11 @@ def test_q51_coupling_candidate_runs_on_private_relation_shifted_geometry():
         eval_species=evaluation,
         graph_fraction=0.15,
         bandwidth=0.2,
-        n_bootstrap=49,
+        n_bootstrap=99,
         seed=1707,
         edge_chunk_size=32,
         train_chunk_size=2048,
     )
     assert np.isfinite(result.coupling_statistic)
     assert len(result.coupling_species_scores) == 20
-    assert 0.0 <= result.coupling_bootstrap.pvalue <= 1.0
+    assert 0.0 <= result.coupling_bootstrap.p_value <= 1.0
