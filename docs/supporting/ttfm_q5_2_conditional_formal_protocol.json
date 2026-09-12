@@ -1,0 +1,87 @@
+{
+  "schema": "ttfm_q5_2_conditional_formal_protocol_v0.1",
+  "status": "frozen_before_q5_2_development_aggregate_and_formal_outcomes",
+  "purpose": "Predeclare the only permitted formal qualification path if the already-authorized Q5.2 geometry-transport development run selects exactly one candidate. This protocol does not authorize formal outcomes by itself.",
+  "upstream": {
+    "development_rule_path": "docs/supporting/ttfm_q5_2_geometry_transport_development_rule.json",
+    "development_authorization_commit": "b35a51c2fe45c460dfdf1a66dd043cd1f7e4bda4",
+    "development_workflow_run_id": 34665453201,
+    "development_result_path": "results/ttfm_q5_2_geometry_transport_development_v0.1.json",
+    "development_result_opened_at_protocol_freeze": false,
+    "q5_result_path": "results/ttfm_q5_geometry_stress_v0.1.json",
+    "q5_1_result_path": "results/ttfm_q5_1_coupling_geometry_v0.1.json",
+    "q5_and_q5_1_remain_immutable_fail": true
+  },
+  "candidate_handoff": {
+    "source": "candidate_selected from the frozen development aggregate only",
+    "allowed_values": [
+      "pooled_inverse_density",
+      "self_inverse_density",
+      "target_density_ratio"
+    ],
+    "if_null": "formal qualification is forbidden and the geometry-transport family terminates",
+    "if_selected": "the selected candidate definition is inherited byte-for-byte from the frozen development implementation; no weight clipping, exponent, density bandwidth, graph fraction, field bandwidth, response transformation, threshold, role, or candidate combination may change",
+    "formal_run_may_compute_only_selected_candidate": true,
+    "unselected_candidates_must_not_be_evaluated_on_formal_worlds": true
+  },
+  "fixed_method": {
+    "ttf_m": "inherits the already-qualified Q5/Q5.1 TTF-M result and is not a formal candidate dimension",
+    "ttf_c_training_response": "Q5.1 within-system edge-length-orthogonalized coupling turnover",
+    "ttf_c_evaluation_target": "raw held-out coupling turnover",
+    "ttf_c_evaluation_score": "raw within-system Spearman correlation",
+    "graph_fraction": 0.15,
+    "field_bandwidth": 0.2,
+    "prior_strength": 0.25,
+    "prior_mean": 0.0,
+    "segment_points": 5,
+    "transition_width": 0.2,
+    "evaluation_response_residualization": false,
+    "private_null_recalibration": false
+  },
+  "formal_worlds": {
+    "master_seed": 20260919,
+    "worlds_per_cell": 500,
+    "bootstrap_resamples": 1999,
+    "alpha": 0.05,
+    "batch_size": 25,
+    "fresh_relative_to_development_seed": true
+  },
+  "formal_cells": [
+    {"id": "F52_NULL_COMPONENT", "response_mode": "null_component", "geometry_profile": "matched", "amplitude": 3.0, "noise_sd": 0.8, "role": "type1"},
+    {"id": "F52_PRIVATE_M", "response_mode": "null_private_mismatch", "geometry_profile": "matched", "amplitude": 3.0, "noise_sd": 0.8, "role": "type1"},
+    {"id": "F52_PRIVATE_C", "response_mode": "null_private_relation", "geometry_profile": "matched", "amplitude": 2.0, "noise_sd": 0.0, "role": "type1"},
+    {"id": "F52_POWER_M_MATCHED", "response_mode": "power_shared_mismatch", "geometry_profile": "matched", "amplitude": 2.0, "noise_sd": 0.8, "role": "power"},
+    {"id": "F52_POWER_C_MATCHED", "response_mode": "power_shared_relation", "geometry_profile": "matched", "amplitude": 2.0, "noise_sd": 0.0, "role": "power"},
+    {"id": "F52_POWER_M_SHIFTED", "response_mode": "power_shared_mismatch", "geometry_profile": "shifted", "amplitude": 2.0, "noise_sd": 0.8, "role": "power"},
+    {"id": "F52_POWER_C_SHIFTED", "response_mode": "power_shared_relation", "geometry_profile": "shifted", "amplitude": 2.0, "noise_sd": 0.0, "role": "power"}
+  ],
+  "precision_gate": {
+    "confidence_interval": "two-sided Wilson score 95%",
+    "type1_wilson_upper_ceiling": 0.10,
+    "power_wilson_lower_floor": 0.80,
+    "ttf_c_formal_pass": "every type-I cell upper95 <= 0.10 AND every power cell lower95 >= 0.80",
+    "joint_q5_2_pass": "inherited TTF_M_Q5_1_pass == true AND TTF-C formal pass == true"
+  },
+  "authorization_firewall": {
+    "formal_authorization_file_required": true,
+    "authorization_may_be_created_only_after_development_aggregate_is committed": true,
+    "authorization_must_pin_development_result_blob": true,
+    "authorization_must_pin_selected_candidate": true,
+    "authorization_must_pin_protocol_and_all_formal_code_blobs": true,
+    "authorization_must_verify_selected_candidate_is_non_null_and_development_passed": true,
+    "no_formal_world_may_run_before_exact_authorization_passes": true
+  },
+  "terminal_rules": {
+    "formal_pass": "qualifies only the selected TTF-C geometry-transport estimator on the declared finite heterogeneous synthetic family; Q5 and Q5.1 remain failed historical estimators",
+    "formal_fail": "candidate is immutable formal FAIL; no same-family threshold, clipping, density bandwidth, graph, field bandwidth, response, or null retuning; any successor requires a newly named mechanism and fresh development family",
+    "empirical_next_gate_after_pass": "independent application-specific observation-support and measurement contract before any ecological outcome is opened"
+  },
+  "claim_firewall": {
+    "protocol_is_not_qualification": true,
+    "development_result_not_opened_when_protocol_frozen": true,
+    "no_empirical_data": true,
+    "no_flower_colour_outcome": true,
+    "no_causal_geometry_claim": true,
+    "no_universal_robustness_claim": true
+  }
+}
