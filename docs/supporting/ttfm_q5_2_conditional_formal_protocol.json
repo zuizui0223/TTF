@@ -64,11 +64,13 @@
   },
   "authorization_firewall": {
     "formal_authorization_file_required": true,
-    "authorization_may_be_created_only_after_development_aggregate_is committed": true,
+    "authorization_may_be_created_only_after_development_aggregate_is_committed": true,
     "authorization_must_pin_development_result_blob": true,
     "authorization_must_pin_selected_candidate": true,
     "authorization_must_pin_protocol_and_all_formal_code_blobs": true,
     "authorization_must_verify_selected_candidate_is_non_null_and_development_passed": true,
+    "no_manual_dispatch": true,
+    "workflow_trigger_must_be_authorization_file_push_only": true,
     "no_formal_world_may_run_before_exact_authorization_passes": true
   },
   "terminal_rules": {
