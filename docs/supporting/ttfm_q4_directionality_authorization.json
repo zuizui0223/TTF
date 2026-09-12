@@ -1,0 +1,25 @@
+{
+  "schema": "ttfm_q4_directionality_authorization_v0.1",
+  "status": "authorize_exactly_one_q4_directionality_qualification_run",
+  "rule_blob_sha": "de9dac2af30ae1a1cd24802f8f5d7269de3015ea",
+  "directionality_blob_sha": "ac18449c9add9536744511f0d1d4ac4771697336",
+  "simulator_blob_sha": "f8db0da5565c0203b1fd77adcf05f97b1c4194c5",
+  "paired_inference_blob_sha": "70aa80668412396a227e0be0c62aa2412f4fb389",
+  "runner_blob_sha": "f0c94d171ff3adf9a4dbc8831c2406d474b76027",
+  "aggregator_blob_sha": "cff060ffcfbfbc8531fd65d9f779dbd5733865cf",
+  "workflow_blob_sha": "323fff75d6b92c07880678c0010b50fa7e2c83e6",
+  "idealized_result_blob_sha": "b2e4438272434674eb622e455ab2e3373fb45481",
+  "replicates_per_cell": 500,
+  "batch_size": 25,
+  "mandatory_cells": [
+    "Q4_BREAK_shared_breakdown",
+    "Q4_RECOUPLE_shared_recoupling",
+    "Q4_ROTATE_neutral_relation_change",
+    "Q4_PRIVATE_private_directional_change",
+    "Q4_FLIP_shared_front_conflicting_sign"
+  ],
+  "q4_outcomes_previously_opened": false,
+  "empirical_data_authorized": false,
+  "q5_authorized": false,
+  "claim_firewall_acknowledged": true
+}

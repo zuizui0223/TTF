@@ -1,0 +1,343 @@
+{
+  "Q4_1_pass": true,
+  "cells": [
+    {
+      "breakdown_label": {
+        "count": 500,
+        "rate": 1.0,
+        "wilson95_high": 1.0,
+        "wilson95_low": 0.9923756595384479
+      },
+      "id": "Q4_1_BREAK_shared_breakdown",
+      "mean_front_center": -0.0008679769056706455,
+      "mean_negative_fraction": 0.0,
+      "mean_oriented_delta": 1.5199568040441638,
+      "mean_positive_fraction": 1.0,
+      "mean_ttf_c_statistic": 0.1800318264912323,
+      "mode": "shared_breakdown",
+      "n_replicates": 500,
+      "noise_sd": 0.25,
+      "recoupling_label": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95_high": 0.007624340461552241,
+        "wilson95_low": 4.336808689942018e-19
+      },
+      "relation_detection": {
+        "count": 500,
+        "rate": 1.0,
+        "wilson95_high": 1.0,
+        "wilson95_low": 0.9923756595384479
+      },
+      "roles": [
+        "relation_power",
+        "breakdown_power",
+        "recoupling_type1"
+      ]
+    },
+    {
+      "breakdown_label": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95_high": 0.007624340461552241,
+        "wilson95_low": 4.336808689942018e-19
+      },
+      "id": "Q4_1_RECOUPLE_shared_recoupling",
+      "mean_front_center": -0.0002886022109125218,
+      "mean_negative_fraction": 1.0,
+      "mean_oriented_delta": -1.5205307529550318,
+      "mean_positive_fraction": 0.0,
+      "mean_ttf_c_statistic": 0.17739865173072283,
+      "mode": "shared_recoupling",
+      "n_replicates": 500,
+      "noise_sd": 0.25,
+      "recoupling_label": {
+        "count": 500,
+        "rate": 1.0,
+        "wilson95_high": 1.0,
+        "wilson95_low": 0.9923756595384479
+      },
+      "relation_detection": {
+        "count": 500,
+        "rate": 1.0,
+        "wilson95_high": 1.0,
+        "wilson95_low": 0.9923756595384479
+      },
+      "roles": [
+        "relation_power",
+        "recoupling_power",
+        "breakdown_type1"
+      ]
+    },
+    {
+      "breakdown_label": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95_high": 0.007624340461552241,
+        "wilson95_low": 4.336808689942018e-19
+      },
+      "id": "Q4_1_ROTATE_neutral_relation_change",
+      "mean_front_center": 0.00038091402187869394,
+      "mean_negative_fraction": 0.0,
+      "mean_oriented_delta": 0.0,
+      "mean_positive_fraction": 0.0,
+      "mean_ttf_c_statistic": 0.3416410398188084,
+      "mode": "shared_neutral_rotation",
+      "n_replicates": 500,
+      "noise_sd": 0.0,
+      "recoupling_label": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95_high": 0.007624340461552241,
+        "wilson95_low": 4.336808689942018e-19
+      },
+      "relation_detection": {
+        "count": 500,
+        "rate": 1.0,
+        "wilson95_high": 1.0,
+        "wilson95_low": 0.9923756595384479
+      },
+      "roles": [
+        "relation_power",
+        "breakdown_type1",
+        "recoupling_type1"
+      ]
+    },
+    {
+      "breakdown_label": {
+        "count": 24,
+        "rate": 0.048,
+        "wilson95_high": 0.07042719683589006,
+        "wilson95_low": 0.03246520694135317
+      },
+      "id": "Q4_1_STRICT_PRIVATE_periodic_directional_change",
+      "mean_front_center": 0.0010959925407434932,
+      "mean_negative_fraction": 0.0,
+      "mean_oriented_delta": 1.5203812157049137,
+      "mean_positive_fraction": 1.0,
+      "mean_ttf_c_statistic": 0.0002065137026340954,
+      "mode": "strict_private_periodic_directional_change",
+      "n_replicates": 500,
+      "noise_sd": 0.25,
+      "recoupling_label": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95_high": 0.007624340461552241,
+        "wilson95_low": 4.336808689942018e-19
+      },
+      "relation_detection": {
+        "count": 24,
+        "rate": 0.048,
+        "wilson95_high": 0.07042719683589006,
+        "wilson95_low": 0.03246520694135317
+      },
+      "roles": [
+        "relation_type1",
+        "breakdown_type1",
+        "recoupling_type1"
+      ]
+    },
+    {
+      "breakdown_label": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95_high": 0.007624340461552241,
+        "wilson95_low": 4.336808689942018e-19
+      },
+      "id": "Q4_1_FLIP_shared_front_conflicting_sign",
+      "mean_front_center": -0.00023011080433727748,
+      "mean_negative_fraction": 0.49994152046783624,
+      "mean_oriented_delta": -0.001119361093632946,
+      "mean_positive_fraction": 0.5000584795321638,
+      "mean_ttf_c_statistic": 0.1775584805260142,
+      "mode": "shared_sign_flip",
+      "n_replicates": 500,
+      "noise_sd": 0.25,
+      "recoupling_label": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95_high": 0.007624340461552241,
+        "wilson95_low": 4.336808689942018e-19
+      },
+      "relation_detection": {
+        "count": 500,
+        "rate": 1.0,
+        "wilson95_high": 1.0,
+        "wilson95_low": 0.9923756595384479
+      },
+      "roles": [
+        "relation_power",
+        "breakdown_type1",
+        "recoupling_type1"
+      ]
+    },
+    {
+      "breakdown_label": {
+        "count": 70,
+        "rate": 0.14,
+        "wilson95_high": 0.17316686494445405,
+        "wilson95_low": 0.11232266018786358
+      },
+      "id": "Q4_1_ZONE_shared_front_density_characterization",
+      "mean_front_center": -0.0024494892262326077,
+      "mean_negative_fraction": 0.20867777777777777,
+      "mean_oriented_delta": 0.4675103018896106,
+      "mean_positive_fraction": 0.7913222222222221,
+      "mean_ttf_c_statistic": 0.024031572994277224,
+      "mode": "shared_front_zone_directional_change",
+      "n_replicates": 500,
+      "noise_sd": 0.25,
+      "recoupling_label": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95_high": 0.007624340461552241,
+        "wilson95_low": 4.336808689942018e-19
+      },
+      "relation_detection": {
+        "count": 86,
+        "rate": 0.172,
+        "wilson95_high": 0.20754744749912687,
+        "wilson95_low": 0.1414541198436514
+      },
+      "roles": [
+        "characterization_only"
+      ]
+    }
+  ],
+  "characterization_cells_excluded_from_gate": [
+    "Q4_1_ZONE_shared_front_density_characterization"
+  ],
+  "checks": [
+    {
+      "cell_id": "Q4_1_BREAK_shared_breakdown",
+      "observed_bound": 0.9923756595384479,
+      "pass": true,
+      "required": ">= 0.8",
+      "role": "relation_power"
+    },
+    {
+      "cell_id": "Q4_1_BREAK_shared_breakdown",
+      "observed_bound": 0.9923756595384479,
+      "pass": true,
+      "required": ">= 0.8",
+      "role": "breakdown_power"
+    },
+    {
+      "cell_id": "Q4_1_BREAK_shared_breakdown",
+      "observed_bound": 0.007624340461552241,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "recoupling_type1"
+    },
+    {
+      "cell_id": "Q4_1_RECOUPLE_shared_recoupling",
+      "observed_bound": 0.9923756595384479,
+      "pass": true,
+      "required": ">= 0.8",
+      "role": "relation_power"
+    },
+    {
+      "cell_id": "Q4_1_RECOUPLE_shared_recoupling",
+      "observed_bound": 0.9923756595384479,
+      "pass": true,
+      "required": ">= 0.8",
+      "role": "recoupling_power"
+    },
+    {
+      "cell_id": "Q4_1_RECOUPLE_shared_recoupling",
+      "observed_bound": 0.007624340461552241,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "breakdown_type1"
+    },
+    {
+      "cell_id": "Q4_1_ROTATE_neutral_relation_change",
+      "observed_bound": 0.9923756595384479,
+      "pass": true,
+      "required": ">= 0.8",
+      "role": "relation_power"
+    },
+    {
+      "cell_id": "Q4_1_ROTATE_neutral_relation_change",
+      "observed_bound": 0.007624340461552241,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "breakdown_type1"
+    },
+    {
+      "cell_id": "Q4_1_ROTATE_neutral_relation_change",
+      "observed_bound": 0.007624340461552241,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "recoupling_type1"
+    },
+    {
+      "cell_id": "Q4_1_STRICT_PRIVATE_periodic_directional_change",
+      "observed_bound": 0.07042719683589006,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "relation_type1"
+    },
+    {
+      "cell_id": "Q4_1_STRICT_PRIVATE_periodic_directional_change",
+      "observed_bound": 0.07042719683589006,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "breakdown_type1"
+    },
+    {
+      "cell_id": "Q4_1_STRICT_PRIVATE_periodic_directional_change",
+      "observed_bound": 0.007624340461552241,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "recoupling_type1"
+    },
+    {
+      "cell_id": "Q4_1_FLIP_shared_front_conflicting_sign",
+      "observed_bound": 0.9923756595384479,
+      "pass": true,
+      "required": ">= 0.8",
+      "role": "relation_power"
+    },
+    {
+      "cell_id": "Q4_1_FLIP_shared_front_conflicting_sign",
+      "observed_bound": 0.007624340461552241,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "breakdown_type1"
+    },
+    {
+      "cell_id": "Q4_1_FLIP_shared_front_conflicting_sign",
+      "observed_bound": 0.007624340461552241,
+      "pass": true,
+      "required": "<= 0.1",
+      "role": "recoupling_type1"
+    }
+  ],
+  "claim_firewall": {
+    "breakdown_means_transferable_increase_in_predeclared_mismatch_only": true,
+    "direction_free_ttf_c_front_alone_is_not_breakdown": true,
+    "exact_front_independence_is_not_sufficient_for_ttf_null": true,
+    "no_empirical_data": true,
+    "no_fitness_loss_claim": true,
+    "no_flower_colour_outcome": true,
+    "no_mechanism_failure_claim": true,
+    "orientation_is_not_causal_identification": true,
+    "q4_1_is_new_protocol_not_rerun": true,
+    "q4_v0_1_remains_immutable_fail": true,
+    "q5_geometry_stress_not_authorized": true,
+    "shared_front_zone_is_not_type1_null": true
+  },
+  "history_firewall": {
+    "empirical_data_authorized": false,
+    "idealized_joint_extension_pass_required": true,
+    "idealized_result_path": "results/ttfm_idealized_qualification_v0.1.json",
+    "q4_v0_1_must_remain_fail": true,
+    "q4_v0_1_result_path": "results/ttfm_q4_directionality_v0.1.json",
+    "q5_authorized": false
+  },
+  "next_required_if_pass": "Q5_heterogeneous_geometry_stress",
+  "rule_schema": "ttfm_q4_1_strict_private_qualification_rule_v0.1",
+  "schema": "ttfm_q4_1_strict_private_result_v0.1",
+  "status": "formal_q4_1_strict_private_complete"
+}

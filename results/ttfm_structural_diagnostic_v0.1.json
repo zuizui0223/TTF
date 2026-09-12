@@ -1,0 +1,96 @@
+{
+  "claim_firewall": {
+    "no_breakdown_direction_claim_without_side_rule": true,
+    "no_ecological_validity_claim": true,
+    "no_flower_colour_outcome": true,
+    "no_power_claim": true,
+    "no_type_i_claim": true
+  },
+  "formal_pass_fail": null,
+  "modes": {
+    "coupled_shared_transition": {
+      "n_worlds": 100,
+      "ttf_c_coupling_transfer": {
+        "fraction_positive": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "q05": 0.0,
+        "q95": 0.0
+      },
+      "ttf_m_mismatch_transfer": {
+        "fraction_positive": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "q05": 0.0,
+        "q95": 0.0
+      }
+    },
+    "private_mismatch_transition": {
+      "n_worlds": 100,
+      "ttf_c_coupling_transfer": {
+        "fraction_positive": 0.54,
+        "mean": 0.011079752771122508,
+        "median": 0.016949718159376622,
+        "q05": -0.19477536285629926,
+        "q95": 0.20324076010084763
+      },
+      "ttf_m_mismatch_transfer": {
+        "fraction_positive": 0.54,
+        "mean": 0.011079752771122508,
+        "median": 0.016949718159376622,
+        "q05": -0.19477536285629926,
+        "q95": 0.20324076010084763
+      }
+    },
+    "shared_mismatch_transition": {
+      "n_worlds": 100,
+      "ttf_c_coupling_transfer": {
+        "fraction_positive": 1.0,
+        "mean": 0.9559979894934174,
+        "median": 0.9559922006879742,
+        "q05": 0.9515084639480346,
+        "q95": 0.9602040270879622
+      },
+      "ttf_m_mismatch_transfer": {
+        "fraction_positive": 1.0,
+        "mean": 0.9559979894934174,
+        "median": 0.9559922006879742,
+        "q05": 0.9515084639480346,
+        "q95": 0.9602040270879622
+      }
+    },
+    "shared_relational_rotation": {
+      "n_worlds": 100,
+      "ttf_c_coupling_transfer": {
+        "fraction_positive": 1.0,
+        "mean": 0.39219143278328533,
+        "median": 0.3918014788983495,
+        "q05": 0.3690693368407048,
+        "q95": 0.4150836156203344
+      },
+      "ttf_m_mismatch_transfer": {
+        "fraction_positive": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "q05": 0.0,
+        "q95": 0.0
+      }
+    }
+  },
+  "rule_status": "frozen_before_structural_diagnostic_outcomes",
+  "schema": "ttfm_structural_diagnostic_result_v0.1",
+  "settings": {
+    "amplitude": 3.0,
+    "bandwidth": 0.35,
+    "eval_fraction": 0.5,
+    "graph_k": 6,
+    "master_seed": 20260924,
+    "n_species": 40,
+    "noise_sd": 0.0,
+    "prior_strength": 0.0,
+    "records_per_species": 60,
+    "segment_points": 5,
+    "transition_width": 0.15
+  },
+  "status": "development_only_no_formal_pass_fail"
+}

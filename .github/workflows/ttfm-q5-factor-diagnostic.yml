@@ -1,0 +1,130 @@
+name: ttfm-q5-factor-diagnostic
+
+on:
+  push:
+    branches:
+      - "diagnostic/ttfm-q5-factor-isolation"
+    paths:
+      - "docs/supporting/ttfm_q5_factor_diagnostic_authorization.json"
+
+permissions:
+  contents: write
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      - run: pytest -q
+      - name: Require exact development-only authorization
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          auth=json.loads(Path('docs/supporting/ttfm_q5_factor_diagnostic_authorization.json').read_text())
+          rule=json.loads(Path('docs/supporting/ttfm_q5_factor_isolation_rule.json').read_text())
+          q5=json.loads(Path('results/ttfm_q5_geometry_stress_v0.1.json').read_text())
+          assert auth['schema']=='ttfm_q5_factor_diagnostic_authorization_v0.1'
+          assert auth['status']=='authorize_exactly_one_development_factor_isolation_run'
+          assert rule['status']=='frozen_before_development_diagnostic_outcomes'
+          assert q5['joint_Q5_pass'] is False and q5['TTF_M_Q5_pass'] is True and q5['TTF_C_Q5_pass'] is False
+          assert rule['diagnostic']['formal_pass_fail_forbidden'] is True
+          assert rule['diagnostic']['candidate_selection_forbidden'] is True
+          assert rule['claim_firewall']['no_empirical_data'] is True
+          assert not Path('results/ttfm_q5_factor_diagnostic_v0.1.json').exists()
+          expected={
+            'rule_blob_sha':'docs/supporting/ttfm_q5_factor_isolation_rule.json',
+            'simulator_blob_sha':'src/ttf/q5_factor_diagnostic.py',
+            'heterogeneous_inference_blob_sha':'src/ttf/heterogeneous_inference.py',
+            'runner_blob_sha':'scripts/run_ttfm_q5_factor_diagnostic_batch.py',
+            'aggregator_blob_sha':'scripts/aggregate_ttfm_q5_factor_diagnostic.py',
+            'workflow_blob_sha':'.github/workflows/ttfm-q5-factor-diagnostic.yml',
+            'q5_result_blob_sha':'results/ttfm_q5_geometry_stress_v0.1.json',
+          }
+          for key,path in expected.items():
+            actual=subprocess.check_output(['git','rev-parse',f'HEAD:{path}'], text=True).strip()
+            assert actual==auth[key], (key, actual, auth[key])
+          assert auth['replicates_per_cell']==100
+          assert auth['bootstrap_resamples']==999
+          assert auth['formal_outcomes_previously_opened'] is False
+          print({'authorization':'exact','formal_pass_fail':False,'candidate_selection':False})
+          PY
+
+  batches:
+    needs: invariants
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        profile: [balanced,n_only,clustering_only,truncation_only,missingness_only,all_matched,n_shift_only,clustering_shift_only,n_clustering_shift,all_shifted]
+        response: [private_mismatch,private_relation,shared_mismatch]
+        start: [0,20,40,60,80]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      - name: Run frozen factor diagnostic batch
+        run: >-
+          python scripts/run_ttfm_q5_factor_diagnostic_batch.py
+          --rule docs/supporting/ttfm_q5_factor_isolation_rule.json
+          --profile "${{ matrix.profile }}"
+          --response-id "${{ matrix.response }}"
+          --start ${{ matrix.start }}
+          --count 20
+          --output "batch/${{ matrix.profile }}_${{ matrix.response }}_${{ matrix.start }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttfm-q5-factor-${{ matrix.profile }}-${{ matrix.response }}-${{ matrix.start }}
+          path: batch/*.json
+          if-no-files-found: error
+
+  aggregate:
+    needs: batches
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ttfm-q5-factor-*
+          path: downloaded
+          merge-multiple: true
+      - name: Aggregate factor-isolation diagnostic
+        run: >-
+          python scripts/aggregate_ttfm_q5_factor_diagnostic.py
+          --rule docs/supporting/ttfm_q5_factor_isolation_rule.json
+          --batch-dir downloaded
+          --output results/ttfm_q5_factor_diagnostic_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttfm-q5-factor-diagnostic-v0.1
+          path: results/ttfm_q5_factor_diagnostic_v0.1.json
+          if-no-files-found: error
+      - name: Commit immutable diagnostic result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/ttfm_q5_factor_diagnostic_v0.1.json
+          git commit -m "Freeze TTF-M Q5 factor diagnostic v0.1"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt*2))
+          done
+          exit 1

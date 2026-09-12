@@ -1,0 +1,18 @@
+{
+  "schema": "ttfm_q5_factor_diagnostic_authorization_v0.1",
+  "status": "authorize_exactly_one_development_factor_isolation_run",
+  "rule_blob_sha": "99ae1479238f724b2007163cbf41bd5e4e2f76a4",
+  "simulator_blob_sha": "c0ba134363e931d7e0c2eb80578b5bd84085580d",
+  "heterogeneous_inference_blob_sha": "99f7881b4260a91f490f26f5ba7dec90499bcef4",
+  "runner_blob_sha": "5dfebdfff83ac6b69fc05f9b3204bd5aabd2b9b9",
+  "aggregator_blob_sha": "50a745fecf1dd47661b40068a1c6fb97e30a4670",
+  "workflow_blob_sha": "a22896dbbac086fd2dba23819a600ed423ad2958",
+  "q5_result_blob_sha": "3a59fe30009385ac3fa1e805bb129f140a7a8ab9",
+  "replicates_per_cell": 100,
+  "bootstrap_resamples": 999,
+  "formal_outcomes_previously_opened": false,
+  "formal_pass_fail_forbidden": true,
+  "candidate_selection_forbidden": true,
+  "empirical_data_authorized": false,
+  "q5_remains_immutable_fail": true
+}
