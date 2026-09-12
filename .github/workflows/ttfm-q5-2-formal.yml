@@ -1,0 +1,129 @@
+name: ttfm-q5-2-formal
+
+on:
+  push:
+    branches:
+      - qualification/ttfm-q5-2-conditional
+    paths:
+      - docs/supporting/ttfm_q5_2_formal_authorization.json
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  PROTOCOL: docs/supporting/ttfm_q5_2_conditional_formal_protocol.json
+  DEV_RESULT: results/ttfm_q5_2_geometry_transport_development_v0.1.json
+  Q51_RESULT: results/ttfm_q5_1_coupling_geometry_v0.1.json
+  AUTH: docs/supporting/ttfm_q5_2_formal_authorization.json
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[test]"
+      - run: pytest -q
+      - name: Require exact Q5.2 formal authorization
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+
+          auth = json.loads(Path("docs/supporting/ttfm_q5_2_formal_authorization.json").read_text())
+          protocol = json.loads(Path("docs/supporting/ttfm_q5_2_conditional_formal_protocol.json").read_text())
+          development = json.loads(Path("results/ttfm_q5_2_geometry_transport_development_v0.1.json").read_text())
+          q51 = json.loads(Path("results/ttfm_q5_1_coupling_geometry_v0.1.json").read_text())
+
+          assert auth["status"] == "authorize_exactly_one_q5_2_formal_run"
+          assert protocol["status"] == "frozen_before_q5_2_development_aggregate_and_formal_outcomes"
+          candidate = development.get("candidate_selected")
+          assert candidate is not None
+          assert candidate == auth["candidate"]
+          assert candidate in protocol["candidate_handoff"]["allowed_values"]
+          assert development["candidate_checks"][candidate]["development_pass"] is True
+          assert q51["TTF_M_Q5_1_pass"] is True
+          assert q51["TTF_C_Q5_1_pass"] is False
+          assert auth["formal_worlds_previously_opened"] is False
+          assert auth["empirical_data_opened"] is False
+
+          for path, expected in auth["blob_sha"].items():
+              actual = subprocess.check_output(["git", "hash-object", path], text=True).strip()
+              assert actual == expected, (path, actual, expected)
+          PY
+
+  batches:
+    needs: invariants
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        cell:
+          - F52_NULL_COMPONENT
+          - F52_PRIVATE_M
+          - F52_PRIVATE_C
+          - F52_POWER_M_MATCHED
+          - F52_POWER_C_MATCHED
+          - F52_POWER_M_SHIFTED
+          - F52_POWER_C_SHIFTED
+        start: [0, 25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[test]"
+      - name: Run frozen selected-only Q5.2 formal batch
+        run: |
+          mkdir -p out
+          python scripts/run_ttfm_q5_2_formal_batch.py \
+            --protocol "$PROTOCOL" \
+            --development-result "$DEV_RESULT" \
+            --cell-id "${{ matrix.cell }}" \
+            --start "${{ matrix.start }}" \
+            --count 25 \
+            --output "out/${{ matrix.cell }}_${{ matrix.start }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttfm-q5-2-formal-${{ matrix.cell }}-${{ matrix.start }}
+          path: out/*.json
+          if-no-files-found: error
+
+  aggregate:
+    needs: batches
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[test]"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ttfm-q5-2-formal-*
+          path: formal_batches
+          merge-multiple: false
+      - name: Aggregate frozen formal result
+        run: |
+          python scripts/aggregate_ttfm_q5_2_formal.py \
+            --protocol "$PROTOCOL" \
+            --development-result "$DEV_RESULT" \
+            --q5-1-result "$Q51_RESULT" \
+            --batch-dir formal_batches \
+            --output results/ttfm_q5_2_formal_v0.1.json
+      - name: Commit immutable formal result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/ttfm_q5_2_formal_v0.1.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Freeze Q5.2 formal qualification result"
+          git push
