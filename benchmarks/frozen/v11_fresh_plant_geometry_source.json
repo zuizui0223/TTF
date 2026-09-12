@@ -1,0 +1,119 @@
+{
+  "acquisition": {
+    "all_species_full_target_pass": true,
+    "failing_species": [],
+    "full_target_species": 250,
+    "photo_structure_pass": true,
+    "photo_structure_reason": "",
+    "request_attempts": 565,
+    "request_error_fraction": 0.0,
+    "request_error_fraction_ceiling": 0.05,
+    "request_errors": 0,
+    "request_gate_pass": true,
+    "required_full_target_species": 250,
+    "shards": 8
+  },
+  "additional_pages_after_result_performed": false,
+  "candidate_image_pixels_opened": false,
+  "candidate_performance_evaluated_at_freeze": false,
+  "claim_boundary": "This ledger freezes only a fresh plant sampling geometry acquisition outcome. It contains no image pixels, flower-colour values, synthetic TTF performance or empirical TTF conclusion. A failed freeze may not be rescued by species substitution, additional pages, target relaxation or a favourable rerun.",
+  "empirical_trait_or_colour_fields_read": false,
+  "fresh_geometry_freeze_pass": true,
+  "locked_graph_architecture": {
+    "bandwidth_km": 500.0,
+    "evaluation_turnover": "unchanged raw held-out turnover",
+    "k": 15,
+    "k_selection": "exactly round(0.15*100)=15 as the sole v0.11 candidate; no k grid",
+    "neighbor_fraction": 0.15,
+    "private_strength_profiling": "unchanged training-only v0.7 profiled-private procedure",
+    "records_per_species": 100,
+    "training_turnover_control": "unchanged training-side within-species edge-length rank orthogonalization",
+    "transfer_statistic": "unchanged held-out macro mean Spearman transfer"
+  },
+  "output": {
+    "geometry_path": "benchmarks/frozen/v11_fresh_plant_geometry.csv",
+    "geometry_sha256": "16a61e1cb2fd9596ff983310be2f1670aa7c954546b389d6fd2c5c6266d41fc9",
+    "records": 25000,
+    "records_per_species": 100,
+    "species": 250
+  },
+  "prospective_execution": {
+    "calibration_statistic_draws": 1000,
+    "eval_fraction": 0.5,
+    "eval_species": 125,
+    "mandatory_cells": [
+      [
+        0.0,
+        0.5
+      ],
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        2.0
+      ],
+      [
+        0.0,
+        3.0
+      ],
+      [
+        1.0,
+        2.0
+      ]
+    ],
+    "noise_sd": 0.8,
+    "observed_worlds_per_cell": 500,
+    "power_wilson_lower_floor": 0.8,
+    "private_reference_labels": [
+      "A0",
+      "A0p5",
+      "A1",
+      "A2",
+      "A3",
+      "A5",
+      "A10",
+      "infinite_snr"
+    ],
+    "profile_strength_draws": 999,
+    "reference_worlds_per_configuration": 1999,
+    "seed": 20260923,
+    "selected_private_configurations": 2,
+    "strength_neighbours": 4,
+    "train_species": 125,
+    "transition_width": 0.2,
+    "type1_wilson_upper_ceiling": 0.1
+  },
+  "rule": "docs/supporting/v11_fresh_density_scaled_graph_rule.json",
+  "schema": "ttf_v11_fresh_plant_geometry_source_v0.1",
+  "selection": {
+    "capacity_species": 4730,
+    "previous_1000_taxon_digest": "670ff7155e4da52aed336587f7607a8c0eff744c8592efa97a2f501e0856a5ee",
+    "previous_rank_range_one_based": [
+      1,
+      1000
+    ],
+    "rank_range_one_based": [
+      1001,
+      1250
+    ],
+    "raw_photo_target": 100,
+    "selected_species": 250,
+    "species_hash_seed": 20260916,
+    "taxon_overlap_with_previous_1000": [],
+    "v11_250_taxon_digest": "da08fc51919ca74bf1ff307ae0d9c7f894777e1d7022631691ced6e9b4813079"
+  },
+  "source_blobs": {
+    "data/frozen/global_monte_carlo_capacity_scan_selected_species_v3.csv": "cf09ee716fe15caad5b8a97081bbb1ecd4bce7f5",
+    "docs/supporting/global_monte_carlo_candidate_acquisition_authorization_v1.json": "472e6fae39e14bc9d8b41075ef02cb3572bff982",
+    "docs/supporting/global_monte_carlo_candidate_acquisition_contract_v1.json": "ad0cdca4710a11f9fc2243a9061f45ec12161c9a",
+    "docs/supporting/global_monte_carlo_candidate_species_budget_amendment_v1.json": "7a3185ae69bf7f2c19fa76f9273cc70bccc55c27",
+    "docs/supporting/global_monte_carlo_capacity_scan_manifest_v3.json": "d47b5b84e3890d7f54bec1f078037dcea8f086a5"
+  },
+  "source_commit": "9a3dbd1c433356c4235de87553f9cb9963c11943",
+  "source_repository": "zuizui0223/fcp",
+  "species_replacement_performed": false,
+  "status": "fresh_geometry_frozen_without_outcomes",
+  "synthetic_worlds_run_at_freeze": 0
+}

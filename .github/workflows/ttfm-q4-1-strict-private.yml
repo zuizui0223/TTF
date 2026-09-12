@@ -1,0 +1,149 @@
+name: ttfm-q4-1-strict-private
+
+on:
+  push:
+    branches:
+      - "method/ttfm-mismatch-decoupling"
+    paths:
+      - "docs/supporting/ttfm_q4_1_strict_private_authorization.json"
+
+permissions:
+  contents: write
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      - run: pytest -q
+      - name: Require exact frozen Q4.1 authorization and failed-Q4 provenance
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+
+          auth=json.loads(Path('docs/supporting/ttfm_q4_1_strict_private_authorization.json').read_text())
+          rule=json.loads(Path('docs/supporting/ttfm_q4_1_strict_private_rule.json').read_text())
+          ideal=json.loads(Path('results/ttfm_idealized_qualification_v0.1.json').read_text())
+          q4=json.loads(Path('results/ttfm_q4_directionality_v0.1.json').read_text())
+
+          assert auth['schema']=='ttfm_q4_1_strict_private_authorization_v0.1'
+          assert auth['status']=='authorize_exactly_one_fresh_q4_1_strict_private_run'
+          assert rule['status']=='frozen_before_q4_1_outcomes'
+          assert ideal['joint_extension_pass'] is True
+          assert q4['Q4_pass'] is False
+          assert rule['history_firewall']['q4_v0_1_must_remain_fail'] is True
+          assert rule['history_firewall']['q5_authorized'] is False
+          assert rule['history_firewall']['empirical_data_authorized'] is False
+          assert rule['claim_firewall']['q4_1_is_new_protocol_not_rerun'] is True
+          assert rule['claim_firewall']['shared_front_zone_is_not_type1_null'] is True
+          assert not Path('results/ttfm_q4_1_strict_private_v0.1.json').exists()
+
+          expected={
+            'rule_blob_sha':'docs/supporting/ttfm_q4_1_strict_private_rule.json',
+            'spec_blob_sha':'docs/supporting/ttfm_q4_1_strict_private_spec_v0.1.md',
+            'diagnosis_blob_sha':'docs/Q4_DIRECTIONALITY_FAILURE_DIAGNOSIS.md',
+            'directionality_blob_sha':'src/ttf/directionality.py',
+            'simulator_blob_sha':'src/ttf/directionality_simulate.py',
+            'paired_inference_blob_sha':'src/ttf/mismatch_inference.py',
+            'runner_blob_sha':'scripts/run_ttfm_q4_1_strict_private_batch.py',
+            'aggregator_blob_sha':'scripts/aggregate_ttfm_q4_1_strict_private.py',
+            'workflow_blob_sha':'.github/workflows/ttfm-q4-1-strict-private.yml',
+            'idealized_result_blob_sha':'results/ttfm_idealized_qualification_v0.1.json',
+            'q4_failed_result_blob_sha':'results/ttfm_q4_directionality_v0.1.json',
+          }
+          for key,path in expected.items():
+            actual=subprocess.check_output(['git','rev-parse',f'HEAD:{path}'], text=True).strip()
+            assert actual==auth[key], (key, actual, auth[key])
+
+          assert auth['replicates_per_cell']==500
+          assert auth['batch_size']==25
+          assert auth['q4_1_outcomes_previously_opened'] is False
+          assert auth['q4_v0_1_remains_failed'] is True
+          assert auth['empirical_data_authorized'] is False
+          assert auth['q5_authorized'] is False
+          print({'authorization':'exact','q4_v0_1':'immutable_fail','q4_1_outcomes_previously_opened':False,'empirical_data':False,'q5':False})
+          PY
+
+  batches:
+    needs: invariants
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        cell:
+          - Q4_1_BREAK_shared_breakdown
+          - Q4_1_RECOUPLE_shared_recoupling
+          - Q4_1_ROTATE_neutral_relation_change
+          - Q4_1_STRICT_PRIVATE_periodic_directional_change
+          - Q4_1_FLIP_shared_front_conflicting_sign
+          - Q4_1_ZONE_shared_front_density_characterization
+        start: [0,25,50,75,100,125,150,175,200,225,250,275,300,325,350,375,400,425,450,475]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      - name: Run frozen Q4.1 batch
+        run: >-
+          python scripts/run_ttfm_q4_1_strict_private_batch.py
+          --rule docs/supporting/ttfm_q4_1_strict_private_rule.json
+          --cell-id "${{ matrix.cell }}"
+          --start ${{ matrix.start }}
+          --count 25
+          --output "batch/${{ matrix.cell }}_${{ matrix.start }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttfm-q41-${{ matrix.cell }}-${{ matrix.start }}
+          path: batch/*.json
+          if-no-files-found: error
+
+  aggregate:
+    needs: batches
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ttfm-q41-*
+          path: downloaded
+          merge-multiple: true
+      - name: Aggregate frozen Q4.1 Wilson gates
+        run: >-
+          python scripts/aggregate_ttfm_q4_1_strict_private.py
+          --rule docs/supporting/ttfm_q4_1_strict_private_rule.json
+          --batch-dir downloaded
+          --output results/ttfm_q4_1_strict_private_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttfm-q4-1-strict-private-v0.1
+          path: results/ttfm_q4_1_strict_private_v0.1.json
+          if-no-files-found: error
+      - name: Commit immutable Q4.1 result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/ttfm_q4_1_strict_private_v0.1.json
+          git commit -m "Freeze TTF-M Q4.1 strict-private qualification v0.1"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt*2))
+          done
+          exit 1

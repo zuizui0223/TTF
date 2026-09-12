@@ -1,0 +1,74 @@
+{
+  "schema": "ttf_v07_profiled_private_null_rule_v0.1",
+  "status": "frozen_before_v07_profiled_private_null_outcomes",
+  "parent_result": "results/v06_private_null_diagnostic_v0.1.json",
+  "parent_conclusion": "An unrestricted worst-case private-strength envelope is non-identifiable for moderate sharedness because the noise-free private null dominates T; matched-strength oracle type-I is controlled but power is geometry-limited.",
+  "scientific_target": "Estimate private spatial-strength nuisance from training species only, then test raw held-out transfer against the private configurations compatible with that training-only strength. Held-out transfer outcomes never select the nuisance configuration.",
+  "development_panels": ["v03", "v04"],
+  "future_layers": {
+    "birds_performance_opened": false,
+    "butterflies_performance_opened": false,
+    "rgfca_reserve_opened": false
+  },
+  "base_statistic": "unchanged v03 raw transfer statistic",
+  "nuisance_strength": {
+    "name": "equal_species_mean_training_edge_midpoint_neighbor_coherence",
+    "training_only": true,
+    "heldout_trait_used": false,
+    "input_response": "within-species turnover rank orthogonalized against edge-length rank, exactly as v03 training response",
+    "per_species_definition": "Pearson correlation between each edge response and the mean response of its four nearest edge midpoints within that species; constant cases score zero",
+    "macro_definition": "equal-species mean across training species",
+    "edge_midpoint_neighbors": 4,
+    "orientation_used": false,
+    "simulator_amplitude_used": false
+  },
+  "private_reference_family": {
+    "inherit_from_v06": true,
+    "labels": ["A0","A0p5","A1","A2","A3","A5","A10","infinite_snr"],
+    "worlds_per_configuration": 1999,
+    "transition_width": 0.2,
+    "private_offset": "within-species median projection",
+    "orientation": "independent isotropic random per species",
+    "reference_seed_rule": "seed_for(panel_world_seed, 'v07_private_reference', configuration_label, replicate)",
+    "reference_worlds_independent_of_v06": true
+  },
+  "reference_partition": {
+    "ordering": "replicate index ascending within panel and private configuration",
+    "profile_strength_draws": 999,
+    "calibration_statistic_draws": 1000,
+    "independent_roles": true,
+    "rule": "The first 999 worlds supply only nuisance-strength distributions. The remaining 1000 worlds supply only raw-T Monte Carlo reference values."
+  },
+  "profiling": {
+    "distance": "absolute robust z distance from observed training strength to configuration profile median",
+    "scale": "max(1.4826 * MAD, 1e-6)",
+    "selected_configurations": 2,
+    "selection_order": "two smallest robust distances; ties by configuration label",
+    "heldout_transfer_used_for_configuration_selection": false,
+    "component_pvalue": "(1 + count(calibration T >= observed T)) / 1001",
+    "profiled_pvalue": "maximum component p-value across the two selected private configurations"
+  },
+  "observed_cells": [[0.0,0.5],[0.0,1.0],[0.0,2.0],[0.0,3.0],[1.0,2.0]],
+  "observed_worlds_per_cell": 500,
+  "observed_seed_rule": "reuse exactly the previously frozen fixed_geometry_world seeds for each panel/cell/replicate",
+  "alpha": 0.05,
+  "precision_gate": {
+    "type1_wilson_upper_ceiling": 0.10,
+    "power_wilson_lower_floor": 0.80,
+    "confidence_interval": "two-sided Wilson score 95%",
+    "selection_rule": "profiled_private_raw_transfer is a development candidate only if BOTH v03 and v04 pass both precision gates"
+  },
+  "required_diagnostics": {
+    "private_configuration_recovery": "Report the two selected labels for every private observed world and the fraction of worlds whose matching amplitude label is among the selected pair. This is diagnostic only, not an extra selection gate.",
+    "strength_separation": "Report per-configuration training-strength median, MAD, and quantiles and pooled correlation between training strength and raw T under private references.",
+    "oracle_comparison": "Retain v06 matched-amplitude oracle as a non-selectable upper-bound comparison."
+  },
+  "confirmation_firewall": {
+    "if_development_passes": "Do not open birds or butterflies yet. First broaden the profiled private family prospectively across transition width and private-boundary offset and show the training-strength profiling rule remains calibrated on v03 and v04.",
+    "if_development_fails": "Select no v0.7 candidate and preserve the failure.",
+    "birds_and_butterflies_remain_unopened": true,
+    "rgfca_reserve_remains_unopened": true
+  },
+  "failed_v02_v03_v04_v05_v06_results_remain_immutable": true,
+  "claim_ready": false
+}

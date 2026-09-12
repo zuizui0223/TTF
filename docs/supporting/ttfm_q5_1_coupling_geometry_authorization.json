@@ -1,0 +1,22 @@
+{
+  "schema": "ttfm_q5_1_coupling_geometry_authorization_v0.1",
+  "status": "authorize_exactly_one_formal_q5_1_run",
+  "rule_blob_sha": "529d94241c9094ef096f97fd2fd4c5f8225edf06",
+  "candidate_blob_sha": "4e34649af6dc96f999900589267ee1eab18b4d7d",
+  "geometry_control_blob_sha": "d982b76a56392a3c9b0ef029f4c7058b30fc222d",
+  "simulator_blob_sha": "07287ee0093ebe866a462b167e35ad585eadf132",
+  "runner_blob_sha": "aeb11c603319520a8f9a0e6150433b98869386a2",
+  "aggregator_blob_sha": "679368b23808f978de730e3fc91e0f271864a6fd",
+  "workflow_blob_sha": "f09c7bc739c859eeeba60bf3810efd850d3e4d6e",
+  "q5_result_blob_sha": "3a59fe30009385ac3fa1e805bb129f140a7a8ab9",
+  "factor_diagnostic_blob_sha": "63356399966f340f5d2f65af2a5774b0f3898184",
+  "replicates_per_cell": 500,
+  "bootstrap_resamples": 1999,
+  "formal_outcomes_previously_opened": false,
+  "empirical_data_authorized": false,
+  "q5_remains_immutable_fail": true,
+  "threshold_retuning_authorized": false,
+  "graph_retuning_authorized": false,
+  "bandwidth_retuning_authorized": false,
+  "evaluation_side_geometry_residualization_authorized": false
+}

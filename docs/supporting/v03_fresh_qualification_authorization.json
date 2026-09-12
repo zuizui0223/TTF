@@ -1,0 +1,28 @@
+{
+  "schema": "ttf_v03_fresh_qualification_authorization_v0.1",
+  "status": "authorize_exactly_one_locked_v03_fresh_external_precision_run",
+  "candidate": "train_orthogonalized_only",
+  "development_result_blob_sha": "110ac0102b464055c5583046b38d4f6ddff1e97e",
+  "fresh_geometry_blob_sha": "ccee1e09fb7a0e4e5bc0d695016a79adb9de25c3",
+  "fresh_source_ledger_blob_sha": "c10537a2e661787351be3c42b680b8d29faa100c",
+  "fresh_geometry_freeze_workflow_run_id": 34140674194,
+  "fresh_geometry_artifact_id": 10026000189,
+  "k": 4,
+  "seed": 20260908,
+  "eval_fraction": 0.5,
+  "bandwidth_km": 125.29246372510903,
+  "worlds_per_cell": 500,
+  "bootstrap_resamples": 1999,
+  "mandatory_cells": [
+    [0.0, 0.5],
+    [0.0, 1.0],
+    [0.0, 2.0],
+    [0.0, 3.0],
+    [1.0, 2.0]
+  ],
+  "type1_wilson_upper_ceiling": 0.1,
+  "power_wilson_lower_floor": 0.8,
+  "authorization_rule": "Run the locked v0.3 candidate once on the prospectively frozen fresh external geometry. Preserve the result regardless of sign; do not tune the candidate, bandwidth, split, cell grid, world count, bootstrap count, or thresholds after opening performance.",
+  "failed_panels_remain_failed": true,
+  "reserve_gate_requires_fresh_external_pass": true
+}

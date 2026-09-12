@@ -1,0 +1,25 @@
+{
+  "schema": "ttfm_idealized_qualification_authorization_v0.1",
+  "status": "authorize_exactly_one_formal_idealized_qualification_run",
+  "authorized_date": "2026-09-09",
+  "rule_blob_sha": "2704b8302b9e7c67f1be553aaed4f7e5b76d327e",
+  "simulator_blob_sha": "58040dc709c0f3caf9a7474903ee6a6fb5f02663",
+  "mismatch_blob_sha": "228a0095b6bc214f4955bf4bbc864874553a92bd",
+  "paired_inference_blob_sha": "70aa80668412396a227e0be0c62aa2412f4fb389",
+  "runner_blob_sha": "be2b22a483b9cc238817589b4489897657ec7dd0",
+  "aggregator_blob_sha": "94769276b6ae2d62e9501af54af91a23f3efce69",
+  "workflow_blob_sha": "fe78c0363ad7743c7261300a4c97a3573361647c",
+  "replicates_per_cell": 500,
+  "batch_size": 25,
+  "mandatory_cell_count": 8,
+  "formal_outcomes_previously_opened": false,
+  "empirical_data_authorized": false,
+  "structural_diagnostic_may_not_change_rule": true,
+  "claim_firewall": {
+    "no_empirical_data": true,
+    "no_flower_colour_outcome": true,
+    "no_breakdown_direction_claim": true,
+    "no_real_geometry_qualification_claim": true,
+    "no_retroactive_change_to_ttf_v0_1_through_v0_12": true
+  }
+}

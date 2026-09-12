@@ -1,0 +1,92 @@
+name: v03-edge-length-nuisance-diagnostic
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - "src/ttf/geometry_control.py"
+      - "src/ttf/geometry_conditioned_batch.py"
+      - "tests/test_geometry_control.py"
+      - "scripts/diagnose_gate_i_b_length_nuisance.py"
+      - ".github/workflows/v03-edge-length-diagnostic.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[test]"
+      - name: Require v0.2 Gate-I failures remain frozen
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a = json.loads(Path('results/gate_i_a_animal_precision_v0.1.json').read_text())
+          b = json.loads(Path('results/gate_i_b_rgfca_precision_v0.1.json').read_text())
+          assert a['gate_i_a_pass'] is False
+          assert b['gate_pass'] is False
+          assert a['precision_qualification']['passed'] is False
+          assert b['precision_qualification']['passed'] is False
+          print({'v02_gate_i_a':'failed_frozen','v02_gate_i_b':'failed_frozen'})
+          PY
+      - run: pytest -q
+      - name: Run paired failed-geometry nuisance diagnostic
+        run: >-
+          python scripts/diagnose_gate_i_b_length_nuisance.py
+          --input benchmarks/frozen/gate_i_b_rgfca_outer0_geometry.csv
+          --coordinate-columns x_km,y_km,z_km
+          --min-records 20
+          --replicates 500
+          --resamples 999
+          --k 3
+          --bandwidth 500
+          --batch-size 25
+          --seed 20260907
+          --output results/v03_gate_i_b_edge_length_diagnostic.json
+      - name: Freeze diagnostic without qualification language
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          p = Path('results/v03_gate_i_b_edge_length_diagnostic.json')
+          d = json.loads(p.read_text())
+          assert d['claim_ready'] is False
+          assert d['may_qualify_successor'] is False
+          d['lineage'] = {
+              'workflow_run_id': int(os.environ['GITHUB_RUN_ID']),
+              'workflow_head_sha': os.environ['GITHUB_SHA'],
+              'failed_gate_i_b_result': 'results/gate_i_b_rgfca_precision_v0.1.json',
+          }
+          p.write_text(json.dumps(d, indent=2, sort_keys=True) + '\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v03-edge-length-nuisance-diagnostic
+          path: results/v03_gate_i_b_edge_length_diagnostic.json
+          if-no-files-found: error
+      - name: Commit development diagnostic
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/v03_gate_i_b_edge_length_diagnostic.json
+          git commit -m "Freeze v0.3 edge-length nuisance diagnostic"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt * 2))
+          done
+          exit 1

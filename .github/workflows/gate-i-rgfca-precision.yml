@@ -1,0 +1,185 @@
+name: gate-i-b-rgfca-precision
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - "results/gate_i_b_rgfca_pilot_v0.1.json"
+      - ".github/workflows/gate-i-rgfca-precision.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[test]"
+      - run: pytest -q
+      - name: Require frozen pre-inference RGFCA pilot lineage
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          pilot = json.loads(Path("results/gate_i_b_rgfca_pilot_v0.1.json").read_text())
+          source = json.loads(Path("benchmarks/frozen/gate_i_b_rgfca_outer0_source.json").read_text())
+          assert pilot["schema"] == "ttf_gate_i_b_rgfca_pilot_v0.1"
+          assert pilot["claim_ready"] is False
+          assert source["source_commit"] == "e6ad7aa76261906b6f757ffc324ea6cd062a0917"
+          assert source["source_g1_g3_inference_run"] is False
+          assert source["source_external_overlay_opened"] is False
+          assert source["empirical_colour_columns_read"] is False
+          assert source["frozen_outer"]["outer_index"] == 0
+          assert source["frozen_outer"]["species"] == 250
+          assert source["frozen_outer"]["records"] == 5000
+          assert source["frozen_outer"]["photos_per_species"] == 20
+          assert pilot["geometry"]["species_count"] == 250
+          assert pilot["geometry"]["record_count"] == 5000
+          print({"gate_i_b_source":"pass","geometry":pilot["geometry"]["fingerprint_sha256"]})
+          PY
+
+  cell:
+    needs: invariants
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - shared: 0.0
+            amplitude: 0.5
+          - shared: 0.0
+            amplitude: 1.0
+          - shared: 0.0
+            amplitude: 2.0
+          - shared: 0.0
+            amplitude: 3.0
+          - shared: 1.0
+            amplitude: 2.0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Run exact-batched frozen Gate-I-B precision cell
+        run: >-
+          python scripts/run_geometry_calibration_batch_cell.py
+          --input benchmarks/frozen/gate_i_b_rgfca_outer0_geometry.csv
+          --coordinate-columns x_km,y_km,z_km
+          --min-records 20
+          --shared-fraction ${{ matrix.shared }}
+          --amplitude ${{ matrix.amplitude }}
+          --replicates 500
+          --resamples 1999
+          --k 3
+          --bandwidth 500.0
+          --world-batch-size 25
+          --seed 20260907
+          --output "results/gate_i_b_precision_cells/cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: "gate-i-b-cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}"
+          path: "results/gate_i_b_precision_cells/cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}.json"
+          if-no-files-found: error
+
+  aggregate:
+    needs: cell
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: gate-i-b-cell-*
+          path: results/gate_i_b_precision_cells
+          merge-multiple: true
+      - name: Require exactly the five frozen Gate-I-B cells
+        run: test "$(find results/gate_i_b_precision_cells -maxdepth 1 -name 'cell-*.json' | wc -l)" -eq 5
+      - name: Aggregate Gate-I-B Wilson-bound qualification
+        run: >-
+          python scripts/aggregate_geometry_batch_precision.py
+          --input-dir results/gate_i_b_precision_cells
+          --moderate-amplitude 2.0
+          --type1-upper-ceiling 0.10
+          --power-lower-floor 0.80
+          --gate "I-B intended empirical TTF sampling geometry"
+          --qualification-scope "pre_inference_rgfca_outer0_high_precision"
+          --output results/gate_i_b_rgfca_precision_v0.1.json
+      - name: Freeze Gate-I-B lineage
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          def sha(path):
+              return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+          path = Path("results/gate_i_b_rgfca_precision_v0.1.json")
+          data = json.loads(path.read_text())
+          data["source"] = json.loads(Path("benchmarks/frozen/gate_i_b_rgfca_outer0_source.json").read_text())
+          data["lineage"] = {
+              "workflow_run_id": int(os.environ["GITHUB_RUN_ID"]),
+              "workflow_head_sha": os.environ["GITHUB_SHA"],
+              "pilot_result_sha256": sha("results/gate_i_b_rgfca_pilot_v0.1.json"),
+              "geometry_source_ledger_sha256": sha("benchmarks/frozen/gate_i_b_rgfca_outer0_source.json"),
+              "frozen_rgfca_source_commit": "e6ad7aa76261906b6f757ffc324ea6cd062a0917",
+              "rgfca_outer_index": 0,
+              "inherited_pre_outcome_k": 3,
+              "inherited_pre_outcome_bandwidth_km": 500.0,
+          }
+          path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n")
+          PY
+      - name: Jointly reduce Gate-I-A and Gate-I-B
+        run: >-
+          python scripts/finalize_gate_i.py
+          --gate-i-a results/gate_i_a_animal_precision_v0.1.json
+          --gate-i-b results/gate_i_b_rgfca_precision_v0.1.json
+          --output results/gate_i_joint_qualification_v0.1.json
+      - name: Print Gate-I-B and joint decisions
+        run: |
+          cat results/gate_i_b_rgfca_precision_v0.1.json
+          cat results/gate_i_joint_qualification_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gate-i-b-rgfca-precision
+          if-no-files-found: error
+          path: |
+            results/gate_i_b_rgfca_precision_v0.1.json
+            results/gate_i_joint_qualification_v0.1.json
+      - name: Freeze Gate-I-B and joint precision results on branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            results/gate_i_b_rgfca_precision_v0.1.json \
+            results/gate_i_joint_qualification_v0.1.json
+          if git diff --cached --quiet; then
+            echo "No Gate-I-B precision result change to commit"
+            exit 0
+          fi
+          git commit -m "Freeze Gate-I-B and joint Gate-I precision results"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt * 2))
+          done
+          exit 1

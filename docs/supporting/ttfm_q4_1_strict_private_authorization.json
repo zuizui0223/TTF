@@ -1,0 +1,30 @@
+{
+  "schema": "ttfm_q4_1_strict_private_authorization_v0.1",
+  "status": "authorize_exactly_one_fresh_q4_1_strict_private_run",
+  "rule_blob_sha": "aa3aae65ed5f9e995a1eb8d847990830af7cd01c",
+  "spec_blob_sha": "f301b1f3e4796e175e243d5582445dc18e5c64a0",
+  "diagnosis_blob_sha": "c824a60c80f78d390c40edd2d613a60b70e14dd0",
+  "directionality_blob_sha": "ac18449c9add9536744511f0d1d4ac4771697336",
+  "simulator_blob_sha": "b8f9deb269b1cdfa30164267e065256d09942096",
+  "paired_inference_blob_sha": "70aa80668412396a227e0be0c62aa2412f4fb389",
+  "runner_blob_sha": "6650df05248aba2ea14029130945d94a817f1c3d",
+  "aggregator_blob_sha": "3786fc6379c489f4d74930f9dd62f3bb077bf600",
+  "workflow_blob_sha": "f601ee650100b5d913c5f01ead1d2a6b96a459cb",
+  "idealized_result_blob_sha": "b2e4438272434674eb622e455ab2e3373fb45481",
+  "q4_failed_result_blob_sha": "032a5c02a76ec0fdf102aec30469b8dc4602736c",
+  "replicates_per_cell": 500,
+  "batch_size": 25,
+  "mandatory_cells": [
+    "Q4_1_BREAK_shared_breakdown",
+    "Q4_1_RECOUPLE_shared_recoupling",
+    "Q4_1_ROTATE_neutral_relation_change",
+    "Q4_1_STRICT_PRIVATE_periodic_directional_change",
+    "Q4_1_FLIP_shared_front_conflicting_sign",
+    "Q4_1_ZONE_shared_front_density_characterization"
+  ],
+  "q4_1_outcomes_previously_opened": false,
+  "q4_v0_1_remains_failed": true,
+  "zone_is_characterization_only": true,
+  "empirical_data_authorized": false,
+  "q5_authorized": false
+}

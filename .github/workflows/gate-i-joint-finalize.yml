@@ -1,0 +1,54 @@
+name: gate-i-joint-finalize
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - "results/gate_i_a_animal_precision_v0.1.json"
+      - "results/gate_i_b_rgfca_precision_v0.1.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reduce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Reduce available Gate-I precision lanes
+        run: >-
+          python scripts/finalize_gate_i.py
+          --gate-i-a results/gate_i_a_animal_precision_v0.1.json
+          --gate-i-b results/gate_i_b_rgfca_precision_v0.1.json
+          --output results/gate_i_joint_qualification_v0.1.json
+      - name: Print Gate-I status
+        run: cat results/gate_i_joint_qualification_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gate-i-joint-qualification
+          path: results/gate_i_joint_qualification_v0.1.json
+          if-no-files-found: error
+      - name: Freeze current joint Gate-I status
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/gate_i_joint_qualification_v0.1.json
+          if git diff --cached --quiet; then
+            echo "No joint Gate-I status change to commit"
+            exit 0
+          fi
+          git commit -m "Freeze joint Gate-I qualification status"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt * 2))
+          done
+          exit 1

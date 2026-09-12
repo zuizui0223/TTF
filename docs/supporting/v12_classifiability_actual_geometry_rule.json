@@ -1,0 +1,75 @@
+{
+  "schema": "ttf_v12_classifiability_actual_geometry_rule_v0.1",
+  "status": "frozen_after_v11_synthetic_pass_before_any_v11_empirical_colour_values_are_opened",
+  "purpose": "Define the only permitted bridge from the v0.11 synthetic 250x100 k=15 pass to an empirical flower-colour analysis: use measurement evaluability only to freeze the actual retained geometry, then requalify that geometry synthetically before any colour-derived TTF statistic is inspected.",
+  "required_predecessor": {
+    "result": "results/v11_fresh_density_scaled_qualification_v0.1.json",
+    "v11_pass": true,
+    "empirical_colour_outcome_opened": false,
+    "candidate_image_pixels_opened_at_v11_qualification": false
+  },
+  "measurement_firewall": {
+    "permitted_before_actual_geometry_freeze": [
+      "photo_id",
+      "species",
+      "latitude",
+      "longitude",
+      "measurement_evaluable boolean/status produced by the independently frozen colour-measurement pipeline"
+    ],
+    "forbidden_before_actual_geometry_requalification_pass": [
+      "continuous colour-vector component values",
+      "Jensen-Shannon or other pairwise colour distances",
+      "edge colour turnover",
+      "TTF transfer statistics",
+      "shared-boundary maps",
+      "environmental associations"
+    ],
+    "pixel_processing_role": "Pixels may be processed only by the independently frozen measurement pipeline to determine evaluability and later colour representation. TTF must not inspect pixels or colour values during this gate.",
+    "no_failure_replacement": true,
+    "no_additional_photos_after_evaluability_is_known": true
+  },
+  "classifiability_gate": {
+    "frozen_species": 250,
+    "minimum_evaluable_records_per_species": 40,
+    "all_250_species_must_meet_minimum": true,
+    "if_any_species_below_40": "not_evaluable_stop_without_replacement_or_empirical_ttf",
+    "retained_records_per_species_if_gate_passes": 40,
+    "retained_record_selection": "Among evaluable records within each frozen species, select the 40 smallest SHA256 keys of '20260924\\x1f' + photo_id. This selection uses no colour value.",
+    "selection_seed": 20260924,
+    "species_replacement_allowed": false,
+    "record_target_relaxation_allowed": false
+  },
+  "actual_geometry_architecture": {
+    "records": 10000,
+    "records_per_species": 40,
+    "train_species": 125,
+    "eval_species": 125,
+    "species_split": "reuse exactly the v0.11 125/125 species split; do not redraw",
+    "neighbor_fraction": 0.15,
+    "k": 6,
+    "bandwidth_km": 500.0,
+    "execution_operator": "same exact Gaussian opportunity-corrected segment-integrated transfer operator as v0.11; chunking may change storage only",
+    "training_response": "same frozen training-side edge-length orthogonalized turnover",
+    "inference": "same frozen training-only profiled-private inference"
+  },
+  "synthetic_requalification": {
+    "must_finish_before_any_empirical_colour_ttf_statistic": true,
+    "master_seed": 20260925,
+    "reference_seed_namespace": "v12_actual_geometry_private_reference",
+    "observed_seed_namespace": "v12_actual_geometry_observed",
+    "reference_configurations": ["A0", "A0p5", "A1", "A2", "A3", "A5", "A10", "infinite_snr"],
+    "reference_worlds_per_configuration": 1999,
+    "profile_strength_draws": 999,
+    "calibration_statistic_draws": 1000,
+    "selected_private_configurations": 2,
+    "observed_worlds_per_cell": 500,
+    "mandatory_cells": [[0.0, 0.5], [0.0, 1.0], [0.0, 2.0], [0.0, 3.0], [1.0, 2.0]],
+    "alpha": 0.05,
+    "type1_wilson_upper_ceiling": 0.10,
+    "power_wilson_lower_floor": 0.80,
+    "pass_rule": "maximum Wilson 95% upper bound across the four private cells <= 0.10 AND Wilson 95% lower bound for shared A2 >= 0.80",
+    "if_fail": "Freeze failure and stop empirical TTF. Do not tune k, bandwidth, record count, species membership, profiling, thresholds, or synthetic cells on this geometry.",
+    "if_pass": "Only then may a separately authorized empirical TTF run read the frozen colour representation for these exact 10,000 retained records."
+  },
+  "claim_boundary": "A v0.12 pass establishes only synthetic adequacy on the classifiability-filtered actual geometry. It does not itself establish an empirical shared flower-colour boundary, biological prevalence, environmental cause, historical cause, or pollinator mechanism."
+}

@@ -1,0 +1,466 @@
+{
+  "candidate_selectable": false,
+  "claim_ready": false,
+  "interpretation_boundary": "This audit may explain failed-development behavior but cannot qualify k/n scaling, authorize an empirical analysis, or open a new confirmatory panel by itself.",
+  "predeclared_signature": {
+    "constant_neighbor_fraction_stabilizes_geometry_signature": true,
+    "fixed_k_edge_localization_supported": true
+  },
+  "rows": [
+    {
+      "equal_species_mean_edge_count": 39.452,
+      "equal_species_mean_edge_length_km": 678.3631319715649,
+      "equal_species_mean_nontrivial_direction_fraction": 0.485138671875,
+      "equal_species_mean_standardized_edge_length": 0.2118088413866304,
+      "equal_species_median_edge_length_km": 378.11256155575944,
+      "equal_species_median_standardized_edge_length": 0.1175190618630335,
+      "geometry_fingerprint_sha256": "42aff12cc88910e4990e91a3f33bd5cc8fa4c74a2b89b32bbc92ee16bc689d33",
+      "graph_rule": "fixed_k3",
+      "k": 3,
+      "records_per_species": 20,
+      "shared_observability": {
+        "directions": 2048,
+        "equal_species_mean_contrast": {
+          "max": 0.15256238483791829,
+          "mean": 0.09493143902336562,
+          "median": 0.0961919161656885,
+          "min": 0.055128765080293504,
+          "q05": 0.062324343995971095,
+          "q25": 0.0841498923007129,
+          "q75": 0.107290295000043,
+          "q95": 0.1284604772395165
+        },
+        "species_mean_contrast": {
+          "max": 0.3823995895724251,
+          "mean": 0.09493143902336562,
+          "median": 0.060050495867619944,
+          "min": 0.0018742161994596404,
+          "q10": 0.008964431152067857,
+          "q90": 0.24327972446208013
+        }
+      },
+      "species_median_edge_length_km": {
+        "median": 205.92806888900856,
+        "q10": 36.29631482783784,
+        "q90": 1018.6034165434471
+      },
+      "species_median_standardized_edge_length": {
+        "median": 0.06524938233862304,
+        "q10": 0.011437074950522444,
+        "q90": 0.31031732173253096
+      }
+    },
+    {
+      "equal_species_mean_edge_count": 78.752,
+      "equal_species_mean_edge_length_km": 412.1048146578575,
+      "equal_species_mean_nontrivial_direction_fraction": 0.492298828125,
+      "equal_species_mean_standardized_edge_length": 0.12901352176409892,
+      "equal_species_median_edge_length_km": 218.74206079011165,
+      "equal_species_median_standardized_edge_length": 0.06835213499787168,
+      "geometry_fingerprint_sha256": "1afcd85959bb35ab6985cb18c9aed2228934ae8d3eb3b0db5c62ddf392824bd6",
+      "graph_rule": "fixed_k3",
+      "k": 3,
+      "records_per_species": 40,
+      "shared_observability": {
+        "directions": 2048,
+        "equal_species_mean_contrast": {
+          "max": 0.09758812254267676,
+          "mean": 0.05811304339279136,
+          "median": 0.06103177295704925,
+          "min": 0.02775361530739461,
+          "q05": 0.03176594379506945,
+          "q25": 0.04997845921027011,
+          "q75": 0.06757331106123181,
+          "q95": 0.08212073681920855
+        },
+        "species_mean_contrast": {
+          "max": 0.21565947350913578,
+          "mean": 0.05811304339279135,
+          "median": 0.03984139881190982,
+          "min": 0.0012843791435059912,
+          "q10": 0.0064338615612124965,
+          "q90": 0.14795759735510536
+        }
+      },
+      "species_median_edge_length_km": {
+        "median": 120.57986002437298,
+        "q10": 23.482217238012353,
+        "q90": 595.4909436111134
+      },
+      "species_median_standardized_edge_length": {
+        "median": 0.037134614324887474,
+        "q10": 0.007286989513373731,
+        "q90": 0.17908712534840251
+      }
+    },
+    {
+      "equal_species_mean_edge_count": 117.872,
+      "equal_species_mean_edge_length_km": 318.6606861241844,
+      "equal_species_mean_nontrivial_direction_fraction": 0.49401953125,
+      "equal_species_mean_standardized_edge_length": 0.0995654702185166,
+      "equal_species_median_edge_length_km": 163.8399451841455,
+      "equal_species_median_standardized_edge_length": 0.05117931104886574,
+      "geometry_fingerprint_sha256": "317e5eecb5ed15fc7a3922a7cd4ba01facbf1277afe42a852cc327035378db60",
+      "graph_rule": "fixed_k3",
+      "k": 3,
+      "records_per_species": 60,
+      "shared_observability": {
+        "directions": 2048,
+        "equal_species_mean_contrast": {
+          "max": 0.0765710451021233,
+          "mean": 0.04460878700415048,
+          "median": 0.046757816966393737,
+          "min": 0.021749448704302274,
+          "q05": 0.024418769197161114,
+          "q25": 0.037569448708555504,
+          "q75": 0.05139660817930564,
+          "q95": 0.06471348132720402
+        },
+        "species_mean_contrast": {
+          "max": 0.16261858115041017,
+          "mean": 0.04460878700415048,
+          "median": 0.03257784419516692,
+          "min": 0.0009401644115363835,
+          "q10": 0.005325394885906518,
+          "q90": 0.11468045135636179
+        }
+      },
+      "species_median_edge_length_km": {
+        "median": 87.12002648630764,
+        "q10": 15.53110637579363,
+        "q90": 429.0333649775883
+      },
+      "species_median_standardized_edge_length": {
+        "median": 0.027279483570624943,
+        "q10": 0.004937591989792949,
+        "q90": 0.1337434643568148
+      }
+    },
+    {
+      "equal_species_mean_edge_count": 156.12,
+      "equal_species_mean_edge_length_km": 258.74192035055796,
+      "equal_species_mean_nontrivial_direction_fraction": 0.492126953125,
+      "equal_species_mean_standardized_edge_length": 0.08074494309691461,
+      "equal_species_median_edge_length_km": 137.7194975023435,
+      "equal_species_median_standardized_edge_length": 0.042891372989403424,
+      "geometry_fingerprint_sha256": "2d533a1bfacc1419cfcd44551fffd3fe87f05e6b7e5dc52f3865f56151b2743f",
+      "graph_rule": "fixed_k3",
+      "k": 3,
+      "records_per_species": 80,
+      "shared_observability": {
+        "directions": 2048,
+        "equal_species_mean_contrast": {
+          "max": 0.06468098702513482,
+          "mean": 0.03670497817149472,
+          "median": 0.03857465045458289,
+          "min": 0.01683457658180278,
+          "q05": 0.01911044698706206,
+          "q25": 0.03021166766978575,
+          "q75": 0.04260967927838461,
+          "q95": 0.05404435351122962
+        },
+        "species_mean_contrast": {
+          "max": 0.14065843303247955,
+          "mean": 0.03670497817149472,
+          "median": 0.026303513346627144,
+          "min": 0.0007414040073343033,
+          "q10": 0.0042519187916828325,
+          "q90": 0.09240181188942152
+        }
+      },
+      "species_median_edge_length_km": {
+        "median": 70.80184281392802,
+        "q10": 12.734972361403667,
+        "q90": 365.94850576482423
+      },
+      "species_median_standardized_edge_length": {
+        "median": 0.022067712937769258,
+        "q10": 0.004011352700356153,
+        "q90": 0.11302394014728499
+      }
+    },
+    {
+      "equal_species_mean_edge_count": 194.528,
+      "equal_species_mean_edge_length_km": 221.4265109497487,
+      "equal_species_mean_nontrivial_direction_fraction": 0.485814453125,
+      "equal_species_mean_standardized_edge_length": 0.06907845740022808,
+      "equal_species_median_edge_length_km": 120.05443600569319,
+      "equal_species_median_standardized_edge_length": 0.03746504913508807,
+      "geometry_fingerprint_sha256": "68375d4ee88a90564d6a04f64a5b79f71fc648a42bd16e4c844404c2cf5a4cf6",
+      "graph_rule": "fixed_k3",
+      "k": 3,
+      "records_per_species": 100,
+      "shared_observability": {
+        "directions": 2048,
+        "equal_species_mean_contrast": {
+          "max": 0.05723451473010998,
+          "mean": 0.03181307947538703,
+          "median": 0.03321423770296384,
+          "min": 0.015222534182081249,
+          "q05": 0.016978394626813022,
+          "q25": 0.025722904591575682,
+          "q75": 0.03662786441517966,
+          "q95": 0.04787059507024842
+        },
+        "species_mean_contrast": {
+          "max": 0.12628730304067404,
+          "mean": 0.031813079475387036,
+          "median": 0.02330593350620844,
+          "min": 0.0006719699981236696,
+          "q10": 0.00347115276043915,
+          "q90": 0.0809660279316497
+        }
+      },
+      "species_median_edge_length_km": {
+        "median": 62.461027680342,
+        "q10": 11.634636851901458,
+        "q90": 325.68988789847174
+      },
+      "species_median_standardized_edge_length": {
+        "median": 0.019482448945587774,
+        "q10": 0.0036488698520721957,
+        "q90": 0.10130090149616056
+      }
+    },
+    {
+      "equal_species_mean_edge_count": 39.452,
+      "equal_species_mean_edge_length_km": 678.3631319715649,
+      "equal_species_mean_nontrivial_direction_fraction": 0.485138671875,
+      "equal_species_mean_standardized_edge_length": 0.2118088413866304,
+      "equal_species_median_edge_length_km": 378.11256155575944,
+      "equal_species_median_standardized_edge_length": 0.1175190618630335,
+      "geometry_fingerprint_sha256": "42aff12cc88910e4990e91a3f33bd5cc8fa4c74a2b89b32bbc92ee16bc689d33",
+      "graph_rule": "constant_neighbor_fraction",
+      "k": 3,
+      "records_per_species": 20,
+      "shared_observability": {
+        "directions": 2048,
+        "equal_species_mean_contrast": {
+          "max": 0.15256238483791829,
+          "mean": 0.09493143902336562,
+          "median": 0.0961919161656885,
+          "min": 0.055128765080293504,
+          "q05": 0.062324343995971095,
+          "q25": 0.0841498923007129,
+          "q75": 0.107290295000043,
+          "q95": 0.1284604772395165
+        },
+        "species_mean_contrast": {
+          "max": 0.3823995895724251,
+          "mean": 0.09493143902336562,
+          "median": 0.060050495867619944,
+          "min": 0.0018742161994596404,
+          "q10": 0.008964431152067857,
+          "q90": 0.24327972446208013
+        }
+      },
+      "species_median_edge_length_km": {
+        "median": 205.92806888900856,
+        "q10": 36.29631482783784,
+        "q90": 1018.6034165434471
+      },
+      "species_median_standardized_edge_length": {
+        "median": 0.06524938233862304,
+        "q10": 0.011437074950522444,
+        "q90": 0.31031732173253096
+      }
+    },
+    {
+      "equal_species_mean_edge_count": 154.62,
+      "equal_species_mean_edge_length_km": 624.7868784966246,
+      "equal_species_mean_nontrivial_direction_fraction": 0.5434140625,
+      "equal_species_mean_standardized_edge_length": 0.19566147242958573,
+      "equal_species_median_edge_length_km": 347.6548494912962,
+      "equal_species_median_standardized_edge_length": 0.10880934984721236,
+      "geometry_fingerprint_sha256": "1afcd85959bb35ab6985cb18c9aed2228934ae8d3eb3b0db5c62ddf392824bd6",
+      "graph_rule": "constant_neighbor_fraction",
+      "k": 6,
+      "records_per_species": 40,
+      "shared_observability": {
+        "directions": 2048,
+        "equal_species_mean_contrast": {
+          "max": 0.13997052011257047,
+          "mean": 0.08733230292658553,
+          "median": 0.09086600177783508,
+          "min": 0.04706533672941658,
+          "q05": 0.05336278641287783,
+          "q25": 0.07606835659652364,
+          "q75": 0.09960655129127438,
+          "q95": 0.11865219488892566
+        },
+        "species_mean_contrast": {
+          "max": 0.3399883471262064,
+          "mean": 0.08733230292658554,
+          "median": 0.06288671686868322,
+          "min": 0.0019316863838590432,
+          "q10": 0.00905829199706835,
+          "q90": 0.22859284965394996
+        }
+      },
+      "species_median_edge_length_km": {
+        "median": 182.59226466080963,
+        "q10": 38.91683909318246,
+        "q90": 902.0526909882192
+      },
+      "species_median_standardized_edge_length": {
+        "median": 0.05729869273293469,
+        "q10": 0.01205697814828492,
+        "q90": 0.28455570821461024
+      }
+    },
+    {
+      "equal_species_mean_edge_count": 344.456,
+      "equal_species_mean_edge_length_km": 608.9659925015062,
+      "equal_species_mean_nontrivial_direction_fraction": 0.5678203125,
+      "equal_species_mean_standardized_edge_length": 0.19019609344439414,
+      "equal_species_median_edge_length_km": 334.807562996303,
+      "equal_species_median_standardized_edge_length": 0.10462253185391905,
+      "geometry_fingerprint_sha256": "317e5eecb5ed15fc7a3922a7cd4ba01facbf1277afe42a852cc327035378db60",
+      "graph_rule": "constant_neighbor_fraction",
+      "k": 9,
+      "records_per_species": 60,
+      "shared_observability": {
+        "directions": 2048,
+        "equal_species_mean_contrast": {
+          "max": 0.13679758728646968,
+          "mean": 0.08442603300176901,
+          "median": 0.08787859261711001,
+          "min": 0.045506388016536864,
+          "q05": 0.05122974829142293,
+          "q25": 0.07420805242073011,
+          "q75": 0.09631903723078208,
+          "q95": 0.11568675640835432
+        },
+        "species_mean_contrast": {
+          "max": 0.31450696168372516,
+          "mean": 0.084426033001769,
+          "median": 0.058263976290372756,
+          "min": 0.0017866717618764683,
+          "q10": 0.00876662356686599,
+          "q90": 0.21956729596890265
+        }
+      },
+      "species_median_edge_length_km": {
+        "median": 176.86922474285785,
+        "q10": 36.28314191002506,
+        "q90": 861.5044780267931
+      },
+      "species_median_standardized_edge_length": {
+        "median": 0.055834195132973635,
+        "q10": 0.011030952969307012,
+        "q90": 0.266847383492276
+      }
+    },
+    {
+      "equal_species_mean_edge_count": 607.952,
+      "equal_species_mean_edge_length_km": 598.9510516211228,
+      "equal_species_mean_nontrivial_direction_fraction": 0.5819453125,
+      "equal_species_mean_standardized_edge_length": 0.18687202450021073,
+      "equal_species_median_edge_length_km": 329.6967728474985,
+      "equal_species_median_standardized_edge_length": 0.1028102077224578,
+      "geometry_fingerprint_sha256": "2d533a1bfacc1419cfcd44551fffd3fe87f05e6b7e5dc52f3865f56151b2743f",
+      "graph_rule": "constant_neighbor_fraction",
+      "k": 12,
+      "records_per_species": 80,
+      "shared_observability": {
+        "directions": 2048,
+        "equal_species_mean_contrast": {
+          "max": 0.13530413159895158,
+          "mean": 0.08302235394630339,
+          "median": 0.08651552425216641,
+          "min": 0.04342273646039091,
+          "q05": 0.04953435415607266,
+          "q25": 0.07286566069690142,
+          "q75": 0.09504544841212192,
+          "q95": 0.11396895067614299
+        },
+        "species_mean_contrast": {
+          "max": 0.3195911305107412,
+          "mean": 0.08302235394630339,
+          "median": 0.05681820474374584,
+          "min": 0.0016792869149480209,
+          "q10": 0.00905961417136903,
+          "q90": 0.20886872178863905
+        }
+      },
+      "species_median_edge_length_km": {
+        "median": 173.12727507629754,
+        "q10": 36.49307303977585,
+        "q90": 828.2161562118213
+      },
+      "species_median_standardized_edge_length": {
+        "median": 0.053548870298046475,
+        "q10": 0.011498084516176557,
+        "q90": 0.25557237596400134
+      }
+    },
+    {
+      "equal_species_mean_edge_count": 944.644,
+      "equal_species_mean_edge_length_km": 594.491024533001,
+      "equal_species_mean_nontrivial_direction_fraction": 0.589369140625,
+      "equal_species_mean_standardized_edge_length": 0.18553589877986854,
+      "equal_species_median_edge_length_km": 327.0595190448895,
+      "equal_species_median_standardized_edge_length": 0.10184001495431051,
+      "geometry_fingerprint_sha256": "68375d4ee88a90564d6a04f64a5b79f71fc648a42bd16e4c844404c2cf5a4cf6",
+      "graph_rule": "constant_neighbor_fraction",
+      "k": 15,
+      "records_per_species": 100,
+      "shared_observability": {
+        "directions": 2048,
+        "equal_species_mean_contrast": {
+          "max": 0.13373361656315436,
+          "mean": 0.08234554417945728,
+          "median": 0.08573274430517427,
+          "min": 0.04401252763098763,
+          "q05": 0.04948650103465659,
+          "q25": 0.07260308528129643,
+          "q75": 0.09367679614889796,
+          "q95": 0.11338350546153374
+        },
+        "species_mean_contrast": {
+          "max": 0.3079846196943212,
+          "mean": 0.08234554417945728,
+          "median": 0.05699721588258739,
+          "min": 0.0017604054821047134,
+          "q10": 0.008840630968542295,
+          "q90": 0.2151169938961497
+        }
+      },
+      "species_median_edge_length_km": {
+        "median": 169.7927319478174,
+        "q10": 37.075722847529214,
+        "q90": 809.938995457428
+      },
+      "species_median_standardized_edge_length": {
+        "median": 0.05286585377344358,
+        "q10": 0.01162957829899298,
+        "q90": 0.25384691731714376
+      }
+    }
+  ],
+  "rule": "docs/supporting/v10_density_edge_scale_diagnostic_rule.json",
+  "schema": "ttf_v10_density_edge_scale_diagnostic_v0.1",
+  "source_ledger": "benchmarks/frozen/v09_rgfca_reserve_b_max_density_geometry_source.json",
+  "status": "development_only_geometry_mechanism_audit",
+  "synthetic_trait_worlds_used": false,
+  "trait_or_colour_outcomes_used": false,
+  "trend_summary": {
+    "constant_neighbor_fraction": {
+      "loglog_slope_shared_mean_contrast_vs_n": -0.08956881573733394,
+      "loglog_slope_standardized_edge_length_vs_n": -0.09083338453804304,
+      "monotone_nonincreasing_edge_scale": true,
+      "monotone_nonincreasing_shared_contrast": true,
+      "n20_to_n100_edge_length_ratio": 0.8665829469690912,
+      "n20_to_n100_shared_contrast_ratio": 0.8674212150011699
+    },
+    "fixed_k3": {
+      "loglog_slope_shared_mean_contrast_vs_n": -0.6790819560432987,
+      "loglog_slope_standardized_edge_length_vs_n": -0.7128072789984534,
+      "monotone_nonincreasing_edge_scale": true,
+      "monotone_nonincreasing_shared_contrast": true,
+      "n20_to_n100_edge_length_ratio": 0.3187997635545539,
+      "n20_to_n100_shared_contrast_ratio": 0.33511637243333925
+    }
+  },
+  "ttf_estimator_fit": false
+}

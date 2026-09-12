@@ -1,0 +1,63 @@
+{
+  "schema": "ttf_v05_one_sided_geometry_candidate_rule_v0.1",
+  "status": "frozen_before_v05_diagnostic_outcomes",
+  "development_panels": [
+    {
+      "name": "failed_v03_fresh_external",
+      "geometry": "benchmarks/frozen/v03_fresh_animal_geometry.csv",
+      "role": "development_only_after_v03_failure",
+      "world_seed": 20260908,
+      "k": 4,
+      "bandwidth_km": 125.29246372510903,
+      "species": 40,
+      "train_species": 20,
+      "eval_species": 20
+    },
+    {
+      "name": "failed_v04_fresh_external",
+      "geometry": "benchmarks/frozen/v04_fresh_animal_geometry.csv",
+      "role": "development_only_after_v04_power_failure",
+      "world_seed": 20260909,
+      "k": 4,
+      "bandwidth_km": 81.44335899069378,
+      "species": 48,
+      "train_species": 24,
+      "eval_species": 24
+    }
+  ],
+  "mechanistic_hypothesis": "The v0.4 two-sided edge-level partial removes genuine shared-boundary signal from the held-out target. Geometry-induced private-boundary bias only requires removing the shared nuisance component from the predicted field exposure; the raw held-out target should remain untouched.",
+  "candidate_preference_order": [
+    "prediction_propensity_only",
+    "prediction_length_and_propensity",
+    "target_propensity_only",
+    "two_sided_propensity_only",
+    "v04_two_sided_length_and_propensity"
+  ],
+  "candidate_definitions": {
+    "prediction_propensity_only": "Spearman correlation between prediction rank residualized against geometry-only private propensity rank and raw held-out turnover rank",
+    "prediction_length_and_propensity": "Spearman correlation between prediction rank residualized against edge-length and private-propensity ranks and raw held-out turnover rank",
+    "target_propensity_only": "Spearman correlation between raw prediction rank and target rank residualized against private-propensity rank",
+    "two_sided_propensity_only": "partial Spearman after removing private-propensity rank from both prediction and target",
+    "v04_two_sided_length_and_propensity": "locked v0.4 two-sided partial with length and private propensity controls"
+  },
+  "selection_rule": "Select the first candidate in preference order that passes the Wilson precision requirements on BOTH failed development panels: maximum zero-shared two-sided Wilson 95% upper bound across amplitudes 0.5,1,2,3 <= 0.10 AND full-shared amplitude-2 two-sided Wilson 95% lower bound >= 0.80. If none passes both panels, select no v0.5 candidate from this family.",
+  "precision_requirements": {
+    "worlds_per_cell": 500,
+    "bootstrap_resamples": 1999,
+    "alpha": 0.05,
+    "type1_wilson_upper_ceiling": 0.10,
+    "power_wilson_lower_floor": 0.80,
+    "mandatory_cells": [[0.0,0.5],[0.0,1.0],[0.0,2.0],[0.0,3.0],[1.0,2.0]]
+  },
+  "shared_method_components": {
+    "training_response": "v03 length-rank-orthogonalized turnover",
+    "field_projection": "exact opportunity-corrected dense kernel projection",
+    "private_propensity_directions": 2048,
+    "private_propensity_seed": 20260908,
+    "private_propensity_transition_width": 0.2,
+    "amplitude_used_in_propensity": false
+  },
+  "confirmatory_policy": "Any selected v0.5 candidate must be locked before performance is opened on newly frozen confirmation panels. Passing one panel is insufficient; the pre-frozen confirmation set defined before diagnostic outcome inspection must pass as a conjunction before RGFCA reserve authorization.",
+  "failed_v02_v03_v04_results_remain_immutable": true,
+  "rgfca_reserve_opened": false
+}

@@ -1,0 +1,92 @@
+{
+  "schema": "ttfm_q4_directionality_qualification_rule_v0.1",
+  "status": "frozen_before_q4_directionality_outcomes",
+  "purpose": "Qualify a signed breakdown/recoupling label only when an already-qualified direction-free TTF-C relation front and a held-out oriented mismatch sign both generalize.",
+  "prerequisite": {
+    "idealized_result_path": "results/ttfm_idealized_qualification_v0.1.json",
+    "required_joint_extension_pass": true,
+    "frozen_ttf_v0_1_through_v0_12_unchanged": true
+  },
+  "geometry": {
+    "n_systems": 40,
+    "records_per_system": 60,
+    "train_systems": 20,
+    "eval_systems": 20,
+    "split_rule": "lexicographically_first_20_train_remaining_20_eval",
+    "graph_k": 9,
+    "graph_fraction_interpretation": 0.15,
+    "bandwidth": 0.2,
+    "prior_strength": 0.25,
+    "prior_mean": 0.5,
+    "segment_points": 5
+  },
+  "direction_rule": {
+    "orientation": "prospectively_generated_x_coordinate_independent_of_state_outcomes",
+    "front_locator": "equal_system_median_of_training_system_raw_relation_edge_dissimilarity_weighted_medians",
+    "front_edge_fraction": 0.15,
+    "front_window": 0.35,
+    "heldout_contrast": "mean_pointwise_mismatch_positive_side_minus_negative_side_within_symmetric_front_window",
+    "minimum_records_per_side": 4,
+    "sign_consistency_fraction": 0.75,
+    "breakdown": "ttf_c_p_lt_alpha AND positive_delta_bootstrap_p_lt_alpha AND positive_species_fraction_ge_0.75",
+    "recoupling": "ttf_c_p_lt_alpha AND negative_delta_bootstrap_p_lt_alpha AND negative_species_fraction_ge_0.75"
+  },
+  "world_parameters": {
+    "low_mismatch": 1.0,
+    "high_mismatch": 3.0,
+    "transition_width": 0.12,
+    "default_noise_sd": 0.25,
+    "master_seed": 20260910
+  },
+  "mandatory_cells": [
+    {
+      "id": "Q4_BREAK_shared_breakdown",
+      "mode": "shared_breakdown",
+      "noise_sd": 0.25,
+      "roles": ["relation_power", "breakdown_power", "recoupling_type1"]
+    },
+    {
+      "id": "Q4_RECOUPLE_shared_recoupling",
+      "mode": "shared_recoupling",
+      "noise_sd": 0.25,
+      "roles": ["relation_power", "recoupling_power", "breakdown_type1"]
+    },
+    {
+      "id": "Q4_ROTATE_neutral_relation_change",
+      "mode": "shared_neutral_rotation",
+      "noise_sd": 0.0,
+      "roles": ["relation_power", "breakdown_type1", "recoupling_type1"]
+    },
+    {
+      "id": "Q4_PRIVATE_private_directional_change",
+      "mode": "private_directional_change",
+      "noise_sd": 0.25,
+      "roles": ["relation_type1", "breakdown_type1", "recoupling_type1"]
+    },
+    {
+      "id": "Q4_FLIP_shared_front_conflicting_sign",
+      "mode": "shared_sign_flip",
+      "noise_sd": 0.25,
+      "roles": ["relation_power", "breakdown_type1", "recoupling_type1"]
+    }
+  ],
+  "inference": {
+    "replicates_per_cell": 500,
+    "bootstrap_resamples": 1999,
+    "alpha": 0.05,
+    "wilson_confidence": 0.95,
+    "type1_wilson_upper_max": 0.10,
+    "power_wilson_lower_min": 0.80,
+    "formal_pass_requires_every_declared_role_to_pass": true
+  },
+  "claim_firewall": {
+    "direction_free_ttf_c_front_alone_is_not_breakdown": true,
+    "orientation_is_not_causal_identification": true,
+    "breakdown_means_transferable_increase_in_predeclared_mismatch_only": true,
+    "no_fitness_loss_claim": true,
+    "no_mechanism_failure_claim": true,
+    "no_empirical_data": true,
+    "no_flower_colour_outcome": true,
+    "q5_geometry_stress_not_authorized": true
+  }
+}

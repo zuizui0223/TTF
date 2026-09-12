@@ -1,0 +1,354 @@
+{
+  "authorization": {
+    "aggregator_blob_sha": "9a6af952a0e8b7642facbfdd993ab457d5222d2b",
+    "authorization_rule": "Run the prospectively frozen v0.7 profiled-private inference exactly once for false-positive validity on the two v0.8 fresh external geometries. Open only zero-shared private A=0.5,1,2,3 observed cells and independent private reference families. Do not generate a shared positive-control world, do not use power or observability to drop a panel, and preserve the result regardless of sign.",
+    "calibration_statistic_draws": 1000,
+    "failed_v02_v03_v04_v05_v06_v07_results_remain_immutable": true,
+    "if_gate_v_fails": "Preserve the failure and do not open the RGFCA reserve.",
+    "if_gate_v_passes": "Only then may a separate exact-blob authorization be created for the RGFCA reserve Gate-D local type-I plus shared-A2 deployment adequacy audit.",
+    "legacy_birds_butterflies_remain_unopened": true,
+    "legacy_holdout_blob_sha": "a1571090c905db59051a9fb357e5f69d15b7de9a",
+    "mandatory_private_cells": [
+      [
+        0.0,
+        0.5
+      ],
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        2.0
+      ],
+      [
+        0.0,
+        3.0
+      ]
+    ],
+    "observed_worlds_per_cell": 500,
+    "panel_source_blob_sha": "c438c4257b365557e1ef530a452fec213afc6bbf",
+    "panels": {
+      "europe_birds": {
+        "bandwidth_km": 62.222531677671526,
+        "eval_species": 24,
+        "records": 4800,
+        "species": 48,
+        "split_seed": 8849490829815163460,
+        "train_species": 24,
+        "world_seed": 20260917
+      },
+      "na_waterbirds": {
+        "bandwidth_km": 91.4488312642481,
+        "eval_species": 24,
+        "records": 4800,
+        "species": 48,
+        "split_seed": 15988766491480510410,
+        "train_species": 24,
+        "world_seed": 20260918
+      }
+    },
+    "power_or_observability_may_exempt_panel": false,
+    "private_reference_labels": [
+      "A0",
+      "A0p5",
+      "A1",
+      "A2",
+      "A3",
+      "A5",
+      "A10",
+      "infinite_snr"
+    ],
+    "profile_strength_draws": 999,
+    "reference_worlds_per_configuration": 1999,
+    "reserve_source_blob_sha": "29bee8c15e4e4b2b3f0ae5bba6e1ec79d2b99e62",
+    "rgfca_reserve_remains_unopened": true,
+    "rule_blob_sha": "bfc8fea9b46f2b5a79b61b7d6daad38fd251c0b9",
+    "runner_blob_sha": "7476c1a6b7bd4aa9cc405b8ca08ee083f1f2772b",
+    "schema": "ttf_v08_validity_authorization_v0.1",
+    "selected_private_configurations": 2,
+    "shared_positive_control_forbidden": true,
+    "status": "authorize_exactly_one_v08_fresh_external_type1_validity_run",
+    "type1_wilson_upper_ceiling": 0.1,
+    "v07_result_blob_sha": "b14a178375ad9b1b567b7a6089127d7211017f3a"
+  },
+  "claim_ready": false,
+  "gate_v_pass": true,
+  "legacy_birds_butterflies_opened": false,
+  "lineage": {
+    "workflow_head_sha": "08be635b22b6672bec8497391bb28c537d27295d",
+    "workflow_run_id": 34178680246
+  },
+  "next_gate": "If gate_v_pass is true, the RGFCA reserve may receive the separately frozen Gate-D local type-I plus shared-A2 detectability audit before any empirical colour outcome is opened. If false, preserve failure and do not open the reserve.",
+  "panel_source": "benchmarks/frozen/v08_validity_panels_source.json",
+  "panels": {
+    "europe_birds": {
+      "cells": [
+        {
+          "alpha": 0.05,
+          "amplitude": 0.5,
+          "mean_null_statistic": NaN,
+          "mean_statistic": -0.0006216561369558338,
+          "median_p_value": 0.543956043956044,
+          "n_replicates": 500,
+          "rejection_rate": 0.046,
+          "shared_fraction": 0.0
+        },
+        {
+          "alpha": 0.05,
+          "amplitude": 1.0,
+          "mean_null_statistic": NaN,
+          "mean_statistic": -0.00039035200921671323,
+          "median_p_value": 0.5314685314685315,
+          "n_replicates": 500,
+          "rejection_rate": 0.054,
+          "shared_fraction": 0.0
+        },
+        {
+          "alpha": 0.05,
+          "amplitude": 2.0,
+          "mean_null_statistic": NaN,
+          "mean_statistic": 0.0006338948536646655,
+          "median_p_value": 0.532967032967033,
+          "n_replicates": 500,
+          "rejection_rate": 0.032,
+          "shared_fraction": 0.0
+        },
+        {
+          "alpha": 0.05,
+          "amplitude": 3.0,
+          "mean_null_statistic": NaN,
+          "mean_statistic": 0.004345432241603513,
+          "median_p_value": 0.510989010989011,
+          "n_replicates": 500,
+          "rejection_rate": 0.05,
+          "shared_fraction": 0.0
+        }
+      ],
+      "matching_private_label_recovery": {
+        "0.5": 0.822,
+        "1.0": 0.538,
+        "2.0": 0.804,
+        "3.0": 0.938
+      },
+      "max_zero_shared_estimate": 0.054,
+      "max_zero_shared_upper95": 0.07742656151064709,
+      "passed": true,
+      "selected_pair_counts": {
+        "0.5": {
+          "A0+A0p5": 230,
+          "A0p5+A0": 58,
+          "A0p5+A1": 10,
+          "A1+A0p5": 113,
+          "A1+A2": 38,
+          "A2+A1": 41,
+          "A2+A3": 8,
+          "A3+A2": 2
+        },
+        "1.0": {
+          "A0+A0p5": 153,
+          "A0p5+A0": 48,
+          "A0p5+A1": 15,
+          "A1+A0p5": 128,
+          "A1+A2": 45,
+          "A2+A1": 81,
+          "A2+A3": 24,
+          "A3+A2": 6
+        },
+        "2.0": {
+          "A0+A0p5": 13,
+          "A0p5+A0": 11,
+          "A0p5+A1": 1,
+          "A1+A0p5": 71,
+          "A1+A2": 37,
+          "A2+A1": 154,
+          "A2+A3": 121,
+          "A3+A2": 90,
+          "A3+A5": 1,
+          "A5+A3": 1
+        },
+        "3.0": {
+          "A1+A0p5": 2,
+          "A1+A2": 4,
+          "A2+A1": 25,
+          "A2+A3": 68,
+          "A3+A2": 335,
+          "A3+A5": 49,
+          "A5+A3": 17
+        }
+      },
+      "shared_positive_control_opened": false,
+      "type1_upper_ceiling": 0.1,
+      "zero_shared_intervals": [
+        {
+          "amplitude": 0.5,
+          "estimate": 0.046,
+          "high": 0.06807779276827323,
+          "low": 0.030845108370816204,
+          "successes": 23,
+          "trials": 500
+        },
+        {
+          "amplitude": 1.0,
+          "estimate": 0.054,
+          "high": 0.07742656151064709,
+          "low": 0.03737435018105752,
+          "successes": 27,
+          "trials": 500
+        },
+        {
+          "amplitude": 2.0,
+          "estimate": 0.032,
+          "high": 0.051344869045441784,
+          "low": 0.019791513626571118,
+          "successes": 16,
+          "trials": 500
+        },
+        {
+          "amplitude": 3.0,
+          "estimate": 0.05,
+          "high": 0.0727681611715476,
+          "low": 0.034093745243849435,
+          "successes": 25,
+          "trials": 500
+        }
+      ]
+    },
+    "na_waterbirds": {
+      "cells": [
+        {
+          "alpha": 0.05,
+          "amplitude": 0.5,
+          "mean_null_statistic": NaN,
+          "mean_statistic": 0.0005044267633566059,
+          "median_p_value": 0.5294705294705294,
+          "n_replicates": 500,
+          "rejection_rate": 0.058,
+          "shared_fraction": 0.0
+        },
+        {
+          "alpha": 0.05,
+          "amplitude": 1.0,
+          "mean_null_statistic": NaN,
+          "mean_statistic": 0.0011116121009006972,
+          "median_p_value": 0.506993006993007,
+          "n_replicates": 500,
+          "rejection_rate": 0.044,
+          "shared_fraction": 0.0
+        },
+        {
+          "alpha": 0.05,
+          "amplitude": 2.0,
+          "mean_null_statistic": NaN,
+          "mean_statistic": 0.006207275306407696,
+          "median_p_value": 0.5654345654345654,
+          "n_replicates": 500,
+          "rejection_rate": 0.034,
+          "shared_fraction": 0.0
+        },
+        {
+          "alpha": 0.05,
+          "amplitude": 3.0,
+          "mean_null_statistic": NaN,
+          "mean_statistic": 0.013318526317212484,
+          "median_p_value": 0.5644355644355644,
+          "n_replicates": 500,
+          "rejection_rate": 0.028,
+          "shared_fraction": 0.0
+        }
+      ],
+      "matching_private_label_recovery": {
+        "0.5": 0.878,
+        "1.0": 0.546,
+        "2.0": 0.882,
+        "3.0": 0.968
+      },
+      "max_zero_shared_estimate": 0.058,
+      "max_zero_shared_upper95": 0.08205618785625499,
+      "passed": true,
+      "selected_pair_counts": {
+        "0.5": {
+          "A0+A0p5": 245,
+          "A0p5+A0": 61,
+          "A0p5+A1": 9,
+          "A1+A0p5": 124,
+          "A1+A2": 19,
+          "A2+A1": 39,
+          "A2+A3": 2,
+          "A3+A2": 1
+        },
+        "1.0": {
+          "A0+A0p5": 147,
+          "A0p5+A0": 61,
+          "A0p5+A1": 16,
+          "A1+A0p5": 149,
+          "A1+A2": 34,
+          "A2+A1": 74,
+          "A2+A3": 18,
+          "A3+A2": 1
+        },
+        "2.0": {
+          "A0p5+A0": 4,
+          "A1+A0p5": 53,
+          "A1+A2": 27,
+          "A2+A1": 171,
+          "A2+A3": 158,
+          "A3+A2": 85,
+          "A3+A5": 1,
+          "A5+A3": 1
+        },
+        "3.0": {
+          "A1+A2": 1,
+          "A2+A1": 15,
+          "A2+A3": 70,
+          "A3+A2": 288,
+          "A3+A5": 102,
+          "A5+A3": 24
+        }
+      },
+      "shared_positive_control_opened": false,
+      "type1_upper_ceiling": 0.1,
+      "zero_shared_intervals": [
+        {
+          "amplitude": 0.5,
+          "estimate": 0.058,
+          "high": 0.08205618785625499,
+          "low": 0.0406837291117572,
+          "successes": 29,
+          "trials": 500
+        },
+        {
+          "amplitude": 1.0,
+          "estimate": 0.044,
+          "high": 0.06571944287232845,
+          "low": 0.02923395562860718,
+          "successes": 22,
+          "trials": 500
+        },
+        {
+          "amplitude": 2.0,
+          "estimate": 0.034,
+          "high": 0.053771365501634506,
+          "low": 0.02133451980853219,
+          "successes": 17,
+          "trials": 500
+        },
+        {
+          "amplitude": 3.0,
+          "estimate": 0.028,
+          "high": 0.04644640267494888,
+          "low": 0.01675097472075645,
+          "successes": 14,
+          "trials": 500
+        }
+      ]
+    }
+  },
+  "power_claim_made": false,
+  "rgfca_reserve_opened": false,
+  "rule": "docs/supporting/v08_validity_detectability_rule.json",
+  "schema": "ttf_v08_external_validity_v0.1",
+  "selection_rule_applied_mechanically": true,
+  "shared_positive_control_opened": false,
+  "status": "fresh_external_type1_validity_confirmation"
+}

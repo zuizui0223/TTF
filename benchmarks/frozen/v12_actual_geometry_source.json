@@ -1,0 +1,343 @@
+{
+  "additional_photos_after_evaluability_known": false,
+  "claim_boundary": "This result contains photo-level evaluability only. No colour-vector value, colour distance, edge turnover, TTF transfer statistic, shared-boundary map, or environment association was inspected.",
+  "classifiability_gate_pass": false,
+  "colour_vector_values_read_by_ttf": false,
+  "failing_species": [
+    {
+      "n_evaluable": 15,
+      "n_frozen": 100,
+      "species": "Hillia parasitica"
+    },
+    {
+      "n_evaluable": 16,
+      "n_frozen": 100,
+      "species": "Caleana major"
+    },
+    {
+      "n_evaluable": 16,
+      "n_frozen": 100,
+      "species": "Daphne laureola"
+    },
+    {
+      "n_evaluable": 16,
+      "n_frozen": 100,
+      "species": "Lonicera utahensis"
+    },
+    {
+      "n_evaluable": 16,
+      "n_frozen": 100,
+      "species": "Phragmites australis"
+    },
+    {
+      "n_evaluable": 17,
+      "n_frozen": 100,
+      "species": "Prosartes trachycarpa"
+    },
+    {
+      "n_evaluable": 18,
+      "n_frozen": 100,
+      "species": "Aruncus dioicus"
+    },
+    {
+      "n_evaluable": 18,
+      "n_frozen": 100,
+      "species": "Chasmanthe aethiopica"
+    },
+    {
+      "n_evaluable": 18,
+      "n_frozen": 100,
+      "species": "Trillium cuneatum"
+    },
+    {
+      "n_evaluable": 19,
+      "n_frozen": 100,
+      "species": "Prosartes hookeri"
+    },
+    {
+      "n_evaluable": 20,
+      "n_frozen": 100,
+      "species": "Cortaderia selloana"
+    },
+    {
+      "n_evaluable": 21,
+      "n_frozen": 100,
+      "species": "Elaeagnus pungens"
+    },
+    {
+      "n_evaluable": 21,
+      "n_frozen": 100,
+      "species": "Halleria lucida"
+    },
+    {
+      "n_evaluable": 23,
+      "n_frozen": 100,
+      "species": "Arum cylindraceum"
+    },
+    {
+      "n_evaluable": 23,
+      "n_frozen": 100,
+      "species": "Fritillaria affinis"
+    },
+    {
+      "n_evaluable": 24,
+      "n_frozen": 100,
+      "species": "Atriplex hymenelytra"
+    },
+    {
+      "n_evaluable": 24,
+      "n_frozen": 100,
+      "species": "Gentiana algida"
+    },
+    {
+      "n_evaluable": 25,
+      "n_frozen": 100,
+      "species": "Oemleria cerasiformis"
+    },
+    {
+      "n_evaluable": 25,
+      "n_frozen": 100,
+      "species": "Trillium vaseyi"
+    },
+    {
+      "n_evaluable": 26,
+      "n_frozen": 100,
+      "species": "Castanea mollissima"
+    },
+    {
+      "n_evaluable": 27,
+      "n_frozen": 100,
+      "species": "Baccharis pilularis"
+    },
+    {
+      "n_evaluable": 27,
+      "n_frozen": 100,
+      "species": "Correa alba"
+    },
+    {
+      "n_evaluable": 27,
+      "n_frozen": 100,
+      "species": "Salix interior"
+    },
+    {
+      "n_evaluable": 28,
+      "n_frozen": 100,
+      "species": "Albizia julibrissin"
+    },
+    {
+      "n_evaluable": 28,
+      "n_frozen": 100,
+      "species": "Cassytha filiformis"
+    },
+    {
+      "n_evaluable": 28,
+      "n_frozen": 100,
+      "species": "Chionanthus virginicus"
+    },
+    {
+      "n_evaluable": 28,
+      "n_frozen": 100,
+      "species": "Enkianthus quinqueflorus"
+    },
+    {
+      "n_evaluable": 28,
+      "n_frozen": 100,
+      "species": "Passiflora caerulea"
+    },
+    {
+      "n_evaluable": 28,
+      "n_frozen": 100,
+      "species": "Spiranthes romanzoffiana"
+    },
+    {
+      "n_evaluable": 29,
+      "n_frozen": 100,
+      "species": "Amorpha canescens"
+    },
+    {
+      "n_evaluable": 29,
+      "n_frozen": 100,
+      "species": "Phytolacca rivinoides"
+    },
+    {
+      "n_evaluable": 29,
+      "n_frozen": 100,
+      "species": "Platanthera bifolia"
+    },
+    {
+      "n_evaluable": 29,
+      "n_frozen": 100,
+      "species": "Salvia carnea"
+    },
+    {
+      "n_evaluable": 31,
+      "n_frozen": 100,
+      "species": "Monotoca scoparia"
+    },
+    {
+      "n_evaluable": 32,
+      "n_frozen": 100,
+      "species": "Oenothera suffrutescens"
+    },
+    {
+      "n_evaluable": 33,
+      "n_frozen": 100,
+      "species": "Ambrosia salsola"
+    },
+    {
+      "n_evaluable": 33,
+      "n_frozen": 100,
+      "species": "Lepidium didymum"
+    },
+    {
+      "n_evaluable": 33,
+      "n_frozen": 100,
+      "species": "Oxalis montana"
+    },
+    {
+      "n_evaluable": 34,
+      "n_frozen": 100,
+      "species": "Astragalus canadensis"
+    },
+    {
+      "n_evaluable": 34,
+      "n_frozen": 100,
+      "species": "Coccoloba uvifera"
+    },
+    {
+      "n_evaluable": 34,
+      "n_frozen": 100,
+      "species": "Eubotrys racemosus"
+    },
+    {
+      "n_evaluable": 34,
+      "n_frozen": 100,
+      "species": "Monotropa hypopitys"
+    },
+    {
+      "n_evaluable": 34,
+      "n_frozen": 100,
+      "species": "Ribes triste"
+    },
+    {
+      "n_evaluable": 35,
+      "n_frozen": 100,
+      "species": "Bomarea edulis"
+    },
+    {
+      "n_evaluable": 35,
+      "n_frozen": 100,
+      "species": "Mohavea confertiflora"
+    },
+    {
+      "n_evaluable": 36,
+      "n_frozen": 100,
+      "species": "Alpinia purpurata"
+    },
+    {
+      "n_evaluable": 36,
+      "n_frozen": 100,
+      "species": "Amphicarpaea bracteata"
+    },
+    {
+      "n_evaluable": 36,
+      "n_frozen": 100,
+      "species": "Hedysarum alpinum"
+    },
+    {
+      "n_evaluable": 36,
+      "n_frozen": 100,
+      "species": "Lathyrus vestitus"
+    },
+    {
+      "n_evaluable": 36,
+      "n_frozen": 100,
+      "species": "Rhinanthus glacialis"
+    },
+    {
+      "n_evaluable": 37,
+      "n_frozen": 100,
+      "species": "Calluna vulgaris"
+    },
+    {
+      "n_evaluable": 37,
+      "n_frozen": 100,
+      "species": "Calopogon pallidus"
+    },
+    {
+      "n_evaluable": 37,
+      "n_frozen": 100,
+      "species": "Euphorbia amygdaloides"
+    },
+    {
+      "n_evaluable": 37,
+      "n_frozen": 100,
+      "species": "Sophora tomentosa"
+    },
+    {
+      "n_evaluable": 38,
+      "n_frozen": 100,
+      "species": "Eriogonum inflatum"
+    },
+    {
+      "n_evaluable": 39,
+      "n_frozen": 100,
+      "species": "Acacia fimbriata"
+    },
+    {
+      "n_evaluable": 39,
+      "n_frozen": 100,
+      "species": "Aloe arborescens"
+    },
+    {
+      "n_evaluable": 39,
+      "n_frozen": 100,
+      "species": "Gomphocarpus physocarpus"
+    },
+    {
+      "n_evaluable": 39,
+      "n_frozen": 100,
+      "species": "Hibiscus syriacus"
+    },
+    {
+      "n_evaluable": 39,
+      "n_frozen": 100,
+      "species": "Ilex opaca"
+    },
+    {
+      "n_evaluable": 39,
+      "n_frozen": 100,
+      "species": "Lyonia lucida"
+    }
+  ],
+  "firewall_sha256": "8930f3e4919c4fce9b0eb3b35976e736c9f47a33242c940ca663b55b0525561a",
+  "frozen_records": 25000,
+  "frozen_species": 250,
+  "measurement_evaluable_terminal_status": "classified_four_state_morph",
+  "median_evaluable_records": 51.0,
+  "minimum_evaluable_records_per_species": 40,
+  "minimum_observed_evaluable_records": 15,
+  "next_gate": "Stop empirical TTF without replacement, target relaxation, or tuning.",
+  "no_failure_replacement": true,
+  "pairwise_colour_distances_computed": false,
+  "retained_geometry": {
+    "bandwidth_km": null,
+    "k": null,
+    "path": null,
+    "records": 0,
+    "records_per_species": null,
+    "selection_seed": 20260924,
+    "sha256": null,
+    "species": 0
+  },
+  "schema": "ttf_v12_classifiability_actual_geometry_result_v0.1",
+  "species_meeting_minimum": 189,
+  "status": "not_evaluable_actual_geometry_classifiability_gate_failed",
+  "terminal_status_counts": {
+    "classified_four_state_morph": 12671,
+    "not_evaluable_ambiguous_palette_composition": 1124,
+    "not_evaluable_no_biological_palette_mass": 9,
+    "not_evaluable_roi_or_flip_gate": 11196
+  },
+  "ttf_empirical_statistic_computed": false
+}

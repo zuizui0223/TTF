@@ -1,0 +1,237 @@
+{
+  "cells": [
+    {
+      "alpha": 0.05,
+      "amplitude": 0.5,
+      "mean_null_statistic": -3.50478095520149e-06,
+      "mean_statistic": -0.0002988330425407655,
+      "median_p_value": 0.5395,
+      "n_replicates": 500,
+      "rejection_rate": 0.058,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 1.0,
+      "mean_null_statistic": 2.578095935699481e-05,
+      "mean_statistic": -0.0015450540285288977,
+      "median_p_value": 0.52675,
+      "n_replicates": 500,
+      "rejection_rate": 0.046,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 2.0,
+      "mean_null_statistic": -4.181485405726243e-05,
+      "mean_statistic": 0.004435360670284661,
+      "median_p_value": 0.43225,
+      "n_replicates": 500,
+      "rejection_rate": 0.072,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 3.0,
+      "mean_null_statistic": 2.608715882136478e-05,
+      "mean_statistic": 0.01111659723991331,
+      "median_p_value": 0.35524999999999995,
+      "n_replicates": 500,
+      "rejection_rate": 0.11,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 2.0,
+      "mean_null_statistic": 1.2289734645288455e-06,
+      "mean_statistic": 0.04513640078740501,
+      "median_p_value": 0.089,
+      "n_replicates": 500,
+      "rejection_rate": 0.392,
+      "shared_fraction": 1.0
+    }
+  ],
+  "claim_boundary": "This run can qualify Gate I-A, the independent non-flower geometry stress. It cannot qualify Gate I overall: Gate I-B must separately pass on the prospectively frozen intended empirical TTF sampling geometry.",
+  "claim_ready": false,
+  "design": {
+    "alpha": 0.05,
+    "bandwidth": 71.89344849809788,
+    "confidence_interval": "two-sided Wilson score 95%",
+    "eval_fraction": 0.5,
+    "inference": "heldout_species_bootstrap",
+    "k": 4,
+    "mandatory_cells": [
+      [
+        0.0,
+        0.5
+      ],
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        2.0
+      ],
+      [
+        0.0,
+        3.0
+      ],
+      [
+        1.0,
+        2.0
+      ]
+    ],
+    "max_distance": null,
+    "moderate_amplitude": 2.0,
+    "noise_sd": 0.8,
+    "power_lower_floor": 0.8,
+    "prior_mean": 0.5,
+    "prior_strength": 0.25,
+    "replicates": 500,
+    "resamples": 1999,
+    "seed": 20260907,
+    "segment_points": 5,
+    "transition_width": 0.2,
+    "type1_upper_ceiling": 0.1
+  },
+  "gate": "I-A external non-flower geometry stress",
+  "gate_i_a_pass": false,
+  "gate_i_b_required": true,
+  "geometry": {
+    "block_column": null,
+    "coordinate_columns": [
+      "x_km",
+      "y_km",
+      "z_km"
+    ],
+    "excluded_below_min_records": [],
+    "fingerprint_sha256": "9a88e6ba1119648a033f829ae6f7541d541d9a4ad520737e53f4ff3818600018",
+    "input": "benchmarks/frozen/gate_i_a_animal_geometry.csv",
+    "input_sha256": "066eebe31862dbc13c888b187280712147cef499bf44736526c561c4280f98be",
+    "min_records": 80,
+    "record_count": 1920,
+    "records_per_species": {
+      "Anas platyrhynchos": 120,
+      "Buteo buteo": 120,
+      "Capreolus capreolus": 120,
+      "Cervus elaphus": 120,
+      "Columba palumbus": 120,
+      "Corvus corone": 120,
+      "Cygnus olor": 120,
+      "Erinaceus europaeus": 120,
+      "Lepus europaeus": 120,
+      "Meles meles": 120,
+      "Parus major": 120,
+      "Picus viridis": 120,
+      "Sciurus vulgaris": 120,
+      "Sus scrofa": 120,
+      "Turdus merula": 120,
+      "Vulpes vulpes": 120
+    },
+    "species_column": "species",
+    "species_count": 16
+  },
+  "lineage": {
+    "frozen_bandwidth_km": 71.89344849809788,
+    "frozen_geometry_pilot_commit": "76ef7ec3a98de7e3dd6d26116c295da5c2445d7f",
+    "frozen_geometry_pilot_result": "results/gate_i_a_animal_pilot.json",
+    "workflow_head_sha": "c3b7bf0aa21d0b1b90cc110fefda5f79d582758f",
+    "workflow_run_id": 34135155346
+  },
+  "overall_gate_i_pass": false,
+  "point_qualification": {
+    "full_shared_moderate_power": 0.392,
+    "max_zero_shared_rejection": 0.11,
+    "moderate_amplitude": 2.0,
+    "passed": false,
+    "power_floor": 0.8,
+    "power_pass": false,
+    "type1_ceiling": 0.1,
+    "type1_pass": false
+  },
+  "precision_qualification": {
+    "full_shared_interval": {
+      "amplitude": 2.0,
+      "estimate": 0.392,
+      "high": 0.4354594797500162,
+      "low": 0.35018737778967923,
+      "shared_fraction": 1.0,
+      "successes": 196,
+      "trials": 500
+    },
+    "full_shared_moderate_estimate": 0.392,
+    "full_shared_moderate_lower95": 0.35018737778967923,
+    "max_zero_shared_estimate": 0.11,
+    "max_zero_shared_upper95": 0.14045557040340767,
+    "moderate_amplitude": 2.0,
+    "passed": false,
+    "power_lower_floor": 0.8,
+    "power_pass": false,
+    "type1_pass": false,
+    "type1_upper_ceiling": 0.1,
+    "zero_shared_intervals": [
+      {
+        "amplitude": 0.5,
+        "estimate": 0.058,
+        "high": 0.08205618785625499,
+        "low": 0.0406837291117572,
+        "shared_fraction": 0.0,
+        "successes": 29,
+        "trials": 500
+      },
+      {
+        "amplitude": 1.0,
+        "estimate": 0.046,
+        "high": 0.06807779276827323,
+        "low": 0.030845108370816204,
+        "shared_fraction": 0.0,
+        "successes": 23,
+        "trials": 500
+      },
+      {
+        "amplitude": 2.0,
+        "estimate": 0.072,
+        "high": 0.09806840401696253,
+        "low": 0.0524580314181262,
+        "shared_fraction": 0.0,
+        "successes": 36,
+        "trials": 500
+      },
+      {
+        "amplitude": 3.0,
+        "estimate": 0.11,
+        "high": 0.14045557040340767,
+        "low": 0.0854914151566031,
+        "shared_fraction": 0.0,
+        "successes": 55,
+        "trials": 500
+      }
+    ]
+  },
+  "qualification_scope": "external_non_flower_geometry_high_precision",
+  "schema": "ttf_gate_i_geometry_precision_v0.1",
+  "split": {
+    "eval_species": [
+      "Vulpes vulpes",
+      "Buteo buteo",
+      "Sciurus vulgaris",
+      "Corvus corone",
+      "Turdus merula",
+      "Sus scrofa",
+      "Meles meles",
+      "Anas platyrhynchos"
+    ],
+    "split_seed": 6723391324861235453,
+    "train_species": [
+      "Lepus europaeus",
+      "Erinaceus europaeus",
+      "Picus viridis",
+      "Cygnus olor",
+      "Columba palumbus",
+      "Cervus elaphus",
+      "Capreolus capreolus",
+      "Parus major"
+    ]
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "authorization": {
+    "aggregator_blob_sha": "5876d75fc6d94a686a4e0f353da07676c3d57a34",
+    "authorization_rule": "Run exactly one synthetic Gate-D adequacy audit on the prospectively frozen v0.9 species- and photo-disjoint max-density reserve-B design. Do not reuse or retune the failed v0.8 Gate-D panel. Preserve the result regardless of sign.",
+    "bandwidth_km": 500.0,
+    "calibration_statistic_draws": 1000,
+    "empirical_colour_or_pixels_must_remain_unopened": true,
+    "eval_fraction": 0.5,
+    "eval_species": 125,
+    "failed_gate_d_blob_sha": "71e6f791274d9ce9afdcbd59d8095f3420094fd6",
+    "failed_v08_gate_d_panel_must_not_be_reused": true,
+    "gate_v_blob_sha": "8b504aef5b8780a3292c62a2bffd37100032d0d0",
+    "geometry_sha256": "e6da374ff5e534b3a1deb6e608007bd432f53af4bf3bd38d52e4b17e84fbb537",
+    "if_v09_gate_d_fails": "Freeze the design failure, do not tune this panel, and do not open empirical colour or pixels.",
+    "if_v09_gate_d_passes": "Freeze the adequacy pass, then create a separate empirical measurement and analysis authorization before opening any colour or pixel outcome.",
+    "k": 3,
+    "mandatory_cells": [
+      [
+        0.0,
+        0.5
+      ],
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        2.0
+      ],
+      [
+        0.0,
+        3.0
+      ],
+      [
+        1.0,
+        2.0
+      ]
+    ],
+    "noise_sd": 0.8,
+    "observed_worlds_per_cell": 500,
+    "photo_overlap_with_failed_gate_d": 0,
+    "power_wilson_lower_floor": 0.8,
+    "private_reference_labels": [
+      "A0",
+      "A0p5",
+      "A1",
+      "A2",
+      "A3",
+      "A5",
+      "A10",
+      "infinite_snr"
+    ],
+    "profile_strength_draws": 999,
+    "records": 25000,
+    "records_per_species": 100,
+    "reference_worlds_per_configuration": 1999,
+    "rule_blob_sha": "444fb9fdd302628cfba7974e1070acd1b8200eba",
+    "runner_blob_sha": "1f2fbb3ea9d18d2ed28f852c86d848deabe3e77a",
+    "schema": "ttf_v09_gate_d_authorization_v0.1",
+    "seed": 20260920,
+    "selected_private_configurations": 2,
+    "source_blob_sha": "7fab4e08bc3a51ab3f1f5e0db764d775e7d3e8c3",
+    "species": 250,
+    "species_overlap_with_failed_gate_d": 0,
+    "status": "authorize_exactly_one_v09_rgfca_reserve_b_deployment_adequacy_run",
+    "strength_neighbours": 4,
+    "train_species": 125,
+    "transition_width": 0.2,
+    "type1_wilson_upper_ceiling": 0.1,
+    "workflow_blob_sha": "b5610a188658c52c903b6501186a7bf4e00a6c1b"
+  },
+  "cells": [
+    {
+      "alpha": 0.05,
+      "amplitude": 0.5,
+      "mean_null_statistic": NaN,
+      "mean_statistic": 5.580925809937681e-05,
+      "median_p_value": 0.5814185814185814,
+      "n_replicates": 500,
+      "rejection_rate": 0.04,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 1.0,
+      "mean_null_statistic": NaN,
+      "mean_statistic": -0.00011173919243773249,
+      "median_p_value": 0.5829170829170829,
+      "n_replicates": 500,
+      "rejection_rate": 0.036,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 2.0,
+      "mean_null_statistic": NaN,
+      "mean_statistic": 0.0008937216126228307,
+      "median_p_value": 0.5444555444555444,
+      "n_replicates": 500,
+      "rejection_rate": 0.048,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 3.0,
+      "mean_null_statistic": NaN,
+      "mean_statistic": 0.0024943813104200295,
+      "median_p_value": 0.5514485514485514,
+      "n_replicates": 500,
+      "rejection_rate": 0.052,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 2.0,
+      "mean_null_statistic": NaN,
+      "mean_statistic": 0.011060606685864355,
+      "median_p_value": 0.17832167832167833,
+      "n_replicates": 500,
+      "rejection_rate": 0.244,
+      "shared_fraction": 1.0
+    }
+  ],
+  "claim_ready": false,
+  "empirical_colour_outcome_opened": false,
+  "failed_v08_gate_d_panel_reused": false,
+  "gate_d_pass": false,
+  "interpretation_boundary": "v0.9 Gate-D is a pre-outcome adequacy test of a new species- and photo-disjoint maximal-support design. A pass only authorizes separately frozen empirical measurement/analysis; a failure freezes this design without tuning it.",
+  "lineage": {
+    "workflow_head_sha": "a1a27b7251cf18e240a27610a0c3871d6ee54fc7",
+    "workflow_run_id": 34179627821
+  },
+  "matching_private_label_recovery": {
+    "s0.0-a0.5": 0.484,
+    "s0.0-a1.0": 0.168,
+    "s0.0-a2.0": 0.358,
+    "s0.0-a3.0": 0.648,
+    "s1.0-a2.0": null
+  },
+  "precision_qualification": {
+    "full_shared_interval": {
+      "amplitude": 2.0,
+      "estimate": 0.244,
+      "high": 0.2835048068560928,
+      "low": 0.208398855460222,
+      "shared_fraction": 1.0,
+      "successes": 122,
+      "trials": 500
+    },
+    "full_shared_moderate_estimate": 0.244,
+    "full_shared_moderate_lower95": 0.208398855460222,
+    "max_zero_shared_estimate": 0.052,
+    "max_zero_shared_upper95": 0.07510114393784553,
+    "moderate_amplitude": 2.0,
+    "passed": false,
+    "power_lower_floor": 0.8,
+    "power_pass": false,
+    "type1_pass": true,
+    "type1_upper_ceiling": 0.1,
+    "zero_shared_intervals": [
+      {
+        "amplitude": 0.5,
+        "estimate": 0.04,
+        "high": 0.060973595834850805,
+        "low": 0.026040797389777257,
+        "shared_fraction": 0.0,
+        "successes": 20,
+        "trials": 500
+      },
+      {
+        "amplitude": 1.0,
+        "estimate": 0.036,
+        "high": 0.056184326968027755,
+        "low": 0.02289106098029272,
+        "shared_fraction": 0.0,
+        "successes": 18,
+        "trials": 500
+      },
+      {
+        "amplitude": 2.0,
+        "estimate": 0.048,
+        "high": 0.07042719683589006,
+        "low": 0.03246520694135317,
+        "shared_fraction": 0.0,
+        "successes": 24,
+        "trials": 500
+      },
+      {
+        "amplitude": 3.0,
+        "estimate": 0.052,
+        "high": 0.07510114393784553,
+        "low": 0.035730265115705276,
+        "shared_fraction": 0.0,
+        "successes": 26,
+        "trials": 500
+      }
+    ]
+  },
+  "rule": "docs/supporting/v09_reserve_b_max_density_rule.json",
+  "schema": "ttf_v09_gate_d_rgfca_reserve_b_v0.1",
+  "selected_pair_counts": {
+    "s0.0-a0.5": {
+      "A0+A0p5": 15,
+      "A0+A1": 2,
+      "A0p5+A0": 227,
+      "A1+A0": 44,
+      "A1+A2": 7,
+      "A2+A1": 34,
+      "A2+A3": 27,
+      "A3+A2": 78,
+      "A3+A5": 16,
+      "A5+A3": 50
+    },
+    "s0.0-a1.0": {
+      "A0+A0p5": 7,
+      "A0+A1": 1,
+      "A0p5+A0": 216,
+      "A1+A0": 31,
+      "A1+A2": 8,
+      "A2+A1": 44,
+      "A2+A3": 47,
+      "A3+A2": 79,
+      "A3+A5": 18,
+      "A5+A3": 49
+    },
+    "s0.0-a2.0": {
+      "A0+A0p5": 8,
+      "A0+A1": 2,
+      "A0p5+A0": 165,
+      "A1+A0": 32,
+      "A1+A2": 3,
+      "A2+A1": 30,
+      "A2+A3": 36,
+      "A3+A2": 110,
+      "A3+A5": 29,
+      "A5+A3": 85
+    },
+    "s0.0-a3.0": {
+      "A0+A0p5": 5,
+      "A0+A1": 1,
+      "A0p5+A0": 90,
+      "A1+A0": 30,
+      "A1+A2": 7,
+      "A10+A5": 2,
+      "A2+A1": 36,
+      "A2+A3": 41,
+      "A3+A2": 104,
+      "A3+A5": 32,
+      "A5+A10": 5,
+      "A5+A3": 147
+    },
+    "s1.0-a2.0": {
+      "A0+A0p5": 5,
+      "A0+A1": 5,
+      "A0p5+A0": 104,
+      "A1+A0": 31,
+      "A1+A2": 9,
+      "A10+A5": 1,
+      "A2+A1": 34,
+      "A2+A3": 42,
+      "A3+A2": 110,
+      "A3+A5": 23,
+      "A5+A10": 4,
+      "A5+A3": 132
+    }
+  },
+  "source_ledger": "benchmarks/frozen/v09_rgfca_reserve_b_max_density_geometry_source.json",
+  "status": "synthetic_deployment_adequacy_on_species_disjoint_max_density_reserve_b"
+}

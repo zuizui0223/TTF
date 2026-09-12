@@ -1,0 +1,47 @@
+{
+  "schema": "ttf_v08_validity_authorization_v0.1",
+  "status": "authorize_exactly_one_v08_fresh_external_type1_validity_run",
+  "authorization_rule": "Run the prospectively frozen v0.7 profiled-private inference exactly once for false-positive validity on the two v0.8 fresh external geometries. Open only zero-shared private A=0.5,1,2,3 observed cells and independent private reference families. Do not generate a shared positive-control world, do not use power or observability to drop a panel, and preserve the result regardless of sign.",
+  "rule_blob_sha": "bfc8fea9b46f2b5a79b61b7d6daad38fd251c0b9",
+  "panel_source_blob_sha": "c438c4257b365557e1ef530a452fec213afc6bbf",
+  "runner_blob_sha": "7476c1a6b7bd4aa9cc405b8ca08ee083f1f2772b",
+  "aggregator_blob_sha": "9a6af952a0e8b7642facbfdd993ab457d5222d2b",
+  "v07_result_blob_sha": "b14a178375ad9b1b567b7a6089127d7211017f3a",
+  "legacy_holdout_blob_sha": "a1571090c905db59051a9fb357e5f69d15b7de9a",
+  "reserve_source_blob_sha": "29bee8c15e4e4b2b3f0ae5bba6e1ec79d2b99e62",
+  "panels": {
+    "europe_birds": {
+      "species": 48,
+      "records": 4800,
+      "train_species": 24,
+      "eval_species": 24,
+      "bandwidth_km": 62.222531677671526,
+      "world_seed": 20260917,
+      "split_seed": 8849490829815163460
+    },
+    "na_waterbirds": {
+      "species": 48,
+      "records": 4800,
+      "train_species": 24,
+      "eval_species": 24,
+      "bandwidth_km": 91.4488312642481,
+      "world_seed": 20260918,
+      "split_seed": 15988766491480510410
+    }
+  },
+  "mandatory_private_cells": [[0.0, 0.5], [0.0, 1.0], [0.0, 2.0], [0.0, 3.0]],
+  "observed_worlds_per_cell": 500,
+  "private_reference_labels": ["A0", "A0p5", "A1", "A2", "A3", "A5", "A10", "infinite_snr"],
+  "reference_worlds_per_configuration": 1999,
+  "profile_strength_draws": 999,
+  "calibration_statistic_draws": 1000,
+  "selected_private_configurations": 2,
+  "type1_wilson_upper_ceiling": 0.10,
+  "shared_positive_control_forbidden": true,
+  "power_or_observability_may_exempt_panel": false,
+  "legacy_birds_butterflies_remain_unopened": true,
+  "rgfca_reserve_remains_unopened": true,
+  "if_gate_v_passes": "Only then may a separate exact-blob authorization be created for the RGFCA reserve Gate-D local type-I plus shared-A2 deployment adequacy audit.",
+  "if_gate_v_fails": "Preserve the failure and do not open the RGFCA reserve.",
+  "failed_v02_v03_v04_v05_v06_v07_results_remain_immutable": true
+}

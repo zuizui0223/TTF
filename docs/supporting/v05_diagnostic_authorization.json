@@ -1,0 +1,21 @@
+{
+  "schema": "ttf_v05_diagnostic_authorization_v0.1",
+  "status": "authorize_exactly_one_v05_two_development_panel_diagnostic",
+  "authorization_rule": "Run the prospectively specified v0.5 side-specific candidate family exactly once on the two already failed external development panels. Do not open the predeclared birds or butterflies confirmation performance, and do not open the RGFCA reserve. Apply the frozen Wilson selection rule mechanically; if no candidate passes both development panels, select none.",
+  "development_panels": ["v03", "v04"],
+  "rule_blob_sha": "af33407ab91a4b83954589d985ee3448ded3647c",
+  "confirmation_panels_blob_sha": "a1571090c905db59051a9fb357e5f69d15b7de9a",
+  "cell_runner_blob_sha": "2a2e89053ecd8f0d7bf88d38a445889b820b60e0",
+  "aggregator_blob_sha": "324c25578aadc608cf544a30cbd06948f4b3ebb7",
+  "v03_result_blob_sha": "8a820e4f13a93e69dcc016e7c701ef1ca995efba",
+  "v04_result_blob_sha": "0d426293534cfe27c7e3010043a3854c3d1bd64c",
+  "mandatory_cells": [[0.0,0.5],[0.0,1.0],[0.0,2.0],[0.0,3.0],[1.0,2.0]],
+  "replicates_per_cell": 500,
+  "bootstrap_resamples": 1999,
+  "type1_wilson_upper_ceiling": 0.10,
+  "power_wilson_lower_floor": 0.80,
+  "confirmatory_panels_remain_unopened": ["birds", "butterflies"],
+  "confirmation_policy": "Only a mechanically selected candidate may later be locked and tested on both predeclared confirmation panels; both must pass Wilson precision before any RGFCA reserve authorization.",
+  "failed_v02_v03_v04_results_remain_immutable": true,
+  "rgfca_reserve_opened_at_authorization": false
+}

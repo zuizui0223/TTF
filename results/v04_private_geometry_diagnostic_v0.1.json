@@ -1,0 +1,369 @@
+{
+  "candidate_selected": false,
+  "cells": [
+    {
+      "amplitude": 0.5,
+      "mechanism": {
+        "mean_target_length_rho": 0.010075832244239129,
+        "mean_target_private_propensity_rho": 0.011387459071517878,
+        "mean_v03_prediction_opportunity_rho": -0.008687674365831954,
+        "mean_v03_prediction_private_propensity_rho": 0.016679058046625665
+      },
+      "shared_fraction": 0.0,
+      "variants": {
+        "eval_geometry_partial": {
+          "mean_statistic": -0.0005831748487766887,
+          "median_p": 0.50425,
+          "rejection_rate": 0.052
+        },
+        "train_and_eval_geometry": {
+          "mean_statistic": -0.00067355471321823,
+          "median_p": 0.51875,
+          "rejection_rate": 0.064
+        },
+        "train_geometry_residualized": {
+          "mean_statistic": -0.00022863797799567177,
+          "median_p": 0.5115,
+          "rejection_rate": 0.058
+        },
+        "v03_raw": {
+          "mean_statistic": -9.642878210750717e-06,
+          "median_p": 0.50475,
+          "rejection_rate": 0.046
+        }
+      }
+    },
+    {
+      "amplitude": 1.0,
+      "mechanism": {
+        "mean_target_length_rho": 0.032086403395600226,
+        "mean_target_private_propensity_rho": 0.03855662146813452,
+        "mean_v03_prediction_opportunity_rho": -0.026711942889934306,
+        "mean_v03_prediction_private_propensity_rho": 0.04783272424342331
+      },
+      "shared_fraction": 0.0,
+      "variants": {
+        "eval_geometry_partial": {
+          "mean_statistic": 0.0010959382183608822,
+          "median_p": 0.48975,
+          "rejection_rate": 0.058
+        },
+        "train_and_eval_geometry": {
+          "mean_statistic": 0.0016266258139832407,
+          "median_p": 0.49924999999999997,
+          "rejection_rate": 0.076
+        },
+        "train_geometry_residualized": {
+          "mean_statistic": 0.002460332830938177,
+          "median_p": 0.467,
+          "rejection_rate": 0.074
+        },
+        "v03_raw": {
+          "mean_statistic": 0.0030242426561401838,
+          "median_p": 0.44,
+          "rejection_rate": 0.086
+        }
+      }
+    },
+    {
+      "amplitude": 2.0,
+      "mechanism": {
+        "mean_target_length_rho": 0.08393993883327992,
+        "mean_target_private_propensity_rho": 0.10172037903649035,
+        "mean_v03_prediction_opportunity_rho": -0.029661761115817642,
+        "mean_v03_prediction_private_propensity_rho": 0.10221164469548258
+      },
+      "shared_fraction": 0.0,
+      "variants": {
+        "eval_geometry_partial": {
+          "mean_statistic": 0.004734232125267898,
+          "median_p": 0.43474999999999997,
+          "rejection_rate": 0.07
+        },
+        "train_and_eval_geometry": {
+          "mean_statistic": 0.005468303469730205,
+          "median_p": 0.402,
+          "rejection_rate": 0.078
+        },
+        "train_geometry_residualized": {
+          "mean_statistic": 0.009206367940602448,
+          "median_p": 0.334,
+          "rejection_rate": 0.14
+        },
+        "v03_raw": {
+          "mean_statistic": 0.015610614869980435,
+          "median_p": 0.23475000000000001,
+          "rejection_rate": 0.202
+        }
+      }
+    },
+    {
+      "amplitude": 3.0,
+      "mechanism": {
+        "mean_target_length_rho": 0.12042415637376284,
+        "mean_target_private_propensity_rho": 0.14948453893832153,
+        "mean_v03_prediction_opportunity_rho": -0.04640651574641922,
+        "mean_v03_prediction_private_propensity_rho": 0.15084571305317662
+      },
+      "shared_fraction": 0.0,
+      "variants": {
+        "eval_geometry_partial": {
+          "mean_statistic": 0.007058704750747243,
+          "median_p": 0.3465,
+          "rejection_rate": 0.08
+        },
+        "train_and_eval_geometry": {
+          "mean_statistic": 0.007763070795595764,
+          "median_p": 0.335,
+          "rejection_rate": 0.088
+        },
+        "train_geometry_residualized": {
+          "mean_statistic": 0.015039719635047986,
+          "median_p": 0.22475,
+          "rejection_rate": 0.198
+        },
+        "v03_raw": {
+          "mean_statistic": 0.03117115991874363,
+          "median_p": 0.09725,
+          "rejection_rate": 0.398
+        }
+      }
+    },
+    {
+      "amplitude": 2.0,
+      "mechanism": {
+        "mean_target_length_rho": 0.08521452119200862,
+        "mean_target_private_propensity_rho": 0.09178831055946392,
+        "mean_v03_prediction_opportunity_rho": -0.022395563676420545,
+        "mean_v03_prediction_private_propensity_rho": 0.09625579755904728
+      },
+      "shared_fraction": 1.0,
+      "variants": {
+        "eval_geometry_partial": {
+          "mean_statistic": 0.07752567259157002,
+          "median_p": 0.001,
+          "rejection_rate": 0.874
+        },
+        "train_and_eval_geometry": {
+          "mean_statistic": 0.07655223986857669,
+          "median_p": 0.001,
+          "rejection_rate": 0.87
+        },
+        "train_geometry_residualized": {
+          "mean_statistic": 0.08463927899428002,
+          "median_p": 0.001,
+          "rejection_rate": 0.884
+        },
+        "v03_raw": {
+          "mean_statistic": 0.08857710020558156,
+          "median_p": 0.0005,
+          "rejection_rate": 0.894
+        }
+      }
+    }
+  ],
+  "claim_ready": false,
+  "design": {
+    "bandwidth": 125.29246372510903,
+    "k": 4,
+    "paired_worlds_with_frozen_v03": true,
+    "replicates": 500,
+    "resamples": 1999,
+    "seed": 20260908,
+    "selection_rule": null,
+    "variants": [
+      "v03_raw",
+      "eval_geometry_partial",
+      "train_geometry_residualized",
+      "train_and_eval_geometry"
+    ]
+  },
+  "diagnostic_nuisance": {
+    "amplitude_used": false,
+    "directions": 2048,
+    "frame": "exact_pooled_affine_standardization_used_by_gate_i_simulator",
+    "name": "expected_random_private_median_hyperplane_tanh_edge_contrast",
+    "outcome_free": true,
+    "transition_width": 0.2
+  },
+  "geometry_only_eval_species": [
+    {
+      "rho_propensity_length": 0.8471676082099878,
+      "rho_propensity_opportunity": -0.3061433170672444,
+      "rho_propensity_projection_l2": -0.5725555308077024,
+      "rho_propensity_radial": -0.32403736475860717,
+      "rho_radial_opportunity": 0.2704389144241737,
+      "species": "Colaptes auratus"
+    },
+    {
+      "rho_propensity_length": 0.827341779065917,
+      "rho_propensity_opportunity": -0.33307934687245033,
+      "rho_propensity_projection_l2": -0.46350480833239455,
+      "rho_propensity_radial": -0.11354492044147217,
+      "rho_radial_opportunity": -0.599933089588262,
+      "species": "Poecile atricapillus"
+    },
+    {
+      "rho_propensity_length": 0.7915740346994548,
+      "rho_propensity_opportunity": -0.2722661947809069,
+      "rho_propensity_projection_l2": -0.4843636020003323,
+      "rho_propensity_radial": -0.3374693449536726,
+      "rho_radial_opportunity": -0.21275493795830153,
+      "species": "Quiscalus quiscula"
+    },
+    {
+      "rho_propensity_length": 0.8396642969549388,
+      "rho_propensity_opportunity": -0.5054919061817015,
+      "rho_propensity_projection_l2": -0.48646548638141385,
+      "rho_propensity_radial": -0.4181471943620678,
+      "rho_radial_opportunity": 0.022948137576061473,
+      "species": "Spinus tristis"
+    },
+    {
+      "rho_propensity_length": 0.8803647664729436,
+      "rho_propensity_opportunity": -0.43868152436171204,
+      "rho_propensity_projection_l2": -0.5609651709899999,
+      "rho_propensity_radial": -0.2457680413235359,
+      "rho_radial_opportunity": -0.30223825658330933,
+      "species": "Branta canadensis"
+    },
+    {
+      "rho_propensity_length": 0.8796624248770368,
+      "rho_propensity_opportunity": -0.47803338256430894,
+      "rho_propensity_projection_l2": -0.5469128520281485,
+      "rho_propensity_radial": -0.27405070333231213,
+      "rho_radial_opportunity": 0.11059776768771405,
+      "species": "Procyon lotor"
+    },
+    {
+      "rho_propensity_length": 0.8203976167796445,
+      "rho_propensity_opportunity": -0.3946034518698728,
+      "rho_propensity_projection_l2": -0.5061889319573701,
+      "rho_propensity_radial": -0.23650665069409446,
+      "rho_radial_opportunity": -0.18107012715609935,
+      "species": "Passer domesticus"
+    },
+    {
+      "rho_propensity_length": 0.8746851541456606,
+      "rho_propensity_opportunity": -0.33801694395711185,
+      "rho_propensity_projection_l2": -0.7169406961501086,
+      "rho_propensity_radial": -0.10858285125449198,
+      "rho_radial_opportunity": 0.00687149854235011,
+      "species": "Corvus brachyrhynchos"
+    },
+    {
+      "rho_propensity_length": 0.6880407415884642,
+      "rho_propensity_opportunity": -0.5166642824444954,
+      "rho_propensity_projection_l2": -0.5226453421835661,
+      "rho_propensity_radial": -0.35821841382467384,
+      "rho_radial_opportunity": 0.2414296749828336,
+      "species": "Agelaius phoeniceus"
+    },
+    {
+      "rho_propensity_length": 0.916943086704755,
+      "rho_propensity_opportunity": -0.4567624034356904,
+      "rho_propensity_projection_l2": -0.6762093914030359,
+      "rho_propensity_radial": -0.6054243670926889,
+      "rho_radial_opportunity": 0.3973993732186384,
+      "species": "Ardea herodias"
+    },
+    {
+      "rho_propensity_length": 0.8951392104559477,
+      "rho_propensity_opportunity": -0.3309602227889049,
+      "rho_propensity_projection_l2": -0.7545154536976045,
+      "rho_propensity_radial": -0.0724572650966223,
+      "rho_radial_opportunity": 0.2687338990014935,
+      "species": "Megaceryle alcyon"
+    },
+    {
+      "rho_propensity_length": 0.9207842183566033,
+      "rho_propensity_opportunity": -0.2752124341954681,
+      "rho_propensity_projection_l2": -0.6810211146715496,
+      "rho_propensity_radial": -0.5130886644541085,
+      "rho_radial_opportunity": -0.19710245479514762,
+      "species": "Melospiza melodia"
+    },
+    {
+      "rho_propensity_length": 0.7697674718528741,
+      "rho_propensity_opportunity": -0.2652233069810031,
+      "rho_propensity_projection_l2": -0.4697868169566283,
+      "rho_propensity_radial": -0.5038735346083906,
+      "rho_radial_opportunity": -0.32709862133893913,
+      "species": "Cardinalis cardinalis"
+    },
+    {
+      "rho_propensity_length": 0.8582531680243137,
+      "rho_propensity_opportunity": -0.2695250083154524,
+      "rho_propensity_projection_l2": -0.6857248139621337,
+      "rho_propensity_radial": -0.34087745958037946,
+      "rho_radial_opportunity": 0.36639318067684523,
+      "species": "Turdus migratorius"
+    },
+    {
+      "rho_propensity_length": 0.8846724467345993,
+      "rho_propensity_opportunity": -0.36120455071792495,
+      "rho_propensity_projection_l2": -0.6993189844835572,
+      "rho_propensity_radial": -0.5194339103751737,
+      "rho_radial_opportunity": 0.12139662459471978,
+      "species": "Sturnus vulgaris"
+    },
+    {
+      "rho_propensity_length": 0.6712618751420067,
+      "rho_propensity_opportunity": -0.07669678897809852,
+      "rho_propensity_projection_l2": -0.42106747112809817,
+      "rho_propensity_radial": -0.3557619700006674,
+      "rho_radial_opportunity": -0.5931170855820085,
+      "species": "Marmota monax"
+    },
+    {
+      "rho_propensity_length": 0.7960188840376436,
+      "rho_propensity_opportunity": -0.3882630813953488,
+      "rho_propensity_projection_l2": -0.6051396649624469,
+      "rho_propensity_radial": -0.19993100171930142,
+      "rho_radial_opportunity": -0.3111589166138811,
+      "species": "Zenaida macroura"
+    },
+    {
+      "rho_propensity_length": 0.8964392631383684,
+      "rho_propensity_opportunity": -0.5099881565616929,
+      "rho_propensity_projection_l2": -0.6522640944050456,
+      "rho_propensity_radial": -0.32742797619896974,
+      "rho_radial_opportunity": 0.28984746222228563,
+      "species": "Didelphis virginiana"
+    },
+    {
+      "rho_propensity_length": 0.7337451079087866,
+      "rho_propensity_opportunity": -0.40431366505293637,
+      "rho_propensity_projection_l2": -0.607165075558773,
+      "rho_propensity_radial": -0.19488903719120443,
+      "rho_radial_opportunity": -0.22482199009139445,
+      "species": "Accipiter cooperii"
+    },
+    {
+      "rho_propensity_length": 0.8164387957491406,
+      "rho_propensity_opportunity": -0.3185591047660013,
+      "rho_propensity_projection_l2": -0.6931782104195897,
+      "rho_propensity_radial": 0.10550406412475379,
+      "rho_radial_opportunity": -0.0765769179562283,
+      "species": "Canis latrans"
+    }
+  ],
+  "geometry_only_eval_summary": {
+    "rho_propensity_length": 0.8304180975449544,
+    "rho_propensity_opportunity": -0.36198445366441634,
+    "rho_propensity_projection_l2": -0.5902966756239749,
+    "rho_propensity_radial": -0.297199330356884,
+    "rho_radial_opportunity": -0.04649079323682279
+  },
+  "interpretation_boundary": "This reuses the failed fresh animal panel only as development data to diagnose why strong species-private transitions produce positive transfer. It cannot qualify v0.4, and the untouched RGFCA reserve remains closed.",
+  "reserve_opened": false,
+  "schema": "ttf_v04_private_geometry_diagnostic_v0.1",
+  "status": "development_only_after_v03_fresh_failure",
+  "v03_failure": {
+    "max_private_rejection": 0.398,
+    "max_private_upper95": 0.4415253875502624,
+    "path": "results/v03_fresh_external_precision_v0.1.json",
+    "shared_power": 0.894,
+    "shared_power_lower95": 0.8639490699892671
+  }
+}

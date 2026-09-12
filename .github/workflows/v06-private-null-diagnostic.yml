@@ -1,0 +1,229 @@
+name: v06-private-null-diagnostic
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - "docs/supporting/v06_diagnostic_authorization.json"
+
+permissions:
+  contents: write
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      - run: pytest -q
+      - name: Require exact v0.6 development authorization and unopened future layers
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          auth=json.loads(Path('docs/supporting/v06_diagnostic_authorization.json').read_text())
+          rule=json.loads(Path('docs/supporting/v06_private_null_rule.json').read_text())
+          v05=json.loads(Path('results/v05_one_sided_diagnostic_v0.1.json').read_text())
+          confirmations=json.loads(Path('benchmarks/frozen/v05_confirmation_panels_source.json').read_text())
+          reserve=json.loads(Path('benchmarks/frozen/v03_rgfca_reserve_geometry_source.json').read_text())
+
+          assert auth['schema']=='ttf_v06_diagnostic_authorization_v0.1'
+          assert auth['status']=='authorize_exactly_one_v06_private_null_development_run'
+          assert rule['status']=='frozen_before_v06_private_null_diagnostic_outcomes'
+          assert v05['selected_candidate'] is None
+          assert confirmations['candidate_performance_evaluated_at_freeze'] is False
+          assert confirmations['synthetic_worlds_run_at_freeze']==0
+          assert reserve['candidate_performance_evaluated_at_freeze'] is False
+          assert reserve['synthetic_worlds_run_at_freeze']==0
+          assert not Path('docs/supporting/v05_confirmation_authorization.json').exists()
+          assert not Path('results/v06_private_null_diagnostic_v0.1.json').exists()
+
+          for path,key in (
+              ('docs/supporting/v06_private_null_rule.json','rule_blob_sha'),
+              ('src/ttf/private_null_inference.py','inference_blob_sha'),
+              ('scripts/run_v06_private_null_statistics.py','statistics_runner_blob_sha'),
+              ('scripts/aggregate_v06_private_null.py','aggregator_blob_sha'),
+              ('results/v05_one_sided_diagnostic_v0.1.json','v05_result_blob_sha'),
+              ('benchmarks/frozen/v05_confirmation_panels_source.json','confirmation_panels_blob_sha'),
+          ):
+              actual=subprocess.check_output(['git','rev-parse',f'HEAD:{path}'],text=True).strip()
+              assert auth[key]==actual,(path,auth[key],actual)
+
+          assert auth['private_reference_configurations']==['A0','A0p5','A1','A2','A3','A5','A10','infinite_snr']
+          assert auth['reference_worlds_per_configuration']==1999
+          assert auth['observed_worlds_per_cell']==500
+          assert auth['mandatory_cells']==[[0.0,0.5],[0.0,1.0],[0.0,2.0],[0.0,3.0],[1.0,2.0]]
+          assert auth['confirmatory_performance_remains_unopened'] is True
+          assert auth['rgfca_reserve_remains_unopened'] is True
+          print({'authorized':True,'v05_selected':None,'confirmatory_unopened':True,'reserve_opened':False})
+          PY
+
+  reference:
+    needs: invariants
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {panel: v03, input: benchmarks/frozen/v03_fresh_animal_geometry.csv, split: results/v03_fresh_external_precision_v0.1.json, bandwidth: 125.29246372510903, world_seed: 20260908, label: A0, amp: 0.0, noise: 0.8}
+          - {panel: v03, input: benchmarks/frozen/v03_fresh_animal_geometry.csv, split: results/v03_fresh_external_precision_v0.1.json, bandwidth: 125.29246372510903, world_seed: 20260908, label: A0p5, amp: 0.5, noise: 0.8}
+          - {panel: v03, input: benchmarks/frozen/v03_fresh_animal_geometry.csv, split: results/v03_fresh_external_precision_v0.1.json, bandwidth: 125.29246372510903, world_seed: 20260908, label: A1, amp: 1.0, noise: 0.8}
+          - {panel: v03, input: benchmarks/frozen/v03_fresh_animal_geometry.csv, split: results/v03_fresh_external_precision_v0.1.json, bandwidth: 125.29246372510903, world_seed: 20260908, label: A2, amp: 2.0, noise: 0.8}
+          - {panel: v03, input: benchmarks/frozen/v03_fresh_animal_geometry.csv, split: results/v03_fresh_external_precision_v0.1.json, bandwidth: 125.29246372510903, world_seed: 20260908, label: A3, amp: 3.0, noise: 0.8}
+          - {panel: v03, input: benchmarks/frozen/v03_fresh_animal_geometry.csv, split: results/v03_fresh_external_precision_v0.1.json, bandwidth: 125.29246372510903, world_seed: 20260908, label: A5, amp: 5.0, noise: 0.8}
+          - {panel: v03, input: benchmarks/frozen/v03_fresh_animal_geometry.csv, split: results/v03_fresh_external_precision_v0.1.json, bandwidth: 125.29246372510903, world_seed: 20260908, label: A10, amp: 10.0, noise: 0.8}
+          - {panel: v03, input: benchmarks/frozen/v03_fresh_animal_geometry.csv, split: results/v03_fresh_external_precision_v0.1.json, bandwidth: 125.29246372510903, world_seed: 20260908, label: infinite_snr, amp: 1.0, noise: 0.0}
+          - {panel: v04, input: benchmarks/frozen/v04_fresh_animal_geometry.csv, split: results/v04_fresh_external_precision_v0.1.json, bandwidth: 81.44335899069378, world_seed: 20260909, label: A0, amp: 0.0, noise: 0.8}
+          - {panel: v04, input: benchmarks/frozen/v04_fresh_animal_geometry.csv, split: results/v04_fresh_external_precision_v0.1.json, bandwidth: 81.44335899069378, world_seed: 20260909, label: A0p5, amp: 0.5, noise: 0.8}
+          - {panel: v04, input: benchmarks/frozen/v04_fresh_animal_geometry.csv, split: results/v04_fresh_external_precision_v0.1.json, bandwidth: 81.44335899069378, world_seed: 20260909, label: A1, amp: 1.0, noise: 0.8}
+          - {panel: v04, input: benchmarks/frozen/v04_fresh_animal_geometry.csv, split: results/v04_fresh_external_precision_v0.1.json, bandwidth: 81.44335899069378, world_seed: 20260909, label: A2, amp: 2.0, noise: 0.8}
+          - {panel: v04, input: benchmarks/frozen/v04_fresh_animal_geometry.csv, split: results/v04_fresh_external_precision_v0.1.json, bandwidth: 81.44335899069378, world_seed: 20260909, label: A3, amp: 3.0, noise: 0.8}
+          - {panel: v04, input: benchmarks/frozen/v04_fresh_animal_geometry.csv, split: results/v04_fresh_external_precision_v0.1.json, bandwidth: 81.44335899069378, world_seed: 20260909, label: A5, amp: 5.0, noise: 0.8}
+          - {panel: v04, input: benchmarks/frozen/v04_fresh_animal_geometry.csv, split: results/v04_fresh_external_precision_v0.1.json, bandwidth: 81.44335899069378, world_seed: 20260909, label: A10, amp: 10.0, noise: 0.8}
+          - {panel: v04, input: benchmarks/frozen/v04_fresh_animal_geometry.csv, split: results/v04_fresh_external_precision_v0.1.json, bandwidth: 81.44335899069378, world_seed: 20260909, label: infinite_snr, amp: 1.0, noise: 0.0}
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Generate independent private-null reference statistics
+        run: >-
+          python scripts/run_v06_private_null_statistics.py
+          --mode reference
+          --panel "${{ matrix.panel }}"
+          --input "${{ matrix.input }}"
+          --split-result "${{ matrix.split }}"
+          --baseline-v05 results/v05_one_sided_diagnostic_v0.1.json
+          --coordinate-columns x_km,y_km,z_km
+          --min-records 80
+          --shared-fraction 0
+          --amplitude "${{ matrix.amp }}"
+          --noise-sd "${{ matrix.noise }}"
+          --configuration-label "${{ matrix.label }}"
+          --replicates 1999
+          --k 4
+          --bandwidth "${{ matrix.bandwidth }}"
+          --world-seed "${{ matrix.world_seed }}"
+          --world-batch-size 25
+          --transition-width 0.2
+          --output "results/v06_private_null_inputs/reference-${{ matrix.panel }}-${{ matrix.label }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v06-reference-${{ matrix.panel }}-${{ matrix.label }}
+          path: results/v06_private_null_inputs/*.json
+          if-no-files-found: error
+
+  observed:
+    needs: invariants
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {panel: v03, input: benchmarks/frozen/v03_fresh_animal_geometry.csv, split: results/v03_fresh_external_precision_v0.1.json, bandwidth: 125.29246372510903, world_seed: 20260908, shared: 0, amp: 0.5}
+          - {panel: v03, input: benchmarks/frozen/v03_fresh_animal_geometry.csv, split: results/v03_fresh_external_precision_v0.1.json, bandwidth: 125.29246372510903, world_seed: 20260908, shared: 0, amp: 1}
+          - {panel: v03, input: benchmarks/frozen/v03_fresh_animal_geometry.csv, split: results/v03_fresh_external_precision_v0.1.json, bandwidth: 125.29246372510903, world_seed: 20260908, shared: 0, amp: 2}
+          - {panel: v03, input: benchmarks/frozen/v03_fresh_animal_geometry.csv, split: results/v03_fresh_external_precision_v0.1.json, bandwidth: 125.29246372510903, world_seed: 20260908, shared: 0, amp: 3}
+          - {panel: v03, input: benchmarks/frozen/v03_fresh_animal_geometry.csv, split: results/v03_fresh_external_precision_v0.1.json, bandwidth: 125.29246372510903, world_seed: 20260908, shared: 1, amp: 2}
+          - {panel: v04, input: benchmarks/frozen/v04_fresh_animal_geometry.csv, split: results/v04_fresh_external_precision_v0.1.json, bandwidth: 81.44335899069378, world_seed: 20260909, shared: 0, amp: 0.5}
+          - {panel: v04, input: benchmarks/frozen/v04_fresh_animal_geometry.csv, split: results/v04_fresh_external_precision_v0.1.json, bandwidth: 81.44335899069378, world_seed: 20260909, shared: 0, amp: 1}
+          - {panel: v04, input: benchmarks/frozen/v04_fresh_animal_geometry.csv, split: results/v04_fresh_external_precision_v0.1.json, bandwidth: 81.44335899069378, world_seed: 20260909, shared: 0, amp: 2}
+          - {panel: v04, input: benchmarks/frozen/v04_fresh_animal_geometry.csv, split: results/v04_fresh_external_precision_v0.1.json, bandwidth: 81.44335899069378, world_seed: 20260909, shared: 0, amp: 3}
+          - {panel: v04, input: benchmarks/frozen/v04_fresh_animal_geometry.csv, split: results/v04_fresh_external_precision_v0.1.json, bandwidth: 81.44335899069378, world_seed: 20260909, shared: 1, amp: 2}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Reproduce frozen raw observed statistics
+        run: >-
+          python scripts/run_v06_private_null_statistics.py
+          --mode observed
+          --panel "${{ matrix.panel }}"
+          --input "${{ matrix.input }}"
+          --split-result "${{ matrix.split }}"
+          --baseline-v05 results/v05_one_sided_diagnostic_v0.1.json
+          --coordinate-columns x_km,y_km,z_km
+          --min-records 80
+          --shared-fraction "${{ matrix.shared }}"
+          --amplitude "${{ matrix.amp }}"
+          --noise-sd 0.8
+          --replicates 500
+          --k 4
+          --bandwidth "${{ matrix.bandwidth }}"
+          --world-seed "${{ matrix.world_seed }}"
+          --world-batch-size 25
+          --transition-width 0.2
+          --output "results/v06_private_null_inputs/observed-${{ matrix.panel }}-s${{ matrix.shared }}-a${{ matrix.amp }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v06-observed-${{ matrix.panel }}-s${{ matrix.shared }}-a${{ matrix.amp }}
+          path: results/v06_private_null_inputs/*.json
+          if-no-files-found: error
+
+  aggregate:
+    needs: [reference, observed]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: v06-*
+          path: results/v06_private_null_inputs
+          merge-multiple: true
+      - name: Require exact reference and observed input counts
+        run: |
+          test "$(find results/v06_private_null_inputs -name 'reference-*.json' | wc -l)" -eq 16
+          test "$(find results/v06_private_null_inputs -name 'observed-*.json' | wc -l)" -eq 10
+      - name: Apply frozen private-null envelope rule
+        run: >-
+          python scripts/aggregate_v06_private_null.py
+          --input-dir results/v06_private_null_inputs
+          --rule docs/supporting/v06_private_null_rule.json
+          --output results/v06_private_null_diagnostic_v0.1.json
+      - name: Freeze authorization lineage
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path('results/v06_private_null_diagnostic_v0.1.json')
+          d=json.loads(p.read_text())
+          d['authorization']=json.loads(Path('docs/supporting/v06_diagnostic_authorization.json').read_text())
+          d['lineage']={'workflow_run_id':int(os.environ['GITHUB_RUN_ID']),'workflow_head_sha':os.environ['GITHUB_SHA']}
+          p.write_text(json.dumps(d,indent=2,sort_keys=True)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v06-private-null-diagnostic
+          path: results/v06_private_null_diagnostic_v0.1.json
+          if-no-files-found: error
+      - name: Commit development-only v0.6 result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/v06_private_null_diagnostic_v0.1.json
+          git commit -m "Freeze v0.6 private-null diagnosis"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt * 2))
+          done
+          exit 1

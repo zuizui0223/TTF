@@ -1,0 +1,30 @@
+{
+  "schema": "ttfm_q5_geometry_stress_authorization_v0.1",
+  "status": "authorize_exactly_one_fresh_q5_geometry_stress_run",
+  "spec_blob_sha": "fb1eb1aeb18296be39b733eeed04af4971e43ea7",
+  "rule_blob_sha": "832ee8205f2dfb5b811f16f0bcfca7e684dc299a",
+  "heterogeneous_inference_blob_sha": "99f7881b4260a91f490f26f5ba7dec90499bcef4",
+  "heterogeneous_simulator_blob_sha": "07287ee0093ebe866a462b167e35ad585eadf132",
+  "runner_blob_sha": "4e31ccac96cd4faa1c9a00c844eebba43458b6ba",
+  "aggregator_blob_sha": "eb90cb0416edc74ae00485cfbe5611aeea8b8a43",
+  "workflow_blob_sha": "71ccb7ccef1d3b0b694b4d5622f06b09c3feec37",
+  "idealized_result_blob_sha": "b2e4438272434674eb622e455ab2e3373fb45481",
+  "q4_failed_result_blob_sha": "032a5c02a76ec0fdf102aec30469b8dc4602736c",
+  "q4_1_result_blob_sha": "a79b54d7507edf4ef978550d3c524e976093f569",
+  "replicates_per_cell": 500,
+  "batch_size": 25,
+  "mandatory_cells": [
+    "Q5_NULL_COMPONENT",
+    "Q5_NULL_PRIVATE_M",
+    "Q5_NULL_PRIVATE_C",
+    "Q5_POWER_M",
+    "Q5_POWER_C",
+    "Q5_SHIFT_M",
+    "Q5_SHIFT_C"
+  ],
+  "q5_outcomes_previously_opened": false,
+  "q4_v0_1_remains_failed": true,
+  "q4_1_required_pass": true,
+  "empirical_data_authorized": false,
+  "flower_colour_outcome_authorized": false
+}

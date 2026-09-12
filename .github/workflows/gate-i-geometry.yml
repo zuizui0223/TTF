@@ -1,0 +1,74 @@
+name: gate-i-geometry
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "scripts/run_geometry_calibration.py"
+      - ".github/workflows/gate-i-geometry.yml"
+  workflow_dispatch:
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[test]"
+      - run: pytest -q
+
+  cli-smoke:
+    needs: invariants
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Build irregular fixed-geometry fixture
+        run: |
+          python - <<'PY'
+          import csv
+          import numpy as np
+
+          rng = np.random.default_rng(20260907)
+          with open("/tmp/geometry.csv", "w", newline="") as handle:
+              writer = csv.writer(handle)
+              writer.writerow(["species", "x", "y", "trait_ignored"])
+              for i in range(12):
+                  center = np.array([0.2 * np.cos(i), 0.2 * np.sin(i)])
+                  coords = center + rng.normal(0.0, 0.7, size=(16 + i % 3, 2))
+                  for j, (x, y) in enumerate(coords):
+                      writer.writerow([f"sp_{i:02d}", x, y, 1000 + j])
+          PY
+      - name: Run fixed-geometry calibration smoke test
+        run: >-
+          python scripts/run_geometry_calibration.py
+          --input /tmp/geometry.csv
+          --shared-fractions 0,1
+          --amplitudes 2
+          --replicates 1
+          --resamples 99
+          --k 3
+          --bandwidth 0.5
+          --output /tmp/gate-i-smoke.json
+      - name: Check geometry lineage and ignored trait column
+        run: |
+          python - <<'PY'
+          import json
+          with open("/tmp/gate-i-smoke.json") as handle:
+              data = json.load(handle)
+          assert data["schema"] == "ttf_gate_i_geometry_calibration_v0.1"
+          assert data["geometry"]["species_count"] == 12
+          assert len(data["geometry"]["fingerprint_sha256"]) == 64
+          assert len(data["split"]["eval_species"]) == 6
+          assert data["config"]["inference"] == "heldout_species_bootstrap"
+          PY

@@ -1,0 +1,167 @@
+name: v11-freeze-fresh-plant-geometry
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - "docs/supporting/v11_fresh_geometry_authorization.json"
+
+permissions:
+  contents: write
+
+env:
+  FCP_COMMIT: 9a3dbd1c433356c4235de87553f9cb9963c11943
+  RULE: docs/supporting/v11_fresh_density_scaled_graph_rule.json
+  AUTH: docs/supporting/v11_fresh_geometry_authorization.json
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]" pandas
+      - run: pytest -q
+      - name: Require exact one-shot pre-geometry authorization
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          auth=json.loads(Path('docs/supporting/v11_fresh_geometry_authorization.json').read_text())
+          rule=json.loads(Path('docs/supporting/v11_fresh_density_scaled_graph_rule.json').read_text())
+          assert auth['schema']=='ttf_v11_fresh_geometry_authorization_v0.1'
+          assert auth['status']=='authorize_exactly_one_v11_fresh_plant_geometry_acquisition'
+          assert rule['status']=='frozen_before_v11_fresh_plant_geometry_acquisition_and_before_any_v11_synthetic_worlds'
+          assert auth['fcp_commit']=='9a3dbd1c433356c4235de87553f9cb9963c11943'
+          assert auth['rank_range_one_based']==[1001,1250]
+          assert auth['species_hash_seed']==20260916
+          assert auth['species']==250 and auth['records_per_species']==100
+          assert auth['candidate_page_seed']==20260917
+          assert auth['species_replacement_allowed'] is False
+          assert auth['additional_pages_after_result_allowed'] is False
+          assert auth['target_relaxation_allowed'] is False
+          assert auth['rerun_for_favourable_species_set_allowed'] is False
+          assert auth['candidate_image_pixels_may_open'] is False
+          assert auth['flower_colour_may_open'] is False
+          assert auth['synthetic_worlds_may_run'] is False
+          def blob(path):
+              return subprocess.check_output(['git','rev-parse',f'HEAD:{path}'],text=True).strip()
+          assert blob('docs/supporting/v11_fresh_density_scaled_graph_rule.json')==auth['rule_blob_sha']
+          assert blob('scripts/acquire_v11_fresh_plant_geometry_shard.py')==auth['acquisition_runner_blob_sha']
+          assert blob('scripts/freeze_v11_fresh_plant_geometry.py')==auth['freezer_blob_sha']
+          assert blob('.github/workflows/v11-freeze-fresh-plant-geometry.yml')==auth['workflow_blob_sha']
+          assert blob('results/v10_density_edge_scale_diagnostic_v0.1.json')==auth['v10_result_blob_sha']
+          print({'authorized':True,'rank_range':[1001,1250],'species':250,'pixels':False,'synthetic_worlds':0})
+          PY
+
+  acquire:
+    needs: invariants
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Checkout exact pre-colour FCP source
+        run: |
+          rm -rf /tmp/fcp
+          git clone --filter=blob:none https://github.com/zuizui0223/fcp.git /tmp/fcp
+          git -C /tmp/fcp checkout --detach "$FCP_COMMIT"
+      - name: Install frozen FCP acquisition helpers
+        run: python -m pip install -e /tmp/fcp
+      - name: Run one frozen metadata-only v0.11 shard
+        run: >-
+          python scripts/acquire_v11_fresh_plant_geometry_shard.py
+          --fcp-root /tmp/fcp
+          --rule "$RULE"
+          --shard-index ${{ matrix.shard }}
+          --shard-count 8
+          --output-dir out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v11-fresh-plant-shard-${{ matrix.shard }}
+          path: out/*
+          if-no-files-found: error
+
+  freeze:
+    needs: acquire
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install pandas
+      - name: Checkout exact FCP source for lineage revalidation
+        run: |
+          rm -rf /tmp/fcp
+          git clone --filter=blob:none https://github.com/zuizui0223/fcp.git /tmp/fcp
+          git -C /tmp/fcp checkout --detach "$FCP_COMMIT"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: v11-fresh-plant-shard-*
+          path: gathered
+          merge-multiple: true
+      - name: Freeze fresh geometry or immutable not-evaluable acquisition result
+        run: >-
+          python scripts/freeze_v11_fresh_plant_geometry.py
+          --input-dir gathered
+          --fcp-root /tmp/fcp
+          --rule "$RULE"
+          --output-geometry benchmarks/frozen/v11_fresh_plant_geometry.csv
+          --output-ledger benchmarks/frozen/v11_fresh_plant_geometry_source.json
+      - name: Enforce outcome firewall and expose freeze decision
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('benchmarks/frozen/v11_fresh_plant_geometry_source.json').read_text())
+          assert d['candidate_image_pixels_opened'] is False
+          assert d['empirical_trait_or_colour_fields_read'] is False
+          assert d['synthetic_worlds_run_at_freeze']==0
+          assert d['candidate_performance_evaluated_at_freeze'] is False
+          assert d['species_replacement_performed'] is False
+          assert d['additional_pages_after_result_performed'] is False
+          assert d['selection']['taxon_overlap_with_previous_1000']==[]
+          if d['fresh_geometry_freeze_pass']:
+              assert d['output']['species']==250 and d['output']['records']==25000
+              assert Path('benchmarks/frozen/v11_fresh_plant_geometry.csv').exists()
+          else:
+              assert not Path('benchmarks/frozen/v11_fresh_plant_geometry.csv').exists()
+          print({'fresh_geometry_freeze_pass':d['fresh_geometry_freeze_pass'],'full_target_species':d['acquisition']['full_target_species'],'request_error_fraction':d['acquisition']['request_error_fraction']})
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v11-fresh-plant-geometry-freeze
+          path: |
+            benchmarks/frozen/v11_fresh_plant_geometry_source.json
+            benchmarks/frozen/v11_fresh_plant_geometry.csv
+      - name: Commit immutable v0.11 geometry acquisition outcome
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/v11_fresh_plant_geometry_source.json
+          if [ -f benchmarks/frozen/v11_fresh_plant_geometry.csv ]; then
+            git add benchmarks/frozen/v11_fresh_plant_geometry.csv
+          fi
+          git commit -m "Freeze v0.11 fresh plant geometry acquisition outcome"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt*2))
+          done
+          exit 1

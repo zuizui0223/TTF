@@ -1,0 +1,188 @@
+name: v05-seal-existing-confirmation-panels
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - ".github/workflows/v05-seal-existing-confirmation-panels.yml"
+
+permissions:
+  actions: read
+  contents: write
+
+env:
+  SOURCE_RUN_ID: 34169920175
+  BRANCH: analysis/gate-i-geometry-calibration
+
+jobs:
+  seal-existing-artifacts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Download the already-acquired untouched panel artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: v05-freeze-*
+          path: benchmarks/frozen
+          merge-multiple: true
+          github-token: ${{ github.token }}
+          repository: zuizui0223/TTF
+          run-id: 34169920175
+      - name: Seal exactly those artifacts without reacquisition
+        run: |
+          python - <<'PY'
+          import csv, hashlib, json
+          from collections import defaultdict
+          from pathlib import Path
+          import numpy as np
+          from ttf import knn_edges
+
+          expected_raw_sha = {
+              'birds': {
+                  'csv': 'ef54bfa76da5eb91a191b99cf0d404896b221329e23959210b724ae73ae356ff',
+                  'ledger': 'cf2b9603083f084740647ec50a708ae1e814af051d832b336e394c1f94670474',
+                  'seed': 20260910,
+                  'artifact_id': 10035464049,
+                  'artifact_zip_digest': 'sha256:ca7391e96663e0ff2af1535582d85522ad46481f7672beecf872270ae12856f0',
+              },
+              'butterflies': {
+                  'csv': 'e063786e41186c22b3a1f5669ac256f7bdf1c9c75a542281978aa1b3d8cbac9b',
+                  'ledger': 'f4f40eee566b6dcfe321124711ef2167dcef7f9833965859fe8b9940614d64da',
+                  'seed': 20260911,
+                  'artifact_id': 10035457778,
+                  'artifact_zip_digest': 'sha256:f12bc819b2ccf2750d07c3b574b5ae73e9d69748ef65c1ab399cdd9c011fdf4f',
+              },
+          }
+
+          reserve = json.loads(Path('benchmarks/frozen/v03_rgfca_reserve_geometry_source.json').read_text())
+          assert reserve['synthetic_worlds_run_at_freeze'] == 0
+          assert reserve['candidate_performance_evaluated_at_freeze'] is False
+          assert not Path('results/v05_one_sided_diagnostic_v0.1.json').exists()
+          assert not Path('docs/supporting/v05_diagnostic_authorization.json').exists()
+
+          prior = set()
+          for path in (
+              'benchmarks/gate_i_animal_geometry_manifest.csv',
+              'benchmarks/v03_fresh_animal_geometry_manifest.csv',
+              'benchmarks/v04_fresh_animal_geometry_manifest.csv',
+          ):
+              with open(path, newline='') as h:
+                  prior |= {r['scientific_name'].strip() for r in csv.DictReader(h)}
+
+          panel_names = {}
+          summary = {}
+          for panel, spec in expected_raw_sha.items():
+              csv_path = Path(f'benchmarks/frozen/v05_fresh_{panel}_geometry.csv')
+              ledger_path = Path(f'benchmarks/frozen/v05_fresh_{panel}_geometry_source.json')
+              assert csv_path.exists() and ledger_path.exists(), panel
+              assert hashlib.sha256(csv_path.read_bytes()).hexdigest() == spec['csv']
+              assert hashlib.sha256(ledger_path.read_bytes()).hexdigest() == spec['ledger']
+
+              raw_ledger = json.loads(ledger_path.read_text())
+              assert raw_ledger['seed'] == spec['seed']
+              assert raw_ledger['record_count'] == 4800
+              assert len(raw_ledger['species']) == 48
+
+              grouped = defaultdict(list)
+              with csv_path.open(newline='') as h:
+                  for r in csv.DictReader(h):
+                      grouped[r['species']].append([
+                          float(r['x_km']), float(r['y_km']), float(r['z_km'])
+                      ])
+              names = set(grouped)
+              assert len(names) == 48, (panel, len(names))
+              assert all(len(rows) == 100 for rows in grouped.values())
+              assert not (names & prior), (panel, sorted(names & prior))
+
+              medians = []
+              for name in sorted(grouped):
+                  coords = np.asarray(grouped[name], dtype=float)
+                  edges = knn_edges(coords, k=4)
+                  lengths = np.linalg.norm(
+                      coords[edges[:, 0]] - coords[edges[:, 1]], axis=1
+                  )
+                  medians.append(float(np.median(lengths)))
+              bandwidth = float(np.median(medians))
+
+              d = raw_ledger
+              d['validation_role'] = f'prospectively_frozen_v05_confirmation_panel_{panel}'
+              d['confirmatory_holdout'] = True
+              d['prior_gate_i_taxa_overlap'] = []
+              d['candidate_performance_evaluated_at_freeze'] = False
+              d['synthetic_worlds_run_at_freeze'] = 0
+              d['prospective_execution'] = {
+                  'k': 4,
+                  'bandwidth_rule': 'median_of_species_median_kNN_edge_length',
+                  'bandwidth_km': bandwidth,
+                  'eval_fraction': 0.5,
+                  'train_species': 24,
+                  'eval_species': 24,
+                  'seed': spec['seed'],
+              }
+              d['source_freeze_workflow'] = {
+                  'run_id': 34169920175,
+                  'artifact_id': spec['artifact_id'],
+                  'artifact_zip_digest': spec['artifact_zip_digest'],
+                  'raw_csv_sha256': spec['csv'],
+                  'raw_ledger_sha256': spec['ledger'],
+              }
+              d['confirmation_policy'] = (
+                  'v0.5 confirmation requires BOTH predeclared birds and butterflies '
+                  'panels to pass Wilson precision before any RGFCA reserve authorization'
+              )
+              d['claim_boundary'] = (
+                  'Outcome-free external sampling geometry only; no synthetic candidate '
+                  'performance is evaluated during freeze or seal.'
+              )
+              ledger_path.write_text(json.dumps(d, indent=2, sort_keys=True) + '\n')
+              panel_names[panel] = names
+              summary[panel] = {
+                  'species': 48,
+                  'records': 4800,
+                  'bandwidth_km': bandwidth,
+                  'seed': spec['seed'],
+                  'source_run_id': 34169920175,
+                  'source_artifact_id': spec['artifact_id'],
+                  'raw_csv_sha256': spec['csv'],
+                  'raw_ledger_sha256': spec['ledger'],
+              }
+
+          assert not (panel_names['birds'] & panel_names['butterflies'])
+          Path('benchmarks/frozen/v05_confirmation_panels_source.json').write_text(
+              json.dumps({
+                  'schema': 'ttf_v05_confirmation_panels_v0.1',
+                  'status': 'both_panels_frozen_before_v05_candidate_confirmation',
+                  'panels': summary,
+                  'panel_taxa_overlap': [],
+                  'prior_gate_i_taxa_overlap': [],
+                  'candidate_performance_evaluated_at_freeze': False,
+                  'synthetic_worlds_run_at_freeze': 0,
+                  'conjunctive_confirmation_required': True,
+                  'rgfca_reserve_opened': False,
+                  'seal_reused_existing_artifacts_without_reacquisition': True,
+                  'source_freeze_run_id': 34169920175,
+              }, indent=2, sort_keys=True) + '\n'
+          )
+          print(json.dumps(summary, indent=2, sort_keys=True))
+          PY
+      - name: Commit untouched sealed v0.5 confirmation geometries
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/v05_fresh_birds_geometry.csv benchmarks/frozen/v05_fresh_birds_geometry_source.json benchmarks/frozen/v05_fresh_butterflies_geometry.csv benchmarks/frozen/v05_fresh_butterflies_geometry_source.json benchmarks/frozen/v05_confirmation_panels_source.json
+          git commit -m "Seal untouched v0.5 confirmation panels"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt * 2))
+          done
+          exit 1

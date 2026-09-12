@@ -1,0 +1,258 @@
+{
+  "authorization": {
+    "aggregator_blob_sha": "8a0d2522fd8c42307890b6a85a49c816da0a3360",
+    "authorization_rule": "Run exactly one synthetic deployment-adequacy audit on the prospectively frozen, empirical-colour-unopened RGFCA reserve after the fresh external Gate-V type-I validity confirmation passed. Use the frozen profiled-private inference without retuning. Evaluate private A=0.5,1,2,3 and shared A=2 only, 500 worlds per observed cell, with independent 1,999-world private references split into 999 profiling and 1,000 calibration draws. Preserve the result regardless of sign.",
+    "bandwidth_km": 500.0,
+    "calibration_statistic_draws": 1000,
+    "empirical_colour_outcome_must_remain_unopened": true,
+    "eval_fraction": 0.5,
+    "eval_species": 125,
+    "failed_v02_v03_v04_v05_v06_v07_results_remain_immutable": true,
+    "gate_v_pass_required": true,
+    "gate_v_result_blob_sha": "8b504aef5b8780a3292c62a2bffd37100032d0d0",
+    "if_gate_d_fails": "Preserve the failure as deployment non-qualification and do not interpret non-rejection as absence of sharedness. Do not open empirical colour outcomes under this design.",
+    "if_gate_d_passes": "The frozen RGFCA reserve design is adequate for subsequent empirical TTF analysis; the Gate-D result itself is not an empirical flower-colour conclusion.",
+    "k": 3,
+    "legacy_birds_butterflies_remain_unopened": true,
+    "mandatory_cells": [
+      [
+        0.0,
+        0.5
+      ],
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        2.0
+      ],
+      [
+        0.0,
+        3.0
+      ],
+      [
+        1.0,
+        2.0
+      ]
+    ],
+    "master_seed": 20260908,
+    "noise_sd": 0.8,
+    "observed_worlds_per_cell": 500,
+    "power_wilson_lower_floor": 0.8,
+    "private_reference_labels": [
+      "A0",
+      "A0p5",
+      "A1",
+      "A2",
+      "A3",
+      "A5",
+      "A10",
+      "infinite_snr"
+    ],
+    "profile_strength_draws": 999,
+    "reference_worlds_per_configuration": 1999,
+    "reserve_geometry_sha256": "1a9442c59a7db52b18e8766fff218f42c99d0dd22e84b16dea91653de8b88f8b",
+    "reserve_records": 5000,
+    "reserve_source_blob_sha": "29bee8c15e4e4b2b3f0ae5bba6e1ec79d2b99e62",
+    "reserve_species": 250,
+    "rule_blob_sha": "bfc8fea9b46f2b5a79b61b7d6daad38fd251c0b9",
+    "runner_blob_sha": "a687476dea93b5cd8c54dbf2597b106ea4f24ed0",
+    "schema": "ttf_v08_gate_d_authorization_v0.1",
+    "selected_private_configurations": 2,
+    "status": "authorize_exactly_one_v08_rgfca_deployment_adequacy_run",
+    "strength_neighbours": 4,
+    "train_species": 125,
+    "transition_width": 0.2,
+    "type1_wilson_upper_ceiling": 0.1
+  },
+  "cells": [
+    {
+      "alpha": 0.05,
+      "amplitude": 0.5,
+      "mean_null_statistic": NaN,
+      "mean_statistic": -0.00035480695124253823,
+      "median_p_value": 0.5309690309690309,
+      "n_replicates": 500,
+      "rejection_rate": 0.03,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 1.0,
+      "mean_null_statistic": NaN,
+      "mean_statistic": -0.00015979403320283924,
+      "median_p_value": 0.5279720279720279,
+      "n_replicates": 500,
+      "rejection_rate": 0.026,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 2.0,
+      "mean_null_statistic": NaN,
+      "mean_statistic": 0.002978285562792218,
+      "median_p_value": 0.5039960039960041,
+      "n_replicates": 500,
+      "rejection_rate": 0.034,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 3.0,
+      "mean_null_statistic": NaN,
+      "mean_statistic": 0.0056055677965659014,
+      "median_p_value": 0.5404595404595405,
+      "n_replicates": 500,
+      "rejection_rate": 0.046,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 2.0,
+      "mean_null_statistic": NaN,
+      "mean_statistic": 0.0470825932009302,
+      "median_p_value": 0.017982017982017984,
+      "n_replicates": 500,
+      "rejection_rate": 0.666,
+      "shared_fraction": 1.0
+    }
+  ],
+  "claim_ready": false,
+  "empirical_colour_outcome_opened": false,
+  "gate_d_pass": false,
+  "interpretation_boundary": "Gate-D is a pre-outcome design-adequacy check. A pass permits subsequent empirical TTF analysis on this frozen reserve design; it does not itself constitute an empirical flower-colour result.",
+  "lineage": {
+    "workflow_head_sha": "8282e53c7b074d0004b522c1e23a51beccdb00a4",
+    "workflow_run_id": 34179030658
+  },
+  "matching_private_label_recovery": {
+    "s0.0-a0.5": 0.806,
+    "s0.0-a1.0": 0.528,
+    "s0.0-a2.0": 0.734,
+    "s0.0-a3.0": 0.908,
+    "s1.0-a2.0": null
+  },
+  "precision_qualification": {
+    "full_shared_interval": {
+      "amplitude": 2.0,
+      "estimate": 0.666,
+      "high": 0.7059361875441229,
+      "low": 0.6235325314226418,
+      "shared_fraction": 1.0,
+      "successes": 333,
+      "trials": 500
+    },
+    "full_shared_moderate_estimate": 0.666,
+    "full_shared_moderate_lower95": 0.6235325314226418,
+    "max_zero_shared_estimate": 0.046,
+    "max_zero_shared_upper95": 0.06807779276827323,
+    "moderate_amplitude": 2.0,
+    "passed": false,
+    "power_lower_floor": 0.8,
+    "power_pass": false,
+    "type1_pass": true,
+    "type1_upper_ceiling": 0.1,
+    "zero_shared_intervals": [
+      {
+        "amplitude": 0.5,
+        "estimate": 0.03,
+        "high": 0.04890366683594573,
+        "low": 0.018263213197913384,
+        "shared_fraction": 0.0,
+        "successes": 15,
+        "trials": 500
+      },
+      {
+        "amplitude": 1.0,
+        "estimate": 0.026,
+        "high": 0.043971490834224275,
+        "low": 0.01525638392332725,
+        "shared_fraction": 0.0,
+        "successes": 13,
+        "trials": 500
+      },
+      {
+        "amplitude": 2.0,
+        "estimate": 0.034,
+        "high": 0.053771365501634506,
+        "low": 0.02133451980853219,
+        "shared_fraction": 0.0,
+        "successes": 17,
+        "trials": 500
+      },
+      {
+        "amplitude": 3.0,
+        "estimate": 0.046,
+        "high": 0.06807779276827323,
+        "low": 0.030845108370816204,
+        "shared_fraction": 0.0,
+        "successes": 23,
+        "trials": 500
+      }
+    ]
+  },
+  "rule": "docs/supporting/v08_validity_detectability_rule.json",
+  "schema": "ttf_v08_gate_d_rgfca_reserve_v0.1",
+  "selected_pair_counts": {
+    "s0.0-a0.5": {
+      "A0+A0p5": 232,
+      "A0p5+A0": 31,
+      "A0p5+A1": 21,
+      "A1+A0p5": 119,
+      "A1+A2": 11,
+      "A2+A1": 54,
+      "A2+A3": 23,
+      "A3+A2": 8,
+      "A3+A5": 1
+    },
+    "s0.0-a1.0": {
+      "A0+A0p5": 164,
+      "A0p5+A0": 15,
+      "A0p5+A1": 14,
+      "A1+A0p5": 134,
+      "A1+A2": 20,
+      "A2+A1": 96,
+      "A2+A3": 38,
+      "A3+A2": 19
+    },
+    "s0.0-a2.0": {
+      "A0+A0p5": 29,
+      "A0p5+A0": 8,
+      "A0p5+A1": 6,
+      "A1+A0p5": 72,
+      "A1+A2": 13,
+      "A2+A1": 111,
+      "A2+A3": 125,
+      "A3+A2": 118,
+      "A3+A5": 14,
+      "A5+A3": 4
+    },
+    "s0.0-a3.0": {
+      "A0+A0p5": 1,
+      "A0p5+A1": 2,
+      "A1+A0p5": 7,
+      "A1+A2": 5,
+      "A2+A1": 30,
+      "A2+A3": 92,
+      "A3+A2": 210,
+      "A3+A5": 85,
+      "A5+A10": 1,
+      "A5+A3": 67
+    },
+    "s1.0-a2.0": {
+      "A0+A0p5": 47,
+      "A0p5+A0": 11,
+      "A0p5+A1": 9,
+      "A1+A0p5": 73,
+      "A1+A2": 17,
+      "A2+A1": 118,
+      "A2+A3": 115,
+      "A3+A2": 86,
+      "A3+A5": 18,
+      "A5+A3": 6
+    }
+  },
+  "source_ledger": "benchmarks/frozen/v03_rgfca_reserve_geometry_source.json",
+  "status": "synthetic_deployment_adequacy_on_unopened_rgfca_reserve"
+}

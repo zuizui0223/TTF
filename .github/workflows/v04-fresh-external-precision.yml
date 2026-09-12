@@ -1,0 +1,193 @@
+name: v04-fresh-external-precision
+
+on:
+  push:
+    branches:
+      - "analysis/gate-i-geometry-calibration"
+    paths:
+      - "docs/supporting/v04_fresh_qualification_authorization.json"
+
+permissions:
+  contents: write
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      - run: pytest -q
+      - name: Require exact prospective v0.4 authorization and candidate lock
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          auth = json.loads(Path('docs/supporting/v04_fresh_qualification_authorization.json').read_text())
+          selection = json.loads(Path('results/v04_candidate_selection_v0.1.json').read_text())
+          audit = json.loads(Path('results/v04_propensity_seed_lock_audit_v0.1.json').read_text())
+          lock = json.loads(Path('results/v04_candidate_lock_v0.1.json').read_text())
+          ledger = json.loads(Path('benchmarks/frozen/v04_fresh_animal_geometry_source.json').read_text())
+          reserve = json.loads(Path('benchmarks/frozen/v03_rgfca_reserve_geometry_source.json').read_text())
+          assert auth['status'] == 'authorize_exactly_one_locked_v04_fresh_external_precision_run'
+          assert auth['candidate'] == 'eval_geometry_partial'
+          assert selection['selected_candidate'] == auth['candidate']
+          assert audit['candidate_lock_valid_on_development_rule'] is True
+          assert lock['candidate'] == auth['candidate']
+          assert lock['second_external_geometry_performance_opened'] is False
+          assert lock['rgfca_reserve_opened'] is False
+          assert ledger['confirmatory_holdout'] is True
+          assert ledger['candidate_performance_evaluated_at_freeze'] is False
+          assert ledger['synthetic_worlds_run_at_freeze'] == 0
+          assert ledger['prior_gate_i_taxa_overlap'] == []
+          assert reserve['synthetic_worlds_run_at_freeze'] == 0
+          assert reserve['candidate_performance_evaluated_at_freeze'] is False
+          for path, key in (
+              ('results/v04_candidate_selection_v0.1.json', 'selection_blob_sha'),
+              ('results/v04_propensity_seed_lock_audit_v0.1.json', 'seed_audit_blob_sha'),
+              ('results/v04_candidate_lock_v0.1.json', 'candidate_lock_blob_sha'),
+              ('benchmarks/frozen/v04_fresh_animal_geometry.csv', 'fresh_geometry_blob_sha'),
+              ('benchmarks/frozen/v04_fresh_animal_geometry_source.json', 'fresh_source_ledger_blob_sha'),
+          ):
+              actual = subprocess.check_output(['git','rev-parse',f'HEAD:{path}'], text=True).strip()
+              assert actual == auth[key], (path, actual, auth[key])
+          assert auth['mandatory_cells'] == [[0.0,0.5],[0.0,1.0],[0.0,2.0],[0.0,3.0],[1.0,2.0]]
+          assert auth['worlds_per_cell'] == 500
+          assert auth['bootstrap_resamples'] == 1999
+          assert auth['propensity_seed'] == 20260908
+          assert auth['propensity_directions'] == 2048
+          assert auth['propensity_transition_width'] == 0.2
+          assert not Path('docs/supporting/v04_reserve_qualification_authorization.json').exists()
+          print({'authorized': True, 'candidate_lock': True, 'reserve_opened': False})
+          PY
+
+  cell:
+    needs: invariants
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - shared: 0
+            amplitude: 0.5
+          - shared: 0
+            amplitude: 1
+          - shared: 0
+            amplitude: 2
+          - shared: 0
+            amplitude: 3
+          - shared: 1
+            amplitude: 2
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Read frozen v0.4 execution parameters
+        run: |
+          python - <<'PY' >> "$GITHUB_ENV"
+          import json
+          a = json.load(open('docs/supporting/v04_fresh_qualification_authorization.json'))
+          print(f"V04_BANDWIDTH_KM={a['bandwidth_km']}")
+          print(f"V04_WORLD_SEED={a['world_seed']}")
+          print(f"V04_K={a['k']}")
+          PY
+      - name: Run locked v0.4 fresh precision cell
+        run: >-
+          python scripts/run_v04_fresh_geometry_cell.py
+          --input benchmarks/frozen/v04_fresh_animal_geometry.csv
+          --source-ledger benchmarks/frozen/v04_fresh_animal_geometry_source.json
+          --coordinate-columns x_km,y_km,z_km
+          --min-records 80
+          --shared-fraction ${{ matrix.shared }}
+          --amplitude ${{ matrix.amplitude }}
+          --replicates 500
+          --resamples 1999
+          --eval-fraction 0.5
+          --k "$V04_K"
+          --bandwidth "$V04_BANDWIDTH_KM"
+          --world-batch-size 25
+          --seed "$V04_WORLD_SEED"
+          --output "results/v04_fresh_precision_cells/cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v04-fresh-cell-s${{ matrix.shared }}-a${{ matrix.amplitude }}
+          path: results/v04_fresh_precision_cells/*.json
+          if-no-files-found: error
+
+  aggregate:
+    needs: cell
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: v04-fresh-cell-*
+          path: results/v04_fresh_precision_cells
+          merge-multiple: true
+      - name: Require exact five-cell result set
+        run: |
+          test "$(find results/v04_fresh_precision_cells -name 'cell-*.json' | wc -l)" -eq 5
+      - name: Aggregate locked v0.4 fresh Wilson qualification
+        run: >-
+          python scripts/aggregate_v04_fresh_precision.py
+          --input-dir results/v04_fresh_precision_cells
+          --output results/v04_fresh_external_precision_v0.1.json
+      - name: Freeze lineage and authorization
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p = Path('results/v04_fresh_external_precision_v0.1.json')
+          d = json.loads(p.read_text())
+          d['authorization'] = json.loads(Path('docs/supporting/v04_fresh_qualification_authorization.json').read_text())
+          d['lineage'] = {
+              'workflow_run_id': int(os.environ['GITHUB_RUN_ID']),
+              'workflow_head_sha': os.environ['GITHUB_SHA'],
+              'candidate_selection': 'results/v04_candidate_selection_v0.1.json',
+              'candidate_lock': 'results/v04_candidate_lock_v0.1.json',
+              'seed_audit': 'results/v04_propensity_seed_lock_audit_v0.1.json',
+              'fresh_source_ledger': 'benchmarks/frozen/v04_fresh_animal_geometry_source.json',
+          }
+          p.write_text(json.dumps(d, indent=2, sort_keys=True) + '\n')
+          PY
+      - name: Print v0.4 fresh decision
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('results/v04_fresh_external_precision_v0.1.json'))
+          print(json.dumps({
+              'pass':d['v04_fresh_external_pass'],
+              'precision':d['precision_qualification'],
+          }, sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v04-fresh-external-precision
+          path: results/v04_fresh_external_precision_v0.1.json
+          if-no-files-found: error
+      - name: Commit immutable v0.4 fresh qualification result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/v04_fresh_external_precision_v0.1.json
+          git commit -m "Freeze v0.4 fresh external qualification"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt * 2))
+          done
+          exit 1

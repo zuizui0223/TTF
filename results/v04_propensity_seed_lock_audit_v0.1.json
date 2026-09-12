@@ -1,0 +1,189 @@
+{
+  "candidate_lock_valid_on_development_rule": true,
+  "cell_shifts": [
+    {
+      "absolute_mean_statistic_shift": 1.5079451815905526e-05,
+      "absolute_rejection_shift": 0.0020000000000000018,
+      "amplitude": 0.5,
+      "diagnostic_derived_seed_mean_statistic": -0.0005831748487766887,
+      "diagnostic_derived_seed_rejection": 0.052,
+      "formal_seed_mean_statistic": -0.0005982543005925942,
+      "formal_seed_rejection": 0.054,
+      "shared_fraction": 0.0
+    },
+    {
+      "absolute_mean_statistic_shift": 2.1094662605563664e-05,
+      "absolute_rejection_shift": 0.008,
+      "amplitude": 1.0,
+      "diagnostic_derived_seed_mean_statistic": 0.0010959382183608822,
+      "diagnostic_derived_seed_rejection": 0.058,
+      "formal_seed_mean_statistic": 0.0011170328809664459,
+      "formal_seed_rejection": 0.05,
+      "shared_fraction": 0.0
+    },
+    {
+      "absolute_mean_statistic_shift": 2.972345585783038e-05,
+      "absolute_rejection_shift": 0.00399999999999999,
+      "amplitude": 2.0,
+      "diagnostic_derived_seed_mean_statistic": 0.004734232125267898,
+      "diagnostic_derived_seed_rejection": 0.07,
+      "formal_seed_mean_statistic": 0.004704508669410068,
+      "formal_seed_rejection": 0.074,
+      "shared_fraction": 0.0
+    },
+    {
+      "absolute_mean_statistic_shift": 8.60764373180169e-05,
+      "absolute_rejection_shift": 0.0040000000000000036,
+      "amplitude": 3.0,
+      "diagnostic_derived_seed_mean_statistic": 0.007058704750747243,
+      "diagnostic_derived_seed_rejection": 0.08,
+      "formal_seed_mean_statistic": 0.006972628313429226,
+      "formal_seed_rejection": 0.076,
+      "shared_fraction": 0.0
+    },
+    {
+      "absolute_mean_statistic_shift": 0.00014380577505380965,
+      "absolute_rejection_shift": 0.0020000000000000018,
+      "amplitude": 2.0,
+      "diagnostic_derived_seed_mean_statistic": 0.07752567259157002,
+      "diagnostic_derived_seed_rejection": 0.874,
+      "formal_seed_mean_statistic": 0.07738186681651621,
+      "formal_seed_rejection": 0.872,
+      "shared_fraction": 1.0
+    }
+  ],
+  "claim_ready": false,
+  "diagnostic_derived_seed": 514090827554859057,
+  "directions": 2048,
+  "formal_candidate_seed": 20260908,
+  "formal_seed_cells": [
+    {
+      "alpha": 0.05,
+      "amplitude": 0.5,
+      "mean_null_statistic": -2.0466790822721758e-05,
+      "mean_statistic": -0.0005982543005925942,
+      "median_p_value": 0.5077499999999999,
+      "n_replicates": 500,
+      "rejection_rate": 0.054,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 1.0,
+      "mean_null_statistic": 1.3001751115684039e-05,
+      "mean_statistic": 0.0011170328809664459,
+      "median_p_value": 0.4875,
+      "n_replicates": 500,
+      "rejection_rate": 0.05,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 2.0,
+      "mean_null_statistic": 4.100104364469539e-06,
+      "mean_statistic": 0.004704508669410068,
+      "median_p_value": 0.432,
+      "n_replicates": 500,
+      "rejection_rate": 0.074,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 3.0,
+      "mean_null_statistic": -1.4659740220894327e-06,
+      "mean_statistic": 0.006972628313429226,
+      "median_p_value": 0.354,
+      "n_replicates": 500,
+      "rejection_rate": 0.076,
+      "shared_fraction": 0.0
+    },
+    {
+      "alpha": 0.05,
+      "amplitude": 2.0,
+      "mean_null_statistic": 1.8372158427653293e-05,
+      "mean_statistic": 0.07738186681651621,
+      "median_p_value": 0.001,
+      "n_replicates": 500,
+      "rejection_rate": 0.872,
+      "shared_fraction": 1.0
+    }
+  ],
+  "interpretation_boundary": "This audit resolves a seed-serialization mismatch on already failed development data. It does not qualify v0.4. A confirmatory panel remains required.",
+  "point_qualification": {
+    "full_shared_moderate_power": 0.872,
+    "max_zero_shared_rejection": 0.076,
+    "moderate_amplitude": 2.0,
+    "passed": true,
+    "power_floor": 0.8,
+    "power_pass": true,
+    "type1_ceiling": 0.1,
+    "type1_pass": true
+  },
+  "precision_qualification": {
+    "full_shared_interval": {
+      "amplitude": 2.0,
+      "estimate": 0.872,
+      "high": 0.8984731760047634,
+      "low": 0.8398543146918417,
+      "shared_fraction": 1.0,
+      "successes": 436,
+      "trials": 500
+    },
+    "full_shared_moderate_estimate": 0.872,
+    "full_shared_moderate_lower95": 0.8398543146918417,
+    "max_zero_shared_estimate": 0.076,
+    "max_zero_shared_upper95": 0.10259641367396849,
+    "moderate_amplitude": 2.0,
+    "passed": false,
+    "power_lower_floor": 0.8,
+    "power_pass": true,
+    "type1_pass": false,
+    "type1_upper_ceiling": 0.1,
+    "zero_shared_intervals": [
+      {
+        "amplitude": 0.5,
+        "estimate": 0.054,
+        "high": 0.07742656151064709,
+        "low": 0.03737435018105752,
+        "shared_fraction": 0.0,
+        "successes": 27,
+        "trials": 500
+      },
+      {
+        "amplitude": 1.0,
+        "estimate": 0.05,
+        "high": 0.0727681611715476,
+        "low": 0.034093745243849435,
+        "shared_fraction": 0.0,
+        "successes": 25,
+        "trials": 500
+      },
+      {
+        "amplitude": 2.0,
+        "estimate": 0.074,
+        "high": 0.10033475332223055,
+        "low": 0.054161184751011976,
+        "shared_fraction": 0.0,
+        "successes": 37,
+        "trials": 500
+      },
+      {
+        "amplitude": 3.0,
+        "estimate": 0.076,
+        "high": 0.10259641367396849,
+        "low": 0.055869027037427826,
+        "shared_fraction": 0.0,
+        "successes": 38,
+        "trials": 500
+      }
+    ]
+  },
+  "propensity_rank_agreement": {
+    "max_spearman": 0.9995511935929017,
+    "mean_spearman": 0.9989139172694479,
+    "min_spearman": 0.9982234171784097
+  },
+  "reserve_opened": false,
+  "schema": "ttf_v04_propensity_seed_lock_audit_v0.1",
+  "status": "development_only_seed_definition_audit"
+}
