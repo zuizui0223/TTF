@@ -1,0 +1,514 @@
+{
+  "candidate_selected": null,
+  "cell_summaries": {
+    "DSO_NULL_COMPONENT": {
+      "endpoints": {
+        "alignment_C": {
+          "estimate": 0.001199030768243075,
+          "high95": 0.0037976440390764922,
+          "low95": -0.0013317470463755634
+        },
+        "alignment_M": {
+          "estimate": 6.147417516810562e-05,
+          "high95": 0.0022992909676918657,
+          "low95": -0.0021857050736575415
+        },
+        "low_support_fraction": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "mean_opportunity": {
+          "estimate": 1.5743039546896902,
+          "high95": 1.5808306591649879,
+          "low95": 1.56740989579716
+        },
+        "mean_prior_fraction": {
+          "estimate": 0.14334967267346324,
+          "high95": 0.14425264641506272,
+          "low95": 0.1424750613132091
+        },
+        "partial_C": {
+          "estimate": -0.005913881457711229,
+          "high95": -0.0009641648004215462,
+          "low95": -0.010853062670722185
+        },
+        "partial_M": {
+          "estimate": 4.238368261557539e-05,
+          "high95": 0.005757062760867324,
+          "low95": -0.005652098366955419
+        },
+        "raw_C": {
+          "estimate": -0.0037653000777394274,
+          "high95": 0.0017272055003976475,
+          "low95": -0.009065166044267816
+        },
+        "raw_M": {
+          "estimate": -0.0003837282307715682,
+          "high95": 0.00545172877553568,
+          "low95": -0.0062850790149723505
+        }
+      },
+      "geometry_profile": "matched",
+      "n_worlds": 100,
+      "response_mode": "null_component"
+    },
+    "DSO_POWER_C_MATCHED": {
+      "endpoints": {
+        "alignment_C": {
+          "estimate": 0.050846939004927025,
+          "high95": 0.06130362986521338,
+          "low95": 0.04128844247974253
+        },
+        "alignment_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "low_support_fraction": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "mean_opportunity": {
+          "estimate": 1.5724681351744738,
+          "high95": 1.579166322599581,
+          "low95": 1.565792739986777
+        },
+        "mean_prior_fraction": {
+          "estimate": 0.14353192490866784,
+          "high95": 0.14425502647360638,
+          "low95": 0.14282189126534542
+        },
+        "partial_C": {
+          "estimate": 0.43354794749790826,
+          "high95": 0.44080212820700293,
+          "low95": 0.42612696219276464
+        },
+        "partial_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "raw_C": {
+          "estimate": 0.4346970709283564,
+          "high95": 0.438504053148122,
+          "low95": 0.4307394473866547
+        },
+        "raw_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        }
+      },
+      "geometry_profile": "matched",
+      "n_worlds": 100,
+      "response_mode": "power_shared_relation"
+    },
+    "DSO_POWER_C_SHIFTED": {
+      "endpoints": {
+        "alignment_C": {
+          "estimate": 0.061028224211947465,
+          "high95": 0.0694951825632882,
+          "low95": 0.05260913989371534
+        },
+        "alignment_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "low_support_fraction": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "mean_opportunity": {
+          "estimate": 1.583327093201561,
+          "high95": 1.5903640613255718,
+          "low95": 1.5768948876044697
+        },
+        "mean_prior_fraction": {
+          "estimate": 0.14165246186444416,
+          "high95": 0.14219561988809068,
+          "low95": 0.1411025614261518
+        },
+        "partial_C": {
+          "estimate": 0.4198899929374045,
+          "high95": 0.42968158501404363,
+          "low95": 0.4104702930531518
+        },
+        "partial_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "raw_C": {
+          "estimate": 0.41834927558292295,
+          "high95": 0.4229575840634186,
+          "low95": 0.4135791805077695
+        },
+        "raw_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        }
+      },
+      "geometry_profile": "shifted",
+      "n_worlds": 100,
+      "response_mode": "power_shared_relation"
+    },
+    "DSO_POWER_M_MATCHED": {
+      "endpoints": {
+        "alignment_C": {
+          "estimate": 0.009117426714596578,
+          "high95": 0.012238112171036881,
+          "low95": 0.006099826477262219
+        },
+        "alignment_M": {
+          "estimate": 0.041759389808839434,
+          "high95": 0.04846897908536085,
+          "low95": 0.03561485001154883
+        },
+        "low_support_fraction": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "mean_opportunity": {
+          "estimate": 1.5710751314618714,
+          "high95": 1.5773739110778264,
+          "low95": 1.5648699445640177
+        },
+        "mean_prior_fraction": {
+          "estimate": 0.14308557117448312,
+          "high95": 0.14395456219753106,
+          "low95": 0.14228232472150126
+        },
+        "partial_C": {
+          "estimate": 0.08036045462029164,
+          "high95": 0.08652845290229029,
+          "low95": 0.07452321123725442
+        },
+        "partial_M": {
+          "estimate": 0.18575159840195787,
+          "high95": 0.1928592264366496,
+          "low95": 0.17799635365565156
+        },
+        "raw_C": {
+          "estimate": 0.0815745117247249,
+          "high95": 0.08707971180762597,
+          "low95": 0.07637096948138757
+        },
+        "raw_M": {
+          "estimate": 0.20795444608318697,
+          "high95": 0.21384014826697229,
+          "low95": 0.20168025811484375
+        }
+      },
+      "geometry_profile": "matched",
+      "n_worlds": 100,
+      "response_mode": "power_shared_mismatch"
+    },
+    "DSO_POWER_M_SHIFTED": {
+      "endpoints": {
+        "alignment_C": {
+          "estimate": 0.00926818746190556,
+          "high95": 0.01228289606789619,
+          "low95": 0.006301780514314907
+        },
+        "alignment_M": {
+          "estimate": 0.040749142726371035,
+          "high95": 0.04658154495753647,
+          "low95": 0.03565775150288953
+        },
+        "low_support_fraction": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "mean_opportunity": {
+          "estimate": 1.5756064331427664,
+          "high95": 1.5819259527237821,
+          "low95": 1.568876210035242
+        },
+        "mean_prior_fraction": {
+          "estimate": 0.1421642107210993,
+          "high95": 0.14282258231467218,
+          "low95": 0.14154975557973554
+        },
+        "partial_C": {
+          "estimate": 0.07387094810356473,
+          "high95": 0.08028383571578963,
+          "low95": 0.06744029850098987
+        },
+        "partial_M": {
+          "estimate": 0.14789527656499893,
+          "high95": 0.15473160827655882,
+          "low95": 0.14065015381684565
+        },
+        "raw_C": {
+          "estimate": 0.07566055721064138,
+          "high95": 0.08152717275462766,
+          "low95": 0.07004044180952866
+        },
+        "raw_M": {
+          "estimate": 0.1702880421895641,
+          "high95": 0.17730931514127857,
+          "low95": 0.16334388524723054
+        }
+      },
+      "geometry_profile": "shifted",
+      "n_worlds": 100,
+      "response_mode": "power_shared_mismatch"
+    },
+    "DSO_PRIVATE_C": {
+      "endpoints": {
+        "alignment_C": {
+          "estimate": 0.003752699756698527,
+          "high95": 0.008164893907565224,
+          "low95": -0.0008600773345601094
+        },
+        "alignment_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "low_support_fraction": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "mean_opportunity": {
+          "estimate": 1.572747618657522,
+          "high95": 1.5799169202961325,
+          "low95": 1.5656982076510109
+        },
+        "mean_prior_fraction": {
+          "estimate": 0.1429483958376857,
+          "high95": 0.14382048039726317,
+          "low95": 0.14213437444804006
+        },
+        "partial_C": {
+          "estimate": 0.03331443942504196,
+          "high95": 0.04552462525589617,
+          "low95": 0.022049499726879977
+        },
+        "partial_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "raw_C": {
+          "estimate": 0.033017293405271445,
+          "high95": 0.043026638081278705,
+          "low95": 0.022434549852340408
+        },
+        "raw_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        }
+      },
+      "geometry_profile": "matched",
+      "n_worlds": 100,
+      "response_mode": "null_private_relation"
+    },
+    "DSO_PRIVATE_M": {
+      "endpoints": {
+        "alignment_C": {
+          "estimate": -0.001363813662477719,
+          "high95": 0.0012920351454708478,
+          "low95": -0.00398689314172854
+        },
+        "alignment_M": {
+          "estimate": -0.0008292015519274589,
+          "high95": 0.002669984932552384,
+          "low95": -0.004066555237522787
+        },
+        "low_support_fraction": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "mean_opportunity": {
+          "estimate": 1.5823885859668119,
+          "high95": 1.589983565940354,
+          "low95": 1.5752115402875515
+        },
+        "mean_prior_fraction": {
+          "estimate": 0.14255130817544456,
+          "high95": 0.14332135219043687,
+          "low95": 0.14180783722902945
+        },
+        "partial_C": {
+          "estimate": 0.00766360520634802,
+          "high95": 0.01361321357474021,
+          "low95": 0.0022070873773810144
+        },
+        "partial_M": {
+          "estimate": 0.007624456990672713,
+          "high95": 0.014359843880963586,
+          "low95": 0.0007213148285101669
+        },
+        "raw_C": {
+          "estimate": 0.005959831476398185,
+          "high95": 0.012138528734407671,
+          "low95": -0.0002847901807821638
+        },
+        "raw_M": {
+          "estimate": 0.0064684861734247015,
+          "high95": 0.013065082420716067,
+          "low95": -0.00047342544468948616
+        }
+      },
+      "geometry_profile": "matched",
+      "n_worlds": 100,
+      "response_mode": "null_private_mismatch"
+    }
+  },
+  "claim_firewall": {
+    "development_only": false,
+    "diagnostic_only": true,
+    "no_causal_geometry_claim": true,
+    "no_empirical_data": true,
+    "no_flower_colour_outcome": true,
+    "no_repair_selection": true,
+    "no_same_world_successor_tuning": true,
+    "no_ttf_c_qualification_claim": true,
+    "q5_q5_1_q5_2_history_immutable": true
+  },
+  "formal_pass_fail": null,
+  "global_gate_predeclared": false,
+  "interpretation": "Report each predeclared mechanism test separately; this diagnostic does not select a repair candidate or qualify TTF-C.",
+  "mechanism_tests": {
+    "estimand_specificity": {
+      "private_C_C_minus_M_mediation_effect": {
+        "estimate": -0.0002971460197705179,
+        "high95": 0.005148097354921642,
+        "low95": -0.005676224728241038
+      },
+      "private_C_specificity_supported": false,
+      "private_M_C_minus_M_mediation_effect": {
+        "estimate": -0.0005478029127018218,
+        "high95": 0.002639662303467907,
+        "low95": -0.003930767965205508
+      },
+      "private_M_specificity_supported": false,
+      "supported": false
+    },
+    "private_mismatch_opportunity_mediation": {
+      "C_minus_M_mediation_effect": {
+        "estimate": -0.0005478029127018218,
+        "high95": 0.002639662303467907,
+        "low95": -0.003930767965205508
+      },
+      "coupling_raw_minus_partial": {
+        "estimate": -0.0017037737299498352,
+        "high95": 0.0009862219999776406,
+        "low95": -0.004418482477715266
+      },
+      "mismatch_raw_minus_partial": {
+        "estimate": -0.001155970817248013,
+        "high95": 0.002433096699295384,
+        "low95": -0.004430474088949626
+      },
+      "raw_C_vs_alignment_C_spearman": {
+        "estimate": 0.524980498049805,
+        "high95": 0.650681228164718,
+        "low95": 0.364152861347071
+      },
+      "raw_M_vs_alignment_M_spearman": {
+        "estimate": 0.4237863786378638,
+        "high95": 0.5854730424938434,
+        "low95": 0.24170531867709516
+      },
+      "supported": false
+    },
+    "private_relation_opportunity_mediation": {
+      "C_minus_M_mediation_effect": {
+        "estimate": -0.0002971460197705179,
+        "high95": 0.005148097354921642,
+        "low95": -0.005676224728241038
+      },
+      "coupling_raw_minus_partial": {
+        "estimate": -0.0002971460197705179,
+        "high95": 0.004980049389737289,
+        "low95": -0.005883304383421905
+      },
+      "mismatch_raw_minus_partial": {
+        "estimate": 0.0,
+        "high95": 0.0,
+        "low95": 0.0
+      },
+      "raw_C_vs_alignment_C_spearman": {
+        "estimate": 0.3636963696369637,
+        "high95": 0.5137638277419517,
+        "low95": 0.17941965334922852
+      },
+      "raw_M_vs_alignment_M_spearman": {
+        "estimate": 0.0,
+        "high95": 0.0,
+        "low95": 0.0
+      },
+      "supported": false
+    },
+    "shared_relation_negative_control": {
+      "DSO_POWER_C_MATCHED": {
+        "partial_C": {
+          "estimate": 0.43354794749790826,
+          "high95": 0.44080212820700293,
+          "low95": 0.42612696219276464
+        },
+        "raw_C": {
+          "estimate": 0.4346970709283564,
+          "high95": 0.438504053148122,
+          "low95": 0.4307394473866547
+        },
+        "raw_minus_partial_C": {
+          "estimate": 0.0011491234304481545,
+          "high95": 0.008146975795965303,
+          "low95": -0.005278917401798632
+        }
+      },
+      "DSO_POWER_C_SHIFTED": {
+        "partial_C": {
+          "estimate": 0.4198899929374045,
+          "high95": 0.42968158501404363,
+          "low95": 0.4104702930531518
+        },
+        "raw_C": {
+          "estimate": 0.41834927558292295,
+          "high95": 0.4229575840634186,
+          "low95": 0.4135791805077695
+        },
+        "raw_minus_partial_C": {
+          "estimate": -0.0015407173544815078,
+          "high95": 0.006918289464851126,
+          "low95": -0.010139683379037891
+        }
+      }
+    },
+    "shifted_power_support_loss": {
+      "comparison": "independent bootstrap because matched and shifted cells use independently generated worlds",
+      "mean_prior_fraction_shifted_minus_matched": {
+        "estimate": -0.0009213604533838127,
+        "high95": 0.00014471409878701996,
+        "low95": -0.0019701539029356465
+      },
+      "raw_C_shifted_minus_matched": {
+        "estimate": -0.005913954514083511,
+        "high95": 0.0015913659234182938,
+        "low95": -0.013590712761779596
+      },
+      "supported": false
+    }
+  },
+  "schema": "ttfc_support_overlap_diagnostic_result_v0.1",
+  "status": "diagnostic_complete_nonqualifying",
+  "terminal_rule": {
+    "candidate_selected": null,
+    "formal_pass_fail": null,
+    "if_not_supported": "Freeze the negative diagnosis and do not tune opportunity controls on these worlds. A different newly named mechanism diagnosis would be required.",
+    "if_supported": "Freeze only the support-overlap diagnosis. Any corrective estimator must be defined later in a newly named prospective development family with fresh worlds."
+  }
+}

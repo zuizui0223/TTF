@@ -1,0 +1,92 @@
+{
+  "schema": "ttfc_support_overlap_diagnostic_rule_v0.1",
+  "status": "frozen_before_support_overlap_diagnostic_outcomes",
+  "purpose": "Non-qualifying mechanism diagnosis of whether held-out kernel opportunity/support overlap explains residual heterogeneous-geometry TTF-C failure after immutable Q5, Q5.1, and Q5.2 endpoints. This rule defines no repair candidate and cannot qualify TTF-C.",
+  "upstream": {
+    "main_integration_commit": "832c19b7a51b61c0331d1c4b5d6cbacbad96496e",
+    "q5_result_path": "results/ttfm_q5_geometry_stress_v0.1.json",
+    "q5_must_remain_joint_fail": true,
+    "q5_1_result_path": "results/ttfm_q5_1_coupling_geometry_v0.1.json",
+    "q5_1_ttf_m_must_remain_pass": true,
+    "q5_1_ttf_c_must_remain_fail": true,
+    "q5_2_result_path": "results/ttfm_q5_2_geometry_transport_development_v0.1.json",
+    "q5_2_candidate_selected_must_be_null": true,
+    "no_empirical_outcomes_opened": true
+  },
+  "diagnostic_question": "Does cross-split kernel opportunity induce a common rank axis in held-out prediction and held-out turnover, creating private false transfer and/or shifted-geometry power loss specifically for TTF-C?",
+  "not_a_candidate_family": true,
+  "fixed_estimators": {
+    "ttf_m": "frozen Q5 heterogeneous estimator: raw mismatch turnover in train and held-out systems, prior mean 0.5",
+    "ttf_c": "frozen Q5.1 estimator: training coupling turnover length-orthogonalized within system; held-out coupling turnover raw; ordinary held-out Spearman; prior mean 0.0",
+    "graph_fraction": 0.15,
+    "bandwidth": 0.2,
+    "prior_strength": 0.25,
+    "segment_points": 5,
+    "no_field_mass_transport": true,
+    "no_response_tuning": true,
+    "no_null_recalibration": true
+  },
+  "support_object": {
+    "definition": "For each held-out edge, evaluate the exact frozen training-kernel mass at the same five segment quadrature points used by TTF and average that mass over the edge. This response-blind quantity is called edge kernel opportunity.",
+    "prior_fraction": "At each segment point prior_strength/(kernel_opportunity+prior_strength), averaged over the edge.",
+    "low_support_indicator": "edge mean kernel opportunity <= prior_strength",
+    "uses_response": false
+  },
+  "per_system_endpoints": [
+    "raw_score = Spearman(prediction, raw held-out turnover)",
+    "opportunity_partial_score = rank correlation after projecting prediction rank and target rank off edge kernel-opportunity rank; diagnostic only",
+    "prediction_opportunity_rho = Spearman(prediction, opportunity)",
+    "target_opportunity_rho = Spearman(raw held-out turnover, opportunity)",
+    "opportunity_alignment_product = prediction_opportunity_rho * target_opportunity_rho",
+    "mean_opportunity",
+    "mean_prior_fraction",
+    "low_support_fraction"
+  ],
+  "world_aggregate_endpoints": [
+    "macro-average raw_score for TTF-M and TTF-C",
+    "macro-average opportunity_partial_score for TTF-M and TTF-C",
+    "macro-average opportunity_alignment_product for TTF-M and TTF-C",
+    "macro-average mean_prior_fraction",
+    "macro-average low_support_fraction"
+  ],
+  "interpretation_tests": {
+    "private_relation_opportunity_mediation": "On DSO_PRIVATE_C worlds, bootstrap the world-level mean of raw_C - partial_C and the Spearman association across worlds between raw_C and alignment_C. Support requires lower95(raw_C-partial_C) > 0 and lower95(rho(raw_C,alignment_C)) > 0.",
+    "private_mismatch_opportunity_mediation": "Apply the same two diagnostics on DSO_PRIVATE_M worlds; report without candidate selection.",
+    "shifted_power_support_loss": "Compare DSO_POWER_M_SHIFTED with DSO_POWER_M_MATCHED for TTF-C. These cells are independently generated; bootstrap their world means independently. Support requires lower95(mean_prior_fraction_shifted - matched) > 0 AND upper95(raw_C_shifted - raw_C_matched) < 0.",
+    "estimand_specificity": "Compare opportunity-mediation effect raw-partial between C and M on the same private worlds. Specificity requires lower95((raw_C-partial_C)-(raw_M-partial_M)) > 0 in at least one private role; otherwise do not call the mechanism TTF-C-specific.",
+    "shared_relation_negative_control": "DSO_POWER_C_MATCHED and DSO_POWER_C_SHIFTED are negative controls for generic collapse: report raw and partial C scores but impose no repair gate."
+  },
+  "diagnostic_worlds": {
+    "master_seed": 20260920,
+    "worlds_per_cell": 100,
+    "aggregate_bootstrap_resamples": 1999,
+    "aggregate_bootstrap_seed": 920260920,
+    "batch_size": 10
+  },
+  "cells": [
+    {"id": "DSO_NULL_COMPONENT", "response_mode": "null_component", "geometry_profile": "matched", "amplitude": 3.0, "noise_sd": 0.8},
+    {"id": "DSO_PRIVATE_M", "response_mode": "null_private_mismatch", "geometry_profile": "matched", "amplitude": 3.0, "noise_sd": 0.8},
+    {"id": "DSO_PRIVATE_C", "response_mode": "null_private_relation", "geometry_profile": "matched", "amplitude": 2.0, "noise_sd": 0.0},
+    {"id": "DSO_POWER_M_MATCHED", "response_mode": "power_shared_mismatch", "geometry_profile": "matched", "amplitude": 2.0, "noise_sd": 0.8},
+    {"id": "DSO_POWER_C_MATCHED", "response_mode": "power_shared_relation", "geometry_profile": "matched", "amplitude": 2.0, "noise_sd": 0.0},
+    {"id": "DSO_POWER_M_SHIFTED", "response_mode": "power_shared_mismatch", "geometry_profile": "shifted", "amplitude": 2.0, "noise_sd": 0.8},
+    {"id": "DSO_POWER_C_SHIFTED", "response_mode": "power_shared_relation", "geometry_profile": "shifted", "amplitude": 2.0, "noise_sd": 0.0}
+  ],
+  "terminal_rule": {
+    "candidate_selected": null,
+    "formal_pass_fail": null,
+    "if_supported": "Freeze only the support-overlap diagnosis. Any corrective estimator must be defined later in a newly named prospective development family with fresh worlds.",
+    "if_not_supported": "Freeze the negative diagnosis and do not tune opportunity controls on these worlds. A different newly named mechanism diagnosis would be required."
+  },
+  "claim_firewall": {
+    "development_only": false,
+    "diagnostic_only": true,
+    "q5_q5_1_q5_2_history_immutable": true,
+    "no_ttf_c_qualification_claim": true,
+    "no_repair_selection": true,
+    "no_empirical_data": true,
+    "no_flower_colour_outcome": true,
+    "no_causal_geometry_claim": true,
+    "no_same_world_successor_tuning": true
+  }
+}
