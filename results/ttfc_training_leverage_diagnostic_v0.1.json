@@ -1,0 +1,685 @@
+{
+  "candidate_selected": null,
+  "cell_summaries": {
+    "DTL_NULL_COMPONENT": {
+      "endpoints": {
+        "loo_score_mean_C": {
+          "estimate": -0.0040781225585004455,
+          "high95": 0.0013346962044662838,
+          "low95": -0.009268424926126465
+        },
+        "loo_score_mean_M": {
+          "estimate": -0.0007721378533932962,
+          "high95": 0.00494535453317093,
+          "low95": -0.006410263193501692
+        },
+        "loo_score_min_C": {
+          "estimate": -0.01845950411760397,
+          "high95": -0.013369190377431185,
+          "low95": -0.02355292606086151
+        },
+        "loo_score_min_M": {
+          "estimate": -0.01569493433944114,
+          "high95": -0.010301333148274451,
+          "low95": -0.021429043036416736
+        },
+        "loo_score_sd_C": {
+          "estimate": 0.007055821618601361,
+          "high95": 0.007528671929113143,
+          "low95": 0.006607328514113612
+        },
+        "loo_score_sd_M": {
+          "estimate": 0.007194150644367752,
+          "high95": 0.007758010814883534,
+          "low95": 0.0066589617864898495
+        },
+        "mean_abs_loo_score_shift_C": {
+          "estimate": 0.0056389681326067835,
+          "high95": 0.0060512570182001705,
+          "low95": 0.005282783368116482
+        },
+        "mean_abs_loo_score_shift_M": {
+          "estimate": 0.005649044294088592,
+          "high95": 0.006115552152593833,
+          "low95": 0.005222021212824922
+        },
+        "mean_dominant_training_system_share": {
+          "estimate": 0.1807628596090669,
+          "high95": 0.18287963500256535,
+          "low95": 0.1784703216529521
+        },
+        "mean_effective_training_system_count": {
+          "estimate": 10.94799512590503,
+          "high95": 11.032701420676728,
+          "low95": 10.862084500334769
+        },
+        "mean_prediction_loo_sd_C": {
+          "estimate": 0.0035624836411597,
+          "high95": 0.00362011840269242,
+          "low95": 0.0035039805419255746
+        },
+        "mean_prediction_loo_sd_M": {
+          "estimate": 0.0037053539586334723,
+          "high95": 0.003762881314602182,
+          "low95": 0.003649238532167837
+        },
+        "raw_C": {
+          "estimate": -0.004376091893420766,
+          "high95": 0.0011668154939490042,
+          "low95": -0.01018887649528197
+        },
+        "raw_M": {
+          "estimate": -0.0009315533596350767,
+          "high95": 0.004967190031451827,
+          "low95": -0.006790533850764498
+        }
+      },
+      "geometry_profile": "matched",
+      "n_worlds": 100,
+      "response_mode": "null_component"
+    },
+    "DTL_POWER_C_MATCHED": {
+      "endpoints": {
+        "loo_score_mean_C": {
+          "estimate": 0.43361656115907066,
+          "high95": 0.4378006252916946,
+          "low95": 0.4295843794835657
+        },
+        "loo_score_mean_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "loo_score_min_C": {
+          "estimate": 0.43103350601502,
+          "high95": 0.4350247391456845,
+          "low95": 0.42688035533543556
+        },
+        "loo_score_min_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "loo_score_sd_C": {
+          "estimate": 0.0011904365988786151,
+          "high95": 0.0013061305069698046,
+          "low95": 0.0010817717440490485
+        },
+        "loo_score_sd_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "mean_abs_loo_score_shift_C": {
+          "estimate": 0.000936911991105993,
+          "high95": 0.001028418969157928,
+          "low95": 0.0008523166141547146
+        },
+        "mean_abs_loo_score_shift_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "mean_dominant_training_system_share": {
+          "estimate": 0.1792359915306533,
+          "high95": 0.18154793363137858,
+          "low95": 0.1769034122871527
+        },
+        "mean_effective_training_system_count": {
+          "estimate": 11.007280614424102,
+          "high95": 11.086963075117033,
+          "low95": 10.923533691795916
+        },
+        "mean_prediction_loo_sd_C": {
+          "estimate": 0.003923939560252222,
+          "high95": 0.003997952856950541,
+          "low95": 0.0038510542251604498
+        },
+        "mean_prediction_loo_sd_M": {
+          "estimate": 1.042453788592748e-17,
+          "high95": 1.0817106254136606e-17,
+          "low95": 1.0062053659749634e-17
+        },
+        "raw_C": {
+          "estimate": 0.43380614229663544,
+          "high95": 0.43772916787742977,
+          "low95": 0.4295235662892888
+        },
+        "raw_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        }
+      },
+      "geometry_profile": "matched",
+      "n_worlds": 100,
+      "response_mode": "power_shared_relation"
+    },
+    "DTL_POWER_C_SHIFTED": {
+      "endpoints": {
+        "loo_score_mean_C": {
+          "estimate": 0.41863825987123404,
+          "high95": 0.42328480580439865,
+          "low95": 0.41426104628782084
+        },
+        "loo_score_mean_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "loo_score_min_C": {
+          "estimate": 0.41652723857037166,
+          "high95": 0.4209094697154199,
+          "low95": 0.41193440607724074
+        },
+        "loo_score_min_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "loo_score_sd_C": {
+          "estimate": 0.000990486780414095,
+          "high95": 0.0010908121120436292,
+          "low95": 0.0008971707156702753
+        },
+        "loo_score_sd_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "mean_abs_loo_score_shift_C": {
+          "estimate": 0.0007983153702669619,
+          "high95": 0.0008712232017994682,
+          "low95": 0.0007233013729693169
+        },
+        "mean_abs_loo_score_shift_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "mean_dominant_training_system_share": {
+          "estimate": 0.14315567557697953,
+          "high95": 0.1445312390902753,
+          "low95": 0.14185516997147193
+        },
+        "mean_effective_training_system_count": {
+          "estimate": 13.38950046729556,
+          "high95": 13.456705448320577,
+          "low95": 13.325907420924853
+        },
+        "mean_prediction_loo_sd_C": {
+          "estimate": 0.003250818938424692,
+          "high95": 0.0033369808584683427,
+          "low95": 0.0031674602324069908
+        },
+        "mean_prediction_loo_sd_M": {
+          "estimate": 1.1586179878232735e-17,
+          "high95": 1.197215200058936e-17,
+          "low95": 1.121837666110979e-17
+        },
+        "raw_C": {
+          "estimate": 0.41879557043056215,
+          "high95": 0.42298472912921153,
+          "low95": 0.41421593123061184
+        },
+        "raw_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        }
+      },
+      "geometry_profile": "shifted",
+      "n_worlds": 100,
+      "response_mode": "power_shared_relation"
+    },
+    "DTL_POWER_M_MATCHED": {
+      "endpoints": {
+        "loo_score_mean_C": {
+          "estimate": 0.08116367516290951,
+          "high95": 0.0863627577149624,
+          "low95": 0.07603192157001502
+        },
+        "loo_score_mean_M": {
+          "estimate": 0.2081084809731405,
+          "high95": 0.21408393906426232,
+          "low95": 0.20246376678926764
+        },
+        "loo_score_min_C": {
+          "estimate": 0.069210184634037,
+          "high95": 0.07461956562695833,
+          "low95": 0.06373207329698931
+        },
+        "loo_score_min_M": {
+          "estimate": 0.19892843809348645,
+          "high95": 0.20463470053227284,
+          "low95": 0.19321925471812934
+        },
+        "loo_score_sd_C": {
+          "estimate": 0.00562872489174374,
+          "high95": 0.006070528169575533,
+          "low95": 0.0052129471679334925
+        },
+        "loo_score_sd_M": {
+          "estimate": 0.004386486883126033,
+          "high95": 0.004683808206096233,
+          "low95": 0.00410277934595576
+        },
+        "mean_abs_loo_score_shift_C": {
+          "estimate": 0.004439180563860853,
+          "high95": 0.004777209822841991,
+          "low95": 0.004123574953404494
+        },
+        "mean_abs_loo_score_shift_M": {
+          "estimate": 0.003430817882902738,
+          "high95": 0.003667120376219256,
+          "low95": 0.0032168199488203536
+        },
+        "mean_dominant_training_system_share": {
+          "estimate": 0.17960195716094532,
+          "high95": 0.18163513133091058,
+          "low95": 0.17745068830536728
+        },
+        "mean_effective_training_system_count": {
+          "estimate": 10.953775905460025,
+          "high95": 11.027589716028114,
+          "low95": 10.87936519408245
+        },
+        "mean_prediction_loo_sd_C": {
+          "estimate": 0.003634751476256089,
+          "high95": 0.0036958500929096384,
+          "low95": 0.003576343864422993
+        },
+        "mean_prediction_loo_sd_M": {
+          "estimate": 0.004018507102687018,
+          "high95": 0.004072772595342218,
+          "low95": 0.003961711506444893
+        },
+        "raw_C": {
+          "estimate": 0.08186659949606061,
+          "high95": 0.08733017475951126,
+          "low95": 0.07645991929505767
+        },
+        "raw_M": {
+          "estimate": 0.20821712310457208,
+          "high95": 0.214131487183196,
+          "low95": 0.20211039048607257
+        }
+      },
+      "geometry_profile": "matched",
+      "n_worlds": 100,
+      "response_mode": "power_shared_mismatch"
+    },
+    "DTL_POWER_M_SHIFTED": {
+      "endpoints": {
+        "loo_score_mean_C": {
+          "estimate": 0.07569955355987258,
+          "high95": 0.08129118623813635,
+          "low95": 0.07007987531876175
+        },
+        "loo_score_mean_M": {
+          "estimate": 0.1700342751381948,
+          "high95": 0.1769215796754424,
+          "low95": 0.1631041431142894
+        },
+        "loo_score_min_C": {
+          "estimate": 0.06248266946907757,
+          "high95": 0.06800498383249573,
+          "low95": 0.056963945366407254
+        },
+        "loo_score_min_M": {
+          "estimate": 0.15968492578367377,
+          "high95": 0.16688199936370818,
+          "low95": 0.1526862248811664
+        },
+        "loo_score_sd_C": {
+          "estimate": 0.006361786805398676,
+          "high95": 0.0067043443226091366,
+          "low95": 0.006019206931815852
+        },
+        "loo_score_sd_M": {
+          "estimate": 0.005067676406499774,
+          "high95": 0.005439137170002708,
+          "low95": 0.004709196765815501
+        },
+        "mean_abs_loo_score_shift_C": {
+          "estimate": 0.005144232082723104,
+          "high95": 0.005445329839035386,
+          "low95": 0.00485542513470326
+        },
+        "mean_abs_loo_score_shift_M": {
+          "estimate": 0.004068111821388038,
+          "high95": 0.0043598468942779986,
+          "low95": 0.0037833139899757177
+        },
+        "mean_dominant_training_system_share": {
+          "estimate": 0.14206954565980154,
+          "high95": 0.14356291345703157,
+          "low95": 0.1405365920926308
+        },
+        "mean_effective_training_system_count": {
+          "estimate": 13.445154524213887,
+          "high95": 13.521015686851632,
+          "low95": 13.374118868075485
+        },
+        "mean_prediction_loo_sd_C": {
+          "estimate": 0.003315279957933976,
+          "high95": 0.00335699385369686,
+          "low95": 0.003271221958803611
+        },
+        "mean_prediction_loo_sd_M": {
+          "estimate": 0.003502131747629485,
+          "high95": 0.003552318298745407,
+          "low95": 0.0034555430881338376
+        },
+        "raw_C": {
+          "estimate": 0.076300550585483,
+          "high95": 0.08171082805983836,
+          "low95": 0.07089760475028185
+        },
+        "raw_M": {
+          "estimate": 0.17026773789855498,
+          "high95": 0.17746837922662864,
+          "low95": 0.1629394516797864
+        }
+      },
+      "geometry_profile": "shifted",
+      "n_worlds": 100,
+      "response_mode": "power_shared_mismatch"
+    },
+    "DTL_PRIVATE_C": {
+      "endpoints": {
+        "loo_score_mean_C": {
+          "estimate": 0.03259812736519908,
+          "high95": 0.04249526381249806,
+          "low95": 0.022561806070591377
+        },
+        "loo_score_mean_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "loo_score_min_C": {
+          "estimate": 0.00622087463685862,
+          "high95": 0.017216980877374107,
+          "low95": -0.004579045577925531
+        },
+        "loo_score_min_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "loo_score_sd_C": {
+          "estimate": 0.013925323764148017,
+          "high95": 0.015131539019138265,
+          "low95": 0.012764390202486063
+        },
+        "loo_score_sd_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "mean_abs_loo_score_shift_C": {
+          "estimate": 0.011468151573426764,
+          "high95": 0.012414513631172162,
+          "low95": 0.010514818223928335
+        },
+        "mean_abs_loo_score_shift_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        },
+        "mean_dominant_training_system_share": {
+          "estimate": 0.18135798836521247,
+          "high95": 0.18351506365584058,
+          "low95": 0.17913621551770548
+        },
+        "mean_effective_training_system_count": {
+          "estimate": 10.937601862479518,
+          "high95": 11.010742140928853,
+          "low95": 10.86472756467119
+        },
+        "mean_prediction_loo_sd_C": {
+          "estimate": 0.006703897346494613,
+          "high95": 0.006776399554472812,
+          "low95": 0.00663727715361115
+        },
+        "mean_prediction_loo_sd_M": {
+          "estimate": 1.06857555921288e-17,
+          "high95": 1.1092944592779276e-17,
+          "low95": 1.0274844505231495e-17
+        },
+        "raw_C": {
+          "estimate": 0.03309995986849313,
+          "high95": 0.04393650495206193,
+          "low95": 0.022811637351152127
+        },
+        "raw_M": {
+          "estimate": 0.0,
+          "high95": 0.0,
+          "low95": 0.0
+        }
+      },
+      "geometry_profile": "matched",
+      "n_worlds": 100,
+      "response_mode": "null_private_relation"
+    },
+    "DTL_PRIVATE_M": {
+      "endpoints": {
+        "loo_score_mean_C": {
+          "estimate": 0.004865037093377417,
+          "high95": 0.01070628247709877,
+          "low95": -0.0010012379035029217
+        },
+        "loo_score_mean_M": {
+          "estimate": 0.006309486533651514,
+          "high95": 0.012981217743719329,
+          "low95": -0.00010764936920221414
+        },
+        "loo_score_min_C": {
+          "estimate": -0.010806422084793942,
+          "high95": -0.005213972355139921,
+          "low95": -0.01654612262269825
+        },
+        "loo_score_min_M": {
+          "estimate": -0.013942589096547154,
+          "high95": -0.007513464279055307,
+          "low95": -0.020620487818821684
+        },
+        "loo_score_sd_C": {
+          "estimate": 0.007836655154192853,
+          "high95": 0.008402853980899322,
+          "low95": 0.0072924004241508265
+        },
+        "loo_score_sd_M": {
+          "estimate": 0.010089175662397832,
+          "high95": 0.010874524972294523,
+          "low95": 0.009332620131394362
+        },
+        "mean_abs_loo_score_shift_C": {
+          "estimate": 0.006419500431832873,
+          "high95": 0.006864983928158239,
+          "low95": 0.005971616944928188
+        },
+        "mean_abs_loo_score_shift_M": {
+          "estimate": 0.00825625329860986,
+          "high95": 0.00893831700229289,
+          "low95": 0.007619781015519621
+        },
+        "mean_dominant_training_system_share": {
+          "estimate": 0.1819585997063394,
+          "high95": 0.1840903250900753,
+          "low95": 0.17970621723478652
+        },
+        "mean_effective_training_system_count": {
+          "estimate": 10.919866750696222,
+          "high95": 10.995251259426993,
+          "low95": 10.841824686842937
+        },
+        "mean_prediction_loo_sd_C": {
+          "estimate": 0.004069791932867203,
+          "high95": 0.004118989750293212,
+          "low95": 0.004018282286427156
+        },
+        "mean_prediction_loo_sd_M": {
+          "estimate": 0.005299177453831273,
+          "high95": 0.0053611299556601,
+          "low95": 0.005233759065694365
+        },
+        "raw_C": {
+          "estimate": 0.005252325728769928,
+          "high95": 0.011472394817433902,
+          "low95": -0.0010619568125560257
+        },
+        "raw_M": {
+          "estimate": 0.006495019794066347,
+          "high95": 0.013792452081203133,
+          "low95": -0.00020754212065516708
+        }
+      },
+      "geometry_profile": "matched",
+      "n_worlds": 100,
+      "response_mode": "null_private_mismatch"
+    }
+  },
+  "claim_firewall": {
+    "diagnostic_only": true,
+    "no_causal_geometry_claim": true,
+    "no_empirical_data": true,
+    "no_flower_colour_outcome": true,
+    "no_repair_selection": true,
+    "no_same_world_successor_tuning": true,
+    "no_ttf_c_qualification_claim": true,
+    "q5_q5_1_q5_2_support_overlap_history_immutable": true
+  },
+  "formal_pass_fail": null,
+  "global_gate_predeclared": false,
+  "interpretation": "Report each predeclared training-leverage mechanism test separately; no repair candidate or TTF-C qualification is selected.",
+  "mechanism_tests": {
+    "estimand_specificity": {
+      "DTL_POWER_M_MATCHED": {
+        "C_minus_M_loo_score_sd": {
+          "estimate": 0.0012422380086177076,
+          "high95": 0.0016016432060114445,
+          "low95": 0.0008917295385278475
+        },
+        "supported": true
+      },
+      "DTL_PRIVATE_M": {
+        "C_minus_M_loo_score_sd": {
+          "estimate": -0.0022525205082049777,
+          "high95": -0.0015300729006819357,
+          "low95": -0.0030311534611513497
+        },
+        "supported": false
+      },
+      "supported": true
+    },
+    "private_mismatch_field_leverage": {
+      "raw_C_vs_loo_score_sd_C_spearman": {
+        "estimate": 0.16764476447644763,
+        "high95": 0.3615398319066061,
+        "low95": -0.03283661422192869
+      },
+      "raw_C_vs_mean_prediction_loo_sd_C_spearman": {
+        "estimate": -0.04232823282328233,
+        "high95": 0.15723331999739992,
+        "low95": -0.23483984360566496
+      },
+      "supported": false
+    },
+    "private_relation_field_leverage": {
+      "raw_C_vs_loo_score_sd_C_spearman": {
+        "estimate": -0.21435343534353435,
+        "high95": -0.02042108465294694,
+        "low95": -0.40321830661073127
+      },
+      "raw_C_vs_mean_prediction_loo_sd_C_spearman": {
+        "estimate": -0.20321632163216322,
+        "high95": -0.02697603711999418,
+        "low95": -0.37213499360949853
+      },
+      "supported": false
+    },
+    "private_relation_geometry_concentration": {
+      "raw_C_vs_dominant_share_spearman": {
+        "estimate": -0.07242724272427242,
+        "high95": 0.13155287703959098,
+        "low95": -0.26501875806596836
+      },
+      "raw_C_vs_effective_system_count_spearman": {
+        "estimate": -0.02465046504650465,
+        "high95": 0.17139039830032196,
+        "low95": -0.21977124342911236
+      },
+      "supported": false
+    },
+    "shared_relation_negative_control": {
+      "DTL_POWER_C_MATCHED": {
+        "loo_score_mean_C": {
+          "estimate": 0.43361656115907066,
+          "high95": 0.4378006252916946,
+          "low95": 0.4295843794835657
+        },
+        "loo_score_min_C": {
+          "estimate": 0.43103350601502,
+          "high95": 0.4350247391456845,
+          "low95": 0.42688035533543556
+        },
+        "loo_score_sd_C": {
+          "estimate": 0.0011904365988786151,
+          "high95": 0.0013061305069698046,
+          "low95": 0.0010817717440490485
+        },
+        "raw_C": {
+          "estimate": 0.43380614229663544,
+          "high95": 0.43772916787742977,
+          "low95": 0.4295235662892888
+        }
+      },
+      "DTL_POWER_C_SHIFTED": {
+        "loo_score_mean_C": {
+          "estimate": 0.41863825987123404,
+          "high95": 0.42328480580439865,
+          "low95": 0.41426104628782084
+        },
+        "loo_score_min_C": {
+          "estimate": 0.41652723857037166,
+          "high95": 0.4209094697154199,
+          "low95": 0.41193440607724074
+        },
+        "loo_score_sd_C": {
+          "estimate": 0.000990486780414095,
+          "high95": 0.0010908121120436292,
+          "low95": 0.0008971707156702753
+        },
+        "raw_C": {
+          "estimate": 0.41879557043056215,
+          "high95": 0.42298472912921153,
+          "low95": 0.41421593123061184
+        }
+      }
+    },
+    "shifted_power_training_instability": {
+      "comparison": "independent bootstrap because matched and shifted cells use independently generated worlds",
+      "loo_score_sd_C_shifted_minus_matched": {
+        "estimate": 0.0007330619136549357,
+        "high95": 0.00130506816864581,
+        "low95": 0.0001713883958394889
+      },
+      "raw_C_shifted_minus_matched": {
+        "estimate": -0.005566048910577603,
+        "high95": 0.002695484547008694,
+        "low95": -0.013228259115291014
+      },
+      "supported": false
+    }
+  },
+  "schema": "ttfc_training_leverage_diagnostic_result_v0.1",
+  "status": "diagnostic_complete_nonqualifying",
+  "terminal_rule": {
+    "candidate_selected": null,
+    "formal_pass_fail": null,
+    "if_not_supported": "Freeze the negative diagnosis and do not tune leverage penalties, training-system caps, or training-resampling inference on these worlds. A different newly named mechanism diagnosis would be required.",
+    "if_supported": "Freeze only the training-leverage diagnosis. Any corrective estimator must be specified later in a newly named prospective development family with fresh worlds."
+  }
+}

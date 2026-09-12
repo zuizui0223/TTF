@@ -1,0 +1,160 @@
+name: ttfc-training-leverage-diagnostic
+
+on:
+  push:
+    branches:
+      - diagnostic/ttfc-training-leverage
+    paths:
+      - docs/supporting/ttfc_training_leverage_diagnostic_authorization.json
+
+permissions:
+  contents: write
+
+env:
+  RULE: docs/supporting/ttfc_training_leverage_diagnostic_rule.json
+  AUTH: docs/supporting/ttfc_training_leverage_diagnostic_authorization.json
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[test]"
+      - run: pytest -q
+      - name: Require exact training-leverage diagnostic authorization
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+
+          auth = json.loads(Path("docs/supporting/ttfc_training_leverage_diagnostic_authorization.json").read_text())
+          rule = json.loads(Path("docs/supporting/ttfc_training_leverage_diagnostic_rule.json").read_text())
+          q5 = json.loads(Path("results/ttfm_q5_geometry_stress_v0.1.json").read_text())
+          q51 = json.loads(Path("results/ttfm_q5_1_coupling_geometry_v0.1.json").read_text())
+          q52 = json.loads(Path("results/ttfm_q5_2_geometry_transport_development_v0.1.json").read_text())
+          support = json.loads(Path("results/ttfc_support_overlap_diagnostic_v0.1.json").read_text())
+
+          assert auth["schema"] == "ttfc_training_leverage_diagnostic_authorization_v0.1"
+          assert auth["status"] == "authorize_exactly_one_training_leverage_diagnostic_run"
+          assert rule["status"] == "frozen_before_training_leverage_diagnostic_outcomes"
+          assert rule["not_a_candidate_family"] is True
+          assert rule["terminal_rule"]["candidate_selected"] is None
+          assert rule["terminal_rule"]["formal_pass_fail"] is None
+          assert rule["claim_firewall"]["diagnostic_only"] is True
+          assert rule["claim_firewall"]["no_repair_selection"] is True
+
+          assert q5["joint_Q5_pass"] is False
+          assert q51["TTF_M_Q5_1_pass"] is True
+          assert q51["TTF_C_Q5_1_pass"] is False
+          assert q51["joint_Q5_1_pass"] is False
+          assert q52["candidate_selected"] is None
+          assert q52["formal_q5_2_qualified"] is False
+          assert support["status"] == "diagnostic_complete_nonqualifying"
+          assert support["candidate_selected"] is None
+          assert support["formal_pass_fail"] is None
+          for key in (
+              "private_relation_opportunity_mediation",
+              "private_mismatch_opportunity_mediation",
+              "shifted_power_support_loss",
+              "estimand_specificity",
+          ):
+              assert support["mechanism_tests"][key]["supported"] is False
+
+          assert auth["master_seed"] == 20260921
+          assert auth["worlds_per_cell"] == 100
+          assert auth["batch_size"] == 10
+          assert auth["aggregate_bootstrap_resamples"] == 1999
+          assert auth["diagnostic_outcomes_previously_opened"] is False
+          assert auth["empirical_data_opened"] is False
+          assert auth["candidate_selection_authorized"] is False
+          assert auth["formal_qualification_authorized"] is False
+
+          for path, expected in auth["blob_sha"].items():
+              actual = subprocess.check_output(["git", "hash-object", path], text=True).strip()
+              assert actual == expected, (path, actual, expected)
+          PY
+
+  batches:
+    needs: invariants
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        cell:
+          - DTL_NULL_COMPONENT
+          - DTL_PRIVATE_M
+          - DTL_PRIVATE_C
+          - DTL_POWER_M_MATCHED
+          - DTL_POWER_C_MATCHED
+          - DTL_POWER_M_SHIFTED
+          - DTL_POWER_C_SHIFTED
+        start: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[test]"
+      - name: Run frozen training-leverage diagnostic batch
+        run: |
+          mkdir -p batch
+          python scripts/run_ttfc_training_leverage_batch.py \
+            --rule "$RULE" \
+            --cell-id "${{ matrix.cell }}" \
+            --start "${{ matrix.start }}" \
+            --count 10 \
+            --output "batch/${{ matrix.cell }}_${{ matrix.start }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttfc-training-leverage-${{ matrix.cell }}-${{ matrix.start }}
+          path: batch/*.json
+          if-no-files-found: error
+
+  aggregate:
+    needs: batches
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[test]"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ttfc-training-leverage-*
+          path: downloaded
+          merge-multiple: true
+      - name: Aggregate frozen training-leverage diagnosis
+        run: |
+          python scripts/aggregate_ttfc_training_leverage.py \
+            --rule "$RULE" \
+            --batch-dir downloaded \
+            --output results/ttfc_training_leverage_diagnostic_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttfc-training-leverage-diagnostic-v0.1
+          path: results/ttfc_training_leverage_diagnostic_v0.1.json
+          if-no-files-found: error
+      - name: Commit immutable training-leverage diagnostic result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/ttfc_training_leverage_diagnostic_v0.1.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Freeze TTF-C training-leverage diagnostic v0.1"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            sleep $((attempt*2))
+          done
+          exit 1
