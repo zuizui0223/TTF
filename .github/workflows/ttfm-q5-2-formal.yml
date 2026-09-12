@@ -6,7 +6,6 @@ on:
       - qualification/ttfm-q5-2-conditional
     paths:
       - docs/supporting/ttfm_q5_2_formal_authorization.json
-  workflow_dispatch:
 
 permissions:
   contents: write
