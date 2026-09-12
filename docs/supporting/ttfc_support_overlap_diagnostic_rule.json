@@ -52,7 +52,7 @@
   "interpretation_tests": {
     "private_relation_opportunity_mediation": "On DSO_PRIVATE_C worlds, bootstrap the world-level mean of raw_C - partial_C and the Spearman association across worlds between raw_C and alignment_C. Support requires lower95(raw_C-partial_C) > 0 and lower95(rho(raw_C,alignment_C)) > 0.",
     "private_mismatch_opportunity_mediation": "Apply the same two diagnostics on DSO_PRIVATE_M worlds; report without candidate selection.",
-    "shifted_power_support_loss": "Compare DSO_POWER_M_SHIFTED with DSO_POWER_M_MATCHED for TTF-C. Support requires lower95(mean_prior_fraction_shifted - matched) > 0 AND upper95(raw_C_shifted - raw_C_matched) < 0.",
+    "shifted_power_support_loss": "Compare DSO_POWER_M_SHIFTED with DSO_POWER_M_MATCHED for TTF-C. These cells are independently generated; bootstrap their world means independently. Support requires lower95(mean_prior_fraction_shifted - matched) > 0 AND upper95(raw_C_shifted - raw_C_matched) < 0.",
     "estimand_specificity": "Compare opportunity-mediation effect raw-partial between C and M on the same private worlds. Specificity requires lower95((raw_C-partial_C)-(raw_M-partial_M)) > 0 in at least one private role; otherwise do not call the mechanism TTF-C-specific.",
     "shared_relation_negative_control": "DSO_POWER_C_MATCHED and DSO_POWER_C_SHIFTED are negative controls for generic collapse: report raw and partial C scores but impose no repair gate."
   },
@@ -60,6 +60,7 @@
     "master_seed": 20260920,
     "worlds_per_cell": 100,
     "aggregate_bootstrap_resamples": 1999,
+    "aggregate_bootstrap_seed": 920260920,
     "batch_size": 10
   },
   "cells": [
