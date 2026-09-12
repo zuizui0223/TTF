@@ -1,0 +1,477 @@
+{
+  "baseline_mode": "q5_1_uniform",
+  "candidate_checks": {
+    "pooled_inverse_density": {
+      "checks": [
+        {
+          "cell_id": "D52_NULL_COMPONENT",
+          "observed_rate": 0.06,
+          "pass": true,
+          "required": "<= 0.08",
+          "role": "type1"
+        },
+        {
+          "cell_id": "D52_PRIVATE_M",
+          "observed_rate": 0.12,
+          "pass": false,
+          "required": "<= 0.08",
+          "role": "type1"
+        },
+        {
+          "cell_id": "D52_PRIVATE_C",
+          "observed_rate": 0.18,
+          "pass": false,
+          "required": "<= 0.08",
+          "role": "type1"
+        },
+        {
+          "cell_id": "D52_POWER_M_MATCHED",
+          "observed_rate": 0.86,
+          "pass": true,
+          "required": ">= 0.85",
+          "role": "shared_mismatch_matched_power"
+        },
+        {
+          "cell_id": "D52_POWER_C_MATCHED",
+          "observed_rate": 1.0,
+          "pass": true,
+          "required": ">= 0.95",
+          "role": "shared_relation_matched_power"
+        },
+        {
+          "cell_id": "D52_POWER_M_SHIFTED",
+          "observed_rate": 0.76,
+          "pass": false,
+          "required": ">= 0.82",
+          "role": "shared_mismatch_shifted_power"
+        },
+        {
+          "cell_id": "D52_POWER_C_SHIFTED",
+          "observed_rate": 1.0,
+          "pass": true,
+          "required": ">= 0.95",
+          "role": "shared_relation_shifted_power"
+        }
+      ],
+      "development_pass": false
+    },
+    "self_inverse_density": {
+      "checks": [
+        {
+          "cell_id": "D52_NULL_COMPONENT",
+          "observed_rate": 0.08,
+          "pass": true,
+          "required": "<= 0.08",
+          "role": "type1"
+        },
+        {
+          "cell_id": "D52_PRIVATE_M",
+          "observed_rate": 0.11,
+          "pass": false,
+          "required": "<= 0.08",
+          "role": "type1"
+        },
+        {
+          "cell_id": "D52_PRIVATE_C",
+          "observed_rate": 0.2,
+          "pass": false,
+          "required": "<= 0.08",
+          "role": "type1"
+        },
+        {
+          "cell_id": "D52_POWER_M_MATCHED",
+          "observed_rate": 0.86,
+          "pass": true,
+          "required": ">= 0.85",
+          "role": "shared_mismatch_matched_power"
+        },
+        {
+          "cell_id": "D52_POWER_C_MATCHED",
+          "observed_rate": 1.0,
+          "pass": true,
+          "required": ">= 0.95",
+          "role": "shared_relation_matched_power"
+        },
+        {
+          "cell_id": "D52_POWER_M_SHIFTED",
+          "observed_rate": 0.81,
+          "pass": false,
+          "required": ">= 0.82",
+          "role": "shared_mismatch_shifted_power"
+        },
+        {
+          "cell_id": "D52_POWER_C_SHIFTED",
+          "observed_rate": 1.0,
+          "pass": true,
+          "required": ">= 0.95",
+          "role": "shared_relation_shifted_power"
+        }
+      ],
+      "development_pass": false
+    },
+    "target_density_ratio": {
+      "checks": [
+        {
+          "cell_id": "D52_NULL_COMPONENT",
+          "observed_rate": 0.06,
+          "pass": true,
+          "required": "<= 0.08",
+          "role": "type1"
+        },
+        {
+          "cell_id": "D52_PRIVATE_M",
+          "observed_rate": 0.06,
+          "pass": true,
+          "required": "<= 0.08",
+          "role": "type1"
+        },
+        {
+          "cell_id": "D52_PRIVATE_C",
+          "observed_rate": 0.13,
+          "pass": false,
+          "required": "<= 0.08",
+          "role": "type1"
+        },
+        {
+          "cell_id": "D52_POWER_M_MATCHED",
+          "observed_rate": 0.85,
+          "pass": true,
+          "required": ">= 0.85",
+          "role": "shared_mismatch_matched_power"
+        },
+        {
+          "cell_id": "D52_POWER_C_MATCHED",
+          "observed_rate": 1.0,
+          "pass": true,
+          "required": ">= 0.95",
+          "role": "shared_relation_matched_power"
+        },
+        {
+          "cell_id": "D52_POWER_M_SHIFTED",
+          "observed_rate": 0.75,
+          "pass": false,
+          "required": ">= 0.82",
+          "role": "shared_mismatch_shifted_power"
+        },
+        {
+          "cell_id": "D52_POWER_C_SHIFTED",
+          "observed_rate": 1.0,
+          "pass": true,
+          "required": ">= 0.95",
+          "role": "shared_relation_shifted_power"
+        }
+      ],
+      "development_pass": false
+    }
+  },
+  "candidate_selected": null,
+  "cells": [
+    {
+      "geometry_profile": "matched",
+      "id": "D52_NULL_COMPONENT",
+      "modes": {
+        "pooled_inverse_density": {
+          "mean_statistic": -0.003092350775862226,
+          "mean_train_effective_edge_count": 349.2095635583785,
+          "minimum_train_effective_edge_count": 5.284485912317059,
+          "rejection_rate": 0.06,
+          "rejection_rate_delta_from_q5_1": -0.020000000000000004,
+          "rejections": 6
+        },
+        "q5_1_uniform": {
+          "mean_statistic": -0.003849696459997406,
+          "mean_train_effective_edge_count": 424.5395,
+          "minimum_train_effective_edge_count": 31.0,
+          "rejection_rate": 0.08,
+          "rejections": 8
+        },
+        "self_inverse_density": {
+          "mean_statistic": -0.0021798422989531955,
+          "mean_train_effective_edge_count": 224.70697396764913,
+          "minimum_train_effective_edge_count": 12.614129384849502,
+          "rejection_rate": 0.08,
+          "rejection_rate_delta_from_q5_1": 0.0,
+          "rejections": 8
+        },
+        "target_density_ratio": {
+          "mean_statistic": -0.003645040750752818,
+          "mean_train_effective_edge_count": 392.5727653190701,
+          "minimum_train_effective_edge_count": 27.353868863986254,
+          "rejection_rate": 0.06,
+          "rejection_rate_delta_from_q5_1": -0.020000000000000004,
+          "rejections": 6
+        }
+      },
+      "n_replicates": 100,
+      "response_mode": "null_component",
+      "role": "type1"
+    },
+    {
+      "geometry_profile": "matched",
+      "id": "D52_PRIVATE_M",
+      "modes": {
+        "pooled_inverse_density": {
+          "mean_statistic": 0.01184816146933468,
+          "mean_train_effective_edge_count": 349.24078468394663,
+          "minimum_train_effective_edge_count": 6.75748034896307,
+          "rejection_rate": 0.12,
+          "rejection_rate_delta_from_q5_1": 0.06,
+          "rejections": 12
+        },
+        "q5_1_uniform": {
+          "mean_statistic": 0.005827084797987384,
+          "mean_train_effective_edge_count": 422.4755,
+          "minimum_train_effective_edge_count": 21.0,
+          "rejection_rate": 0.06,
+          "rejections": 6
+        },
+        "self_inverse_density": {
+          "mean_statistic": 0.014321249112832734,
+          "mean_train_effective_edge_count": 224.81623437833218,
+          "minimum_train_effective_edge_count": 12.450867340849618,
+          "rejection_rate": 0.11,
+          "rejection_rate_delta_from_q5_1": 0.05,
+          "rejections": 11
+        },
+        "target_density_ratio": {
+          "mean_statistic": 0.006045625571395272,
+          "mean_train_effective_edge_count": 392.39788853041733,
+          "minimum_train_effective_edge_count": 20.397425431825244,
+          "rejection_rate": 0.06,
+          "rejection_rate_delta_from_q5_1": 0.0,
+          "rejections": 6
+        }
+      },
+      "n_replicates": 100,
+      "response_mode": "null_private_mismatch",
+      "role": "type1"
+    },
+    {
+      "geometry_profile": "matched",
+      "id": "D52_PRIVATE_C",
+      "modes": {
+        "pooled_inverse_density": {
+          "mean_statistic": 0.048481958893192824,
+          "mean_train_effective_edge_count": 346.2190139022423,
+          "minimum_train_effective_edge_count": 6.481362418502637,
+          "rejection_rate": 0.18,
+          "rejection_rate_delta_from_q5_1": 0.04999999999999999,
+          "rejections": 18
+        },
+        "q5_1_uniform": {
+          "mean_statistic": 0.03308628349010691,
+          "mean_train_effective_edge_count": 423.89300000000003,
+          "minimum_train_effective_edge_count": 30.0,
+          "rejection_rate": 0.13,
+          "rejections": 13
+        },
+        "self_inverse_density": {
+          "mean_statistic": 0.045049253950924385,
+          "mean_train_effective_edge_count": 222.509679867323,
+          "minimum_train_effective_edge_count": 12.437382051448399,
+          "rejection_rate": 0.2,
+          "rejection_rate_delta_from_q5_1": 0.07,
+          "rejections": 20
+        },
+        "target_density_ratio": {
+          "mean_statistic": 0.03254801494539752,
+          "mean_train_effective_edge_count": 391.5800135723133,
+          "minimum_train_effective_edge_count": 26.33679498544539,
+          "rejection_rate": 0.13,
+          "rejection_rate_delta_from_q5_1": 0.0,
+          "rejections": 13
+        }
+      },
+      "n_replicates": 100,
+      "response_mode": "null_private_relation",
+      "role": "type1"
+    },
+    {
+      "geometry_profile": "matched",
+      "id": "D52_POWER_M_MATCHED",
+      "modes": {
+        "pooled_inverse_density": {
+          "mean_statistic": 0.08338349260775152,
+          "mean_train_effective_edge_count": 340.6960573810226,
+          "minimum_train_effective_edge_count": 7.171896857013378,
+          "rejection_rate": 0.86,
+          "rejection_rate_delta_from_q5_1": 0.020000000000000018,
+          "rejections": 86
+        },
+        "q5_1_uniform": {
+          "mean_statistic": 0.08102712780065635,
+          "mean_train_effective_edge_count": 420.3,
+          "minimum_train_effective_edge_count": 34.0,
+          "rejection_rate": 0.84,
+          "rejections": 84
+        },
+        "self_inverse_density": {
+          "mean_statistic": 0.08630608456109912,
+          "mean_train_effective_edge_count": 220.97310148111006,
+          "minimum_train_effective_edge_count": 13.286711165155019,
+          "rejection_rate": 0.86,
+          "rejection_rate_delta_from_q5_1": 0.020000000000000018,
+          "rejections": 86
+        },
+        "target_density_ratio": {
+          "mean_statistic": 0.08126776025364263,
+          "mean_train_effective_edge_count": 389.82681829322814,
+          "minimum_train_effective_edge_count": 29.513424655807345,
+          "rejection_rate": 0.85,
+          "rejection_rate_delta_from_q5_1": 0.010000000000000009,
+          "rejections": 85
+        }
+      },
+      "n_replicates": 100,
+      "response_mode": "power_shared_mismatch",
+      "role": "shared_mismatch_matched_power"
+    },
+    {
+      "geometry_profile": "matched",
+      "id": "D52_POWER_C_MATCHED",
+      "modes": {
+        "pooled_inverse_density": {
+          "mean_statistic": 0.4375030234262087,
+          "mean_train_effective_edge_count": 343.3370564020718,
+          "minimum_train_effective_edge_count": 6.259045943335148,
+          "rejection_rate": 1.0,
+          "rejection_rate_delta_from_q5_1": 0.0,
+          "rejections": 100
+        },
+        "q5_1_uniform": {
+          "mean_statistic": 0.43464420342251325,
+          "mean_train_effective_edge_count": 423.88800000000003,
+          "minimum_train_effective_edge_count": 33.0,
+          "rejection_rate": 1.0,
+          "rejections": 100
+        },
+        "self_inverse_density": {
+          "mean_statistic": 0.4336216456050104,
+          "mean_train_effective_edge_count": 225.62673671135374,
+          "minimum_train_effective_edge_count": 13.415401365058479,
+          "rejection_rate": 1.0,
+          "rejection_rate_delta_from_q5_1": 0.0,
+          "rejections": 100
+        },
+        "target_density_ratio": {
+          "mean_statistic": 0.4345898041192917,
+          "mean_train_effective_edge_count": 391.4986651152241,
+          "minimum_train_effective_edge_count": 29.595496666702378,
+          "rejection_rate": 1.0,
+          "rejection_rate_delta_from_q5_1": 0.0,
+          "rejections": 100
+        }
+      },
+      "n_replicates": 100,
+      "response_mode": "power_shared_relation",
+      "role": "shared_relation_matched_power"
+    },
+    {
+      "geometry_profile": "shifted",
+      "id": "D52_POWER_M_SHIFTED",
+      "modes": {
+        "pooled_inverse_density": {
+          "mean_statistic": 0.07805908338121363,
+          "mean_train_effective_edge_count": 480.8743519924436,
+          "minimum_train_effective_edge_count": 8.149612278662016,
+          "rejection_rate": 0.76,
+          "rejection_rate_delta_from_q5_1": 0.030000000000000027,
+          "rejections": 76
+        },
+        "q5_1_uniform": {
+          "mean_statistic": 0.0758586330371968,
+          "mean_train_effective_edge_count": 528.515,
+          "minimum_train_effective_edge_count": 33.0,
+          "rejection_rate": 0.73,
+          "rejections": 73
+        },
+        "self_inverse_density": {
+          "mean_statistic": 0.08101759984063905,
+          "mean_train_effective_edge_count": 334.943147905537,
+          "minimum_train_effective_edge_count": 18.02377192460137,
+          "rejection_rate": 0.81,
+          "rejection_rate_delta_from_q5_1": 0.08000000000000007,
+          "rejections": 81
+        },
+        "target_density_ratio": {
+          "mean_statistic": 0.07613223921937565,
+          "mean_train_effective_edge_count": 480.81104887885465,
+          "minimum_train_effective_edge_count": 30.999539981399753,
+          "rejection_rate": 0.75,
+          "rejection_rate_delta_from_q5_1": 0.020000000000000018,
+          "rejections": 75
+        }
+      },
+      "n_replicates": 100,
+      "response_mode": "power_shared_mismatch",
+      "role": "shared_mismatch_shifted_power"
+    },
+    {
+      "geometry_profile": "shifted",
+      "id": "D52_POWER_C_SHIFTED",
+      "modes": {
+        "pooled_inverse_density": {
+          "mean_statistic": 0.4199385888895237,
+          "mean_train_effective_edge_count": 484.1579704662799,
+          "minimum_train_effective_edge_count": 4.695874002845613,
+          "rejection_rate": 1.0,
+          "rejection_rate_delta_from_q5_1": 0.0,
+          "rejections": 100
+        },
+        "q5_1_uniform": {
+          "mean_statistic": 0.41736751235911035,
+          "mean_train_effective_edge_count": 532.552,
+          "minimum_train_effective_edge_count": 18.0,
+          "rejection_rate": 1.0,
+          "rejections": 100
+        },
+        "self_inverse_density": {
+          "mean_statistic": 0.41665137467875474,
+          "mean_train_effective_edge_count": 336.223651837262,
+          "minimum_train_effective_edge_count": 15.337512534836046,
+          "rejection_rate": 1.0,
+          "rejection_rate_delta_from_q5_1": 0.0,
+          "rejections": 100
+        },
+        "target_density_ratio": {
+          "mean_statistic": 0.41776621807625736,
+          "mean_train_effective_edge_count": 485.726917485198,
+          "minimum_train_effective_edge_count": 16.49022219811261,
+          "rejection_rate": 1.0,
+          "rejection_rate_delta_from_q5_1": 0.0,
+          "rejections": 100
+        }
+      },
+      "n_replicates": 100,
+      "response_mode": "power_shared_relation",
+      "role": "shared_relation_shifted_power"
+    }
+  ],
+  "claim_firewall": {
+    "development_only": true,
+    "evaluation_geometry_may_be_used_only_by_target_density_ratio_and_never_with_evaluation_responses": true,
+    "no_causal_geometry_claim": true,
+    "no_empirical_data": true,
+    "no_flower_colour_outcome": true,
+    "no_q5_2_qualification_claim": true,
+    "no_threshold_graph_bandwidth_or_role_tuning_after_outcomes": true,
+    "q5_1_remains_immutable_fail": true,
+    "q5_remains_immutable_fail": true
+  },
+  "formal_q5_2_qualified": false,
+  "next_step": "Freeze null selection and stop geometry-transport candidate hunting in this family unless a new mechanism diagnosis justifies a separately named development family.",
+  "q5_1_remains_immutable_fail": true,
+  "q5_remains_immutable_fail": true,
+  "schema": "ttfm_q5_2_geometry_transport_development_result_v0.1",
+  "selection_rule": {
+    "preference_order_is_binding": true,
+    "rule": "Select the first candidate in candidate_preference_order satisfying every development threshold. If none passes, candidate_selected=null. Development selection is not qualification.",
+    "select_at_most_one": true,
+    "shared_mismatch_matched_min_power": 0.85,
+    "shared_mismatch_shifted_min_power": 0.82,
+    "shared_relation_matched_min_power": 0.95,
+    "shared_relation_shifted_min_power": 0.95,
+    "type1_max_rate": 0.08
+  },
+  "status": "development_complete_nonqualifying"
+}

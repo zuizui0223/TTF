@@ -1,0 +1,21 @@
+{
+  "schema": "ttfm_q5_2_geometry_transport_development_authorization_v0.1",
+  "status": "authorize_exactly_one_q5_2_transport_development_run",
+  "authorized_pre_outcome_head_sha": "550bcce076a3a4ef6402c78d96ef6a733736f16d",
+  "rule_blob_sha": "04a49b7448cacc59443bf4a6b171fd85ee01631e",
+  "transport_blob_sha": "0dd078f4cdf8123b0e51aeea21ee5fa3e01042de",
+  "scorer_blob_sha": "902e75c1e95d16d491cf8e750b4837175db19c14",
+  "simulator_blob_sha": "07287ee0093ebe866a462b167e35ad585eadf132",
+  "runner_blob_sha": "53ef1975aae28ede3b672c50038e7f725a1528f7",
+  "aggregator_blob_sha": "79a17fc3051812b813b7d17cd74d33332d37c1ba",
+  "workflow_blob_sha": "71b92edebf10e003d22260385f22c070c67d1d5f",
+  "q5_result_blob_sha": "3a59fe30009385ac3fa1e805bb129f140a7a8ab9",
+  "q5_1_result_blob_sha": "65b96b2941732fc0dd83d5f595b7ae0f9fc9ba4d",
+  "factor_diagnostic_blob_sha": "63356399966f340f5d2f65af2a5774b0f3898184",
+  "worlds_per_cell": 100,
+  "bootstrap_resamples": 999,
+  "development_outcomes_previously_opened": false,
+  "empirical_data_authorized": false,
+  "candidate_selection_is_nonqualifying": true,
+  "q5_and_q5_1_remain_immutable": true
+}

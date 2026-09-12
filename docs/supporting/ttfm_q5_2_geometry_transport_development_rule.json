@@ -1,0 +1,112 @@
+{
+  "schema": "ttfm_q5_2_geometry_transport_development_rule_v0.1",
+  "status": "frozen_before_q5_2_transport_development_outcomes",
+  "purpose": "Development-only selection of at most one response-blind geometry-transport successor for TTF-C after immutable Q5 and Q5.1 failures. This stage cannot qualify Q5.2 and cannot alter Q5/Q5.1.",
+  "prerequisites": {
+    "q5_result_path": "results/ttfm_q5_geometry_stress_v0.1.json",
+    "q5_joint_must_remain_fail": true,
+    "q5_1_result_path": "results/ttfm_q5_1_coupling_geometry_v0.1.json",
+    "q5_1_joint_must_remain_fail": true,
+    "q5_1_ttf_m_must_remain_pass": true,
+    "q5_1_ttf_c_must_remain_fail": true,
+    "factor_diagnostic_path": "results/ttfm_q5_factor_diagnostic_v0.1.json",
+    "factor_diagnostic_candidate_selected_must_be_null": true,
+    "no_empirical_outcomes_opened": true
+  },
+  "scientific_target": "Remove or transport response-blind sampling-geometry mass in the learned TTF-C field rather than residualizing held-out responses or tightening the private null.",
+  "fixed_q5_1_components": {
+    "ttf_m": "unchanged_and_not_a_candidate_dimension",
+    "coupling_training_response": "q5_1_length_orthogonalized_coupling_turnover",
+    "coupling_evaluation_target": "raw_coupling_turnover",
+    "coupling_evaluation_score": "raw_within_system_spearman",
+    "graph_fraction": 0.15,
+    "bandwidth": 0.2,
+    "prior_strength": 0.25,
+    "coupling_prior_mean": 0.0,
+    "segment_points": 5,
+    "evaluation_side_response_residualization": false,
+    "private_null_recalibration": false
+  },
+  "candidate_preference_order": [
+    "pooled_inverse_density",
+    "self_inverse_density",
+    "target_density_ratio"
+  ],
+  "candidates": {
+    "pooled_inverse_density": {
+      "uses_training_geometry": true,
+      "uses_evaluation_geometry": false,
+      "uses_any_response": false,
+      "definition": "At each training coupling-edge midpoint, compute Gaussian density from all training coupling-edge midpoints using equal total mass per training system and the frozen field bandwidth. Within each training system, set field edge mass proportional to reciprocal pooled density and renormalize system mass to one."
+    },
+    "self_inverse_density": {
+      "uses_training_geometry": true,
+      "uses_evaluation_geometry": false,
+      "uses_any_response": false,
+      "definition": "Within each training system, compute Gaussian density of its coupling-edge midpoints against that same system with uniform edge mass and the frozen field bandwidth. Set field edge mass proportional to reciprocal self density and renormalize system mass to one."
+    },
+    "target_density_ratio": {
+      "uses_training_geometry": true,
+      "uses_evaluation_geometry": true,
+      "uses_any_response": false,
+      "definition": "At each training coupling-edge midpoint, compute species-equal Gaussian midpoint density in evaluation geometry divided by species-equal Gaussian midpoint density in training geometry, using the frozen field bandwidth. Within each training system, use this ratio as field edge mass and renormalize system mass to one. Evaluation responses never enter the ratio."
+    }
+  },
+  "numerics": {
+    "density_kernel": "exp(-0.5 * squared_euclidean_distance / bandwidth^2)",
+    "density_floor": "numpy_finfo_float_tiny_only_for_underflow_guard",
+    "weight_clipping": false,
+    "species_total_training_mass": 1.0,
+    "candidate_specific_bandwidth": false
+  },
+  "split": {
+    "n_systems": 40,
+    "train_systems": 20,
+    "eval_systems": 20,
+    "rule": "sp_000_through_sp_019_train_sp_020_through_sp_039_eval"
+  },
+  "world_parameters": {
+    "transition_width": 0.2,
+    "master_seed": 20260918
+  },
+  "development_cells": [
+    {"id": "D52_NULL_COMPONENT", "response_mode": "null_component", "geometry_profile": "matched", "amplitude": 3.0, "noise_sd": 0.8, "role": "type1"},
+    {"id": "D52_PRIVATE_M", "response_mode": "null_private_mismatch", "geometry_profile": "matched", "amplitude": 3.0, "noise_sd": 0.8, "role": "type1"},
+    {"id": "D52_PRIVATE_C", "response_mode": "null_private_relation", "geometry_profile": "matched", "amplitude": 2.0, "noise_sd": 0.0, "role": "type1"},
+    {"id": "D52_POWER_M_MATCHED", "response_mode": "power_shared_mismatch", "geometry_profile": "matched", "amplitude": 2.0, "noise_sd": 0.8, "role": "shared_mismatch_matched_power"},
+    {"id": "D52_POWER_C_MATCHED", "response_mode": "power_shared_relation", "geometry_profile": "matched", "amplitude": 2.0, "noise_sd": 0.0, "role": "shared_relation_matched_power"},
+    {"id": "D52_POWER_M_SHIFTED", "response_mode": "power_shared_mismatch", "geometry_profile": "shifted", "amplitude": 2.0, "noise_sd": 0.8, "role": "shared_mismatch_shifted_power"},
+    {"id": "D52_POWER_C_SHIFTED", "response_mode": "power_shared_relation", "geometry_profile": "shifted", "amplitude": 2.0, "noise_sd": 0.0, "role": "shared_relation_shifted_power"}
+  ],
+  "development_inference": {
+    "worlds_per_cell": 100,
+    "bootstrap_resamples": 999,
+    "alpha": 0.05,
+    "batch_size": 10,
+    "baseline_q5_1_reported_audit_only": true,
+    "candidate_selection_uses_point_rates_not_wilson_intervals": true
+  },
+  "selection_rule": {
+    "select_at_most_one": true,
+    "preference_order_is_binding": true,
+    "type1_max_rate": 0.08,
+    "shared_mismatch_matched_min_power": 0.85,
+    "shared_mismatch_shifted_min_power": 0.82,
+    "shared_relation_matched_min_power": 0.95,
+    "shared_relation_shifted_min_power": 0.95,
+    "rule": "Select the first candidate in candidate_preference_order satisfying every development threshold. If none passes, candidate_selected=null. Development selection is not qualification."
+  },
+  "next_if_candidate_selected": "Freeze the selected definition without modification, use a new master seed and 500 worlds per formal Q5 role with 1999 bootstrap resamples, and require the original Wilson type-I/power gates before any empirical observation-support work.",
+  "next_if_no_candidate": "Freeze null selection and stop geometry-transport candidate hunting in this family unless a new mechanism diagnosis justifies a separately named development family.",
+  "claim_firewall": {
+    "development_only": true,
+    "q5_remains_immutable_fail": true,
+    "q5_1_remains_immutable_fail": true,
+    "no_q5_2_qualification_claim": true,
+    "no_empirical_data": true,
+    "no_flower_colour_outcome": true,
+    "no_causal_geometry_claim": true,
+    "no_threshold_graph_bandwidth_or_role_tuning_after_outcomes": true,
+    "evaluation_geometry_may_be_used_only_by_target_density_ratio_and_never_with_evaluation_responses": true
+  }
+}
