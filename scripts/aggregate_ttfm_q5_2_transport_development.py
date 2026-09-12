@@ -124,14 +124,14 @@ def aggregate(rule: dict, batch_paths: list[Path]) -> dict:
     return {
         "schema": "ttfm_q5_2_geometry_transport_development_result_v0.1",
         "status": "development_complete_nonqualifying",
-        "formal_q5_2_qualified": false,
+        "formal_q5_2_qualified": False,
         "candidate_selected": selected,
         "selection_rule": rule["selection_rule"],
         "candidate_checks": candidate_checks,
         "cells": cell_results,
         "baseline_mode": AUDIT_BASELINE,
-        "q5_remains_immutable_fail": true,
-        "q5_1_remains_immutable_fail": true,
+        "q5_remains_immutable_fail": True,
+        "q5_1_remains_immutable_fail": True,
         "next_step": (
             rule["next_if_candidate_selected"]
             if selected is not None
