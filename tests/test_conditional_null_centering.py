@@ -51,7 +51,7 @@ def test_one_phase_draw_reproduces_frozen_q51_coupling_statistic():
     frozen = q51_paired_heldout_species_bootstrap_test(
         world.samples,
         **_kwargs(),
-        n_bootstrap=19,
+        n_bootstrap=99,
         seed=991,
     )
     assert direct.statistics.shape == (1,)
