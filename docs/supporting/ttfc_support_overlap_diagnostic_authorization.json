@@ -1,0 +1,42 @@
+{
+  "schema": "ttfc_support_overlap_diagnostic_authorization_v0.1",
+  "status": "authorize_exactly_one_support_overlap_diagnostic_run",
+  "preauthorization_commit": "d9f4a93379525db36d406333bd091f971336d5db",
+  "master_seed": 20260920,
+  "worlds_per_cell": 100,
+  "batch_size": 10,
+  "aggregate_bootstrap_resamples": 1999,
+  "aggregate_bootstrap_seed": 920260920,
+  "diagnostic_outcomes_previously_opened": false,
+  "empirical_data_opened": false,
+  "candidate_selection_authorized": false,
+  "formal_qualification_authorized": false,
+  "partial_batch_interpretation_forbidden": true,
+  "blob_sha": {
+    "docs/supporting/ttfc_support_overlap_diagnostic_rule.json": "be9567ab076f77b79d4c2ca36ad18438a186547b",
+    "src/ttf/support_overlap_diagnostic.py": "52511726bd4ef37c35a5c85b09276d398d5dd7f0",
+    "scripts/run_ttfc_support_overlap_batch.py": "e3b3cd6d4fe6419d013c83f58d2d3145e344f583",
+    "scripts/aggregate_ttfc_support_overlap.py": "c97c655b27c562ace148af7bb49dc427d8056154",
+    ".github/workflows/ttfc-support-overlap-diagnostic.yml": "4c0f0f1ff3a8b45d0f7d3da7253cc5b310b8b933",
+    "src/ttf/heterogeneous_simulate.py": "07287ee0093ebe866a462b167e35ad585eadf132",
+    "src/ttf/heterogeneous_inference.py": "99f7881b4260a91f490f26f5ba7dec90499bcef4",
+    "src/ttf/mismatch.py": "228a0095b6bc214f4955bf4bbc864874553a92bd",
+    "src/ttf/geometry_control.py": "d982b76a56392a3c9b0ef029f4c7058b30fc222d",
+    "src/ttf/one_sided_geometry_control.py": "27817dd61079a6ae149808cb454a39293b46ae4d",
+    "src/ttf/chunked_transfer.py": "bc513c4da4a1327613edc5437b44144c436a0105",
+    "src/ttf/core.py": "90ec4b7e2b43f71676978bd2a1bda9dd620e4685",
+    "src/ttf/q51_inference.py": "4e34649af6dc96f999900589267ee1eab18b4d7d",
+    "results/ttfm_q5_geometry_stress_v0.1.json": "3a59fe30009385ac3fa1e805bb129f140a7a8ab9",
+    "results/ttfm_q5_1_coupling_geometry_v0.1.json": "65b96b2941732fc0dd83d5f595b7ae0f9fc9ba4d",
+    "results/ttfm_q5_2_geometry_transport_development_v0.1.json": "c289ba55f744b58eee6deac7a9d815214b11ca4e"
+  },
+  "claim_firewall": {
+    "diagnostic_only": true,
+    "no_repair_candidate": true,
+    "no_ttf_c_qualification": true,
+    "q5_q5_1_q5_2_immutable": true,
+    "no_empirical_data": true,
+    "no_causal_geometry_claim": true,
+    "successor_requires_new_named_fresh_world_development": true
+  }
+}
