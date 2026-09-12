@@ -1,0 +1,85 @@
+{
+  "schema": "ttfc_training_leverage_diagnostic_rule_v0.1",
+  "status": "frozen_before_training_leverage_diagnostic_outcomes",
+  "purpose": "Non-qualifying mechanism diagnosis of whether residual heterogeneous-geometry TTF-C failure is associated with local concentration of training-system kernel mass and sensitivity of the learned field to leaving out one training system. This defines no repair candidate and cannot qualify TTF-C.",
+  "upstream": {
+    "main_after_support_overlap_merge": "881f909458075a909cca357379efd13e07bc1754",
+    "support_overlap_result_path": "results/ttfc_support_overlap_diagnostic_v0.1.json",
+    "support_overlap_result_blob": "6cd7e5ead4a3826c24da834ea72cc5f760b84d30",
+    "support_overlap_all_predeclared_mechanism_tests_must_be_unsupported": true,
+    "q5_q5_1_q5_2_history_immutable": true,
+    "no_empirical_outcomes_opened": true
+  },
+  "diagnostic_question": "When total cross-split kernel support is adequate, does concentration of that support among a few training systems make the learned field unstable and thereby contribute to private false transfer or shifted-geometry power loss in TTF-C?",
+  "not_a_candidate_family": true,
+  "fixed_estimators": {
+    "ttf_m": "frozen Q5 heterogeneous estimator: raw mismatch turnover in train and held-out systems, prior mean 0.5",
+    "ttf_c": "frozen Q5.1 estimator: training coupling turnover length-orthogonalized within system; held-out coupling turnover raw; ordinary held-out Spearman; prior mean 0.0",
+    "graph_fraction": 0.15,
+    "bandwidth": 0.2,
+    "prior_strength": 0.25,
+    "segment_points": 5,
+    "no_response_tuning": true,
+    "no_null_recalibration": true,
+    "no_field_mass_transport": true,
+    "no_support_threshold_tuning": true
+  },
+  "training_leverage_object": {
+    "local_system_mass": "At each held-out quadrature point, sum the frozen Gaussian kernel weights separately within each training system. Normalize those system masses by their response-blind total kernel mass.",
+    "effective_training_system_count": "1/sum_s(q_s^2) at each quadrature point, averaged over edge then held-out systems; q_s is the local training-system mass share.",
+    "dominant_training_system_share": "max_s(q_s) at each quadrature point, averaged over edge then held-out systems.",
+    "leave_one_training_system_out": "For each training system s, compute the exact field after removing all edges of s while keeping the frozen bandwidth, prior strength, prior mean, quadrature and all remaining species weights unchanged. LOO predictions are obtained exactly by subtracting the precomputed system-specific numerator and denominator contributions.",
+    "uses_heldout_response_to_define_geometry": false,
+    "uses_heldout_response_to_choose_leaveout": false
+  },
+  "per_world_endpoints": [
+    "raw_M and raw_C frozen full-training statistics",
+    "loo_score_sd_M and loo_score_sd_C across all training-system deletions",
+    "loo_score_mean_M and loo_score_mean_C",
+    "loo_score_min_M and loo_score_min_C",
+    "mean_abs_loo_score_shift_M and mean_abs_loo_score_shift_C",
+    "mean_prediction_loo_sd_M and mean_prediction_loo_sd_C across held-out edges",
+    "mean_effective_training_system_count",
+    "mean_dominant_training_system_share"
+  ],
+  "interpretation_tests": {
+    "private_relation_field_leverage": "On DTL_PRIVATE_C worlds, bootstrap across-world Spearman(raw_C, loo_score_sd_C) and Spearman(raw_C, mean_prediction_loo_sd_C). Support requires both lower95 > 0.",
+    "private_relation_geometry_concentration": "On DTL_PRIVATE_C worlds, bootstrap Spearman(raw_C, dominant_training_system_share) and Spearman(raw_C, effective_training_system_count). Support requires dominant-share lower95 > 0 and effective-count upper95 < 0.",
+    "private_mismatch_field_leverage": "Apply the same field-leverage diagnostic on DTL_PRIVATE_M worlds; report without repair selection.",
+    "shifted_power_training_instability": "Compare DTL_POWER_M_SHIFTED with DTL_POWER_M_MATCHED using independent bootstrap. Support requires lower95(loo_score_sd_C_shifted - matched) > 0 and upper95(raw_C_shifted - matched) < 0.",
+    "estimand_specificity": "Within DTL_PRIVATE_M and DTL_POWER_M_MATCHED worlds, compare loo_score_sd_C - loo_score_sd_M. Specificity requires lower95 > 0 in at least one role; otherwise do not call instability TTF-C-specific.",
+    "shared_relation_negative_control": "Report raw C, mean/min LOO C score and LOO score SD for DTL_POWER_C_MATCHED and DTL_POWER_C_SHIFTED; no repair gate is imposed."
+  },
+  "diagnostic_worlds": {
+    "master_seed": 20260921,
+    "worlds_per_cell": 100,
+    "aggregate_bootstrap_resamples": 1999,
+    "aggregate_bootstrap_seed": 921260921,
+    "batch_size": 10
+  },
+  "cells": [
+    {"id": "DTL_NULL_COMPONENT", "response_mode": "null_component", "geometry_profile": "matched", "amplitude": 3.0, "noise_sd": 0.8},
+    {"id": "DTL_PRIVATE_M", "response_mode": "null_private_mismatch", "geometry_profile": "matched", "amplitude": 3.0, "noise_sd": 0.8},
+    {"id": "DTL_PRIVATE_C", "response_mode": "null_private_relation", "geometry_profile": "matched", "amplitude": 2.0, "noise_sd": 0.0},
+    {"id": "DTL_POWER_M_MATCHED", "response_mode": "power_shared_mismatch", "geometry_profile": "matched", "amplitude": 2.0, "noise_sd": 0.8},
+    {"id": "DTL_POWER_C_MATCHED", "response_mode": "power_shared_relation", "geometry_profile": "matched", "amplitude": 2.0, "noise_sd": 0.0},
+    {"id": "DTL_POWER_M_SHIFTED", "response_mode": "power_shared_mismatch", "geometry_profile": "shifted", "amplitude": 2.0, "noise_sd": 0.8},
+    {"id": "DTL_POWER_C_SHIFTED", "response_mode": "power_shared_relation", "geometry_profile": "shifted", "amplitude": 2.0, "noise_sd": 0.0}
+  ],
+  "terminal_rule": {
+    "candidate_selected": null,
+    "formal_pass_fail": null,
+    "if_supported": "Freeze only the training-leverage diagnosis. Any corrective estimator must be specified later in a newly named prospective development family with fresh worlds.",
+    "if_not_supported": "Freeze the negative diagnosis and do not tune leverage penalties, training-system caps, or training-resampling inference on these worlds. A different newly named mechanism diagnosis would be required."
+  },
+  "claim_firewall": {
+    "diagnostic_only": true,
+    "no_repair_selection": true,
+    "no_ttf_c_qualification_claim": true,
+    "q5_q5_1_q5_2_support_overlap_history_immutable": true,
+    "no_empirical_data": true,
+    "no_flower_colour_outcome": true,
+    "no_causal_geometry_claim": true,
+    "no_same_world_successor_tuning": true
+  }
+}
