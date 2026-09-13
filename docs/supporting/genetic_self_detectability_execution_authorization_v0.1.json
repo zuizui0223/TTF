@@ -1,0 +1,51 @@
+{
+  "schema": "ttf_genetic_self_detectability_execution_authorization_v0.1",
+  "status": "authorize_synthetic_self_detectability_qualification",
+  "purpose": "Run the predeclared endpoint-safe within-species detectability qualification before any empirical genetic outcome is opened, so a future negative cross-species transfer result can be separated from lack of within-species spatial detectability.",
+  "geometry_source_ledger_blob_sha": "180c00e2d79ba58a1068e0c9fe45e41b3c3c04c1",
+  "geometry_fingerprint_sha256": "a1e0f76abd391d6e8d41347df91c8eda2963f4b998564a0b69e8345ca08a8f0b",
+  "geometry_csv_sha256": "86d3b71e8a1cb61819b9135766eec16f4fac9c2c6b13e7b75b39536d2766ba26",
+  "parent_protocol_blob_sha": "e82dae7e6d38a26e0e84cfea1bad5a9a21e6cbd6",
+  "qualification_rule_blob_sha": "bc4fd86506648a6fea2200cf1a9dc2f59c21581d",
+  "pilot_rule_blob_sha": "edcb84fc0cd709133fdb794e4c3a3b48d39d6d87",
+  "frozen_code_blobs": {
+    "src/ttf/genetic_self_detectability.py": "8129b7eccfc4e2134c04c77729f43fdf3f21440f",
+    "src/ttf/genetic_simulate.py": "792f037efe85e445e3617455cf0ab37d1b793666",
+    "src/ttf/genetic_ibd.py": "339d15e22cba29054137c4aca3168c97d601d132",
+    "src/ttf/genetic_gate.py": "2ae019b2dbd9573dbd4795cb4948ac3a034bec34",
+    "src/ttf/calibration.py": "0b24843597b7df9ac11f73cbd3614fddc6545b2f",
+    "src/ttf/private_null_inference.py": "63ccada38347f57ef28522ba8034e7f6fcda2aa8",
+    "src/ttf/precision.py": "7baf89612149f6dde02e4a14ce2a046330d32919",
+    "scripts/run_genetic_self_reference_shard.py": "3de47ffaab47cee4e5e09333417434c6b0942ccb",
+    "scripts/aggregate_genetic_self_references.py": "f834fc0bc3227be7e61c8836275111c388c6af90",
+    "scripts/run_genetic_self_evaluation_shard.py": "e6240224a88bdd0142245fc5d7f4e02394a53b55",
+    "scripts/aggregate_genetic_self_qualification.py": "db1910dc1db1a7340b61992916b3ff55f5295c85"
+  },
+  "frozen_worlds": {
+    "null_reference": 1000,
+    "null_evaluation": 500,
+    "private_A2_evaluation": 500,
+    "master_seed": 20260913,
+    "batch_width": 64,
+    "reference_shard_size": 250,
+    "evaluation_shard_size": 250
+  },
+  "frozen_decision": {
+    "alpha": 0.05,
+    "type1_wilson95_upper_ceiling": 0.10,
+    "private_A2_power_wilson95_lower_floor": 0.80
+  },
+  "outcome_firewall": {
+    "empirical_pairwise_genetic_distances_opened": false,
+    "sequence_characters_opened_for_inference": false,
+    "alignment_divergence_summaries_opened": false,
+    "monmonier_results_opened": false,
+    "break_presence_absence_opened": false
+  },
+  "forbidden_after_authorization": [
+    "changing the 110 evaluated species or frozen geometry",
+    "changing endpoint exclusion, bandwidth, prior, or self-field statistic",
+    "changing synthetic worlds, seeds, reference size, alpha, or Wilson gates",
+    "opening empirical genetic outcomes before the final synthetic qualification receipt"
+  ]
+}
