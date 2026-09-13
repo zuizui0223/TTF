@@ -26,3 +26,4 @@ jobs:
           tests/test_genetic_ibd.py
           tests/test_genetic_simulate.py
           tests/test_genetic_gate.py
+          tests/test_genetic_self_detectability.py
