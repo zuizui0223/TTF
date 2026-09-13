@@ -36,3 +36,4 @@ jobs:
           tests/test_phylogatr_confirmatory.py
           tests/test_phylogatr_character_mask.py
           tests/test_phylogatr_freeze_contracts.py
+          tests/test_phylogatr_phase2_freezer.py
