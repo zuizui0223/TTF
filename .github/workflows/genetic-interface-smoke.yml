@@ -8,7 +8,9 @@ on:
     paths:
       - ".github/workflows/genetic-interface-smoke.yml"
       - "src/ttf/genetic_*.py"
+      - "src/ttf/phylogatr_*.py"
       - "tests/test_genetic_*.py"
+      - "tests/test_phylogatr_*.py"
 
 jobs:
   pytest-genetic:
@@ -27,3 +29,4 @@ jobs:
           tests/test_genetic_simulate.py
           tests/test_genetic_gate.py
           tests/test_genetic_self_detectability.py
+          tests/test_phylogatr_confirmatory.py
