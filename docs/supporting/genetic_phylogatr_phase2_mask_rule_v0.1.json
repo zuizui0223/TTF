@@ -1,0 +1,52 @@
+{
+  "schema": "ttf_genetic_phylogatr_phase2_mask_rule_v0.1",
+  "status": "frozen_before_any_fresh_phylogatr_character_mask_is_opened",
+  "parent_protocol": "docs/supporting/genetic_phylogatr_confirmatory_protocol_v0.1.json",
+  "phase1_execution_rule": "docs/supporting/genetic_phylogatr_phase1_execution_rule_v0.1.json",
+  "purpose": "Freeze the only character-level information permitted before confirmatory synthetic requalification: whether each aligned character is canonical A/C/G/T or noncanonical/missing. Nucleotide identity itself remains masked.",
+  "character_mask": {
+    "canonical_valid": ["A","C","G","T","a","c","g","t"],
+    "all_other_characters": "invalid/noncanonical including gap, N and IUPAC ambiguity codes",
+    "storage": "boolean valid/invalid mask only; nucleotide identity must not be persisted in phase-2 outputs",
+    "sequence_line_handling": "strip leading/trailing ASCII whitespace from each FASTA sequence line, then concatenate wrapped lines in file order",
+    "duplicate_aligned_header": "species inadmissible",
+    "unequal_or_zero_aligned_sequence_length": "species inadmissible"
+  },
+  "edge_admissibility": {
+    "minimum_comparable_fraction": 0.50,
+    "minimum_comparable_columns": "ceil(0.50 * frozen aligned sequence length)",
+    "valid_sequence_pair": "the two sequence masks have canonical-valid overlap in at least the minimum comparable columns",
+    "valid_frozen_edge": "at least one sequence pair across its two frozen endpoint localities is valid",
+    "admissible_species": "every frozen phase-1 edge is valid",
+    "failed_species": "NOT_EVALUABLE_CHARACTER_SUPPORT; do not rewire edges and do not substitute another marker"
+  },
+  "survivor_panel": {
+    "minimum_species": 150,
+    "inherit_phase1_species_split": true,
+    "rebalancing_or_resplitting": false,
+    "graph_and_localities": "unchanged within each surviving species",
+    "new_geometry_fingerprint": "computed over surviving species only",
+    "next_gate": "repeat the full dataset-specific profiled-private Gate-D on the surviving response-blind geometry before nucleotide identities may be opened"
+  },
+  "source_integrity": {
+    "require_phase1_status": "FROZEN_RESPONSE_BLIND_PHASE1_GEOMETRY",
+    "require_same_cite_sha256": true,
+    "require_same_genes_sha256": true,
+    "require_same_occurrence_sha256_per_species": true,
+    "require_same_aligned_header_sha256_per_species": true
+  },
+  "forbidden": [
+    "persisting A/C/G/T identities or any pairwise nucleotide differences",
+    "using divergence, TTF statistic, or empirical transfer outcome in species admissibility",
+    "changing the 50% comparable-site threshold after mask opening",
+    "switching loci for a species that fails the frozen edge-support rule",
+    "rewiring the frozen graph after character-mask opening",
+    "re-splitting or balancing train/evaluation species after character-mask opening"
+  ],
+  "outcome_firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_ttf_statistic_opened": false,
+    "decker_empirical_genetic_outcomes_opened": false
+  }
+}
