@@ -1,0 +1,42 @@
+{
+  "schema": "ttf_genetic_decker_execution_benchmark_authorization_v0.1",
+  "status": "authorize_exactly_one_synthetic_execution_benchmark",
+  "authorization_rule": "Run exactly three synthetic worlds on the frozen Decker genetic pilot geometry to verify end-to-end execution and measure runtime. Preserve all outputs regardless of sign. Do not use these three outcomes to tune graph degree, bandwidth, IBD residualization, split, private-null configuration, or qualification thresholds.",
+  "source_ledger": "benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.1.json",
+  "source_ledger_blob_sha": "eb030a6298a0c578dadb90faf2b81443edcb063b",
+  "geometry_fingerprint_sha256": "3aa9f8da8cf4b923c6b8f64dcd1238fa4247a3302c111b2a79daf14192f53ef7",
+  "geometry_csv_sha256": "3e0846684ad0fe1b459fbcd81a053f59dcbb7b86c1a3b4f718a92a8f61235cca",
+  "runner": "scripts/benchmark_genetic_decker_pipeline.py",
+  "runner_blob_sha": "51f314ee028aa131b831b67b60f7971c3e20c8ba",
+  "authorized_cases": [
+    {
+      "label": "ibd_only",
+      "shared_fraction": 0.0,
+      "residual_amplitude": 0.0,
+      "noise_sd": 0.0,
+      "seed": 2026091301
+    },
+    {
+      "label": "private_A2",
+      "shared_fraction": 0.0,
+      "residual_amplitude": 2.0,
+      "noise_sd": 0.10,
+      "seed": 2026091302
+    },
+    {
+      "label": "shared_A2",
+      "shared_fraction": 1.0,
+      "residual_amplitude": 2.0,
+      "noise_sd": 0.10,
+      "seed": 2026091303
+    }
+  ],
+  "required_invariants": {
+    "ibd_only_statistic_absolute_max": 1e-12,
+    "ibd_only_training_strength_absolute_max": 1e-12,
+    "all_110_eval_species_scores_finite": true,
+    "empirical_genetic_outcomes_must_remain_unopened": true
+  },
+  "qualification_claim_forbidden": true,
+  "post_benchmark_rule": "Runtime may motivate computational optimization only if the mathematical estimand remains exact. Synthetic statistic sign or magnitude from these three worlds may not select or tune an inferential candidate."
+}
