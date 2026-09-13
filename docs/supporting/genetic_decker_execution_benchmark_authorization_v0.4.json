@@ -1,0 +1,41 @@
+{
+  "schema": "ttf_genetic_decker_execution_benchmark_authorization_v0.4",
+  "status": "authorize_exactly_one_v04_exact_fast_execution_benchmark",
+  "authorization_rule": "Run exactly the same three frozen synthetic benchmark worlds on the canonical Decker v0.2 geometry using the exact-fast v0.4 IBD implementation and canonical pure-IBD scale. Preserve outputs regardless of sign. This benchmark may validate exact-zero invariants, finite held-out scoring, and execution time only; it cannot qualify the method or tune any inferential choice.",
+  "geometry_source_ledger": "benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.2.json",
+  "geometry_source_ledger_blob_sha": "180c00e2d79ba58a1068e0c9fe45e41b3c3c04c1",
+  "pilot_rule": "docs/supporting/genetic_decker_pilot_rule_v0.1.json",
+  "pilot_rule_blob_sha": "edcb84fc0cd709133fdb794e4c3a3b48d39d6d87",
+  "exact_fast_rule": "docs/supporting/genetic_ibd_exact_fast_v04_rule.json",
+  "exact_fast_rule_blob_sha": "0582a04c41cbd793bd78cfe1642454400c389946",
+  "exact_scale_addendum": "docs/supporting/genetic_ibd_v04_exact_scale_addendum.json",
+  "exact_scale_addendum_blob_sha": "efadd0ebf71f4a9c7d1631539dce68e4df3fdbef",
+  "runner": "scripts/benchmark_genetic_decker_pipeline_v04.py",
+  "runner_blob_sha": "f3e4dc0197102f25b70e714d5feea4e6110b1407",
+  "genetic_simulate_blob_sha": "792f037efe85e445e3617455cf0ab37d1b793666",
+  "genetic_ibd_blob_sha": "339d15e22cba29054137c4aca3168c97d601d132",
+  "genetic_gate_blob_sha": "2ae019b2dbd9573dbd4795cb4948ac3a034bec34",
+  "geometry_fingerprint_sha256": "a1e0f76abd391d6e8d41347df91c8eda2963f4b998564a0b69e8345ca08a8f0b",
+  "geometry_csv_sha256": "86d3b71e8a1cb61819b9135766eec16f4fac9c2c6b13e7b75b39536d2766ba26",
+  "authorized_cases": [
+    {"label": "ibd_only", "shared_fraction": 0.0, "residual_amplitude": 0.0, "noise_sd": 0.0, "seed": 2026091301},
+    {"label": "private_A2", "shared_fraction": 0.0, "residual_amplitude": 2.0, "noise_sd": 0.10, "seed": 2026091302},
+    {"label": "shared_A2", "shared_fraction": 1.0, "residual_amplitude": 2.0, "noise_sd": 0.10, "seed": 2026091303}
+  ],
+  "required_invariants": {
+    "ibd_only_statistic_absolute_max": 0.0,
+    "ibd_only_training_strength_absolute_max": 0.0,
+    "all_110_eval_species_scores_finite": true,
+    "empirical_genetic_outcomes_must_remain_unopened": true
+  },
+  "forbidden_uses": [
+    "qualification_claim",
+    "graph_or_bandwidth_tuning",
+    "species_exclusion",
+    "private_null_configuration_change",
+    "profile_draw_count_change",
+    "qualification_threshold_change",
+    "candidate_selection_from_private_or_shared_statistic_sign_or_magnitude"
+  ],
+  "post_benchmark_rule": "If all invariants pass, runtime may be used only to choose deterministic execution sharding/batching that is regression-equivalent. Full Gate-D settings remain those already frozen in genetic_decker_pilot_rule_v0.1.json."
+}
