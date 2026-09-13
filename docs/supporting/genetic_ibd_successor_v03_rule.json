@@ -1,0 +1,34 @@
+{
+  "schema": "ttf_genetic_ibd_successor_v03_rule",
+  "status": "frozen_after_v02_ibd_only_invariant_failure_and_authorized_ibd_only_diagnosis_before_v03_performance",
+  "parent_failure": "benchmarks/frozen/genetic_decker_execution_benchmark_v02_failure.json",
+  "diagnosis": "benchmarks/frozen/genetic_ibd_only_numeric_diagnostic_v0.1.json",
+  "scientific_estimand_unchanged": true,
+  "allowed_changes": {
+    "exact_ibd_calibration_construction": "When residual_amplitude=0 and noise_sd=0, construct synthetic genetic edge distance directly as positive IBD strength times the same geographic edge distance passed to the residualizer, divided by the fixed pooled radial scale. Do not apply square/square-root reconstruction.",
+    "exact_monotone_rank_identity_shortcut": "If genetic and geographic edge-distance vectors have exactly identical weak rank order including ties under the existing average-rank definition, return the rank-IBD residual exactly zero because every endpoint-disjoint subset inherits the same weak order.",
+    "geometry_only_precomputation": "Precompute endpoint-disjoint edge-index sets, geographic training ranks, centered geographic ranks, denominators, and held-out geographic rank fractions once on frozen geometry, then reuse them across worlds.",
+    "execution_sharding_or_batching": "Permit deterministic sharding/batching only when exact single-world equivalence is regression-tested to numerical precision."
+  },
+  "forbidden_changes": [
+    "residual_magnitude_threshold_selected_from_diagnostic",
+    "graph_degree_change",
+    "bandwidth_change",
+    "species_or_support_exclusion",
+    "train_eval_split_change",
+    "private_reference_configuration_change",
+    "profile_draw_count_change",
+    "qualification_threshold_change",
+    "empirical_outcome_opening",
+    "private_or_shared_synthetic_performance_based_candidate_selection"
+  ],
+  "required_tests": [
+    "strict_monotone_IBD_exact_zero",
+    "tie_rich_monotone_IBD_exact_zero",
+    "Cuculus_like_near_tie_IBD_exact_zero",
+    "cached_and_uncached_nonmonotone_results_equivalent",
+    "endpoint_leakage_protection_unchanged",
+    "barrier_departure_preserved"
+  ],
+  "required_successor_benchmark": "A newly named v0.3 execution benchmark must preserve the v0.2 geometry, species split, 500 km bandwidth, three benchmark worlds, and exact-zero IBD-only invariants. The failed v0.2 benchmark remains immutable."
+}
