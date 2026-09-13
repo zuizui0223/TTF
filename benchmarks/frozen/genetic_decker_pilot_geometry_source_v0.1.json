@@ -1,0 +1,76 @@
+{
+  "schema": "ttf_genetic_decker_pilot_geometry_source_v0.1",
+  "status": "frozen_before_any_genetic_synthetic_performance_and_before_empirical_genetic_outcomes",
+  "source_repository": "skdecker/PhylogeographicBreaks",
+  "source_commit": "11534ba70fbe3705e667651030edef5b849fa949",
+  "freeze_workflow_run_id": 34749848375,
+  "freeze_workflow_head_sha": "8503f1f580b94dcd3d76315d12e785f4df5291c1",
+  "artifact_id": 10315143405,
+  "artifact_name": "decker-genetic-pilot-geometry-v0.1",
+  "artifact_sha256": "1f874ecc211e833a130c05cd2684dc2875152abe359afe1bc7def839930814e0",
+  "census_workflow_run_id": 34749586629,
+  "census_artifact_id": 10315665061,
+  "census_artifact_sha256": "6e74de5cd475cc94f6bc99df89b8eb4a994e32c4ab54da07c5ac5ea9ff6d62dd",
+  "rule": "docs/supporting/genetic_decker_pilot_rule_v0.1.json",
+  "rule_sha256": "71a1a6b8abc1a34d44b0a98e612a4b60ce4d1c23d1b94929e4026926c2001c90",
+  "geometry_csv_sha256": "3e0846684ad0fe1b459fbcd81a053f59dcbb7b86c1a3b4f718a92a8f61235cca",
+  "geometry_fingerprint_sha256": "3aa9f8da8cf4b923c6b8f64dcd1238fa4247a3302c111b2a79daf14192f53ef7",
+  "census_sha256": "077d604ff6416da09d2645ea704e1c162e73cfbd8756b98dd41c6c73bb1e1271",
+  "species_count": 221,
+  "class_counts": {
+    "Aves": 149,
+    "Chiroptera": 72
+  },
+  "locality_count": 5583,
+  "edge_count": 20987,
+  "locality_count_per_species": {
+    "min": 12,
+    "median": 19.0,
+    "p90": 44.0,
+    "max": 146
+  },
+  "edge_count_per_species": {
+    "min": 14,
+    "median": 37.0,
+    "p90": 212.0,
+    "max": 2004
+  },
+  "species_median_edge_length_km": {
+    "median": 416.23420870647806,
+    "p10": 125.53134420721194,
+    "p90": 1533.1020570530911
+  },
+  "split": {
+    "rule": "class_stratified_species_disjoint_half_split",
+    "master_seed": 20260913,
+    "train_species": 111,
+    "eval_species": 110,
+    "train_class_counts": {
+      "Aves": 75,
+      "Chiroptera": 36
+    },
+    "eval_class_counts": {
+      "Aves": 74,
+      "Chiroptera": 36
+    }
+  },
+  "support_at_inherited_500km_bandwidth": {
+    "eval_species": 110,
+    "species_fraction_within_bandwidth_median": 1.0,
+    "species_fraction_within_bandwidth_p10": 0.8090277777777778,
+    "species_median_nearest_training_edge_km_median": 33.89354436716479,
+    "species_median_nearest_training_edge_km_p90": 165.54062992058186,
+    "species_with_zero_edges_within_bandwidth": 2,
+    "zero_support_eval_species": [
+      "Rhinolophus fumigatus",
+      "Xanthomixis zosterops"
+    ],
+    "post_hoc_exclusion_forbidden": true
+  },
+  "outcome_firewall": {
+    "empirical_pairwise_genetic_distances_opened": false,
+    "sequence_characters_used_for_selection": false,
+    "monmonier_results_opened": false
+  },
+  "claim_boundary": "This ledger freezes a response-blind development geometry only. It does not qualify genetic TTF and does not authorize empirical genetic interpretation."
+}
