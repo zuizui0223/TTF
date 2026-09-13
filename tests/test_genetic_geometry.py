@@ -2,6 +2,7 @@ import numpy as np
 
 from ttf.genetic_geometry import (
     endpoint_disjoint_training_counts,
+    prepare_density_scaled_genetic_geometry,
     prepare_genetic_sampling_geometry,
 )
 
@@ -22,6 +23,7 @@ def test_prepare_genetic_geometry_collapses_only_exact_duplicate_localities():
     geometry = prepare_genetic_sampling_geometry(coordinates, k=2)
     assert geometry.n_records == 8
     assert geometry.n_localities == 7
+    assert geometry.graph_k == 2
     assert sorted(geometry.records_per_locality.tolist()) == [1, 1, 1, 1, 1, 1, 2]
     assert geometry.record_to_locality[0] == geometry.record_to_locality[1]
     assert geometry.record_to_locality[2] != geometry.record_to_locality[0]
@@ -52,3 +54,16 @@ def test_genetic_geometry_reports_crossfit_information_before_outcomes_exist():
     assert geometry.n_localities == 16
     assert geometry.n_edges > geometry.n_localities
     assert geometry.min_endpoint_disjoint_training_edges >= 3
+
+
+def test_density_scaled_genetic_geometry_uses_unique_locality_count_only():
+    x = np.arange(20.0)
+    coordinates = np.column_stack([x, np.sin(x)])
+    coordinates = np.vstack([coordinates, coordinates[:5]])
+    geometry = prepare_density_scaled_genetic_geometry(
+        coordinates,
+        neighbor_fraction=0.15,
+    )
+    assert geometry.n_records == 25
+    assert geometry.n_localities == 20
+    assert geometry.graph_k == 3  # floor(0.15 * 20 + 0.5)
