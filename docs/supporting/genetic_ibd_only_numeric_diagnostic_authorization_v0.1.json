@@ -1,0 +1,26 @@
+{
+  "schema": "ttf_genetic_ibd_only_numeric_diagnostic_authorization_v0.1",
+  "status": "authorize_exactly_one_ibd_only_numeric_diagnostic",
+  "purpose": "Diagnose why the frozen v0.2 Decker benchmark failed the exact-zero IBD-only training-strength invariant without inspecting any private/shared synthetic performance or empirical genetic outcome.",
+  "parent_failure": "benchmarks/frozen/genetic_decker_execution_benchmark_v02_failure.json",
+  "geometry_source": "benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.2.json",
+  "geometry_fingerprint_sha256": "a1e0f76abd391d6e8d41347df91c8eda2963f4b998564a0b69e8345ca08a8f0b",
+  "authorized_world": {"shared_fraction": 0.0, "residual_amplitude": 0.0, "noise_sd": 0.0, "ibd_strength": 1.0, "seed": 2026091301},
+  "authorized_diagnostics": [
+    "global_weak_rank_order_identity_genetic_vs_geographic",
+    "max_abs_raw_crossfit_residual_per_species",
+    "raw_residual_range_per_species",
+    "unique_post_rank_turnover_count_per_species",
+    "training_strength_before_any_successor_fix"
+  ],
+  "forbidden": [
+    "private_A2_statistic",
+    "shared_A2_statistic",
+    "private_or_shared_pvalues",
+    "empirical_sequence_characters",
+    "empirical_pairwise_genetic_distances",
+    "Monmonier_results",
+    "threshold_grid_search"
+  ],
+  "successor_constraint": "A numerical successor may use only an algebraically exact rank-order identity shortcut or an implementation-equivalent computational optimization. No residual-magnitude threshold may be tuned from this diagnostic."
+}
