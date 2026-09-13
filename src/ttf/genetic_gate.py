@@ -14,7 +14,12 @@ from .chunked_transfer import (
 )
 from .core import SpeciesEdges, split_species
 from .genetic_geometry import GeneticSamplingGeometry
-from .genetic_ibd import CrossfitIBDResult, crossfit_ibd_residuals
+from .genetic_ibd import (
+    CrossfitIBDDesign,
+    CrossfitIBDResult,
+    crossfit_ibd_residuals_prepared,
+    prepare_crossfit_ibd_design,
+)
 from .genetic_simulate import GeneticSyntheticWorld, simulate_genetic_distance_world
 from .geometry_control import length_orthogonalized_turnover
 from .private_strength import (
@@ -42,6 +47,7 @@ class GeneticTTFDesign:
 
     geometries: Mapping[str, GeneticSamplingGeometry]
     template_edges: Mapping[str, SpeciesEdges]
+    ibd_designs: Mapping[str, CrossfitIBDDesign]
     train_species: tuple[str, ...]
     eval_species: tuple[str, ...]
     strength_indices: Mapping[str, np.ndarray]
@@ -100,7 +106,7 @@ def prepare_genetic_ttf_design(
     min_training_edges: int = 5,
     strength_neighbours: int = 4,
 ) -> GeneticTTFDesign:
-    """Freeze the response-blind genetic transfer operator and nuisance design."""
+    """Freeze genetic transfer, endpoint-safe IBD, and nuisance geometry."""
     if not geometries:
         raise ValueError("at least one genetic geometry is required")
     if min_training_edges < 3:
@@ -139,6 +145,14 @@ def prepare_genetic_ttf_design(
         name: _template_species_edges(name, geometries[name])
         for name in train + evaluation
     }
+    ibd_designs = {
+        name: prepare_crossfit_ibd_design(
+            templates[name].length,
+            templates[name].nodes,
+            min_training_edges=int(min_training_edges),
+        )
+        for name in train + evaluation
+    }
     strength_index = {
         name: edge_midpoint_neighbor_indices(
             templates[name].midpoint,
@@ -157,6 +171,7 @@ def prepare_genetic_ttf_design(
     return GeneticTTFDesign(
         geometries={name: geometries[name] for name in labels},
         template_edges=templates,
+        ibd_designs=ibd_designs,
         train_species=train,
         eval_species=evaluation,
         strength_indices=strength_index,
@@ -172,7 +187,7 @@ def score_genetic_world(
     edge_chunk_size: int = 32,
     train_chunk_size: int = 4096,
 ) -> GeneticWorldScore:
-    """Apply endpoint-safe IBD residualization then current TTF geometry control."""
+    """Apply cached endpoint-safe IBD residualization then core TTF v0.11."""
     used = design.train_species + design.eval_species
     missing = set(used) - set(world.genetic_distance)
     if missing:
@@ -184,11 +199,9 @@ def score_genetic_world(
 
     for name in used:
         edges = design.template_edges[name]
-        result = crossfit_ibd_residuals(
+        result = crossfit_ibd_residuals_prepared(
             world.genetic_distance[name],
-            edges.length,
-            edges.nodes,
-            min_training_edges=design.min_training_edges,
+            design.ibd_designs[name],
         )
         ibd[name] = result
         if name in design.train_species:
