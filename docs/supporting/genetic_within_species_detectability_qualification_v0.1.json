@@ -1,0 +1,66 @@
+{
+  "schema": "ttf_genetic_within_species_detectability_qualification_v0.1",
+  "status": "frozen_before_any_self_detectability_synthetic_result",
+  "parent_protocol": "docs/supporting/genetic_within_species_detectability_protocol_v0.1.json",
+  "purpose": "Fix an independent Monte Carlo calibration and power qualification for the endpoint-safe same-species self-field before any empirical genetic outcome or self-detectability synthetic result is inspected.",
+  "geometry": {
+    "source_fingerprint_sha256": "a1e0f76abd391d6e8d41347df91c8eda2963f4b998564a0b69e8345ca08a8f0b",
+    "evaluated_species": "the frozen 110 primary held-out species",
+    "bandwidth_km": 500.0,
+    "segment_points": 5,
+    "prior_strength": 0.25,
+    "prior_mean": 0.5,
+    "min_endpoint_disjoint_training_edges": 5
+  },
+  "synthetic_worlds": {
+    "master_seed": 20260913,
+    "independent_null_reference_worlds": 1000,
+    "null_evaluation_worlds": 500,
+    "private_A2_evaluation_worlds": 500,
+    "reference_world": {"shared_fraction": 0.0, "residual_amplitude": 0.0, "noise_sd": 0.10},
+    "null_evaluation_world": {"shared_fraction": 0.0, "residual_amplitude": 0.0, "noise_sd": 0.10},
+    "private_A2_evaluation_world": {"shared_fraction": 0.0, "residual_amplitude": 2.0, "noise_sd": 0.10},
+    "reference_seed_rule": "seed_for(20260913, genetic_self_reference, absolute_replicate_index)",
+    "null_seed_rule": "seed_for(20260913, genetic_self_null_eval, absolute_replicate_index)",
+    "private_A2_seed_rule": "seed_for(20260913, genetic_self_private_A2_eval, absolute_replicate_index)",
+    "ibd_strength": 1.0,
+    "transition_width": 0.20,
+    "noise_dimensions": 2
+  },
+  "inference": {
+    "panel_statistic": "W = arithmetic mean of finite held-out species self-field Spearman scores W_s",
+    "p_value": "upper Monte Carlo p = (1 + number of independent reference W values >= observed W) / (1000 + 1)",
+    "alpha": 0.05,
+    "same_reference_used_for_both_evaluation_cells": true,
+    "reference_is_independent_of_all_1000_evaluation_worlds": true
+  },
+  "qualification": {
+    "type1_cell": "500 independent null-evaluation worlds",
+    "power_cell": "500 independent private-A2-evaluation worlds",
+    "type1_pass": "two-sided Wilson 95% upper bound of p<=0.05 rejection rate <= 0.10",
+    "power_pass": "two-sided Wilson 95% lower bound of p<=0.05 rejection rate >= 0.80",
+    "overall_pass": "both type1_pass and power_pass",
+    "failure_interpretation": "SELF_DETECTABILITY_NOT_QUALIFIED; empirical cross-species non-transfer cannot be interpreted as lineage-conditioned"
+  },
+  "execution_only": {
+    "world_batch_width": 64,
+    "reference_shard_size": 250,
+    "evaluation_shard_size": 250,
+    "sharding_semantics": "absolute replicate index only; execution partition cannot change world identity"
+  },
+  "forbidden_after_freeze": [
+    "changing self-field bandwidth or endpoint exclusion",
+    "changing reference/evaluation world counts or seeds",
+    "changing A2 positive amplitude",
+    "changing alpha or Wilson gates",
+    "using private-A2 outcomes to define the null threshold",
+    "opening empirical genetic outcomes before qualification completes"
+  ],
+  "outcome_firewall": {
+    "empirical_pairwise_genetic_distances_opened": false,
+    "sequence_characters_opened_for_inference": false,
+    "alignment_divergence_summaries_opened": false,
+    "monmonier_results_opened": false,
+    "break_presence_absence_opened": false
+  }
+}
