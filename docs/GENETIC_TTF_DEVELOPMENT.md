@@ -33,11 +33,15 @@ The Decker data are a **development/pilot source**, not the preferred confirmato
 
 Sequence count is not an information criterion for TTF. Multiple sequences may share one coordinate, so records are first collapsed by **exact coordinate pair**. Near-but-nonidentical points are not merged unless a separate radius rule is frozen before genetic outcomes are opened.
 
-The main graph remains the core TTF species-local kNN graph. Development default: `k = 4`.
+The genetic main graph now inherits the **qualified core TTF v0.11 density-scaled architecture**, rather than the historical fixed `k=4` development default. After exact locality collapse,
 
-`src/ttf/genetic_geometry.py` freezes, without genetic outcomes, the original record count, exact unique localities, records per locality, kNN edge set, and for every edge the number of other edges sharing neither endpoint.
+`k_s = min(n_s - 1, max(2, floor(0.15 * n_s + 0.5)))`.
 
-A coarse development pre-screen of **at least 12 exact unique localities** may be used to avoid obviously uninformative panels. It is not an empirical qualification criterion. Final EVALUABLE / NOT EVALUABLE status must be determined from the actual frozen kNN geometry by response-blind semi-synthetic calibration.
+This rule is determined by locality geometry only. It follows the v0.10 mechanism diagnosis and v0.11 fresh confirmatory PASS, where fixed small `k` became too local as sampling density increased while `k/n ~= 0.15` preserved transition observability.
+
+`src/ttf/genetic_geometry.py` freezes, without genetic outcomes, the original record count, exact unique localities, records per locality, selected density-scaled `k`, kNN edge set, and for every edge the number of other edges sharing neither endpoint.
+
+A coarse development pre-screen of **at least 12 exact unique localities** may be used to avoid obviously uninformative panels. It is not an empirical qualification criterion. Final EVALUABLE / NOT EVALUABLE status must be determined from the actual frozen density-scaled geometry by response-blind semi-synthetic calibration.
 
 ## 4. Biological IBD residualization
 
@@ -49,21 +53,31 @@ After every edge receives an out-of-pair residual, residuals are ranked within s
 
 The construction is invariant to strictly increasing rescalings of genetic or geographic distance and removes a noiseless strictly monotone IBD relation exactly.
 
-This is a **biological estimand layer**, not the historical v0.3 geometry repair. The failed v0.3 fresh-external result remains failed and must not be reused as a qualification claim.
+This is a **biological estimand layer**, not a geometry repair. Core TTF geometry safeguards are applied only after the biological IBD expectation has been removed.
 
 ## 5. Relation to the current TTF inference lineage
 
-Historical v0.3 controlled training-side edge-length rank but failed fresh external Type-I qualification on strong private spatial structure. v0.4 controlled Type I but lost too much power. The later profiled-private lineage reached fresh external Type-I validity, but deployment adequacy remained geometry specific: the 250-species RGFCA reserve passed Type I and failed the prespecified 80% power floor.
+The relevant core lineage is now v0.11, not v0.3 or v0.8.
 
-Therefore the genetic interface must not inherit qualification from any earlier panel. Its sequence is:
+- v0.3/v0.4 remain immutable development failures.
+- v0.8 established that profiled-private inference can control private-structure Type I on fresh external panels, but deployment power remained geometry specific.
+- v0.10 identified the edge-scale mechanism: fixed small `k` becomes increasingly local as record density rises.
+- **v0.11 passed** a fresh 250-species x 100-record confirmatory qualification using the single frozen density-scaled choice `k=15`, i.e. `k/n=0.15`, together with training-only edge-length orthogonalization and profiled-private inference.
+- v0.12 stopped the flower-colour empirical route at an observation-support gate; that measurement failure is not a failure of the v0.11 core method.
 
-1. freeze genetic sampling geometry;
-2. construct a genetic-specific semi-synthetic world including monotone IBD plus private and shared residual spatial transitions;
-3. validate the cross-fit IBD response construction;
-4. run the current profiled-private TTF validity machinery on the frozen genetic geometry;
-5. require both Type-I control and prespecified positive-control power before any empirical genetic sharedness result is interpreted.
+The genetic interface therefore inherits the *architecture* of v0.11, but not its qualification. Its sequence is:
 
-Failure at step 5 means **NOT EVALUABLE under this design**, not absence of shared phylogeographic structure.
+1. freeze exact-locality sampling geometry and density-scaled graphs;
+2. require sufficient endpoint-disjoint edges for leave-two-localities-out IBD fitting;
+3. generate genetic-specific semi-synthetic worlds with monotone IBD plus private/shared residual differentiation;
+4. construct post-IBD residual turnover;
+5. on training species only, apply the inherited edge-length-rank orthogonalization;
+6. use the inherited training-only private-strength profile and profiled-private null;
+7. require dataset-specific Type-I control **and** positive-control power before any observed genetic transfer statistic is interpreted.
+
+`src/ttf/genetic_simulate.py` implements the synthetic genetic worlds from latent locality states, so pairwise distances share endpoints rather than being independent edge draws. `src/ttf/genetic_gate.py` implements the combined post-IBD v0.11 scoring and private-reference machinery.
+
+Failure at step 7 means **NOT EVALUABLE under this design**, not absence of shared phylogeographic structure.
 
 ## 6. Required synthetic arms before outcome opening
 
@@ -76,7 +90,9 @@ The genetic Gate-D surface must include at least:
 - **locality duplication:** multiple sequence records at the same locality do not inflate spatial information;
 - **support mismatch:** inadequate train/evaluation geographic support yields NOT EVALUABLE rather than a biological negative.
 
-Qualification thresholds must be frozen before observed genetic distances are opened.
+The initial synthetic generator represents each locality by a latent Euclidean genetic state. Its geographic dimensions produce exact monotone IBD when residual amplitude and noise are zero; a separate transition dimension creates shared/private residual differentiation; locality-level noise preserves pairwise endpoint dependence. Thus the IBD-only arm can test the whole response-construction pipeline rather than merely unit-testing a regression helper.
+
+Qualification thresholds must be frozen before observed genetic distances are opened. The intended high-precision convention is the same as core TTF: private-null Wilson 95% upper bounds must remain below the frozen Type-I ceiling, and the shared moderate-signal Wilson 95% lower bound must exceed the frozen power floor.
 
 ## 7. Empirical hierarchy after qualification
 
