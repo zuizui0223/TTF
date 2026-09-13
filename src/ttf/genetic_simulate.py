@@ -10,13 +10,7 @@ from .genetic_geometry import GeneticSamplingGeometry
 
 @dataclass(frozen=True)
 class GeneticSyntheticWorld:
-    """Synthetic pairwise genetic distances on frozen locality graphs.
-
-    Genetic distances combine an exact geographic-distance IBD component with
-    endpoint-dependent private/shared transition and locality-noise components.
-    The construction is symmetric and non-negative, and the non-IBD components
-    share endpoint states rather than being independent edge draws.
-    """
+    """Synthetic pairwise genetic distances on frozen locality graphs."""
 
     genetic_distance: Mapping[str, np.ndarray]
     residual_edge_signal: Mapping[str, np.ndarray]
@@ -69,24 +63,17 @@ def simulate_genetic_distance_world(
 ) -> GeneticSyntheticWorld:
     """Generate outcome-blind calibration worlds for the genetic TTF interface.
 
-    Each edge distance is the Euclidean norm of three orthogonal components:
+    Nontrivial worlds combine an IBD component with orthogonal endpoint
+    transition and locality-noise components. The exactly noise-free,
+    zero-residual-amplitude arm is special only in numerical representation:
+    because the nuisance estimand is rank based, every strictly positive scalar
+    multiple of geographic distance is mathematically equivalent. We therefore
+    use canonical positive scale one and copy geographic edge distance exactly
+    whenever ``ibd_strength > 0``. This preserves weak ordering bit-for-bit and
+    avoids floating rescaling of near-tied edges. With zero IBD strength the pure
+    arm remains an exactly zero distance vector.
 
-    1. an ordinary IBD component proportional to the *same* geographic edge
-       length supplied to the residualizer;
-    2. a difference in one private/shared transition state at the endpoints;
-    3. differences in optional independent locality-noise states.
-
-    The exactly noise-free, zero-residual-amplitude IBD-only arm is evaluated
-    directly as ``positive_scale * geographic_distance``.  This is algebraically
-    identical to the IBD component of the Euclidean construction but avoids a
-    square/square-root floating round trip that can reverse the weak ordering of
-    near-tied edges on real geometries.  No tolerance or outcome-derived cutoff
-    is used.
-
-    Shared residual species use one common hyperplane in the pooled standardized
-    geographic frame. Private species use independent hyperplanes whose offsets
-    pass through the median projection of that species. No empirical genetic
-    value enters the simulator.
+    No empirical genetic value enters the simulator.
     """
     if not 0.0 <= float(shared_fraction) <= 1.0:
         raise ValueError("shared_fraction must lie in [0, 1]")
@@ -155,14 +142,17 @@ def simulate_genetic_distance_world(
             coords[nodes[:, 0]] - coords[nodes[:, 1]],
             axis=1,
         )
-        ibd_component = strengths[name] * geographic / radial_scale
         boundary_delta = float(residual_amplitude) * (
             boundary_state[nodes[:, 0]] - boundary_state[nodes[:, 1]]
         )
 
         if exact_ibd_only:
-            genetic[name] = ibd_component.copy()
+            if strengths[name] > 0.0:
+                genetic[name] = geographic.copy()
+            else:
+                genetic[name] = np.zeros_like(geographic)
         else:
+            ibd_component = strengths[name] * geographic / radial_scale
             noise = rng.normal(
                 0.0,
                 float(noise_sd),
