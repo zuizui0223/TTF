@@ -9,6 +9,9 @@ on:
       - ".github/workflows/genetic-interface-smoke.yml"
       - "src/ttf/genetic_*.py"
       - "src/ttf/phylogatr_*.py"
+      - "scripts/freeze_phylogatr_confirmatory_phase1.py"
+      - "docs/supporting/genetic_phylogatr_*.json"
+      - "benchmarks/frozen/genetic_decker_species_exclusion_v0.1.json"
       - "tests/test_genetic_*.py"
       - "tests/test_phylogatr_*.py"
 
