@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Mapping
 
 import numpy as np
 
@@ -12,11 +12,10 @@ from .genetic_geometry import GeneticSamplingGeometry
 class GeneticSyntheticWorld:
     """Synthetic pairwise genetic distances on frozen locality graphs.
 
-    Genetic distances are generated from a latent Euclidean state so they remain
-    symmetric, non-negative, and endpoint-dependent rather than independent edge
-    draws.  The base latent coordinates reproduce strict monotone IBD when the
-    residual amplitude and noise are zero.  A separate latent boundary dimension
-    adds private or shared place-specific differentiation.
+    Genetic distances combine an exact geographic-distance IBD component with
+    endpoint-dependent private/shared transition and locality-noise components.
+    The construction is symmetric and non-negative, and the non-IBD components
+    share endpoint states rather than being independent edge draws.
     """
 
     genetic_distance: Mapping[str, np.ndarray]
@@ -70,21 +69,22 @@ def simulate_genetic_distance_world(
 ) -> GeneticSyntheticWorld:
     """Generate outcome-blind calibration worlds for the genetic TTF interface.
 
-    For locality ``i`` in species ``s`` the latent genetic state contains three
-    independent pieces:
+    Each edge distance is the Euclidean norm of three orthogonal components:
 
-    1. a scaled copy of the observed geographic coordinate (ordinary IBD);
-    2. one private/shared transition coordinate;
-    3. optional independent locality noise coordinates.
+    1. an ordinary IBD component proportional to the *same* geographic edge
+       length supplied to the residualizer;
+    2. a difference in one private/shared transition state at the endpoints;
+    3. differences in optional independent locality-noise states.
 
-    Genetic edge distance is Euclidean distance between the latent states at the
-    two edge endpoints.  Consequently, when ``residual_amplitude=noise_sd=0``,
-    genetic distance is exactly a positive scalar multiple of geographic edge
-    length and the endpoint-safe rank IBD residualizer should remove it exactly.
+    Computing the IBD component directly from geographic edge length avoids
+    floating-point tie breaking from subtracting and rescaling coordinates a
+    second time. Therefore ``residual_amplitude=noise_sd=0`` is numerically an
+    exact positive scalar multiple of the geographic distance vector, including
+    geometries with repeated equal edge lengths.
 
     Shared residual species use one common hyperplane in the pooled standardized
-    geographic frame.  Private species use independent hyperplanes whose offsets
-    pass through the median projection of that species.  No empirical genetic
+    geographic frame. Private species use independent hyperplanes whose offsets
+    pass through the median projection of that species. No empirical genetic
     value enters the simulator.
     """
     if not 0.0 <= float(shared_fraction) <= 1.0:
@@ -105,10 +105,6 @@ def simulate_genetic_distance_world(
 
     strengths = _ibd_strength_map(labels, ibd_strength)
     pooled = np.vstack([geometries[name].coordinates for name in labels])
-
-    # A single scalar scale preserves Euclidean geographic-distance ordering
-    # exactly in the IBD-only arm.  Per-axis standardization is used separately
-    # only to define the orientation of synthetic transition fields.
     center = np.median(pooled, axis=0)
     radial_scale = float(np.sqrt(np.sum(np.var(pooled, axis=0))))
     if radial_scale <= np.sqrt(np.finfo(float).eps):
@@ -151,21 +147,28 @@ def simulate_genetic_distance_world(
             offset = float(np.median(zz @ normal))
 
         boundary_state = np.tanh(((zz @ normal) - offset) / float(transition_width))
-        base = strengths[name] * (coords - center) / radial_scale
-        boundary = (float(residual_amplitude) * boundary_state)[:, None]
         noise = rng.normal(
             0.0,
             float(noise_sd),
             size=(len(coords), int(noise_dimensions)),
         )
-        latent = np.hstack([base, boundary, noise])
 
         nodes = geometry.edge_nodes
-        delta = latent[nodes[:, 0]] - latent[nodes[:, 1]]
-        genetic[name] = np.sqrt(np.sum(delta * delta, axis=1))
-        residual_truth[name] = float(residual_amplitude) * np.abs(
+        geographic = np.linalg.norm(
+            coords[nodes[:, 0]] - coords[nodes[:, 1]],
+            axis=1,
+        )
+        ibd_component = strengths[name] * geographic / radial_scale
+        boundary_delta = float(residual_amplitude) * (
             boundary_state[nodes[:, 0]] - boundary_state[nodes[:, 1]]
         )
+        noise_delta = noise[nodes[:, 0]] - noise[nodes[:, 1]]
+        genetic[name] = np.sqrt(
+            ibd_component * ibd_component
+            + boundary_delta * boundary_delta
+            + np.sum(noise_delta * noise_delta, axis=1)
+        )
+        residual_truth[name] = np.abs(boundary_delta)
         normals[name] = normal.copy()
         offsets[name] = float(offset)
 
