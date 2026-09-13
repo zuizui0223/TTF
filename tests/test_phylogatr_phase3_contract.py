@@ -146,6 +146,43 @@ def test_phase3_authorization_and_runtime_contract_pass(tmp_path: Path) -> None:
     assert context.master_seed == expected_seed
 
 
+def test_phase3_shard_plan_exactly_covers_frozen_replicates(tmp_path: Path) -> None:
+    _, _, authorization = _authorize(tmp_path)
+    output = tmp_path / "plan.json"
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "scripts/plan_phylogatr_phase3_shards.py",
+            "--phase3-rule",
+            str(RULE),
+            "--authorization",
+            str(authorization),
+            "--output",
+            str(output),
+        ],
+        check=False,
+        text=True,
+        capture_output=True,
+    )
+    assert completed.returncode == 0, completed.stderr
+    plan = json.loads(output.read_text())
+    assert plan["reference_job_count"] == 64
+    assert plan["observed_job_count"] == 10
+
+    by_config: dict[str, list[int]] = {}
+    for job in plan["reference_jobs"]:
+        by_config.setdefault(job["configuration"], []).extend(range(job["start"], job["stop"]))
+    assert len(by_config) == 8
+    assert all(indices == list(range(1999)) for indices in by_config.values())
+
+    by_cell: dict[tuple[float, float], list[int]] = {}
+    for job in plan["observed_jobs"]:
+        key = (job["shared_fraction"], job["residual_amplitude"])
+        by_cell.setdefault(key, []).extend(range(job["start"], job["stop"]))
+    assert len(by_cell) == 5
+    assert all(indices == list(range(500)) for indices in by_cell.values())
+
+
 def test_phase3_runtime_rejects_geometry_drift_after_authorization(tmp_path: Path) -> None:
     geometry_csv, manifest_path, authorization = _authorize(tmp_path)
     geometry_csv.write_text(geometry_csv.read_text() + "\n")
