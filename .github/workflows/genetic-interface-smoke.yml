@@ -1,0 +1,28 @@
+name: genetic interface smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "method/genetic-ibd-crossfit"
+    paths:
+      - ".github/workflows/genetic-interface-smoke.yml"
+      - "src/ttf/genetic_*.py"
+      - "tests/test_genetic_*.py"
+
+jobs:
+  pytest-genetic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[test]"
+      - run: >-
+          pytest -q
+          tests/test_genetic_geometry.py
+          tests/test_genetic_ibd.py
+          tests/test_genetic_simulate.py
+          tests/test_genetic_gate.py
