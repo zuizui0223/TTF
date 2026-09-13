@@ -1,0 +1,104 @@
+{
+  "schema": "ttfc_conditional_null_centering_rule_v0.1",
+  "status": "frozen_before_conditional_null_centering_outcomes",
+  "purpose": "Diagnose whether the frozen Q5.1 TTF-C statistic has a positive geometry-conditioned expectation under independent private relation phases, after phase randomness is averaged out.",
+  "not_a_candidate_family": true,
+  "upstream_history": {
+    "q5_result": "results/ttfm_q5_geometry_stress_v0.1.json",
+    "q5_1_result": "results/ttfm_q5_1_coupling_geometry_v0.1.json",
+    "q5_2_result": "results/ttfm_q5_2_geometry_transport_development_v0.1.json",
+    "support_overlap_result": "results/ttfc_support_overlap_diagnostic_v0.1.json",
+    "training_leverage_result": "results/ttfc_training_leverage_diagnostic_v0.1.json",
+    "history_immutable": true
+  },
+  "fixed_estimator": {
+    "estimand": "TTF-C only",
+    "definition": "exact frozen Q5.1 TTF-C: training coupling turnover length-orthogonalized within system; held-out coupling turnover raw; held-out score ordinary Spearman",
+    "graph_fraction": 0.15,
+    "bandwidth": 0.2,
+    "prior_strength": 0.25,
+    "prior_mean": 0.0,
+    "segment_points": 5,
+    "transition_width": 0.2,
+    "relation_amplitude": 2.0,
+    "eval_response_residualization": false,
+    "field_transport": false,
+    "null_recalibration": false
+  },
+  "diagnostic_worlds": {
+    "geometry_master_seed": 20260922,
+    "phase_master_seed": 920260922,
+    "geometry_worlds_per_cell": 100,
+    "private_phase_draws_per_geometry": 128,
+    "batch_size": 5,
+    "aggregate_bootstrap_resamples": 1999,
+    "aggregate_bootstrap_seed": 922260922
+  },
+  "cells": [
+    {
+      "id": "DCN_HOMOGENEOUS",
+      "geometry_mode": "identical_uniform60",
+      "role": "negative_control",
+      "description": "All 40 systems share the same 60-point evenly spaced circular geometry up to one world-level global rotation; no clustering, truncation, or missingness heterogeneity."
+    },
+    {
+      "id": "DCN_MATCHED",
+      "geometry_mode": "q5_matched",
+      "role": "primary",
+      "description": "Fresh Q5 matched heterogeneous geometry; responses from the simulator are discarded and replaced by independent private phase redraws."
+    },
+    {
+      "id": "DCN_SHIFTED",
+      "geometry_mode": "q5_shifted",
+      "role": "secondary",
+      "description": "Fresh Q5 shifted train/eval geometry; simulator responses are discarded and replaced by independent private phase redraws."
+    }
+  ],
+  "phase_redraw_contract": {
+    "private_relation_only": true,
+    "system_phases_independent": true,
+    "phase_distribution": "Uniform(0, 2*pi)",
+    "phase_draws_independent_of_geometry_seed": true,
+    "observed_simulator_phases_used": false,
+    "observed_simulator_responses_used": false,
+    "same_fixed_geometry_reused_across_all_phase_draws": true,
+    "scoring_vectorized_but_mathematically_identical_to_one_Q5_1_score_per_phase_draw": true
+  },
+  "predeclared_mechanism_tests": {
+    "matched_conditional_null_bias": "Supported iff the lower 95% bootstrap bound of the across-geometry mean of each geometry world's phase-averaged Q5.1 TTF-C score is > 0 on DCN_MATCHED.",
+    "shifted_conditional_null_bias": "Same criterion on DCN_SHIFTED; reported separately.",
+    "matched_heterogeneity_amplification": "Supported iff the lower 95% bootstrap bound of mean(DCN_MATCHED) - mean(DCN_HOMOGENEOUS) is > 0 using independent geometry-world bootstrap resampling.",
+    "shifted_heterogeneity_amplification": "Supported iff the lower 95% bootstrap bound of mean(DCN_SHIFTED) - mean(DCN_HOMOGENEOUS) is > 0.",
+    "primary_geometry_conditioned_null_bias": "Supported iff matched_conditional_null_bias AND matched_heterogeneity_amplification are both supported. This is a mechanism diagnosis only, not a qualification or repair gate."
+  },
+  "required_descriptives": {
+    "per_cell": [
+      "mean conditional-null score",
+      "mean within-geometry phase SD",
+      "mean Monte Carlo SE of each geometry-conditioned mean",
+      "mean fraction of phase redraw scores above zero",
+      "mean phase-draw 5%, 50%, and 95% quantiles"
+    ],
+    "profile_differences": [
+      "matched minus homogeneous conditional-null mean",
+      "shifted minus homogeneous conditional-null mean",
+      "shifted minus matched conditional-null mean"
+    ]
+  },
+  "terminal_rule": {
+    "candidate_selected": null,
+    "formal_pass_fail": null,
+    "if_supported": "Freeze only the geometry-conditioned null-bias diagnosis. Any correction must be defined later in a newly named prospective development family with fresh worlds; these geometry worlds and phase redraws may not be used to tune it.",
+    "if_not_supported": "Freeze the negative diagnosis and do not tune phase-centering, geometry-conditioned offsets, or private-null expectation corrections on these worlds."
+  },
+  "claim_firewall": {
+    "diagnostic_only": true,
+    "no_repair_selection": true,
+    "no_same_world_successor_tuning": true,
+    "no_ttf_c_qualification_claim": true,
+    "no_empirical_data": true,
+    "no_flower_colour_outcome": true,
+    "no_causal_ecological_claim": true,
+    "q5_q5_1_q5_2_support_overlap_training_leverage_history_immutable": true
+  }
+}

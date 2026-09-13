@@ -1,0 +1,195 @@
+{
+  "candidate_selected": null,
+  "cell_summaries": {
+    "DCN_HOMOGENEOUS": {
+      "endpoints": {
+        "conditional_mean_C": {
+          "estimate": 0.0009864135632134798,
+          "high95": 0.002119618523528317,
+          "low95": -0.00010036189700986421
+        },
+        "conditional_mean_mc_se_C": {
+          "estimate": 0.005731531744816867,
+          "high95": 0.005802705842423466,
+          "low95": 0.005655381346869071
+        },
+        "phase_fraction_positive_C": {
+          "estimate": 0.500859375,
+          "high95": 0.50961328125,
+          "low95": 0.4921875
+        },
+        "phase_q05_C": {
+          "estimate": -0.10282953496736774,
+          "high95": -0.10052437614633836,
+          "low95": -0.10503605748534127
+        },
+        "phase_q50_C": {
+          "estimate": 0.00026414608175440434,
+          "high95": 0.0016278005262042796,
+          "low95": -0.0009928815984678856
+        },
+        "phase_q95_C": {
+          "estimate": 0.10542132016036138,
+          "high95": 0.10764814428866226,
+          "low95": 0.10324995674174028
+        },
+        "within_geometry_phase_sd_C": {
+          "estimate": 0.06484487941353553,
+          "high95": 0.06569497925986474,
+          "low95": 0.06401422169122405
+        }
+      },
+      "geometry_mode": "identical_uniform60",
+      "n_geometry_worlds": 100
+    },
+    "DCN_MATCHED": {
+      "endpoints": {
+        "conditional_mean_C": {
+          "estimate": 0.023497678497471416,
+          "high95": 0.02497216979051681,
+          "low95": 0.02200208050432647
+        },
+        "conditional_mean_mc_se_C": {
+          "estimate": 0.005092068395556094,
+          "high95": 0.005164095727116109,
+          "low95": 0.0050213755118756285
+        },
+        "phase_fraction_positive_C": {
+          "estimate": 0.655078125,
+          "high95": 0.66562890625,
+          "low95": 0.644375
+        },
+        "phase_q05_C": {
+          "estimate": -0.06965713708425803,
+          "high95": -0.06717792518316267,
+          "low95": -0.07204338547469648
+        },
+        "phase_q50_C": {
+          "estimate": 0.023332669347447436,
+          "high95": 0.02516439312617103,
+          "low95": 0.021470490528000347
+        },
+        "phase_q95_C": {
+          "estimate": 0.1157388099335362,
+          "high95": 0.11812990976788967,
+          "low95": 0.11340154432862441
+        },
+        "within_geometry_phase_sd_C": {
+          "estimate": 0.05761017748421467,
+          "high95": 0.0583854853396186,
+          "low95": 0.056838917351014054
+        }
+      },
+      "geometry_mode": "q5_matched",
+      "n_geometry_worlds": 100
+    },
+    "DCN_SHIFTED": {
+      "endpoints": {
+        "conditional_mean_C": {
+          "estimate": 0.023985092890291403,
+          "high95": 0.025609554711718694,
+          "low95": 0.022459456811252845
+        },
+        "conditional_mean_mc_se_C": {
+          "estimate": 0.005412640783877654,
+          "high95": 0.005504736971527289,
+          "low95": 0.0053242244098301115
+        },
+        "phase_fraction_positive_C": {
+          "estimate": 0.651171875,
+          "high95": 0.66305078125,
+          "low95": 0.63851171875
+        },
+        "phase_q05_C": {
+          "estimate": -0.07504923787974413,
+          "high95": -0.07237389097495646,
+          "low95": -0.07796072555763213
+        },
+        "phase_q50_C": {
+          "estimate": 0.023884200870523495,
+          "high95": 0.025771871631584845,
+          "low95": 0.022009801206221542
+        },
+        "phase_q95_C": {
+          "estimate": 0.12324730480182283,
+          "high95": 0.12604601300622628,
+          "low95": 0.12059186670691355
+        },
+        "within_geometry_phase_sd_C": {
+          "estimate": 0.06123704003850815,
+          "high95": 0.06225825316924801,
+          "low95": 0.060220203126366965
+        }
+      },
+      "geometry_mode": "q5_shifted",
+      "n_geometry_worlds": 100
+    }
+  },
+  "claim_firewall": {
+    "diagnostic_only": true,
+    "no_causal_ecological_claim": true,
+    "no_empirical_data": true,
+    "no_flower_colour_outcome": true,
+    "no_repair_selection": true,
+    "no_same_world_successor_tuning": true,
+    "no_ttf_c_qualification_claim": true,
+    "q5_q5_1_q5_2_support_overlap_training_leverage_history_immutable": true
+  },
+  "formal_pass_fail": null,
+  "global_gate_predeclared": false,
+  "interpretation": "This diagnostic tests geometry-conditioned null centering only; it does not select a correction or qualify TTF-C.",
+  "mechanism_tests": {
+    "matched_conditional_null_bias": {
+      "conditional_mean_C": {
+        "estimate": 0.023497678497471416,
+        "high95": 0.02497216979051681,
+        "low95": 0.02200208050432647
+      },
+      "supported": true
+    },
+    "matched_heterogeneity_amplification": {
+      "matched_minus_homogeneous": {
+        "estimate": 0.022511264934257934,
+        "high95": 0.024332898343441923,
+        "low95": 0.0206157474940245
+      },
+      "supported": true
+    },
+    "primary_geometry_conditioned_null_bias": {
+      "requires": [
+        "matched_conditional_null_bias",
+        "matched_heterogeneity_amplification"
+      ],
+      "supported": true
+    },
+    "shifted_conditional_null_bias": {
+      "conditional_mean_C": {
+        "estimate": 0.023985092890291403,
+        "high95": 0.025609554711718694,
+        "low95": 0.022459456811252845
+      },
+      "supported": true
+    },
+    "shifted_heterogeneity_amplification": {
+      "shifted_minus_homogeneous": {
+        "estimate": 0.02299867932707792,
+        "high95": 0.025013412902410718,
+        "low95": 0.020976937982010703
+      },
+      "supported": true
+    },
+    "shifted_minus_matched": {
+      "estimate": 0.00048741439281998686,
+      "high95": 0.0026103044808613173,
+      "low95": -0.001788784066285413
+    }
+  },
+  "schema": "ttfc_conditional_null_centering_result_v0.1",
+  "status": "diagnostic_complete_nonqualifying",
+  "terminal_rule": {
+    "candidate_selected": null,
+    "formal_pass_fail": null,
+    "if_not_supported": "Freeze the negative diagnosis and do not tune phase-centering, geometry-conditioned offsets, or private-null expectation corrections on these worlds.",
+    "if_supported": "Freeze only the geometry-conditioned null-bias diagnosis. Any correction must be defined later in a newly named prospective development family with fresh worlds; these geometry worlds and phase redraws may not be used to tune it."
+  }
+}

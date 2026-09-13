@@ -1,0 +1,50 @@
+{
+  "schema": "ttfc_conditional_null_centering_authorization_v0.1",
+  "status": "authorize_exactly_one_conditional_null_centering_run",
+  "authorization_parent_commit": "4c9322a43df49b4d5b1a1cf28686941705e26a2e",
+  "preauthorization_test_workflow": 34706867460,
+  "preauthorization_full_pytest_passed": true,
+  "geometry_master_seed": 20260922,
+  "phase_master_seed": 920260922,
+  "geometry_worlds_per_cell": 100,
+  "private_phase_draws_per_geometry": 128,
+  "batch_size": 5,
+  "aggregate_bootstrap_resamples": 1999,
+  "aggregate_bootstrap_seed": 922260922,
+  "diagnostic_outcomes_previously_opened": false,
+  "empirical_data_opened": false,
+  "candidate_selection_authorized": false,
+  "formal_qualification_authorized": false,
+  "authorized_cells": [
+    "DCN_HOMOGENEOUS",
+    "DCN_MATCHED",
+    "DCN_SHIFTED"
+  ],
+  "blob_sha": {
+    "docs/supporting/ttfc_conditional_null_centering_rule.json": "da2fd6911d5573e1dfaa7e0fc6528b2a4807f714",
+    "src/ttf/conditional_null_centering.py": "32d16d7c0a3a78aafbcc91f1d1a556fd5acca844",
+    "scripts/run_ttfc_conditional_null_centering_batch.py": "987d5263f102f037ec3beaa196e3571b609d17cc",
+    "scripts/aggregate_ttfc_conditional_null_centering.py": "f354a08cf2b1cba62ec3797f5092e9f8ce67daf3",
+    ".github/workflows/ttfc-conditional-null-centering-diagnostic.yml": "d197a52b72dfd4445f89736172058ad4003945b0",
+    "tests/test_conditional_null_centering.py": "ffa379a28230e1bfb28c2298d7426d5e16c5cd84",
+    "tests/test_conditional_null_centering_aggregator.py": "853de3d1da6996629a39d49be755038b4847235a",
+    "src/ttf/chunked_transfer.py": "bc513c4da4a1327613edc5437b44144c436a0105",
+    "src/ttf/geometry_control.py": "d982b76a56392a3c9b0ef029f4c7058b30fc222d",
+    "src/ttf/heterogeneous_inference.py": "99f7881b4260a91f490f26f5ba7dec90499bcef4",
+    "src/ttf/heterogeneous_simulate.py": "07287ee0093ebe866a462b167e35ad585eadf132",
+    "src/ttf/mismatch.py": "228a0095b6bc214f4955bf4bbc864874553a92bd",
+    "src/ttf/q51_inference.py": "4e34649af6dc96f999900589267ee1eab18b4d7d",
+    "results/ttfm_q5_geometry_stress_v0.1.json": "3a59fe30009385ac3fa1e805bb129f140a7a8ab9",
+    "results/ttfm_q5_1_coupling_geometry_v0.1.json": "65b96b2941732fc0dd83d5f595b7ae0f9fc9ba4d",
+    "results/ttfm_q5_2_geometry_transport_development_v0.1.json": "c289ba55f744b58eee6deac7a9d815214b11ca4e",
+    "results/ttfc_support_overlap_diagnostic_v0.1.json": "6cd7e5ead4a3826c24da834ea72cc5f760b84d30",
+    "results/ttfc_training_leverage_diagnostic_v0.1.json": "bbb1133c3f05aa05481c600e9d127107082028d8"
+  },
+  "firewall": {
+    "one_run_only": true,
+    "no_partial_outcome_interpretation": true,
+    "no_same_world_successor_tuning": true,
+    "candidate_selected": null,
+    "formal_pass_fail": null
+  }
+}
