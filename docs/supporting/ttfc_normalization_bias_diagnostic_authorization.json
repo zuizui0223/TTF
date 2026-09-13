@@ -1,0 +1,50 @@
+{
+  "schema": "ttfc_normalization_bias_diagnostic_authorization_v0.1",
+  "status": "authorize_exactly_one_normalization_bias_diagnostic_run",
+  "preauthorization_head": "a6499ef0310b161bd5e96c0add786ae5c3a1e188",
+  "preauthorization_tree": "a85ef520d847223afe488fecb413d9061d985af1",
+  "preauthorization_ci": {
+    "workflow_run": 34730224615,
+    "conclusion": "success"
+  },
+  "geometry_master_seed": 20260923,
+  "phase_master_seed": 923260923,
+  "worlds_per_cell": 100,
+  "phase_redraws_per_geometry": 128,
+  "batch_size": 5,
+  "aggregate_bootstrap_resamples": 1999,
+  "aggregate_bootstrap_seed": 923092326,
+  "diagnostic_outcomes_previously_opened": false,
+  "empirical_data_opened": false,
+  "candidate_selection_authorized": false,
+  "formal_qualification_authorized": false,
+  "blob_sha": {
+    "docs/supporting/ttfc_normalization_bias_diagnostic_rule.json": "5ac8becfd235c7576cae65fb6ccfddcd729a5633",
+    "src/ttf/normalization_bias_diagnostic.py": "90bfda07331986b6d175964daff6f390be82f404",
+    "scripts/run_ttfc_normalization_bias_batch.py": "c1908edbea555f206aaf9889bc8c23866b9b1ebf",
+    "scripts/aggregate_ttfc_normalization_bias.py": "1205aae7d4bc96bc95f9eec2c7e9799d04d2b510",
+    ".github/workflows/ttfc-normalization-bias-diagnostic.yml": "717d1f72d6d066bcf09b9e9e0ca01189019ed2e0",
+    "tests/test_normalization_bias_diagnostic.py": "7a87fc9fb4057a10b1cbb185f48033202650eb07",
+    "tests/test_normalization_bias_aggregator.py": "a49d117a1028a3006419f0e73822eb6f42a1044d",
+    "src/ttf/conditional_null_centering.py": "32d16d7c0a3a78aafbcc91f1d1a556fd5acca844",
+    "src/ttf/q51_inference.py": "4e34649af6dc96f999900589267ee1eab18b4d7d",
+    "src/ttf/geometry_control.py": "d982b76a56392a3c9b0ef029f4c7058b30fc222d",
+    "src/ttf/heterogeneous_simulate.py": "07287ee0093ebe866a462b167e35ad585eadf132",
+    "src/ttf/chunked_transfer.py": "bc513c4da4a1327613edc5437b44144c436a0105",
+    "src/ttf/core.py": "90ec4b7e2b43f71676978bd2a1bda9dd620e4685",
+    "results/ttfm_q5_geometry_stress_v0.1.json": "3a59fe30009385ac3fa1e805bb129f140a7a8ab9",
+    "results/ttfm_q5_1_coupling_geometry_v0.1.json": "65b96b2941732fc0dd83d5f595b7ae0f9fc9ba4d",
+    "results/ttfm_q5_2_geometry_transport_development_v0.1.json": "c289ba55f744b58eee6deac7a9d815214b11ca4e",
+    "results/ttfc_support_overlap_diagnostic_v0.1.json": "6cd7e5ead4a3826c24da834ea72cc5f760b84d30",
+    "results/ttfc_training_leverage_diagnostic_v0.1.json": "bbb1133c3f05aa05481c600e9d127107082028d8",
+    "results/ttfc_conditional_null_centering_v0.1.json": "748aaa0cd3a9dcab2fb5ca817f8203f42b0bf7ed"
+  },
+  "firewall": {
+    "new_name": "ttfc_normalization_bias_diagnostic_v0.1",
+    "new_frozen_prediction": true,
+    "fresh_worlds": true,
+    "leverage_support_concentration_tuning_closed": true,
+    "same_world_successor_tuning_forbidden": true,
+    "unscaled_residual_is_diagnostic_only": true
+  }
+}
