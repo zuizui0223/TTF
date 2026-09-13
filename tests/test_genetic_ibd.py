@@ -2,7 +2,11 @@ import numpy as np
 import pytest
 
 from ttf.core import knn_edges, spearman_rho
-from ttf.genetic_ibd import crossfit_ibd_residuals
+from ttf.genetic_ibd import (
+    crossfit_ibd_residuals,
+    crossfit_ibd_residuals_prepared,
+    prepare_crossfit_ibd_design,
+)
 
 
 def _random_edge_geometry(seed: int = 20260913):
@@ -20,8 +24,43 @@ def test_crossfit_ibd_removes_noiseless_strictly_monotone_ibd_exactly():
     _, _, edges, geographic = _random_edge_geometry()
     genetic = np.exp(geographic)
     result = crossfit_ibd_residuals(genetic, geographic, edges)
-    assert np.allclose(result.residual, 0.0, atol=1e-12, rtol=0.0)
-    assert np.allclose(result.residual_turnover, 0.5, atol=1e-12, rtol=0.0)
+    assert np.array_equal(result.residual, np.zeros_like(result.residual))
+    assert np.array_equal(result.residual_turnover, np.full_like(result.residual, 0.5))
+
+
+def test_crossfit_ibd_removes_tie_rich_monotone_ibd_exactly():
+    _, _, edges, geographic = _random_edge_geometry(17)
+    geographic = np.round(geographic, 1)
+    genetic = 0.137 * geographic
+    result = crossfit_ibd_residuals(genetic, geographic, edges)
+    assert np.array_equal(result.residual, np.zeros_like(result.residual))
+    assert np.array_equal(result.residual_turnover, np.full_like(result.residual, 0.5))
+    assert np.array_equal(result.observed_rank_fraction, result.expected_rank_fraction)
+
+
+def test_crossfit_ibd_near_tied_direct_scalar_relation_is_exact_zero():
+    _, _, edges, geographic = _random_edge_geometry(41)
+    # Force two distances to be adjacent floating-point neighbours. The direct
+    # positive scalar relation must retain the same weak order and be evaluated
+    # as exactly pure rank-IBD rather than amplifying roundoff through rank01.
+    geographic = geographic.copy()
+    geographic[1] = np.nextafter(geographic[0], np.inf)
+    genetic = geographic.copy()
+    result = crossfit_ibd_residuals(genetic, geographic, edges)
+    assert np.array_equal(result.residual, np.zeros_like(result.residual))
+
+
+def test_prepared_and_wrapper_crossfit_are_exactly_equivalent_nonmonotone():
+    rng, _, edges, geographic = _random_edge_geometry(55)
+    genetic = geographic + rng.normal(0.0, 0.07, len(geographic))
+    genetic -= float(genetic.min()) - 0.01
+    direct = crossfit_ibd_residuals(genetic, geographic, edges)
+    design = prepare_crossfit_ibd_design(geographic, edges)
+    cached = crossfit_ibd_residuals_prepared(genetic, design)
+    assert np.array_equal(direct.n_training_edges, cached.n_training_edges)
+    assert np.allclose(direct.residual, cached.residual, atol=0.0, rtol=0.0)
+    assert np.allclose(direct.residual_turnover, cached.residual_turnover, atol=0.0, rtol=0.0)
+    assert np.allclose(direct.expected_rank_fraction, cached.expected_rank_fraction, atol=0.0, rtol=0.0)
 
 
 def test_crossfit_ibd_is_invariant_to_strictly_monotone_rescaling():
