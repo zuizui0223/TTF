@@ -21,7 +21,7 @@ def main() -> int:
 
     pilot = json.loads(args.pilot_rule.read_text())
     auth = json.loads(args.authorization.read_text())
-    if auth.get('schema') != 'ttf_genetic_gate_d_execution_authorization_v0.1':
+    if auth.get('schema') != 'ttf_genetic_gate_d_execution_authorization_v0.2':
         raise RuntimeError('Gate-D execution authorization drift')
     ref_total = int(pilot['qualification']['reference_worlds_per_configuration'])
     obs_total = int(pilot['qualification']['observed_worlds_per_cell'])
