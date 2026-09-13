@@ -1,0 +1,29 @@
+{
+  "schema": "ttf_genetic_gate_d_v01_execution_invalidation",
+  "status": "invalidated_before_any_reference_world_was_generated",
+  "workflow_run_id": 34752839306,
+  "workflow_head_sha": "3c65b4a9babe379d70cca6a52c4171cff7a78851",
+  "authorization": "docs/supporting/genetic_gate_d_execution_authorization_v0.1.json",
+  "plan_job_passed": true,
+  "reference_worlds_generated": 0,
+  "reference_results_persisted": 0,
+  "observed_worlds_generated": 0,
+  "gate_d_rejection_rates_opened": false,
+  "gate_d_power_opened": false,
+  "empirical_genetic_outcomes_opened": false,
+  "failure_stage": "reference_shard_firewall_precondition_before_geometry_design_or_world_generation",
+  "cause": "The authorization correctly stored all empirical-outcome firewall fields under outcome_firewall, but the reference and observed shard runners incorrectly required a nonexistent top-level empirical_genetic_outcomes_opened field. dict.get therefore returned null and the precondition intentionally aborted every shard before synthetic world generation.",
+  "unaffected_frozen_objects": [
+    "geometry and 111/110 split",
+    "all synthetic world counts and seed rules",
+    "private-reference configurations",
+    "999/1000 profiling-calibration split",
+    "mandatory five observed cells",
+    "alpha and Wilson thresholds",
+    "selected batch width 64",
+    "shard ranges and absolute replicate indexing",
+    "all numerical/scientific estimator code"
+  ],
+  "authorized_repair": "Create a v0.2 Gate-D execution authorization and runners whose only semantic change is to validate that every value in authorization.outcome_firewall is false. No inferential, numerical, seed, geometry, eligibility, threshold, or batching change is permitted.",
+  "claim_boundary": "The v0.1 Gate-D run contains no synthetic qualification result and cannot be used for inference."
+}
