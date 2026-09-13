@@ -18,6 +18,23 @@ from ttf.genetic_simulate import simulate_genetic_distance_world
 from ttf.profiled_private_null import profiled_private_pvalue
 
 
+FIREWALL_KEYS = {
+    'empirical_pairwise_genetic_distances_opened',
+    'sequence_characters_opened_for_inference',
+    'alignment_divergence_summaries_opened',
+    'monmonier_results_opened',
+    'break_presence_absence_opened',
+}
+
+
+def _assert_closed_firewall(auth: dict) -> None:
+    firewall = auth.get('outcome_firewall')
+    if not isinstance(firewall, dict) or set(firewall) != FIREWALL_KEYS:
+        raise RuntimeError('empirical genetic outcome firewall schema drift')
+    if any(value is not False for value in firewall.values()):
+        raise RuntimeError('empirical genetic outcome firewall is open')
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument('--geometry', type=Path, required=True)
@@ -36,14 +53,13 @@ def main() -> int:
     pilot = json.loads(args.pilot_rule.read_text())
     auth = json.loads(args.authorization.read_text())
     refs_payload = json.loads(args.references.read_text())
-    if auth.get('schema') != 'ttf_genetic_gate_d_execution_authorization_v0.1':
+    if auth.get('schema') != 'ttf_genetic_gate_d_execution_authorization_v0.2':
         raise RuntimeError('Gate-D execution authorization drift')
     if auth.get('status') != 'authorize_frozen_genetic_gate_d_synthetic_qualification':
         raise RuntimeError('Gate-D execution is not authorized')
     if refs_payload.get('schema') != 'ttf_genetic_gate_d_references_v0.1':
         raise RuntimeError('ordered reference payload required')
-    if auth.get('empirical_genetic_outcomes_opened') is not False:
-        raise RuntimeError('empirical genetic outcome firewall is open')
+    _assert_closed_firewall(auth)
 
     shared = float(args.shared_fraction)
     amplitude = float(args.residual_amplitude)
