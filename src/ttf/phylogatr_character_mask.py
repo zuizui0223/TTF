@@ -228,9 +228,6 @@ def edge_mask_support(
                 maximum = max(maximum, overlap)
                 if overlap >= threshold:
                     found = True
-                    break
-            if found:
-                break
         valid[index] = found
         best[index] = int(maximum)
     return EdgeMaskSupport(
