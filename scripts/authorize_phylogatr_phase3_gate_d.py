@@ -31,7 +31,7 @@ CRITICAL_CODE_PATHS = (
     "scripts/run_phylogatr_phase3_reference_shard.py",
     "scripts/aggregate_phylogatr_phase3_references.py",
     "scripts/run_phylogatr_phase3_observed_shard.py",
-    "scripts/aggregate_phylogatr_phase3_qualification.py"
+    "scripts/aggregate_phylogatr_phase3_qualification.py",
 )
 
 
@@ -45,6 +45,27 @@ def _load_json(path: Path, schema: str) -> dict:
 def _assert_false_mapping(payload: dict, label: str) -> None:
     if not payload or any(value is not False for value in payload.values()):
         raise RuntimeError(f"{label} is not fully closed")
+
+
+def _assert_phase2_blindness(phase2: dict) -> None:
+    if phase2.get("character_mask_opened") is not True:
+        raise RuntimeError("Phase-2 character mask was not opened/frozen")
+    if phase2.get("confirmatory_sequence_identity_opened") is not False:
+        raise RuntimeError("cannot authorize Phase 3 after fresh nucleotide identity opening")
+    if phase2.get("confirmatory_pairwise_genetic_distances_opened") is not False:
+        raise RuntimeError("cannot authorize Phase 3 after fresh genetic-distance opening")
+    if phase2.get("confirmatory_ttf_statistic_opened") is not False:
+        raise RuntimeError("cannot authorize Phase 3 after fresh empirical TTF opening")
+    mask = phase2.get("mask_contract")
+    if not isinstance(mask, dict):
+        raise RuntimeError("Phase-2 mask contract missing")
+    if mask.get("nucleotide_identity_persisted") is not False:
+        raise RuntimeError("Phase-2 mask contract persisted nucleotide identity")
+    if mask.get("pairwise_nucleotide_differences_computed") is not False:
+        raise RuntimeError("Phase-2 mask contract computed nucleotide differences")
+    split = phase2.get("split")
+    if not isinstance(split, dict) or split.get("inherit_phase1_without_resplitting") is not True:
+        raise RuntimeError("Phase-2 split was not inherited unchanged from Phase 1")
 
 
 def main() -> int:
@@ -71,12 +92,7 @@ def main() -> int:
         raise RuntimeError(
             f"fresh Phase-3 authorization requires {required_status}, got {phase2.get('status')!r}"
         )
-    if phase2.get("confirmatory_sequence_identity_opened") is not False:
-        raise RuntimeError("cannot authorize Phase 3 after fresh nucleotide identity opening")
-    if phase2.get("confirmatory_pairwise_genetic_distances_opened") is not False:
-        raise RuntimeError("cannot authorize Phase 3 after fresh genetic-distance opening")
-    if phase2.get("confirmatory_ttf_statistic_opened") is not False:
-        raise RuntimeError("cannot authorize Phase 3 after fresh empirical TTF opening")
+    _assert_phase2_blindness(phase2)
     _assert_false_mapping(rule["outcome_firewall"], "phase-3 rule outcome firewall")
 
     geometry_sha = sha256_path(args.geometry)
@@ -87,6 +103,20 @@ def main() -> int:
         expected_sha256=geometry_sha,
         expected_neighbor_fraction=float(rule["geometry_contract"]["neighbor_fraction"]),
     )
+    minimum_training_edges = int(
+        rule["geometry_contract"]["minimum_endpoint_disjoint_ibd_training_edges"]
+    )
+    insufficient = [
+        name
+        for name, geometry in table.geometries.items()
+        if geometry.min_endpoint_disjoint_training_edges < minimum_training_edges
+    ]
+    if insufficient:
+        raise RuntimeError(
+            "fresh Phase-2 geometry lost endpoint-disjoint IBD support: "
+            + ", ".join(sorted(insufficient)[:10])
+        )
+
     train = tuple(map(str, phase2["split"]["train_species"]))
     evaluation = tuple(map(str, phase2["split"]["eval_species"]))
     species = set(table.species)
@@ -146,7 +176,7 @@ def main() -> int:
             "train": len(train),
             "eval": len(evaluation),
             "train_species": list(train),
-            "eval_species": list(evaluation)
+            "eval_species": list(evaluation),
         },
         "master_seed": master_seed,
         "seed_rule": rule["seed_contract"],
@@ -158,20 +188,26 @@ def main() -> int:
             "observed_shard_size": observed_shard,
             "reference_expected_jobs": reference_jobs,
             "observed_expected_jobs": observed_jobs,
-            "sharding_semantics": execution["sharding_semantics"]
+            "sharding_semantics": execution["sharding_semantics"],
         },
         "frozen_inference": {
             "private_reference_configurations": list(configs.keys()),
             "reference_worlds_per_configuration": reference_n,
             "profile_strength_draws": int(qualification["profile_strength_draws"]),
             "calibration_statistic_draws": int(qualification["calibration_statistic_draws"]),
-            "selected_private_configurations": int(rule["core_method"]["profiled_private_selected_configurations"]),
+            "selected_private_configurations": int(
+                rule["core_method"]["profiled_private_selected_configurations"]
+            ),
             "mandatory_primary_cells": qualification["mandatory_primary_cells"],
             "observed_worlds_per_cell": observed_n,
             "alpha": float(qualification["alpha"]),
-            "type1_wilson95_upper_ceiling": float(qualification["type1_wilson95_upper_ceiling"]),
-            "shared_A2_wilson95_lower_floor": float(qualification["shared_A2_wilson95_lower_floor"]),
-            "failure_interpretation": qualification["failure_interpretation"]
+            "type1_wilson95_upper_ceiling": float(
+                qualification["type1_wilson95_upper_ceiling"]
+            ),
+            "shared_A2_wilson95_lower_floor": float(
+                qualification["shared_A2_wilson95_lower_floor"]
+            ),
+            "failure_interpretation": qualification["failure_interpretation"],
         },
         "frozen_code_sha256": frozen_code,
         "outcome_firewall": dict(rule["outcome_firewall"]),
@@ -179,9 +215,9 @@ def main() -> int:
             "changing the Phase-2 survivor species set, graph, or inherited split",
             "changing the Phase-3 rule, master-seed derivation, world counts, reference family, alpha, or Wilson gates",
             "changing the bandwidth or IBD residualization based on synthetic qualification results",
-            "opening fresh nucleotide identity, pairwise genetic distances, or empirical TTF values before a complete PASS receipt"
+            "opening fresh nucleotide identity, pairwise genetic distances, or empirical TTF values before a complete PASS receipt",
         ],
-        "claim_boundary": "This authorization permits synthetic qualification only. It does not open nucleotide identity and does not constitute an empirical genetic result."
+        "claim_boundary": "This authorization permits synthetic qualification only. It does not open nucleotide identity and does not constitute an empirical genetic result.",
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(out, indent=2, sort_keys=True) + "\n")
@@ -196,7 +232,7 @@ def main() -> int:
                 "master_seed": master_seed,
                 "reference_expected_jobs": reference_jobs,
                 "observed_expected_jobs": observed_jobs,
-                "fresh_nucleotide_identity_opened": False
+                "fresh_nucleotide_identity_opened": False,
             },
             sort_keys=True,
         )
