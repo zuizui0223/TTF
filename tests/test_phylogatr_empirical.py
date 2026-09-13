@@ -35,8 +35,8 @@ def test_frozen_edge_distance_is_mean_over_all_valid_cross_locality_pairs() -> N
         alignment_length=4,
         minimum_comparable_fraction=0.5,
     )
-    # distances: .25, 1.0, .75, .5 -> mean .625
-    assert result.genetic_distance.tolist() == [0.625]
+    # distances: .25, 1.0, .5, .5 -> mean .5625
+    assert result.genetic_distance.tolist() == [0.5625]
     assert result.valid_pair_counts.tolist() == [4]
     assert result.minimum_comparable_columns == 2
 
