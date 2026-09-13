@@ -76,11 +76,12 @@ def simulate_genetic_distance_world(
     2. a difference in one private/shared transition state at the endpoints;
     3. differences in optional independent locality-noise states.
 
-    Computing the IBD component directly from geographic edge length avoids
-    floating-point tie breaking from subtracting and rescaling coordinates a
-    second time. Therefore ``residual_amplitude=noise_sd=0`` is numerically an
-    exact positive scalar multiple of the geographic distance vector, including
-    geometries with repeated equal edge lengths.
+    The exactly noise-free, zero-residual-amplitude IBD-only arm is evaluated
+    directly as ``positive_scale * geographic_distance``.  This is algebraically
+    identical to the IBD component of the Euclidean construction but avoids a
+    square/square-root floating round trip that can reverse the weak ordering of
+    near-tied edges on real geometries.  No tolerance or outcome-derived cutoff
+    is used.
 
     Shared residual species use one common hyperplane in the pooled standardized
     geographic frame. Private species use independent hyperplanes whose offsets
@@ -134,6 +135,8 @@ def simulate_genetic_distance_world(
     offsets: dict[str, float] = {}
     shared_names: list[str] = []
 
+    exact_ibd_only = float(residual_amplitude) == 0.0 and float(noise_sd) == 0.0
+
     for index, name in enumerate(labels):
         geometry = geometries[name]
         coords = geometry.coordinates
@@ -147,12 +150,6 @@ def simulate_genetic_distance_world(
             offset = float(np.median(zz @ normal))
 
         boundary_state = np.tanh(((zz @ normal) - offset) / float(transition_width))
-        noise = rng.normal(
-            0.0,
-            float(noise_sd),
-            size=(len(coords), int(noise_dimensions)),
-        )
-
         nodes = geometry.edge_nodes
         geographic = np.linalg.norm(
             coords[nodes[:, 0]] - coords[nodes[:, 1]],
@@ -162,12 +159,21 @@ def simulate_genetic_distance_world(
         boundary_delta = float(residual_amplitude) * (
             boundary_state[nodes[:, 0]] - boundary_state[nodes[:, 1]]
         )
-        noise_delta = noise[nodes[:, 0]] - noise[nodes[:, 1]]
-        genetic[name] = np.sqrt(
-            ibd_component * ibd_component
-            + boundary_delta * boundary_delta
-            + np.sum(noise_delta * noise_delta, axis=1)
-        )
+
+        if exact_ibd_only:
+            genetic[name] = ibd_component.copy()
+        else:
+            noise = rng.normal(
+                0.0,
+                float(noise_sd),
+                size=(len(coords), int(noise_dimensions)),
+            )
+            noise_delta = noise[nodes[:, 0]] - noise[nodes[:, 1]]
+            genetic[name] = np.sqrt(
+                ibd_component * ibd_component
+                + boundary_delta * boundary_delta
+                + np.sum(noise_delta * noise_delta, axis=1)
+            )
         residual_truth[name] = np.abs(boundary_delta)
         normals[name] = normal.copy()
         offsets[name] = float(offset)
