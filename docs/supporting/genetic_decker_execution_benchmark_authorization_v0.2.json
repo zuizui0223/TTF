@@ -1,0 +1,25 @@
+{
+  "schema": "ttf_genetic_decker_execution_benchmark_authorization_v0.2",
+  "status": "authorize_exactly_one_v02_synthetic_execution_benchmark",
+  "authorization_rule": "Run exactly three synthetic worlds on the corrected frozen Decker genetic pilot geometry v0.2 to verify end-to-end execution and measure runtime. Preserve all outputs regardless of sign. Do not use these three outcomes to tune graph degree, bandwidth, IBD residualization, split, private-null configuration, support exclusions, or qualification thresholds.",
+  "source_ledger": "benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.2.json",
+  "source_ledger_blob_sha": "180c00e2d79ba58a1068e0c9fe45e41b3c3c04c1",
+  "geometry_fingerprint_sha256": "a1e0f76abd391d6e8d41347df91c8eda2963f4b998564a0b69e8345ca08a8f0b",
+  "geometry_csv_sha256": "86d3b71e8a1cb61819b9135766eec16f4fac9c2c6b13e7b75b39536d2766ba26",
+  "runner": "scripts/benchmark_genetic_decker_pipeline_v02.py",
+  "runner_blob_sha": "79e44fdf1b84d5984248f7794fbe5d85683c9ff1",
+  "v0.1_benchmark_status": "invalidated_before_any_synthetic_world_scored",
+  "authorized_cases": [
+    {"label": "ibd_only", "shared_fraction": 0.0, "residual_amplitude": 0.0, "noise_sd": 0.0, "seed": 2026091301},
+    {"label": "private_A2", "shared_fraction": 0.0, "residual_amplitude": 2.0, "noise_sd": 0.10, "seed": 2026091302},
+    {"label": "shared_A2", "shared_fraction": 1.0, "residual_amplitude": 2.0, "noise_sd": 0.10, "seed": 2026091303}
+  ],
+  "required_invariants": {
+    "ibd_only_statistic_absolute_max": 1e-12,
+    "ibd_only_training_strength_absolute_max": 1e-12,
+    "all_110_eval_species_scores_finite": true,
+    "empirical_genetic_outcomes_must_remain_unopened": true
+  },
+  "qualification_claim_forbidden": true,
+  "post_benchmark_rule": "Runtime may motivate computational optimization only if the mathematical estimand remains exact. Synthetic statistic sign or magnitude from these three worlds may not select or tune an inferential candidate. The two zero-support evaluation species remain included."
+}
