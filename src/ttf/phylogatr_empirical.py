@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
 import math
 from pathlib import Path
 from typing import Mapping, Sequence
@@ -10,9 +11,6 @@ import numpy as np
 from .genetic_geometry import GeneticSamplingGeometry
 from .phylogatr_character_mask import coordinate_by_header
 from .phylogatr_confirmatory import read_occurrence_rows
-
-
-_CANONICAL_UPPER = np.asarray([65, 67, 71, 84], dtype=np.uint8)  # A,C,G,T
 
 
 class EmpiricalSequenceError(ValueError):
@@ -108,6 +106,19 @@ def read_aligned_nucleotide_identity(path: Path) -> AlignedNucleotideIdentity:
 def _canonical_mask(sequence: np.ndarray) -> np.ndarray:
     x = np.asarray(sequence, dtype=np.uint8)
     return (x == 65) | (x == 67) | (x == 71) | (x == 84)
+
+
+def canonical_mask_sha256_from_identity(alignment: AlignedNucleotideIdentity) -> str:
+    """Reproduce the Phase-2 boolean-mask digest without serializing identity."""
+    digest = hashlib.sha256()
+    for header, sequence in zip(alignment.headers, alignment.sequences):
+        mask = _canonical_mask(sequence)
+        digest.update(header.encode("utf-8"))
+        digest.update(b"\0")
+        digest.update(int(len(mask)).to_bytes(8, "big", signed=False))
+        digest.update(np.packbits(np.asarray(mask, dtype=np.uint8)).tobytes())
+        digest.update(b"\0")
+    return digest.hexdigest()
 
 
 def sequence_pair_p_distance(
@@ -227,6 +238,7 @@ __all__ = [
     "AlignedNucleotideIdentity",
     "EmpiricalSequenceError",
     "FrozenEdgeGeneticDistances",
+    "canonical_mask_sha256_from_identity",
     "extract_species_frozen_edge_distances",
     "frozen_edge_mean_p_distances",
     "read_aligned_nucleotide_identity",
