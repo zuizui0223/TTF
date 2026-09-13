@@ -1,0 +1,88 @@
+{
+  "schema": "ttf_genetic_phylogatr_confirmatory_protocol_v0.1",
+  "status": "prospective_confirmatory_protocol_frozen_before_decker_empirical_opening",
+  "purpose": "Define a fresh, species-disjoint and higher-taxon-disjoint confirmatory dataset for the biological claim that geographic location can predict mitochondrial intraspecific differentiation in unseen species. The Decker panel remains development/pilot only.",
+  "source": {
+    "database": "phylogatR",
+    "required_download_time": "after this protocol freeze and before any confirmatory sequence identity is inspected",
+    "required_provenance_files": ["genes.txt", "cite.txt"],
+    "required_per_species_files": ["aligned FASTA for the selected COI-family locus", "occurrence file linking accessions to latitude/longitude"],
+    "provenance_freeze": "Archive the complete genes.txt and cite.txt plus cryptographic hashes of every selected FASTA and occurrence file before confirmatory synthetic qualification.",
+    "no_decker_file_reuse": true
+  },
+  "taxonomic_universe": {
+    "kingdom": "Animalia",
+    "exclude_classes": ["Aves"],
+    "exclude_orders": ["Chiroptera"],
+    "exclude_all_221_decker_species": true,
+    "rationale": "The confirmatory test must not be a second sample of the bird/bat development panel and should challenge transfer across a materially broader lineage set."
+  },
+  "marker_contract": {
+    "family": "mitochondrial cytochrome-c oxidase subunit I (COI/COX1)",
+    "normalized_aliases": ["COI", "CO1", "COX1", "COXI", "MT-CO1", "CYTOCHROME C OXIDASE SUBUNIT I", "CYTOCHROME OXIDASE I"],
+    "alias_normalization": "uppercase, trim whitespace, replace underscore and hyphen with a single space before exact alias matching",
+    "multiple_candidate_alignments_per_species": "choose the candidate with the largest number of unique provided geographic localities among aligned FASTA accessions; break ties by larger aligned sequence count, then lexicographically by raw locus/file identifier",
+    "no_marker_switch_after_sequence_identity_opening": true
+  },
+  "phase_1_response_blind_geometry": {
+    "sequence_information_allowed": "FASTA accession/header membership only; nucleotide characters are not opened",
+    "locality": "exact latitude-longitude values supplied in the phylogatR occurrence file; do not introduce additional coordinate rounding beyond the downloaded database values",
+    "minimum_unique_localities": 12,
+    "neighbor_fraction": 0.15,
+    "graph_rule": "same density-scaled undirected kNN graph used by qualified genetic TTF",
+    "minimum_endpoint_disjoint_ibd_training_edges": 5,
+    "one_panel_per_species": true,
+    "selection_if_more_than_250_species": "rank eligible species by SHA256 of the UTF-8 string '<phylogatR cite.txt digest>|<canonical species name>' and retain the first 250; this is independent of genetic sequence identity, genetic distance, range, class, and transfer support",
+    "minimum_panel_size": 150,
+    "panel_size_rule": "use all eligible species when 150-250; if fewer than 150 the confirmatory arm is NOT_EVALUABLE; never lower the threshold after seeing sequence identity",
+    "split": "deterministic species-disjoint 50/50 split from SHA256('<dataset digest>|split|<species>'), taking the lower half as training and upper half as evaluation; no outcome-based rebalancing",
+    "support_policy": "do not drop low-support evaluation species post hoc; dataset-specific synthetic qualification determines whether the frozen geometry is usable"
+  },
+  "phase_2_character_mask_admissibility": {
+    "purpose": "Check whether frozen edges can be assigned the predeclared p-distance without revealing nucleotide identity or genetic divergence.",
+    "allowed_view": "For every aligned character, reveal only canonical-valid versus noncanonical/missing: A/C/G/T -> 1; gap, N and IUPAC ambiguity -> 0. Do not retain which canonical nucleotide was present.",
+    "valid_sequence_pair": "comparable canonical columns >= ceil(0.5 * frozen alignment length)",
+    "valid_edge": "at least one valid cross-locality sequence pair exists for the two frozen endpoint localities",
+    "species_admissible": "every edge in that species' frozen graph is valid",
+    "failed_species": "mark NOT_EVALUABLE; do not rewire edges or choose another marker",
+    "post_mask_rule": "Freeze the surviving species panel and a new geometry fingerprint, then repeat the full genetic Gate-D synthetic qualification on that exact surviving panel before any A/C/G/T identity is unmasked.",
+    "minimum_surviving_species": 150,
+    "if_below_minimum": "confirmatory arm is NOT_EVALUABLE and nucleotide identity remains unopened"
+  },
+  "phase_3_synthetic_qualification": {
+    "method": "same endpoint-safe rank-IBD residualization, v0.11 geometry control, profiled-private inference, reference configuration family, alpha and Wilson gates as the qualified Decker-development genetic method",
+    "dataset_specific": true,
+    "must_pass_before_identity_unmasking": true,
+    "failure": "NOT_EVALUABLE; do not inspect confirmatory pairwise genetic distances"
+  },
+  "phase_4_empirical_response_if_qualified": {
+    "sequence_pair_distance": "uncorrected p-distance = canonical A/C/G/T mismatches / columns where both sequences are canonical",
+    "locality_pair_distance": "arithmetic mean over all valid cross-locality sequence-pair p-distances",
+    "edge_response": "locality-pair distance on the already-frozen graph edge",
+    "trait_construction": "endpoint-safe cross-fit rank-IBD residual turnover",
+    "primary_test": "frozen out-of-species profiled-private TTF test on the frozen training/evaluation split",
+    "alpha": 0.05,
+    "confirmatory_positive": "positive held-out T with profiled-private p <= 0.05",
+    "confirmatory_negative": "interpret using the separately qualified within-species detectability gate; otherwise NOT_EVALUABLE"
+  },
+  "confirmatory_claim": {
+    "positive_Decker_and_positive_phylogatR": "evidence for a transferable geography of mitochondrial intraspecific differentiation that replicates outside the bird/bat development clades",
+    "positive_Decker_negative_phylogatR_with_detectability": "transfer is development-panel or lineage-domain conditioned rather than broadly lineage-transcending",
+    "positive_Decker_negative_phylogatR_without_detectability": "confirmatory arm NOT_EVALUABLE, not a contradiction",
+    "Decker_not_opened_or_negative": "phylogatR remains an independently predeclared confirmatory path and must not be redesigned around the Decker empirical outcome"
+  },
+  "forbidden": [
+    "using genetic divergence to choose species, locus, split, or geographic support",
+    "including any Aves or Chiroptera in the confirmatory panel",
+    "choosing a different marker for a species after identity unmasking",
+    "deleting individual high-divergence sequences based on the TTF response",
+    "changing minimum locality count, panel-size minimum, graph density, bandwidth, alpha, or qualification gates after sequence identity is opened",
+    "treating a failed geometry, mask, or power gate as a biological null"
+  ],
+  "outcome_firewall_at_freeze": {
+    "confirmatory_sequence_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_ttf_statistic_opened": false,
+    "decker_empirical_genetic_outcomes_opened": false
+  }
+}
