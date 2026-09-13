@@ -14,7 +14,7 @@ class CrossfitIBDResult:
 
     ``residual_turnover`` is the within-species rank of the cross-fit residual and
     is the genetic TTF target after removing the monotone geographic-distance
-    expectation.  The auxiliary arrays are retained for audit and qualification.
+    expectation. The auxiliary arrays are retained for audit and qualification.
     """
 
     residual: np.ndarray
@@ -59,9 +59,9 @@ def crossfit_ibd_residuals(
     """Remove a monotone within-species IBD expectation without endpoint leakage.
 
     For each scored edge ``(i, j)``, the nuisance fit excludes every other edge
-    incident to locality ``i`` or ``j``.  The remaining endpoint-disjoint edges
-    define an out-of-pair training set.  Genetic and geographic distances are
-    represented only by their training-set order.  A rank-linear IBD expectation
+    incident to locality ``i`` or ``j``. The remaining endpoint-disjoint edges
+    define an out-of-pair training set. Genetic and geographic distances are
+    represented only by their training-set order. A rank-linear IBD expectation
     is fitted there and evaluated for the held-out edge using order fractions
     against the training set.
 
@@ -76,8 +76,12 @@ def crossfit_ibd_residuals(
 
     The returned residual is finally ranked within species so locus-specific
     genetic-distance scale does not determine cross-species field weighting.
-    This is the biological IBD layer; the separate v0.3 training-only edge-length
-    orthogonalization remains a geometry-nuisance safeguard downstream.
+    This is the biological IBD layer. The current core TTF v0.11 architecture is
+    applied downstream as a separate geometry/inference layer: density-scaled
+    species-local graphs, training-only edge-length orthogonalization, and the
+    profiled-private null. Qualification of those layers does not automatically
+    qualify this genetic interface; the combined pipeline must pass its own
+    genetic-specific geometry gate.
     """
     genetic = np.asarray(genetic_distance, dtype=float)
     geographic = np.asarray(geographic_distance, dtype=float)
