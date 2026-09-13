@@ -1,0 +1,43 @@
+{
+  "schema": "ttf_genetic_phylogatr_phase1_parser_rule_v0.1",
+  "status": "frozen_before_any_fresh_phylogatr_download_is_inspected",
+  "parent_protocol": "docs/supporting/genetic_phylogatr_confirmatory_protocol_v0.1.json",
+  "purpose": "Resolve only file/schema parsing details needed to construct the response-blind phase-1 confirmatory geometry. This rule may inspect taxonomy, FASTA headers, accession membership and coordinates, but never nucleotide characters.",
+  "phylogatr_schema_reference": {
+    "web_repository": "OSC/phylogatr-web",
+    "reference_commit": "7aeb3c8501eb8431f1df9f6b9e6df28d116daf66",
+    "genes_headers": ["gene","dir","proportion_retained","num_seqs_unaligned","num_seqs_aligned","kingdom","phylum","class","order","family","genus","species","subspecies","different_genbank_species"],
+    "occurrence_headers": ["phylogatr_id","accession","source_id","latitude","longitude","basis_of_record","coordinate_uncertainty_in_meters","issue","flag"]
+  },
+  "locus_identifier_normalization": {
+    "step_1": "uppercase and trim the raw genes.txt gene field",
+    "step_2": "replace every run of underscore, hyphen or whitespace by one ASCII space",
+    "step_3": "normalize the canonical species name by the same rule",
+    "step_4": "if and only if the normalized gene identifier begins with '<normalized species> ', remove that prefix once",
+    "step_5": "compare the remaining token by exact equality to the parent protocol COI-family normalized aliases",
+    "forbidden": "substring, regex-near-match, edit-distance or post-download manual locus relabeling"
+  },
+  "aligned_file_resolution": {
+    "directory": "root / genes.txt dir field",
+    "candidate": "within that directory, the aligned .afa file whose extension-free basename equals the raw genes.txt gene field exactly",
+    "fallback": "if no exact basename exists, STOP that genes.txt row as unresolved; do not guess among files",
+    "multiple_exact_candidates": "invalid download structure"
+  },
+  "header_only_fasta_read": {
+    "allowed": "read only lines beginning with '>' and strip the leading character plus surrounding whitespace",
+    "forbidden": "reading, hashing, counting, validating or otherwise inspecting any non-header FASTA line during phase 1",
+    "occurrence_join_key": "prefer exact phylogatr_id match; if no phylogatr_id match for a header, permit exact accession match only when accession is non-empty and unique in occurrences.txt; otherwise the sequence has no usable locality"
+  },
+  "coordinates": {
+    "parse": "finite decimal latitude and longitude only",
+    "bounds": "-90 <= latitude <= 90 and -180 <= longitude <= 180",
+    "locality_collapse": "exact numeric latitude-longitude equality only",
+    "no_rounding": true
+  },
+  "outcome_firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_ttf_statistic_opened": false,
+    "decker_empirical_genetic_outcomes_opened": false
+  }
+}
