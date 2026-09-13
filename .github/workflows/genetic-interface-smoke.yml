@@ -30,3 +30,4 @@ jobs:
           tests/test_genetic_gate.py
           tests/test_genetic_self_detectability.py
           tests/test_phylogatr_confirmatory.py
+          tests/test_phylogatr_freeze_contracts.py
