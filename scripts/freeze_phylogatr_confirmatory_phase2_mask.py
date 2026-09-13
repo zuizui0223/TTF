@@ -227,6 +227,15 @@ def main() -> int:
             for row in csv_by_species[species]:
                 writer.writerow(row)
 
+    core_fingerprint_available = len(survivor_geometry) >= 4
+    survivor_fingerprint = (
+        geometry_fingerprint(
+            [survivor_geometry[name] for name in sorted(survivor_geometry)]
+        )
+        if core_fingerprint_available
+        else None
+    )
+
     manifest = {
         "schema": "ttf_genetic_phylogatr_confirmatory_phase2_mask_v0.1",
         "status": status,
@@ -266,12 +275,11 @@ def main() -> int:
             "eval_count": len(evaluation),
         },
         "geometry_csv_sha256": sha256_path(args.output_csv),
-        "geometry_fingerprint_sha256": (
-            geometry_fingerprint(
-                [survivor_geometry[name] for name in sorted(survivor_geometry)]
-            )
-            if survivor_geometry
-            else None
+        "geometry_fingerprint_sha256": survivor_fingerprint,
+        "geometry_fingerprint_status": (
+            "computed_core_fingerprint"
+            if core_fingerprint_available
+            else "not_applicable_fewer_than_four_survivor_species"
         ),
         "species_ledger": ledger,
         "character_mask_opened": True,
@@ -297,6 +305,7 @@ def main() -> int:
                 "train": len(train),
                 "eval": len(evaluation),
                 "geometry_fingerprint_sha256": manifest["geometry_fingerprint_sha256"],
+                "geometry_fingerprint_status": manifest["geometry_fingerprint_status"],
                 "nucleotide_identity_opened": False,
                 "pairwise_genetic_distances_opened": False,
             },
