@@ -1,4 +1,4 @@
-name: phylogatR phase-1 schema dry-run
+name: phylogatR phase-1 schema drift canary
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ on:
       - "benchmarks/frozen/genetic_decker_species_exclusion_v0.1.json"
 
 jobs:
-  dryrun:
+  legacy-schema-canary:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,8 +28,9 @@ jobs:
           python-version: "3.12"
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -e .
-      - name: Run frozen phase-1 parser on official phylogatR test fixture
+      - name: Confirm legacy official fixture is rejected before geometry freeze
         run: |
+          set +e
           python scripts/freeze_phylogatr_confirmatory_phase1.py \
             --root external/phylogatr-web/test/data/squamata_results \
             --protocol docs/supporting/genetic_phylogatr_confirmatory_protocol_v0.1.json \
@@ -37,33 +38,36 @@ jobs:
             --digest-rule docs/supporting/genetic_phylogatr_phase1_digest_rule_v0.1.json \
             --execution-rule docs/supporting/genetic_phylogatr_phase1_execution_rule_v0.1.json \
             --decker-exclusion benchmarks/frozen/genetic_decker_species_exclusion_v0.1.json \
-            --output-csv results/phylogatr_phase1_schema_fixture.csv \
-            --output-manifest results/phylogatr_phase1_schema_fixture.json
-      - name: Enforce dry-run firewall and expected small-fixture stop
+            --output-csv results/legacy_fixture.csv \
+            --output-manifest results/legacy_fixture.json \
+            >results/legacy_stdout.txt 2>results/legacy_stderr.txt
+          code=$?
+          set -e
+          test "$code" -ne 0
+          grep -F "unexpected TSV schema" results/legacy_stderr.txt
+          grep -F "['accession', 'source_id', 'latitude', 'longitude', 'basis_of_record', 'geodetic_datum', 'coordinate_uncertainty_in_meters', 'issue']" results/legacy_stderr.txt
+          test ! -e results/legacy_fixture.json
+          test ! -e results/legacy_fixture.csv
+      - name: Record canary receipt
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          p=json.loads(Path('results/phylogatr_phase1_schema_fixture.json').read_text())
-          assert p['schema']=='ttf_genetic_phylogatr_confirmatory_phase1_geometry_v0.1'
-          assert p['status']=='NOT_EVALUABLE_PHASE1_PANEL_TOO_SMALL'
-          assert p['census']['genes_rows'] > 0
-          assert p['census']['final_species'] < 150
-          assert p['response_blind']['sequence_characters_used'] is False
-          assert p['response_blind']['sequence_characters_hashed'] is False
-          assert p['confirmatory_sequence_identity_opened'] is False
-          assert p['confirmatory_pairwise_genetic_distances_opened'] is False
-          print(json.dumps({
-            'status':p['status'],
-            'dataset_digest_sha256':p['dataset_digest_sha256'],
-            'geometry_fingerprint_sha256':p['geometry_fingerprint_sha256'],
-            'census':p['census'],
-          },sort_keys=True))
+          p={
+            'schema':'ttf_phylogatr_legacy_schema_drift_canary_v0.1',
+            'status':'PASS_EXPECTED_REJECTION_BEFORE_PHASE1_FREEZE',
+            'fixture_repository':'OSC/phylogatr-web',
+            'fixture_commit':'7aeb3c8501eb8431f1df9f6b9e6df28d116daf66',
+            'legacy_occurrence_headers':['accession','source_id','latitude','longitude','basis_of_record','geodetic_datum','coordinate_uncertainty_in_meters','issue'],
+            'required_current_occurrence_headers':['phylogatr_id','accession','source_id','latitude','longitude','basis_of_record','coordinate_uncertainty_in_meters','issue','flag'],
+            'sequence_identity_opened':False,
+            'geometry_frozen':False,
+            'interpretation':'Older phylogatR archives with legacy occurrence schema are rejected rather than silently coerced. A fresh confirmatory archive must match the frozen current export schema exactly.'
+          }
+          Path('results/phylogatr_legacy_schema_canary.json').write_text(json.dumps(p,indent=2,sort_keys=True)+'\n')
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: phylogatr-phase1-schema-fixture
-          path: |
-            results/phylogatr_phase1_schema_fixture.csv
-            results/phylogatr_phase1_schema_fixture.json
+          name: phylogatr-legacy-schema-drift-canary
+          path: results/phylogatr_legacy_schema_canary.json
           if-no-files-found: error
