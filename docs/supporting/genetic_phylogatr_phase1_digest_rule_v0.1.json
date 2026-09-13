@@ -1,0 +1,22 @@
+{
+  "schema": "ttf_genetic_phylogatr_phase1_digest_rule_v0.1",
+  "status": "frozen_before_any_fresh_phylogatr_download_is_inspected",
+  "parent_protocol": "docs/supporting/genetic_phylogatr_confirmatory_protocol_v0.1.json",
+  "parser_rule": "docs/supporting/genetic_phylogatr_phase1_parser_rule_v0.1.json",
+  "purpose": "Define the response-blind dataset digest used for the prospective 250-species cap and deterministic train/evaluation split without reading nucleotide characters.",
+  "digest_algorithm": "SHA256 over UTF-8 canonical JSON with sort_keys=true and separators=(',',':')",
+  "payload": {
+    "cite_sha256": "SHA256 of cite.txt raw bytes",
+    "genes_sha256": "SHA256 of genes.txt raw bytes",
+    "selected_panel_entries": "sorted by canonical species; each entry contains canonical species, taxonomy fields, raw genes.txt gene, raw dir, SHA256 of the ordered FASTA header strings only, SHA256 of occurrences.txt raw bytes, and sorted exact usable latitude-longitude pairs",
+    "sequence_characters": "MUST NOT be read, hashed, counted, validated, or included"
+  },
+  "panel_cap_key": "SHA256('<dataset_digest>|<canonical species>') ascending; retain first 250 if eligible species exceed 250",
+  "split_key": "SHA256('<dataset_digest>|split|<canonical species>') ascending; lower floor(n/2) species are training and the remainder evaluation",
+  "tie_break": "hex digest lexicographic order, then canonical species lexicographic order if ever required",
+  "firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "decker_empirical_genetic_outcomes_opened": false
+  }
+}
