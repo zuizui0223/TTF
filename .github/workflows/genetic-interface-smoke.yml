@@ -15,8 +15,11 @@ on:
       - "scripts/plan_phylogatr_phase3_shards.py"
       - "scripts/run_phylogatr_phase3_*.py"
       - "scripts/aggregate_phylogatr_phase3_*.py"
+      - "scripts/authorize_phylogatr_phase4_identity_opening.py"
+      - "scripts/run_phylogatr_phase4_empirical_test.py"
       - "docs/supporting/genetic_phylogatr_*.json"
       - "benchmarks/frozen/genetic_decker_species_exclusion_v0.1.json"
+      - "benchmarks/frozen/genetic_empirical_opening_state_v0.1.json"
       - "tests/test_genetic_*.py"
       - "tests/test_phylogatr_*.py"
 
@@ -38,8 +41,12 @@ jobs:
           tests/test_genetic_simulate.py
           tests/test_genetic_gate.py
           tests/test_genetic_self_detectability.py
+          tests/test_genetic_empirical_score.py
           tests/test_phylogatr_confirmatory.py
           tests/test_phylogatr_character_mask.py
+          tests/test_phylogatr_empirical.py
           tests/test_phylogatr_freeze_contracts.py
           tests/test_phylogatr_phase2_freezer.py
           tests/test_phylogatr_phase3_contract.py
+          tests/test_phylogatr_phase3_self_qualification.py
+          tests/test_phylogatr_phase4_contract.py
