@@ -11,7 +11,15 @@ def _geometry(n=24):
     return prepare_density_scaled_genetic_geometry(coordinates)
 
 
-def test_ibd_only_noise_free_world_is_exactly_removed_by_crossfit():
+def _geographic(geometry):
+    nodes = geometry.edge_nodes
+    return np.linalg.norm(
+        geometry.coordinates[nodes[:, 1]] - geometry.coordinates[nodes[:, 0]],
+        axis=1,
+    )
+
+
+def test_ibd_only_noise_free_world_uses_exact_canonical_rank_scale():
     geometry = _geometry()
     world = simulate_genetic_distance_world(
         {"sp": geometry},
@@ -21,20 +29,18 @@ def test_ibd_only_noise_free_world_is_exactly_removed_by_crossfit():
         noise_sd=0.0,
         seed=7,
     )
-    nodes = geometry.edge_nodes
-    start = geometry.coordinates[nodes[:, 0]]
-    end = geometry.coordinates[nodes[:, 1]]
-    geographic = np.linalg.norm(end - start, axis=1)
+    geographic = _geographic(geometry)
+    assert np.array_equal(world.genetic_distance["sp"], geographic)
     result = crossfit_ibd_residuals(
         world.genetic_distance["sp"],
         geographic,
-        nodes,
+        geometry.edge_nodes,
         min_training_edges=5,
     )
-    assert np.allclose(result.residual, 0.0, atol=1e-12, rtol=0.0)
+    assert np.array_equal(result.residual, np.zeros_like(result.residual))
 
 
-def test_mixed_ibd_strengths_are_supported_without_changing_geometry():
+def test_mixed_positive_ibd_strengths_share_same_exact_rank_canonicalization():
     geometries = {"a": _geometry(), "b": _geometry()}
     world = simulate_genetic_distance_world(
         geometries,
@@ -44,11 +50,26 @@ def test_mixed_ibd_strengths_are_supported_without_changing_geometry():
         noise_sd=0.0,
         seed=11,
     )
-    assert set(world.genetic_distance) == {"a", "b"}
-    assert len(world.genetic_distance["a"]) == geometries["a"].n_edges
-    assert len(world.genetic_distance["b"]) == geometries["b"].n_edges
+    assert np.array_equal(world.genetic_distance["a"], _geographic(geometries["a"]))
+    assert np.array_equal(world.genetic_distance["b"], _geographic(geometries["b"]))
     assert np.max(world.residual_edge_signal["a"]) == 0.0
     assert np.max(world.residual_edge_signal["b"]) == 0.0
+
+
+def test_zero_ibd_strength_remains_zero_in_pure_arm():
+    geometry = _geometry()
+    world = simulate_genetic_distance_world(
+        {"sp": geometry},
+        shared_fraction=0.0,
+        residual_amplitude=0.0,
+        ibd_strength=0.0,
+        noise_sd=0.0,
+        seed=12,
+    )
+    assert np.array_equal(
+        world.genetic_distance["sp"],
+        np.zeros(geometry.n_edges, dtype=float),
+    )
 
 
 def test_shared_fraction_controls_only_residual_field_membership():
