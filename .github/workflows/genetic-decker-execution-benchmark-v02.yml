@@ -46,17 +46,18 @@ jobs:
       - name: Verify frozen authorization lineage
         run: |
           python - <<'PY'
-          import hashlib, json
+          import json, subprocess
           from pathlib import Path
-          def sha(path):
-              return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+          def blob_sha(path):
+              return subprocess.check_output(['git','hash-object',path], text=True).strip()
           a=json.loads(Path('docs/supporting/genetic_decker_execution_benchmark_authorization_v0.2.json').read_text())
           l=json.loads(Path('benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.2.json').read_text())
           m=json.loads(Path('results/decker_genetic_pilot_geometry_v0.2.json').read_text())
           assert a['schema']=='ttf_genetic_decker_execution_benchmark_authorization_v0.2'
           assert a['status']=='authorize_exactly_one_v02_synthetic_execution_benchmark'
           assert l['schema']=='ttf_genetic_decker_pilot_geometry_source_v0.2'
-          assert sha('benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.2.json') == a['source_ledger_blob_sha'] or True
+          assert blob_sha('benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.2.json') == a['source_ledger_blob_sha']
+          assert blob_sha('scripts/benchmark_genetic_decker_pipeline_v02.py') == a['runner_blob_sha']
           assert m['geometry_csv_sha256']==l['geometry_csv_sha256']==a['geometry_csv_sha256']
           assert m['geometry_fingerprint_sha256']==l['geometry_fingerprint_sha256']==a['geometry_fingerprint_sha256']
           assert m['synthetic_worlds_scored_before_freeze']==0
