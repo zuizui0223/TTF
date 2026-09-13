@@ -17,7 +17,7 @@ from ttf.genetic_simulate import simulate_genetic_distance_world
 
 def _geometries() -> dict:
     out = {}
-    for species_index in range(8):
+    for species_index in range(12):
         coordinates = np.column_stack(
             [
                 np.arange(12, dtype=float) * 25.0 + species_index * 3.0,
@@ -25,25 +25,29 @@ def _geometries() -> dict:
                 np.full(12, species_index * 2.0, dtype=float),
             ]
         )
-        out[f"species_{species_index}"] = prepare_density_scaled_genetic_geometry(
+        out[f"species_{species_index:02d}"] = prepare_density_scaled_genetic_geometry(
             coordinates, neighbor_fraction=0.15
         )
     return out
 
 
-def test_empirical_cross_adapter_matches_synthetic_scorer_exactly() -> None:
-    geometries = _geometries()
+def _design(geometries: dict):
     names = tuple(sorted(geometries))
-    design = prepare_genetic_ttf_design(
+    return names, prepare_genetic_ttf_design(
         geometries,
-        train_species=names[:4],
-        eval_species=names[4:],
+        train_species=names[:6],
+        eval_species=names[6:],
         bandwidth=500.0,
         prior_strength=0.25,
         segment_points=5,
         min_training_edges=5,
         strength_neighbours=4,
     )
+
+
+def test_empirical_cross_adapter_matches_synthetic_scorer_exactly() -> None:
+    geometries = _geometries()
+    names, design = _design(geometries)
     world = simulate_genetic_distance_world(
         geometries,
         shared_fraction=0.5,
@@ -68,17 +72,7 @@ def test_empirical_cross_adapter_matches_synthetic_scorer_exactly() -> None:
 
 def test_empirical_self_adapter_matches_synthetic_self_scorer_exactly() -> None:
     geometries = _geometries()
-    names = tuple(sorted(geometries))
-    design = prepare_genetic_ttf_design(
-        geometries,
-        train_species=names[:4],
-        eval_species=names[4:],
-        bandwidth=500.0,
-        prior_strength=0.25,
-        segment_points=5,
-        min_training_edges=5,
-        strength_neighbours=4,
-    )
+    _, design = _design(geometries)
     self_design = prepare_genetic_self_detectability(
         design,
         bandwidth=500.0,
