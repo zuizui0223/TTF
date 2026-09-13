@@ -1,0 +1,15 @@
+{
+  "schema": "ttf_genetic_decker_execution_benchmark_v03_failure",
+  "status": "failed_ibd_only_training_strength_invariant",
+  "run_id": 34750820940,
+  "job_id": 103706941740,
+  "head_sha": "1a9035bd53e814d3217a3bd54fee7878b9d33762",
+  "parent_failure": "benchmarks/frozen/genetic_decker_execution_benchmark_v02_failure.json",
+  "geometry_fingerprint_sha256": "a1e0f76abd391d6e8d41347df91c8eda2963f4b998564a0b69e8345ca08a8f0b",
+  "failed_invariant": "IBD-only training private strength absolute value <= 1e-12",
+  "empirical_genetic_outcomes_opened": false,
+  "qualification_claim_made": false,
+  "private_or_shared_benchmark_values_used_for_selection": false,
+  "interpretation": "Removing the square/square-root round trip was insufficient because positive floating rescaling of extremely close geographic distances can still collapse weak rank order. Since the nuisance estimand is rank based, the exact pure-IBD calibration arm should use a canonical positive scale of one rather than an arbitrary floating scale.",
+  "successor_constraint": "Preserve geometry, split, graph, bandwidth, IBD estimand, qualification thresholds and private-null architecture. Only canonical rank-equivalent pure-IBD scaling and already pre-frozen exact execution optimization are permitted."
+}
