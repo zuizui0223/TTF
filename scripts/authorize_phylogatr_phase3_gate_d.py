@@ -28,6 +28,7 @@ CRITICAL_CODE_PATHS = (
     "src/ttf/calibration.py",
     "src/ttf/phylogatr_phase3.py",
     "scripts/authorize_phylogatr_phase3_gate_d.py",
+    "scripts/plan_phylogatr_phase3_shards.py",
     "scripts/run_phylogatr_phase3_reference_shard.py",
     "scripts/aggregate_phylogatr_phase3_references.py",
     "scripts/run_phylogatr_phase3_observed_shard.py",
