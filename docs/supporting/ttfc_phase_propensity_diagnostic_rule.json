@@ -1,0 +1,103 @@
+{
+  "schema": "ttfc_phase_propensity_diagnostic_rule_v0.1",
+  "status": "frozen_before_phase_propensity_outcomes",
+  "parent_diagnoses": {
+    "conditional_null": {
+      "result": "results/ttfc_conditional_null_centering_v0.1.json",
+      "result_blob": "748aaa0cd3a9dcab2fb5ca817f8203f42b0bf7ed",
+      "frozen_conclusion": "Frozen Q5.1 TTF-C has a reproducible positive conditional-null expectation on heterogeneous Q5 geometry under independent private relation phases."
+    },
+    "normalization_bias": {
+      "result": "results/ttfc_normalization_bias_diagnostic_v0.1.json",
+      "result_blob": "dab1bc591d265bef7289115418d1944ea597b2ea",
+      "result_commit": "05488a756daad875d8c86d02441789fc3e236850",
+      "main_merge_commit": "5131a9babf422d06472fd10ed923e71788f68d46",
+      "frozen_conclusion": "Final residual-SD normalization measurably amplifies the positive conditional-null bias but is not necessary; the dominant mechanism lies upstream of the final rescaling."
+    }
+  },
+  "scientific_target": "Test whether heterogeneous geometry induces a nonzero phase-averaged training response through edge-specific private-boundary crossing propensity that survives the Q5.1 rank-length projection, and whether that deterministic mean response is necessary for the positive TTF-C conditional-null bias.",
+  "mechanistic_identity": {
+    "private_relation_side": "For phase phi, an observation at circular angle theta is on side 1 iff sin(theta-phi) >= 0.",
+    "edge_angular_separation": "delta_e is the shortest circular angular separation between the two edge endpoints, constrained to [0, pi].",
+    "crossing_probability": "For phi uniform on [0, 2*pi), P(edge e crosses the private relation boundary | geometry) = delta_e / pi.",
+    "binary_rank_identity": "For m edges and crossing fraction q(phi), rank01 of the binary crossing indicator equals 0.5 - 0.5*q(phi) + 0.5*I_e(phi).",
+    "phase_expected_centered_rank": "Therefore E_phi[rank01(I_e)-0.5 | geometry] = 0.5*(p_e - mean_e p_e), where p_e = delta_e/pi.",
+    "q51_linear_projection": "The unscaled Q5.1 rank-length residual is a linear projection of centered turnover rank off centered rank(edge length), so its phase expectation is obtained by applying that same fixed linear projection to 0.5*(p_e-mean p).",
+    "prediction": "If this deterministic edge-phase propensity residual is the upstream geometry-conditioned mechanism, subtracting the analytically fixed phase-expected residual from each training phase response should remove most or all of the positive conditional-null mean on fresh heterogeneous geometry while leaving the homogeneous negative control centered."
+  },
+  "estimators": {
+    "baseline_unscaled_q51": {
+      "diagnostic_baseline": true,
+      "graph_fraction": 0.15,
+      "bandwidth": 0.2,
+      "prior_strength": 0.25,
+      "prior_mean": 0.0,
+      "segment_points": 5,
+      "training_response": "Exact Q5.1 centered rank-length residual before final residual-SD normalization, as frozen by the normalization-bias diagnosis.",
+      "evaluation_response": "Raw held-out coupling-turnover rank.",
+      "score": "Ordinary held-out within-system Spearman, equal-system macro mean."
+    },
+    "phase_propensity_centered_ablation": {
+      "diagnostic_only": true,
+      "single_change": "From each baseline training response edge, subtract the geometry-only analytic phase expectation of the unscaled Q5.1 residual derived from p_e = delta_e/pi. No empirical or realized held-out response enters this quantity.",
+      "evaluation_response": "Unchanged raw held-out coupling-turnover rank.",
+      "graph_field_prior_quadrature_score": "Identical to baseline_unscaled_q51.",
+      "not_a_candidate": true,
+      "no_fitted_parameters": true
+    }
+  },
+  "fresh_worlds": {
+    "geometry_master_seed": 20260924,
+    "phase_master_seed": 924260924,
+    "worlds_per_cell": 100,
+    "phase_redraws_per_geometry": 128,
+    "batch_size": 5,
+    "aggregate_bootstrap_resamples": 1999,
+    "aggregate_bootstrap_seed": 924092426,
+    "cells": [
+      {"id": "DPP_HOMOGENEOUS", "geometry_mode": "identical_uniform60", "role": "negative_control"},
+      {"id": "DPP_MATCHED", "geometry_mode": "q5_matched", "role": "primary"},
+      {"id": "DPP_SHIFTED", "geometry_mode": "q5_shifted", "role": "secondary"}
+    ],
+    "freshness": "No geometry world or private-phase redraw from any earlier TTF-C diagnosis may be reused."
+  },
+  "per_geometry_endpoints": [
+    "conditional_mean_baseline_C",
+    "conditional_mean_propensity_centered_C",
+    "conditional_mean_baseline_minus_centered_C",
+    "within_geometry_phase_sd_baseline_C",
+    "within_geometry_phase_sd_propensity_centered_C",
+    "phase_fraction_positive_baseline_C",
+    "phase_fraction_positive_propensity_centered_C",
+    "mean_training_expected_residual_rms"
+  ],
+  "predeclared_mechanism_tests": {
+    "matched_baseline_bias_replication": "SUPPORTED iff lower95 of across-geometry mean conditional_mean_baseline_C in DPP_MATCHED is > 0.",
+    "matched_phase_propensity_contribution": "SUPPORTED iff lower95 of paired across-geometry mean (baseline minus propensity-centered conditional mean) in DPP_MATCHED is > 0.",
+    "matched_propensity_centered_recentered": "SUPPORTED iff the two-sided 95% bootstrap CI for mean conditional_mean_propensity_centered_C in DPP_MATCHED contains 0.",
+    "primary_phase_propensity_mechanism": "SUPPORTED iff matched_baseline_bias_replication, matched_phase_propensity_contribution, and matched_propensity_centered_recentered are all supported.",
+    "shifted_baseline_bias_replication": "SUPPORTED iff lower95 of mean conditional_mean_baseline_C in DPP_SHIFTED is > 0.",
+    "shifted_phase_propensity_contribution": "SUPPORTED iff lower95 of paired baseline-minus-centered mean in DPP_SHIFTED is > 0.",
+    "shifted_propensity_centered_recentered": "SUPPORTED iff the two-sided 95% bootstrap CI for mean conditional_mean_propensity_centered_C in DPP_SHIFTED contains 0.",
+    "homogeneous_negative_control": "Report both arms, their paired difference, and analytic expected-residual RMS without using this cell to tune or select any correction."
+  },
+  "global_gate_predeclared": false,
+  "terminal_rule": {
+    "candidate_selected": null,
+    "formal_pass_fail": null,
+    "if_supported": "Freeze only the edge-phase propensity mechanism diagnosis. The propensity-centered ablation is not thereby selected. Any corrective estimator requires a separately named prospective development family with a new frozen prediction and fresh worlds.",
+    "if_not_supported": "Freeze the negative diagnosis and do not tune crossing-propensity centering, angular-distance transforms, residual offsets, or related thresholds on these worlds."
+  },
+  "claim_firewall": {
+    "diagnostic_only": true,
+    "no_repair_selection": true,
+    "no_ttf_c_qualification_claim": true,
+    "no_same_world_successor_tuning": true,
+    "no_empirical_data": true,
+    "no_flower_colour_outcome": true,
+    "no_causal_ecological_claim": true,
+    "leverage_support_concentration_tuning_closed": true,
+    "residual_sd_normalization_tuning_closed": true,
+    "q5_q5_1_q5_2_support_overlap_training_leverage_conditional_null_normalization_history_immutable": true
+  }
+}
