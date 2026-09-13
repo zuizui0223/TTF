@@ -69,17 +69,60 @@ def _assert_phase2_blindness(phase2: dict) -> None:
         raise RuntimeError("Phase-2 split was not inherited unchanged from Phase 1")
 
 
+def _validate_phase1_chain(phase1: dict, phase2: dict) -> None:
+    if phase1.get("status") != "FROZEN_RESPONSE_BLIND_PHASE1_GEOMETRY":
+        raise RuntimeError("Phase-1 manifest is not a frozen response-blind geometry")
+    blind = phase1.get("response_blind")
+    if not isinstance(blind, dict):
+        raise RuntimeError("Phase-1 response-blind receipt missing")
+    if blind.get("sequence_characters_used") is not False:
+        raise RuntimeError("Phase-1 manifest indicates sequence characters were used")
+    if blind.get("sequence_characters_hashed") is not False:
+        raise RuntimeError("Phase-1 manifest indicates sequence characters were hashed")
+    if phase1.get("confirmatory_sequence_identity_opened") is not False:
+        raise RuntimeError("Phase-1 manifest indicates nucleotide identity was opened")
+    if phase1.get("confirmatory_pairwise_genetic_distances_opened") is not False:
+        raise RuntimeError("Phase-1 manifest indicates genetic distances were opened")
+
+    expected = phase2["phase1"]
+    comparisons = {
+        "dataset_digest_sha256": phase1.get("dataset_digest_sha256"),
+        "geometry_fingerprint_sha256": phase1.get("geometry_fingerprint_sha256"),
+        "geometry_csv_sha256": phase1.get("geometry_csv_sha256"),
+        "species_count": phase1.get("census", {}).get("final_species"),
+        "train_count": phase1.get("split", {}).get("train_count"),
+        "eval_count": phase1.get("split", {}).get("eval_count"),
+    }
+    for key, observed in comparisons.items():
+        if observed != expected[key]:
+            raise RuntimeError(f"Phase-1/Phase-2 provenance drift for {key}")
+
+    phase1_train = set(map(str, phase1["split"]["train_species"]))
+    phase1_eval = set(map(str, phase1["split"]["eval_species"]))
+    phase2_train = set(map(str, phase2["split"]["train_species"]))
+    phase2_eval = set(map(str, phase2["split"]["eval_species"]))
+    if not phase2_train.issubset(phase1_train):
+        raise RuntimeError("Phase-2 training survivors do not inherit the Phase-1 training split")
+    if not phase2_eval.issubset(phase1_eval):
+        raise RuntimeError("Phase-2 evaluation survivors do not inherit the Phase-1 evaluation split")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(
         description="Authorize fresh phylogatR Phase-3 Gate-D on one exact Phase-2 survivor geometry."
     )
     ap.add_argument("--geometry", type=Path, required=True)
+    ap.add_argument("--phase1-manifest", type=Path, required=True)
     ap.add_argument("--phase2-manifest", type=Path, required=True)
     ap.add_argument("--phase3-rule", type=Path, required=True)
     ap.add_argument("--repo-root", type=Path, default=Path("."))
     ap.add_argument("--output", type=Path, required=True)
     args = ap.parse_args()
 
+    phase1 = _load_json(
+        args.phase1_manifest,
+        "ttf_genetic_phylogatr_confirmatory_phase1_geometry_v0.1",
+    )
     phase2 = _load_json(
         args.phase2_manifest,
         "ttf_genetic_phylogatr_confirmatory_phase2_mask_v0.1",
@@ -93,6 +136,7 @@ def main() -> int:
         raise RuntimeError(
             f"fresh Phase-3 authorization requires {required_status}, got {phase2.get('status')!r}"
         )
+    _validate_phase1_chain(phase1, phase2)
     _assert_phase2_blindness(phase2)
     _assert_false_mapping(rule["outcome_firewall"], "phase-3 rule outcome firewall")
 
@@ -166,6 +210,7 @@ def main() -> int:
         "schema": "ttf_genetic_phylogatr_phase3_gate_d_authorization_v0.1",
         "status": "authorize_frozen_fresh_phylogatr_phase3_gate_d",
         "purpose": "Authorize synthetic Gate-D only on this exact response-blind Phase-2 survivor geometry before fresh nucleotide identity is opened.",
+        "phase1_manifest_sha256": sha256_path(args.phase1_manifest),
         "phase2_manifest_sha256": sha256_path(args.phase2_manifest),
         "phase3_rule_sha256": sha256_path(args.phase3_rule),
         "phase2_mask_rule_sha256": phase2["rule_sha256"],
@@ -213,7 +258,7 @@ def main() -> int:
         "frozen_code_sha256": frozen_code,
         "outcome_firewall": dict(rule["outcome_firewall"]),
         "forbidden_after_authorization": [
-            "changing the Phase-2 survivor species set, graph, or inherited split",
+            "changing the Phase-1/Phase-2 provenance chain, survivor species set, graph, or inherited split",
             "changing the Phase-3 rule, master-seed derivation, world counts, reference family, alpha, or Wilson gates",
             "changing the bandwidth or IBD residualization based on synthetic qualification results",
             "opening fresh nucleotide identity, pairwise genetic distances, or empirical TTF values before a complete PASS receipt",
