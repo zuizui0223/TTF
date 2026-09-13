@@ -52,7 +52,9 @@ def _assert_false_mapping(payload: Mapping[str, object], *, label: str) -> None:
         raise RuntimeError(f"{label} is open: {bad}")
 
 
-def verify_authorized_code_files(authorization: Mapping[str, object], *, repo_root: Path = Path(".")) -> None:
+def verify_authorized_code_files(
+    authorization: Mapping[str, object], *, repo_root: Path = Path(".")
+) -> None:
     frozen = authorization.get("frozen_code_sha256")
     if not isinstance(frozen, dict) or not frozen:
         raise RuntimeError("phase-3 authorization lacks frozen_code_sha256")
@@ -63,6 +65,27 @@ def verify_authorized_code_files(authorization: Mapping[str, object], *, repo_ro
         observed = sha256_path(path)
         if observed != str(expected):
             raise RuntimeError(f"authorized code file drift: {relative}")
+
+
+def _assert_phase2_blindness(phase2: Mapping[str, object]) -> None:
+    if phase2.get("character_mask_opened") is not True:
+        raise RuntimeError("fresh phase-2 character mask was not opened/frozen")
+    if phase2.get("confirmatory_sequence_identity_opened") is not False:
+        raise RuntimeError("fresh nucleotide identity is already open")
+    if phase2.get("confirmatory_pairwise_genetic_distances_opened") is not False:
+        raise RuntimeError("fresh pairwise genetic distances are already open")
+    if phase2.get("confirmatory_ttf_statistic_opened") is not False:
+        raise RuntimeError("fresh empirical TTF statistic is already open")
+    mask = phase2.get("mask_contract")
+    if not isinstance(mask, dict):
+        raise RuntimeError("fresh phase-2 mask contract missing")
+    if mask.get("nucleotide_identity_persisted") is not False:
+        raise RuntimeError("fresh phase-2 mask contract persisted nucleotide identity")
+    if mask.get("pairwise_nucleotide_differences_computed") is not False:
+        raise RuntimeError("fresh phase-2 mask contract computed nucleotide differences")
+    split = phase2.get("split")
+    if not isinstance(split, dict) or split.get("inherit_phase1_without_resplitting") is not True:
+        raise RuntimeError("fresh phase-2 split was not inherited unchanged from phase 1")
 
 
 def load_phylogatr_phase3_context(
@@ -82,14 +105,11 @@ def load_phylogatr_phase3_context(
         raise RuntimeError("fresh phase-3 requires a PASS_TO_SYNTHETIC_GATE phase-2 manifest")
     if authorization.get("status") != "authorize_frozen_fresh_phylogatr_phase3_gate_d":
         raise RuntimeError("fresh phase-3 Gate-D is not authorized")
-    if phase2.get("confirmatory_sequence_identity_opened") is not False:
-        raise RuntimeError("fresh nucleotide identity is already open")
-    if phase2.get("confirmatory_pairwise_genetic_distances_opened") is not False:
-        raise RuntimeError("fresh pairwise genetic distances are already open")
-    if phase2.get("confirmatory_ttf_statistic_opened") is not False:
-        raise RuntimeError("fresh empirical TTF statistic is already open")
+    _assert_phase2_blindness(phase2)
     _assert_false_mapping(rule["outcome_firewall"], label="phase-3 rule outcome firewall")
-    _assert_false_mapping(authorization["outcome_firewall"], label="phase-3 authorization outcome firewall")
+    _assert_false_mapping(
+        authorization["outcome_firewall"], label="phase-3 authorization outcome firewall"
+    )
 
     if sha256_path(phase2_manifest_path) != authorization["phase2_manifest_sha256"]:
         raise RuntimeError("phase-2 manifest SHA256 drift after authorization")
@@ -105,6 +125,20 @@ def load_phylogatr_phase3_context(
         expected_sha256=phase2["geometry_csv_sha256"],
         expected_neighbor_fraction=float(rule["geometry_contract"]["neighbor_fraction"]),
     )
+    minimum_training_edges = int(
+        rule["geometry_contract"]["minimum_endpoint_disjoint_ibd_training_edges"]
+    )
+    insufficient = [
+        name
+        for name, geometry in table.geometries.items()
+        if geometry.min_endpoint_disjoint_training_edges < minimum_training_edges
+    ]
+    if insufficient:
+        raise RuntimeError(
+            "fresh phase-2 geometry lost endpoint-disjoint IBD support: "
+            + ", ".join(sorted(insufficient)[:10])
+        )
+
     species = set(table.species)
     train = tuple(map(str, phase2["split"]["train_species"]))
     evaluation = tuple(map(str, phase2["split"]["eval_species"]))
