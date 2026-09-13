@@ -10,18 +10,32 @@ from .genetic_geometry import endpoint_disjoint_training_counts
 
 @dataclass(frozen=True)
 class CrossfitIBDResult:
-    """Leave-two-localities-out IBD residualization for one species.
-
-    ``residual_turnover`` is the within-species rank of the cross-fit residual and
-    is the genetic TTF target after removing the monotone geographic-distance
-    expectation. The auxiliary arrays are retained for audit and qualification.
-    """
+    """Leave-two-localities-out IBD residualization for one species."""
 
     residual: np.ndarray
     residual_turnover: np.ndarray
     observed_rank_fraction: np.ndarray
     expected_rank_fraction: np.ndarray
     geographic_rank_fraction: np.ndarray
+    n_training_edges: np.ndarray
+
+
+@dataclass(frozen=True)
+class CrossfitIBDDesign:
+    """Geometry-only endpoint-safe IBD design reusable across response worlds.
+
+    Every stored object depends only on geographic edge distance and graph
+    endpoints. No genetic outcome enters this design, so it can be frozen before
+    any synthetic or empirical genetic response is opened.
+    """
+
+    geographic_distance: np.ndarray
+    edge_nodes: np.ndarray
+    training_indices: tuple[np.ndarray, ...]
+    geographic_centered_ranks: tuple[np.ndarray, ...]
+    geographic_rank_means: np.ndarray
+    geographic_rank_denominators: np.ndarray
+    held_geographic_rank_fraction: np.ndarray
     n_training_edges: np.ndarray
 
 
@@ -49,6 +63,140 @@ def _validated_edges(edge_nodes: np.ndarray, n_edges: int) -> np.ndarray:
     return canonical
 
 
+def prepare_crossfit_ibd_design(
+    geographic_distance: np.ndarray,
+    edge_nodes: np.ndarray,
+    *,
+    min_training_edges: int = 5,
+) -> CrossfitIBDDesign:
+    """Precompute every response-blind part of endpoint-safe rank IBD fitting."""
+    geographic = np.asarray(geographic_distance, dtype=float)
+    if geographic.ndim != 1 or len(geographic) < 3:
+        raise ValueError("geographic_distance must be a 1D array with >=3 edges")
+    if not np.isfinite(geographic).all() or np.any(geographic < 0):
+        raise ValueError("geographic distances must be finite and non-negative")
+    if min_training_edges < 3:
+        raise ValueError("min_training_edges must be >= 3")
+
+    nodes = _validated_edges(edge_nodes, len(geographic))
+    available = endpoint_disjoint_training_counts(nodes)
+    if int(np.min(available)) < int(min_training_edges):
+        worst = int(np.min(available))
+        raise ValueError(
+            "endpoint-disjoint IBD cross-fit is not estimable for every edge: "
+            f"minimum available training edges={worst}, required={min_training_edges}"
+        )
+
+    indices: list[np.ndarray] = []
+    centered: list[np.ndarray] = []
+    means = np.empty(len(nodes), dtype=float)
+    denominators = np.empty(len(nodes), dtype=float)
+    held = np.empty(len(nodes), dtype=float)
+
+    for index, (left, right) in enumerate(nodes):
+        mask = (
+            (nodes[:, 0] != left)
+            & (nodes[:, 1] != left)
+            & (nodes[:, 0] != right)
+            & (nodes[:, 1] != right)
+        )
+        train_index = np.flatnonzero(mask).astype(np.int64, copy=False)
+        x_train = geographic[train_index]
+        x_rank = _training_rank_fraction(x_train)
+        x_mean = float(x_rank.mean())
+        x_centered = x_rank - x_mean
+
+        indices.append(train_index)
+        centered.append(x_centered)
+        means[index] = x_mean
+        denominators[index] = float(np.dot(x_centered, x_centered))
+        held[index] = _rank_fraction_against(geographic[index], x_train)
+
+    return CrossfitIBDDesign(
+        geographic_distance=geographic.copy(),
+        edge_nodes=nodes.copy(),
+        training_indices=tuple(indices),
+        geographic_centered_ranks=tuple(centered),
+        geographic_rank_means=means,
+        geographic_rank_denominators=denominators,
+        held_geographic_rank_fraction=held,
+        n_training_edges=available.copy(),
+    )
+
+
+def crossfit_ibd_residuals_prepared(
+    genetic_distance: np.ndarray,
+    design: CrossfitIBDDesign,
+) -> CrossfitIBDResult:
+    """Score one genetic-distance vector on a frozen endpoint-safe IBD design.
+
+    If the genetic and geographic vectors have exactly the same weak rank order
+    including ties, every endpoint-disjoint subset necessarily has the same weak
+    rank order as well. Under the existing rank-linear IBD estimand the fitted
+    slope is therefore exactly one and every held-out residual is algebraically
+    zero. That identity is returned directly, avoiding floating roundoff followed
+    by rank amplification. No numerical tolerance is used.
+    """
+    genetic = np.asarray(genetic_distance, dtype=float)
+    geographic = np.asarray(design.geographic_distance, dtype=float)
+    if genetic.ndim != 1 or genetic.shape != geographic.shape:
+        raise ValueError("genetic_distance shape differs from frozen IBD design")
+    if not np.isfinite(genetic).all() or np.any(genetic < 0):
+        raise ValueError("genetic distances must be finite and non-negative")
+
+    if np.array_equal(average_ranks(genetic), average_ranks(geographic)):
+        zero = np.zeros(len(genetic), dtype=float)
+        held = np.asarray(design.held_geographic_rank_fraction, dtype=float).copy()
+        return CrossfitIBDResult(
+            residual=zero,
+            residual_turnover=np.full(len(genetic), 0.5, dtype=float),
+            observed_rank_fraction=held.copy(),
+            expected_rank_fraction=held.copy(),
+            geographic_rank_fraction=held,
+            n_training_edges=np.asarray(design.n_training_edges, dtype=np.int64).copy(),
+        )
+
+    residual = np.empty(len(genetic), dtype=float)
+    observed = np.empty(len(genetic), dtype=float)
+    expected = np.empty(len(genetic), dtype=float)
+
+    for index, train_index in enumerate(design.training_indices):
+        y_train = genetic[train_index]
+        y_rank = _training_rank_fraction(y_train)
+        y_mean = float(y_rank.mean())
+        y_centered = y_rank - y_mean
+        denominator = float(design.geographic_rank_denominators[index])
+        beta = (
+            0.0
+            if denominator <= np.finfo(float).eps
+            else float(
+                np.dot(design.geographic_centered_ranks[index], y_centered)
+                / denominator
+            )
+        )
+        intercept = float(
+            y_mean - beta * float(design.geographic_rank_means[index])
+        )
+        held_y = _rank_fraction_against(genetic[index], y_train)
+        held_expected = float(
+            intercept + beta * float(design.held_geographic_rank_fraction[index])
+        )
+        observed[index] = held_y
+        expected[index] = held_expected
+        residual[index] = float(held_y - held_expected)
+
+    return CrossfitIBDResult(
+        residual=residual,
+        residual_turnover=rank01(residual),
+        observed_rank_fraction=observed,
+        expected_rank_fraction=expected,
+        geographic_rank_fraction=np.asarray(
+            design.held_geographic_rank_fraction, dtype=float
+        ).copy(),
+        n_training_edges=np.asarray(design.n_training_edges, dtype=np.int64).copy(),
+    )
+
+
 def crossfit_ibd_residuals(
     genetic_distance: np.ndarray,
     geographic_distance: np.ndarray,
@@ -56,32 +204,11 @@ def crossfit_ibd_residuals(
     *,
     min_training_edges: int = 5,
 ) -> CrossfitIBDResult:
-    """Remove a monotone within-species IBD expectation without endpoint leakage.
+    """Remove monotone within-species IBD without endpoint leakage.
 
-    For each scored edge ``(i, j)``, the nuisance fit excludes every other edge
-    incident to locality ``i`` or ``j``. The remaining endpoint-disjoint edges
-    define an out-of-pair training set. Genetic and geographic distances are
-    represented only by their training-set order. A rank-linear IBD expectation
-    is fitted there and evaluated for the held-out edge using order fractions
-    against the training set.
-
-    This construction has three useful properties for pairwise genetic data:
-
-    1. the expected value for an edge never uses a genetic outcome involving
-       either of that edge's localities;
-    2. strictly increasing transformations of genetic or geographic distance do
-       not change the result;
-    3. any noiseless strictly monotone IBD relation is removed exactly, while
-       departures from that relation remain available to TTF.
-
-    The returned residual is finally ranked within species so locus-specific
-    genetic-distance scale does not determine cross-species field weighting.
-    This is the biological IBD layer. The current core TTF v0.11 architecture is
-    applied downstream as a separate geometry/inference layer: density-scaled
-    species-local graphs, training-only edge-length orthogonalization, and the
-    profiled-private null. Qualification of those layers does not automatically
-    qualify this genetic interface; the combined pipeline must pass its own
-    genetic-specific geometry gate.
+    This convenience wrapper constructs the response-blind design and then calls
+    ``crossfit_ibd_residuals_prepared``. Repeated-world qualification should
+    prepare the design once and reuse it.
     """
     genetic = np.asarray(genetic_distance, dtype=float)
     geographic = np.asarray(geographic_distance, dtype=float)
@@ -93,59 +220,10 @@ def crossfit_ibd_residuals(
         raise ValueError("genetic and geographic distances must be finite")
     if np.any(genetic < 0) or np.any(geographic < 0):
         raise ValueError("genetic and geographic distances must be non-negative")
-    if min_training_edges < 3:
-        raise ValueError("min_training_edges must be >= 3")
 
-    nodes = _validated_edges(edge_nodes, len(genetic))
-    available = endpoint_disjoint_training_counts(nodes)
-    if int(np.min(available)) < int(min_training_edges):
-        worst = int(np.min(available))
-        raise ValueError(
-            "endpoint-disjoint IBD cross-fit is not estimable for every edge: "
-            f"minimum available training edges={worst}, required={min_training_edges}"
-        )
-
-    residual = np.empty(len(genetic), dtype=float)
-    observed = np.empty(len(genetic), dtype=float)
-    expected = np.empty(len(genetic), dtype=float)
-    geo_fraction = np.empty(len(genetic), dtype=float)
-
-    for index, (left, right) in enumerate(nodes):
-        train = (
-            (nodes[:, 0] != left)
-            & (nodes[:, 1] != left)
-            & (nodes[:, 0] != right)
-            & (nodes[:, 1] != right)
-        )
-        x_train = geographic[train]
-        y_train = genetic[train]
-
-        x_rank = _training_rank_fraction(x_train)
-        y_rank = _training_rank_fraction(y_train)
-        x_centered = x_rank - float(x_rank.mean())
-        y_centered = y_rank - float(y_rank.mean())
-        denominator = float(np.dot(x_centered, x_centered))
-        beta = (
-            0.0
-            if denominator <= np.finfo(float).eps
-            else float(np.dot(x_centered, y_centered) / denominator)
-        )
-        intercept = float(y_rank.mean() - beta * x_rank.mean())
-
-        held_x = _rank_fraction_against(geographic[index], x_train)
-        held_y = _rank_fraction_against(genetic[index], y_train)
-        held_expected = float(intercept + beta * held_x)
-
-        geo_fraction[index] = held_x
-        observed[index] = held_y
-        expected[index] = held_expected
-        residual[index] = float(held_y - held_expected)
-
-    return CrossfitIBDResult(
-        residual=residual,
-        residual_turnover=rank01(residual),
-        observed_rank_fraction=observed,
-        expected_rank_fraction=expected,
-        geographic_rank_fraction=geo_fraction,
-        n_training_edges=available,
+    design = prepare_crossfit_ibd_design(
+        geographic,
+        edge_nodes,
+        min_training_edges=int(min_training_edges),
     )
+    return crossfit_ibd_residuals_prepared(genetic, design)
