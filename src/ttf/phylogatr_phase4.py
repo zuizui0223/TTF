@@ -25,6 +25,8 @@ class PhylogatrPhase4Context:
     phase3_authorization: dict
     references: dict
     qualification: dict
+    self_references: dict
+    self_qualification: dict
     phase4_rule: dict
     authorization: dict
 
@@ -91,6 +93,8 @@ def load_phylogatr_phase4_context(
     phase3_authorization_path: Path,
     references_path: Path,
     qualification_path: Path,
+    self_references_path: Path,
+    self_qualification_path: Path,
     phase4_rule_path: Path,
     phase4_authorization_path: Path,
     opening_state_path: Path,
@@ -116,6 +120,12 @@ def load_phylogatr_phase4_context(
     )
     qualification = _load_json(
         qualification_path, "ttf_genetic_phylogatr_phase3_qualification_v0.1"
+    )
+    self_references = _load_json(
+        self_references_path, "ttf_genetic_phylogatr_phase3_self_references_v0.1"
+    )
+    self_qualification = _load_json(
+        self_qualification_path, "ttf_genetic_phylogatr_phase3_self_qualification_v0.1"
     )
     phase4_rule = _load_json(
         phase4_rule_path, "ttf_genetic_phylogatr_phase4_response_rule_v0.1"
@@ -145,6 +155,8 @@ def load_phylogatr_phase4_context(
         "phase3_authorization_sha256": sha256_path(phase3_authorization_path),
         "phase3_references_sha256": sha256_path(references_path),
         "phase3_qualification_sha256": sha256_path(qualification_path),
+        "phase3_self_references_sha256": sha256_path(self_references_path),
+        "phase3_self_qualification_sha256": sha256_path(self_qualification_path),
         "phase4_rule_sha256": sha256_path(phase4_rule_path),
         "opening_state_sha256": sha256_path(opening_state_path),
         "geometry_csv_sha256": sha256_path(geometry_csv),
@@ -188,6 +200,19 @@ def load_phylogatr_phase4_context(
         raise RuntimeError("fresh Phase-3 references indicate identity opening")
     if references.get("confirmatory_pairwise_genetic_distances_opened") is not False:
         raise RuntimeError("fresh Phase-3 references indicate distance opening")
+
+    if self_references.get("status") != "complete_independent_null_reference":
+        raise RuntimeError("fresh self-reference family is incomplete")
+    if self_references.get("geometry_fingerprint_sha256") != fingerprint:
+        raise RuntimeError("fresh self references use a different geometry")
+    if self_qualification.get("geometry_fingerprint_sha256") != fingerprint:
+        raise RuntimeError("fresh self qualification uses a different geometry")
+    if self_qualification.get("status") not in {"PASS", "SELF_DETECTABILITY_NOT_QUALIFIED"}:
+        raise RuntimeError("fresh self qualification is incomplete")
+    if self_qualification.get("confirmatory_sequence_identity_opened") is not False:
+        raise RuntimeError("fresh self qualification indicates identity opening")
+    if self_qualification.get("confirmatory_pairwise_genetic_distances_opened") is not False:
+        raise RuntimeError("fresh self qualification indicates distance opening")
 
     table = load_frozen_genetic_geometry_csv(
         geometry_csv,
@@ -237,6 +262,8 @@ def load_phylogatr_phase4_context(
         phase3_authorization=phase3_auth,
         references=references,
         qualification=qualification,
+        self_references=self_references,
+        self_qualification=self_qualification,
         phase4_rule=phase4_rule,
         authorization=authorization,
     )
