@@ -1,0 +1,69 @@
+name: phylogatR phase-1 schema dry-run
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "method/genetic-ibd-crossfit"
+    paths:
+      - ".github/workflows/phylogatr-phase1-schema-dryrun.yml"
+      - "scripts/freeze_phylogatr_confirmatory_phase1.py"
+      - "src/ttf/phylogatr_confirmatory.py"
+      - "docs/supporting/genetic_phylogatr_*.json"
+      - "benchmarks/frozen/genetic_decker_species_exclusion_v0.1.json"
+
+jobs:
+  dryrun:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: OSC/phylogatr-web
+          ref: 7aeb3c8501eb8431f1df9f6b9e6df28d116daf66
+          path: external/phylogatr-web
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Run frozen phase-1 parser on official phylogatR test fixture
+        run: |
+          python scripts/freeze_phylogatr_confirmatory_phase1.py \
+            --root external/phylogatr-web/test/data/squamata_results \
+            --protocol docs/supporting/genetic_phylogatr_confirmatory_protocol_v0.1.json \
+            --parser-rule docs/supporting/genetic_phylogatr_phase1_parser_rule_v0.1.json \
+            --digest-rule docs/supporting/genetic_phylogatr_phase1_digest_rule_v0.1.json \
+            --execution-rule docs/supporting/genetic_phylogatr_phase1_execution_rule_v0.1.json \
+            --decker-exclusion benchmarks/frozen/genetic_decker_species_exclusion_v0.1.json \
+            --output-csv results/phylogatr_phase1_schema_fixture.csv \
+            --output-manifest results/phylogatr_phase1_schema_fixture.json
+      - name: Enforce dry-run firewall and expected small-fixture stop
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path('results/phylogatr_phase1_schema_fixture.json').read_text())
+          assert p['schema']=='ttf_genetic_phylogatr_confirmatory_phase1_geometry_v0.1'
+          assert p['status']=='NOT_EVALUABLE_PHASE1_PANEL_TOO_SMALL'
+          assert p['census']['genes_rows'] > 0
+          assert p['census']['final_species'] < 150
+          assert p['response_blind']['sequence_characters_used'] is False
+          assert p['response_blind']['sequence_characters_hashed'] is False
+          assert p['confirmatory_sequence_identity_opened'] is False
+          assert p['confirmatory_pairwise_genetic_distances_opened'] is False
+          print(json.dumps({
+            'status':p['status'],
+            'dataset_digest_sha256':p['dataset_digest_sha256'],
+            'geometry_fingerprint_sha256':p['geometry_fingerprint_sha256'],
+            'census':p['census'],
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phylogatr-phase1-schema-fixture
+          path: |
+            results/phylogatr_phase1_schema_fixture.csv
+            results/phylogatr_phase1_schema_fixture.json
+          if-no-files-found: error
