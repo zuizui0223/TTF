@@ -5,6 +5,8 @@
   "parent_rule_blob_sha": "d7f0496b7124fd758ab24b9803bc988a6dce3a2a",
   "cached_transfer_blob_sha": "bf97d466f2c75e3ed3bbac2ea387bed9e5bb92a1",
   "genetic_batch_execution_blob_sha": "0dd41fd3903fafa6cbe693640bcb3705b5ac9b07",
+  "runner": "scripts/benchmark_genetic_v05_batch_width.py",
+  "runner_blob_sha": "a62f70c37fd0a11d27d77819610809e7f79edb0e",
   "candidate_batch_widths": [8, 16, 32, 64],
   "n_worlds": 64,
   "world_family": {
