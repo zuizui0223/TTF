@@ -277,10 +277,11 @@ def main() -> int:
         "provenance": {
             "cite_sha256": sha256_path(cite_path),
             "genes_sha256": sha256_path(genes_path),
-            "protocol_blob_sha": None,
-            "parser_rule_blob_sha": None,
-            "digest_rule_blob_sha": None,
-            "execution_rule_blob_sha": None,
+            "protocol_sha256": sha256_path(args.protocol),
+            "parser_rule_sha256": sha256_path(args.parser_rule),
+            "digest_rule_sha256": sha256_path(args.digest_rule),
+            "execution_rule_sha256": sha256_path(args.execution_rule),
+            "decker_exclusion_manifest_sha256": sha256_path(args.decker_exclusion),
             "decker_exclusion_species_list_sha256": exclusion["species_list_sha256"],
         },
         "response_blind": {
