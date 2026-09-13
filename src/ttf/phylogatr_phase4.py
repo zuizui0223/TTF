@@ -25,6 +25,7 @@ class PhylogatrPhase4Context:
     phase3_authorization: dict
     references: dict
     qualification: dict
+    self_rule: dict
     self_references: dict
     self_qualification: dict
     phase4_rule: dict
@@ -93,6 +94,7 @@ def load_phylogatr_phase4_context(
     phase3_authorization_path: Path,
     references_path: Path,
     qualification_path: Path,
+    self_rule_path: Path,
     self_references_path: Path,
     self_qualification_path: Path,
     phase4_rule_path: Path,
@@ -121,6 +123,9 @@ def load_phylogatr_phase4_context(
     qualification = _load_json(
         qualification_path, "ttf_genetic_phylogatr_phase3_qualification_v0.1"
     )
+    self_rule = _load_json(
+        self_rule_path, "ttf_genetic_phylogatr_phase3_self_detectability_rule_v0.1"
+    )
     self_references = _load_json(
         self_references_path, "ttf_genetic_phylogatr_phase3_self_references_v0.1"
     )
@@ -144,6 +149,7 @@ def load_phylogatr_phase4_context(
         phase4_rule["outcome_firewall_at_rule_freeze"],
         label="Phase-4 rule freeze firewall",
     )
+    _assert_false_mapping(self_rule["outcome_firewall"], label="fresh self-rule firewall")
     if opening_state.get("development_panel", {}).get("opening_decision") != "PERMANENTLY_CLOSED_UNDER_V0_2_DESIGN":
         raise RuntimeError("Decker development opening state drift")
     _assert_false_mapping(opening_state["global_firewall"], label="canonical genetic opening-state firewall")
@@ -155,6 +161,7 @@ def load_phylogatr_phase4_context(
         "phase3_authorization_sha256": sha256_path(phase3_authorization_path),
         "phase3_references_sha256": sha256_path(references_path),
         "phase3_qualification_sha256": sha256_path(qualification_path),
+        "phase3_self_rule_sha256": sha256_path(self_rule_path),
         "phase3_self_references_sha256": sha256_path(self_references_path),
         "phase3_self_qualification_sha256": sha256_path(self_qualification_path),
         "phase4_rule_sha256": sha256_path(phase4_rule_path),
@@ -262,6 +269,7 @@ def load_phylogatr_phase4_context(
         phase3_authorization=phase3_auth,
         references=references,
         qualification=qualification,
+        self_rule=self_rule,
         self_references=self_references,
         self_qualification=self_qualification,
         phase4_rule=phase4_rule,
