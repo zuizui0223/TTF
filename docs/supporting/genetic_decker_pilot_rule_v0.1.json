@@ -1,0 +1,110 @@
+{
+  "schema": "ttf_genetic_decker_pilot_rule_v0.1",
+  "status": "frozen_after_response_blind_geometry_census_before_any_empirical_genetic_outcome_and_before_genetic_synthetic_performance",
+  "purpose": "Freeze the only permitted development path from the Decker public sampling geometry to a genetic-specific TTF Gate-D pilot without inspecting empirical genetic distances or Monmonier outcomes.",
+  "source": {
+    "repository": "skdecker/PhylogeographicBreaks",
+    "commit": "11534ba70fbe3705e667651030edef5b849fa949",
+    "census_workflow_run_id": 34749586629,
+    "census_artifact_id": 10315665061,
+    "census_artifact_sha256": "6e74de5cd475cc94f6bc99df89b8eb4a994e32c4ab54da07c5ac5ea9ff6d62dd",
+    "census_panels": 433,
+    "census_species": 403,
+    "precalibration_eligible_panels": 231,
+    "precalibration_eligible_species": 221
+  },
+  "outcome_firewall": {
+    "empirical_pairwise_genetic_distances_opened": false,
+    "sequence_characters_used_for_selection": false,
+    "alignment_divergence_summaries_opened": false,
+    "monmonier_break_results_opened": false,
+    "break_presence_absence_opened": false,
+    "eligibility_tuned_on_genetic_outcomes": false
+  },
+  "geometry_filter": {
+    "coordinate_match": "phylogatr_id intersection of final FASTA headers and occurfiltered rows",
+    "locality_collapse": "exact latitude_longitude_pair_only",
+    "coordinate_geometry": "spherical_ECEF_km_radius_6371.0088",
+    "coarse_min_exact_localities": 12,
+    "min_endpoint_disjoint_ibd_training_edges": 5,
+    "neighbor_fraction": 0.15,
+    "graph_rule": "k_s=min(n_s-1,max(2,floor(0.15*n_s+0.5)))_after_exact_locality_collapse"
+  },
+  "one_panel_per_species": {
+    "required": true,
+    "selection_order": [
+      "maximum_unique_localities",
+      "maximum_matched_fasta_records",
+      "lexicographically_smallest_locus"
+    ],
+    "selection_uses_genetic_outcome": false,
+    "expected_species": 221,
+    "expected_aves": 149,
+    "expected_chiroptera": 72
+  },
+  "core_v011_inheritance": {
+    "graph_neighbor_fraction": 0.15,
+    "bandwidth_km": 500.0,
+    "bandwidth_rule": "inherit_v0.11_500km_without_reoptimization_on_Decker",
+    "training_response_after_ibd": "within_species_post_ibd_turnover_rank_orthogonalized_against_edge_length_rank",
+    "evaluation_response_after_ibd": "raw_within_species_post_ibd_turnover_rank",
+    "prior_strength": 0.25,
+    "prior_mean": 0.0,
+    "segment_points": 5,
+    "private_strength": "equal_species_mean_training_edge_midpoint_neighbor_coherence",
+    "strength_neighbours": 4,
+    "profiled_private_selected_configurations": 2
+  },
+  "split": {
+    "master_seed": 20260913,
+    "rule": "class_stratified_species_disjoint_half_split_then_combine",
+    "aves_expected_train_eval": [75, 74],
+    "chiroptera_expected_train_eval": [36, 36],
+    "expected_train_species": 111,
+    "expected_eval_species": 110
+  },
+  "genetic_world": {
+    "ibd_strength_primary": 1.0,
+    "locality_noise_sd": 0.10,
+    "noise_dimensions": 2,
+    "transition_width": 0.20,
+    "private_reference_configurations": {
+      "A0": [0.0, 0.10],
+      "A0p5": [0.5, 0.10],
+      "A1": [1.0, 0.10],
+      "A2": [2.0, 0.10],
+      "A3": [3.0, 0.10],
+      "A5": [5.0, 0.10],
+      "A10": [10.0, 0.10],
+      "infinite_snr": [1.0, 0.0]
+    },
+    "mixed_ibd_diagnostic": {
+      "levels": [0.5, 1.0, 2.0],
+      "assignment": "sha256_species_name_mod_3",
+      "must_not_change_primary_rule": true
+    }
+  },
+  "qualification": {
+    "alpha": 0.05,
+    "reference_worlds_per_configuration": 1999,
+    "profile_strength_draws": 999,
+    "calibration_statistic_draws": 1000,
+    "observed_worlds_per_cell": 500,
+    "mandatory_primary_cells": [
+      [0.0, 0.5],
+      [0.0, 1.0],
+      [0.0, 2.0],
+      [0.0, 3.0],
+      [1.0, 2.0]
+    ],
+    "ibd_only_diagnostic": {
+      "shared_fraction": 0.0,
+      "residual_amplitude": 0.0,
+      "noise_sd": 0.0
+    },
+    "type1_wilson95_upper_ceiling": 0.10,
+    "shared_A2_wilson95_lower_floor": 0.80,
+    "failure_interpretation": "NOT_EVALUABLE_under_this_design_not_absence_of_shared_phylogeography"
+  },
+  "pilot_claim_boundary": "This is development qualification on a previously published convenience sampling frame. A pass may justify opening Decker genetic outcomes as a pilot only; it is not a fresh confirmatory empirical claim."
+}
