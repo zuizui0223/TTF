@@ -166,6 +166,33 @@ def coordinate_by_header(
     return out
 
 
+def masks_by_frozen_locality(
+    alignment: CanonicalMaskAlignment,
+    occurrence_rows: Sequence[Mapping[str, str]],
+    frozen_latlon: np.ndarray,
+) -> dict[int, tuple[np.ndarray, ...]]:
+    """Map boolean masks to exact phase-1 localities without changing geometry."""
+    latlon = np.asarray(frozen_latlon, dtype=float)
+    if latlon.ndim != 2 or latlon.shape[1] != 2 or len(latlon) == 0:
+        raise ValueError("frozen_latlon must be non-empty n x 2")
+    lookup = {tuple(map(float, row)): index for index, row in enumerate(latlon)}
+    if len(lookup) != len(latlon):
+        raise ValueError("frozen_latlon contains duplicate localities")
+    coordinates = coordinate_by_header(alignment.headers, occurrence_rows)
+    grouped: dict[int, list[np.ndarray]] = {}
+    for header, mask in zip(alignment.headers, alignment.masks):
+        coordinate = coordinates.get(header)
+        if coordinate is None:
+            continue
+        if coordinate not in lookup:
+            raise RuntimeError(
+                f"phase-2 matched coordinate {coordinate!r} is absent from frozen phase-1 localities"
+            )
+        index = int(lookup[coordinate])
+        grouped.setdefault(index, []).append(np.asarray(mask, dtype=bool))
+    return {index: tuple(values) for index, values in grouped.items()}
+
+
 def edge_mask_support(
     masks_by_locality: Mapping[int, Sequence[np.ndarray]],
     edge_nodes: np.ndarray,
@@ -220,5 +247,6 @@ __all__ = [
     "canonical_mask_sha256",
     "coordinate_by_header",
     "edge_mask_support",
+    "masks_by_frozen_locality",
     "read_canonical_mask_alignment",
 ]
