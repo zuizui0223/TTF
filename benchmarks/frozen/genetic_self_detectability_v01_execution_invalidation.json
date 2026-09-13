@@ -1,0 +1,19 @@
+{
+  "schema": "ttf_genetic_self_detectability_v01_execution_invalidation",
+  "status": "invalidated_for_yaml_null_scalar_before_null_evaluation_world_generation",
+  "workflow_run_id": 34754486500,
+  "failure_scope": "The evaluation matrix used an unquoted YAML null scalar for the null cell label. GitHub Actions therefore rendered matrix.cell as an empty value and invoked the runner with '--cell --start ...', which argparse rejected before null evaluation world generation.",
+  "null_evaluation_worlds_generated": 0,
+  "null_evaluation_results_opened": false,
+  "private_A2_partial_results_opened": false,
+  "final_self_detectability_result_created": false,
+  "empirical_genetic_outcomes_opened": false,
+  "reference_universe_status": "The independent 1000-world null reference completed, but the whole v0.1 execution is not used as a qualification receipt. A successor reruns the exact frozen reference and evaluation universes from their absolute replicate-index seed rules.",
+  "allowed_successor_change": "Quote the null cell label as a literal string in the GitHub Actions matrix/workflow. All frozen method code, geometry, synthetic parameters, world counts, seed namespaces, alpha, and Wilson gates must remain unchanged.",
+  "forbidden_successor_changes": [
+    "changing any synthetic world identity or count",
+    "using partial private_A2 output from the invalid run to tune the method",
+    "changing the self-field estimator, bandwidth, endpoint exclusion, null reference, alpha, or Wilson thresholds",
+    "opening empirical genetic outcomes"
+  ]
+}
