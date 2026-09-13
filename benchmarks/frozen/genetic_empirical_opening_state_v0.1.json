@@ -1,0 +1,91 @@
+{
+  "schema": "ttf_genetic_empirical_opening_state_v0.1",
+  "status": "EMPIRICAL_OPENING_CLOSED",
+  "purpose": "Canonical machine-readable handoff for the genetic TTF program. It states exactly which data surfaces may be opened next and prevents a failed or incomplete qualification from being interpreted as biological evidence.",
+  "source_head_before_receipt": "6edf81c1d1902d73bd91d1d88b6594d264f938bb",
+  "development_panel": {
+    "dataset": "Decker et al. bird/bat development geometry",
+    "cross_species_gate_d": {
+      "status": "NOT_EVALUABLE",
+      "receipt": "benchmarks/frozen/genetic_gate_d_v02_qualification_receipt.json",
+      "receipt_blob_sha": "a9b3e3941ebeda9030cd6079fe9075b089808acb",
+      "type1_gate_pass": false,
+      "binding_private_cell": "A3",
+      "binding_wilson95_upper": 0.10033475332223055,
+      "frozen_upper_ceiling": 0.10,
+      "shared_A2_power_gate_pass": true,
+      "shared_A2_wilson95_lower": 0.8355052092686175,
+      "frozen_power_floor": 0.80,
+      "empirical_opening_eligible": false
+    },
+    "within_species_self_detectability": {
+      "status": "PASS",
+      "receipt": "benchmarks/frozen/genetic_self_detectability_v02_qualification_receipt.json",
+      "receipt_blob_sha": "a303f8d13e4f38b5d37ddce1dad2b31fcdc887de",
+      "null_wilson95_upper": 0.053771365501634506,
+      "private_A2_wilson95_lower": 0.9923756595384479,
+      "scope": "within-species self-detectability only; does not authorize Decker outcome opening"
+    },
+    "opening_decision": "PERMANENTLY_CLOSED_UNDER_V0_2_DESIGN",
+    "forbidden": [
+      "open Decker nucleotide identities",
+      "open Decker pairwise genetic distances",
+      "open Decker Monmonier results or break labels",
+      "round the A3 Wilson upper bound down to the 0.10 ceiling",
+      "retune graph, bandwidth, alpha, null family, species panel, or split from the failed Gate-D result"
+    ]
+  },
+  "fresh_confirmatory_route": {
+    "dataset": "fresh phylogatR download independent of the Decker development files",
+    "protocol": "docs/supporting/genetic_phylogatr_confirmatory_protocol_v0.1.json",
+    "protocol_blob_sha": "8db5f1dd4bc20821c3a7e4e76267e087404f180d",
+    "current_state": "READY_FOR_RESPONSE_BLIND_PHASE_1_WHEN_A_FRESH_ARCHIVE_IS_AVAILABLE",
+    "phase_1": {
+      "allowed_input_surface": "genes.txt, cite.txt, current-schema occurrences.txt, aligned FASTA headers only",
+      "forbidden_input_surface": "nucleotide character identity",
+      "minimum_unique_localities": 12,
+      "neighbor_fraction": 0.15,
+      "minimum_endpoint_disjoint_ibd_training_edges": 5,
+      "maximum_species": 250,
+      "minimum_species": 150,
+      "taxonomic_firewall": "Animalia excluding Aves, Chiroptera, and the exact frozen 221-species Decker exclusion set",
+      "output_required_status_for_phase_2": "FROZEN_RESPONSE_BLIND_PHASE1_GEOMETRY"
+    },
+    "phase_2": {
+      "allowed_input_surface": "canonical-valid versus noncanonical character masks only",
+      "canonical_valid": ["A", "C", "G", "T", "a", "c", "g", "t"],
+      "minimum_comparable_fraction": 0.5,
+      "species_rule": "every frozen edge must have at least one valid cross-locality sequence pair",
+      "geometry_rule": "no rewiring",
+      "split_rule": "inherit the Phase-1 train/evaluation assignment and filter only; no resplitting",
+      "minimum_surviving_species": 150,
+      "output_required_status_for_gate_d": "PASS_TO_SYNTHETIC_GATE"
+    },
+    "phase_3": {
+      "action": "repeat the full dataset-specific profiled-private genetic Gate-D on the exact Phase-2 survivor geometry",
+      "nucleotide_identity_must_remain_closed": true,
+      "pass_required_before_empirical_response": true,
+      "failure_interpretation": "NOT_EVALUABLE"
+    },
+    "phase_4": {
+      "action_if_and_only_if_phase_3_passes": "unmask nucleotide identity and compute the predeclared p-distance response on the already-frozen edges",
+      "primary_empirical_test": "frozen out-of-species profiled-private TTF test",
+      "alpha": 0.05
+    }
+  },
+  "global_firewall": {
+    "decker_empirical_sequence_identity_opened": false,
+    "decker_empirical_pairwise_genetic_distances_opened": false,
+    "decker_empirical_break_labels_opened": false,
+    "fresh_confirmatory_sequence_identity_opened": false,
+    "fresh_confirmatory_pairwise_genetic_distances_opened": false,
+    "fresh_confirmatory_ttf_statistic_opened": false,
+    "empirical_genetic_conclusion_exists": false
+  },
+  "interpretation_contract": {
+    "qualified_cross_species_positive": "evidence for a transferable place component of within-species genetic differentiation",
+    "qualified_cross_species_negative_with_self_detectability_pass": "evidence consistent with lineage-conditioned spatial structure within the tested domain",
+    "any_failed_geometry_mask_or_power_type1_gate": "NOT_EVALUABLE; never a biological null"
+  },
+  "next_authorized_action": "Obtain a genuinely fresh phylogatR archive and execute response-blind Phase 1 only. Do not open nucleotide identities."
+}
