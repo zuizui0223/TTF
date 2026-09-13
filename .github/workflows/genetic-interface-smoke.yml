@@ -12,6 +12,7 @@ on:
       - "scripts/freeze_phylogatr_confirmatory_phase1.py"
       - "scripts/freeze_phylogatr_confirmatory_phase2_mask.py"
       - "scripts/authorize_phylogatr_phase3_gate_d.py"
+      - "scripts/plan_phylogatr_phase3_shards.py"
       - "scripts/run_phylogatr_phase3_*.py"
       - "scripts/aggregate_phylogatr_phase3_*.py"
       - "docs/supporting/genetic_phylogatr_*.json"
