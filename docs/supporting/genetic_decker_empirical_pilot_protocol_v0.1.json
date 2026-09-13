@@ -1,0 +1,63 @@
+{
+  "schema": "ttf_genetic_decker_empirical_pilot_protocol_v0.1",
+  "status": "predeclared_not_authorized_pending_gate_d_pass",
+  "purpose": "Freeze how empirical mitochondrial sequence differentiation would be converted into the already-qualified genetic-TTF estimand if and only if the frozen genetic Gate-D returns PASS. This file does not authorize opening sequence characters, pairwise genetic distances, Monmonier outputs, or break labels.",
+  "authorization_precondition": "A separate explicit empirical-opening authorization may be created only after a completed frozen Gate-D report has status PASS and empirical_pilot_opening_eligible=true.",
+  "source": {
+    "repository": "skdecker/PhylogeographicBreaks",
+    "commit": "11534ba70fbe3705e667651030edef5b849fa949",
+    "panel": "the same 221 species, one frozen species-locus panel per species, 5,583 localities, 20,987 density-scaled graph edges, and 111/110 train-evaluation split used by genetic Gate-D",
+    "forbidden_sources": [
+      "Aves_MonmonierResults",
+      "Chiroptera_MonmoniersResults",
+      "published break presence/absence labels",
+      "any outcome-selected alternative locus or species panel"
+    ]
+  },
+  "observation_contract": {
+    "node": "exact latitude-longitude locality already frozen by the response-blind geometry pipeline",
+    "multiple_sequences_same_locality": "retain all frozen-locus sequences linked to the locality; do not create within-locality graph edges",
+    "sequence_normalization": "uppercase aligned sequence characters; only A,C,G,T are canonical comparable states",
+    "sequence_pair_distance": "uncorrected p-distance = canonical mismatches divided by columns where both sequences are canonical A/C/G/T",
+    "minimum_comparable_fraction": 0.5,
+    "minimum_comparable_rule": "A sequence pair is valid only when its number of comparable canonical columns is at least ceil(0.5 * frozen alignment length). Gaps, N, and IUPAC ambiguity codes are ignored rather than counted as matches or mismatches.",
+    "locality_pair_distance": "arithmetic mean of all valid cross-locality sequence-pair p-distances for the two localities",
+    "edge_response": "the locality-pair distance for each already-frozen graph edge",
+    "edge_missingness_rule": "Do not delete, replace, or rewire an edge after sequence opening. If any frozen edge for a species has no valid cross-locality sequence pair, that species is empirical-outcome NOT_EVALUABLE under the frozen graph.",
+    "species_unit": "species, never sequence or edge, remains the inferential unit"
+  },
+  "primary_estimand": {
+    "trait_construction": "endpoint-safe leave-two-localities-out rank-IBD residualization followed by within-species residual rank turnover, exactly as qualified by genetic Gate-D",
+    "training_geometry_control": "the frozen v0.11 training-only edge-length geometry control, unchanged",
+    "transfer": "the frozen 500-km transferable turnover field on the 111 training species scored on the 110 completely held-out species",
+    "primary_statistic": "mean held-out species Spearman transfer score T",
+    "empirical_p_value": "profiled-private upper Monte Carlo p-value using the completed Gate-D private-reference families; the two nuisance configurations are selected using training strength only, never empirical held-out T",
+    "alpha": 0.05
+  },
+  "primary_interpretation": {
+    "positive_result": "A small profiled-private p-value with positive held-out T is pilot evidence that geographic location predicts mitochondrial intraspecific differentiation in unseen species beyond the frozen IBD and sampling-geometry controls.",
+    "negative_result": "A non-significant pilot result is inconclusive and must not be called lineage-specific unless a separately predeclared within-species detectability gate has also qualified.",
+    "claim_scope": "mitochondrial phylogeographic differentiation on this published development panel, not genome-wide differentiation and not fresh confirmatory evidence"
+  },
+  "secondary_analyses": {
+    "species_scores": "report all held-out C_s values and their class membership after the primary result is fixed",
+    "spatial_field": "map the training-derived field and support only after the primary inferential receipt is frozen",
+    "aves_to_chiroptera_and_chiroptera_to_aves": "not inferentially authorized by this protocol; reciprocal class transfer requires a separate response-blind geometry census and its own synthetic qualification before empirical class-transfer scores are opened",
+    "common_marker_replications": "COI/CYTB/ND2 or other marker-specific replications are secondary and require frozen eligibility rules before their outcomes are inspected"
+  },
+  "forbidden_after_empirical_opening": [
+    "switching from mean locality-pair p-distance to median or minimum based on results",
+    "changing comparable-site rules based on transfer performance",
+    "dropping poorly fitting species or graph edges after seeing genetic distances",
+    "changing bandwidth, graph degree, species split, IBD residualization, private-null profiling, or alpha",
+    "using Decker Monmonier break outputs to tune or validate the primary TTF statistic",
+    "describing a non-significant result as evidence for lineage-specific history without a separately qualified detectability analysis"
+  ],
+  "outcome_firewall": {
+    "empirical_pairwise_genetic_distances_opened": false,
+    "sequence_characters_opened_for_inference": false,
+    "alignment_divergence_summaries_opened": false,
+    "monmonier_results_opened": false,
+    "break_presence_absence_opened": false
+  }
+}
