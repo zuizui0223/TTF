@@ -1,0 +1,38 @@
+{
+  "schema": "ttf_genetic_gate_d_v02_qualification_receipt",
+  "status": "NOT_EVALUABLE",
+  "workflow_run_id": 34753846062,
+  "workflow_head_sha": "69ad9384a8899406960b0add7f9602b53a99c487",
+  "qualification_artifact_id": 10317170875,
+  "qualification_artifact_digest": "sha256:b705887aab914c385986d4524cfeb0dcb10e3511e09831f2d20b4b38c224ee1d",
+  "frozen_geometry_fingerprint_sha256": "a1e0f76abd391d6e8d41347df91c8eda2963f4b998564a0b69e8345ca08a8f0b",
+  "cells": [
+    {"shared_fraction": 0.0, "residual_amplitude": 0.5, "rejections": 8, "n_worlds": 500, "rejection_rate": 0.016, "wilson95_low": 0.008129253033388314, "wilson95_high": 0.03125110853339426},
+    {"shared_fraction": 0.0, "residual_amplitude": 1.0, "rejections": 10, "n_worlds": 500, "rejection_rate": 0.02, "wilson95_low": 0.010899183596210813, "wilson95_high": 0.036420183246879345},
+    {"shared_fraction": 0.0, "residual_amplitude": 2.0, "rejections": 16, "n_worlds": 500, "rejection_rate": 0.032, "wilson95_low": 0.019791513626571118, "wilson95_high": 0.051344869045441784},
+    {"shared_fraction": 0.0, "residual_amplitude": 3.0, "rejections": 37, "n_worlds": 500, "rejection_rate": 0.074, "wilson95_low": 0.054161184751011976, "wilson95_high": 0.10033475332223055},
+    {"shared_fraction": 1.0, "residual_amplitude": 2.0, "rejections": 434, "n_worlds": 500, "rejection_rate": 0.868, "wilson95_low": 0.8355052092686175, "wilson95_high": 0.8948832761516801}
+  ],
+  "type1_gate": {
+    "wilson95_upper_ceiling": 0.10,
+    "max_observed_wilson95_upper": 0.10033475332223055,
+    "pass": false,
+    "binding_cell": {"shared_fraction": 0.0, "residual_amplitude": 3.0}
+  },
+  "power_gate": {
+    "cell": {"shared_fraction": 1.0, "residual_amplitude": 2.0},
+    "wilson95_lower_floor": 0.80,
+    "observed_wilson95_lower": 0.8355052092686175,
+    "pass": true
+  },
+  "empirical_pilot_opening_eligible": false,
+  "empirical_genetic_outcomes_opened": false,
+  "decision": "Do not open Decker empirical genetic outcomes. The frozen design is NOT_EVALUABLE because the A3 private-null Wilson upper bound exceeds 0.10, even though shared-A2 power passes.",
+  "forbidden_post_result_rescue": [
+    "rounding 0.10033475332223055 down to 0.10",
+    "dropping or weakening the A3 private-null cell",
+    "changing alpha, Wilson confidence level, private-reference configurations, selected-config count, graph, bandwidth, species set, or split based on this result",
+    "opening Decker pairwise genetic distances, sequence characters, Monmonier results, or break labels under this failed qualification"
+  ],
+  "failure_interpretation": "NOT_EVALUABLE under this frozen development design; not evidence that transferable phylogeographic structure is absent."
+}

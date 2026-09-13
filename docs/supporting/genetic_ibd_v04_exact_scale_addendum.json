@@ -1,0 +1,25 @@
+{
+  "schema": "ttf_genetic_ibd_v04_exact_scale_addendum",
+  "status": "frozen_after_v03_exactness_failure_before_canonical_scale_implementation",
+  "parent_failure": "benchmarks/frozen/genetic_decker_execution_benchmark_v03_failure.json",
+  "parent_execution_rule": "docs/supporting/genetic_ibd_exact_fast_v04_rule.json",
+  "scientific_estimand_unchanged": true,
+  "rank_invariance_argument": "The IBD nuisance layer depends only on within-species order. Any strictly positive scalar multiple of geographic distance is the same mathematical IBD ordering. For the exactly noise-free, zero-residual calibration arm, choosing canonical positive scale 1 removes floating order collapse without changing the rank estimand.",
+  "allowed_change": "If residual_amplitude=0, noise_sd=0, and ibd_strength>0, set synthetic genetic edge distance exactly equal to geographic edge distance. If ibd_strength=0, retain an exactly zero genetic-distance vector.",
+  "forbidden": [
+    "empirical residual thresholds",
+    "near-tie tolerance tuning",
+    "species-specific exceptions",
+    "graph changes",
+    "bandwidth changes",
+    "support exclusions",
+    "qualification threshold changes",
+    "private/shared performance based tuning"
+  ],
+  "required_validation": [
+    "all 221 frozen Decker species have identical weak rank order in pure-IBD world",
+    "IBD-only heldout statistic exactly zero",
+    "IBD-only training strength exactly zero",
+    "private/shared benchmark worlds remain the same frozen seeds and parameters"
+  ]
+}

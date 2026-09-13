@@ -1,0 +1,42 @@
+{
+  "schema": "ttf_genetic_transfer_batch_v05_rule",
+  "status": "frozen_after_v04_execution_profile_before_v05_implementation_or_benchmark",
+  "parent_execution_receipt": "benchmarks/frozen/genetic_decker_execution_benchmark_v04_receipt.json",
+  "profile_workflow_run_id": 34752081351,
+  "profile_result": {
+    "ibd_seconds": 0.851027508999664,
+    "transfer_seconds": 27.379337652999993,
+    "transfer_fraction_of_scoring_wall": 0.9694846285602988
+  },
+  "scientific_estimand_unchanged": true,
+  "allowed_changes": {
+    "geometry_only_denominator_cache": "Compute and store the exact opportunity denominator for every frozen evaluation edge and segment point once, using the same Gaussian kernel, train-edge weights, prior strength, edge chunk size 32, train chunk size 4096, and summation order as score_chunked_batch pass 1.",
+    "world_batching": "Assemble multiple independently generated response worlds as columns and pass them together through the existing exact dense Gaussian projection so every geometry kernel block is reused across columns.",
+    "deterministic_sharding": "Partition absolute replicate indices into deterministic contiguous shards. Seed generation must continue to use the frozen absolute replicate index, so changing shard count cannot change any synthetic world."
+  },
+  "frozen_execution_constants": {
+    "edge_chunk_size": 32,
+    "train_chunk_size": 4096,
+    "candidate_batch_widths": [8, 16, 32, 64],
+    "batch_width_selection_basis": "execution time and memory only after exact numerical equivalence passes"
+  },
+  "required_validation": {
+    "cached_vs_original_single_world": "statistic and every held-out species score agree within 1e-12",
+    "batched_vs_sequential_worlds": "training strength, statistic, and every held-out species score agree within 1e-12 for each world",
+    "tie_rich_and_private_shared_cases": "include exact ties and both private and shared synthetic residual fields",
+    "response_firewall": "No empirical genetic outcome may be opened during v0.5 development or execution benchmarking"
+  },
+  "forbidden_changes": [
+    "kernel approximation",
+    "distance cutoff",
+    "sparse truncation",
+    "dtype reduction",
+    "graph or bandwidth change",
+    "species exclusion",
+    "IBD estimand change",
+    "private-null configuration change",
+    "qualification threshold change",
+    "using benchmark statistic sign or magnitude to select batch width"
+  ],
+  "qualification_boundary": "A v0.5 execution pass can authorize the already-frozen genetic Gate-D computation only. It cannot by itself qualify genetic TTF or authorize empirical genetic interpretation."
+}

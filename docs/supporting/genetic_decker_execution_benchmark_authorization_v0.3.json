@@ -1,0 +1,46 @@
+{
+  "schema": "ttf_genetic_decker_execution_benchmark_authorization_v0.3",
+  "status": "authorize_exactly_one_v03_successor_execution_benchmark",
+  "authorization_rule": "Run exactly the same three synthetic benchmark worlds as failed v0.2 on the same corrected frozen Decker geometry after the prospectively constrained v0.3 exactness/cache successor. Preserve the result regardless of sign. This is execution validation, not qualification and not candidate selection.",
+  "parent_failure": "benchmarks/frozen/genetic_decker_execution_benchmark_v02_failure.json",
+  "diagnosis": "benchmarks/frozen/genetic_ibd_only_numeric_diagnostic_v0.1.json",
+  "source_ledger": "benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.2.json",
+  "source_ledger_blob_sha": "180c00e2d79ba58a1068e0c9fe45e41b3c3c04c1",
+  "successor_rule": "docs/supporting/genetic_ibd_successor_v03_rule.json",
+  "successor_rule_blob_sha": "792cd530583d9b299f200b8ecea632d4def032fb",
+  "frozen_successor_rule_blob_sha": "792cd530583d9b299f200b8ecea632d4def032fb",
+  "runner": "scripts/benchmark_genetic_decker_pipeline_v03.py",
+  "runner_blob_sha": "53330ddb83316224b66f766dce8e322286a30463",
+  "genetic_simulate_blob_sha": "8477342cb97ae6813ef9eec57d6ea8386757261a",
+  "genetic_ibd_blob_sha": "1578f91ccba87d507085c2898836172a18f43fd4",
+  "genetic_gate_blob_sha": "2ae019b2dbd9573dbd4795cb4948ac3a034bec34",
+  "geometry_fingerprint_sha256": "a1e0f76abd391d6e8d41347df91c8eda2963f4b998564a0b69e8345ca08a8f0b",
+  "geometry_csv_sha256": "86d3b71e8a1cb61819b9135766eec16f4fac9c2c6b13e7b75b39536d2766ba26",
+  "authorized_cases": [
+    {"label": "ibd_only", "shared_fraction": 0.0, "residual_amplitude": 0.0, "noise_sd": 0.0, "seed": 2026091301},
+    {"label": "private_A2", "shared_fraction": 0.0, "residual_amplitude": 2.0, "noise_sd": 0.10, "seed": 2026091302},
+    {"label": "shared_A2", "shared_fraction": 1.0, "residual_amplitude": 2.0, "noise_sd": 0.10, "seed": 2026091303}
+  ],
+  "required_invariants": {
+    "ibd_only_statistic_absolute_max": 1e-12,
+    "ibd_only_training_strength_absolute_max": 1e-12,
+    "all_110_eval_species_scores_finite": true
+  },
+  "frozen_architecture": {
+    "species": 221,
+    "train_species": 111,
+    "eval_species": 110,
+    "neighbor_fraction": 0.15,
+    "bandwidth_km": 500.0,
+    "split_unchanged_from_v02": true
+  },
+  "forbidden": [
+    "support_exclusion",
+    "bandwidth_retuning",
+    "graph_retuning",
+    "threshold_retuning",
+    "private_reference_retuning",
+    "using_private_or_shared_benchmark_sign_or_magnitude_to_select_a_successor",
+    "empirical_genetic_outcome_opening"
+  ]
+}

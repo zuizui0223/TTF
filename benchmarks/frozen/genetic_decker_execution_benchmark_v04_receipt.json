@@ -1,0 +1,28 @@
+{
+  "schema": "ttf_genetic_decker_execution_benchmark_v04_receipt",
+  "status": "passed_execution_invariants_not_qualification",
+  "workflow_run_id": 34751881760,
+  "workflow_head_sha": "e0ba058fc24842460dc1f29fe6453c8077070a79",
+  "artifact_id": 10315876812,
+  "artifact_name": "decker-genetic-execution-benchmark-v0.4",
+  "artifact_sha256": "7efc5b6eaf83e2a22e645e090786ebb45ce787521d3ad20d410cdff8598f39b7",
+  "geometry_fingerprint_sha256": "a1e0f76abd391d6e8d41347df91c8eda2963f4b998564a0b69e8345ca08a8f0b",
+  "species_count": 221,
+  "train_species": 111,
+  "eval_species": 110,
+  "total_edges": 20987,
+  "design_preparation_seconds": 3.5644041740000034,
+  "cases": [
+    {"label": "ibd_only", "statistic": 0.0, "training_strength": 0.0, "finite_eval_species_scores": 110, "score_seconds": 42.94206344099999},
+    {"label": "private_A2", "statistic": 0.022868529876360916, "training_strength": 0.40183220680954884, "finite_eval_species_scores": 110, "score_seconds": 43.998104581999996},
+    {"label": "shared_A2", "statistic": 0.09863499005624647, "training_strength": 0.3190217321951907, "finite_eval_species_scores": 110, "score_seconds": 43.96520866899999}
+  ],
+  "total_score_seconds": 130.96956742499998,
+  "required_invariants_passed": {
+    "ibd_only_statistic_exact_zero": true,
+    "ibd_only_training_strength_exact_zero": true,
+    "all_110_eval_species_scores_finite": true,
+    "empirical_genetic_outcomes_opened": false
+  },
+  "claim_boundary": "This receipt validates only numerical/execution invariants for the frozen v0.4 implementation. It does not qualify genetic TTF and does not authorize empirical genetic interpretation."
+}

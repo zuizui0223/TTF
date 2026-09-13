@@ -1,0 +1,28 @@
+{
+  "schema": "ttf_genetic_decker_pilot_geometry_v01_invalidation",
+  "status": "invalidated_before_any_synthetic_world_was_scored",
+  "invalidated_source_ledger": "benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.1.json",
+  "invalidated_freeze_workflow_run_id": 34749848375,
+  "invalidated_artifact_id": 10315143405,
+  "failed_execution_benchmark_run_id": 34749969336,
+  "failure_stage": "geometry_fingerprint_precondition_before_world_generation",
+  "synthetic_worlds_scored_before_failure": 0,
+  "empirical_genetic_outcomes_opened": false,
+  "cause": "prepare_density_scaled_genetic_geometry canonicalized ECEF rows with numpy.unique, so edge-node indices referenced canonical ECEF order; the v0.1 freeze fingerprint, CSV locality index, and support calculation instead used the pre-canonical latitude-longitude-derived ECEF row order.",
+  "unaffected_objects": [
+    "species-locus eligibility census",
+    "221 selected species identities",
+    "one-panel-per-species selection rule",
+    "density-scaled k values",
+    "edge counts",
+    "endpoint-disjoint IBD support counts",
+    "111/110 class-stratified species split"
+  ],
+  "invalid_objects": [
+    "v0.1 geometry fingerprint",
+    "v0.1 CSV row order as graph-node identity",
+    "v0.1 nearest-training-edge support diagnostics"
+  ],
+  "repair_rule": "Create a new v0.2 freeze that uses the canonical coordinates stored in GeneticSamplingGeometry for fingerprinting, graph-node identity, CSV locality indexing, and support calculation. Do not inspect any synthetic statistic or empirical genetic outcome before the v0.2 freeze is complete.",
+  "claim_boundary": "The v0.1 geometry artifact cannot be used for qualification or empirical inference. Its preservation is an audit record of a pre-outcome representation bug."
+}

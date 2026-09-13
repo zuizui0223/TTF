@@ -1,0 +1,25 @@
+{
+  "schema": "ttf_genetic_v04_execution_profile_authorization",
+  "status": "authorize_one_computational_profile_after_v04_execution_pass",
+  "parent_receipt": "benchmarks/frozen/genetic_decker_execution_benchmark_v04_receipt.json",
+  "parent_workflow_run_id": 34751881760,
+  "purpose": "Decompose the approximately 44-second frozen v0.4 single-world runtime into endpoint-safe IBD, training geometry control, private-strength, and transfer-scoring time so later optimization can target execution only.",
+  "profile_world": {"label": "private_A2", "shared_fraction": 0.0, "residual_amplitude": 2.0, "noise_sd": 0.10, "seed": 2026091302},
+  "allowed_outputs": [
+    "total wall seconds",
+    "IBD residualization seconds",
+    "training geometry-control seconds",
+    "private-strength seconds",
+    "transfer-score seconds",
+    "per-species IBD seconds and edge count",
+    "design preparation seconds"
+  ],
+  "forbidden_uses": [
+    "changing scientific estimand",
+    "changing graph degree or bandwidth",
+    "species exclusion",
+    "qualification threshold changes",
+    "using statistic sign or magnitude to select an implementation"
+  ],
+  "empirical_genetic_outcomes_opened": false
+}

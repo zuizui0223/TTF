@@ -1,0 +1,59 @@
+name: genetic v0.4 execution profile
+
+on:
+  push:
+    branches:
+      - "method/genetic-ibd-crossfit"
+    paths:
+      - ".github/workflows/genetic-v04-execution-profile.yml"
+      - "docs/supporting/genetic_v04_execution_profile_authorization.json"
+      - "scripts/profile_genetic_v04_execution.py"
+  workflow_dispatch:
+
+jobs:
+  profile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: skdecker/PhylogeographicBreaks
+          ref: 11534ba70fbe3705e667651030edef5b849fa949
+          path: external/decker
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Reconstruct frozen v0.2 geometry
+        run: |
+          python scripts/census_decker_genetic_geometry.py --root external/decker --output results/decker_genetic_geometry_census_v0.1.json --min-localities 12 --min-endpoint-training-edges 5 --neighbor-fraction 0.15
+          python scripts/freeze_decker_genetic_pilot_geometry_v02.py --root external/decker --census results/decker_genetic_geometry_census_v0.1.json --rule docs/supporting/genetic_decker_pilot_rule_v0.1.json --output-csv results/decker_genetic_pilot_geometry_v0.2.csv --output-manifest results/decker_genetic_pilot_geometry_v0.2.json
+      - name: Profile frozen execution stages
+        run: |
+          python scripts/profile_genetic_v04_execution.py \
+            --geometry results/decker_genetic_pilot_geometry_v0.2.csv \
+            --manifest results/decker_genetic_pilot_geometry_v0.2.json \
+            --pilot-rule docs/supporting/genetic_decker_pilot_rule_v0.1.json \
+            --authorization docs/supporting/genetic_v04_execution_profile_authorization.json \
+            --output results/genetic_v04_execution_profile_v0.1.json
+      - name: Enforce computational-only boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path('results/genetic_v04_execution_profile_v0.1.json').read_text())
+          assert p['schema']=='ttf_genetic_v04_execution_profile_v0.1'
+          assert p['status']=='computational_profile_only_not_qualification'
+          assert p['empirical_genetic_outcomes_opened'] is False
+          assert p['qualification_claim_made'] is False
+          assert p['finite_eval_species_scores']==110
+          print(json.dumps({k:v for k,v in p.items() if k!='top_15_ibd_species'},sort_keys=True))
+          print(json.dumps({'top_15_ibd_species':p['top_15_ibd_species']},sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genetic-v04-execution-profile-v0.1
+          path: results/genetic_v04_execution_profile_v0.1.json
+          if-no-files-found: error

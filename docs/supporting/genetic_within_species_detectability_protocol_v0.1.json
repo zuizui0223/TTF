@@ -1,0 +1,50 @@
+{
+  "schema": "ttf_genetic_within_species_detectability_protocol_v0.1",
+  "status": "predeclared_not_yet_synthetically_qualified",
+  "purpose": "Provide the missing interpretability gate for negative cross-species transfer. A species panel may be called lineage-conditioned only when its IBD-residual turnover is spatially predictable from other endpoint-disjoint edges within the same species at the same geographic scale, while cross-species transfer is not supported. Otherwise a negative cross-species result is NOT_EVALUABLE.",
+  "geometry": {
+    "source": "the same frozen 221-species Decker geometry and primary 111/110 split",
+    "evaluated_species": "the 110 primary held-out species only",
+    "bandwidth_km": 500.0,
+    "segment_points": 5,
+    "prior_strength": 0.25,
+    "prior_mean": 0.5,
+    "target_edge_safety": "For target edge (i,j), same-species predictor training edges must share neither locality i nor locality j. No target endpoint may contribute a response value to its own prediction."
+  },
+  "response": {
+    "input": "endpoint-safe rank-IBD residual turnover from the already-frozen genetic TTF trait construction",
+    "self_field": "For each target edge, construct the same Gaussian spatial field form from endpoint-disjoint edges of that species only, with equal total weight one over the eligible same-species training edges and the frozen prior; integrate prediction over the same five target-edge segment points.",
+    "species_score": "W_s = Spearman(predicted self-field turnover, observed IBD-residual turnover) across all target edges with an estimable endpoint-disjoint predictor",
+    "panel_statistic": "W = arithmetic mean of finite W_s across the frozen 110 held-out species"
+  },
+  "synthetic_qualification": {
+    "must_precede_empirical_use": true,
+    "null_world": {"shared_fraction": 0.0, "residual_amplitude": 0.0, "noise_sd": 0.10},
+    "private_positive_world": {"shared_fraction": 0.0, "residual_amplitude": 2.0, "noise_sd": 0.10},
+    "worlds_per_cell": 500,
+    "alpha": 0.05,
+    "null_calibration": "Use an independent null reference distribution for the upper-tail W test; do not choose a threshold from the private-positive worlds.",
+    "type1_gate": "Wilson 95% upper bound of null rejection rate <= 0.10",
+    "power_gate": "Wilson 95% lower bound of private-A2 detection power >= 0.80",
+    "failure": "If either gate fails, within-species detectability is NOT QUALIFIED and no empirical negative cross-species result may be interpreted as lineage-conditioned."
+  },
+  "empirical_classification_if_both_gates_are_qualified": {
+    "transferable_place_component": "cross-species profiled-private p <= 0.05 with positive held-out T; self detectability may be reported but is not required for this label",
+    "lineage_conditioned_spatial_structure": "cross-species profiled-private p > 0.05 AND within-species self-coherence p <= 0.05",
+    "not_evaluable": "cross-species profiled-private p > 0.05 AND within-species self-coherence p > 0.05, or the self-detectability method failed synthetic qualification",
+    "claim_boundary": "lineage-conditioned means spatial structure exists within species but did not transfer across species under the frozen design; it is not proof of a particular demographic history or causal lineage mechanism"
+  },
+  "forbidden": [
+    "using shared-species outcomes to choose the self-field bandwidth",
+    "allowing target-edge endpoints into the same-species training response set",
+    "changing the self-score or synthetic gates after empirical genetic outcomes are opened",
+    "calling a cross-species non-result lineage-specific when self detectability is absent or unqualified"
+  ],
+  "outcome_firewall": {
+    "empirical_pairwise_genetic_distances_opened": false,
+    "sequence_characters_opened_for_inference": false,
+    "alignment_divergence_summaries_opened": false,
+    "monmonier_results_opened": false,
+    "break_presence_absence_opened": false
+  }
+}

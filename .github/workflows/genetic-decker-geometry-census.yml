@@ -1,0 +1,63 @@
+name: genetic Decker geometry census
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "method/genetic-ibd-crossfit"
+    paths:
+      - ".github/workflows/genetic-decker-geometry-census.yml"
+      - "scripts/census_decker_genetic_geometry.py"
+      - "src/ttf/genetic_geometry.py"
+
+jobs:
+  census:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout TTF branch
+        uses: actions/checkout@v4
+
+      - name: Checkout frozen Decker source
+        uses: actions/checkout@v4
+        with:
+          repository: skdecker/PhylogeographicBreaks
+          ref: 11534ba70fbe3705e667651030edef5b849fa949
+          path: external/decker
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+
+      - name: Census species-locus locality geometry
+        run: >-
+          python scripts/census_decker_genetic_geometry.py
+          --root external/decker
+          --output results/decker_genetic_geometry_census_v0.1.json
+          --min-localities 12
+          --min-endpoint-training-edges 5
+          --neighbor-fraction 0.15
+
+      - name: Enforce response-blind firewall
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = json.loads(Path('results/decker_genetic_geometry_census_v0.1.json').read_text())
+          assert p['schema'] == 'ttf_genetic_decker_geometry_census_v0.1'
+          assert p['genetic_outcomes_opened'] is False
+          assert p['sequence_characters_used'] is False
+          assert p['monmonier_results_opened'] is False
+          assert p['summary']['panels'] > 0
+          print(json.dumps(p['summary'], sort_keys=True))
+          PY
+
+      - name: Upload frozen census artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: decker-genetic-geometry-census-v0.1
+          path: results/decker_genetic_geometry_census_v0.1.json
+          if-no-files-found: error

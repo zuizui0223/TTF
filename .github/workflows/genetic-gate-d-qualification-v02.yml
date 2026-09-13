@@ -1,0 +1,254 @@
+name: genetic Gate-D qualification v0.2
+
+on:
+  push:
+    branches:
+      - "method/genetic-ibd-crossfit"
+    paths:
+      - ".github/workflows/genetic-gate-d-qualification-v02.yml"
+      - "docs/supporting/genetic_gate_d_execution_authorization_v0.2.json"
+  workflow_dispatch:
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      reference_matrix: ${{ steps.matrix.outputs.reference_matrix }}
+      observed_matrix: ${{ steps.matrix.outputs.observed_matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: skdecker/PhylogeographicBreaks
+          ref: 11534ba70fbe3705e667651030edef5b849fa949
+          path: external/decker
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Verify repaired frozen authorization and code lineage
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          def blob(path):
+              return subprocess.check_output(['git','hash-object',path],text=True).strip()
+          a=json.loads(Path('docs/supporting/genetic_gate_d_execution_authorization_v0.2.json').read_text())
+          assert a['schema']=='ttf_genetic_gate_d_execution_authorization_v0.2'
+          assert a['status']=='authorize_frozen_genetic_gate_d_synthetic_qualification'
+          assert blob(a['parent_invalidation'])==a['parent_invalidation_blob_sha']
+          firewall=a['outcome_firewall']
+          assert set(firewall)=={
+            'empirical_pairwise_genetic_distances_opened',
+            'sequence_characters_opened_for_inference',
+            'alignment_divergence_summaries_opened',
+            'monmonier_results_opened',
+            'break_presence_absence_opened',
+          }
+          assert all(value is False for value in firewall.values())
+          fixed={
+            'benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.2.json':a['geometry_source_ledger_blob_sha'],
+            'docs/supporting/genetic_decker_pilot_rule_v0.1.json':a['pilot_rule_blob_sha'],
+            'docs/supporting/genetic_ibd_exact_fast_v04_rule.json':a['exact_fast_rule_blob_sha'],
+            'docs/supporting/genetic_ibd_v04_exact_scale_addendum.json':a['exact_scale_addendum_blob_sha'],
+            'docs/supporting/genetic_transfer_batch_v05_rule.json':a['transfer_batch_rule_blob_sha'],
+            'benchmarks/frozen/genetic_v05_batch_width_selection_receipt.json':a['batch_width_selection_receipt_blob_sha'],
+          }
+          fixed.update(a['frozen_code_blobs'])
+          for path, expected in fixed.items():
+              actual=blob(path)
+              assert actual==expected,(path,actual,expected)
+          assert a['selected_batch_width']==64
+          assert a['frozen_inference']['reference_worlds_per_configuration']==1999
+          assert a['frozen_inference']['profile_strength_draws']==999
+          assert a['frozen_inference']['calibration_statistic_draws']==1000
+          assert a['frozen_inference']['observed_worlds_per_cell']==500
+          assert a['frozen_inference']['alpha']==0.05
+          PY
+      - name: Reconstruct frozen response-blind geometry once
+        run: |
+          python scripts/census_decker_genetic_geometry.py \
+            --root external/decker \
+            --output results/decker_genetic_geometry_census_v0.1.json \
+            --min-localities 12 \
+            --min-endpoint-training-edges 5 \
+            --neighbor-fraction 0.15
+          python scripts/freeze_decker_genetic_pilot_geometry_v02.py \
+            --root external/decker \
+            --census results/decker_genetic_geometry_census_v0.1.json \
+            --rule docs/supporting/genetic_decker_pilot_rule_v0.1.json \
+            --output-csv results/decker_genetic_pilot_geometry_v0.2.csv \
+            --output-manifest results/decker_genetic_pilot_geometry_v0.2.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path('docs/supporting/genetic_gate_d_execution_authorization_v0.2.json').read_text())
+          m=json.loads(Path('results/decker_genetic_pilot_geometry_v0.2.json').read_text())
+          assert m['geometry_fingerprint_sha256']==a['geometry_fingerprint_sha256']
+          assert m['geometry_csv_sha256']==a['geometry_csv_sha256']
+          assert m['genetic_outcomes_opened'] is False
+          assert m['synthetic_worlds_scored_before_freeze']==0
+          PY
+      - name: Build deterministic shard plan
+        run: |
+          python scripts/plan_genetic_gate_d_shards.py \
+            --pilot-rule docs/supporting/genetic_decker_pilot_rule_v0.1.json \
+            --authorization docs/supporting/genetic_gate_d_execution_authorization_v0.2.json \
+            --output results/genetic_gate_d_shard_plan_v0.2.json
+      - id: matrix
+        name: Export matrices
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+          p=json.loads(Path('results/genetic_gate_d_shard_plan_v0.2.json').read_text())
+          assert p['reference_job_count']==64
+          assert p['observed_job_count']==10
+          print('reference_matrix='+json.dumps(p['reference_matrix'],separators=(',',':')))
+          print('observed_matrix='+json.dumps(p['observed_matrix'],separators=(',',':')))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genetic-gate-d-v02-frozen-geometry
+          path: |
+            results/decker_genetic_pilot_geometry_v0.2.csv
+            results/decker_genetic_pilot_geometry_v0.2.json
+            results/genetic_gate_d_shard_plan_v0.2.json
+          if-no-files-found: error
+
+  private_references:
+    needs: plan
+    strategy:
+      fail-fast: false
+      max-parallel: 32
+      matrix: ${{ fromJSON(needs.plan.outputs.reference_matrix) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: genetic-gate-d-v02-frozen-geometry
+          path: results/geometry
+      - name: Run repaired frozen private-reference shard
+        run: |
+          python scripts/run_genetic_gate_reference_shard.py \
+            --geometry results/geometry/decker_genetic_pilot_geometry_v0.2.csv \
+            --manifest results/geometry/decker_genetic_pilot_geometry_v0.2.json \
+            --pilot-rule docs/supporting/genetic_decker_pilot_rule_v0.1.json \
+            --authorization docs/supporting/genetic_gate_d_execution_authorization_v0.2.json \
+            --config-label "${{ matrix.config }}" \
+            --start ${{ matrix.start }} \
+            --stop ${{ matrix.stop }} \
+            --output "results/reference_${{ matrix.config }}_${{ matrix.start }}_${{ matrix.stop }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v02-${{ matrix.artifact }}
+          path: results/reference_${{ matrix.config }}_${{ matrix.start }}_${{ matrix.stop }}.json
+          if-no-files-found: error
+
+  aggregate_references:
+    needs: [plan, private_references]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: v02-genetic-gate-ref-*
+          path: results/reference_shards
+      - name: Aggregate ordered independent references
+        run: |
+          python scripts/aggregate_genetic_gate_references.py \
+            --input-dir results/reference_shards \
+            --pilot-rule docs/supporting/genetic_decker_pilot_rule_v0.1.json \
+            --output results/genetic_gate_d_references_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genetic-gate-d-v02-references-v0.1
+          path: results/genetic_gate_d_references_v0.1.json
+          if-no-files-found: error
+
+  observed_cells:
+    needs: [plan, aggregate_references]
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix: ${{ fromJSON(needs.plan.outputs.observed_matrix) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: genetic-gate-d-v02-frozen-geometry
+          path: results/geometry
+      - uses: actions/download-artifact@v4
+        with:
+          name: genetic-gate-d-v02-references-v0.1
+          path: results/references
+      - name: Run repaired frozen mandatory observed-cell shard
+        run: |
+          python scripts/run_genetic_gate_observed_shard.py \
+            --geometry results/geometry/decker_genetic_pilot_geometry_v0.2.csv \
+            --manifest results/geometry/decker_genetic_pilot_geometry_v0.2.json \
+            --pilot-rule docs/supporting/genetic_decker_pilot_rule_v0.1.json \
+            --authorization docs/supporting/genetic_gate_d_execution_authorization_v0.2.json \
+            --references results/references/genetic_gate_d_references_v0.1.json \
+            --shared-fraction ${{ matrix.shared }} \
+            --residual-amplitude ${{ matrix.amplitude }} \
+            --start ${{ matrix.start }} \
+            --stop ${{ matrix.stop }} \
+            --output "results/observed_${{ matrix.cell }}_${{ matrix.start }}_${{ matrix.stop }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v02-${{ matrix.artifact }}
+          path: results/observed_${{ matrix.cell }}_${{ matrix.start }}_${{ matrix.stop }}.json
+          if-no-files-found: error
+
+  aggregate_qualification:
+    needs: observed_cells
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: v02-genetic-gate-obs-*
+          path: results/observed_shards
+      - name: Apply frozen Wilson Gate-D decision
+        run: |
+          python scripts/aggregate_genetic_gate_qualification.py \
+            --input-dir results/observed_shards \
+            --pilot-rule docs/supporting/genetic_decker_pilot_rule_v0.1.json \
+            --output results/genetic_gate_d_qualification_v0.2.json
+      - name: Enforce final claim boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path('results/genetic_gate_d_qualification_v0.2.json').read_text())
+          assert p['schema']=='ttf_genetic_gate_d_qualification_v0.1'
+          assert p['status'] in {'PASS','NOT_EVALUABLE'}
+          assert p['empirical_genetic_outcomes_opened'] is False
+          assert len(p['cells'])==5
+          print(json.dumps(p,sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genetic-gate-d-qualification-v0.2
+          path: results/genetic_gate_d_qualification_v0.2.json
+          if-no-files-found: error

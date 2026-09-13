@@ -1,0 +1,35 @@
+{
+  "schema": "ttf_genetic_phylogatr_phase1_execution_rule_v0.1",
+  "status": "frozen_before_any_fresh_phylogatr_download_is_inspected",
+  "parent_protocol": "docs/supporting/genetic_phylogatr_confirmatory_protocol_v0.1.json",
+  "parser_rule": "docs/supporting/genetic_phylogatr_phase1_parser_rule_v0.1.json",
+  "digest_rule": "docs/supporting/genetic_phylogatr_phase1_digest_rule_v0.1.json",
+  "decker_exclusion": "benchmarks/frozen/genetic_decker_species_exclusion_v0.1.json",
+  "phase1": {
+    "minimum_unique_localities": 12,
+    "neighbor_fraction": 0.15,
+    "minimum_endpoint_disjoint_ibd_training_edges": 5,
+    "maximum_species": 250,
+    "minimum_panel_size": 150,
+    "train_fraction_semantics": "lower floor(n/2) by frozen split hash is training; remainder evaluation",
+    "support_census_bandwidth_km": 500.0,
+    "support_census_is_descriptive_only": true
+  },
+  "eligibility": {
+    "kingdom": "Animalia",
+    "excluded_classes": ["Aves"],
+    "excluded_orders": ["Chiroptera"],
+    "excluded_development_species_count": 221,
+    "marker_family": "COI/COX1 only under the frozen exact alias parser"
+  },
+  "failure": {
+    "fewer_than_150_final_species": "NOT_EVALUABLE; freeze census and geometry but do not proceed to character-mask opening",
+    "schema_or_provenance_drift": "STOP before geometry qualification"
+  },
+  "outcome_firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_ttf_statistic_opened": false,
+    "decker_empirical_genetic_outcomes_opened": false
+  }
+}

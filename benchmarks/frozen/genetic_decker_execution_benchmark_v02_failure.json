@@ -1,0 +1,18 @@
+{
+  "schema": "ttf_genetic_decker_execution_benchmark_v02_failure",
+  "status": "failed_ibd_only_invariant_before_qualification",
+  "primary_run_id": 34750337690,
+  "primary_job_id": 103705616955,
+  "primary_head_sha": "a52b36c799c3652dad6fd785f81b274e24c2b506",
+  "geometry_source": "benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.2.json",
+  "geometry_fingerprint_sha256": "a1e0f76abd391d6e8d41347df91c8eda2963f4b998564a0b69e8345ca08a8f0b",
+  "failure_stage": "post_execution_required_invariant_check",
+  "failed_invariant": "IBD-only training private strength must be exactly zero within 1e-12",
+  "heldout_statistic_invariant_status": "not_used_for_success_claim",
+  "private_A2_or_shared_A2_values_used_for_method_selection": false,
+  "benchmark_receipt_written": false,
+  "qualification_claim_made": false,
+  "empirical_genetic_outcomes_opened": false,
+  "interpretation": "The endpoint-safe rank IBD layer is not yet numerically exact enough on the real frozen Decker geometry. This is a method/interface qualification failure, not a biological result.",
+  "successor_rule": "Diagnose the IBD-only arm only. Any successor must be named prospectively, preserve the frozen geometry/split/bandwidth/qualification thresholds, and may alter only numerical exactness or mathematically equivalent execution unless a separately frozen mechanism diagnosis justifies otherwise."
+}

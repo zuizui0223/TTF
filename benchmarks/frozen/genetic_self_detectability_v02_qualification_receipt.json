@@ -1,0 +1,34 @@
+{
+  "schema": "ttf_genetic_self_detectability_v02_qualification_receipt",
+  "status": "PASS",
+  "workflow_run_id": 34754814279,
+  "workflow_head_sha": "d5c61edbb3faafa941bc7f69cb171732e7e7ffbb",
+  "qualification_artifact_id": 10316149665,
+  "qualification_artifact_digest": "sha256:9c3fb338919f939874c8a6f709797f42addb358544d04879e28027f409f7032b",
+  "null_cell": {
+    "rejections": 17,
+    "n_worlds": 500,
+    "rejection_rate": 0.034,
+    "wilson95_low": 0.02133451980853219,
+    "wilson95_high": 0.053771365501634506,
+    "type1_wilson95_upper_ceiling": 0.10,
+    "pass": true
+  },
+  "private_A2_cell": {
+    "rejections": 500,
+    "n_worlds": 500,
+    "rejection_rate": 1.0,
+    "wilson95_low": 0.9923756595384479,
+    "wilson95_high": 1.0,
+    "power_wilson95_lower_floor": 0.80,
+    "pass": true
+  },
+  "passed": true,
+  "empirical_genetic_outcomes_opened": false,
+  "claim_boundary": "This PASS qualifies only the endpoint-safe within-species self-detectability diagnostic. It does not override the failed cross-species Gate-D and does not authorize opening Decker empirical genetic outcomes.",
+  "interpretive_use_if_a_future_cross_species_design_is_qualified": {
+    "cross_species_positive": "transferable place component",
+    "cross_species_negative_and_self_positive": "lineage-conditioned spatial structure",
+    "cross_species_negative_and_self_negative": "NOT_EVALUABLE"
+  }
+}

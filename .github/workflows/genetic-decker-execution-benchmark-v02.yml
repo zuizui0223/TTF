@@ -1,0 +1,97 @@
+name: genetic Decker execution benchmark v0.2
+
+on:
+  push:
+    branches:
+      - "method/genetic-ibd-crossfit"
+    paths:
+      - ".github/workflows/genetic-decker-execution-benchmark-v02.yml"
+      - "docs/supporting/genetic_decker_execution_benchmark_authorization_v0.2.json"
+      - "benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.2.json"
+      - "scripts/benchmark_genetic_decker_pipeline_v02.py"
+  workflow_dispatch:
+
+jobs:
+  benchmark-v02:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout TTF branch
+        uses: actions/checkout@v4
+      - name: Checkout frozen Decker source
+        uses: actions/checkout@v4
+        with:
+          repository: skdecker/PhylogeographicBreaks
+          ref: 11534ba70fbe3705e667651030edef5b849fa949
+          path: external/decker
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Reconstruct frozen v0.2 geometry
+        run: |
+          python scripts/census_decker_genetic_geometry.py \
+            --root external/decker \
+            --output results/decker_genetic_geometry_census_v0.1.json \
+            --min-localities 12 \
+            --min-endpoint-training-edges 5 \
+            --neighbor-fraction 0.15
+          python scripts/freeze_decker_genetic_pilot_geometry_v02.py \
+            --root external/decker \
+            --census results/decker_genetic_geometry_census_v0.1.json \
+            --rule docs/supporting/genetic_decker_pilot_rule_v0.1.json \
+            --output-csv results/decker_genetic_pilot_geometry_v0.2.csv \
+            --output-manifest results/decker_genetic_pilot_geometry_v0.2.json
+      - name: Verify frozen authorization lineage
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          def blob_sha(path):
+              return subprocess.check_output(['git','hash-object',path], text=True).strip()
+          a=json.loads(Path('docs/supporting/genetic_decker_execution_benchmark_authorization_v0.2.json').read_text())
+          l=json.loads(Path('benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.2.json').read_text())
+          m=json.loads(Path('results/decker_genetic_pilot_geometry_v0.2.json').read_text())
+          assert a['schema']=='ttf_genetic_decker_execution_benchmark_authorization_v0.2'
+          assert a['status']=='authorize_exactly_one_v02_synthetic_execution_benchmark'
+          assert l['schema']=='ttf_genetic_decker_pilot_geometry_source_v0.2'
+          assert blob_sha('benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.2.json') == a['source_ledger_blob_sha']
+          assert blob_sha('scripts/benchmark_genetic_decker_pipeline_v02.py') == a['runner_blob_sha']
+          assert m['geometry_csv_sha256']==l['geometry_csv_sha256']==a['geometry_csv_sha256']
+          assert m['geometry_fingerprint_sha256']==l['geometry_fingerprint_sha256']==a['geometry_fingerprint_sha256']
+          assert m['synthetic_worlds_scored_before_freeze']==0
+          assert m['genetic_outcomes_opened'] is False
+          assert m['monmonier_results_opened'] is False
+          PY
+      - name: Run exactly three authorized synthetic worlds
+        run: |
+          python scripts/benchmark_genetic_decker_pipeline_v02.py \
+            --geometry results/decker_genetic_pilot_geometry_v0.2.csv \
+            --manifest results/decker_genetic_pilot_geometry_v0.2.json \
+            --source-ledger benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.2.json \
+            --rule docs/supporting/genetic_decker_pilot_rule_v0.1.json \
+            --authorization docs/supporting/genetic_decker_execution_benchmark_authorization_v0.2.json \
+            --output results/decker_genetic_execution_benchmark_v0.2.json
+      - name: Enforce benchmark claim boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path('results/decker_genetic_execution_benchmark_v0.2.json').read_text())
+          assert p['schema']=='ttf_genetic_decker_execution_benchmark_v0.2'
+          assert p['status']=='synthetic_execution_benchmark_only_not_qualification'
+          assert p['empirical_genetic_outcomes_opened'] is False
+          assert p['qualification_claim_made'] is False
+          assert p['v0.1_execution_benchmark_remains_invalid'] is True
+          assert p['species_count']==221 and p['train_species']==111 and p['eval_species']==110
+          assert len(p['cases'])==3
+          assert all(c['finite_eval_species_scores']==110 for c in p['cases'])
+          print(json.dumps(p, sort_keys=True))
+          PY
+      - name: Upload benchmark receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: decker-genetic-execution-benchmark-v0.2
+          path: results/decker_genetic_execution_benchmark_v0.2.json
+          if-no-files-found: error

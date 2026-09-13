@@ -1,0 +1,19 @@
+{
+  "schema": "ttf_genetic_decker_execution_benchmark_v02_run_policy",
+  "status": "frozen_while_both_runs_in_progress_before_benchmark_results_opened",
+  "primary_authorized_run_id": 34750337690,
+  "technical_replay_run_id": 34750361487,
+  "primary_head_sha": "a52b36c799c3652dad6fd785f81b274e24c2b506",
+  "technical_replay_head_sha": "2e07b8fcef4244265997b41729f49ab79717fb1a",
+  "reason_for_replay": "The first workflow contained a weak internal blob-audit assertion. Before any benchmark result was inspected, the workflow audit was corrected to compare actual Git blob hashes, which automatically triggered a second deterministic run.",
+  "external_pre_result_verification": {
+    "source_ledger_blob_sha_at_primary_head": "180c00e2d79ba58a1068e0c9fe45e41b3c3c04c1",
+    "authorized_source_ledger_blob_sha": "180c00e2d79ba58a1068e0c9fe45e41b3c3c04c1",
+    "runner_blob_sha_at_primary_head": "79e44fdf1b84d5984248f7794fbe5d85683c9ff1",
+    "authorized_runner_blob_sha": "79e44fdf1b84d5984248f7794fbe5d85683c9ff1",
+    "primary_frozen_blobs_match_authorization": true
+  },
+  "analysis_rule": "Only run 34750337690 is the inferential execution benchmark. The technical replay may be checked only for deterministic execution consistency and must not be used to choose, tune, rescue, reject, or reinterpret any method, parameter, support rule, threshold, or qualification decision.",
+  "empirical_genetic_outcomes_opened": false,
+  "benchmark_results_opened_at_policy_freeze": false
+}

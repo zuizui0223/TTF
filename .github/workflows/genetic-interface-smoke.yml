@@ -1,0 +1,39 @@
+name: genetic interface smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "method/genetic-ibd-crossfit"
+    paths:
+      - ".github/workflows/genetic-interface-smoke.yml"
+      - "src/ttf/genetic_*.py"
+      - "src/ttf/phylogatr_*.py"
+      - "scripts/freeze_phylogatr_confirmatory_phase1.py"
+      - "scripts/freeze_phylogatr_confirmatory_phase2_mask.py"
+      - "docs/supporting/genetic_phylogatr_*.json"
+      - "benchmarks/frozen/genetic_decker_species_exclusion_v0.1.json"
+      - "tests/test_genetic_*.py"
+      - "tests/test_phylogatr_*.py"
+
+jobs:
+  pytest-genetic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[test]"
+      - run: >-
+          pytest -q
+          tests/test_genetic_geometry.py
+          tests/test_genetic_ibd.py
+          tests/test_genetic_simulate.py
+          tests/test_genetic_gate.py
+          tests/test_genetic_self_detectability.py
+          tests/test_phylogatr_confirmatory.py
+          tests/test_phylogatr_character_mask.py
+          tests/test_phylogatr_freeze_contracts.py
+          tests/test_phylogatr_phase2_freezer.py

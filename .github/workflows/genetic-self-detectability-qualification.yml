@@ -1,0 +1,224 @@
+name: genetic self-detectability qualification v0.2
+
+on:
+  push:
+    branches:
+      - "method/genetic-ibd-crossfit"
+    paths:
+      - ".github/workflows/genetic-self-detectability-qualification.yml"
+  workflow_dispatch:
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: skdecker/PhylogeographicBreaks
+          ref: 11534ba70fbe3705e667651030edef5b849fa949
+          path: external/decker
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - name: Verify frozen self-detectability lineage and v0.1 invalidation
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          def blob(path): return subprocess.check_output(['git','hash-object',path],text=True).strip()
+          a=json.loads(Path('docs/supporting/genetic_self_detectability_execution_authorization_v0.1.json').read_text())
+          invalid=json.loads(Path('benchmarks/frozen/genetic_self_detectability_v01_execution_invalidation.json').read_text())
+          assert invalid['schema']=='ttf_genetic_self_detectability_v01_execution_invalidation'
+          assert invalid['status']=='invalidated_for_yaml_null_scalar_before_null_evaluation_world_generation'
+          assert invalid['null_evaluation_worlds_generated']==0
+          assert invalid['null_evaluation_results_opened'] is False
+          assert invalid['private_A2_partial_results_opened'] is False
+          assert invalid['empirical_genetic_outcomes_opened'] is False
+          assert a['schema']=='ttf_genetic_self_detectability_execution_authorization_v0.1'
+          assert a['status']=='authorize_synthetic_self_detectability_qualification'
+          firewall=a['outcome_firewall']
+          assert len(firewall)==5 and all(v is False for v in firewall.values())
+          fixed={
+            'benchmarks/frozen/genetic_decker_pilot_geometry_source_v0.2.json':a['geometry_source_ledger_blob_sha'],
+            'docs/supporting/genetic_within_species_detectability_protocol_v0.1.json':a['parent_protocol_blob_sha'],
+            'docs/supporting/genetic_within_species_detectability_qualification_v0.1.json':a['qualification_rule_blob_sha'],
+            'docs/supporting/genetic_decker_pilot_rule_v0.1.json':a['pilot_rule_blob_sha'],
+          }
+          fixed.update(a['frozen_code_blobs'])
+          for path, expected in fixed.items():
+              actual=blob(path)
+              assert actual==expected,(path,actual,expected)
+          assert a['frozen_worlds']=={
+            'null_reference':1000,'null_evaluation':500,'private_A2_evaluation':500,
+            'master_seed':20260913,'batch_width':64,'reference_shard_size':250,'evaluation_shard_size':250,
+          }
+          assert a['frozen_decision']=={
+            'alpha':0.05,'type1_wilson95_upper_ceiling':0.10,'private_A2_power_wilson95_lower_floor':0.80,
+          }
+          PY
+      - name: Reconstruct frozen geometry
+        run: |
+          python scripts/census_decker_genetic_geometry.py \
+            --root external/decker \
+            --output results/decker_genetic_geometry_census_v0.1.json \
+            --min-localities 12 \
+            --min-endpoint-training-edges 5 \
+            --neighbor-fraction 0.15
+          python scripts/freeze_decker_genetic_pilot_geometry_v02.py \
+            --root external/decker \
+            --census results/decker_genetic_geometry_census_v0.1.json \
+            --rule docs/supporting/genetic_decker_pilot_rule_v0.1.json \
+            --output-csv results/decker_genetic_pilot_geometry_v0.2.csv \
+            --output-manifest results/decker_genetic_pilot_geometry_v0.2.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path('docs/supporting/genetic_self_detectability_execution_authorization_v0.1.json').read_text())
+          m=json.loads(Path('results/decker_genetic_pilot_geometry_v0.2.json').read_text())
+          assert m['geometry_fingerprint_sha256']==a['geometry_fingerprint_sha256']
+          assert m['geometry_csv_sha256']==a['geometry_csv_sha256']
+          assert m['genetic_outcomes_opened'] is False
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genetic-self-v02-frozen-geometry
+          path: |
+            results/decker_genetic_pilot_geometry_v0.2.csv
+            results/decker_genetic_pilot_geometry_v0.2.json
+          if-no-files-found: error
+
+  reference:
+    needs: plan
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {start: 0, stop: 250}
+          - {start: 250, stop: 500}
+          - {start: 500, stop: 750}
+          - {start: 750, stop: 1000}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: genetic-self-v02-frozen-geometry
+          path: results/geometry
+      - name: Run independent null reference shard
+        run: |
+          python scripts/run_genetic_self_reference_shard.py \
+            --geometry results/geometry/decker_genetic_pilot_geometry_v0.2.csv \
+            --manifest results/geometry/decker_genetic_pilot_geometry_v0.2.json \
+            --pilot-rule docs/supporting/genetic_decker_pilot_rule_v0.1.json \
+            --qualification docs/supporting/genetic_within_species_detectability_qualification_v0.1.json \
+            --start ${{ matrix.start }} --stop ${{ matrix.stop }} \
+            --output results/self_reference_${{ matrix.start }}_${{ matrix.stop }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genetic-self-v02-reference-${{ matrix.start }}-${{ matrix.stop }}
+          path: results/self_reference_${{ matrix.start }}_${{ matrix.stop }}.json
+          if-no-files-found: error
+
+  aggregate_reference:
+    needs: reference
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: genetic-self-v02-reference-*
+          path: results/reference_shards
+      - run: |
+          python scripts/aggregate_genetic_self_references.py \
+            --input-dir results/reference_shards \
+            --qualification docs/supporting/genetic_within_species_detectability_qualification_v0.1.json \
+            --output results/genetic_self_references_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genetic-self-v02-references-v0.1
+          path: results/genetic_self_references_v0.1.json
+          if-no-files-found: error
+
+  evaluation:
+    needs: [plan, aggregate_reference]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {cell: "null", start: 0, stop: 250}
+          - {cell: "null", start: 250, stop: 500}
+          - {cell: private_A2, start: 0, stop: 250}
+          - {cell: private_A2, start: 250, stop: 500}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: genetic-self-v02-frozen-geometry
+          path: results/geometry
+      - uses: actions/download-artifact@v4
+        with:
+          name: genetic-self-v02-references-v0.1
+          path: results/reference
+      - name: Run frozen self-detectability evaluation shard
+        run: |
+          python scripts/run_genetic_self_evaluation_shard.py \
+            --geometry results/geometry/decker_genetic_pilot_geometry_v0.2.csv \
+            --manifest results/geometry/decker_genetic_pilot_geometry_v0.2.json \
+            --pilot-rule docs/supporting/genetic_decker_pilot_rule_v0.1.json \
+            --qualification docs/supporting/genetic_within_species_detectability_qualification_v0.1.json \
+            --references results/reference/genetic_self_references_v0.1.json \
+            --cell "${{ matrix.cell }}" --start ${{ matrix.start }} --stop ${{ matrix.stop }} \
+            --output results/self_eval_${{ matrix.cell }}_${{ matrix.start }}_${{ matrix.stop }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genetic-self-v02-eval-${{ matrix.cell }}-${{ matrix.start }}-${{ matrix.stop }}
+          path: results/self_eval_${{ matrix.cell }}_${{ matrix.start }}_${{ matrix.stop }}.json
+          if-no-files-found: error
+
+  aggregate:
+    needs: evaluation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: genetic-self-v02-eval-*
+          path: results/eval_shards
+      - name: Apply frozen self-detectability Wilson gates
+        run: |
+          python scripts/aggregate_genetic_self_qualification.py \
+            --input-dir results/eval_shards \
+            --qualification docs/supporting/genetic_within_species_detectability_qualification_v0.1.json \
+            --output results/genetic_self_detectability_qualification_v0.2.json
+      - name: Enforce claim boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path('results/genetic_self_detectability_qualification_v0.2.json').read_text())
+          assert p['schema']=='ttf_genetic_self_detectability_qualification_result_v0.1'
+          assert p['status'] in {'PASS','SELF_DETECTABILITY_NOT_QUALIFIED'}
+          assert p['empirical_genetic_outcomes_opened'] is False
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genetic-self-detectability-qualification-v0.2
+          path: results/genetic_self_detectability_qualification_v0.2.json
+          if-no-files-found: error

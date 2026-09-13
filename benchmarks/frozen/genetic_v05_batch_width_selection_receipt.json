@@ -1,0 +1,21 @@
+{
+  "schema": "ttf_genetic_v05_batch_width_selection_receipt",
+  "status": "frozen_runtime_only_selection",
+  "workflow_run_id": 34752353383,
+  "workflow_head_sha": "8e3c748275f075d67d351b2a2e0bb81aad973a01",
+  "selection_artifact_id": 10315932402,
+  "selection_artifact_sha256": "5c5518f69504ac3a48a0f327c3ed359270918f06772df1fe8b592cbf80acaaf5",
+  "selected_batch_width": 64,
+  "selection_rule": "minimum total_scoring_seconds among candidates passing real-geometry sequential equivalence within 1e-12 and all-110-species finite invariant; exact runtime ties prefer smaller width",
+  "candidates": [
+    {"batch_width": 8, "total_scoring_seconds": 284.04020181199996, "seconds_per_world": 4.438128153312499, "max_abs_equivalence_difference": 0.0, "artifact_id": 10316766415, "artifact_sha256": "b6a5bae97aab9554d024fdffb663e4865c64a5c2edacce80ee879744fac99909"},
+    {"batch_width": 16, "total_scoring_seconds": 188.52110822299994, "seconds_per_world": 2.945642315984374, "max_abs_equivalence_difference": 0.0, "artifact_id": 10316057065, "artifact_sha256": "35e6618add647adf6531e93a828900bd7bcc1f45da5a2e2c4f515fba22548474"},
+    {"batch_width": 32, "total_scoring_seconds": 138.614761129, "seconds_per_world": 2.165855642640625, "max_abs_equivalence_difference": 0.0, "artifact_id": 10316736446, "artifact_sha256": "28c7c5b0ba658fe733af1a5b5c875b80bc3b1d479e9ed523a3299fd99a73ea10"},
+    {"batch_width": 64, "total_scoring_seconds": 112.24002464500002, "seconds_per_world": 1.7537503850781253, "max_abs_equivalence_difference": 0.0, "artifact_id": 10316651654, "artifact_sha256": "68f7d6890227c7272018abf2a040c04d2cc7a04a82b3e90d61f279da6b8654cc"}
+  ],
+  "selection_used_statistic_sign_or_magnitude": false,
+  "statistic_values_persisted_by_candidate_benchmarks": false,
+  "empirical_genetic_outcomes_opened": false,
+  "qualification_claim_made": false,
+  "claim_boundary": "This receipt fixes execution batch width only. It does not alter the genetic TTF estimand, null, thresholds, world counts, seeds, geometry, or authorize empirical genetic interpretation."
+}

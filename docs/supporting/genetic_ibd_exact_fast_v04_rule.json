@@ -1,0 +1,32 @@
+{
+  "schema": "ttf_genetic_ibd_exact_fast_v04_rule",
+  "status": "frozen_before_v03_benchmark_result_and_before_fast_implementation",
+  "motivation_source": "The failed v0.2 benchmark required about 97 seconds for three worlds; full Gate-D contains 18492 worlds. This rule is therefore computational only and is not motivated by v0.3 private/shared performance.",
+  "scientific_estimand_unchanged": true,
+  "exact_identity": {
+    "subset_rank_formula": "For a training edge f retained for target e, average_rank_S_e(f) = average_rank_all(f) - n_excluded_less(y_f) - 0.5*n_excluded_equal(y_f), where excluded means edges incident to either endpoint of e.",
+    "held_rank_formula": "Held-out rank fraction is reconstructed from global less/equal counts minus excluded less/equal counts, with the same +0.5 continuity term and denominator |S_e|+1 used by the frozen residualizer.",
+    "consequence": "Large endpoint-disjoint subsets need not be sorted separately for every target edge. Only one global sort plus small excluded-endpoint sorts are required, yielding the same rank-linear IBD residual."
+  },
+  "allowed_changes": [
+    "store excluded endpoint-edge indices in the response-blind CrossfitIBDDesign",
+    "replace per-target full-subset ranking with the exact global-rank-minus-excluded-rank identity",
+    "deterministic process or workflow sharding after exact single-world equivalence passes"
+  ],
+  "forbidden_changes": [
+    "approximate ranks",
+    "tie dropping",
+    "distance binning",
+    "float32 substitution",
+    "response-dependent pruning",
+    "graph_or_bandwidth_change",
+    "species_exclusion",
+    "qualification_threshold_change"
+  ],
+  "required_validation": {
+    "random_continuous_worlds": "fast and reference raw residual, expected rank, observed rank and turnover agree within 1e-12",
+    "tie_rich_worlds": "same requirement with exact ties",
+    "endpoint_leakage_test": "unchanged",
+    "real_geometry_execution_benchmark": "same frozen Decker geometry and worlds, with runtime recorded"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "ttf_genetic_v05_batch_width_benchmark_authorization",
+  "status": "authorize_runtime_only_batch_width_benchmark",
+  "parent_rule": "docs/supporting/genetic_transfer_batch_v05_rule.json",
+  "parent_rule_blob_sha": "d7f0496b7124fd758ab24b9803bc988a6dce3a2a",
+  "cached_transfer_blob_sha": "bf97d466f2c75e3ed3bbac2ea387bed9e5bb92a1",
+  "genetic_batch_execution_blob_sha": "0dd41fd3903fafa6cbe693640bcb3705b5ac9b07",
+  "runner": "scripts/benchmark_genetic_v05_batch_width.py",
+  "runner_blob_sha": "a62f70c37fd0a11d27d77819610809e7f79edb0e",
+  "candidate_batch_widths": [8, 16, 32, 64],
+  "n_worlds": 64,
+  "world_family": {
+    "shared_fraction": 0.0,
+    "residual_amplitude": 2.0,
+    "noise_sd": 0.10,
+    "master_seed": 20260913,
+    "seed_rule": "seed_for(master_seed, genetic_v05_batch_benchmark, absolute_replicate_index)"
+  },
+  "selection_rule": "Among candidates that pass real-geometry sequential equivalence within 1e-12 and return finite scores for all 110 evaluation species in all 64 worlds, choose the candidate with the smallest total scoring wall time. Break exact ties in favor of the smaller batch width.",
+  "allowed_outputs": [
+    "batch_width",
+    "cache_preparation_seconds",
+    "total_scoring_seconds",
+    "seconds_per_world",
+    "max_abs_statistic_difference_from_sequential_first_world",
+    "max_abs_training_strength_difference_from_sequential_first_world",
+    "max_abs_species_score_difference_from_sequential_first_world",
+    "finite_score_invariant"
+  ],
+  "forbidden_outputs_for_selection": [
+    "statistic sign",
+    "statistic magnitude",
+    "private/shared discrimination",
+    "p-values",
+    "rejection rates"
+  ],
+  "empirical_genetic_outcomes_opened": false
+}
