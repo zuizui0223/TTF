@@ -1,0 +1,115 @@
+{
+  "schema": "ttf_genetic_empirical_opening_state_v0.2",
+  "status": "EMPIRICAL_OPENING_CLOSED_WAITING_FOR_FRESH_PHYLOGATR_ARCHIVE",
+  "purpose": "Canonical machine-readable handoff after the fresh phylogatR Phase-3/4 workflow and one-command response-blind Phase-1 intake were merged. This receipt does not supersede or rewrite earlier failures; it advances only the allowed next action.",
+  "parent_receipt": "benchmarks/frozen/genetic_empirical_opening_state_v0.1.json",
+  "source_main_sha": "07b70c66a859cd8057a6febe6de27b0efa706e11",
+  "merged_method_lineage": {
+    "genetic_interface_and_fresh_phase1_phase2": {
+      "pull_request": 18,
+      "merge_commit": "eaef5f4b4b78ed838a9a1c5bfb00cdea5692aa53"
+    },
+    "fresh_phase3_phase4": {
+      "pull_request": 19,
+      "merge_commit": "45ebd1651bc05e05567151a910838ada5ab75f02"
+    },
+    "phase1_intake_wrapper": {
+      "pull_request": 20,
+      "merge_commit": "07b70c66a859cd8057a6febe6de27b0efa706e11",
+      "script": "scripts/run_phylogatr_confirmatory_phase1_intake.py"
+    }
+  },
+  "development_panel": {
+    "dataset": "Decker et al. bird/bat development geometry",
+    "cross_species_gate_d": {
+      "status": "NOT_EVALUABLE",
+      "receipt": "benchmarks/frozen/genetic_gate_d_v02_qualification_receipt.json",
+      "binding_private_cell": "A3",
+      "binding_wilson95_upper": 0.10033475332223055,
+      "frozen_upper_ceiling": 0.10,
+      "shared_A2_power_gate_pass": true,
+      "shared_A2_wilson95_lower": 0.8355052092686175,
+      "frozen_power_floor": 0.80,
+      "empirical_opening_eligible": false
+    },
+    "within_species_self_detectability": {
+      "status": "PASS",
+      "receipt": "benchmarks/frozen/genetic_self_detectability_v02_qualification_receipt.json",
+      "null_wilson95_upper": 0.053771365501634506,
+      "private_A2_wilson95_lower": 0.9923756595384479,
+      "scope": "development-geometry within-species self-detectability only"
+    },
+    "opening_decision": "PERMANENTLY_CLOSED_UNDER_V0_2_DESIGN"
+  },
+  "fresh_confirmatory_route": {
+    "dataset": "genuinely fresh phylogatR download independent of Decker development files",
+    "external_blocker_issue": 21,
+    "current_state": "WAITING_FOR_FRESH_ARCHIVE_BEFORE_RESPONSE_BLIND_PHASE_1",
+    "phase_1": {
+      "status": "READY_NOT_RUN",
+      "only_authorized_command": "python scripts/run_phylogatr_confirmatory_phase1_intake.py --root /path/to/phylogatr-results --output-dir frozen/fresh_phylogatr_phase1",
+      "allowed_input_surface": "genes.txt, cite.txt, current-schema occurrences.txt, aligned FASTA headers only",
+      "forbidden_input_surface": "nucleotide character identity",
+      "minimum_unique_localities": 12,
+      "neighbor_fraction": 0.15,
+      "minimum_endpoint_disjoint_ibd_training_edges": 5,
+      "maximum_species": 250,
+      "minimum_species": 150,
+      "taxonomic_firewall": "Animalia excluding Aves, Chiroptera, and the exact frozen 221-species Decker exclusion set",
+      "required_pass_status": "FROZEN_RESPONSE_BLIND_PHASE1_GEOMETRY",
+      "failure_status": "NOT_EVALUABLE_PHASE1_PANEL_TOO_SMALL",
+      "automatic_phase2_opening": false
+    },
+    "phase_2": {
+      "status": "IMPLEMENTED_BUT_NOT_AUTHORIZED_BEFORE_PHASE1_PASS",
+      "allowed_surface_if_phase1_passes": "canonical-valid versus noncanonical character masks only",
+      "nucleotide_identity_must_remain_closed": true,
+      "minimum_surviving_species": 150,
+      "no_rewiring": true,
+      "no_resplitting": true
+    },
+    "phase_3": {
+      "status": "IMPLEMENTED_BUT_NOT_RUN_WITH_FRESH_GEOMETRY",
+      "action_if_phase2_passes": "run the full dataset-specific profiled-private genetic Gate-D on the exact Phase-2 survivor geometry",
+      "reference_worlds": 15992,
+      "observed_worlds": 2500,
+      "type1_wilson95_upper_ceiling": 0.10,
+      "shared_A2_wilson95_lower_floor": 0.80,
+      "nucleotide_identity_must_remain_closed": true,
+      "failure_interpretation": "NOT_EVALUABLE"
+    },
+    "fresh_self_detectability": {
+      "status": "IMPLEMENTED_BUT_NOT_RUN_WITH_FRESH_GEOMETRY",
+      "role": "required only to interpret a later qualified cross-species negative as lineage-conditioned",
+      "null_reference_worlds": 1000,
+      "null_evaluation_worlds": 500,
+      "private_A2_evaluation_worlds": 500,
+      "type1_wilson95_upper_ceiling": 0.10,
+      "private_A2_wilson95_lower_floor": 0.80
+    },
+    "phase_4": {
+      "status": "IMPLEMENTED_BUT_IDENTITY_OPENING_NOT_AUTHORIZED",
+      "authorization_condition": "complete Phase-3 PASS on the exact fresh Phase-2 geometry",
+      "response_rule": "canonical A/C/G/T uncorrected p-distance; locality-pair arithmetic mean over all valid cross-locality pairs on frozen edges",
+      "primary_estimand": "place_beyond_ibd",
+      "primary_test": "frozen out-of-species profiled-private TTF",
+      "alpha": 0.05
+    }
+  },
+  "global_firewall": {
+    "decker_empirical_sequence_identity_opened": false,
+    "decker_empirical_pairwise_genetic_distances_opened": false,
+    "decker_empirical_break_labels_opened": false,
+    "fresh_confirmatory_sequence_identity_opened": false,
+    "fresh_confirmatory_pairwise_genetic_distances_opened": false,
+    "fresh_confirmatory_ttf_statistic_opened": false,
+    "empirical_genetic_conclusion_exists": false
+  },
+  "interpretation_contract": {
+    "qualified_cross_species_positive": "evidence for a transferable place component of within-species genetic differentiation",
+    "qualified_cross_species_negative_with_fresh_self_qualification_and_empirical_self_positive": "evidence consistent with lineage-conditioned spatial structure within the tested domain",
+    "qualified_cross_species_negative_without_fresh_self_support": "NOT_EVALUABLE_FOR_LINEAGE_CONDITIONING",
+    "any_failed_geometry_mask_or_power_type1_gate": "NOT_EVALUABLE; never a biological null"
+  },
+  "next_authorized_action": "Resolve GitHub issue #21 by obtaining a genuinely fresh phylogatR archive, then run response-blind Phase 1 intake only. Do not inspect nucleotide identities."
+}
