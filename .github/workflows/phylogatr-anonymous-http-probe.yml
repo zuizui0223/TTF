@@ -1,0 +1,41 @@
+name: phylogatR anonymous HTTP probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ops/phylogatr-anonymous-http-probe
+    paths:
+      - .github/workflows/phylogatr-anonymous-http-probe.yml
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe public endpoints without downloading data
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p probe
+          urls=(
+            "https://phylogatr.osc.edu/"
+            "https://phylogatr.osc.edu/ping"
+            "https://phylogatr.osc.edu/searches/new"
+            "https://phylogatr.osc.edu/searches/0.zip?taxon_kingdom=Animalia"
+          )
+          : > probe/results.tsv
+          printf 'url\thttp_code\tlocation\tcontent_type\n' >> probe/results.tsv
+          for url in "${urls[@]}"; do
+            headers="$(mktemp)"
+            code="$(curl -sS -I --connect-timeout 15 --max-time 30 --max-redirs 0 -D "$headers" -o /dev/null -w '%{http_code}' "$url" || true)"
+            location="$(awk 'BEGIN{IGNORECASE=1} /^location:/{sub(/\r$/,""); sub(/^[^:]*:[[:space:]]*/,""); print; exit}' "$headers")"
+            ctype="$(awk 'BEGIN{IGNORECASE=1} /^content-type:/{sub(/\r$/,""); sub(/^[^:]*:[[:space:]]*/,""); print; exit}' "$headers")"
+            printf '%s\t%s\t%s\t%s\n' "$url" "$code" "$location" "$ctype" >> probe/results.tsv
+            rm -f "$headers"
+          done
+          cat probe/results.tsv
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phylogatr-anonymous-http-probe
+          path: probe/results.tsv
+          if-no-files-found: error
