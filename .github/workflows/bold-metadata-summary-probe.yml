@@ -12,7 +12,7 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Query aggregate metadata only
+      - name: Query current aggregate metadata API only
         shell: bash
         run: |
           set -euo pipefail
@@ -21,37 +21,98 @@ jobs:
           printf 'group\thttp_code\tbytes\n' > bold_probe/index.tsv
           for group in "${groups[@]}"; do
             url="https://portal.boldsystems.org/api/summary?query=tax:class:${group}&fields=specimens,species,marker_code"
-            out="bold_probe/${group}.json"
+            out="$(mktemp)"
             code="$(curl -sS --connect-timeout 20 --max-time 120 -o "$out" -w '%{http_code}' "$url" || true)"
             bytes="$(wc -c < "$out" | tr -d ' ')"
             printf '%s\t%s\t%s\n' "$group" "$code" "$bytes" >> bold_probe/index.tsv
+            rm -f "$out"
           done
           cat bold_probe/index.tsv
+
+      - name: Probe legacy v3 specimen metadata endpoint only
+        shell: bash
+        run: |
+          set -euo pipefail
           python - <<'PY'
-          import json
+          import csv
+          import subprocess
+          import tempfile
           from pathlib import Path
-          for p in sorted(Path('bold_probe').glob('*.json')):
-              try:
-                  x=json.loads(p.read_text())
-              except Exception as e:
-                  print(p.name, 'JSON_ERROR', e)
-                  continue
-              if isinstance(x, dict):
-                  print(p.name, 'keys=', sorted(x.keys()))
-                  # Print only aggregate/count-shaped values; never record documents or sequence fields.
-                  for k,v in sorted(x.items()):
-                      kl=k.lower()
-                      if any(t in kl for t in ('sequence','nucleotide','bases')):
-                          continue
-                      if isinstance(v,(int,float,str,bool)) or v is None:
-                          print(' ', k, '=', v)
-                      elif isinstance(v,dict):
-                          print(' ', k, 'dict_keys=', list(v)[:20], 'n=', len(v))
-                      elif isinstance(v,list):
-                          print(' ', k, 'list_n=', len(v), 'sample_types=', sorted({type(z).__name__ for z in v[:20]}))
-              else:
-                  print(p.name, 'type=', type(x).__name__)
+
+          urls = [
+              ('v3_https', 'https://v3.boldsystems.org/index.php/API_Public/specimen?taxon=Osmia&marker=COI-5P&format=tsv'),
+              ('www_https', 'https://www.boldsystems.org/index.php/API_Public/specimen?taxon=Osmia&marker=COI-5P&format=tsv'),
+          ]
+          out_rows = []
+          for label, url in urls:
+              with tempfile.TemporaryDirectory() as td:
+                  body = Path(td) / 'body'
+                  headers = Path(td) / 'headers'
+                  p = subprocess.run([
+                      'curl','-sS','--connect-timeout','20','--max-time','120',
+                      '-D',str(headers),'-o',str(body),'-w','%{http_code}',url
+                  ], capture_output=True, text=True)
+                  code = p.stdout.strip() if p.stdout.strip() else '000'
+                  htext = headers.read_text(errors='replace') if headers.exists() else ''
+                  ctype = ''
+                  location = ''
+                  for line in htext.splitlines():
+                      low = line.lower()
+                      if low.startswith('content-type:') and not ctype:
+                          ctype = line.split(':',1)[1].strip()
+                      if low.startswith('location:') and not location:
+                          location = line.split(':',1)[1].strip()
+                  nbytes = body.stat().st_size if body.exists() else 0
+                  header_names = []
+                  n_rows = None
+                  coordinate_rows = None
+                  species_rows = None
+                  safe_metadata = None
+                  if code == '200' and body.exists():
+                      with body.open('r', encoding='utf-8', errors='replace', newline='') as fh:
+                          reader = csv.reader(fh, delimiter='\t')
+                          try:
+                              header_names = next(reader)
+                          except StopIteration:
+                              header_names = []
+                          lowered = [h.strip().lower() for h in header_names]
+                          forbidden = ('sequence','nucleotide','nucleotides','bases','dna_sequence','sequence_run_site')
+                          safe_metadata = not any(any(token in h for token in forbidden) for h in lowered)
+                          if safe_metadata:
+                              lat_idx = next((i for i,h in enumerate(lowered) if h in {'lat','latitude','coord_lat'} or 'latitude' in h), None)
+                              lon_idx = next((i for i,h in enumerate(lowered) if h in {'lon','lng','longitude','coord_lon'} or 'longitude' in h), None)
+                              species_idx = next((i for i,h in enumerate(lowered) if h in {'species','species_name','species_name_taxon'}), None)
+                              n_rows = 0
+                              coordinate_rows = 0
+                              species_rows = 0
+                              for row in reader:
+                                  n_rows += 1
+                                  if lat_idx is not None and lon_idx is not None and len(row) > max(lat_idx,lon_idx):
+                                      if row[lat_idx].strip() and row[lon_idx].strip():
+                                          coordinate_rows += 1
+                                  if species_idx is not None and len(row) > species_idx and row[species_idx].strip():
+                                      species_rows += 1
+                  out_rows.append({
+                      'endpoint': label,
+                      'http_code': code,
+                      'bytes': nbytes,
+                      'content_type': ctype,
+                      'location': location,
+                      'safe_metadata_header': safe_metadata,
+                      'column_count': len(header_names),
+                      'header_names': '|'.join(header_names),
+                      'data_rows': n_rows,
+                      'coordinate_rows': coordinate_rows,
+                      'species_rows': species_rows,
+                  })
+          path=Path('bold_probe/v3_specimen_probe.tsv')
+          fields=['endpoint','http_code','bytes','content_type','location','safe_metadata_header','column_count','header_names','data_rows','coordinate_rows','species_rows']
+          with path.open('w',newline='',encoding='utf-8') as fh:
+              w=csv.DictWriter(fh,fieldnames=fields,delimiter='\t')
+              w.writeheader(); w.writerows(out_rows)
+          print(path.read_text())
           PY
+
       - uses: actions/upload-artifact@v4
         with:
           name: bold-metadata-summary-probe
