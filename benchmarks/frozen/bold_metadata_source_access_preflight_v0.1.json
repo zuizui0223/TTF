@@ -1,0 +1,86 @@
+{
+  "schema": "ttf_bold_metadata_source_access_preflight_v0.1",
+  "status": "SOURCE_ACCESS_UNAVAILABLE_DO_NOT_INTERPRET_AS_DATA_INSUFFICIENCY",
+  "purpose": "Freeze a response-blind contingency-source preflight for BOLD metadata access. The preflight tested only metadata or aggregate endpoints and never requested or persisted nucleotide sequence data.",
+  "scope": {
+    "role": "contingency source only; does not replace the frozen fresh-phylogatR confirmatory route",
+    "empirical_sequence_opened": false,
+    "pairwise_genetic_distance_opened": false,
+    "empirical_ttf_opened": false,
+    "species_geometry_qualified": false,
+    "biological_conclusion_authorized": false
+  },
+  "current_portal_summary_probe": {
+    "workflow_run_id": 34863266318,
+    "job_id": 104040618473,
+    "artifact_id": 10355792782,
+    "artifact_zip_sha256": "c5d10ef6f738b4c919e902bfe4c48d3be1fe85930557da84ff4032887433d50f",
+    "endpoint_pattern": "https://portal.boldsystems.org/api/summary?query=tax:class:<group>&fields=specimens,species,marker_code",
+    "fixed_groups": [
+      "Amphibia",
+      "Reptilia",
+      "Arachnida",
+      "Actinopterygii",
+      "Malacostraca",
+      "Gastropoda",
+      "Insecta"
+    ],
+    "http_codes": {
+      "Amphibia": 403,
+      "Reptilia": 403,
+      "Arachnida": 403,
+      "Actinopterygii": 403,
+      "Malacostraca": 403,
+      "Gastropoda": 403,
+      "Insecta": 403
+    },
+    "sequence_endpoint_called": false
+  },
+  "legacy_specimen_probe": {
+    "probe_taxon": "Osmia",
+    "probe_marker": "COI-5P",
+    "endpoint_type": "specimen metadata only",
+    "first_run": {
+      "workflow_run_id": 34863551180,
+      "job_id": 104041582804,
+      "artifact_id": 10356262692,
+      "artifact_zip_sha256": "7dd1c0315dbc609745a8baf06f53d78edac67729b89cab807e4aeb96de54a468",
+      "results": {
+        "https://v3.boldsystems.org/index.php/API_Public/specimen": 403,
+        "https://www.boldsystems.org/index.php/API_Public/specimen": 301
+      }
+    },
+    "redirect_target_check": {
+      "workflow_run_id": 34863636427,
+      "job_id": 104041877419,
+      "artifact_id": 10356028167,
+      "artifact_zip_sha256": "56e26c85d57057c545af647b961de872d18ba1bb9997272ddefa1b83b2e34503",
+      "results": {
+        "https://v3.boldsystems.org/index.php/API_Public/specimen": 403,
+        "https://www.boldsystems.org/index.php/API_Public/specimen": 301,
+        "https://www.boldsystems.org/API_Public/specimen": 404
+      }
+    },
+    "sequence_endpoint_called": false,
+    "response_body_persisted": false,
+    "metadata_rows_opened": false
+  },
+  "interpretation": {
+    "what_failed": "public source access at the tested BOLD endpoints",
+    "what_did_not_fail": [
+      "TTF method",
+      "prospective genetic estimand",
+      "species/locality geometry qualification",
+      "BOLD data sufficiency",
+      "transferable-place hypothesis"
+    ],
+    "claim": "The tested BOLD routes were not available for the required response-blind metadata census at the time of the preflight. This is an access-state result only."
+  },
+  "decision": {
+    "bold_contingency_route_status": "HOLD_SOURCE_ACCESS_UNAVAILABLE",
+    "do_not_retry_same_routes_without_external_evidence_of_service_change": true,
+    "primary_confirmatory_route": "authenticated fresh phylogatR archive",
+    "next_authorized_empirical_action": "Acquire a genuinely fresh phylogatR archive through authenticated OSC access and run response-blind Phase 1 only."
+  },
+  "claim_boundary": "No sequence identity, pairwise genetic distance, within-species genetic outcome, or empirical TTF statistic was opened. This receipt cannot support a biological null or a statement about the adequacy of BOLD records."
+}
