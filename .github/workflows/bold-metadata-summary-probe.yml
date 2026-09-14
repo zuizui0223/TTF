@@ -29,7 +29,7 @@ jobs:
           done
           cat bold_probe/index.tsv
 
-      - name: Probe legacy v3 specimen metadata endpoint only
+      - name: Probe legacy specimen metadata endpoints only
         shell: bash
         run: |
           set -euo pipefail
@@ -41,7 +41,8 @@ jobs:
 
           urls = [
               ('v3_https', 'https://v3.boldsystems.org/index.php/API_Public/specimen?taxon=Osmia&marker=COI-5P&format=tsv'),
-              ('www_https', 'https://www.boldsystems.org/index.php/API_Public/specimen?taxon=Osmia&marker=COI-5P&format=tsv'),
+              ('www_index_https', 'https://www.boldsystems.org/index.php/API_Public/specimen?taxon=Osmia&marker=COI-5P&format=tsv'),
+              ('www_final_https', 'https://www.boldsystems.org/API_Public/specimen?taxon=Osmia&marker=COI-5P&format=tsv'),
           ]
           out_rows = []
           for label, url in urls:
