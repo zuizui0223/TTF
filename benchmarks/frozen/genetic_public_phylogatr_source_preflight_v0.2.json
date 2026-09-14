@@ -1,0 +1,104 @@
+{
+  "schema": "ttf_genetic_public_phylogatr_source_preflight_v0.2",
+  "status": "PUBLIC_GITHUB_RAW_SOURCE_SEARCH_CLOSED_NO_UNCONTAMINATED_CONFIRMATORY_ARCHIVE",
+  "date": "2026-09-15",
+  "parent_receipt": {
+    "path": "benchmarks/frozen/genetic_public_phylogatr_source_preflight_v0.1.json",
+    "blob_sha": "aa9a293d55778c93f0ff1def7d6296222aff8ab6"
+  },
+  "purpose": "Extend the immutable public-source preflight using repository metadata and recursive Git-tree path names only, after the v0.1 contamination boundary prohibited commit-diff or row-level data inspection.",
+  "claim_boundary": {
+    "empirical_genetic_conclusion_exists": false,
+    "decker_empirical_genetic_outcomes_opened": false,
+    "fresh_portal_nucleotide_identity_opened": false,
+    "fresh_portal_pairwise_genetic_distances_opened": false,
+    "fresh_portal_ttf_statistic_opened": false,
+    "additional_external_derived_genetic_values_opened_after_v0_1": false
+  },
+  "new_candidates": [
+    {
+      "name": "shastara/phylogatr",
+      "repository": "shastara/phylogatr",
+      "default_branch": "master",
+      "commit_sha": "5d1fcb3eb1ab3377b3359fc6ee0c572ff5bf2779",
+      "tree_sha": "ca532c5c16eff5239c2dd9c1e58ab3b85b2bf024",
+      "preflight_surface": "repository metadata plus recursive Git-tree path names only",
+      "path_queries": {
+        "occurrences.txt": 0,
+        "genes.txt": 0,
+        ".afa": "at least one text-level substring exists somewhere in the serialized tree response, but there is no genes.txt or occurrences.txt raw phylogatR structure"
+      },
+      "decision": "REJECT_AS_CONFIRMATORY_RAW_SOURCE",
+      "reason": "This repository is a teaching/documentation site and its current tracked tree lacks the required genes.txt and per-species occurrences.txt raw-archive structure. No file contents or row values were opened during this decision."
+    },
+    {
+      "name": "kaiyaprovost/bioacoustics",
+      "repository": "kaiyaprovost/bioacoustics",
+      "default_branch": "main",
+      "commit_sha": "3ade98e2c4c60e8afaa0c62c3e347123b21ceb73",
+      "tree_sha": "9ecc6b3a0971af8c862204a200fee1fdcc3999bd",
+      "preflight_surface": "repository metadata plus previously fetched recursive Git-tree path names only",
+      "path_queries": {
+        "phylogatr-results": 0,
+        "phylogatR": 0,
+        "occurrences": 0,
+        "genes.txt": 0
+      },
+      "decision": "REJECT_AS_CONFIRMATORY_RAW_SOURCE",
+      "reason": "The tracked repository tree does not contain the raw phylogatR archive structure. Existing phylogatR references found by global code search therefore correspond to local filesystem dependencies or scripts rather than committed raw data. No script or data-file contents were opened for this v0.2 decision."
+    }
+  ],
+  "github_search_closure": {
+    "repository_name_search_query": "phylogatr",
+    "named_public_repositories_considered": [
+      "OSC/phylogatr",
+      "OSC/phylogatr-web",
+      "shastara/phylogatr"
+    ],
+    "code_search_references_considered_without_row_opening": [
+      "emanuelmfonseca/Global_genetic_diversity",
+      "kaiyaprovost/bioacoustics",
+      "skdecker/PhylogeographicBreaks"
+    ],
+    "usable_uncontaminated_raw_confirmatory_source_found": false,
+    "exhaustiveness_claim": "No claim of exhaustive internet absence is made; this closes the current GitHub-based source-substitution search under the frozen safe-preflight protocol."
+  },
+  "source_decisions_carried_forward": [
+    {
+      "source": "emanuelmfonseca/Global_genetic_diversity",
+      "decision": "REJECT_AS_CONFIRMATORY_RAW_SOURCE"
+    },
+    {
+      "source": "OSC/phylogatr conservation teaching snapshot",
+      "decision": "CONTAMINATED_FOR_CONFIRMATORY_USE"
+    },
+    {
+      "source": "skdecker/PhylogeographicBreaks",
+      "decision": "DEVELOPMENT_ONLY_AND_EMPIRICAL_OUTCOMES_CLOSED"
+    }
+  ],
+  "future_public_source_preflight_rule": {
+    "allowed_before_source_freeze": [
+      "repository metadata",
+      "branch or tag identity",
+      "recursive Git-tree path names",
+      "file sizes and blob SHAs",
+      "release asset names and sizes"
+    ],
+    "forbidden_before_source_freeze": [
+      "commit diffs",
+      "script contents when they may expose local outcome paths or embedded data",
+      "derived working-dataset contents",
+      "nucleotide sequence characters",
+      "pairwise genetic distances",
+      "nucleotide diversity or other genetic summary values",
+      "empirical TTF statistics"
+    ]
+  },
+  "canonical_next_source": {
+    "source": "genuinely fresh phylogatR portal archive",
+    "blocker_issue": 21,
+    "status": "AWAITING_ARCHIVE",
+    "authorized_next_action": "Provide the untouched portal .zip/.tar.gz/.tgz and run scripts/run_phylogatr_confirmatory_phase1_intake.py --archive for response-blind Phase 1 only."
+  }
+}

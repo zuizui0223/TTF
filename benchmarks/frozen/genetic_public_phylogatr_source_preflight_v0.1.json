@@ -1,0 +1,97 @@
+{
+  "schema": "ttf_genetic_public_phylogatr_source_preflight_v0.1",
+  "status": "NO_UNCONTAMINATED_PUBLIC_RAW_CONFIRMATORY_SOURCE_IDENTIFIED",
+  "date": "2026-09-15",
+  "purpose": "Freeze the response-blind search for a public raw phylogatR source that could remove the OSC-login blocker without opening confirmatory nucleotide identity or derived genetic outcomes.",
+  "claim_boundary": {
+    "empirical_genetic_conclusion_exists": false,
+    "decker_empirical_genetic_outcomes_opened": false,
+    "fresh_portal_nucleotide_identity_opened": false,
+    "fresh_portal_pairwise_genetic_distances_opened": false,
+    "fresh_portal_ttf_statistic_opened": false
+  },
+  "candidates": [
+    {
+      "name": "Fonseca et al. public GitHub repository",
+      "repository": "emanuelmfonseca/Global_genetic_diversity",
+      "default_branch": "main",
+      "tree_sha": "237864673904c313a27f295625432b0e4eec8d49",
+      "preflight_surface": "recursive Git tree paths only",
+      "observed_repository_structure": {
+        "scripts_present": true,
+        "working_dataset_present": true,
+        "working_dataset_path": "Fonseca_et_al_scripts/Working_dataset/Working_dataset.txt",
+        "working_dataset_size_bytes": 7112718,
+        "raw_genes_txt_present": false,
+        "raw_occurrences_txt_present": false,
+        "raw_aligned_fasta_present": false
+      },
+      "decision": "REJECT_AS_CONFIRMATORY_RAW_SOURCE",
+      "reason": "The public repository contains scripts and a derived working dataset but not the raw phylogatR genes.txt + per-species occurrences.txt + aligned FASTA structure needed to reconstruct frozen locality-edge genetic responses without opening derived outcome values.",
+      "row_level_values_opened": false
+    },
+    {
+      "name": "OSC official conservation teaching snapshot",
+      "repository": "OSC/phylogatr",
+      "default_branch": "master",
+      "source_tree_sha": "51f2fc9513a7685e6b455e16ac0c2f35ddabcf93",
+      "snapshot_directory": "module_data/conservation/phylogatr-results-c",
+      "archive_path": "module_data/conservation/phylogatr-results-c/conservation_module.zip",
+      "archive_blob_sha": "ef5346040606e304024787391a5ebe40b0521d52",
+      "archive_size_bytes": 18055313,
+      "genes_txt_blob_sha": "d79d518d32db11a60debb8fa3b432c57192b0f94",
+      "cite_txt_blob_sha": "6b5252fc5ec374b7c77c1acdf610b2cdb0583c80",
+      "archive_addition_commit": "5ad0cfbcfe246756c38577986ad0148fffe2273e",
+      "preflight_event": "A commit-diff inspection intended only to verify archive structure exposed a derived nucleotide-diversity table with row-level pi values in the same commit.",
+      "nucleotide_sequence_identity_opened": false,
+      "derived_genetic_outcome_values_exposed": true,
+      "decision": "CONTAMINATED_FOR_CONFIRMATORY_USE",
+      "reason": "The source may remain useful only as a development or teaching snapshot. It is no longer eligible as a response-blind confirmatory dataset because derived genetic outcome values were exposed during source preflight before a source-specific confirmatory contract was frozen."
+    },
+    {
+      "name": "Other GitHub phylogatR references",
+      "search_surface": "GitHub code-search metadata and path snippets",
+      "queries": [
+        "phylogatr-results",
+        "occurrences.txt phylogatr"
+      ],
+      "examples": [
+        "kaiyaprovost/bioacoustics",
+        "skdecker/PhylogeographicBreaks"
+      ],
+      "decision": "NO_NEW_PUBLIC_RAW_ARCHIVE_IDENTIFIED",
+      "reason": "Search hits point to local filesystem paths, scripts, teaching documentation, or the already-disqualified Decker development source rather than a separately hosted raw multi-species phylogatR archive.",
+      "exhaustiveness_claim": false
+    }
+  ],
+  "future_public_source_preflight_rule": {
+    "allowed_before_source_freeze": [
+      "repository metadata",
+      "branch or tag identity",
+      "recursive Git tree path names",
+      "file sizes and blob SHAs",
+      "release asset names and sizes"
+    ],
+    "forbidden_before_source_freeze": [
+      "commit diffs that may include data rows",
+      "derived working-dataset contents",
+      "nucleotide sequence characters",
+      "pairwise genetic distances",
+      "nucleotide diversity or other genetic summary values",
+      "empirical TTF statistics"
+    ],
+    "raw_source_minimum_structure": [
+      "genes.txt",
+      "cite.txt or equivalent immutable provenance",
+      "per-species current-schema occurrences.txt",
+      "aligned FASTA files",
+      "enough candidate species to make the frozen minimum 150-species confirmatory panel plausible before outcome opening"
+    ]
+  },
+  "canonical_next_source": {
+    "source": "genuinely fresh phylogatR portal archive",
+    "blocker_issue": 21,
+    "status": "AWAITING_ARCHIVE",
+    "authorized_next_action": "Run response-blind Phase 1 only on the portal archive using scripts/run_phylogatr_confirmatory_phase1_intake.py --archive."
+  }
+}
