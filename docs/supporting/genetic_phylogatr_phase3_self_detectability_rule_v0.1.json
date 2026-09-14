@@ -1,0 +1,68 @@
+{
+  "schema": "ttf_genetic_phylogatr_phase3_self_detectability_rule_v0.1",
+  "status": "frozen_before_any_fresh_phylogatr_nucleotide_identity_or_self_detectability_result_is_opened",
+  "purpose": "Qualify endpoint-safe within-species spatial detectability on the exact fresh Phase-2 survivor geometry before empirical nucleotide identity is opened, so a later cross-species negative can be distinguished from failure to detect within-species spatial structure.",
+  "geometry": {
+    "evaluated_species": "the exact inherited Phase-2 evaluation species",
+    "bandwidth_km": 500.0,
+    "segment_points": 5,
+    "prior_strength": 0.25,
+    "prior_mean": 0.5,
+    "min_endpoint_disjoint_training_edges": 5,
+    "no_species_dropping_after_phase2": true
+  },
+  "synthetic_worlds": {
+    "independent_null_reference_worlds": 1000,
+    "null_evaluation_worlds": 500,
+    "private_A2_evaluation_worlds": 500,
+    "reference_world": {"shared_fraction": 0.0, "residual_amplitude": 0.0, "noise_sd": 0.10},
+    "null_evaluation_world": {"shared_fraction": 0.0, "residual_amplitude": 0.0, "noise_sd": 0.10},
+    "private_A2_evaluation_world": {"shared_fraction": 0.0, "residual_amplitude": 2.0, "noise_sd": 0.10},
+    "reference_seed_rule": "seed_for(phase3_master_seed, 'genetic_self_reference', absolute_replicate_index)",
+    "null_seed_rule": "seed_for(phase3_master_seed, 'genetic_self_null_eval', absolute_replicate_index)",
+    "private_A2_seed_rule": "seed_for(phase3_master_seed, 'genetic_self_private_A2_eval', absolute_replicate_index)",
+    "ibd_strength": 1.0,
+    "transition_width": 0.20,
+    "noise_dimensions": 2
+  },
+  "inference": {
+    "panel_statistic": "arithmetic mean of finite held-out species self-field Spearman scores",
+    "p_value": "upper Monte Carlo p = (1 + number of independent reference statistics >= observed statistic) / (1000 + 1)",
+    "alpha": 0.05,
+    "same_reference_used_for_both_evaluation_cells": true,
+    "reference_is_independent_of_all_evaluation_worlds": true
+  },
+  "qualification": {
+    "type1_wilson95_upper_ceiling": 0.10,
+    "private_A2_wilson95_lower_floor": 0.80,
+    "overall_pass": "both Type-I and private-A2 power gates pass",
+    "failure_interpretation": "SELF_DETECTABILITY_NOT_QUALIFIED; a later empirical cross-species negative cannot be interpreted as lineage-conditioned"
+  },
+  "execution": {
+    "world_batch_width": 64,
+    "reference_shard_size": 250,
+    "evaluation_shard_size": 250,
+    "reference_expected_jobs": 4,
+    "evaluation_expected_jobs": 4,
+    "sharding_semantics": "absolute replicate index only; execution partition cannot change world identity"
+  },
+  "interpretation_contract": {
+    "if_pass_and_empirical_cross_species_negative": "eligible for lineage-conditioned interpretation, subject to the empirical test itself being valid",
+    "if_not_pass_and_empirical_cross_species_negative": "NOT_EVALUABLE_FOR_LINEAGE_CONDITIONING",
+    "empirical_cross_species_positive": "does not require self-detectability PASS for the transferable-place interpretation"
+  },
+  "outcome_firewall": {
+    "confirmatory_sequence_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_ttf_statistic_opened": false,
+    "decker_empirical_genetic_outcomes_opened": false
+  },
+  "forbidden_after_freeze": [
+    "changing self-field bandwidth or endpoint exclusion",
+    "changing reference/evaluation world counts or seed tags",
+    "changing private-A2 positive amplitude",
+    "changing alpha or Wilson gates",
+    "dropping difficult evaluation species based on self scores",
+    "opening empirical nucleotide identity before this qualification completes"
+  ]
+}

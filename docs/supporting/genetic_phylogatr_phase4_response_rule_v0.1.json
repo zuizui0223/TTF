@@ -1,0 +1,65 @@
+{
+  "schema": "ttf_genetic_phylogatr_phase4_response_rule_v0.1",
+  "status": "frozen_before_any_fresh_phylogatr_nucleotide_identity_is_opened",
+  "purpose": "Freeze the exact empirical genetic response and inferential surface that may be opened only after a complete PASS of the dataset-specific fresh Phase-3 Gate-D qualification.",
+  "parent_protocol": "docs/supporting/genetic_phylogatr_confirmatory_protocol_v0.1.json",
+  "required_phase3_qualification": {
+    "schema": "ttf_genetic_phylogatr_phase3_qualification_v0.1",
+    "status": "PASS",
+    "passed": true,
+    "phase4_identity_opening_eligible": true
+  },
+  "sequence_contract": {
+    "aligned_fasta_only": true,
+    "canonical_characters": ["A", "C", "G", "T", "a", "c", "g", "t"],
+    "noncanonical_characters": "missing_not_comparable",
+    "minimum_comparable_fraction_of_frozen_alignment_length": 0.50,
+    "valid_sequence_pair": "columns where both aligned sequences are canonical >= ceil(0.50 * frozen alignment length)",
+    "sequence_pair_distance": "uncorrected_p_distance = canonical_mismatches / jointly_canonical_columns"
+  },
+  "locality_contract": {
+    "locality_identity": "exact frozen Phase-2 locality index and coordinate; no reclustering or coordinate rounding",
+    "locality_pair_distance": "arithmetic mean of uncorrected p-distance over all valid cross-locality sequence pairs for the frozen edge endpoints",
+    "sequence_pair_weighting": "equal weight per valid cross-locality sequence pair",
+    "frozen_edge_must_be_retained": true,
+    "edge_rewiring": false,
+    "sequence_deletion_based_on_divergence": false,
+    "marker_switching": false
+  },
+  "primary_estimand": {
+    "name": "place_beyond_ibd",
+    "raw_edge_response": "frozen locality-pair mean p-distance",
+    "ibd_adjustment": "endpoint_safe_leave_two_localities_out_rank_ibd",
+    "training_response": "post_ibd_turnover_rank_orthogonalized_against_edge_length_rank",
+    "evaluation_response": "raw_post_ibd_turnover_rank",
+    "test": "frozen out-of-species profiled-private TTF using the exact Phase-3 private reference families and the inherited Phase-2 train/eval split",
+    "alpha": 0.05,
+    "positive": "profiled_private_p_value <= 0.05 with finite scores for every frozen evaluation species",
+    "negative_interpretation": "lineage-conditioned spatial structure only if the separately qualified within-species self-detectability diagnostic is positive; otherwise NOT_EVALUABLE"
+  },
+  "secondary_descriptive_estimand": {
+    "name": "total_genetic_distance_transfer",
+    "use": "descriptive_only_unless_separately_qualified",
+    "claim_limit": "Do not use the raw-distance transfer surface to override or rescue the primary post-IBD confirmatory decision."
+  },
+  "reference_contract": {
+    "reuse_exact_phase3_references": true,
+    "regenerating_or_reprofiling_references_after_identity_opening": false,
+    "reference_file_sha256_must_be_frozen_in_phase4_authorization": true
+  },
+  "outcome_firewall_at_rule_freeze": {
+    "confirmatory_sequence_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_ttf_statistic_opened": false,
+    "decker_empirical_genetic_outcomes_opened": false
+  },
+  "forbidden": [
+    "removing high-divergence sequences after identity opening",
+    "changing the 50 percent comparable-site threshold",
+    "choosing minimum rather than mean locality-pair distance",
+    "changing the Phase-2 graph, species panel, or train/eval split",
+    "regenerating Phase-3 private references with a favorable random seed",
+    "changing bandwidth, alpha, IBD residualization, or profiled-private configuration count",
+    "calling a failed or incomplete empirical analysis evidence of absence"
+  ]
+}

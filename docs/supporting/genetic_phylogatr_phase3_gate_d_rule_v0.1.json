@@ -1,0 +1,96 @@
+{
+  "schema": "ttf_genetic_phylogatr_phase3_gate_d_rule_v0.1",
+  "status": "frozen_before_any_fresh_phylogatr_nucleotide_identity_or_genetic_distance_is_opened",
+  "purpose": "Freeze the dataset-specific synthetic qualification that a fresh phylogatR Phase-2 survivor geometry must pass before nucleotide identities may be unmasked. This reuses the already-frozen genetic Gate-D method family without adapting it to the Decker development qualification result or to fresh empirical outcomes.",
+  "parent_protocol": "docs/supporting/genetic_phylogatr_confirmatory_protocol_v0.1.json",
+  "parent_protocol_git_blob_sha": "8db5f1dd4bc20821c3a7e4e76267e087404f180d",
+  "development_result_is_not_a_tuning_input": {
+    "decker_cross_species_gate_status": "NOT_EVALUABLE",
+    "rule": "No parameter below may be changed because the Decker A3 private-null Wilson upper bound narrowly exceeded its frozen ceiling. Fresh geometry receives an independent qualification under the same method family."
+  },
+  "geometry_contract": {
+    "required_phase2_schema": "ttf_genetic_phylogatr_confirmatory_phase2_mask_v0.1",
+    "required_phase2_status": "PASS_TO_SYNTHETIC_GATE",
+    "minimum_surviving_species": 150,
+    "neighbor_fraction": 0.15,
+    "minimum_endpoint_disjoint_ibd_training_edges": 5,
+    "split": "inherit_phase1_train_eval_after_phase2_filter_without_resplitting",
+    "post_phase2_species_or_edge_dropping": "forbidden"
+  },
+  "core_method": {
+    "bandwidth_km": 500.0,
+    "prior_strength": 0.25,
+    "prior_mean": 0.0,
+    "segment_points": 5,
+    "strength_neighbours": 4,
+    "profiled_private_selected_configurations": 2,
+    "training_response_after_ibd": "within_species_post_ibd_turnover_rank_orthogonalized_against_edge_length_rank",
+    "evaluation_response_after_ibd": "raw_within_species_post_ibd_turnover_rank",
+    "ibd_residualization": "endpoint_safe_leave_two_localities_out_rank_ibd",
+    "exact_fast_execution": true
+  },
+  "synthetic_world": {
+    "ibd_strength_primary": 1.0,
+    "locality_noise_sd": 0.10,
+    "noise_dimensions": 2,
+    "transition_width": 0.20,
+    "private_reference_configurations": {
+      "A0": [0.0, 0.10],
+      "A0p5": [0.5, 0.10],
+      "A1": [1.0, 0.10],
+      "A2": [2.0, 0.10],
+      "A3": [3.0, 0.10],
+      "A5": [5.0, 0.10],
+      "A10": [10.0, 0.10],
+      "infinite_snr": [1.0, 0.0]
+    }
+  },
+  "qualification": {
+    "alpha": 0.05,
+    "reference_worlds_per_configuration": 1999,
+    "profile_strength_draws": 999,
+    "calibration_statistic_draws": 1000,
+    "observed_worlds_per_cell": 500,
+    "mandatory_primary_cells": [
+      [0.0, 0.5],
+      [0.0, 1.0],
+      [0.0, 2.0],
+      [0.0, 3.0],
+      [1.0, 2.0]
+    ],
+    "type1_wilson95_upper_ceiling": 0.10,
+    "shared_A2_wilson95_lower_floor": 0.80,
+    "failure_interpretation": "NOT_EVALUABLE_under_this_fresh_geometry_not_absence_of_transferable_phylogeography"
+  },
+  "seed_contract": {
+    "master_seed_rule": "payload = UTF8('ttf|phylogatr|phase3|' + phase2.dataset_digest_sha256 + '|' + phase2.geometry_fingerprint_sha256); master_seed = int.from_bytes(SHA256(payload)[0:8], 'little')",
+    "reference_seed_rule": "seed_for(master_seed, 'genetic_private_reference', configuration_label, absolute_replicate_index)",
+    "observed_seed_rule": "seed_for(master_seed, 'genetic_observed', shared_fraction, residual_amplitude, absolute_replicate_index)",
+    "seed_selection_uses_empirical_genetic_outcome": false
+  },
+  "execution_defaults": {
+    "batch_width": 64,
+    "edge_chunk_size": 32,
+    "train_chunk_size": 4096,
+    "reference_shard_size": 256,
+    "observed_shard_size": 250,
+    "sharding_semantics": "contiguous absolute replicate index ranges only; batch or shard boundaries cannot alter world identity or inference"
+  },
+  "outcome_firewall": {
+    "confirmatory_sequence_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_ttf_statistic_opened": false,
+    "decker_empirical_genetic_outcomes_opened": false
+  },
+  "pass_action": "A PASS may authorize a separate explicit Phase-4 nucleotide-identity opening receipt for this exact fresh dataset and split. PASS is not itself an empirical biological result.",
+  "failure_action": "STOP and record NOT_EVALUABLE. Do not open fresh nucleotide identities or pairwise genetic distances and do not alter the panel, graph, split, bandwidth, reference family, world counts, alpha, or Wilson thresholds to rescue the result.",
+  "forbidden_after_freeze": [
+    "changing the 500 km bandwidth based on fresh geometry support or synthetic outcomes",
+    "changing private-reference configurations or selected-config count",
+    "changing mandatory cells, world counts, alpha, or Wilson thresholds",
+    "dropping low-support species or edges after Phase 2",
+    "resplitting surviving species after Phase 2",
+    "using Decker empirical outcomes as a tuning signal",
+    "opening fresh nucleotide identity before a complete Phase-3 PASS receipt"
+  ]
+}
