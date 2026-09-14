@@ -1,0 +1,59 @@
+name: BOLD metadata-only summary probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ops/bold-metadata-summary-probe
+    paths:
+      - .github/workflows/bold-metadata-summary-probe.yml
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Query aggregate metadata only
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p bold_probe
+          groups=(Amphibia Reptilia Arachnida Actinopterygii Malacostraca Gastropoda Insecta)
+          printf 'group\thttp_code\tbytes\n' > bold_probe/index.tsv
+          for group in "${groups[@]}"; do
+            url="https://portal.boldsystems.org/api/summary?query=tax:class:${group}&fields=specimens,species,marker_code"
+            out="bold_probe/${group}.json"
+            code="$(curl -sS --connect-timeout 20 --max-time 120 -o "$out" -w '%{http_code}' "$url" || true)"
+            bytes="$(wc -c < "$out" | tr -d ' ')"
+            printf '%s\t%s\t%s\n' "$group" "$code" "$bytes" >> bold_probe/index.tsv
+          done
+          cat bold_probe/index.tsv
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for p in sorted(Path('bold_probe').glob('*.json')):
+              try:
+                  x=json.loads(p.read_text())
+              except Exception as e:
+                  print(p.name, 'JSON_ERROR', e)
+                  continue
+              if isinstance(x, dict):
+                  print(p.name, 'keys=', sorted(x.keys()))
+                  # Print only aggregate/count-shaped values; never record documents or sequence fields.
+                  for k,v in sorted(x.items()):
+                      kl=k.lower()
+                      if any(t in kl for t in ('sequence','nucleotide','bases')):
+                          continue
+                      if isinstance(v,(int,float,str,bool)) or v is None:
+                          print(' ', k, '=', v)
+                      elif isinstance(v,dict):
+                          print(' ', k, 'dict_keys=', list(v)[:20], 'n=', len(v))
+                      elif isinstance(v,list):
+                          print(' ', k, 'list_n=', len(v), 'sample_types=', sorted({type(z).__name__ for z in v[:20]}))
+              else:
+                  print(p.name, 'type=', type(x).__name__)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bold-metadata-summary-probe
+          path: bold_probe
+          if-no-files-found: error
