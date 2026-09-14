@@ -1,0 +1,129 @@
+{
+  "schema": "ttf_genetic_empirical_opening_state_v0.3",
+  "status": "EMPIRICAL_OPENING_CLOSED_SINGLE_EXTERNAL_BLOCKER_FRESH_PHYLOGATR_ARCHIVE",
+  "purpose": "Canonical handoff after archive-direct Phase-1 intake, anonymous phylogatR access preflight, BOLD contingency access preflight, and the public GitHub raw-source search. This receipt changes source-access governance only; it does not change the genetic estimand, qualification thresholds, response rule, or empirical firewall.",
+  "parent_receipt": {
+    "path": "benchmarks/frozen/genetic_empirical_opening_state_v0.2.json",
+    "blob_sha": "d1e102bb7da14daebb6d197e9d7a9a7c3d824b7b"
+  },
+  "source_access_lineage": {
+    "archive_direct_phase1_intake": {
+      "pull_request": 23,
+      "merge_commit": "eed8925783644dcb6525c8a87f0d214a68570e9e",
+      "effect": "Untouched phylogatR .zip/.tar.gz/.tgz can be passed directly to response-blind Phase 1 with safe temporary extraction."
+    },
+    "phylogatr_anonymous_access_preflight": {
+      "pull_request": 24,
+      "merge_commit": "3fe12ed6b861e63003614e9ce7a19ab6b56af4c5",
+      "receipt": "benchmarks/frozen/phylogatr_anonymous_http_probe_v0.1.json",
+      "receipt_blob_sha": "de9aec77f411901312732420e37d2a2f77f03ba7",
+      "status": "ANONYMOUS_DOWNLOAD_BLOCKED_BY_OSC_OIDC",
+      "interpretation": "authenticated OSC access is required; this is infrastructure evidence only"
+    },
+    "bold_contingency_preflight": {
+      "pull_request": 25,
+      "merge_commit": "ded06b2b64c78800ee0d94332b86f22279d69b46",
+      "receipt": "benchmarks/frozen/bold_metadata_source_access_preflight_v0.1.json",
+      "receipt_blob_sha": "9a4877a3b2fe6b7c4995a439029113a36e74e390",
+      "status": "HOLD_SOURCE_ACCESS_UNAVAILABLE",
+      "interpretation": "tested BOLD public routes are unavailable; this is not data insufficiency or a biological null"
+    },
+    "public_github_source_preflight": {
+      "pull_request": 26,
+      "premerge_head_sha": "078adde168094b82d5c45c8a8572fbd67e6ec635",
+      "receipts": [
+        {
+          "path": "benchmarks/frozen/genetic_public_phylogatr_source_preflight_v0.1.json",
+          "blob_sha": "aa9a293d55778c93f0ff1def7d6296222aff8ab6"
+        },
+        {
+          "path": "benchmarks/frozen/genetic_public_phylogatr_source_preflight_v0.2.json",
+          "blob_sha": "209fadf9024204ee3d7fab5a18b816a502643ba9"
+        }
+      ],
+      "status": "PUBLIC_GITHUB_RAW_SOURCE_SEARCH_CLOSED_NO_UNCONTAMINATED_CONFIRMATORY_ARCHIVE",
+      "decisions": {
+        "fonseca_public_repo": "REJECT_RAW_STRUCTURE_ABSENT",
+        "osc_conservation_teaching_snapshot": "CONTAMINATED_FOR_CONFIRMATORY_USE_AFTER_DERIVED_OUTCOME_EXPOSURE",
+        "shastara_phylogatr": "REJECT_RAW_STRUCTURE_ABSENT",
+        "kaiyaprovost_bioacoustics": "REJECT_RAW_STRUCTURE_ABSENT",
+        "decker_repo": "DEVELOPMENT_ONLY_EMPIRICAL_OUTCOMES_CLOSED"
+      },
+      "exhaustiveness_claim": false
+    }
+  },
+  "development_panel": {
+    "dataset": "Decker et al. bird/bat development geometry",
+    "cross_species_gate_d_status": "NOT_EVALUABLE",
+    "binding_private_A3_wilson95_upper": 0.10033475332223055,
+    "frozen_type1_ceiling": 0.10,
+    "shared_A2_power_wilson95_lower": 0.8355052092686175,
+    "frozen_power_floor": 0.80,
+    "within_species_self_detectability_status": "PASS",
+    "opening_decision": "PERMANENTLY_CLOSED_UNDER_V0_2_DESIGN"
+  },
+  "fresh_confirmatory_route": {
+    "source": "genuinely fresh authenticated phylogatR portal archive independent of Decker development files",
+    "external_blocker_issue": 21,
+    "current_state": "WAITING_FOR_UNTOUCHED_PORTAL_ARCHIVE",
+    "phase_1": {
+      "status": "READY_NOT_RUN",
+      "preferred_command": "python scripts/run_phylogatr_confirmatory_phase1_intake.py --archive /path/to/phylogatr_results.zip --output-dir frozen/fresh_phylogatr_phase1",
+      "supported_archive_formats": [".zip", ".tar.gz", ".tgz"],
+      "allowed_input_surface": "genes.txt, cite.txt, current-schema occurrences.txt, aligned FASTA headers only",
+      "nucleotide_identity_must_remain_closed": true,
+      "minimum_species": 150,
+      "required_pass_status": "FROZEN_RESPONSE_BLIND_PHASE1_GEOMETRY",
+      "failure_status": "NOT_EVALUABLE_PHASE1_PANEL_TOO_SMALL",
+      "automatic_phase2_opening": false
+    },
+    "phase_2": {
+      "status": "IMPLEMENTED_NOT_AUTHORIZED_BEFORE_PHASE1_PASS",
+      "allowed_surface_if_phase1_passes": "canonical-valid versus noncanonical character masks only",
+      "nucleotide_identity_must_remain_closed": true,
+      "minimum_surviving_species": 150,
+      "no_rewiring": true,
+      "no_resplitting": true
+    },
+    "phase_3": {
+      "status": "IMPLEMENTED_NOT_RUN_WITH_FRESH_GEOMETRY",
+      "type1_wilson95_upper_ceiling": 0.10,
+      "shared_A2_wilson95_lower_floor": 0.80,
+      "nucleotide_identity_must_remain_closed": true,
+      "failure_interpretation": "NOT_EVALUABLE"
+    },
+    "fresh_self_detectability": {
+      "status": "IMPLEMENTED_NOT_RUN_WITH_FRESH_GEOMETRY",
+      "role": "required only to interpret a later qualified cross-species negative as lineage-conditioned"
+    },
+    "phase_4": {
+      "status": "IMPLEMENTED_IDENTITY_OPENING_NOT_AUTHORIZED",
+      "authorization_condition": "complete Phase-3 PASS on the exact fresh Phase-2 survivor geometry",
+      "primary_estimand": "place_beyond_ibd",
+      "alpha": 0.05
+    }
+  },
+  "source_search_stop_rule": {
+    "portal_anonymous_bypass": "CLOSED_BY_PR24",
+    "bold_public_contingency": "HOLD_BY_PR25",
+    "github_raw_phylogatr_substitution": "CLOSED_BY_PR26",
+    "do_not_continue_same_purpose_source_hunting": true,
+    "reopen_only_if": "new external evidence supplies an untouched raw archive or demonstrates a material service-access change"
+  },
+  "global_firewall": {
+    "decker_empirical_sequence_identity_opened": false,
+    "decker_empirical_pairwise_genetic_distances_opened": false,
+    "decker_empirical_break_labels_opened": false,
+    "fresh_confirmatory_sequence_identity_opened": false,
+    "fresh_confirmatory_pairwise_genetic_distances_opened": false,
+    "fresh_confirmatory_ttf_statistic_opened": false,
+    "empirical_genetic_conclusion_exists": false
+  },
+  "interpretation_contract": {
+    "qualified_cross_species_positive": "evidence for a transferable place component of within-species genetic differentiation",
+    "qualified_cross_species_negative_with_fresh_self_qualification_and_empirical_self_positive": "evidence consistent with lineage-conditioned spatial structure within the tested domain",
+    "qualified_cross_species_negative_without_fresh_self_support": "NOT_EVALUABLE_FOR_LINEAGE_CONDITIONING",
+    "any_failed_geometry_mask_or_power_type1_gate": "NOT_EVALUABLE; never a biological null"
+  },
+  "next_authorized_action": "Obtain an untouched authenticated fresh phylogatR portal archive and provide the archive directly to response-blind Phase 1. Do not inspect nucleotide identities."
+}
