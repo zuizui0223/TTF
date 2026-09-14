@@ -227,6 +227,14 @@ def main() -> int:
     final_species_count = int(len(selected))
     minimum_panel = int(p1["minimum_panel_size"])
     panel_pass = final_species_count >= minimum_panel
+    core_fingerprint_available = len(geometry_by_species) >= 4
+    phase1_fingerprint = (
+        geometry_fingerprint(
+            [geometry_by_species[name] for name in sorted(geometry_by_species)]
+        )
+        if core_fingerprint_available
+        else None
+    )
 
     panels = {}
     for species in sorted(selected_by_species):
@@ -313,9 +321,12 @@ def main() -> int:
             "minimum_panel_pass": bool(panel_pass),
         },
         "geometry_csv_sha256": sha256_path(args.output_csv),
-        "geometry_fingerprint_sha256": geometry_fingerprint(
-            [geometry_by_species[name] for name in sorted(geometry_by_species)]
-        ) if geometry_by_species else None,
+        "geometry_fingerprint_sha256": phase1_fingerprint,
+        "geometry_fingerprint_status": (
+            "computed_core_fingerprint"
+            if core_fingerprint_available
+            else "not_applicable_fewer_than_four_species"
+        ),
         "localities_total": int(sum(panel.n_localities for panel in selected)),
         "edges_total": int(sum(panel.geometry.n_edges for panel in selected)),
         "split": {
@@ -343,6 +354,7 @@ def main() -> int:
                 "status": manifest["status"],
                 "dataset_digest_sha256": dataset_digest,
                 "geometry_fingerprint_sha256": manifest["geometry_fingerprint_sha256"],
+                "geometry_fingerprint_status": manifest["geometry_fingerprint_status"],
                 "species": final_species_count,
                 "train": len(train),
                 "eval": len(evaluation),
