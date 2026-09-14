@@ -1,0 +1,62 @@
+{
+  "schema": "ttf_phylogatr_anonymous_http_probe_v0.1",
+  "status": "ANONYMOUS_DOWNLOAD_BLOCKED_BY_OSC_OIDC",
+  "purpose": "Freeze a response-blind infrastructure preflight establishing whether the current production phylogatR host can be accessed or downloaded from without OSC authentication. No empirical sequence, occurrence, genetic-distance, or TTF data were opened.",
+  "source": {
+    "host": "https://phylogatr.osc.edu",
+    "probe_branch": "ops/phylogatr-anonymous-http-probe",
+    "probe_head_sha": "459485ec629794cc756446891c78a2a29e1e5506",
+    "workflow_run_id": 34862817923,
+    "job_id": 104039109760,
+    "artifact_id": 10355068861,
+    "artifact_name": "phylogatr-anonymous-http-probe",
+    "artifact_zip_sha256": "5b9ce854197fb9267f71dfb29f9fd34f31e788949aa944bebbaf77c59a96c753"
+  },
+  "probe_contract": {
+    "method": "HTTP HEAD only",
+    "credentials_supplied": false,
+    "redirects_followed": false,
+    "response_bodies_downloaded": false,
+    "phylogatr_archive_downloaded": false,
+    "nucleotide_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "empirical_ttf_opened": false
+  },
+  "results": [
+    {
+      "url": "https://phylogatr.osc.edu/",
+      "http_code": 302,
+      "location_class": "OSC_OPENID_CONNECT_AUTHORIZATION",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "url": "https://phylogatr.osc.edu/ping",
+      "http_code": 200,
+      "location_class": null,
+      "content_type": "text/plain; charset=utf-8",
+      "interpretation": "health endpoint only"
+    },
+    {
+      "url": "https://phylogatr.osc.edu/searches/new",
+      "http_code": 302,
+      "location_class": "OSC_OPENID_CONNECT_AUTHORIZATION",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "url": "https://phylogatr.osc.edu/searches/0.zip?taxon_kingdom=Animalia",
+      "http_code": 302,
+      "location_class": "OSC_OPENID_CONNECT_AUTHORIZATION",
+      "content_type": "text/html; charset=utf-8"
+    }
+  ],
+  "upstream_public_source_audit": {
+    "osc_phylogatr_web_release_assets_contain_database_snapshot": false,
+    "osc_phylogatr_web_db_directory_contains_production_database": false,
+    "fonseca_2023_public_repo_contains_raw_phylogatr_results": false,
+    "fonseca_2023_public_repo_contains_processed_working_dataset": true,
+    "fonseca_2023_raw_folder_reference": "/Users/emanuelfonseca/Desktop/phylogatr-results"
+  },
+  "conclusion": "The current production search and archive routes are protected by the OSC OpenID Connect proxy. Anonymous direct download is not an available acquisition path. An authenticated phylogatR archive is required before the frozen response-blind Phase-1 intake can run.",
+  "next_authorized_action": "Acquire a genuinely fresh phylogatR .zip, .tar.gz, or .tgz through authenticated OSC access and run scripts/run_phylogatr_confirmatory_phase1_intake.py --archive <archive> --output-dir <new-empty-directory>. Do not inspect nucleotide identity before Phase 1.",
+  "claim_boundary": "This receipt is infrastructure evidence only. It is not an empirical genetic result and does not alter the Decker NOT_EVALUABLE decision or any genetic TTF estimand."
+}
