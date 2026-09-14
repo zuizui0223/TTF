@@ -10,6 +10,7 @@ on:
       - "src/ttf/genetic_*.py"
       - "src/ttf/phylogatr_*.py"
       - "scripts/freeze_phylogatr_confirmatory_phase1.py"
+      - "scripts/run_phylogatr_confirmatory_phase1_intake.py"
       - "scripts/freeze_phylogatr_confirmatory_phase2_mask.py"
       - "scripts/authorize_phylogatr_phase3_gate_d.py"
       - "scripts/plan_phylogatr_phase3_shards.py"
@@ -43,6 +44,7 @@ jobs:
           tests/test_genetic_self_detectability.py
           tests/test_genetic_empirical_score.py
           tests/test_phylogatr_confirmatory.py
+          tests/test_phylogatr_phase1_intake.py
           tests/test_phylogatr_character_mask.py
           tests/test_phylogatr_empirical.py
           tests/test_phylogatr_freeze_contracts.py
