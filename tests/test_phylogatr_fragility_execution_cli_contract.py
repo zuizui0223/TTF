@@ -9,7 +9,7 @@ from pathlib import Path
 EXECUTION_RULE = Path(
     "docs/supporting/genetic_phylogatr_gate_d_fragility_execution_v0.1.json"
 )
-EXPECTED_EXECUTION_RULE_BLOB = "a2cee09076552428031e9550cb21b017e8021474"
+EXPECTED_EXECUTION_RULE_BLOB = "731928fef0435921e7d4966e67e04e1f3435d493"
 SCRIPTS = [
     "scripts/plan_phylogatr_gate_d_fragility_synthetic.py",
     "scripts/run_phylogatr_gate_d_fragility_reference_shard.py",
