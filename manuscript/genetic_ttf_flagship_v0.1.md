@@ -10,7 +10,7 @@ Target journal: deferred until the frozen empirical branch is known. Journal cho
 
 ## Abstract
 
-Geographic structure in within-species genetic variation reflects both repeatable properties of place and the particular histories of evolutionary lineages. Comparative phylogeography has long sought spatial patterns shared across codistributed species, but retrospective concordance does not by itself establish that geographic information learned from one set of species predicts differentiation in species that were not used to identify the pattern. We define a transferable geographic component operationally as **out-of-species prediction**. For each species, exact sampling localities are connected by a density-scaled within-species graph, pairwise genetic differentiation is summarized on graph edges, and a leave-two-localities-out nuisance fit removes ordinary isolation by distance before spatial turnover is learned across training species. The resulting field is evaluated only on species held entirely outside training. Because empirical sampling geometry can itself determine whether such transfer is detectable, the exact held-out geometry must prospectively pass private-structure Type-I and positive-control power gates before empirical genetic outcomes are interpreted. A bird-and-bat development geometry fails the frozen cross-species Type-I gate narrowly while passing a separate within-species self-detectability gate, demonstrating that spatial genetic structure can be detectable within species even when a cross-lineage transfer test is not qualified. We therefore preregister a fresh phylogatR confirmatory analysis in which nucleotide identity remains masked through geometry and admissibility checks and through a full synthetic qualification on the exact survivor geometry. **[EMPIRICAL RESULT SLOT: populate only after Phase-4 authorization.]** This framework turns shared phylogeographic structure from a retrospective pattern into a prospective prediction problem and makes abstention an explicit outcome when the data geometry cannot support a biological inference.
+Geographic structure in within-species genetic variation reflects both repeatable properties of place and the particular histories of evolutionary lineages. Comparative phylogeography has long sought spatial patterns shared across codistributed species, but retrospective concordance does not by itself establish that geographic information learned from one set of species predicts differentiation in species that were not used to identify the pattern. We define a transferable geographic component operationally as **out-of-species prediction**. For each species, exact sampling localities are connected by a density-scaled within-species graph, pairwise genetic differentiation is summarized on graph edges, and a leave-two-localities-out nuisance fit removes ordinary isolation by distance before spatial turnover is learned across training species. The resulting field is evaluated only on species held entirely outside training. Because empirical sampling geometry can itself determine whether such transfer is detectable, the exact held-out geometry must prospectively pass private-structure Type-I and positive-control power gates before empirical genetic outcomes are interpreted. A bird-and-bat development geometry fails the frozen cross-species Type-I gate narrowly while passing a separate within-species self-detectability gate, demonstrating that the declared synthetic spatial structure can be detectable within species on this geometry even when a cross-lineage transfer test is not qualified. No empirical genetic structure was measured in this development analysis. We therefore preregister a fresh phylogatR confirmatory analysis in which nucleotide identity remains masked through geometry and admissibility checks and through a full synthetic qualification on the exact survivor geometry. **[EMPIRICAL RESULT SLOT: populate only after Phase-4 authorization.]** This framework turns shared phylogeographic structure from a retrospective pattern into a prospective prediction problem and makes abstention an explicit outcome when the data geometry cannot support a biological inference.
 
 ---
 
@@ -38,11 +38,11 @@ Here we develop and preregister this predictive test of phylogeographic transfer
 
 For each species `s`, let sampled localities define nodes in a species-specific spatial graph and let `G_{s,ij}` denote genetic differentiation between connected localities `i` and `j`. The goal is not to pool species into one genetic surface. Instead, each species contributes a within-species turnover pattern, and training species are used to learn a geographic field that is evaluated on species withheld entirely from training.
 
-The two estimands are analyzed separately.
+The primary inferential estimand and secondary descriptive estimand remain separate. The current Phase-4 runner produces the primary transfer result and the within-species self diagnostic; it does not yet emit total genetic transfer.
 
-**Total genetic transfer** uses within-species rank-standardized genetic differentiation on graph edges.
+**Total genetic transfer** uses within-species rank-standardized genetic differentiation on graph edges. Under the frozen Phase-4 rule it is descriptive only unless separately qualified, and cannot override or rescue the primary decision.
 
-**Place beyond IBD**, the primary estimand, first removes an endpoint-safe within-species monotone IBD expectation and then rank-standardizes the residual edge turnover. Only this residual estimand can support the claim that geographic location carries transferable information beyond generic distance dependence.
+**Place beyond IBD**, the primary estimand, first removes an endpoint-safe within-species rank-linear IBD expectation and then rank-standardizes the residual edge turnover. Only this residual estimand can support the claim that geographic location carries transferable information beyond generic distance dependence.
 
 The unit of replication for transfer is the species. Edges contribute to the within-species spatial pattern but are not treated as independent species-level replicates.
 
@@ -116,9 +116,9 @@ The frozen edge list is retained exactly. If an edge cannot be evaluated under t
 
 IBD is treated as a biological nuisance layer rather than a geometry correction. For target edge `e=(i,j)`, all other edges incident to `i` or `j` are excluded from the nuisance fit. Only endpoint-disjoint within-species edges are allowed to estimate the relation between geographic and genetic separation for that target.
 
-Both geographic and genetic distances are represented by training-set order. A rank-linear monotone expectation is fitted using the endpoint-disjoint edges, and the expected and observed order fractions are evaluated for the held-out edge. The residual is the observed minus expected order fraction. Repeating this procedure for every graph edge yields an out-of-pair residual vector that is subsequently rank-standardized within species.
+Both geographic and genetic distances are represented by training-set order. An ordinary least-squares regression of genetic rank fraction on geographic rank fraction is fitted using the endpoint-disjoint edges, and the expected and observed order fractions are evaluated for the held-out edge. The fitted slope is not constrained to be nonnegative; this is rank-linear regression, not a shape-constrained monotone regression. The residual is the observed minus expected order fraction. Repeating this procedure for every graph edge yields an out-of-pair residual vector that is subsequently rank-standardized within species.
 
-The procedure is invariant to strictly increasing transformations of geographic or genetic distance and removes a noiseless strictly monotone IBD relationship exactly. It therefore targets spatial differentiation that cannot be explained by a species' own generic monotone distance trend.
+The procedure is invariant to strictly increasing transformations of geographic or genetic distance and removes a noiseless strictly monotone IBD relationship exactly. These properties do not establish removal of every stochastic or spatially heterogeneous IBD process. The residual estimand and its Type-I guarantee remain conditional on the declared nuisance rule and qualified synthetic family.
 
 ### 7. Learning the transferable turnover field
 
@@ -130,13 +130,13 @@ For each evaluation edge, the trained field produces a predicted turnover value 
 
 `T = mean_s Spearman(predicted_s, observed_s)`
 
-over evaluation species with a finite predeclared score.
+over every frozen evaluation species. The empirical adapter rejects a non-finite score for any evaluation species rather than silently averaging over the remaining species.
 
 ### 8. Profiled-private inference
 
 The null hypothesis is not that traits or genetic responses are exchangeable over localities. Strong spatial structure may exist within every species while remaining private to that lineage. A naive permutation null could therefore destroy the very nuisance structure that must be preserved.
 
-Inference instead uses a profiled-private reference family generated on the frozen empirical geometry. Training-only information determines the private-structure profile. The observed cross-species transfer statistic is compared with the resulting private reference distribution using the frozen alpha level of `0.05`.
+Inference instead uses a profiled-private reference family generated on the frozen empirical geometry. Training-only coherence determines the private-structure profile. For each of eight configurations, the first 999 reference worlds supply the median and median-absolute-deviation scale used to rank compatibility with the observed training coherence. The two most compatible configurations are selected without using the held-out transfer statistic. The remaining 1,000 worlds per configuration supply independent upper-tail Monte Carlo p-values; the primary p-value is the maximum of the two component p-values. The frozen alpha level is `0.05`.
 
 A significant primary result supports transferability beyond private lineage-specific structure under the declared model family. A non-significant result is interpreted only together with qualification and self-detectability evidence.
 
@@ -170,7 +170,7 @@ No failure branch is reworded as evidence that transferable geography is biologi
 
 The endpoint-safe genetic interface was first evaluated on the frozen Decker bird-and-bat sampling geometry without opening its empirical genetic outcomes. The cross-species Gate-D did not meet its prospectively frozen Type-I requirement. The binding private A3 rejection interval had an upper Wilson bound of `0.10033475332223055`, just above the `0.10` ceiling, whereas the shared-A2 power lower bound was `0.8355052092686175` and therefore exceeded the `0.80` power floor. Under the frozen decision rule the development design was consequently `NOT_EVALUABLE` for empirical cross-species transfer.
 
-The separate within-species self-detectability gate passed on the same geometry. Its null upper bound (`0.053771365501634506`) was below the frozen Type-I ceiling and its private-A2 lower power bound (`0.9923756595384479`) was above the frozen power floor. Thus the development system can support detection of spatial structure within species while still failing the stricter calibration needed to interpret cross-species transfer. This distinction motivates qualification on the exact confirmatory geometry rather than assuming that a method validated elsewhere is automatically deployable on a new multispecies dataset.
+The separate within-species self-detectability gate passed on the same geometry. Its null upper bound (`0.053771365501634506`) was below the frozen Type-I ceiling and its private-A2 lower power bound (`0.9923756595384479`) was above the frozen power floor. Thus, on this development geometry, the declared synthetic within-species structure is detectable while cross-species calibration fails. This does not establish that the unopened Decker genetic responses contain detectable structure. This distinction motivates qualification on the exact confirmatory geometry rather than assuming that a method validated elsewhere is automatically deployable on a new multispecies dataset.
 
 ### Fresh confirmatory sampling geometry and character admissibility
 
@@ -208,7 +208,7 @@ Primary report:
 - frozen profiled-private p-value;
 - per-species transfer coefficient distribution;
 - predeclared support diagnostics;
-- total genetic transfer as a secondary estimand;
+- total genetic transfer only as a separately implemented descriptive output under the frozen secondary contract; the current Phase-4 runner does not emit this quantity;
 - empirical within-species self statistic only under its frozen interpretation role.
 
 The first sentence of this section must be selected from the frozen Branch A/B/C logic in `docs/GENETIC_TTF_MANUSCRIPT_SPINE.md`; it must not be rewritten into a stronger causal statement after viewing the data.
@@ -259,7 +259,7 @@ First, the confirmatory analysis uses the COI/COX1 marker family. Mitochondrial 
 
 Second, the tested field is scale dependent. The graph density, 500-km kernel bandwidth, geographic support of the included taxa, and phylogatR sampling process define the spatial domain over which transfer is evaluated. A non-transfer result at this scale does not imply non-transfer at finer or broader scales.
 
-Third, predictive transfer is not causal attribution. Even a strong held-out result would show that place carries reusable information, but multiple correlated geographic mechanisms could generate that information. Separating topography, climate history, habitat transitions, barriers, and other drivers would require a subsequent predictor competition or independent mechanistic design.
+Third, predictive transfer is not causal attribution. A species-disjoint split does not guarantee phylogenetic independence or remove shared demographic history. Related held-out species or lineages exposed to the same historical event can share predictive geography. Positive transfer therefore cannot partition place effects from shared lineage history; likewise, a qualified non-significant result with self support is not an equivalence test establishing zero transfer. Even a strong held-out result would show that place carries reusable information, but multiple correlated geographic mechanisms could generate that information. Separating topography, climate history, habitat transitions, barriers, and other drivers would require a subsequent predictor competition or independent mechanistic design.
 
 Fourth, public sequence and occurrence databases are opportunistic samples. The phased geometry and character-admissibility gates reduce some consequences of uneven sampling, and species are weighted equally in the transfer statistic, but database representation still determines the lineages and geographic regions available for inference.
 
