@@ -138,6 +138,9 @@ def test_fragility_plan_preserves_formal_panel_and_has_no_authority(tmp_path: Pa
 
     receipt_path = write_fragility_plan(plan, tmp_path / "fragility")
     receipt = json.loads(receipt_path.read_text())
+    assert receipt["phase2_manifest_sha256"] == sha256_path(phase2_path)
+    assert receipt["phase3_rule_sha256"] == sha256_path(PHASE3_RULE)
+    assert receipt["fragility_rule_sha256"] == sha256_path(FRAGILITY_RULE)
     assert receipt["formal_gate_d_decision_made_by_this_receipt"] is False
     assert receipt["phase4_identity_opening_authorized_by_this_receipt"] is False
     assert all(value is False for value in receipt["authority_firewall"].values())
@@ -163,5 +166,21 @@ def test_fragility_plan_rejects_any_fresh_identity_opening(tmp_path: Path) -> No
             geometry_csv,
             phase2_path,
             PHASE3_RULE,
+            FRAGILITY_RULE,
+        )
+
+
+def test_fragility_plan_rejects_formal_phase3_rule_drift(tmp_path: Path) -> None:
+    geometry_csv, phase2_path = _fixture(tmp_path)
+    altered_rule = tmp_path / "altered_phase3_rule.json"
+    payload = json.loads(PHASE3_RULE.read_text())
+    payload["core_method"]["bandwidth_km"] = float(payload["core_method"]["bandwidth_km"]) + 1.0
+    altered_rule.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+
+    with pytest.raises(RuntimeError, match="formal Phase-3 rule Git blob SHA drift"):
+        build_fragility_plan(
+            geometry_csv,
+            phase2_path,
+            altered_rule,
             FRAGILITY_RULE,
         )
