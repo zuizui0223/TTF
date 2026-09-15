@@ -32,8 +32,7 @@
     "reuse_formal_world_counts": true,
     "reuse_formal_alpha": true,
     "reuse_formal_wilson_thresholds_as_read_only_reference_lines": true,
-    "structural_support_below_formal_minimum": "record STRUCTURAL_SUPPORT_BELOW_FORMAL_MINIMUM and create no synthetic jobs for that level; do not drop species, edges, or localities to rescue it",
-    "identical_geometry_policy": "If a frozen retention level has the same geometry fingerprint as retention=1.0 or a higher retention level, create no independent synthetic jobs. Reuse the already-authoritative/full or higher-retention synthetic summary as a descriptive plateau with zero new decision authority. This prevents Monte Carlo noise from masquerading as geometry sensitivity."
+    "structural_support_below_formal_minimum": "record STRUCTURAL_SUPPORT_BELOW_FORMAL_MINIMUM and create no synthetic jobs for that level; do not drop species, edges, or localities to rescue it"
   },
   "phase4_completion_policy": {
     "completed_curve_required_before_identity_opening": true,
