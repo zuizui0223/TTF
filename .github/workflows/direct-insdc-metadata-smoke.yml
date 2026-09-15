@@ -1,0 +1,21 @@
+name: direct INSDC metadata smoke
+on:
+  pull_request:
+    paths:
+      - 'src/ttf/direct_insdc_metadata.py'
+      - 'scripts/census_direct_insdc_metadata.py'
+      - 'tests/test_direct_insdc_metadata.py'
+      - 'tests/test_direct_insdc_census.py'
+      - 'docs/supporting/genetic_direct_insdc_source_preflight_v0.1.json'
+      - 'docs/DIRECT_INSDC_CONFIRMATORY_SOURCE_PLAN_V0.1.md'
+      - '.github/workflows/direct-insdc-metadata-smoke.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -e . pytest
+      - run: pytest -q tests/test_direct_insdc_metadata.py tests/test_direct_insdc_census.py
