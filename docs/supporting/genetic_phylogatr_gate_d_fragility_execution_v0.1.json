@@ -20,7 +20,12 @@
     "reason": "There must be exactly one authoritative full-geometry Gate-D path."
   },
   "thinned_geometry_policy": {
-    "run_retention_fractions": [0.875, 0.75, 0.625, 0.5],
+    "run_retention_fractions": [
+      0.875,
+      0.75,
+      0.625,
+      0.5
+    ],
     "reuse_formal_core_method": true,
     "reuse_formal_reference_configuration_family": true,
     "reuse_formal_mandatory_cells": true,
@@ -28,6 +33,15 @@
     "reuse_formal_alpha": true,
     "reuse_formal_wilson_thresholds_as_read_only_reference_lines": true,
     "structural_support_below_formal_minimum": "record STRUCTURAL_SUPPORT_BELOW_FORMAL_MINIMUM and create no synthetic jobs for that level; do not drop species, edges, or localities to rescue it"
+  },
+  "phase4_completion_policy": {
+    "completed_curve_required_before_identity_opening": true,
+    "required_curve_schema": "ttf_genetic_phylogatr_gate_d_fragility_curve_v0.1",
+    "required_curve_status": "DIAGNOSTIC_FRAGILITY_CURVE_COMPLETE",
+    "structural_support_below_formal_minimum_counts_as_completed_diagnostic": true,
+    "diagnostic_metrics_do_not_gate_phase4": true,
+    "only_formal_phase3_pass_controls_scientific_gate": true,
+    "purpose": "Make the response-blind diagnostic auditable before nucleotide identity is opened without giving thinned geometries any PASS/FAIL or rescue authority."
   },
   "seed_contract": {
     "level_master_seed_rule": "payload = UTF8('ttf|phylogatr|fragility|v0.1|' + dataset_digest_sha256 + '|' + full_geometry_fingerprint_sha256 + '|' + canonical_retention_label + '|' + thinned_geometry_fingerprint_sha256); seed = int.from_bytes(SHA256(payload)[0:8], 'little')",
