@@ -2,12 +2,15 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
 from ttf.genetic_geometry_io import load_frozen_genetic_geometry_csv, sha256_path
 from ttf.geometry import SpeciesGeometry, geometry_fingerprint
 
+
+FRAGILITY_EXECUTION_RULE_GIT_BLOB_SHA = "731928fef0435921e7d4966e67e04e1f3435d493"
 
 PHASE4_CODE_PATHS = (
     "src/ttf/phylogatr_phase4.py",
@@ -18,6 +21,13 @@ PHASE4_CODE_PATHS = (
     "src/ttf/genetic_self_detectability.py",
     "src/ttf/private_null_inference.py",
     "src/ttf/profiled_private_null.py",
+    "src/ttf/phylogatr_fragility_execution.py",
+    "src/ttf/phylogatr_fragility_formal_anchor.py",
+    "scripts/plan_phylogatr_gate_d_fragility_synthetic.py",
+    "scripts/run_phylogatr_gate_d_fragility_reference_shard.py",
+    "scripts/aggregate_phylogatr_gate_d_fragility_references.py",
+    "scripts/run_phylogatr_gate_d_fragility_observed_shard.py",
+    "scripts/aggregate_phylogatr_gate_d_fragility_curve.py",
     "scripts/authorize_phylogatr_phase4_identity_opening.py",
     "scripts/run_phylogatr_phase4_empirical_test.py",
 )
@@ -35,9 +45,103 @@ def _closed(payload: dict, label: str) -> None:
         raise RuntimeError(f"{label} is not fully closed")
 
 
+def _git_blob_sha1(path: Path) -> str:
+    data = path.read_bytes()
+    header = f"blob {len(data)}\0".encode("ascii")
+    return hashlib.sha1(header + data).hexdigest()
+
+
+def _validate_fragility_completion(
+    curve: dict,
+    execution_rule: dict,
+    *,
+    phase3_rule_sha256: str,
+    formal_qualification_sha256: str,
+    execution_rule_sha256: str,
+    expected_fingerprint: str,
+    expected_dataset_digest: str,
+) -> list[float]:
+    policy = execution_rule.get("phase4_completion_policy")
+    if not isinstance(policy, dict):
+        raise RuntimeError("fragility execution rule lacks Phase-4 completion policy")
+    if policy.get("completed_curve_required_before_identity_opening") is not True:
+        raise RuntimeError("fragility completion is not frozen as a Phase-4 prerequisite")
+    if policy.get("diagnostic_metrics_do_not_gate_phase4") is not True:
+        raise RuntimeError("fragility diagnostic metrics unexpectedly gate Phase 4")
+    if policy.get("only_formal_phase3_pass_controls_scientific_gate") is not True:
+        raise RuntimeError("formal Phase-3 is not the sole scientific gate")
+    if curve.get("status") != policy.get("required_curve_status"):
+        raise RuntimeError("fragility diagnostic curve is incomplete")
+    if curve.get("schema") != policy.get("required_curve_schema"):
+        raise RuntimeError("fragility diagnostic curve schema drift")
+
+    if curve.get("phase3_rule_sha256") != phase3_rule_sha256:
+        raise RuntimeError("fragility curve formal Phase-3 rule provenance drift")
+    if curve.get("formal_qualification_sha256") != formal_qualification_sha256:
+        raise RuntimeError("fragility curve formal qualification provenance drift")
+    if curve.get("execution_rule_sha256") != execution_rule_sha256:
+        raise RuntimeError("fragility curve execution-rule provenance drift")
+    if curve.get("full_geometry_fingerprint_sha256") != expected_fingerprint:
+        raise RuntimeError("fragility curve full-geometry fingerprint drift")
+    if curve.get("dataset_digest_sha256") != expected_dataset_digest:
+        raise RuntimeError("fragility curve dataset digest drift")
+    if curve.get("formal_full_geometry_status") != "PASS":
+        raise RuntimeError("fragility curve is not anchored to a formal Phase-3 PASS")
+
+    _closed(curve.get("authority_firewall", {}), "fragility curve authority firewall")
+    for key in (
+        "confirmatory_sequence_identity_opened",
+        "confirmatory_pairwise_genetic_distances_opened",
+        "confirmatory_ttf_statistic_opened",
+        "formal_gate_d_decision_made_by_this_curve",
+        "phase4_identity_opening_authorized_by_this_curve",
+    ):
+        if curve.get(key) is not False:
+            raise RuntimeError(f"fragility curve firewall/authority drift: {key}")
+    if curve.get("diagnostic_completion_is_procedural_prerequisite_only") is not True:
+        raise RuntimeError("fragility completion is not marked procedural-only")
+
+    expected_retentions = [1.0] + [
+        float(value)
+        for value in execution_rule["thinned_geometry_policy"]["run_retention_fractions"]
+    ]
+    declared = [float(value) for value in curve.get("expected_retention_fractions", [])]
+    if declared != expected_retentions:
+        raise RuntimeError("fragility curve declared retention levels drift")
+    rows = curve.get("curve")
+    if not isinstance(rows, list):
+        raise RuntimeError("fragility curve rows missing")
+    observed = [float(row["retention_fraction"]) for row in rows]
+    if observed != expected_retentions:
+        raise RuntimeError("fragility curve is incomplete or reordered")
+
+    anchor = rows[0]
+    if anchor.get("source") != "formal_phase3_qualification_receipt":
+        raise RuntimeError("fragility retention=1.0 is not the formal Phase-3 anchor")
+    if anchor.get("formal_status") != "PASS":
+        raise RuntimeError("fragility formal anchor is not PASS")
+    if anchor.get("formal_gate_d_decision_authority") is not True:
+        raise RuntimeError("fragility formal anchor lost formal decision authority")
+    if anchor.get("diagnostic_decision_authority") is not False:
+        raise RuntimeError("fragility formal anchor gained diagnostic decision authority")
+
+    allowed_thinned_status = {
+        "DIAGNOSTIC_SYNTHETIC_SUMMARY",
+        "STRUCTURAL_SUPPORT_BELOW_FORMAL_MINIMUM",
+    }
+    for row in rows[1:]:
+        if row.get("status") not in allowed_thinned_status:
+            raise RuntimeError("fragility thinned level is incomplete")
+        if row.get("formal_gate_d_decision_authority") is not False:
+            raise RuntimeError("fragility thinned level gained formal decision authority")
+        if row.get("phase4_identity_opening_authority") is not False:
+            raise RuntimeError("fragility thinned level gained Phase-4 authority")
+    return observed
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(
-        description="Authorize exact fresh phylogatR nucleotide-identity opening after Phase-3 qualification."
+        description="Authorize exact fresh phylogatR nucleotide-identity opening after Phase-3 qualification and completed response-blind fragility diagnostics."
     )
     ap.add_argument("--geometry", type=Path, required=True)
     ap.add_argument("--phase1-manifest", type=Path, required=True)
@@ -49,6 +153,8 @@ def main() -> int:
     ap.add_argument("--self-rule", type=Path, required=True)
     ap.add_argument("--self-references", type=Path, required=True)
     ap.add_argument("--self-qualification", type=Path, required=True)
+    ap.add_argument("--fragility-execution-rule", type=Path, required=True)
+    ap.add_argument("--fragility-curve", type=Path, required=True)
     ap.add_argument("--phase4-rule", type=Path, required=True)
     ap.add_argument("--opening-state", type=Path, required=True)
     ap.add_argument("--repo-root", type=Path, default=Path("."))
@@ -80,10 +186,21 @@ def main() -> int:
     self_qualification = _load(
         args.self_qualification, "ttf_genetic_phylogatr_phase3_self_qualification_v0.1"
     )
+    fragility_execution_rule = _load(
+        args.fragility_execution_rule,
+        "ttf_genetic_phylogatr_gate_d_fragility_execution_rule_v0.1",
+    )
+    fragility_curve = _load(
+        args.fragility_curve,
+        "ttf_genetic_phylogatr_gate_d_fragility_curve_v0.1",
+    )
     phase4_rule = _load(
         args.phase4_rule, "ttf_genetic_phylogatr_phase4_response_rule_v0.1"
     )
     opening = _load(args.opening_state, "ttf_genetic_empirical_opening_state_v0.1")
+
+    if _git_blob_sha1(args.fragility_execution_rule) != FRAGILITY_EXECUTION_RULE_GIT_BLOB_SHA:
+        raise RuntimeError("frozen fragility execution rule Git blob SHA drift before Phase 4")
 
     _closed(phase4_rule["outcome_firewall_at_rule_freeze"], "Phase-4 rule firewall")
     _closed(self_rule["outcome_firewall"], "fresh self-rule firewall")
@@ -131,6 +248,8 @@ def main() -> int:
         "phase3_self_rule_sha256": sha256_path(args.self_rule),
         "phase3_self_references_sha256": sha256_path(args.self_references),
         "phase3_self_qualification_sha256": sha256_path(args.self_qualification),
+        "fragility_execution_rule_sha256": sha256_path(args.fragility_execution_rule),
+        "fragility_curve_sha256": sha256_path(args.fragility_curve),
         "phase4_rule_sha256": sha256_path(args.phase4_rule),
         "opening_state_sha256": sha256_path(args.opening_state),
         "geometry_csv_sha256": sha256_path(args.geometry),
@@ -145,6 +264,17 @@ def main() -> int:
         raise RuntimeError("geometry CSV differs from Phase-3 authorization")
 
     fingerprint = str(phase3_auth["geometry_fingerprint_sha256"])
+    dataset_digest = str(phase3_auth["dataset_digest_sha256"])
+    fragility_retentions = _validate_fragility_completion(
+        fragility_curve,
+        fragility_execution_rule,
+        phase3_rule_sha256=hashes["phase3_rule_sha256"],
+        formal_qualification_sha256=hashes["phase3_qualification_sha256"],
+        execution_rule_sha256=hashes["fragility_execution_rule_sha256"],
+        expected_fingerprint=fingerprint,
+        expected_dataset_digest=dataset_digest,
+    )
+
     if refs.get("geometry_fingerprint_sha256") != fingerprint:
         raise RuntimeError("Phase-3 reference geometry drift")
     if qualification.get("geometry_fingerprint_sha256") != fingerprint:
@@ -192,7 +322,7 @@ def main() -> int:
         "schema": "ttf_genetic_phylogatr_phase4_identity_opening_authorization_v0.1",
         "status": "AUTHORIZE_EXACT_FRESH_NUCLEOTIDE_IDENTITY_OPENING",
         **hashes,
-        "dataset_digest_sha256": phase3_auth["dataset_digest_sha256"],
+        "dataset_digest_sha256": dataset_digest,
         "geometry_fingerprint_sha256": fingerprint,
         "species": phase3_auth["species"],
         "phase3_gate_d": {
@@ -200,6 +330,15 @@ def main() -> int:
             "passed": True,
             "type1_gate_pass": True,
             "power_gate_pass": True,
+        },
+        "fragility_diagnostic": {
+            "status": fragility_curve["status"],
+            "completion_required_before_opening": True,
+            "completion_is_procedural_prerequisite_only": True,
+            "diagnostic_metrics_gate_phase4": False,
+            "curve_sha256": hashes["fragility_curve_sha256"],
+            "execution_rule_sha256": hashes["fragility_execution_rule_sha256"],
+            "retention_levels": fragility_retentions,
         },
         "fresh_self_detectability": {
             "status": self_qualification["status"],
@@ -215,6 +354,7 @@ def main() -> int:
                 "edge rewiring",
                 "sequence deletion based on divergence",
                 "changing the comparable-site threshold, p-distance definition, IBD model, bandwidth, alpha, or reference family",
+                "using fragility diagnostic metrics to alter, rescue, or reinterpret the formal Phase-3 decision",
             ],
         },
         "outcome_firewall_before_execution": {
@@ -223,7 +363,12 @@ def main() -> int:
             "confirmatory_ttf_statistic_opened": False,
             "decker_empirical_genetic_outcomes_opened": False,
         },
-        "claim_boundary": "This authorization opens only the exact fresh confirmatory Phase-4 response path. The empirical conclusion exists only after the authorized runner completes successfully.",
+        "claim_boundary": (
+            "This authorization opens only the exact fresh confirmatory Phase-4 response path. "
+            "Formal Phase-3 PASS is the sole scientific opening gate; the completed fragility curve "
+            "is a response-blind procedural prerequisite and has no rescue or PASS/FAIL authority. "
+            "The empirical conclusion exists only after the authorized runner completes successfully."
+        ),
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(out, indent=2, sort_keys=True) + "\n")
@@ -233,6 +378,8 @@ def main() -> int:
                 "status": out["status"],
                 "geometry_fingerprint_sha256": fingerprint,
                 "species": len(table.species),
+                "fragility_curve_complete": True,
+                "fragility_metrics_gate_phase4": False,
                 "self_method_qualified": bool(self_qualification["passed"]),
                 "confirmatory_sequence_identity_opened": False,
                 "decker_empirical_genetic_outcomes_opened": False,
