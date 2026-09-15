@@ -10,6 +10,7 @@ import numpy as np
 from ttf.genetic_empirical_score import (
     score_genetic_distance_mapping,
     score_self_detectability_mapping,
+    score_total_genetic_distance_mapping,
 )
 from ttf.genetic_gate import prepare_genetic_ttf_design
 from ttf.genetic_self_detectability import prepare_genetic_self_detectability
@@ -174,9 +175,18 @@ def main() -> int:
     else:
         decision = "NOT_EVALUABLE_FOR_LINEAGE_CONDITIONING"
 
+    # The frozen primary decision is complete before this unqualified descriptor.
+    total = score_total_genetic_distance_mapping(
+        design,
+        genetic_distance,
+        edge_chunk_size=int(execution["edge_chunk_size"]),
+        train_chunk_size=int(execution["train_chunk_size"]),
+    )
+
     out = {
         "schema": "ttf_genetic_phylogatr_phase4_empirical_result_v0.1",
         "status": "EMPIRICAL_RESULT_OPENED_UNDER_FROZEN_PHASE4_AUTHORIZATION",
+        "phase4_authorization_sha256": sha256_path(args.phase4_authorization),
         "geometry_fingerprint_sha256": context.phase3_authorization[
             "geometry_fingerprint_sha256"
         ],
@@ -211,10 +221,11 @@ def main() -> int:
                 for key, value in sorted(empirical_self.species_scores.items())
             },
         },
+        "secondary_total_genetic_transfer": total.as_dict(),
         "decision": decision,
         "interpretation": {
             "TRANSFERABLE_PLACE_COMPONENT": "Evidence that geographic location predicts post-IBD mitochondrial intraspecific differentiation in unseen species within the fresh confirmatory domain.",
-            "LINEAGE_CONDITIONED_SPATIAL_STRUCTURE_WITHIN_TESTED_DOMAIN": "Cross-species transfer is not detected despite qualified and positive within-species spatial detectability; spatial structure is therefore lineage-conditioned within this tested domain.",
+            "LINEAGE_CONDITIONED_SPATIAL_STRUCTURE_WITHIN_TESTED_DOMAIN": "Cross-species transfer is not detected despite qualified and positive within-species spatial detectability; this is consistent with lineage-conditioned spatial structure within the tested domain, not proof of zero transfer or a lineage-specific historical cause.",
             "NOT_EVALUABLE_FOR_LINEAGE_CONDITIONING": "Cross-species transfer is not detected, but within-species evidence is insufficient for a lineage-conditioned interpretation.",
         }[decision],
         "confirmatory_sequence_identity_opened": True,
@@ -226,7 +237,7 @@ def main() -> int:
         "claim_boundary": "This result applies only to the exact frozen fresh phylogatR panel, marker, graph, split, response definition, and prequalified reference family.",
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(out, indent=2, sort_keys=True) + "\n")
+    args.output.write_text(json.dumps(out, indent=2, sort_keys=True, allow_nan=False) + "\n")
     print(
         json.dumps(
             {
