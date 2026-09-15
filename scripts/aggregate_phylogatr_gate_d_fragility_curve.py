@@ -132,7 +132,8 @@ def _plateau_row(level: dict, source_row: dict) -> dict:
     out = {
         "retention_fraction": float(level["retention_fraction"]),
         "source": "diagnostic_identical_geometry_plateau",
-        "status": str(level["status"]),
+        "status": "DIAGNOSTIC_SYNTHETIC_SUMMARY",
+        "execution_status": str(level["status"]),
         "inherits_metrics_from_retention_fraction": float(
             level["inherits_metrics_from_retention_fraction"]
         ),
@@ -250,7 +251,7 @@ def main() -> int:
             "private_null_Wilson95_upper_ceiling": float(
                 rule["qualification"]["type1_wilson95_upper_ceiling"]
             ),
-            "shared_A2_Wilson95_lower_floor": float(
+            "shared_A2_wilson95_lower_floor": float(
                 rule["qualification"]["shared_A2_wilson95_lower_floor"]
             ),
             "read_only": True,
