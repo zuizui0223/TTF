@@ -149,7 +149,29 @@ A completed curve has status `DIAGNOSTIC_FRAGILITY_CURVE_COMPLETE`.
 
 Only attempt this stage when formal Phase 3 has PASS status. The authorization script additionally requires the completed fragility curve and completed self-detectability qualification/provenance chain.
 
-Use `scripts/authorize_phylogatr_phase4_identity_opening.py --help` and supply the exact frozen receipts from Phases 1–3, self qualification, fragility execution, the Phase-4 response rule, opening-state receipt, and exact Phase-2 geometry.
+Use one exact provenance chain. A recommended file convention is shown below; the chosen Phase-3/self/fragility output filenames must be the exact files produced and frozen by the preceding stages.
+
+```bash
+python scripts/authorize_phylogatr_phase4_identity_opening.py \
+  --geometry frozen/fresh_phylogatr_phase2/phase2_geometry.csv \
+  --phase1-manifest frozen/fresh_phylogatr_phase1/phase1_manifest.json \
+  --phase2-manifest frozen/fresh_phylogatr_phase2/phase2_manifest.json \
+  --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+  --phase3-authorization frozen/fresh_phylogatr_phase3/authorization.json \
+  --references frozen/fresh_phylogatr_phase3/references.json \
+  --qualification frozen/fresh_phylogatr_phase3/qualification.json \
+  --self-rule docs/supporting/genetic_phylogatr_phase3_self_detectability_rule_v0.1.json \
+  --self-references frozen/fresh_phylogatr_phase3/self_references.json \
+  --self-qualification frozen/fresh_phylogatr_phase3/self_qualification.json \
+  --fragility-execution-rule docs/supporting/genetic_phylogatr_gate_d_fragility_execution_v0.1.json \
+  --fragility-curve frozen/fresh_phylogatr_phase3/fragility_curve.json \
+  --phase4-rule docs/supporting/genetic_phylogatr_phase4_response_rule_v0.1.json \
+  --opening-state benchmarks/frozen/genetic_empirical_opening_state_v0.1.json \
+  --repo-root . \
+  --output frozen/fresh_phylogatr_phase4/identity_opening_authorization.json
+```
+
+`genetic_empirical_opening_state_v0.1.json` is intentionally the immutable Phase-4 authorization baseline used by the frozen runtime contract. The current source-access governance state remains v0.3; do not substitute v0.3 for the Phase-4 baseline unless the authorization/runtime contract is prospectively revised and requalified before any identity opening.
 
 The fragility curve is a **procedural prerequisite only**. Its diagnostic values do not enter the scientific PASS/FAIL decision; only formal Phase-3 PASS does.
 
