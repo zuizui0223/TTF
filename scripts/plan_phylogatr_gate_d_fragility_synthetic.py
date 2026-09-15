@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 
 from ttf.phylogatr_fragility_execution import build_fragility_execution_plan
+from ttf.phylogatr_fragility_formal_anchor import validate_formal_phase3_qualification
 
 
 EXECUTION_RULE_GIT_BLOB_SHA = "a2cee09076552428031e9550cb21b017e8021474"
@@ -34,6 +35,14 @@ def main() -> int:
         raise RuntimeError(
             "frozen fragility execution rule Git blob SHA drift before diagnostic planning"
         )
+
+    phase2 = json.loads(args.phase2_manifest.read_text())
+    expected_fingerprint = str(phase2["geometry_fingerprint_sha256"])
+    validate_formal_phase3_qualification(
+        args.phase3_rule,
+        args.formal_qualification,
+        expected_geometry_fingerprint_sha256=expected_fingerprint,
+    )
 
     plan = build_fragility_execution_plan(
         args.geometry_plan_receipt,
