@@ -34,6 +34,9 @@ class FragilityPlan:
     phase2: dict
     phase3_rule: dict
     fragility_rule: dict
+    phase2_manifest_sha256: str
+    phase3_rule_sha256: str
+    fragility_rule_sha256: str
     train_species: tuple[str, ...]
     eval_species: tuple[str, ...]
     levels: tuple[FragilityLevel, ...]
@@ -44,6 +47,12 @@ def _load_json(path: Path, schema: str) -> dict:
     if payload.get("schema") != schema:
         raise RuntimeError(f"unexpected schema for {path}: {payload.get('schema')!r}")
     return payload
+
+
+def _git_blob_sha1(path: Path) -> str:
+    data = Path(path).read_bytes()
+    header = f"blob {len(data)}\0".encode("ascii")
+    return hashlib.sha1(header + data).hexdigest()
 
 
 def _assert_phase2_blindness(phase2: Mapping[str, object]) -> None:
@@ -180,6 +189,13 @@ def build_fragility_plan(
     phase3_rule = _load_json(phase3_rule_path, _PHASE3_RULE_SCHEMA)
     fragility_rule = _load_json(fragility_rule_path, _FRAGILITY_RULE_SCHEMA)
 
+    expected_phase3_blob = str(fragility_rule["formal_phase3_rule_git_blob_sha"])
+    observed_phase3_blob = _git_blob_sha1(phase3_rule_path)
+    if observed_phase3_blob != expected_phase3_blob:
+        raise RuntimeError(
+            "formal Phase-3 rule Git blob SHA drift before fragility diagnostic"
+        )
+
     if phase2.get("status") != fragility_rule["input_contract"]["required_phase2_status"]:
         raise RuntimeError("fragility diagnostic requires PASS_TO_SYNTHETIC_GATE Phase 2")
     _assert_phase2_blindness(phase2)
@@ -244,6 +260,9 @@ def build_fragility_plan(
         phase2=phase2,
         phase3_rule=phase3_rule,
         fragility_rule=fragility_rule,
+        phase2_manifest_sha256=sha256_path(phase2_manifest_path),
+        phase3_rule_sha256=sha256_path(phase3_rule_path),
+        fragility_rule_sha256=sha256_path(fragility_rule_path),
         train_species=tuple(map(str, phase2["split"]["train_species"])),
         eval_species=tuple(map(str, phase2["split"]["eval_species"])),
         levels=levels,
@@ -305,6 +324,9 @@ def write_fragility_plan(plan: FragilityPlan, output_dir: Path) -> Path:
     receipt = {
         "schema": "ttf_genetic_phylogatr_gate_d_fragility_geometry_plan_v0.1",
         "status": "response_blind_diagnostic_geometry_plan_only",
+        "phase2_manifest_sha256": plan.phase2_manifest_sha256,
+        "phase3_rule_sha256": plan.phase3_rule_sha256,
+        "fragility_rule_sha256": plan.fragility_rule_sha256,
         "phase2_geometry_csv_sha256": plan.phase2["geometry_csv_sha256"],
         "phase2_geometry_fingerprint_sha256": plan.phase2["geometry_fingerprint_sha256"],
         "dataset_digest_sha256": plan.phase2["phase1"]["dataset_digest_sha256"],
