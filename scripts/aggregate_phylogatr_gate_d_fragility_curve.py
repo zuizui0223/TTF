@@ -119,6 +119,37 @@ def _collect_level(
     }
 
 
+def _plateau_row(level: dict, source_row: dict) -> dict:
+    fields = (
+        "A3_private_null_rejection_rate",
+        "A3_private_null_Wilson95_upper",
+        "max_private_null_Wilson95_upper",
+        "shared_A2_rejection_rate",
+        "shared_A2_Wilson95_lower",
+        "distance_of_max_private_null_upper_to_formal_0.10_ceiling",
+        "distance_of_shared_A2_lower_to_formal_0.80_floor",
+    )
+    out = {
+        "retention_fraction": float(level["retention_fraction"]),
+        "source": "diagnostic_identical_geometry_plateau",
+        "status": str(level["status"]),
+        "inherits_metrics_from_retention_fraction": float(
+            level["inherits_metrics_from_retention_fraction"]
+        ),
+        "geometry_fingerprint_sha256": level["geometry_fingerprint_sha256"],
+        "minimum_endpoint_disjoint_ibd_training_edges": int(
+            level["metrics"]["minimum_endpoint_disjoint_ibd_training_edges"]
+        ),
+        "formal_gate_d_decision_authority": False,
+        "phase4_identity_opening_authority": False,
+    }
+    for field in fields:
+        if field not in source_row:
+            raise RuntimeError(f"identical-geometry plateau source lacks {field}")
+        out[field] = source_row[field]
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--input-dir", type=Path, required=True)
@@ -144,40 +175,59 @@ def main() -> int:
         raise RuntimeError("fragility full-geometry anchor is not the formal Phase-3 receipt")
 
     curve: list[dict] = [dict(formal_anchor)]
+    by_retention: dict[float, dict] = {1.0: curve[0]}
+    identical_statuses = {
+        "IDENTICAL_TO_FULL_GEOMETRY_NO_RERUN",
+        "IDENTICAL_TO_HIGHER_RETENTION_GEOMETRY_NO_RERUN",
+    }
     for level in plan["levels"]:
         retention = float(level["retention_fraction"])
-        if level["status"] == "STRUCTURAL_SUPPORT_BELOW_FORMAL_MINIMUM":
-            curve.append(
-                {
-                    "retention_fraction": retention,
-                    "source": "diagnostic_thinned_geometry_support_only",
-                    "status": "STRUCTURAL_SUPPORT_BELOW_FORMAL_MINIMUM",
-                    "geometry_fingerprint_sha256": level[
-                        "geometry_fingerprint_sha256"
-                    ],
-                    "minimum_endpoint_disjoint_ibd_training_edges": int(
-                        level["metrics"]["minimum_endpoint_disjoint_ibd_training_edges"]
-                    ),
-                    "A3_private_null_rejection_rate": None,
-                    "A3_private_null_Wilson95_upper": None,
-                    "max_private_null_Wilson95_upper": None,
-                    "shared_A2_rejection_rate": None,
-                    "shared_A2_Wilson95_lower": None,
-                    "distance_of_max_private_null_upper_to_formal_0.10_ceiling": None,
-                    "distance_of_shared_A2_lower_to_formal_0.80_floor": None,
-                    "formal_gate_d_decision_authority": False,
-                    "phase4_identity_opening_authority": False,
-                }
-            )
+        status = str(level["status"])
+        if status in identical_statuses:
+            inherited = float(level["inherits_metrics_from_retention_fraction"])
+            source_row = by_retention.get(inherited)
+            if source_row is None:
+                raise RuntimeError(
+                    f"identical-geometry plateau source retention={inherited} is unavailable"
+                )
+            row = _plateau_row(level, source_row)
+            curve.append(row)
+            by_retention[retention] = row
             continue
-        curve.append(
-            _collect_level(
-                args.input_dir,
-                retention=retention,
-                level=level,
-                rule=rule,
-            )
+        if status == "STRUCTURAL_SUPPORT_BELOW_FORMAL_MINIMUM":
+            row = {
+                "retention_fraction": retention,
+                "source": "diagnostic_thinned_geometry_support_only",
+                "status": "STRUCTURAL_SUPPORT_BELOW_FORMAL_MINIMUM",
+                "geometry_fingerprint_sha256": level[
+                    "geometry_fingerprint_sha256"
+                ],
+                "minimum_endpoint_disjoint_ibd_training_edges": int(
+                    level["metrics"]["minimum_endpoint_disjoint_ibd_training_edges"]
+                ),
+                "A3_private_null_rejection_rate": None,
+                "A3_private_null_Wilson95_upper": None,
+                "max_private_null_Wilson95_upper": None,
+                "shared_A2_rejection_rate": None,
+                "shared_A2_Wilson95_lower": None,
+                "distance_of_max_private_null_upper_to_formal_0.10_ceiling": None,
+                "distance_of_shared_A2_lower_to_formal_0.80_floor": None,
+                "formal_gate_d_decision_authority": False,
+                "phase4_identity_opening_authority": False,
+            }
+            curve.append(row)
+            by_retention[retention] = row
+            continue
+        if status != "SYNTHETIC_DIAGNOSTIC_RUNNABLE":
+            raise RuntimeError(f"unexpected fragility execution level status: {status}")
+        row = _collect_level(
+            args.input_dir,
+            retention=retention,
+            level=level,
+            rule=rule,
         )
+        curve.append(row)
+        by_retention[retention] = row
 
     expected_retentions = [1.0] + [float(level["retention_fraction"]) for level in plan["levels"]]
     observed_retentions = [float(row["retention_fraction"]) for row in curve]
@@ -215,6 +265,7 @@ def main() -> int:
         "claim_boundary": (
             "Only retention=1.0 imports the formal Phase-3 Gate-D decision. Thinned levels "
             "are descriptive synthetic sensitivity results and cannot rescue, alter, or reinterpret it. "
+            "Identical geometry fingerprints reuse the prior summary exactly rather than adding Monte Carlo noise. "
             "Curve completion is required procedurally before Phase-4 opening but its diagnostic metrics "
             "do not enter the Phase-4 scientific PASS/FAIL decision."
         ),
