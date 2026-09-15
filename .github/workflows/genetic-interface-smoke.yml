@@ -12,6 +12,7 @@ on:
       - "scripts/freeze_phylogatr_confirmatory_phase1.py"
       - "scripts/run_phylogatr_confirmatory_phase1_intake.py"
       - "scripts/freeze_phylogatr_confirmatory_phase2_mask.py"
+      - "scripts/run_phylogatr_confirmatory_phase2_intake.py"
       - "scripts/authorize_phylogatr_phase3_gate_d.py"
       - "scripts/plan_phylogatr_phase3_shards.py"
       - "scripts/run_phylogatr_phase3_*.py"
@@ -49,6 +50,7 @@ jobs:
           tests/test_phylogatr_empirical.py
           tests/test_phylogatr_freeze_contracts.py
           tests/test_phylogatr_phase2_freezer.py
+          tests/test_phylogatr_phase2_intake.py
           tests/test_phylogatr_phase3_contract.py
           tests/test_phylogatr_phase3_self_qualification.py
           tests/test_phylogatr_phase4_contract.py
