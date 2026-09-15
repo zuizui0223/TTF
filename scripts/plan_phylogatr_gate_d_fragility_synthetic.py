@@ -10,13 +10,38 @@ from ttf.phylogatr_fragility_execution import build_fragility_execution_plan
 from ttf.phylogatr_fragility_formal_anchor import validate_formal_phase3_qualification
 
 
-EXECUTION_RULE_GIT_BLOB_SHA = "731928fef0435921e7d4966e67e04e1f3435d493"
+EXECUTION_RULE_GIT_BLOB_SHA = "a06eac22f47d90a29328a837c401a6c8b938c6ab"
 
 
 def _git_blob_sha1(path: Path) -> str:
     data = path.read_bytes()
     header = f"blob {len(data)}\0".encode("ascii")
     return hashlib.sha1(header + data).hexdigest()
+
+
+def _apply_identical_geometry_policy(plan: dict) -> dict:
+    """Prevent Monte Carlo noise from creating fake fragility at geometry plateaus."""
+    seen: dict[str, float] = {
+        str(plan["full_geometry_fingerprint_sha256"]): 1.0,
+    }
+    for level in plan["levels"]:
+        retention = float(level["retention_fraction"])
+        fingerprint = str(level["geometry_fingerprint_sha256"])
+        inherited_from = seen.get(fingerprint)
+        if inherited_from is None:
+            seen[fingerprint] = retention
+            continue
+        level["status"] = (
+            "IDENTICAL_TO_FULL_GEOMETRY_NO_RERUN"
+            if inherited_from == 1.0
+            else "IDENTICAL_TO_HIGHER_RETENTION_GEOMETRY_NO_RERUN"
+        )
+        level["inherits_metrics_from_retention_fraction"] = inherited_from
+        level["reference_jobs"] = []
+        level["observed_jobs"] = []
+        level["reference_job_count"] = 0
+        level["observed_job_count"] = 0
+    return plan
 
 
 def main() -> int:
@@ -51,6 +76,7 @@ def main() -> int:
         args.formal_qualification,
         args.execution_rule,
     )
+    plan = _apply_identical_geometry_policy(plan)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(plan, indent=2, sort_keys=True) + "\n")
     print(
@@ -62,6 +88,9 @@ def main() -> int:
                     {
                         "retention_fraction": level["retention_fraction"],
                         "status": level["status"],
+                        "inherits_metrics_from_retention_fraction": level.get(
+                            "inherits_metrics_from_retention_fraction"
+                        ),
                         "reference_job_count": level["reference_job_count"],
                         "observed_job_count": level["observed_job_count"],
                     }
