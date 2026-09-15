@@ -1,0 +1,65 @@
+{
+  "schema": "ttf_genetic_phylogatr_gate_d_fragility_execution_rule_v0.1",
+  "status": "frozen_diagnostic_execution_only_before_fresh_identity_opening",
+  "purpose": "Execute the predeclared Gate-D fragility sensitivity curve without creating a second formal Gate-D. The exact retention=1.0 result is imported from the formal Phase-3 qualification receipt; only thinned counterfactual geometries are simulated here.",
+  "parent_fragility_rule": "docs/supporting/genetic_phylogatr_gate_d_fragility_diagnostic_v0.1.json",
+  "formal_phase3_rule": "docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json",
+  "execution_order": [
+    "complete formal Phase-3 Gate-D on exact Phase-2 survivor geometry",
+    "while fresh nucleotide identity remains closed, create fragility execution plan",
+    "run synthetic private references for each runnable thinned level",
+    "aggregate references per level",
+    "run all frozen mandatory synthetic observed cells per level",
+    "aggregate diagnostic curve",
+    "only then may any separately authorized Phase-4 identity opening occur"
+  ],
+  "full_geometry_policy": {
+    "retention_fraction": 1.0,
+    "rerun_in_diagnostic": false,
+    "source": "formal ttf_genetic_phylogatr_phase3_qualification_v0.1 receipt",
+    "reason": "There must be exactly one authoritative full-geometry Gate-D path."
+  },
+  "thinned_geometry_policy": {
+    "run_retention_fractions": [0.875, 0.75, 0.625, 0.5],
+    "reuse_formal_core_method": true,
+    "reuse_formal_reference_configuration_family": true,
+    "reuse_formal_mandatory_cells": true,
+    "reuse_formal_world_counts": true,
+    "reuse_formal_alpha": true,
+    "reuse_formal_wilson_thresholds_as_read_only_reference_lines": true,
+    "structural_support_below_formal_minimum": "record STRUCTURAL_SUPPORT_BELOW_FORMAL_MINIMUM and create no synthetic jobs for that level; do not drop species, edges, or localities to rescue it"
+  },
+  "seed_contract": {
+    "level_master_seed_rule": "payload = UTF8('ttf|phylogatr|fragility|v0.1|' + dataset_digest_sha256 + '|' + full_geometry_fingerprint_sha256 + '|' + canonical_retention_label + '|' + thinned_geometry_fingerprint_sha256); seed = int.from_bytes(SHA256(payload)[0:8], 'little')",
+    "reference_seed_namespace": "genetic_fragility_private_reference",
+    "observed_seed_namespace": "genetic_fragility_observed",
+    "formal_phase3_seed_reused": false,
+    "seed_selection_uses_empirical_genetic_outcome": false
+  },
+  "curve_metrics": [
+    "A3_private_null_rejection_rate",
+    "A3_private_null_Wilson95_upper",
+    "max_private_null_Wilson95_upper",
+    "shared_A2_rejection_rate",
+    "shared_A2_Wilson95_lower",
+    "distance_of_max_private_null_upper_to_formal_0.10_ceiling",
+    "distance_of_shared_A2_lower_to_formal_0.80_floor",
+    "minimum_endpoint_disjoint_ibd_training_edges"
+  ],
+  "authority_firewall": {
+    "diagnostic_can_change_formal_gate_d_status": false,
+    "diagnostic_can_authorize_phase4": false,
+    "diagnostic_can_rescue_not_evaluable": false,
+    "diagnostic_can_reclassify_not_evaluable_as_negative": false,
+    "diagnostic_can_change_thresholds": false,
+    "diagnostic_can_change_world_counts": false,
+    "diagnostic_can_change_species_or_split": false,
+    "diagnostic_can_change_bandwidth_or_graph_rule": false
+  },
+  "outcome_firewall": {
+    "fresh_sequence_identity_must_be_closed": true,
+    "fresh_pairwise_genetic_distances_must_be_closed": true,
+    "fresh_empirical_ttf_must_be_closed": true
+  },
+  "claim_boundary": "The fragility curve describes synthetic method sensitivity to response-blind locality support only. It cannot alter or reinterpret the formal Gate-D decision and is not an empirical genetic result."
+}
