@@ -186,6 +186,7 @@ def main() -> int:
     out = {
         "schema": "ttf_genetic_phylogatr_phase4_empirical_result_v0.1",
         "status": "EMPIRICAL_RESULT_OPENED_UNDER_FROZEN_PHASE4_AUTHORIZATION",
+        "phase4_authorization_sha256": sha256_path(args.phase4_authorization),
         "geometry_fingerprint_sha256": context.phase3_authorization[
             "geometry_fingerprint_sha256"
         ],

@@ -44,8 +44,10 @@ The modified scorer and runner are already in `PHASE4_CODE_PATHS`: a future Phas
 
 These are software and numerical checks on synthetic fixtures, not a fresh geometry-specific Type-I/power qualification.
 
-## Next work
+## Result-to-manuscript completion
 
-The next bounded software task is a result-to-manuscript exporter that reports primary estimates, complete evaluation-species counts, self support and gate provenance from terminal receipts, and refuses biological prose for pre-opening or non-evaluable endpoints. Its output must keep descriptive total transfer distinct from qualified residual inference.
+The receipt-only exporter is implemented in `scripts/export_genetic_ttf_manuscript.py`; usage and validation boundaries are in [GENETIC_TTF_MANUSCRIPT_EXPORT.md](GENETIC_TTF_MANUSCRIPT_EXPORT.md). It produces the Results passage, complete species table and hashed export manifest after checking terminal-receipt consistency. Closed receipts produce a status note only. Tests cover all interpretation branches and inconsistent inputs. This completes the output/reporting development milestone, not the fresh empirical validation.
+
+## Next empirical milestone
 
 The next empirical task remains receipt of the untouched authenticated archive and response-blind Phase 1. Same-purpose source hunting and tuning the failed Decker design remain closed under `benchmarks/frozen/genetic_empirical_opening_state_v0.3.json`.

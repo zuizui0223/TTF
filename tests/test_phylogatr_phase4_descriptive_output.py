@@ -90,6 +90,7 @@ def test_runner_decision_ignores_total_descriptor(
     monkeypatch.setattr(sys, 'argv', _argv(tmp_path, output))
     assert module.main() == 0
     payload = json.loads(output.read_text())
+    assert payload['phase4_authorization_sha256'] == 'fixture'
     assert payload['decision'] == expected
     assert payload['primary_place_beyond_ibd']['positive'] is primary_positive
     secondary = payload['secondary_total_genetic_transfer']
