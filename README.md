@@ -4,6 +4,24 @@ TTF is a standalone, trait-agnostic methods repository for asking whether **with
 
 `fcp` remains an empirical flower-colour ecology project. TTF is the method-development, qualification, abstention, and transfer layer.
 
+## Current genetic flagship route
+
+The active genetic question is whether **within-species genetic differentiation learned from training species predicts differentiation in unseen species beyond the declared IBD adjustment**.
+
+The canonical state is [`genetic_empirical_opening_state_v0.3.json`](benchmarks/frozen/genetic_empirical_opening_state_v0.3.json). The [manuscript spine](docs/GENETIC_TTF_MANUSCRIPT_SPINE.md) and [pre-data draft](manuscript/genetic_ttf_flagship_v0.1.md) preserve the outcome firewall.
+
+| Layer | Frozen state | Meaning |
+| --- | --- | --- |
+| Decker development cross-species Gate-D | `NOT_EVALUABLE` | Private-A3 Wilson upper 0.1003347533 exceeds 0.10; shared-A2 power lower 0.8355052093 passes 0.80. |
+| Decker within-species self-detectability | Synthetic `PASS` | Detectability on the declared simulated family, not a measured genetic result. |
+| Fresh phylogatR Phases 1–4 | Implemented; awaiting untouched authenticated archive | No fresh empirical genetic transfer conclusion exists. |
+
+The next empirical step is response-blind Phase 1 on an untouched authenticated phylogatR archive, tracked in [issue #21](https://github.com/zuizui0223/TTF/issues/21). Phase 1 reads provenance, headers and geometry. Phase 2 may open character-validity masks after Phase-1 PASS; nucleotide identity requires complete Phase-3 qualification on the exact surviving geometry. The Decker empirical outcomes remain closed under the failed design.
+
+Anonymous portal access, BOLD contingency access and public GitHub source substitution have frozen closure/hold decisions. Resume those searches only on new external evidence of an untouched archive or a material service-access change.
+
+The earlier trait and paired-state qualification history follows below; it does not authorize the genetic empirical route.
+
 ## Core estimand
 
 TTF does **not** define cross-species sharedness as hotspot concentration in one pooled map.
@@ -168,6 +186,7 @@ pytest -q
 
 TTF currently licenses bounded method statements only.
 
+- Genetic TTF has a frozen prospective route, but no empirical genetic transfer conclusion; Decker Gate-D remains `NOT_EVALUABLE`.
 - Core TTF v0.11 is qualified on its declared synthetic/frozen-geometry design.
 - The actual flower-colour route stopped at v0.12 as **NOT EVALUABLE before any empirical TTF statistic was opened**.
 - TTF-M and TTF-C are both qualified on their balanced idealized family, and Q4.1 passes its strict-private directional family.
