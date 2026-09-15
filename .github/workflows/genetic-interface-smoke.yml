@@ -2,6 +2,28 @@ name: genetic interface smoke
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/genetic-interface-smoke.yml"
+      - "src/ttf/genetic_*.py"
+      - "src/ttf/phylogatr_*.py"
+      - "scripts/freeze_phylogatr_confirmatory_phase1.py"
+      - "scripts/run_phylogatr_confirmatory_phase1_intake.py"
+      - "scripts/freeze_phylogatr_confirmatory_phase2_mask.py"
+      - "scripts/run_phylogatr_confirmatory_phase2_intake.py"
+      - "scripts/authorize_phylogatr_phase3_gate_d.py"
+      - "scripts/plan_phylogatr_phase3_shards.py"
+      - "scripts/run_phylogatr_phase3_*.py"
+      - "scripts/aggregate_phylogatr_phase3_*.py"
+      - "scripts/authorize_phylogatr_phase4_identity_opening.py"
+      - "scripts/run_phylogatr_phase4_empirical_test.py"
+      - "docs/supporting/genetic_phylogatr_*.json"
+      - "benchmarks/frozen/genetic_decker_species_exclusion_v0.1.json"
+      - "benchmarks/frozen/genetic_empirical_opening_state_v0.1.json"
+      - "benchmarks/frozen/genetic_phylogatr_response_blind_method_closure_v0.1.json"
+      - "docs/PHYLOGATR_FRESH_CONFIRMATORY_RUNBOOK_V0.1.md"
+      - "tests/test_genetic_*.py"
+      - "tests/test_phylogatr_*.py"
   push:
     branches:
       - "method/**"
