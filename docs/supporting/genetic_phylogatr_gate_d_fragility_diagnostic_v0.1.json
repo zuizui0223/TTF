@@ -1,0 +1,81 @@
+{
+  "authority_firewall": {
+    "diagnostic_can_authorize_identity_opening": false,
+    "diagnostic_can_change_bandwidth": false,
+    "diagnostic_can_change_gate_d": false,
+    "diagnostic_can_change_reference_family": false,
+    "diagnostic_can_change_split": false,
+    "diagnostic_can_change_thresholds": false,
+    "diagnostic_can_change_world_counts": false,
+    "diagnostic_can_convert_not_evaluable_to_negative": false,
+    "diagnostic_can_drop_edges_from_formal_geometry": false,
+    "diagnostic_can_drop_species": false,
+    "diagnostic_can_rescue_failed_full_geometry": false
+  },
+  "forbidden_uses": [
+    "choosing a retention level because it passes when the full geometry fails",
+    "dropping species, localities, or edges from the formal geometry based on this diagnostic",
+    "changing bandwidth, graph density, alpha, Wilson thresholds, reference configurations, or world counts based on this diagnostic",
+    "using diagnostic results to authorize Phase-4 nucleotide identity opening",
+    "describing a formal Gate-D failure as a biological negative"
+  ],
+  "formal_decision_rule": "Only the pre-existing Phase-3 Gate-D result on the exact retention=1.0 Phase-2 survivor geometry controls PASS versus NOT_EVALUABLE. Every thinned result is descriptive sensitivity information only.",
+  "formal_phase3_rule": "docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json",
+  "formal_phase3_rule_git_blob_sha": "93f9126d1ba30f5bbed28db071b1a5ced2d18005",
+  "geometry_metrics": [
+    "species_count",
+    "minimum_localities",
+    "median_localities",
+    "maximum_localities",
+    "minimum_graph_k",
+    "median_graph_k",
+    "maximum_graph_k",
+    "minimum_endpoint_disjoint_ibd_training_edges",
+    "median_endpoint_disjoint_ibd_training_edges",
+    "maximum_endpoint_disjoint_ibd_training_edges"
+  ],
+  "input_contract": {
+    "exact_phase2_geometry_required": true,
+    "fresh_empirical_ttf_must_be_closed": true,
+    "fresh_pairwise_genetic_distances_must_be_closed": true,
+    "fresh_sequence_identity_must_be_closed": true,
+    "required_phase2_schema": "ttf_genetic_phylogatr_confirmatory_phase2_mask_v0.1",
+    "required_phase2_status": "PASS_TO_SYNTHETIC_GATE",
+    "species_set_must_remain_exact": true,
+    "train_eval_split_must_remain_exact": true
+  },
+  "parent_protocol": "docs/supporting/genetic_phylogatr_confirmatory_protocol_v0.1.json",
+  "parent_protocol_git_blob_sha": "8db5f1dd4bc20821c3a7e4e76267e087404f180d",
+  "planned_synthetic_metrics": {
+    "formal_thresholds_are_read_only": true,
+    "primary_cells_of_interest": [
+      "A3_private_null",
+      "shared_A2"
+    ],
+    "purpose": "Reserved for a separate diagnostic execution layer that reuses the frozen synthetic Gate-D family without conferring formal decision authority.",
+    "report": [
+      "empirical_rejection_fraction",
+      "Wilson_95_interval",
+      "distance_to_frozen_formal_threshold"
+    ]
+  },
+  "purpose": "Measure how synthetic Gate-D geometry support changes under deterministic nested locality thinning of the exact fresh phylogatR Phase-2 survivor panel. This diagnostic has no authority to alter, rescue, replace, or reinterpret the formal Phase-3 Gate-D decision.",
+  "schema": "ttf_genetic_phylogatr_gate_d_fragility_diagnostic_rule_v0.1",
+  "status": "frozen_response_blind_diagnostic_only_before_fresh_phylogatr_identity_opening",
+  "stress_design": {
+    "full_geometry_role": "retention_fraction=1.0 is the only geometry that may enter the formal Phase-3 Gate-D authorization",
+    "graph_rule": "recompute the same density-scaled undirected kNN graph at neighbor_fraction=0.15 on each thinned counterfactual geometry",
+    "minimum_localities_per_species": 12,
+    "nestedness": "one immutable per-species locality ranking is reused for every retention fraction; each lower-retention selected set must be a subset of every higher-retention selected set",
+    "retention_fractions": [
+      1.0,
+      0.875,
+      0.75,
+      0.625,
+      0.5
+    ],
+    "selected_output_order": "ascending original locality index after hash-ranked selection",
+    "selection_rank": "ascending SHA256(UTF8(dataset_digest_sha256 + '|fragility|v0.1|' + canonical_species_name + '|' + decimal_original_locality_index)); ties impossible except digest collision",
+    "target_locality_count": "max(minimum_localities_per_species, ceil(retention_fraction * original_locality_count))"
+  }
+}
