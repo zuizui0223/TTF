@@ -1,0 +1,82 @@
+{
+  "schema": "ttf_genetic_phylogatr_response_blind_method_closure_v0.1",
+  "status": "RESPONSE_BLIND_METHOD_PATH_COMPLETE_WAITING_FOR_AUTHENTICATED_ARCHIVE",
+  "purpose": "Freeze the completed response-blind fresh-phylogatR method and execution handoff without changing the empirical opening state. No fresh nucleotide identity, pairwise genetic distance, or empirical TTF statistic has been opened.",
+  "source_main_sha_after_method_completion": "a0450dbf81c6ed71dbd8c446ee05892dcb02bd6d",
+  "canonical_empirical_opening_state": {
+    "path": "benchmarks/frozen/genetic_empirical_opening_state_v0.3.json",
+    "git_blob_sha": "261194a6ad8a431b0e08edcc7dbf090f3b74ccbe",
+    "status": "EMPIRICAL_OPENING_CLOSED_SINGLE_EXTERNAL_BLOCKER_FRESH_PHYLOGATR_ARCHIVE",
+    "unchanged_by_this_receipt": true,
+    "reason_not_bumped": "The external source-access state and all empirical firewalls are unchanged; this receipt closes method/execution surfaces only."
+  },
+  "method_lineage": {
+    "fragility_geometry_diagnostic": {
+      "pull_request": 31,
+      "merge_commit": "cd73c4537263ace177e58e644c6c9d3f149c35f0",
+      "rule": "docs/supporting/genetic_phylogatr_gate_d_fragility_diagnostic_v0.1.json",
+      "rule_git_blob_sha": "fe20d73c5809ffe684b4fb35fe30fd4d129839c4",
+      "role": "response-blind deterministic nested geometry stress only; no formal decision authority"
+    },
+    "fragility_synthetic_execution": {
+      "pull_request": 32,
+      "merge_commit": "bbfcffce1554d3ff6bf5c43ca9d8b1014ff772de",
+      "rule": "docs/supporting/genetic_phylogatr_gate_d_fragility_execution_v0.1.json",
+      "rule_git_blob_sha": "731928fef0435921e7d4966e67e04e1f3435d493",
+      "role": "diagnostic-only synthetic sensitivity curve; retention 1.0 imports the sole formal Phase-3 qualification receipt"
+    },
+    "phase2_archive_intake": {
+      "pull_request": 33,
+      "merge_commit": "a0450dbf81c6ed71dbd8c446ee05892dcb02bd6d",
+      "head_sha": "a631f2c842b5056b16d88d570e30a8f2e71d57ec",
+      "full_ci_run": 34941370620,
+      "full_ci_conclusion": "success",
+      "script": "scripts/run_phylogatr_confirmatory_phase2_intake.py",
+      "script_git_blob_sha": "9d61dc65921fdaa8e1782d2c5f8ac8d8291b486d",
+      "role": "bind Phase 2 to the same untouched Phase-1 archive SHA-256, safely re-extract temporarily, keep nucleotide identity closed, and remove manual extraction from the canonical archive workflow"
+    }
+  },
+  "execution_handoff": {
+    "runbook": "docs/PHYLOGATR_FRESH_CONFIRMATORY_RUNBOOK_V0.1.md",
+    "runbook_git_blob_sha": "1c8343eae3f500a25d86189b10a6fbbed264c000",
+    "canonical_source_mode": "one untouched authenticated phylogatR portal archive",
+    "phase1_archive_direct": true,
+    "phase2_same_archive_direct": true,
+    "manual_archive_extraction_required": false,
+    "phase3_formal_decision_is_retention_1_only": true,
+    "phase4_requires_formal_phase3_pass": true,
+    "phase4_requires_completed_fragility_curve_procedurally": true,
+    "fragility_metrics_gate_phase4_scientifically": false,
+    "phase4_opening_state_baseline": "benchmarks/frozen/genetic_empirical_opening_state_v0.1.json",
+    "phase4_opening_state_baseline_role": "immutable runtime authorization baseline; distinct from the current v0.3 source-access governance state"
+  },
+  "scientific_contract_unchanged": {
+    "primary_estimand": "place_beyond_ibd",
+    "formal_cross_species_gate": "retention=1.0 exact Phase-2 survivor geometry only",
+    "type1_wilson95_upper_ceiling": 0.10,
+    "shared_A2_wilson95_lower_floor": 0.80,
+    "bandwidth_km": 500.0,
+    "alpha": 0.05,
+    "post_result_rescue_forbidden": true,
+    "diagnostic_values_can_change_formal_gate": false,
+    "diagnostic_values_can_rescue_not_evaluable": false,
+    "diagnostic_values_can_authorize_phase4": false,
+    "failed_geometry_mask_or_qualification_is_biological_null": false
+  },
+  "external_blocker": {
+    "issue": 21,
+    "status": "WAITING_FOR_UNTOUCHED_AUTHENTICATED_PHYLOGATR_ARCHIVE",
+    "anonymous_download_available": false,
+    "same_purpose_source_hunting_closed": true,
+    "next_human_action": "Obtain one untouched authenticated phylogatR portal archive under the frozen global Animalia query without inspecting nucleotide identity.",
+    "next_machine_action_after_archive": "python scripts/run_phylogatr_confirmatory_phase1_intake.py --archive /path/to/phylogatr_results.zip --output-dir frozen/fresh_phylogatr_phase1"
+  },
+  "global_firewall": {
+    "fresh_confirmatory_sequence_identity_opened": false,
+    "fresh_confirmatory_pairwise_genetic_distances_opened": false,
+    "fresh_confirmatory_ttf_statistic_opened": false,
+    "decker_empirical_genetic_outcomes_opened": false,
+    "empirical_genetic_conclusion_exists": false
+  },
+  "claim_boundary": "The response-blind method/execution path is complete, but no fresh empirical genetic conclusion exists. The only remaining authorized transition is external acquisition of the untouched authenticated archive followed by Phase 1 under the frozen runbook."
+}
