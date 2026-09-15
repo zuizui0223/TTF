@@ -13,6 +13,9 @@ from ttf.phylogatr_phase4 import load_phylogatr_phase4_context
 
 PHASE3_RULE = Path("docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json")
 SELF_RULE = Path("docs/supporting/genetic_phylogatr_phase3_self_detectability_rule_v0.1.json")
+FRAGILITY_EXECUTION_RULE = Path(
+    "docs/supporting/genetic_phylogatr_gate_d_fragility_execution_v0.1.json"
+)
 PHASE4_RULE = Path("docs/supporting/genetic_phylogatr_phase4_response_rule_v0.1.json")
 OPENING_STATE = Path("benchmarks/frozen/genetic_empirical_opening_state_v0.1.json")
 FIELDS = [
@@ -200,6 +203,58 @@ def _build_chain(tmp_path: Path, *, phase3_pass: bool = True, self_pass: bool = 
             sort_keys=True,
         ) + "\n"
     )
+
+    execution_rule_payload = json.loads(FRAGILITY_EXECUTION_RULE.read_text())
+    retentions = [1.0] + [
+        float(value)
+        for value in execution_rule_payload["thinned_geometry_policy"]["run_retention_fractions"]
+    ]
+    curve_rows = [
+        {
+            "retention_fraction": 1.0,
+            "source": "formal_phase3_qualification_receipt",
+            "formal_status": "PASS" if phase3_pass else "NOT_EVALUABLE",
+            "formal_gate_d_decision_authority": True,
+            "diagnostic_decision_authority": False,
+        }
+    ]
+    curve_rows.extend(
+        {
+            "retention_fraction": retention,
+            "source": "diagnostic_thinned_geometry_support_only",
+            "status": "STRUCTURAL_SUPPORT_BELOW_FORMAL_MINIMUM",
+            "formal_gate_d_decision_authority": False,
+            "phase4_identity_opening_authority": False,
+        }
+        for retention in retentions[1:]
+    )
+    fragility_curve = tmp_path / "fragility_curve.json"
+    fragility_curve.write_text(
+        json.dumps(
+            {
+                "schema": "ttf_genetic_phylogatr_gate_d_fragility_curve_v0.1",
+                "status": "DIAGNOSTIC_FRAGILITY_CURVE_COMPLETE",
+                "execution_plan_sha256": "e" * 64,
+                "phase3_rule_sha256": sha256_path(PHASE3_RULE),
+                "formal_qualification_sha256": sha256_path(qualification),
+                "execution_rule_sha256": sha256_path(FRAGILITY_EXECUTION_RULE),
+                "dataset_digest_sha256": dataset_digest,
+                "full_geometry_fingerprint_sha256": fingerprint,
+                "expected_retention_fractions": retentions,
+                "formal_full_geometry_status": "PASS" if phase3_pass else "NOT_EVALUABLE",
+                "curve": curve_rows,
+                "authority_firewall": execution_rule_payload["authority_firewall"],
+                "confirmatory_sequence_identity_opened": False,
+                "confirmatory_pairwise_genetic_distances_opened": False,
+                "confirmatory_ttf_statistic_opened": False,
+                "formal_gate_d_decision_made_by_this_curve": False,
+                "phase4_identity_opening_authorized_by_this_curve": False,
+                "diagnostic_completion_is_procedural_prerequisite_only": True,
+            },
+            indent=2,
+            sort_keys=True,
+        ) + "\n"
+    )
     return {
         "geometry": geometry,
         "phase1": phase1,
@@ -209,6 +264,7 @@ def _build_chain(tmp_path: Path, *, phase3_pass: bool = True, self_pass: bool = 
         "qualification": qualification,
         "self_refs": self_refs,
         "self_qualification": self_qualification,
+        "fragility_curve": fragility_curve,
     }
 
 
@@ -228,6 +284,8 @@ def _authorize_phase4(tmp_path: Path, chain: dict[str, Path]) -> tuple[subproces
             "--self-rule", str(SELF_RULE),
             "--self-references", str(chain["self_refs"]),
             "--self-qualification", str(chain["self_qualification"]),
+            "--fragility-execution-rule", str(FRAGILITY_EXECUTION_RULE),
+            "--fragility-curve", str(chain["fragility_curve"]),
             "--phase4-rule", str(PHASE4_RULE),
             "--opening-state", str(OPENING_STATE),
             "--repo-root", ".",
@@ -248,6 +306,9 @@ def test_phase4_authorization_allows_complete_self_failure_without_rescuing_nega
     assert payload["status"] == "AUTHORIZE_EXACT_FRESH_NUCLEOTIDE_IDENTITY_OPENING"
     assert payload["fresh_self_detectability"]["passed"] is False
     assert payload["fresh_self_detectability"]["negative_interpretation_if_not_passed"] == "NOT_EVALUABLE_FOR_LINEAGE_CONDITIONING"
+    assert payload["fragility_diagnostic"]["status"] == "DIAGNOSTIC_FRAGILITY_CURVE_COMPLETE"
+    assert payload["fragility_diagnostic"]["diagnostic_metrics_gate_phase4"] is False
+    assert payload["fragility_diagnostic"]["retention_levels"] == [1.0, 0.875, 0.75, 0.625, 0.5]
     assert all(value is False for value in payload["outcome_firewall_before_execution"].values())
 
     context = load_phylogatr_phase4_context(
@@ -275,4 +336,15 @@ def test_phase4_authorization_rejects_failed_phase3_gate(tmp_path: Path) -> None
     completed, authorization = _authorize_phase4(tmp_path, chain)
     assert completed.returncode != 0
     assert "Phase-3 Gate-D did not PASS" in completed.stderr
+    assert not authorization.exists()
+
+
+def test_phase4_authorization_rejects_fragility_provenance_drift(tmp_path: Path) -> None:
+    chain = _build_chain(tmp_path, phase3_pass=True, self_pass=True)
+    curve = json.loads(chain["fragility_curve"].read_text())
+    curve["formal_qualification_sha256"] = "0" * 64
+    chain["fragility_curve"].write_text(json.dumps(curve, indent=2, sort_keys=True) + "\n")
+    completed, authorization = _authorize_phase4(tmp_path, chain)
+    assert completed.returncode != 0
+    assert "formal qualification provenance drift" in completed.stderr
     assert not authorization.exists()
