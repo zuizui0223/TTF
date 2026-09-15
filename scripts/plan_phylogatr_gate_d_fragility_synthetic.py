@@ -2,10 +2,20 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
 from ttf.phylogatr_fragility_execution import build_fragility_execution_plan
+
+
+EXECUTION_RULE_GIT_BLOB_SHA = "a2cee09076552428031e9550cb21b017e8021474"
+
+
+def _git_blob_sha1(path: Path) -> str:
+    data = path.read_bytes()
+    header = f"blob {len(data)}\0".encode("ascii")
+    return hashlib.sha1(header + data).hexdigest()
 
 
 def main() -> int:
@@ -19,6 +29,11 @@ def main() -> int:
     ap.add_argument("--execution-rule", type=Path, required=True)
     ap.add_argument("--output", type=Path, required=True)
     args = ap.parse_args()
+
+    if _git_blob_sha1(args.execution_rule) != EXECUTION_RULE_GIT_BLOB_SHA:
+        raise RuntimeError(
+            "frozen fragility execution rule Git blob SHA drift before diagnostic planning"
+        )
 
     plan = build_fragility_execution_plan(
         args.geometry_plan_receipt,
