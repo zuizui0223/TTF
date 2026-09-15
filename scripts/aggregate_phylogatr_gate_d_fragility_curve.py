@@ -135,8 +135,15 @@ def main() -> int:
         raise RuntimeError("formal Phase-3 rule schema drift")
     if sha256_path(args.phase3_rule) != plan["phase3_rule_sha256"]:
         raise RuntimeError("formal Phase-3 rule provenance drift")
+    formal_anchor = plan.get("formal_anchor")
+    if not isinstance(formal_anchor, dict):
+        raise RuntimeError("fragility execution plan lacks formal anchor")
+    if float(formal_anchor.get("retention_fraction", -1.0)) != 1.0:
+        raise RuntimeError("fragility formal anchor retention drift")
+    if formal_anchor.get("source") != "formal_phase3_qualification_receipt":
+        raise RuntimeError("fragility full-geometry anchor is not the formal Phase-3 receipt")
 
-    curve: list[dict] = [dict(plan["formal_anchor"])]
+    curve: list[dict] = [dict(formal_anchor)]
     for level in plan["levels"]:
         retention = float(level["retention_fraction"])
         if level["status"] == "STRUCTURAL_SUPPORT_BELOW_FORMAL_MINIMUM":
@@ -172,9 +179,21 @@ def main() -> int:
             )
         )
 
+    expected_retentions = [1.0] + [float(level["retention_fraction"]) for level in plan["levels"]]
+    observed_retentions = [float(row["retention_fraction"]) for row in curve]
+    if observed_retentions != expected_retentions:
+        raise RuntimeError("fragility curve retention order/completeness drift")
+
     out = {
         "schema": "ttf_genetic_phylogatr_gate_d_fragility_curve_v0.1",
         "status": "DIAGNOSTIC_FRAGILITY_CURVE_COMPLETE",
+        "execution_plan_sha256": sha256_path(args.execution_plan),
+        "phase3_rule_sha256": plan["phase3_rule_sha256"],
+        "formal_qualification_sha256": plan["formal_qualification_sha256"],
+        "execution_rule_sha256": plan["execution_rule_sha256"],
+        "dataset_digest_sha256": plan["dataset_digest_sha256"],
+        "full_geometry_fingerprint_sha256": plan["full_geometry_fingerprint_sha256"],
+        "expected_retention_fractions": expected_retentions,
         "formal_full_geometry_status": plan["formal_anchor"]["formal_status"],
         "curve": curve,
         "threshold_reference_lines": {
@@ -192,9 +211,12 @@ def main() -> int:
         "confirmatory_ttf_statistic_opened": False,
         "formal_gate_d_decision_made_by_this_curve": False,
         "phase4_identity_opening_authorized_by_this_curve": False,
+        "diagnostic_completion_is_procedural_prerequisite_only": True,
         "claim_boundary": (
             "Only retention=1.0 imports the formal Phase-3 Gate-D decision. Thinned levels "
-            "are descriptive synthetic sensitivity results and cannot rescue, alter, or reinterpret it."
+            "are descriptive synthetic sensitivity results and cannot rescue, alter, or reinterpret it. "
+            "Curve completion is required procedurally before Phase-4 opening but its diagnostic metrics "
+            "do not enter the Phase-4 scientific PASS/FAIL decision."
         ),
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -204,7 +226,7 @@ def main() -> int:
             {
                 "status": out["status"],
                 "formal_full_geometry_status": out["formal_full_geometry_status"],
-                "retention_levels": [row["retention_fraction"] for row in curve],
+                "retention_levels": observed_retentions,
                 "formal_gate_d_decision_made_by_this_curve": False,
                 "phase4_identity_opening_authorized_by_this_curve": False,
             },
