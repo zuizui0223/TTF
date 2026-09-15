@@ -10,7 +10,7 @@ from ttf.phylogatr_fragility_execution import build_fragility_execution_plan
 from ttf.phylogatr_fragility_formal_anchor import validate_formal_phase3_qualification
 
 
-EXECUTION_RULE_GIT_BLOB_SHA = "a06eac22f47d90a29328a837c401a6c8b938c6ab"
+EXECUTION_RULE_GIT_BLOB_SHA = "731928fef0435921e7d4966e67e04e1f3435d493"
 
 
 def _git_blob_sha1(path: Path) -> str:
