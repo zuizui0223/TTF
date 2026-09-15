@@ -1,4 +1,12 @@
-from scripts.census_direct_insdc_metadata import parse_latlon
+import importlib.util
+from pathlib import Path
+
+_SCRIPT = Path(__file__).resolve().parents[1] / 'scripts' / 'census_direct_insdc_metadata.py'
+_SPEC = importlib.util.spec_from_file_location('census_direct_insdc_metadata', _SCRIPT)
+_MOD = importlib.util.module_from_spec(_SPEC)
+assert _SPEC and _SPEC.loader
+_SPEC.loader.exec_module(_MOD)
+parse_latlon = _MOD.parse_latlon
 
 
 def test_latlon_parser_common_genbank_forms():
