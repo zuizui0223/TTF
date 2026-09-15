@@ -22,6 +22,8 @@ on:
       - "docs/supporting/genetic_phylogatr_*.json"
       - "benchmarks/frozen/genetic_decker_species_exclusion_v0.1.json"
       - "benchmarks/frozen/genetic_empirical_opening_state_v0.1.json"
+      - "benchmarks/frozen/genetic_phylogatr_response_blind_method_closure_v0.1.json"
+      - "docs/PHYLOGATR_FRESH_CONFIRMATORY_RUNBOOK_V0.1.md"
       - "tests/test_genetic_*.py"
       - "tests/test_phylogatr_*.py"
 
@@ -54,3 +56,4 @@ jobs:
           tests/test_phylogatr_phase3_contract.py
           tests/test_phylogatr_phase3_self_qualification.py
           tests/test_phylogatr_phase4_contract.py
+          tests/test_phylogatr_method_closure.py
