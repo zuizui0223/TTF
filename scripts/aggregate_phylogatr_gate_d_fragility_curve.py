@@ -251,7 +251,7 @@ def main() -> int:
             "private_null_Wilson95_upper_ceiling": float(
                 rule["qualification"]["type1_wilson95_upper_ceiling"]
             ),
-            "shared_A2_wilson95_lower_floor": float(
+            "shared_A2_Wilson95_lower_floor": float(
                 rule["qualification"]["shared_A2_wilson95_lower_floor"]
             ),
             "read_only": True,
