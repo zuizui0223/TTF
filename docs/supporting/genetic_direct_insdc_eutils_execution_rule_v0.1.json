@@ -1,0 +1,34 @@
+{
+  "schema": "ttf_direct_insdc_eutils_execution_rule_v0.1",
+  "status": "FROZEN_BEFORE_ANY_REAL_CENSUS_RESULT",
+  "purpose": "computationally feasible response-blind source census without downloading the full 11.5 TB uncompressed GenBank release",
+  "source": {
+    "database": "NCBI Nucleotide / INSDC",
+    "transport": "E-utilities esearch history plus batched efetch GenBank flatfile",
+    "retrieval_snapshot": "freeze query, UTC retrieval timestamp, accession versions and metadata receipt at execution",
+    "release_273_reference": "Release 273 remains the archival provenance reference; this E-utilities arm is a distinct execution snapshot and must not be represented as byte-identical Release 273"
+  },
+  "query_contract": {
+    "organism": "Animalia",
+    "locus_family": ["COI", "CO1", "COX1", "cytochrome c oxidase subunit I", "cytochrome oxidase subunit I"],
+    "requires_lat_lon": true,
+    "exclude_taxa": ["Aves", "Chiroptera"],
+    "exclude_decker_221": true
+  },
+  "geometry_gate": {
+    "minimum_distinct_localities": 12,
+    "minimum_species": 150,
+    "maximum_species_after_hash_cap": 250
+  },
+  "firewall": {
+    "origin_sequence_lines_interpreted": false,
+    "nucleotide_identity_opened": false,
+    "pairwise_genetic_distance_opened": false,
+    "empirical_ttf_opened": false,
+    "decker_empirical_outcomes_opened": false
+  },
+  "decision": {
+    "eligible_species_gte_150": "PASS_TO_EXACT_GEOMETRY_FREEZE",
+    "eligible_species_lt_150": "OPEN_PREDECLARED_GBIF_LINKAGE_CONTINGENCY"
+  }
+}
