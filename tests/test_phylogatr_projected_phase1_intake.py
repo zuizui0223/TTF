@@ -130,20 +130,28 @@ def _build_archive(tmp_path: Path) -> Path:
     return archive
 
 
+def _run_projected_phase1(archive: Path, output_dir: Path) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        [
+            sys.executable,
+            "scripts/run_phylogatr_projected_phase1_intake.py",
+            "--archive",
+            str(archive),
+            "--output-dir",
+            str(output_dir),
+            "--repo-root",
+            ".",
+        ],
+        check=False,
+        text=True,
+        capture_output=True,
+    )
+
+
 def test_projected_archive_phase1_keeps_raw_archive_provenance(tmp_path: Path) -> None:
     archive = _build_archive(tmp_path)
     output_dir = tmp_path / "phase1"
-    command = [
-        sys.executable,
-        "scripts/run_phylogatr_projected_phase1_intake.py",
-        "--archive",
-        str(archive),
-        "--output-dir",
-        str(output_dir),
-        "--repo-root",
-        ".",
-    ]
-    completed = subprocess.run(command, check=False, text=True, capture_output=True)
+    completed = _run_projected_phase1(archive, output_dir)
     assert completed.returncode == 0, completed.stderr
 
     receipt = json.loads((output_dir / "phase1_intake_receipt.json").read_text())
@@ -162,5 +170,48 @@ def test_projected_archive_phase1_keeps_raw_archive_provenance(tmp_path: Path) -
     assert projection["kingdom_counts"] == {"Animalia": 150, "Plantae": 1}
     assert projection["sequence_identity_opened"] is False
     assert receipt["sequence_characters_opened"] is False
+    assert receipt["pairwise_genetic_distances_opened"] is False
+    assert receipt["empirical_ttf_opened"] is False
+
+
+def test_projected_archive_phase2_reuses_exact_archive_and_projection(tmp_path: Path) -> None:
+    archive = _build_archive(tmp_path)
+    phase1_dir = tmp_path / "phase1"
+    phase1 = _run_projected_phase1(archive, phase1_dir)
+    assert phase1.returncode == 0, phase1.stderr
+
+    phase2_dir = tmp_path / "phase2"
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "scripts/run_phylogatr_projected_phase2_intake.py",
+            "--archive",
+            str(archive),
+            "--phase1-dir",
+            str(phase1_dir),
+            "--output-dir",
+            str(phase2_dir),
+            "--repo-root",
+            ".",
+        ],
+        check=False,
+        text=True,
+        capture_output=True,
+    )
+    assert completed.returncode == 0, completed.stderr
+
+    phase1_receipt = json.loads((phase1_dir / "phase1_intake_receipt.json").read_text())
+    receipt = json.loads((phase2_dir / "phase2_intake_receipt.json").read_text())
+    manifest = json.loads((phase2_dir / "phase2_manifest.json").read_text())
+    projection = receipt["source_projection"]
+
+    assert receipt["status"] == "PHASE2_FROZEN_TO_SYNTHETIC_GATE"
+    assert manifest["status"] == "PASS_TO_SYNTHETIC_GATE"
+    assert receipt["survivor_species"] == 150
+    assert projection["raw_archive_sha256"] == phase1_receipt["source_projection"]["raw_archive_sha256"]
+    assert projection["raw_genes_sha256"] == phase1_receipt["source_projection"]["raw_genes_sha256"]
+    assert projection["projected_genes_sha256"] == phase1_receipt["source_projection"]["projected_genes_sha256"]
+    assert receipt["character_mask_opened"] is True
+    assert receipt["sequence_identity_opened"] is False
     assert receipt["pairwise_genetic_distances_opened"] is False
     assert receipt["empirical_ttf_opened"] is False
