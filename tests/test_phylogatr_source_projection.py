@@ -1,10 +1,14 @@
 from __future__ import annotations
 
 import hashlib
+from pathlib import Path
 
 import pytest
 
-from ttf.phylogatr_source_projection import project_genes_text_to_animalia
+from ttf.phylogatr_source_projection import (
+    project_genes_file_in_place,
+    project_genes_text_to_animalia,
+)
 
 
 HEADER = (
@@ -43,3 +47,30 @@ def test_projection_rejects_schema_drift() -> None:
     malformed = "gene\tkingdom\nAlpha-beta-COI\tAnimalia\n"
     with pytest.raises(ValueError, match="genes.txt schema"):
         project_genes_text_to_animalia(malformed)
+
+
+def test_file_projection_rewrites_only_genes_and_returns_provenance(tmp_path: Path) -> None:
+    root = tmp_path / "phylogatr-results"
+    root.mkdir()
+    animal = _row(gene="Alpha-beta-COI", kingdom="Animalia", species="Alpha beta")
+    plant = _row(gene="Planta-gamma-COI", kingdom="Plantae", species="Planta gamma")
+    raw = HEADER + animal + plant
+    genes = root / "genes.txt"
+    cite = root / "cite.txt"
+    genes.write_text(raw, encoding="utf-8")
+    cite.write_bytes(b"source provenance\n")
+
+    receipt = project_genes_file_in_place(root)
+
+    expected = HEADER + animal
+    assert genes.read_text(encoding="utf-8") == expected
+    assert cite.read_bytes() == b"source provenance\n"
+    assert receipt["schema"] == "ttf_genetic_phylogatr_source_projection_receipt_v0.1"
+    assert receipt["raw_genes_sha256"] == hashlib.sha256(raw.encode()).hexdigest()
+    assert receipt["projected_genes_sha256"] == hashlib.sha256(expected.encode()).hexdigest()
+    assert receipt["cite_sha256"] == hashlib.sha256(b"source provenance\n").hexdigest()
+    assert receipt["original_row_count"] == 2
+    assert receipt["retained_animalia_row_count"] == 1
+    assert receipt["removed_non_animalia_row_count"] == 1
+    assert receipt["kingdom_counts"] == {"Animalia": 1, "Plantae": 1}
+    assert receipt["sequence_identity_opened"] is False
