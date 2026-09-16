@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import hashlib
+from pathlib import Path
+
 import numpy as np
 import pytest
 
@@ -15,6 +18,10 @@ from ttf.genetic_ibd import (
     prepare_crossfit_ibd_design,
 )
 from ttf.genetic_simulate import simulate_genetic_distance_world
+from ttf.phylogatr_compact_authorization import (
+    COMPACT_EXECUTION_CODE_PATHS,
+    augment_compact_phase3_authorization,
+)
 from ttf.phylogatr_compact_execution import (
     prepare_phylogatr_compact_cached_transfer,
     prepare_phylogatr_compact_ttf_design,
@@ -163,3 +170,37 @@ def test_compact_phase3_batch_matches_existing_batch_end_to_end() -> None:
             rtol=0.0,
             atol=2e-13,
         )
+
+
+def test_compact_authorization_adds_only_execution_provenance() -> None:
+    base = {
+        "schema": "ttf_genetic_phylogatr_phase3_gate_d_authorization_v0.1",
+        "status": "authorize_frozen_fresh_phylogatr_phase3_gate_d",
+        "geometry_fingerprint_sha256": "a" * 64,
+        "master_seed": 123,
+        "frozen_code_sha256": {"existing.py": "b" * 64},
+        "outcome_firewall": {
+            "fresh_sequence_identity_opened": False,
+            "fresh_pairwise_genetic_distances_opened": False,
+            "fresh_ttf_statistic_opened": False,
+        },
+    }
+    before = dict(base)
+    before["frozen_code_sha256"] = dict(base["frozen_code_sha256"])
+
+    augmented = augment_compact_phase3_authorization(base, repo_root=Path("."))
+
+    assert base == before
+    assert augmented["schema"] == base["schema"]
+    assert augmented["status"] == base["status"]
+    assert augmented["geometry_fingerprint_sha256"] == base["geometry_fingerprint_sha256"]
+    assert augmented["master_seed"] == base["master_seed"]
+    assert augmented["outcome_firewall"] == base["outcome_firewall"]
+    assert augmented["frozen_code_sha256"]["existing.py"] == "b" * 64
+    assert augmented["execution_amendment"]["schema"] == (
+        "ttf_genetic_phylogatr_phase3_compact_execution_v0.1"
+    )
+    assert augmented["execution_amendment"]["scientific_result_seen_before_amendment"] is False
+    for relative in COMPACT_EXECUTION_CODE_PATHS:
+        expected = hashlib.sha256(Path(relative).read_bytes()).hexdigest()
+        assert augmented["frozen_code_sha256"][relative] == expected
