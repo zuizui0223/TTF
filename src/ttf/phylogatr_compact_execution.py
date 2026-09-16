@@ -21,10 +21,7 @@ from .phylogatr_compact_ibd import (
     crossfit_ibd_residuals_compact,
     prepare_compact_crossfit_ibd_design,
 )
-from .private_strength import (
-    edge_midpoint_neighbor_indices,
-    training_private_strength_from_indices,
-)
+from .private_strength import training_private_strength_from_indices
 
 
 @dataclass(frozen=True)
@@ -59,6 +56,42 @@ def _template_species_edges(
     )
 
 
+def edge_midpoint_neighbor_indices_blocked(
+    midpoint: np.ndarray,
+    *,
+    k: int = 4,
+    block_size: int = 32,
+) -> np.ndarray:
+    """Exact stable nearest-midpoint indices without a full m x m distance matrix.
+
+    This is algebraically identical to ``edge_midpoint_neighbor_indices``: squared
+    Euclidean distances, self-distance set to infinity, stable argsort, and the
+    first ``min(k, m - 1)`` neighbours.  Only the execution memory layout differs.
+    """
+    x = np.asarray(midpoint, dtype=float)
+    if x.ndim != 2 or len(x) < 3:
+        raise ValueError("midpoint must be an m x d array with m >= 3")
+    if not np.isfinite(x).all():
+        raise ValueError("midpoint coordinates must be finite")
+    if k < 1:
+        raise ValueError("k must be >= 1")
+    if block_size < 1:
+        raise ValueError("block_size must be >= 1")
+
+    n = len(x)
+    use_k = min(int(k), n - 1)
+    out = np.empty((n, use_k), dtype=np.int64)
+    for start in range(0, n, int(block_size)):
+        stop = min(start + int(block_size), n)
+        delta = x[start:stop, None, :] - x[None, :, :]
+        distance2 = np.sum(delta * delta, axis=2)
+        rows = np.arange(stop - start, dtype=np.int64)
+        columns = np.arange(start, stop, dtype=np.int64)
+        distance2[rows, columns] = np.inf
+        out[start:stop] = np.argsort(distance2, axis=1, kind="stable")[:, :use_k]
+    return out
+
+
 def prepare_phylogatr_compact_ttf_design(
     geometries: Mapping[str, GeneticSamplingGeometry],
     *,
@@ -72,7 +105,7 @@ def prepare_phylogatr_compact_ttf_design(
     min_training_edges: int = 5,
     strength_neighbours: int = 4,
 ) -> PhylogatrCompactTTFDesign:
-    """Mirror the frozen generic genetic design, changing only IBD storage/execution."""
+    """Mirror the frozen generic genetic design, changing only execution storage."""
     if not geometries:
         raise ValueError("at least one genetic geometry is required")
     if min_training_edges < 3:
@@ -120,9 +153,10 @@ def prepare_phylogatr_compact_ttf_design(
         for name in train + evaluation
     }
     strength_indices = {
-        name: edge_midpoint_neighbor_indices(
+        name: edge_midpoint_neighbor_indices_blocked(
             templates[name].midpoint,
             k=int(strength_neighbours),
+            block_size=32,
         )
         for name in train
     }
@@ -226,6 +260,7 @@ def score_phylogatr_compact_world_batch(
 
 __all__ = [
     "PhylogatrCompactTTFDesign",
+    "edge_midpoint_neighbor_indices_blocked",
     "prepare_phylogatr_compact_cached_transfer",
     "prepare_phylogatr_compact_ttf_design",
     "score_phylogatr_compact_world_batch",
