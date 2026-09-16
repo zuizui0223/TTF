@@ -1,0 +1,24 @@
+name: direct INSDC E-utilities preflight
+on:
+  pull_request:
+    paths:
+      - 'scripts/preflight_direct_insdc_eutils.py'
+      - 'docs/supporting/genetic_direct_insdc_eutils_execution_rule_v0.1.json'
+      - '.github/workflows/direct-insdc-eutils-preflight.yml'
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Count frozen-query records only
+        run: python scripts/preflight_direct_insdc_eutils.py --output direct_insdc_eutils_preflight.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: direct-insdc-eutils-preflight
+          path: direct_insdc_eutils_preflight.json
+          if-no-files-found: error
