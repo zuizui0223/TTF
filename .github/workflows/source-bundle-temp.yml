@@ -1,0 +1,26 @@
+name: source bundle temp
+
+on:
+  push:
+    branches:
+      - "ops/source-bundle-projection-v0-2"
+  workflow_dispatch:
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: >-
+          tar -czf /tmp/ttf-source-projection-v0-2.tgz
+          src
+          scripts
+          docs/supporting
+          benchmarks/frozen
+          pyproject.toml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-source-projection-v0-2
+          path: /tmp/ttf-source-projection-v0-2.tgz
+          retention-days: 1
+          compression-level: 0
