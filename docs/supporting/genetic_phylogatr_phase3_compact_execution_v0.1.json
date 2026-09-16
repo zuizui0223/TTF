@@ -1,0 +1,52 @@
+{
+  "schema": "ttf_genetic_phylogatr_phase3_compact_execution_v0.1",
+  "status": "FROZEN_BEFORE_ANY_SUCCESSFUL_FRESH_PHASE3_SYNTHETIC_REFERENCE_RESULT",
+  "purpose": "Replace only the memory representation and execution of endpoint-safe rank-IBD residualization for fresh phylogatR Phase 3 after the original exact implementation was killed during response-blind design construction on the frozen Phase-2 geometry.",
+  "trigger": {
+    "observed_failure": "The original prepare_crossfit_ibd_design materializes per-target training-index and centered-rank arrays and was killed by the execution environment before one fresh synthetic reference world produced an output.",
+    "largest_observed_geometry": "Entomobrya nivalis: 295 frozen localities and 8711 frozen graph edges",
+    "scientific_result_seen_before_amendment": false
+  },
+  "equivalence_contract": {
+    "estimand": "unchanged endpoint-disjoint rank-IBD residual turnover",
+    "target_training_set": "exactly the edges sharing neither endpoint with the target edge",
+    "rank_semantics": "1-based average ranks with the existing deterministic tie rule",
+    "regression_semantics": "same ordinary least-squares slope/intercept and held-out expected rank fraction as the existing reference implementation",
+    "residual_turnover": "same existing rank01 transformation of residuals",
+    "required_tests": [
+      "compact IBD equals the existing reference implementation with and without ties",
+      "compact fresh batch equals the existing generic batch for statistic, training strength, n_eval_species, and held-out species scores"
+    ]
+  },
+  "execution_change_only": {
+    "compact_storage": "global edge ranks plus per-locality incident-edge rank corrections instead of one training-index/rank array per target edge",
+    "parallelism": "target edges may execute in parallel; within each target edge the edge accumulation order remains deterministic",
+    "species": "unchanged",
+    "localities": "unchanged",
+    "edges": "unchanged",
+    "graph": "unchanged",
+    "train_eval_split": "unchanged",
+    "master_seed": "unchanged derivation",
+    "world_counts": "unchanged",
+    "reference_family": "unchanged",
+    "bandwidth": "unchanged",
+    "alpha": "unchanged",
+    "wilson_gates": "unchanged",
+    "interpretation": "unchanged"
+  },
+  "scope": {
+    "fresh_phylogatr_phase3_reference": true,
+    "fresh_phylogatr_phase3_observed": true,
+    "historical_decker_execution": false,
+    "generic_genetic_api": false,
+    "phase1": false,
+    "phase2": false,
+    "phase4_empirical_identity_opening": false
+  },
+  "firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_empirical_ttf_statistic_opened": false,
+    "successful_fresh_phase3_reference_result_seen": false
+  }
+}
