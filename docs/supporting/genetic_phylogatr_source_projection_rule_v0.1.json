@@ -1,0 +1,58 @@
+{
+  "schema": "ttf_genetic_phylogatr_source_projection_rule_v0.1",
+  "status": "FROZEN_BEFORE_FRESH_NUCLEOTIDE_IDENTITY_OPENING",
+  "purpose": "Handle an authenticated phylogatR archive whose portal export is broader than the predeclared Animalia source query, without using nucleotide identity, genetic distance, or empirical TTF outcomes. This is an explicit source-query amendment, not a silent claim that the raw portal archive matched the original query.",
+  "parent_protocol": "docs/supporting/genetic_phylogatr_confirmatory_protocol_v0.1.json",
+  "parent_runbook": "docs/PHYLOGATR_FRESH_CONFIRMATORY_RUNBOOK_V0.1.md",
+  "trigger": {
+    "allowed_only_when": "The untouched authenticated archive was acquired before nucleotide identity opening, genes.txt metadata show taxa outside Animalia, and no biological outcome has been inspected.",
+    "does_not_apply_to": "Any archive after fresh nucleotide identity, pairwise genetic distance, or empirical TTF statistics have been opened."
+  },
+  "projection": {
+    "input_provenance": "Retain the untouched raw archive and SHA-256 as the immutable source object.",
+    "metadata_file": "genes.txt",
+    "filter": "exact string equality kingdom == 'Animalia'",
+    "row_order": "preserve original genes.txt order",
+    "header": "preserve the original exact frozen-schema header",
+    "retained_rows": "copy retained source rows without field rewriting or taxonomic synonym expansion",
+    "removed_rows": "all rows whose kingdom field is not exactly Animalia",
+    "cite_txt": "unchanged raw bytes",
+    "per_species_files": "unchanged raw bytes; extra non-Animalia files may remain physically present but are unreachable from the projected genes.txt",
+    "sequence_characters": "MUST NOT be decoded, hashed, counted, validated, or otherwise interpreted by the projection step",
+    "projected_genes_sha256_enters_dataset_digest": true
+  },
+  "phase_chain": {
+    "phase1": "Run the frozen Phase-1 implementation on a temporary source view whose genes.txt is the deterministic Animalia projection. Record both original and projected genes SHA-256 plus untouched archive SHA-256.",
+    "phase2": "Recreate the same projection from the same untouched archive, require exact projected genes SHA-256 equality with Phase 1, then run only the frozen canonical-valid/noncanonical mask step.",
+    "phase3_and_later": "No estimator, graph, split, bandwidth, reference family, Wilson threshold, alpha, self-detectability rule, fragility rule, or interpretation changes are authorized by this amendment."
+  },
+  "scientific_authority": {
+    "changes_taxonomic_universe": false,
+    "changes_marker_rule": false,
+    "changes_species_eligibility": false,
+    "changes_graph_rule": false,
+    "changes_panel_cap": false,
+    "changes_split_rule": false,
+    "changes_gate_thresholds": false,
+    "can_rescue_failed_gate": false,
+    "can_open_identity": false
+  },
+  "required_receipt_fields": [
+    "raw_archive_sha256",
+    "raw_genes_sha256",
+    "projected_genes_sha256",
+    "cite_sha256",
+    "original_row_count",
+    "retained_animalia_row_count",
+    "removed_non_animalia_row_count",
+    "kingdom_counts",
+    "sequence_identity_opened"
+  ],
+  "firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_ttf_statistic_opened": false,
+    "decker_empirical_genetic_outcomes_opened": false
+  },
+  "interpretation": "Results obtained through this route must be labeled as using a pre-identity deterministic Animalia metadata projection from a broader authenticated portal archive, rather than described as coming from an untouched Animalia-only portal export."
+}
