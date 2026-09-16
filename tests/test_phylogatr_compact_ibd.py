@@ -222,6 +222,17 @@ def test_compact_authorization_adds_only_execution_provenance() -> None:
         "ttf_genetic_phylogatr_phase3_compact_execution_v0.1"
     )
     assert augmented["execution_amendment"]["scientific_result_seen_before_amendment"] is False
+
+    blocked_rule = "docs/supporting/genetic_phylogatr_phase3_blocked_strength_execution_v0.1.json"
+    assert blocked_rule in COMPACT_EXECUTION_CODE_PATHS
+    strength_amendment = augmented["strength_execution_amendment"]
+    assert strength_amendment["schema"] == (
+        "ttf_genetic_phylogatr_phase3_blocked_strength_execution_v0.1"
+    )
+    assert strength_amendment["scientific_result_seen_before_amendment"] is False
+    assert strength_amendment["execution_change_only"] is True
+    assert strength_amendment["exact_neighbor_indices"] is True
+
     for relative in COMPACT_EXECUTION_CODE_PATHS:
         expected = hashlib.sha256(Path(relative).read_bytes()).hexdigest()
         assert augmented["frozen_code_sha256"][relative] == expected
