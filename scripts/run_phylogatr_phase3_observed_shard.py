@@ -8,9 +8,12 @@ from pathlib import Path
 import numpy as np
 
 from ttf.calibration import seed_for
-from ttf.genetic_batch_execution import prepare_genetic_cached_transfer, score_genetic_world_batch
-from ttf.genetic_gate import prepare_genetic_ttf_design
 from ttf.genetic_simulate import simulate_genetic_distance_world
+from ttf.phylogatr_compact_execution import (
+    prepare_phylogatr_compact_cached_transfer,
+    prepare_phylogatr_compact_ttf_design,
+    score_phylogatr_compact_world_batch,
+)
 from ttf.phylogatr_phase3 import load_phylogatr_phase3_context
 from ttf.profiled_private_null import profiled_private_pvalue
 
@@ -71,7 +74,7 @@ def main() -> int:
         raise RuntimeError("fresh reference configuration set drift")
 
     core = rule["core_method"]
-    design = prepare_genetic_ttf_design(
+    design = prepare_phylogatr_compact_ttf_design(
         context.geometries,
         train_species=context.train_species,
         eval_species=context.eval_species,
@@ -81,7 +84,7 @@ def main() -> int:
         min_training_edges=int(rule["geometry_contract"]["minimum_endpoint_disjoint_ibd_training_edges"]),
         strength_neighbours=int(core["strength_neighbours"]),
     )
-    cached = prepare_genetic_cached_transfer(
+    cached = prepare_phylogatr_compact_cached_transfer(
         design,
         edge_chunk_size=int(auth["execution"]["edge_chunk_size"]),
         train_chunk_size=int(auth["execution"]["train_chunk_size"]),
@@ -111,7 +114,7 @@ def main() -> int:
             )
             for replicate in range(batch_start, batch_stop)
         ]
-        scored = score_genetic_world_batch(design, worlds, cached)
+        scored = score_phylogatr_compact_world_batch(design, worlds, cached)
         for column, replicate in enumerate(range(batch_start, batch_stop)):
             if int(scored.n_eval_species[column]) != len(design.eval_species):
                 raise RuntimeError("non-finite held-out species count in fresh observed shard")
