@@ -23,6 +23,7 @@ from ttf.phylogatr_compact_authorization import (
     augment_compact_phase3_authorization,
 )
 from ttf.phylogatr_compact_execution import (
+    edge_midpoint_neighbor_indices_blocked,
     prepare_phylogatr_compact_cached_transfer,
     prepare_phylogatr_compact_ttf_design,
     score_phylogatr_compact_world_batch,
@@ -31,6 +32,7 @@ from ttf.phylogatr_compact_ibd import (
     crossfit_ibd_residuals_compact,
     prepare_compact_crossfit_ibd_design,
 )
+from ttf.private_strength import edge_midpoint_neighbor_indices
 
 
 def _case(*, ties: bool) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -105,6 +107,25 @@ def test_compact_design_does_not_store_edge_by_edge_training_arrays() -> None:
         len(nodes),
     )
     assert compact.vertex_rank_correction.nbytes < len(nodes) * len(nodes) * 8
+
+
+@pytest.mark.parametrize("case", ["random", "ties", "duplicates"])
+def test_blocked_strength_neighbours_match_dense_exactly(case: str) -> None:
+    rng = np.random.default_rng(20260916)
+    midpoint = rng.normal(size=(200, 3))
+    if case == "ties":
+        midpoint = np.round(midpoint, 1)
+    elif case == "duplicates":
+        midpoint[:5] = 0.0
+
+    dense = edge_midpoint_neighbor_indices(midpoint, k=4)
+    blocked = edge_midpoint_neighbor_indices_blocked(
+        midpoint,
+        k=4,
+        block_size=17,
+    )
+
+    assert np.array_equal(blocked, dense)
 
 
 def _small_geometries() -> dict[str, object]:
