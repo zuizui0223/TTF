@@ -1,0 +1,57 @@
+{
+  "schema": "ttf_genetic_phylogatr_phase3_blocked_strength_execution_v0.1",
+  "status": "FROZEN_BEFORE_ANY_SUCCESSFUL_FRESH_PHASE3_SYNTHETIC_REFERENCE_RESULT",
+  "purpose": "Replace only the memory layout used to compute the frozen nearest-edge midpoint indices for fresh phylogatR Phase 3 private-strength estimation after the exact dense implementation exceeded the execution memory ceiling on the frozen Phase-2 geometry.",
+  "parent_execution_amendment": "docs/supporting/genetic_phylogatr_phase3_compact_execution_v0.1.json",
+  "trigger": {
+    "observed_failure": "After exact compact endpoint-safe IBD removed the first memory bottleneck, the existing edge_midpoint_neighbor_indices materialized the full edge-by-edge midpoint distance matrix and the execution environment killed the process before a fresh synthetic reference shard was written.",
+    "largest_observed_geometry": "Entomobrya nivalis: 8711 frozen graph edges",
+    "rss_before_dense_strength_failure": "approximately 170 MB after compact IBD design; approximately 3.7 GB at process kill during strength-index construction",
+    "scientific_result_seen_before_amendment": false,
+    "successful_fresh_phase3_reference_result_seen": false
+  },
+  "equivalence_contract": {
+    "target_quantity": "the same k nearest edge midpoints used by training_private_strength_from_indices",
+    "distance": "same squared Euclidean distance between frozen edge midpoints",
+    "self_distance": "same positive infinity replacement before sorting",
+    "sort": "same numpy stable argsort semantics",
+    "neighbour_count": 4,
+    "blocked_rows": 32,
+    "required_tests": [
+      "blocked nearest-midpoint indices equal the existing dense implementation for random coordinates",
+      "blocked nearest-midpoint indices equal the existing dense implementation with distance ties",
+      "blocked nearest-midpoint indices equal the existing dense implementation with duplicate midpoints",
+      "end-to-end compact fresh Phase-3 batch remains equal to the existing generic genetic batch"
+    ]
+  },
+  "execution_change_only": {
+    "row_block_size": 32,
+    "species": "unchanged",
+    "edges": "unchanged",
+    "midpoints": "unchanged",
+    "strength_neighbours": 4,
+    "private_strength_function": "unchanged training_private_strength_from_indices",
+    "train_eval_split": "unchanged",
+    "master_seed": "unchanged derivation",
+    "world_counts": "unchanged",
+    "reference_family": "unchanged",
+    "bandwidth": "unchanged",
+    "alpha": "unchanged",
+    "wilson_gates": "unchanged",
+    "interpretation": "unchanged"
+  },
+  "scope": {
+    "fresh_phylogatr_phase3_private_strength_index_construction": true,
+    "historical_decker_execution": false,
+    "generic_genetic_api": false,
+    "phase1": false,
+    "phase2": false,
+    "phase4_empirical_identity_opening": false
+  },
+  "firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_empirical_ttf_statistic_opened": false,
+    "successful_fresh_phase3_reference_result_seen": false
+  }
+}
