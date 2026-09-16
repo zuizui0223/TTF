@@ -1,0 +1,62 @@
+{
+  "schema": "ttf_genetic_direct_insdc_source_preflight_v0.1",
+  "status": "PREFLIGHT_SOURCE_CONTRACT_FROZEN",
+  "purpose": "Evaluate an OSC-independent confirmatory source without opening nucleotide identity or empirical genetic outcomes.",
+  "source_hierarchy": {
+    "primary_candidate": "GenBank/INSDC records carrying source lat_lon plus COI-family annotation",
+    "secondary_candidate": "GBIF associatedSequences accession-coordinate linkage joined to GenBank/INSDC",
+    "reason": "GenBank-only avoids the GBIF 100000-result search ceiling and a second-source join when source lat_lon is already present. GBIF linkage is used only if GenBank-only geometry is insufficient."
+  },
+  "frozen_source_version": {
+    "genbank_release": "273.0",
+    "release_date": "2026-08-15",
+    "release_cutoff": "2026-08-02",
+    "daily_updates_allowed": false,
+    "reason": "A fixed full release is required for deterministic provenance."
+  },
+  "metadata_only_discovery": {
+    "taxon_scope": "Metazoa/Animalia",
+    "locus_aliases": ["COI", "CO1", "COX1"],
+    "require_source_lat_lon": true,
+    "exclude_classes": ["Aves", "Chiroptera"],
+    "exclude_frozen_decker_species": true,
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distance_opened": false,
+    "empirical_ttf_opened": false
+  },
+  "panel_rules": {
+    "minimum_unique_localities_per_species": 12,
+    "minimum_endpoint_disjoint_ibd_training_edges": 5,
+    "maximum_species_after_eligibility": 250,
+    "minimum_species_for_confirmatory_arm": 150,
+    "species_cap_and_split": "reuse the already-frozen species-name SHA256 ordering and 50/50 split semantics, but derive a new source-specific dataset digest and authorization",
+    "no_outcome_dependent_species_selection": true
+  },
+  "identity_firewall": {
+    "phase_1": "accession, accepted species/taxonomy, source lat_lon, locus annotation and provenance only",
+    "phase_2": "canonical-valid versus noncanonical/missing mask only; nucleotide letters must not persist in artifacts",
+    "phase_3": "source-specific exact-geometry synthetic Gate-D required; no inherited phylogatR PASS",
+    "phase_4": "identity may open only after a source-specific authorization receipt"
+  },
+  "gbif_contingency": {
+    "ordinary_occurrence_search_hard_limit": 100000,
+    "bulk_download_requires_gbif_account": true,
+    "allowed_only_if": "a deterministic non-truncated accession-coordinate retrieval contract is frozen before row-level use",
+    "forbidden": [
+      "take the first 100000 records",
+      "analyst-chosen taxon partitioning after seeing eligibility",
+      "treat a GBIF-authenticated bulk download as mandatory when GenBank source lat_lon is sufficient"
+    ]
+  },
+  "preflight_decision_rule": {
+    "PASS_TO_IMPLEMENTATION": "A deterministic GenBank-release-273 metadata-only enumeration can construct >=150 eligible non-Aves/non-Chiroptera/non-Decker species without opening sequence identity.",
+    "FALLBACK_TO_GBIF_LINKAGE": "GenBank-only is deterministic but yields <150 eligible species and a deterministic non-truncated GBIF accession-coordinate contract is available.",
+    "NOT_EVALUABLE_SOURCE_FEASIBILITY": "Neither route can yield >=150 eligible species without arbitrary truncation or opening nucleotide identity."
+  },
+  "claim_boundary": [
+    "This preflight does not alter the merged phylogatR method closure.",
+    "It does not claim that the direct-source arm is already qualified.",
+    "It does not permit use of Decker empirical outcomes.",
+    "It does not permit biological interpretation of source-feasibility failure."
+  ]
+}
