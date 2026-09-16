@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections import Counter
 from dataclasses import dataclass
 import hashlib
+from pathlib import Path
 
 from .phylogatr_confirmatory import GENES_HEADERS
 
@@ -21,6 +22,10 @@ class GenesProjectionResult:
 
 def _sha256_text(value: str) -> str:
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
+def _sha256_bytes(value: bytes) -> str:
+    return hashlib.sha256(value).hexdigest()
 
 
 def project_genes_text_to_animalia(text: str) -> GenesProjectionResult:
@@ -68,4 +73,46 @@ def project_genes_text_to_animalia(text: str) -> GenesProjectionResult:
     )
 
 
-__all__ = ["GenesProjectionResult", "project_genes_text_to_animalia"]
+def project_genes_file_in_place(root: Path) -> dict[str, object]:
+    """Replace only ``genes.txt`` with its deterministic Animalia projection.
+
+    ``cite.txt`` and every per-species file remain untouched. The returned
+    receipt records both pre-projection and projected metadata hashes and makes
+    the response-blind firewall explicit.
+    """
+    root = Path(root)
+    genes_path = root / "genes.txt"
+    cite_path = root / "cite.txt"
+    if not genes_path.is_file() or not cite_path.is_file():
+        raise FileNotFoundError("phylogatR root must contain genes.txt and cite.txt")
+
+    raw_genes = genes_path.read_bytes()
+    try:
+        text = raw_genes.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise ValueError("genes.txt must be valid UTF-8") from exc
+    projection = project_genes_text_to_animalia(text)
+    projected_bytes = projection.projected_text.encode("utf-8")
+    genes_path.write_bytes(projected_bytes)
+
+    return {
+        "schema": "ttf_genetic_phylogatr_source_projection_receipt_v0.1",
+        "status": "ANIMALIA_METADATA_PROJECTION_APPLIED",
+        "raw_genes_sha256": _sha256_bytes(raw_genes),
+        "projected_genes_sha256": _sha256_bytes(projected_bytes),
+        "cite_sha256": _sha256_bytes(cite_path.read_bytes()),
+        "original_row_count": projection.original_rows,
+        "retained_animalia_row_count": projection.retained_rows,
+        "removed_non_animalia_row_count": projection.removed_rows,
+        "kingdom_counts": projection.kingdom_counts,
+        "sequence_identity_opened": False,
+        "pairwise_genetic_distances_opened": False,
+        "empirical_ttf_opened": False,
+    }
+
+
+__all__ = [
+    "GenesProjectionResult",
+    "project_genes_file_in_place",
+    "project_genes_text_to_animalia",
+]
