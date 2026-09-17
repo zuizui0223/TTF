@@ -1,0 +1,209 @@
+name: fresh phylogatR Phase3 gated run
+
+on:
+  push:
+    branches:
+      - ops/fresh-phase3-gated-run-20260917
+    paths:
+      - .github/workflows/fresh-phase3-gated-run.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  INPUT_SHA256: 14cb4d4e21e51df7c000d7da6933dee0461a12aee081f5ad318444b8c2fdc764
+  INPUT_URL: 'https://sdmntprkoreacentral.oaiusercontent.com/files/00000000-158c-8206-978b-84a76ac1bbbd/raw?se=2026-09-17T10%3A38%3A20Z&sp=r&sv=2026-02-06&sr=b&scid=8acd47de-fb8d-5e83-a6e5-78c38e910d8b&skoid=fe2e0858-51c5-47e9-acb7-46ebb9a0f396&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-17T01%3A21%3A47Z&ske=2026-09-18T01%3A21%3A47Z&sks=b&skv=2026-02-06&sig=YGB7O%2Ba0sme5azP4TmdlIy3yJvJO1lnEeukwFS0AELo%3D'
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      reference_matrix: ${{ steps.plan.outputs.reference_matrix }}
+      observed_matrix: ${{ steps.plan.outputs.observed_matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - name: Download response-blind Phase3 input
+        run: |
+          set -euo pipefail
+          curl -fL --retry 3 --retry-delay 2 "$INPUT_URL" -o phase3_input.tar.xz
+          echo "$INPUT_SHA256  phase3_input.tar.xz" | sha256sum -c -
+          mkdir -p phase3-input
+          tar -xJf phase3_input.tar.xz -C phase3-input
+          test -s phase3-input/phase2_geometry.csv
+          test -s phase3-input/phase2_manifest.json
+          test -s phase3-input/authorization.json
+      - name: Verify frozen provenance and plan shards
+        id: plan
+        run: |
+          set -euo pipefail
+          python scripts/plan_phylogatr_phase3_shards.py \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --authorization phase3-input/authorization.json \
+            --output phase3-input/plan.json
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          p=json.load(open('phase3-input/plan.json'))
+          assert p['reference_job_count']==64
+          assert p['observed_job_count']==10
+          assert p['confirmatory_sequence_identity_opened'] is False
+          assert p['confirmatory_pairwise_genetic_distances_opened'] is False
+          print('reference_matrix='+json.dumps({'include':p['reference_jobs']},separators=(',',':')))
+          print('observed_matrix='+json.dumps({'include':p['observed_jobs']},separators=(',',':')))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase3-input
+          path: phase3-input/
+          retention-days: 1
+
+  references:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 64
+      matrix: ${{ fromJSON(needs.prepare.outputs.reference_matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: phase3-input
+          path: phase3-input
+      - name: Run frozen private-reference shard
+        env:
+          NUMBA_NUM_THREADS: '2'
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python scripts/run_phylogatr_phase3_reference_shard.py \
+            --geometry phase3-input/phase2_geometry.csv \
+            --phase2-manifest phase3-input/phase2_manifest.json \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --authorization phase3-input/authorization.json \
+            --config-label '${{ matrix.configuration }}' \
+            --start '${{ matrix.start }}' \
+            --stop '${{ matrix.stop }}' \
+            --output 'out/ref_${{ matrix.configuration }}_${{ matrix.start }}_${{ matrix.stop }}.json'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ref-${{ matrix.configuration }}-${{ matrix.start }}-${{ matrix.stop }}
+          path: out/*.json
+          retention-days: 1
+
+  aggregate_references:
+    needs: [prepare, references]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: phase3-input
+          path: phase3-input
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ref-*
+          path: refs
+          merge-multiple: true
+      - name: Aggregate exact private-reference family
+        run: |
+          set -euo pipefail
+          python scripts/aggregate_phylogatr_phase3_references.py \
+            --input-dir refs \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --authorization phase3-input/authorization.json \
+            --output references.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase3-references
+          path: references.json
+          retention-days: 1
+
+  observed:
+    needs: [prepare, aggregate_references]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix: ${{ fromJSON(needs.prepare.outputs.observed_matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: phase3-input
+          path: phase3-input
+      - uses: actions/download-artifact@v4
+        with:
+          name: phase3-references
+          path: refs
+      - name: Run frozen mandatory observed shard
+        env:
+          NUMBA_NUM_THREADS: '2'
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python scripts/run_phylogatr_phase3_observed_shard.py \
+            --geometry phase3-input/phase2_geometry.csv \
+            --phase2-manifest phase3-input/phase2_manifest.json \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --authorization phase3-input/authorization.json \
+            --references refs/references.json \
+            --shared-fraction '${{ matrix.shared_fraction }}' \
+            --residual-amplitude '${{ matrix.residual_amplitude }}' \
+            --start '${{ matrix.start }}' \
+            --stop '${{ matrix.stop }}' \
+            --output 'out/obs_${{ matrix.shared_fraction }}_${{ matrix.residual_amplitude }}_${{ matrix.start }}_${{ matrix.stop }}.json'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: obs-${{ strategy.job-index }}
+          path: out/*.json
+          retention-days: 1
+
+  qualification:
+    needs: [prepare, observed]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: phase3-input
+          path: phase3-input
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: obs-*
+          path: observed
+          merge-multiple: true
+      - name: Aggregate frozen Phase3 Gate-D qualification
+        run: |
+          set -euo pipefail
+          python scripts/aggregate_phylogatr_phase3_qualification.py \
+            --input-dir observed \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --authorization phase3-input/authorization.json \
+            --output qualification.json
+          cat qualification.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase3-qualification
+          path: qualification.json
+          retention-days: 1
