@@ -1,0 +1,35 @@
+{
+  "schema": "ttf_genetic_phylogatr_phase3_self_compact_execution_v0.1",
+  "status": "FROZEN_AFTER_GATE_D_PASS_BEFORE_ANY_SELF_DETECTABILITY_RESULT_OR_NUCLEOTIDE_IDENTITY_OPENING",
+  "purpose": "Use the already-validated exact compact endpoint-safe rank-IBD execution for the frozen fresh phylogatR self-detectability qualification, because the original self scripts instantiate the historical quadratic IBD cache on the full Phase-2 panel.",
+  "trigger": {
+    "formal_gate_d_status": "PASS",
+    "formal_gate_d_result_seen": true,
+    "self_detectability_result_seen_before_amendment": false,
+    "fresh_sequence_identity_opened": false,
+    "computational_defect": "prepare_genetic_ttf_design materializes the historical quadratic endpoint-safe IBD cache for all Phase-2 species, including Entomobrya nivalis with 8711 frozen edges, before self scoring begins"
+  },
+  "equivalence_contract": {
+    "estimand": "unchanged endpoint-disjoint rank-IBD residual turnover feeding the frozen within-species self-field statistic",
+    "ibd_execution": "same exact compact endpoint-safe rank-IBD implementation already validated and used for formal fresh Gate-D",
+    "self_field_projection": "unchanged prepare_genetic_self_detectability",
+    "panel_statistic": "unchanged arithmetic mean of finite held-out species self-field Spearman scores",
+    "species_panel": "unchanged exact inherited Phase-2 evaluation species",
+    "synthetic_worlds": "unchanged frozen self-detectability rule, counts, amplitudes, noise, and seed tags"
+  },
+  "required_test": "compact self scoring equals the historical reference implementation on the same small geometries and synthetic worlds",
+  "scope": {
+    "fresh_phylogatr_self_reference": true,
+    "fresh_phylogatr_self_evaluation": true,
+    "formal_gate_d_outputs": false,
+    "historical_decker_execution": false,
+    "generic_genetic_api": false,
+    "phase4_empirical_identity_opening": false
+  },
+  "firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_empirical_ttf_statistic_opened": false,
+    "self_detectability_result_seen_before_amendment": false
+  }
+}

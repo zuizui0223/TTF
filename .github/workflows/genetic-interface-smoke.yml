@@ -79,6 +79,7 @@ jobs:
           tests/test_phylogatr_projected_phase1_intake.py
           tests/test_phylogatr_source_projection.py
           tests/test_phylogatr_compact_ibd.py
+          tests/test_phylogatr_compact_self.py
           tests/test_phylogatr_character_mask.py
           tests/test_phylogatr_empirical.py
           tests/test_phylogatr_freeze_contracts.py
