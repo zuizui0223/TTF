@@ -8,12 +8,12 @@ from pathlib import Path
 import numpy as np
 
 from ttf.calibration import seed_for
-from ttf.genetic_gate import prepare_genetic_ttf_design
-from ttf.genetic_self_detectability import (
-    prepare_genetic_self_detectability,
-    score_genetic_self_world_batch,
-)
+from ttf.genetic_self_detectability import prepare_genetic_self_detectability
 from ttf.genetic_simulate import simulate_genetic_distance_world
+from ttf.phylogatr_compact_execution import prepare_phylogatr_compact_ttf_design
+from ttf.phylogatr_compact_self_detectability import (
+    score_phylogatr_compact_self_world_batch,
+)
 from ttf.phylogatr_phase3 import load_phylogatr_phase3_context
 from ttf.private_null_inference import upper_monte_carlo_pvalue
 
@@ -63,7 +63,7 @@ def main() -> int:
         raise RuntimeError("fresh self-reference length drift")
 
     core = context.rule["core_method"]
-    design = prepare_genetic_ttf_design(
+    design = prepare_phylogatr_compact_ttf_design(
         context.geometries,
         train_species=context.train_species,
         eval_species=context.eval_species,
@@ -105,7 +105,7 @@ def main() -> int:
             )
             for replicate in range(batch_start, batch_stop)
         ]
-        scored = score_genetic_self_world_batch(design, self_design, worlds)
+        scored = score_phylogatr_compact_self_world_batch(design, self_design, worlds)
         for column, replicate in enumerate(range(batch_start, batch_stop)):
             if int(scored.n_species[column]) != len(design.eval_species):
                 raise RuntimeError("non-finite species count in fresh self evaluation")
