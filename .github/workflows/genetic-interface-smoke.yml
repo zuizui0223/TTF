@@ -80,6 +80,7 @@ jobs:
           tests/test_phylogatr_source_projection.py
           tests/test_phylogatr_compact_ibd.py
           tests/test_phylogatr_compact_self.py
+          tests/test_phylogatr_self_cli_wiring.py
           tests/test_phylogatr_character_mask.py
           tests/test_phylogatr_empirical.py
           tests/test_phylogatr_freeze_contracts.py
