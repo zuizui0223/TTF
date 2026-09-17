@@ -52,9 +52,9 @@ jobs:
           assert auth['schema'] == 'ttf_genetic_phylogatr_phase3_gate_d_authorization_v0.1'
           assert auth['status'] == 'authorize_frozen_fresh_phylogatr_phase3_gate_d'
           for key in (
-              'fresh_sequence_identity_opened',
-              'fresh_pairwise_genetic_distances_opened',
-              'fresh_ttf_statistic_opened',
+              'confirmatory_sequence_identity_opened',
+              'confirmatory_pairwise_genetic_distances_opened',
+              'confirmatory_ttf_statistic_opened',
           ):
               assert auth['outcome_firewall'][key] is False
 
