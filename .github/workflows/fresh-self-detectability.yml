@@ -1,0 +1,231 @@
+name: fresh phylogatR self-detectability qualification
+
+on:
+  push:
+    branches:
+      - ops/fresh-self-detectability-20260917
+    paths:
+      - .github/workflows/fresh-self-detectability.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  PHASE3_INPUT_ARTIFACT_ID: '10491713083'
+  GATE_D_QUAL_ARTIFACT_ID: '10494502727'
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - name: Download exact Gate-D input and PASS receipt
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p self-input gate-d
+          curl -fL \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/${PHASE3_INPUT_ARTIFACT_ID}/zip" \
+            -o phase3-input.zip
+          unzip -q phase3-input.zip -d self-input
+          curl -fL \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/${GATE_D_QUAL_ARTIFACT_ID}/zip" \
+            -o gate-d.zip
+          unzip -q gate-d.zip -d gate-d
+          test -s self-input/phase2_geometry.csv
+          test -s self-input/phase2_manifest.json
+          test -s self-input/authorization.json
+          test -s gate-d/qualification.json
+      - name: Verify pre-self firewalls and inherited Gate-D PASS
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          auth=json.load(open('self-input/authorization.json'))
+          gd=json.load(open('gate-d/qualification.json'))
+          sr=json.load(open('docs/supporting/genetic_phylogatr_phase3_self_detectability_rule_v0.1.json'))
+          er=json.load(open('docs/supporting/genetic_phylogatr_phase3_self_compact_execution_v0.1.json'))
+          assert gd['status']=='PASS' and gd['passed'] is True
+          assert gd['geometry_fingerprint_sha256']==auth['geometry_fingerprint_sha256']
+          assert gd['confirmatory_sequence_identity_opened'] is False
+          assert gd['confirmatory_pairwise_genetic_distances_opened'] is False
+          assert all(v is False for v in sr['outcome_firewall'].values())
+          assert er['trigger']['formal_gate_d_status']=='PASS'
+          assert er['trigger']['self_detectability_result_seen_before_amendment'] is False
+          assert er['trigger']['fresh_sequence_identity_opened'] is False
+          assert all(v is False for v in er['firewall'].values())
+          print({'geometry_fingerprint':auth['geometry_fingerprint_sha256'],'gate_d':'PASS','self_identity_opened':False})
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: self-input
+          path: self-input/
+          retention-days: 1
+
+  references:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include:
+          - {start: 0, stop: 250}
+          - {start: 250, stop: 500}
+          - {start: 500, stop: 750}
+          - {start: 750, stop: 1000}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: self-input
+          path: self-input
+      - name: Run frozen independent self reference shard
+        env:
+          NUMBA_NUM_THREADS: '2'
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python scripts/run_phylogatr_phase3_self_reference_shard.py \
+            --geometry self-input/phase2_geometry.csv \
+            --phase2-manifest self-input/phase2_manifest.json \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --phase3-authorization self-input/authorization.json \
+            --self-rule docs/supporting/genetic_phylogatr_phase3_self_detectability_rule_v0.1.json \
+            --start '${{ matrix.start }}' \
+            --stop '${{ matrix.stop }}' \
+            --output 'out/selfref_${{ matrix.start }}_${{ matrix.stop }}.json'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: selfref-${{ matrix.start }}-${{ matrix.stop }}
+          path: out/*.json
+          retention-days: 1
+
+  aggregate_references:
+    needs: [prepare, references]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: self-input
+          path: self-input
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: selfref-*
+          path: refs
+          merge-multiple: true
+      - name: Aggregate exact independent self reference
+        run: |
+          set -euo pipefail
+          python scripts/aggregate_phylogatr_phase3_self_references.py \
+            --input-dir refs \
+            --self-rule docs/supporting/genetic_phylogatr_phase3_self_detectability_rule_v0.1.json \
+            --phase3-authorization self-input/authorization.json \
+            --output self_references.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: self-references
+          path: self_references.json
+          retention-days: 1
+
+  evaluation:
+    needs: [prepare, aggregate_references]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include:
+          - {cell: null, start: 0, stop: 250}
+          - {cell: null, start: 250, stop: 500}
+          - {cell: private_A2, start: 0, stop: 250}
+          - {cell: private_A2, start: 250, stop: 500}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: self-input
+          path: self-input
+      - uses: actions/download-artifact@v4
+        with:
+          name: self-references
+          path: refs
+      - name: Run frozen self-detectability evaluation shard
+        env:
+          NUMBA_NUM_THREADS: '2'
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python scripts/run_phylogatr_phase3_self_evaluation_shard.py \
+            --geometry self-input/phase2_geometry.csv \
+            --phase2-manifest self-input/phase2_manifest.json \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --phase3-authorization self-input/authorization.json \
+            --self-rule docs/supporting/genetic_phylogatr_phase3_self_detectability_rule_v0.1.json \
+            --references refs/self_references.json \
+            --cell '${{ matrix.cell }}' \
+            --start '${{ matrix.start }}' \
+            --stop '${{ matrix.stop }}' \
+            --output 'out/selfeval_${{ matrix.cell }}_${{ matrix.start }}_${{ matrix.stop }}.json'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: selfeval-${{ matrix.cell }}-${{ matrix.start }}-${{ matrix.stop }}
+          path: out/*.json
+          retention-days: 1
+
+  qualification:
+    needs: [prepare, evaluation]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: self-input
+          path: self-input
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: selfeval-*
+          path: evals
+          merge-multiple: true
+      - name: Aggregate frozen self-detectability qualification
+        run: |
+          set -euo pipefail
+          python scripts/aggregate_phylogatr_phase3_self_qualification.py \
+            --input-dir evals \
+            --self-rule docs/supporting/genetic_phylogatr_phase3_self_detectability_rule_v0.1.json \
+            --phase3-authorization self-input/authorization.json \
+            --output self_qualification.json
+          cat self_qualification.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: self-qualification
+          path: self_qualification.json
+          retention-days: 1
