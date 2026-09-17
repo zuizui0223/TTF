@@ -2,6 +2,11 @@ name: fresh phylogatR self-detectability qualification
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - ops/fresh-self-detectability-run-20260918
+    paths:
+      - ".github/workflows/fresh-self-detectability-run.yml"
 
 permissions:
   contents: read
@@ -63,7 +68,7 @@ jobs:
           assert rule['execution']['evaluation_shard_size'] == 250
 
           execution_rule = json.loads(Path('docs/supporting/genetic_phylogatr_phase3_self_compact_execution_v0.1.json').read_text())
-          assert execution_rule['status'] == 'FROZEN_BEFORE_ANY_FRESH_SELF_DETECTABILITY_RESULT'
+          assert execution_rule['status'] == 'FROZEN_AFTER_GATE_D_PASS_BEFORE_ANY_SELF_DETECTABILITY_RESULT_OR_NUCLEOTIDE_IDENTITY_OPENING'
           assert execution_rule['trigger']['self_detectability_result_seen_before_amendment'] is False
           assert all(value is False for value in execution_rule['firewall'].values())
 
