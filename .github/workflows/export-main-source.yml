@@ -1,0 +1,23 @@
+name: export exact main source
+
+on:
+  push:
+    branches:
+      - ops/export-main-source-20260917
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: d68cfc67b0cb25dd5f1a3ee9500ef330bf1a4191
+          fetch-depth: 1
+      - name: Archive exact main tree
+        run: git archive --format=zip HEAD -o ttf-main-d68cfc67.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-main-d68cfc67
+          path: ttf-main-d68cfc67.zip
+          if-no-files-found: error
+          retention-days: 1
