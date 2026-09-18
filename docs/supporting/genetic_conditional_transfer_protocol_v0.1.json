@@ -23,10 +23,11 @@
     "field_bandwidth_km": 500,
     "support_radius_km": 500,
     "target_coverage_definition": "fraction of target graph-edge midpoints whose nearest source graph-edge midpoint is <= 500 km",
-    "source_in_pool": "target coverage >= 0.25",
+    "source_in_pool": "target coverage >= 0.50",
     "minimum_source_species_per_target": 5,
     "unsupported_target_policy": "prospectively unsupported for the conditional estimand; do not relax coverage or source-count thresholds after outcomes",
-    "source_weighting_within_pool": "equal total weight per selected training species, inherited from core TTF; equal weight within a species is divided over its frozen graph edges"
+    "source_weighting_within_pool": "equal total weight per selected training species, inherited from core TTF; selected species are rescaled by N_train/N_selected so every target-specific field retains the same total pre-kernel training-species weight mass as the full training panel",
+    "mass_preservation": "for each target, multiply all selected-source edge weights by N_train/N_selected; this prevents source-count reduction alone from changing the total species-weight mass or prior shrinkage scale, while retaining the selected sources' actual geographic kernel geometry"
   },
   "primary_estimand": {
     "name": "same_order_increment_beyond_geography",
@@ -66,7 +67,7 @@
   "confirmatory_stopping_rules": [
     "do not inspect development-panel nucleotide identity",
     "do not inspect confirmatory-panel nucleotide identity before all response-blind gates pass",
-    "do not alter support radius, 0.25 coverage threshold, minimum five source species, taxonomy rank, bandwidth, split, alpha, or bootstrap rule after confirmatory outcomes are opened",
+    "do not alter support radius, 0.50 coverage threshold, minimum five source species, taxonomy rank, bandwidth, split, alpha, or bootstrap rule after confirmatory outcomes are opened",
     "do not replace same-order with a finer or coarser taxonomic rank after seeing empirical transfer",
     "do not use the new result to rewrite the completed unconditional one-shot result"
   ],
