@@ -1,0 +1,94 @@
+{
+  "schema": "ttf_genetic_phylogatr_phase4_pre_empirical_handoff_v0.1",
+  "status": "PHASE4_AUTHORIZED_WAITING_FOR_EXACT_SOURCE_ARCHIVE_RECOVERY",
+  "source_main_sha": "c846bcf431a9aad52237a50009a91fd549b689ef",
+  "purpose": "Freeze the exact state immediately before the single fresh phylogatR empirical Phase-4 test. Method qualification, self-detectability, fragility completion, and identity-opening authorization are complete; nucleotide identity, pairwise genetic distances, and empirical TTF remain unopened because the exact original authenticated source archive bytes are not currently available for deterministic Phase-1 selected_panels regeneration.",
+  "phase1_original": {
+    "species_count": 250,
+    "train_count": 125,
+    "eval_count": 125,
+    "dataset_digest_sha256": "088274dafdcd1e82d7688db07f7734172887972f3e72bfac394df6b0bb3fab59",
+    "phase1_manifest_sha256": "daeedabbeb99fa304568f0f2b2e1c46e0dd6221fbac02b0491faf2435ef7b7b3",
+    "phase1_geometry_csv_sha256": "d6f0b1f360a77de279263145386e7956af0d43c9386048f319117522f933cb74",
+    "phase1_geometry_fingerprint_sha256": "23938478d839348c6d5ea08eafdf88da57feb0fb35a65f932c283a1df04c5d03"
+  },
+  "phase2": {
+    "status": "PASS_TO_SYNTHETIC_GATE",
+    "survivor_species": 211,
+    "geometry_fingerprint_sha256": "cca0714047523793c609c51c7a2377e120a9ca0d5e18f61816283bafa692fe40"
+  },
+  "formal_phase3_gate_d": {
+    "status": "PASS",
+    "max_private_null_wilson95_upper": 0.06807779276827323,
+    "type1_ceiling": 0.10,
+    "shared_A2_wilson95_lower": 0.9713869308622147,
+    "power_floor": 0.80,
+    "scientific_gate_authority": true
+  },
+  "self_detectability": {
+    "status": "PASS",
+    "null_rejections": 32,
+    "null_trials": 500,
+    "null_wilson95_upper": 0.08895240883768415,
+    "private_A2_rejections": 500,
+    "private_A2_trials": 500,
+    "private_A2_wilson95_lower": 0.9923756595384479
+  },
+  "fragility_diagnostic": {
+    "status": "DIAGNOSTIC_FRAGILITY_CURVE_COMPLETE",
+    "retention_levels": [1.0, 0.875, 0.75, 0.625, 0.5],
+    "procedural_prerequisite_only": true,
+    "diagnostic_metrics_gate_phase4": false
+  },
+  "phase4_authorization": {
+    "status": "AUTHORIZE_EXACT_FRESH_NUCLEOTIDE_IDENTITY_OPENING",
+    "workflow_run": 35322327867,
+    "workflow_source_head": "7b58e46a729fb288c69b89ad817696164a08fea1",
+    "method_source_main_sha": "c846bcf431a9aad52237a50009a91fd549b689ef",
+    "artifact_id": 10537228311,
+    "artifact_zip_sha256": "05eb1c068f6817a6eaec73799f747b8237278e211652267deab3f12eef6f1b12",
+    "authorization_json_sha256": "47ffa048052d7bea5e76ebc144dcd40ea7e86910033ae082acc58757ca92d4d9",
+    "phase1_provenance_mode": "frozen_downstream_hash_witness",
+    "phase1_recovery_changes_scientific_gate": false
+  },
+  "exact_source_archive_required": {
+    "original_name": "phylogatr_results.zip",
+    "size_bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "regeneration_rule": "docs/supporting/genetic_phylogatr_phase1_source_regeneration_v0.1.json",
+    "regeneration_command": "scripts/regenerate_phylogatr_phase1_for_phase4.py",
+    "accept_only_byte_identical_phase1_manifest": true,
+    "accept_only_byte_identical_phase1_geometry": true,
+    "substitute_redownload_or_repack_allowed": false
+  },
+  "repository_lineage": {
+    "phase1_provenance_recovery_pull_request": 47,
+    "phase1_source_regeneration_pull_request": 48,
+    "current_blocker_issue": 49,
+    "retired_archive_acquisition_issue": 21,
+    "retired_parallel_ncbi_source_pull_request": 37
+  },
+  "outcome_firewall": {
+    "confirmatory_sequence_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_ttf_statistic_opened": false,
+    "decker_empirical_genetic_outcomes_opened": false
+  },
+  "next_authorized_transition": [
+    "recover the exact original phylogatr_results.zip bytes",
+    "verify exact archive size and SHA-256",
+    "regenerate response-blind Phase-1 selected_panels and require byte-identical Phase-1 manifest and geometry hashes",
+    "reissue exact Phase-4 authorization against the regenerated Phase-1 manifest and already frozen downstream chain",
+    "run exactly one frozen empirical Phase-4 test",
+    "record the primary place_beyond_ibd decision; total genetic-distance transfer remains descriptive only"
+  ],
+  "forbidden": [
+    "substitute a different or repacked source archive",
+    "reconstruct selected_panels from downstream summaries",
+    "switch to a parallel confirmatory source",
+    "change species, marker, graph, split, bandwidth, alpha, IBD model, reference family, or interpretation after authorization",
+    "open nucleotide identity before exact Phase-1 regeneration passes",
+    "use fragility diagnostics to rescue or overturn the formal Phase-3 decision"
+  ],
+  "claim_boundary": "The genetic TTF fresh phylogatR route is method-qualified and authorized to open the exact frozen empirical response, but no empirical biological conclusion exists until the exact original source archive is recovered, Phase 1 is regenerated byte-identically, and the one frozen Phase-4 empirical test completes."
+}
