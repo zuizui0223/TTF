@@ -1,0 +1,27 @@
+name: conditional pr59 formal snapshot
+
+on:
+  push:
+    branches:
+      - "ops/conditional-pr59-formal-20260919"
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: "e7040f26f2e1b861b35385b5d445cfc210a4905d"
+          fetch-depth: 1
+      - name: Pack exact PR head
+        run: |
+          set -euo pipefail
+          tar --exclude=.git -czf /tmp/TTF-pr59-e7040f26f2e1.tar.gz .
+          sha256sum /tmp/TTF-pr59-e7040f26f2e1.tar.gz > /tmp/TTF-pr59-e7040f26f2e1.tar.gz.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TTF-pr59-e7040f26f2e1
+          path: |
+            /tmp/TTF-pr59-e7040f26f2e1.tar.gz
+            /tmp/TTF-pr59-e7040f26f2e1.tar.gz.sha256
+          if-no-files-found: error
