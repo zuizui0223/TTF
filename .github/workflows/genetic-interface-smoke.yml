@@ -98,3 +98,4 @@ jobs:
           tests/test_phylogatr_phase4_contract.py
           tests/test_phylogatr_method_closure.py
           tests/test_phylogatr_phase4_pre_empirical_handoff.py
+          tests/test_phylogatr_phase4_empirical_handoff.py

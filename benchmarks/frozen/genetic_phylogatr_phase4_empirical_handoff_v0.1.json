@@ -1,0 +1,90 @@
+{
+  "schema": "ttf_genetic_phylogatr_phase4_empirical_handoff_v0.1",
+  "status": "EMPIRICAL_PHASE4_COMPLETE",
+  "source_main_sha": "55ff72a4273d2119a361c3978aa3bea873ed8243",
+  "executed_on": "2026-09-18",
+  "purpose": "Freeze the first and only authorized fresh phylogatR Phase-4 empirical opening after exact Phase-1 byte regeneration. No method, source, split, threshold, estimand, or interpretation was changed after authorization.",
+  "exact_source_archive": {
+    "original_name": "phylogatr_results.zip",
+    "size_bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+  },
+  "phase1_regeneration": {
+    "status": "EXACT_PHASE1_MANIFEST_REGENERATED_RESPONSE_BLIND",
+    "species_count": 250,
+    "train_count": 125,
+    "eval_count": 125,
+    "selected_panels_count": 250,
+    "dataset_digest_sha256": "088274dafdcd1e82d7688db07f7734172887972f3e72bfac394df6b0bb3fab59",
+    "geometry_fingerprint_sha256": "23938478d839348c6d5ea08eafdf88da57feb0fb35a65f932c283a1df04c5d03",
+    "phase1_manifest_sha256": "daeedabbeb99fa304568f0f2b2e1c46e0dd6221fbac02b0491faf2435ef7b7b3",
+    "phase1_geometry_csv_sha256": "d6f0b1f360a77de279263145386e7956af0d43c9386048f319117522f933cb74",
+    "projected_genes_sha256": "3a09b31e466985e1120cef94f5805f5bb23ebc76b4f3b650f3e9188239415e0",
+    "sequence_identity_opened_during_regeneration": false,
+    "pairwise_genetic_distances_opened_during_regeneration": false,
+    "empirical_ttf_opened_during_regeneration": false
+  },
+  "phase4_authorization": {
+    "status": "AUTHORIZE_EXACT_FRESH_NUCLEOTIDE_IDENTITY_OPENING",
+    "phase1_provenance_mode": "exact_manifest",
+    "authorization_json_sha256": "a66edba0a6378f2fa2e24eba73aa5d48f6a58905420e13b53be802f603c3a0e1",
+    "geometry_fingerprint_sha256": "cca0714047523793c609c51c7a2377e120a9ca0d5e18f61816283bafa692fe40",
+    "survivor_species": 211
+  },
+  "empirical_result": {
+    "schema": "ttf_genetic_phylogatr_phase4_empirical_result_v0.1",
+    "status": "EMPIRICAL_RESULT_OPENED_UNDER_FROZEN_PHASE4_AUTHORIZATION",
+    "result_json_sha256": "f5d19fa50c7c18cbf2a110c0afb9c70dcd543c44b77521c015938013843e72fb",
+    "primary_place_beyond_ibd": {
+      "statistic": 0.03256548471362711,
+      "training_strength": 0.4569225317093987,
+      "profiled_private_p_value": 0.7392607392607392,
+      "alpha": 0.05,
+      "positive": false,
+      "selected_configurations": [
+        "A3",
+        "A5"
+      ],
+      "component_p_values": {
+        "A3": 0.6683316683316683,
+        "A5": 0.7392607392607392
+      }
+    },
+    "within_species_self_diagnostic": {
+      "synthetic_method_qualified": true,
+      "statistic": -0.226097652897688,
+      "p_value": 0.008991008991008992,
+      "alpha": 0.05,
+      "positive": true
+    },
+    "secondary_total_genetic_transfer": {
+      "status": "DESCRIPTIVE_ONLY",
+      "statistic": 0.015501562599030518,
+      "inferentially_qualified": false,
+      "used_for_primary_decision": false,
+      "biological_ibd_adjustment": false
+    },
+    "decision": "LINEAGE_CONDITIONED_SPATIAL_STRUCTURE_WITHIN_TESTED_DOMAIN",
+    "interpretation": "Cross-species transfer is not detected despite qualified and positive within-species spatial detectability; this is consistent with lineage-conditioned spatial structure within the tested domain, not proof of zero transfer or a lineage-specific historical cause."
+  },
+  "outcome_state": {
+    "confirmatory_sequence_identity_opened": true,
+    "confirmatory_pairwise_genetic_distances_opened": true,
+    "confirmatory_ttf_statistic_opened": true,
+    "decker_empirical_genetic_outcomes_opened": false,
+    "serialized_sequence_identity": false,
+    "serialized_edge_genetic_distance_vectors": false
+  },
+  "one_shot_execution": {
+    "frozen_empirical_test_completed": true,
+    "result_selection_rerun_allowed": false,
+    "post_result_retuning_allowed": false
+  },
+  "repository_lineage": {
+    "pre_empirical_handoff_pull_request": 50,
+    "blocker_issue_to_close": 49,
+    "phase1_provenance_recovery_pull_request": 47,
+    "phase1_source_regeneration_pull_request": 48
+  },
+  "claim_boundary": "Within the exact fresh phylogatR confirmatory domain, the frozen primary test does not detect cross-species transfer of post-IBD mitochondrial spatial differentiation, while the qualified within-species diagnostic detects spatial structure. This supports a lineage-conditioned interpretation within the tested domain only; it does not prove zero transfer universally or identify a specific historical cause."
+}
