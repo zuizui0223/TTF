@@ -117,5 +117,21 @@
     "new_confirmatory_sequence_identity_opened": false,
     "pairwise_genetic_distances_opened": false,
     "empirical_conditional_ttf_opened": false
+  },
+  "response_blind_geometry_artifacts": {
+    "development": {
+      "library_csv": "/TTF/conditional/development_geometry_v0.1.csv",
+      "geometry_csv_sha256": "d4affc28a2f9da89d0566b0f52123f4711009c99e985baff9f44767da996a9cd",
+      "library_manifest": "/TTF/conditional/development_geometry_manifest_v0.1.json",
+      "manifest_sha256": "f78bc6fa735010270db287764be0f818ef09ce416b00e0cb0c1aa1f00f7513ac",
+      "exact_geometry_reconstructed_without_nucleotide_identity": true
+    },
+    "confirmatory": {
+      "library_csv": "/TTF/conditional/confirmatory_geometry_v0.1.csv",
+      "geometry_csv_sha256": "fc93f1aaac2abc369f3e94c99b73e1d139f635638e197d1f71f977a49a44dbba",
+      "library_manifest": "/TTF/conditional/confirmatory_geometry_manifest_v0.1.json",
+      "manifest_sha256": "debe44fabd10c53b2cf5fad13ad0c182e57429edd193619fa7a5c34e4dbdb880",
+      "exact_geometry_reconstructed_without_nucleotide_identity": true
+    }
   }
 }
