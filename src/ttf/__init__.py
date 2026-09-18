@@ -12,6 +12,16 @@ from .calibration import (
     run_calibration,
     run_geometry_calibration,
 )
+from .conditional_transfer import (
+    ConditionalIncrementBatch,
+    ConditionalIncrementInference,
+    TargetSourcePoolDesign,
+    infer_conditioning_increment,
+    prepare_target_source_pools,
+    score_conditioning_increment_batch,
+    score_pool_difference_batch,
+    score_target_conditioned_batch,
+)
 from .core import (
     SpeciesEdges,
     SpeciesSample,
@@ -76,6 +86,9 @@ from .transfer import (
 
 __all__ = [
     "CalibrationCell",
+    "ConditionalIncrementBatch",
+    "ConditionalIncrementInference",
+    "TargetSourcePoolDesign",
     "FieldEstimate",
     "GeometrySyntheticWorld",
     "KernelBoundaryModel",
@@ -108,6 +121,11 @@ __all__ = [
     "geometry_fingerprint",
     "heldout_species_bootstrap_test",
     "inclusion_counts",
+    "infer_conditioning_increment",
+    "prepare_target_source_pools",
+    "score_conditioning_increment_batch",
+    "score_pool_difference_batch",
+    "score_target_conditioned_batch",
     "knn_edges",
     "mismatch_species_sample",
     "paired_heldout_species_bootstrap_test",
