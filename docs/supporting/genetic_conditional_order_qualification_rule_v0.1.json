@@ -22,14 +22,15 @@
   "frozen_estimator": {
     "field_bandwidth_km": 500,
     "support_radius_km": 500,
-    "minimum_target_coverage": 0.25,
+    "minimum_target_coverage": 0.5,
     "minimum_source_species": 5,
     "group_label": "exact non-empty phylogatR order",
-    "eligible_same_order_eval_species": 79,
+    "eligible_same_order_eval_species": 72,
     "estimand": "species-equal mean of [C_same_order_geo - C_geo] over the response-blind same-order-supported evaluation set",
     "inference": "one-sided centered studentized held-out-species bootstrap of paired target increments",
     "alpha": 0.05,
-    "bootstrap_resamples": 1999
+    "bootstrap_resamples": 1999,
+    "source_mass_normalization": "multiply selected-source edge weights by N_train/N_selected for every target-specific field"
   },
   "synthetic_worlds": {
     "master_seed": 20260919,
@@ -89,7 +90,7 @@
   },
   "forbidden_after_freeze": [
     "changing taxonomic rank from order",
-    "changing support radius, target-coverage threshold, minimum source count, field bandwidth, alpha or bootstrap resamples",
+    "changing support radius, 0.50 target-coverage threshold, source-mass normalization, minimum source count, field bandwidth, alpha or bootstrap resamples",
     "dropping response-blind supported targets based on synthetic or empirical scores",
     "changing private amplitudes or positive-control amplitude after qualification outcomes",
     "opening development-panel empirical nucleotide identity",
