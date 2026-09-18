@@ -1,0 +1,100 @@
+name: fresh phylogatR Phase4 authorization
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ops/fresh-phase4-authorization-20260918
+    paths:
+      - ".github/workflows/fresh-phase4-authorization.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  authorize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - name: Download exact completed response-blind Phase4 bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: phase4-response-blind-bundle
+          path: bundle
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35300806202
+      - name: Verify response-blind chain and authorize identity opening
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+
+          def sha(path):
+              return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+          phase2=json.load(open('bundle/phase3-input/phase2_manifest.json'))
+          phase3=json.load(open('bundle/phase3-input/authorization.json'))
+          qual=json.load(open('bundle/formal-qualification/qualification.json'))
+          selfq=json.load(open('bundle/self-qualification/qualification.json'))
+          frag=json.load(open('bundle/fragility-curve/fragility_curve.json'))
+
+          assert phase2['status']=='PASS_TO_SYNTHETIC_GATE'
+          assert phase2['species']['survivors']==211
+          assert sha('bundle/phase3-input/phase2_manifest.json')==phase3['phase2_manifest_sha256']
+          assert qual['status']=='PASS' and qual['passed'] is True
+          assert selfq['status']=='PASS' and selfq['passed'] is True
+          assert frag['status']=='DIAGNOSTIC_FRAGILITY_CURVE_COMPLETE'
+          assert frag['formal_full_geometry_status']=='PASS'
+          assert [float(x['retention_fraction']) for x in frag['curve']]==[1.0,0.875,0.75,0.625,0.5]
+          for payload in (phase2, phase3, qual, selfq, frag):
+              for key in (
+                  'confirmatory_sequence_identity_opened',
+                  'confirmatory_pairwise_genetic_distances_opened',
+                  'confirmatory_ttf_statistic_opened',
+              ):
+                  if key in payload:
+                      assert payload[key] is False
+          PY
+
+          python scripts/authorize_phylogatr_phase4_identity_opening.py \
+            --geometry bundle/phase3-input/phase2_geometry.csv \
+            --use-frozen-phase1-provenance-recovery \
+            --phase2-manifest bundle/phase3-input/phase2_manifest.json \
+            --phase3-rule bundle/rules/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --phase3-authorization bundle/phase3-input/authorization.json \
+            --references bundle/phase3-references/references.json \
+            --qualification bundle/formal-qualification/qualification.json \
+            --self-rule bundle/rules/genetic_phylogatr_phase3_self_detectability_rule_v0.1.json \
+            --self-references bundle/self-references/references.json \
+            --self-qualification bundle/self-qualification/qualification.json \
+            --fragility-execution-rule bundle/rules/genetic_phylogatr_gate_d_fragility_execution_v0.1.json \
+            --fragility-curve bundle/fragility-curve/fragility_curve.json \
+            --phase4-rule bundle/rules/genetic_phylogatr_phase4_response_rule_v0.1.json \
+            --opening-state bundle/opening/genetic_empirical_opening_state_v0.1.json \
+            --repo-root . \
+            --output identity_opening_authorization.json
+
+          python - <<'PY'
+          import json
+          q=json.load(open('identity_opening_authorization.json'))
+          assert q['status']=='AUTHORIZE_EXACT_FRESH_NUCLEOTIDE_IDENTITY_OPENING'
+          assert q['phase3_gate_d']['passed'] is True
+          assert q['fresh_self_detectability']['passed'] is True
+          assert q['fragility_diagnostic']['status']=='DIAGNOSTIC_FRAGILITY_CURVE_COMPLETE'
+          assert q['fragility_diagnostic']['diagnostic_metrics_gate_phase4'] is False
+          assert q['phase1_provenance']['mode']=='frozen_downstream_hash_witness'
+          assert q['species']['survivors']==211
+          assert all(v is False for v in q['outcome_firewall_before_execution'].values())
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase4-identity-opening-authorization
+          path: identity_opening_authorization.json
+          retention-days: 7
