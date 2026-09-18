@@ -10,6 +10,7 @@ on:
       - "scripts/freeze_phylogatr_confirmatory_phase1.py"
       - "scripts/run_phylogatr_confirmatory_phase1_intake.py"
       - "scripts/run_phylogatr_projected_phase1_intake.py"
+      - "scripts/regenerate_phylogatr_phase1_for_phase4.py"
       - "scripts/freeze_phylogatr_confirmatory_phase2_mask.py"
       - "scripts/run_phylogatr_confirmatory_phase2_intake.py"
       - "scripts/run_phylogatr_projected_phase2_intake.py"
@@ -37,6 +38,7 @@ on:
       - "scripts/freeze_phylogatr_confirmatory_phase1.py"
       - "scripts/run_phylogatr_confirmatory_phase1_intake.py"
       - "scripts/run_phylogatr_projected_phase1_intake.py"
+      - "scripts/regenerate_phylogatr_phase1_for_phase4.py"
       - "scripts/freeze_phylogatr_confirmatory_phase2_mask.py"
       - "scripts/run_phylogatr_confirmatory_phase2_intake.py"
       - "scripts/run_phylogatr_projected_phase2_intake.py"
@@ -77,6 +79,7 @@ jobs:
           tests/test_phylogatr_confirmatory.py
           tests/test_phylogatr_phase1_intake.py
           tests/test_phylogatr_projected_phase1_intake.py
+          tests/test_phylogatr_phase1_source_regeneration.py
           tests/test_phylogatr_source_projection.py
           tests/test_phylogatr_compact_ibd.py
           tests/test_phylogatr_compact_self.py
