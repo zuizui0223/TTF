@@ -9,10 +9,13 @@ import numpy as np
 from .conditional_transfer import (
     CachedTargetConditionedTransferGeometry,
     ConditionalIncrementBatch,
+    FullyCachedTargetConditionedTransferGeometry,
     TargetSourcePoolDesign,
     prepare_cached_target_conditioned_transfer,
+    prepare_fully_cached_target_conditioned_transfer,
     prepare_target_source_pools,
     score_cached_target_conditioned_batch,
+    score_fully_cached_target_conditioned_batch,
 )
 from .genetic_conditional_simulate import (
     GroupedGeneticSyntheticWorld,
@@ -47,6 +50,15 @@ class ConditionalOrderBatchScore:
     order_species_scores: Mapping[str, np.ndarray]
     p_values: np.ndarray
     n_eval_species: int
+
+
+@dataclass(frozen=True)
+class ConditionalOrderFullProjectionExecution:
+    """Execution-only full geometry caches for the frozen order estimand."""
+
+    geographic: FullyCachedTargetConditionedTransferGeometry
+    order: FullyCachedTargetConditionedTransferGeometry
+    eligible_eval_species: tuple[str, ...]
 
 
 def frozen_seed(master_seed: int, tag: str, cell: str, replicate: int) -> int:
@@ -181,6 +193,95 @@ def _responses_for_world_batch(
     return train_response, eval_response
 
 
+def prepare_conditional_order_full_projection_execution(
+    design: ConditionalOrderQualificationDesign,
+) -> ConditionalOrderFullProjectionExecution:
+    """Materialize response-blind full projections for frozen primary targets."""
+    eligible = tuple(design.eligible_eval_species)
+    geographic = prepare_fully_cached_target_conditioned_transfer(
+        design.geographic_cache, eval_species=eligible
+    )
+    order = prepare_fully_cached_target_conditioned_transfer(
+        design.order_cache, eval_species=eligible
+    )
+    if geographic.eval_species != eligible or order.eval_species != eligible:
+        raise RuntimeError("full projection target-set drift")
+    return ConditionalOrderFullProjectionExecution(
+        geographic=geographic,
+        order=order,
+        eligible_eval_species=eligible,
+    )
+
+
+def score_conditional_order_world_batch_full_projection(
+    design: ConditionalOrderQualificationDesign,
+    execution: ConditionalOrderFullProjectionExecution,
+    worlds: Sequence[GroupedGeneticSyntheticWorld],
+    *,
+    cell: str,
+    absolute_start: int,
+    bootstrap_resamples: int = 1999,
+    master_seed: int = 20260919,
+) -> ConditionalOrderBatchScore:
+    """Score frozen worlds using response-blind full projections."""
+    batch = tuple(worlds)
+    train_response, eval_response = _responses_for_world_batch(design, batch)
+    geographic = score_fully_cached_target_conditioned_batch(
+        execution.geographic, train_response, eval_response
+    )
+    order = score_fully_cached_target_conditioned_batch(
+        execution.order, train_response, eval_response
+    )
+    eligible = tuple(design.eligible_eval_species)
+    if tuple(execution.eligible_eval_species) != eligible:
+        raise RuntimeError("full projection execution target-set drift")
+    increments = {
+        name: (
+            np.asarray(order.species_scores[name], dtype=float)
+            - np.asarray(geographic.species_scores[name], dtype=float)
+        )
+        for name in eligible
+    }
+    matrix = np.vstack([increments[name] for name in eligible])
+    statistics = np.mean(matrix, axis=0)
+    p_values = np.empty(len(batch), dtype=float)
+    for column in range(len(batch)):
+        scores = matrix[:, column]
+        bootstrap = centered_species_bootstrap_mean_test(
+            scores,
+            n_bootstrap=int(bootstrap_resamples),
+            seed=frozen_seed(
+                master_seed,
+                "conditional-order-bootstrap",
+                str(cell),
+                int(absolute_start) + column,
+            ),
+        )
+        if not np.isclose(
+            bootstrap.observed_mean, statistics[column], atol=1e-12, rtol=0.0
+        ):
+            raise RuntimeError("paired order increment mean drift")
+        p_values[column] = float(bootstrap.p_value)
+
+    return ConditionalOrderBatchScore(
+        statistics=np.asarray(statistics, dtype=float).copy(),
+        species_increments={
+            name: np.asarray(values, dtype=float).copy()
+            for name, values in increments.items()
+        },
+        geographic_species_scores={
+            name: np.asarray(geographic.species_scores[name], dtype=float).copy()
+            for name in eligible
+        },
+        order_species_scores={
+            name: np.asarray(order.species_scores[name], dtype=float).copy()
+            for name in eligible
+        },
+        p_values=p_values,
+        n_eval_species=len(eligible),
+    )
+
+
 def score_conditional_order_world_batch(
     design: ConditionalOrderQualificationDesign,
     worlds: Sequence[GroupedGeneticSyntheticWorld],
@@ -305,9 +406,12 @@ def make_conditional_order_worlds(
 
 __all__ = [
     "ConditionalOrderBatchScore",
+    "ConditionalOrderFullProjectionExecution",
     "ConditionalOrderQualificationDesign",
     "frozen_seed",
     "make_conditional_order_worlds",
+    "prepare_conditional_order_full_projection_execution",
     "prepare_conditional_order_qualification",
     "score_conditional_order_world_batch",
+    "score_conditional_order_world_batch_full_projection",
 ]
