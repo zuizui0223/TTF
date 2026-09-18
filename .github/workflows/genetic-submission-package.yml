@@ -1,0 +1,41 @@
+name: genetic submission package
+
+on:
+  push:
+    branches:
+      - "ops/genetic-submission-package-20260918"
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: "09a541a923fbfb5f79af41669a7f6ad56053546e"
+          fetch-depth: 1
+      - name: Build submission bundle
+        run: |
+          set -euo pipefail
+          root=/tmp/TTF_genetic_submission_package
+          mkdir -p "$root/manuscript" "$root/figures" "$root/supplement" "$root/provenance" "$root/submission"
+          cp manuscript/genetic_ttf_flagship_v0.2.md "$root/manuscript/"
+          cp manuscript/figures/genetic_phase4_v0.1/figure1_qualification_margins.svg "$root/figures/"
+          cp manuscript/figures/genetic_phase4_v0.1/figure2_post_ibd_species_scores.svg "$root/figures/"
+          cp manuscript/figures/genetic_phase4_v0.1/figure_manifest.json "$root/figures/"
+          cp manuscript/generated/genetic_ttf_phase4_v0.1/results.md "$root/supplement/"
+          cp manuscript/generated/genetic_ttf_phase4_v0.1/species_scores.csv "$root/supplement/"
+          cp manuscript/generated/genetic_ttf_phase4_v0.1/export_manifest.json "$root/supplement/"
+          cp benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json "$root/provenance/"
+          cp docs/GENETIC_TTF_SUBMISSION_READINESS.md "$root/submission/"
+          cp manuscript/genetic_ttf_submission_readiness_v0.1.json "$root/submission/"
+          cp docs/GENETIC_TTF_MOLECULAR_ECOLOGY_ADAPTER.md "$root/submission/"
+          printf '%s\n' "source_commit=09a541a923fbfb5f79af41669a7f6ad56053546e" > "$root/SOURCE_COMMIT.txt"
+          (cd /tmp && zip -qr TTF_genetic_submission_package_20260918.zip TTF_genetic_submission_package)
+          sha256sum /tmp/TTF_genetic_submission_package_20260918.zip > /tmp/TTF_genetic_submission_package_20260918.zip.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TTF-genetic-submission-package-20260918
+          path: |
+            /tmp/TTF_genetic_submission_package_20260918.zip
+            /tmp/TTF_genetic_submission_package_20260918.zip.sha256
+          if-no-files-found: error
