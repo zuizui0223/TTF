@@ -38,8 +38,8 @@
       "Hymenoptera": 10
     },
     "lepidoptera_fraction": 0.5897435897435898,
-    "order_hhi": 0.4047337278106508,
-    "effective_order_count": 2.470760233918129
+    "order_hhi": 0.40433925049309666,
+    "effective_order_count": 2.473170731707317
   },
   "interpretation_guardrail": {
     "primary_changed": false,
