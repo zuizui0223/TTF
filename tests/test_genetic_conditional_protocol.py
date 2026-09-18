@@ -32,15 +32,16 @@ def test_conditional_successor_is_two_panel_and_response_blind() -> None:
     assert geometry["development"]["exact_geometry_reconstructed_without_nucleotide_identity"] is True
     assert geometry["confirmatory"]["exact_geometry_reconstructed_without_nucleotide_identity"] is True
 
-    assert census["development_panel"]["support_500km"]["coverage_ge_0_25"]["target_species_with_ge_5_sources"] == 113
-    assert census["confirmatory_panel"]["support_500km"]["coverage_ge_0_25"]["target_species_with_ge_5_sources"] == 108
-    assert census["development_panel"]["support_500km"]["coverage_ge_0_25_same_order"]["target_species_with_ge_5_sources"] == 79
-    assert census["confirmatory_panel"]["support_500km"]["coverage_ge_0_25_same_order"]["target_species_with_ge_5_sources"] == 86
+    assert census["development_panel"]["support_500km"]["coverage_ge_0_50"]["target_species_with_ge_5_sources"] == 109
+    assert census["confirmatory_panel"]["support_500km"]["coverage_ge_0_50"]["target_species_with_ge_5_sources"] == 105
+    assert census["development_panel"]["support_500km"]["coverage_ge_0_50_same_order"]["target_species_with_ge_5_sources"] == 72
+    assert census["confirmatory_panel"]["support_500km"]["coverage_ge_0_50_same_order"]["target_species_with_ge_5_sources"] == 78
 
     assert protocol["status"] == "FROZEN_RESPONSE_BLIND_ESTIMAND_BEFORE_ANY_NEW_PANEL_NUCLEOTIDE_IDENTITY"
     assert protocol["geographic_conditioning"]["support_radius_km"] == 500.0
-    assert protocol["geographic_conditioning"]["source_in_pool"] == "target coverage >= 0.25"
+    assert protocol["geographic_conditioning"]["source_in_pool"] == "target coverage >= 0.50"
     assert protocol["geographic_conditioning"]["minimum_source_species_per_target"] == 5
+    assert "N_train/N_selected" in protocol["geographic_conditioning"]["mass_preservation"]
     assert protocol["primary_estimand"]["name"] == "same_order_increment_beyond_geography"
     assert protocol["primary_estimand"]["group_label"] == "exact non-empty phylogatR order"
     assert protocol["secondary_estimand"]["name"] == "geographic_conditioning_increment_support_diagnostic"
@@ -69,9 +70,10 @@ def test_conditional_order_qualification_is_frozen_before_outcomes() -> None:
 
     estimator = rule["frozen_estimator"]
     assert estimator["support_radius_km"] == 500.0
-    assert estimator["minimum_target_coverage"] == 0.25
+    assert estimator["minimum_target_coverage"] == 0.50
     assert estimator["minimum_source_species"] == 5
-    assert estimator["eligible_same_order_eval_species"] == 79
+    assert "N_train/N_selected" in estimator["source_mass_normalization"]
+    assert estimator["eligible_same_order_eval_species"] == 72
     assert estimator["bootstrap_resamples"] == 1999
 
     private = rule["synthetic_worlds"]["private_null_cells"]
