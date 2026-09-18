@@ -6,6 +6,7 @@ from typing import Mapping
 import numpy as np
 
 from .batch import BatchTransferResult
+from .cached_chunked_transfer import CachedChunkedTransferGeometry, score_cached_chunked_batch
 from .chunked_transfer import ChunkedTransferGeometry, score_chunked_batch
 from .core import spearman_rho
 from .inference import MeanBootstrapResult, centered_species_bootstrap_mean_test
@@ -25,6 +26,19 @@ class TargetSourcePoolDesign:
     minimum_target_coverage: float
     minimum_source_species: int
     require_same_group: bool
+
+
+@dataclass(frozen=True)
+class CachedTargetConditionedTransferGeometry:
+    """Response-blind cache for target-specific source-pool denominators."""
+
+    base: ChunkedTransferGeometry
+    pools: TargetSourcePoolDesign
+    active_indices: Mapping[str, np.ndarray]
+    eval_points: Mapping[str, np.ndarray]
+    eval_denominator: Mapping[str, np.ndarray]
+    edge_chunk_size: int
+    train_chunk_size: int
 
 
 @dataclass(frozen=True)
@@ -196,6 +210,216 @@ def _source_edge_indices(
     ]
     return np.concatenate(pieces) if pieces else np.empty(0, dtype=np.int64)
 
+
+
+def prepare_cached_target_conditioned_transfer(
+    prepared: ChunkedTransferGeometry,
+    pools: TargetSourcePoolDesign,
+    *,
+    edge_chunk_size: int = 32,
+    train_chunk_size: int = 4096,
+) -> CachedTargetConditionedTransferGeometry:
+    """Cache response-independent geometry for target-specific source pools."""
+    if tuple(pools.train_species) != tuple(prepared.train_species):
+        raise ValueError("source-pool training species drift")
+    if tuple(pools.eval_species) != tuple(prepared.eval_species):
+        raise ValueError("source-pool evaluation species drift")
+    if edge_chunk_size < 1 or train_chunk_size < 1:
+        raise ValueError("chunk sizes must be positive")
+    if len(pools.eligible_eval_species) < 6:
+        raise ValueError("fewer than six response-blind supported evaluation species")
+
+    t = (np.arange(prepared.segment_points, dtype=float) + 0.5) / prepared.segment_points
+    h2 = prepared.bandwidth * prepared.bandwidth
+    tiny = np.finfo(float).tiny
+    active_map: dict[str, np.ndarray] = {}
+    points_map: dict[str, np.ndarray] = {}
+    denominator_map: dict[str, np.ndarray] = {}
+
+    for species in pools.eligible_eval_species:
+        active = _source_edge_indices(prepared, pools.source_pool[species])
+        if len(active) == 0:
+            raise RuntimeError("eligible target has no active source edges")
+        positions = prepared.train_positions[active]
+        weights = prepared.train_weights[active]
+        start = prepared.eval_start[species]
+        end = prepared.eval_end[species]
+        points = start[:, None, :] + t[None, :, None] * (end - start)[:, None, :]
+        denominator = np.empty((len(start), prepared.segment_points), dtype=float)
+
+        for e0 in range(0, len(start), int(edge_chunk_size)):
+            e1 = min(e0 + int(edge_chunk_size), len(start))
+            flat = points[e0:e1].reshape(-1, start.shape[1])
+            opportunity = np.zeros(len(flat), dtype=float)
+            for p0 in range(0, len(active), int(train_chunk_size)):
+                p1 = min(p0 + int(train_chunk_size), len(active))
+                delta = flat[:, None, :] - positions[p0:p1][None, :, :]
+                distance2 = np.sum(delta * delta, axis=2)
+                kernel = np.exp(-0.5 * distance2 / h2) * weights[p0:p1][None, :]
+                opportunity += kernel.sum(axis=1)
+            denominator[e0:e1, :] = np.maximum(
+                opportunity.reshape(e1 - e0, prepared.segment_points)
+                + prepared.prior_strength,
+                tiny,
+            )
+
+        active_map[species] = active
+        points_map[species] = points
+        denominator_map[species] = denominator
+
+    return CachedTargetConditionedTransferGeometry(
+        base=prepared,
+        pools=pools,
+        active_indices=active_map,
+        eval_points=points_map,
+        eval_denominator=denominator_map,
+        edge_chunk_size=int(edge_chunk_size),
+        train_chunk_size=int(train_chunk_size),
+    )
+
+
+def score_cached_target_conditioned_batch(
+    cached: CachedTargetConditionedTransferGeometry,
+    train_turnover: Mapping[str, np.ndarray],
+    eval_turnover: Mapping[str, np.ndarray],
+) -> BatchTransferResult:
+    """Score source-pool fields while reusing response-blind denominators."""
+    prepared = cached.base
+    pools = cached.pools
+    train, evaluation, width = _validate_batch_values(
+        prepared, train_turnover, eval_turnover
+    )
+    packed = np.empty((len(prepared.train_positions), width), dtype=float)
+    for name in prepared.train_species:
+        packed[prepared.train_slices[name], :] = train[name]
+
+    h2 = prepared.bandwidth * prepared.bandwidth
+    score_map: dict[str, np.ndarray] = {}
+    sums = np.zeros(width, dtype=float)
+    counts = np.zeros(width, dtype=np.int64)
+
+    for species in pools.eligible_eval_species:
+        active = cached.active_indices[species]
+        positions = prepared.train_positions[active]
+        weights = prepared.train_weights[active]
+        values = packed[active, :]
+        start = prepared.eval_start[species]
+        target = evaluation[species]
+        points = cached.eval_points[species]
+        denominator = cached.eval_denominator[species]
+
+        prior_edge = (
+            prepared.prior_strength * prepared.prior_mean / denominator
+        ).mean(axis=1)
+        predicted = np.repeat(prior_edge[:, None], width, axis=1)
+
+        for p0 in range(0, len(active), cached.train_chunk_size):
+            p1 = min(p0 + cached.train_chunk_size, len(active))
+            chunk_positions = positions[p0:p1]
+            chunk_weights = weights[p0:p1]
+            chunk_values = values[p0:p1, :]
+            for e0 in range(0, len(start), cached.edge_chunk_size):
+                e1 = min(e0 + cached.edge_chunk_size, len(start))
+                flat = points[e0:e1].reshape(-1, start.shape[1])
+                delta = flat[:, None, :] - chunk_positions[None, :, :]
+                distance2 = np.sum(delta * delta, axis=2)
+                kernel = np.exp(-0.5 * distance2 / h2) * chunk_weights[None, :]
+                normalized = kernel / denominator[e0:e1, :].reshape(-1, 1)
+                projection = normalized.reshape(
+                    e1 - e0, prepared.segment_points, p1 - p0
+                ).mean(axis=1)
+                predicted[e0:e1, :] += projection @ chunk_values
+
+        scores = np.asarray(
+            [spearman_rho(predicted[:, i], target[:, i]) for i in range(width)],
+            dtype=float,
+        )
+        score_map[species] = scores
+        finite = np.isfinite(scores)
+        sums[finite] += scores[finite]
+        counts[finite] += 1
+
+    if np.any(counts == 0):
+        raise ValueError("one or more worlds had no finite conditional species scores")
+    return BatchTransferResult(
+        statistics=sums / counts,
+        species_scores=score_map,
+        n_eval_species=counts,
+    )
+
+
+def score_cached_conditioning_increment_batch(
+    unconditional: CachedChunkedTransferGeometry,
+    conditioned: CachedTargetConditionedTransferGeometry,
+    train_turnover: Mapping[str, np.ndarray],
+    eval_turnover: Mapping[str, np.ndarray],
+) -> ConditionalIncrementBatch:
+    """Paired conditional-minus-unconditional score using frozen caches."""
+    baseline = score_cached_chunked_batch(
+        unconditional, train_turnover, eval_turnover
+    )
+    conditional = score_cached_target_conditioned_batch(
+        conditioned, train_turnover, eval_turnover
+    )
+    eligible = tuple(conditioned.pools.eligible_eval_species)
+    increments = {
+        name: np.asarray(conditional.species_scores[name], dtype=float)
+        - np.asarray(baseline.species_scores[name], dtype=float)
+        for name in eligible
+    }
+    matrix = np.vstack([increments[name] for name in eligible])
+    return ConditionalIncrementBatch(
+        statistics=np.mean(matrix, axis=0),
+        species_increments=increments,
+        baseline_species_scores={
+            name: np.asarray(baseline.species_scores[name], dtype=float).copy()
+            for name in eligible
+        },
+        conditional_species_scores={
+            name: np.asarray(conditional.species_scores[name], dtype=float).copy()
+            for name in eligible
+        },
+        eligible_eval_species=eligible,
+    )
+
+
+def score_cached_pool_difference_batch(
+    reference: CachedTargetConditionedTransferGeometry,
+    conditioned: CachedTargetConditionedTransferGeometry,
+    train_turnover: Mapping[str, np.ndarray],
+    eval_turnover: Mapping[str, np.ndarray],
+) -> ConditionalIncrementBatch:
+    """Paired difference between two cached response-blind pool rules."""
+    if reference.base is not conditioned.base and reference.base != conditioned.base:
+        raise ValueError("cached source pools do not share the same base geometry")
+    eligible = tuple(conditioned.pools.eligible_eval_species)
+    if not set(eligible) <= set(reference.pools.eligible_eval_species):
+        raise ValueError("reference pool does not support all conditioned targets")
+    reference_score = score_cached_target_conditioned_batch(
+        reference, train_turnover, eval_turnover
+    )
+    conditioned_score = score_cached_target_conditioned_batch(
+        conditioned, train_turnover, eval_turnover
+    )
+    increments = {
+        name: np.asarray(conditioned_score.species_scores[name], dtype=float)
+        - np.asarray(reference_score.species_scores[name], dtype=float)
+        for name in eligible
+    }
+    matrix = np.vstack([increments[name] for name in eligible])
+    return ConditionalIncrementBatch(
+        statistics=np.mean(matrix, axis=0),
+        species_increments=increments,
+        baseline_species_scores={
+            name: np.asarray(reference_score.species_scores[name], dtype=float).copy()
+            for name in eligible
+        },
+        conditional_species_scores={
+            name: np.asarray(conditioned_score.species_scores[name], dtype=float).copy()
+            for name in eligible
+        },
+        eligible_eval_species=eligible,
+    )
 
 def score_target_conditioned_batch(
     prepared: ChunkedTransferGeometry,
@@ -437,11 +661,16 @@ def infer_conditioning_increment(
 
 
 __all__ = [
+    "CachedTargetConditionedTransferGeometry",
     "ConditionalIncrementBatch",
     "ConditionalIncrementInference",
     "TargetSourcePoolDesign",
     "infer_conditioning_increment",
+    "prepare_cached_target_conditioned_transfer",
     "prepare_target_source_pools",
+    "score_cached_conditioning_increment_batch",
+    "score_cached_pool_difference_batch",
+    "score_cached_target_conditioned_batch",
     "score_conditioning_increment_batch",
     "score_pool_difference_batch",
     "score_target_conditioned_batch",
