@@ -190,3 +190,47 @@ def test_order_like_pool_difference_is_paired_on_supported_targets() -> None:
             scored.conditional_species_scores[name]
             - scored.baseline_species_scores[name],
         )
+
+
+def test_cached_conditioned_scoring_matches_uncached_exactly() -> None:
+    from ttf.cached_chunked_transfer import prepare_cached_chunked_transfer
+    from ttf.conditional_transfer import (
+        prepare_cached_target_conditioned_transfer,
+        score_cached_conditioning_increment_batch,
+        score_cached_target_conditioned_batch,
+    )
+
+    train, evaluation, prepared = _fixture()
+    pools = prepare_target_source_pools(
+        prepared,
+        {x.species: x.midpoint for x in train},
+        {x.species: x.midpoint for x in evaluation},
+        support_radius=5.0,
+        minimum_target_coverage=0.25,
+        minimum_source_species=2,
+    )
+    train_y = {
+        x.species: np.column_stack([x.turnover, x.turnover[::-1]])
+        for x in train
+    }
+    eval_y = {
+        x.species: np.column_stack([x.turnover, x.turnover[::-1]])
+        for x in evaluation
+    }
+    uncached = score_target_conditioned_batch(prepared, pools, train_y, eval_y)
+    cached_cond = prepare_cached_target_conditioned_transfer(prepared, pools)
+    cached = score_cached_target_conditioned_batch(cached_cond, train_y, eval_y)
+    assert np.allclose(cached.statistics, uncached.statistics, atol=1e-12, rtol=0)
+    for name in pools.eligible_eval_species:
+        assert np.allclose(
+            cached.species_scores[name],
+            uncached.species_scores[name],
+            atol=1e-12,
+            rtol=0,
+        )
+
+    baseline_cache = prepare_cached_chunked_transfer(prepared)
+    increment = score_cached_conditioning_increment_batch(
+        baseline_cache, cached_cond, train_y, eval_y
+    )
+    assert increment.statistics.shape == (2,)
