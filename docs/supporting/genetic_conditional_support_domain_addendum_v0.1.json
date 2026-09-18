@@ -1,0 +1,61 @@
+{
+  "schema": "ttf_genetic_conditional_support_domain_addendum_v0.1",
+  "status": "FROZEN_FROM_RESPONSE_BLIND_GEOMETRY_AND_TAXONOMY_BEFORE_ANY_NEW_PANEL_NUCLEOTIDE_IDENTITY",
+  "frozen_on": "2026-09-19",
+  "parent_protocol": "docs/supporting/genetic_conditional_transfer_protocol_v0.1.json",
+  "parent_qualification_rule": "docs/supporting/genetic_conditional_order_qualification_rule_v0.1.json",
+  "evidence_source": "benchmarks/frozen/genetic_conditional_two_panel_response_blind_census_v0.1.json",
+  "estimator_unchanged": true,
+  "inference_unchanged": true,
+  "primary_decision_unchanged": true,
+  "support_rule": {
+    "radius_km": 500,
+    "target_edge_coverage_minimum": 0.5,
+    "minimum_same_order_source_species": 5
+  },
+  "response_blind_supported_target_domain": {
+    "development": {
+      "supported_eval_species": 72,
+      "class_counts": {
+        "Insecta": 72
+      },
+      "order_counts": {
+        "Lepidoptera": 47,
+        "Diptera": 10,
+        "Coleoptera": 8,
+        "Hymenoptera": 5,
+        "Hemiptera": 2
+      }
+    },
+    "confirmatory_pre_mask": {
+      "supported_eval_species": 78,
+      "class_counts": {
+        "Insecta": 78
+      },
+      "order_counts": {
+        "Lepidoptera": 46,
+        "Diptera": 12,
+        "Coleoptera": 10,
+        "Hymenoptera": 10
+      }
+    }
+  },
+  "claim_boundary": "The frozen primary conditional estimand is supported only for insect evaluation species in the response-blind pre-mask panels. Any later positive result may support order-conditioned transfer among geographically co-supported insects in this sampled phylogatR domain; it must not be generalized to Animalia broadly. The exact confirmatory survivor domain must be re-reported after character-mask admissibility without changing thresholds.",
+  "descriptive_robustness": {
+    "required": true,
+    "primary_decision_use": false,
+    "inference": false,
+    "report": [
+      "number of primary-eligible evaluation species by taxonomic order",
+      "species-equal mean paired increment within each represented order",
+      "unweighted mean of the represented-order means"
+    ],
+    "interpretation": "These summaries diagnose whether the species-equal primary mean is concentrated in the numerically dominant order. They have no p-value and cannot rescue, overturn, or redefine the frozen primary decision."
+  },
+  "outcome_firewall": {
+    "development_sequence_identity_opened": false,
+    "confirmatory_sequence_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "conditional_empirical_result_opened": false
+  }
+}
