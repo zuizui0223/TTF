@@ -1,0 +1,102 @@
+{
+  "schema": "ttf_genetic_conditional_transfer_protocol_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_BEFORE_ANY_CONDITIONAL_PANEL_NUCLEOTIDE_IDENTITY_OPENING",
+  "date": "2026-09-18",
+  "parent_empirical_result": {
+    "repository_main": "937544357475ab177ee89f8878dfc2acc97dff8d",
+    "receipt": "benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json",
+    "result_sha256": "f5d19fa50c7c18cbf2a110c0afb9c70dcd543c44b77521c015938013843e72fb",
+    "status": "EMPIRICAL_PHASE4_COMPLETE",
+    "role": "immutable unconditional baseline only",
+    "rerun_or_retuning_allowed": false
+  },
+  "scientific_question": "Among species that actually share geographic space, does lineage similarity improve out-of-species prediction of post-IBD mitochondrial genetic differentiation?",
+  "source": {
+    "archive_name": "phylogatr_results.zip",
+    "archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "same_archive_as_parent": true,
+    "interpretation": "species-disjoint prospective replication panel within the same source database; not an independent database replication"
+  },
+  "response_blind_panel": {
+    "exclude_parent_phase1_species_count": 250,
+    "exclude_parent_phase1_species": true,
+    "exclude_decker_221_species": true,
+    "exclude_Aves": true,
+    "exclude_Chiroptera": true,
+    "marker_family": "COI/COX1 under the already frozen alias rule",
+    "minimum_unique_localities": 12,
+    "neighbor_fraction": 0.15,
+    "minimum_endpoint_disjoint_ibd_training_edges": 5,
+    "selection_rank": "SHA256('conditional-ttf-v0.1|<exact-source-sha256>|<canonical-species>')",
+    "selection_rule": "after geometry-only one-panel selection and exclusion of all parent Phase-1 species, scan the rank in order and retain the first 250 species passing the frozen endpoint-disjoint geometry requirement; no genetic outcome may enter replacement",
+    "split_rank": "SHA256('conditional-ttf-v0.1|split|<exact-source-sha256>|<canonical-species>')",
+    "split": "lower 125 hash ranks training; upper 125 evaluation",
+    "no_resplitting_after_character_or_genetic_opening": true
+  },
+  "co_distribution": {
+    "directed_metric": "for source s and target t, fraction of target edge midpoints within 500 km of at least one source edge midpoint",
+    "radius_km": 500,
+    "minimum_coverage_fraction": 0.25,
+    "rationale": "requires material shared geographic support at the same spatial scale as the frozen TTF field; threshold selected using response-blind geometry only",
+    "minimum_source_species_per_target": 3
+  },
+  "hypotheses": {
+    "primary": {
+      "name": "order_given_geography",
+      "target_set": "evaluation species with >=3 geographically co-distributed training species from the same non-empty taxonomic order",
+      "baseline_field": "all geographically co-distributed training species, each with the inherited species-equal TTF weighting",
+      "conditioned_field": "same-order subset of the geographically co-distributed training species, each with the inherited species-equal TTF weighting",
+      "estimand": "Delta_order_given_geo = species-equal mean over fixed supported targets of [C_same_order_geo - C_all_geo]",
+      "direction": "positive",
+      "interpretation_if_qualified_positive": "lineage similarity increases spatial transferability among species that share geographic support; taxonomic order is a lineage-similarity proxy, not a measurement of dispersal ability or shared demographic history"
+    },
+    "secondary_geometry_diagnostic": {
+      "name": "geography_restriction",
+      "target_set": "evaluation species with >=3 geographically co-distributed training species",
+      "baseline_field": "all training species",
+      "conditioned_field": "geographically co-distributed training species",
+      "estimand": "Delta_geo = species-equal mean over fixed supported targets of [C_geo - C_all]",
+      "inferential_status": "development diagnostic until a separate geography-conditioned positive-control family is prospectively frozen and qualified"
+    },
+    "future_dispersal_extension": {
+      "status": "CLOSED_PENDING_RESPONSE_BLIND_TRAIT_SOURCE",
+      "rule": "do not substitute taxonomic order for movement ability; a dispersal or life-history similarity test requires an independently sourced trait table, a predeclared missing-data rule, and adequate coverage frozen before conditional nucleotide identity is opened"
+    }
+  },
+  "support_decisions": {
+    "same_class": "not a confirmatory condition because the panel is overwhelmingly Insecta and class is too coarse",
+    "same_family": "not a confirmatory condition because response-blind support is insufficient",
+    "family_min3_supported_targets": 11
+  },
+  "phase3_qualification": {
+    "required_before_nucleotide_identity": true,
+    "primary_inference_candidate": "one-sided centered held-out-species bootstrap of per-target paired Delta_order_given_geo",
+    "private_null": "one independent spatial boundary field per species",
+    "positive_control": "one shared spatial boundary field per frozen taxonomic order; different orders receive independent fields",
+    "residual_amplitude_positive_control": 2,
+    "noise_sd": 0.1,
+    "ibd_strength": 1,
+    "type1_wilson95_upper_ceiling": 0.1,
+    "power_wilson95_lower_floor": 0.8,
+    "alpha": 0.05,
+    "failure": "NOT_EVALUABLE; do not open conditional-panel nucleotide identity"
+  },
+  "empirical_opening": {
+    "status": "NOT_AUTHORIZED",
+    "rule": "only after exact new-panel character-mask admissibility and exact-geometry conditional synthetic qualification PASS",
+    "one_shot": true
+  },
+  "forbidden": [
+    "using any parent-panel genetic score to choose the new species, geographic threshold, taxonomic level, source set, or split",
+    "testing family-level transfer after seeing its sparse support",
+    "calling taxonomic order a direct measurement of dispersal ability",
+    "opening nucleotide identity before the new panel passes its exact-geometry conditional qualification",
+    "searching post hoc across radius, coverage threshold, taxonomic rank, marker, subset, bandwidth, or alpha for a favorable conditional result",
+    "rewriting the completed parent one-shot result"
+  ],
+  "outcome_firewall": {
+    "conditional_panel_sequence_identity_opened": false,
+    "conditional_panel_pairwise_genetic_distances_opened": false,
+    "conditional_panel_ttf_outcome_opened": false
+  }
+}
