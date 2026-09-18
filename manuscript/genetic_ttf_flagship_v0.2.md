@@ -193,6 +193,10 @@ The exact 211-species Phase-2 survivor geometry passed the prospectively frozen 
 
 The separate within-species self-detectability qualification also passed. The null cell rejected in 32/500 worlds (0.064; Wilson upper 0.08895), while the private-A2 cell rejected in 500/500 worlds (Wilson lower 0.99238). This self test is an upper-tail statistic calibrated against its own structural-null distribution; its empirical numerical sign is therefore not interpreted against zero.
 
+![Exact-geometry qualification margins](figures/genetic_phase4_v0.1/figure1_qualification_margins.svg)
+
+*Figure 1. Exact-geometry qualification margins before the empirical opening. Circles show the frozen Wilson bounds and × symbols show the predeclared thresholds. Type-I bounds pass by remaining at or below 0.10; power bounds pass by remaining at or above 0.80. The figure only visualizes already-frozen qualification receipts.*
+
 ### Empirical transfer to unseen species
 
 The single authorized Phase-4 opening did not detect cross-species transfer of post-IBD spatial differentiation. The species-equal `place_beyond_ibd` statistic was `T = 0.0325655`; the frozen profiled-private p-value was `0.739261` (`A3 = 0.668332`, `A5 = 0.739261`). Under the predeclared decision rule this is not evidence for a transferable place component.
@@ -200,6 +204,10 @@ The single authorized Phase-4 opening did not detect cross-species transfer of p
 The independently qualified within-species self diagnostic was significant relative to its frozen null (`S = -0.226098`, upper-tail `p = 0.008991`). Because this statistic is calibrated against a null distribution that is itself shifted below zero by the endpoint-safe self-field construction, significance is interpreted relative to that reference distribution rather than as a positive raw Spearman correlation. Together with the non-significant cross-species test, this resolves the frozen Branch-B decision: `LINEAGE_CONDITIONED_SPATIAL_STRUCTURE_WITHIN_TESTED_DOMAIN`.
 
 The secondary pre-IBD total genetic-transfer score was `0.0155016`. It has no inferential qualification, p-value or significance label and cannot rescue the primary result. A receipt-only exporter independently checked the complete hash-linked result chain and retained all 108 evaluation species in the generated reporting bundle.
+
+![Held-out post-IBD transfer coefficients](figures/genetic_phase4_v0.1/figure2_post_ibd_species_scores.svg)
+
+*Figure 2. Held-out post-IBD transfer coefficients for all 108 evaluation species, ordered by coefficient only for display. The dashed horizontal line is the frozen species-equal aggregate `T = 0.0325655`, and the zero line is a visual reference. Individual points are descriptive species-level components of the aggregate; no species-level significance tests are performed, and the display ordering has no inferential role.*
 
 ---
 

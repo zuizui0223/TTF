@@ -1,0 +1,26 @@
+{
+  "evaluation_species_count": 108,
+  "input_sha256": {
+    "phase4_empirical_handoff.json": "ed67e767e2fc7c9ddec74fcc760f758bd87a710094be7753f4c56246b2b6ed17",
+    "phase4_pre_empirical_handoff.json": "467dfd5d916141296ebe1e66c63570666f758bcda69e6132b68887c763157d0b",
+    "species_scores.csv": "39928e60ceafbfbfbd66727b1ef97bced0217df99a603962f7f6b53f9a186705"
+  },
+  "new_inference_performed": false,
+  "output_sha256": {
+    "figure1_qualification_margins.svg": "2297cecdf37cd5586c06c6b7d0bcafcf7bedaa3c8ba2cb932dba9c15cfe4f182",
+    "figure2_post_ibd_species_scores.svg": "badd3175e8e78398060fdcee9c69d76446562a05baf00cba505326cb75fce4b1"
+  },
+  "post_result_retuning_performed": false,
+  "primary_species_equal_mean": 0.0325654847136271,
+  "qualification": {
+    "cross_species_power_wilson_lower": 0.9713869308622147,
+    "cross_species_type1_wilson_upper": 0.06807779276827323,
+    "power_floor": 0.8,
+    "self_power_wilson_lower": 0.9923756595384479,
+    "self_type1_wilson_upper": 0.08895240883768415,
+    "type1_ceiling": 0.1
+  },
+  "schema": "ttf_genetic_phase4_figure_manifest_v0.1",
+  "status": "DESCRIPTIVE_VISUALIZATION_ONLY",
+  "terminal_empirical_result_sha256": "f5d19fa50c7c18cbf2a110c0afb9c70dcd543c44b77521c015938013843e72fb"
+}

@@ -80,6 +80,7 @@ jobs:
           tests/test_genetic_empirical_score.py
           tests/test_genetic_manuscript_export.py
           tests/test_genetic_phase4_supplementary.py
+          tests/test_genetic_phase4_figures.py
           tests/test_phylogatr_confirmatory.py
           tests/test_phylogatr_phase1_intake.py
           tests/test_phylogatr_projected_phase1_intake.py
