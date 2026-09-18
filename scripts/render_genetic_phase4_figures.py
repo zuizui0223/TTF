@@ -121,7 +121,7 @@ def main() -> int:
         "post_result_retuning_performed": False,
         "input_sha256": {
             "species_scores.csv": _sha256(SCORES),
-            "phase4_empirical_handoff.json": _sha256(HANDOFF),
+            "phase4_empirical_handoff.json": _sha256(EMPIRICAL_HANDOFF),\n            "phase4_pre_empirical_handoff.json": _sha256(PRE_EMPIRICAL_HANDOFF),
         },
         "output_sha256": {
             qualification_figure.name: _sha256(qualification_figure),
