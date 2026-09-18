@@ -37,6 +37,7 @@ class CachedTargetConditionedTransferGeometry:
     active_indices: Mapping[str, np.ndarray]
     eval_points: Mapping[str, np.ndarray]
     eval_denominator: Mapping[str, np.ndarray]
+    pool_weight_scale: Mapping[str, float]
     edge_chunk_size: int
     train_chunk_size: int
 
@@ -91,7 +92,7 @@ def prepare_target_source_pools(
     eval_midpoint: Mapping[str, np.ndarray],
     *,
     support_radius: float = 500.0,
-    minimum_target_coverage: float = 0.25,
+    minimum_target_coverage: float = 0.50,
     minimum_source_species: int = 5,
     train_group: Mapping[str, str] | None = None,
     eval_group: Mapping[str, str] | None = None,
@@ -235,13 +236,22 @@ def prepare_cached_target_conditioned_transfer(
     active_map: dict[str, np.ndarray] = {}
     points_map: dict[str, np.ndarray] = {}
     denominator_map: dict[str, np.ndarray] = {}
+    scale_map: dict[str, float] = {}
 
     for species in pools.eligible_eval_species:
         active = _source_edge_indices(prepared, pools.source_pool[species])
         if len(active) == 0:
             raise RuntimeError("eligible target has no active source edges")
         positions = prepared.train_positions[active]
-        weights = prepared.train_weights[active]
+        source_count = len(pools.source_pool[species])
+        if source_count < 1:
+            raise RuntimeError("eligible target has no selected source species")
+        # Preserve the unconditional field's total training-species kernel mass.
+        # Core TTF gives each species total mass one; after source restriction we
+        # rescale selected species so only composition, not total opportunity/prior
+        # strength, changes in the paired comparison.
+        scale = float(len(prepared.train_species)) / float(source_count)
+        weights = prepared.train_weights[active] * scale
         start = prepared.eval_start[species]
         end = prepared.eval_end[species]
         points = start[:, None, :] + t[None, :, None] * (end - start)[:, None, :]
@@ -266,6 +276,7 @@ def prepare_cached_target_conditioned_transfer(
         active_map[species] = active
         points_map[species] = points
         denominator_map[species] = denominator
+        scale_map[species] = scale
 
     return CachedTargetConditionedTransferGeometry(
         base=prepared,
@@ -273,6 +284,7 @@ def prepare_cached_target_conditioned_transfer(
         active_indices=active_map,
         eval_points=points_map,
         eval_denominator=denominator_map,
+        pool_weight_scale=scale_map,
         edge_chunk_size=int(edge_chunk_size),
         train_chunk_size=int(train_chunk_size),
     )
@@ -301,7 +313,7 @@ def score_cached_target_conditioned_batch(
     for species in pools.eligible_eval_species:
         active = cached.active_indices[species]
         positions = prepared.train_positions[active]
-        weights = prepared.train_weights[active]
+        weights = prepared.train_weights[active] * float(cached.pool_weight_scale[species])
         values = packed[active, :]
         start = prepared.eval_start[species]
         target = evaluation[species]
@@ -457,7 +469,11 @@ def score_target_conditioned_batch(
         if len(active) == 0:
             raise RuntimeError("eligible target has no active source edges")
         positions = prepared.train_positions[active]
-        weights = prepared.train_weights[active]
+        source_count = len(pools.source_pool[species])
+        if source_count < 1:
+            raise RuntimeError("eligible target has no selected source species")
+        scale = float(len(prepared.train_species)) / float(source_count)
+        weights = prepared.train_weights[active] * scale
         values = packed[active, :]
         start = prepared.eval_start[species]
         end = prepared.eval_end[species]
