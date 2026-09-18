@@ -175,39 +175,50 @@ def main() -> int:
     execution = prepare_conditional_order_contrast_execution(design)
 
     worlds_cfg = rule["synthetic_worlds"]
-    worlds = make_conditional_order_contrast_worlds(
-        design,
-        cell=str(args.cell),
-        residual_amplitude=float(cell["residual_amplitude"]),
-        absolute_start=int(args.start),
-        count=int(args.count),
-        group_mode=mode,
-        ibd_strength=float(worlds_cfg["ibd_strength"]),
-        noise_sd=float(worlds_cfg["noise_sd"]),
-        transition_width=float(worlds_cfg["transition_width"]),
-        noise_dimensions=int(worlds_cfg["noise_dimensions"]),
-        master_seed=int(worlds_cfg["master_seed"]),
-    )
-    scored = score_conditional_order_contrast_world_batch(
-        design,
-        execution,
-        worlds,
-        cell=str(args.cell),
-        absolute_start=int(args.start),
-        bootstrap_resamples=int(estimator["bootstrap_resamples"]),
-        master_seed=int(worlds_cfg["master_seed"]),
-    )
+    execution_cfg = rule["execution"]
+    world_batch_size = int(execution_cfg["world_batch_size"])
+    if world_batch_size < 1:
+        raise RuntimeError("frozen world batch size must be positive")
 
     rows = []
-    for offset in range(args.count):
-        rows.append(
-            {
-                "absolute_replicate_index": int(args.start + offset),
-                "statistic": float(scored.statistics[offset]),
-                "p_value": float(scored.p_values[offset]),
-                "reject": bool(scored.p_values[offset] <= float(estimator["alpha"])),
-            }
+    requested_stop = int(args.start) + int(args.count)
+    for batch_start in range(int(args.start), requested_stop, world_batch_size):
+        batch_count = min(world_batch_size, requested_stop - batch_start)
+        worlds = make_conditional_order_contrast_worlds(
+            design,
+            cell=str(args.cell),
+            residual_amplitude=float(cell["residual_amplitude"]),
+            absolute_start=int(batch_start),
+            count=int(batch_count),
+            group_mode=mode,
+            ibd_strength=float(worlds_cfg["ibd_strength"]),
+            noise_sd=float(worlds_cfg["noise_sd"]),
+            transition_width=float(worlds_cfg["transition_width"]),
+            noise_dimensions=int(worlds_cfg["noise_dimensions"]),
+            master_seed=int(worlds_cfg["master_seed"]),
         )
+        scored = score_conditional_order_contrast_world_batch(
+            design,
+            execution,
+            worlds,
+            cell=str(args.cell),
+            absolute_start=int(batch_start),
+            bootstrap_resamples=int(estimator["bootstrap_resamples"]),
+            master_seed=int(worlds_cfg["master_seed"]),
+        )
+        for offset in range(batch_count):
+            rows.append(
+                {
+                    "absolute_replicate_index": int(batch_start + offset),
+                    "statistic": float(scored.statistics[offset]),
+                    "p_value": float(scored.p_values[offset]),
+                    "reject": bool(scored.p_values[offset] <= float(estimator["alpha"])),
+                }
+            )
+    if [row["absolute_replicate_index"] for row in rows] != list(
+        range(int(args.start), requested_stop)
+    ):
+        raise RuntimeError("internal world batching changed absolute replicate order")
     payload = {
         "schema": "ttf_genetic_conditional_order_contrast_qualification_shard_v0.2",
         "status": "SYNTHETIC_ORDER_CONTRAST_QUALIFICATION_SHARD_COMPLETE",
@@ -216,7 +227,7 @@ def main() -> int:
         "residual_amplitude": float(cell["residual_amplitude"]),
         "start": int(args.start),
         "count": int(args.count),
-        "n_eval_species": int(scored.n_eval_species),
+        "n_eval_species": int(len(design.eligible_eval_species)),
         "rule_sha256": sha256_path(args.rule),
         "geometry_manifest_sha256": sha256_path(args.geometry_manifest),
         "geometry_csv_sha256": sha256_path(args.geometry_csv),
@@ -236,8 +247,9 @@ def main() -> int:
                 "start": args.start,
                 "count": args.count,
                 "rejections": sum(row["reject"] for row in rows),
-                "mean_statistic": float(np.mean(scored.statistics)),
-                "n_eval_species": scored.n_eval_species,
+                "mean_statistic": float(np.mean([row["statistic"] for row in rows])),
+                "n_eval_species": len(design.eligible_eval_species),
+                "world_batch_size": world_batch_size,
             },
             sort_keys=True,
         )
