@@ -118,3 +118,5 @@ def test_v02_protocol_freezes_disjoint_formal_seed_namespace_and_closed_firewall
     assert rule["synthetic_worlds"]["bootstrap_seed_tag"] == BOOTSTRAP_SEED_TAG
     assert all(value is False for value in rule["outcome_firewall"].values())
     assert rule["development_pilot_disclosure"]["status"] == "METHOD_DEVELOPMENT_ONLY_NOT_FORMAL_QUALIFICATION"
+    assert rule["execution"]["world_batch_size"] == 20
+    assert "absolute replicate index" in rule["execution"]["sharding_semantics"]
