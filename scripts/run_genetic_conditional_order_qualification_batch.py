@@ -128,11 +128,15 @@ def main() -> int:
     if any(value is not False for value in rule["outcome_firewall"].values()):
         raise RuntimeError("qualification rule outcome firewall is not closed")
     manifest = load_json(args.geometry_manifest, GEOMETRY_SCHEMA)
+    panel = rule["development_panel"]
+    if sha256_path(args.geometry_csv) != panel["geometry_csv_sha256"]:
+        raise RuntimeError("frozen development geometry CSV hash mismatch")
+    if sha256_path(args.geometry_manifest) != panel["geometry_manifest_sha256"]:
+        raise RuntimeError("frozen development geometry manifest hash mismatch")
     geometries, taxonomy_order, train, evaluation = load_geometry(
         args.geometry_csv, manifest
     )
 
-    panel = rule["development_panel"]
     if len(geometries) != int(panel["species"]):
         raise RuntimeError("development species count drift")
     if len(train) != int(panel["train_species"]) or len(evaluation) != int(panel["eval_species"]):
