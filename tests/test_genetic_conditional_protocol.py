@@ -32,7 +32,7 @@ def test_conditional_successor_is_two_panel_and_response_blind() -> None:
     assert protocol["geographic_conditioning"]["support_radius_km"] == 500.0
     assert protocol["geographic_conditioning"]["source_in_pool"] == "target coverage >= 0.25"
     assert protocol["geographic_conditioning"]["minimum_source_species_per_target"] == 5
-    assert protocol["secondary_estimand"]["group_label"] == "exact non-empty phylogatR order"
+    assert protocol["primary_estimand"]["name"] == "same_order_increment_beyond_geography"\n    assert protocol["primary_estimand"]["group_label"] == "exact non-empty phylogatR order"\n    assert protocol["secondary_estimand"]["name"] == "geographic_conditioning_increment_support_diagnostic"\n    assert "already spatially local" in protocol["secondary_estimand"]["role"]
     assert protocol["excluded_estimands"]["same_family"].startswith("not pursued")
     assert protocol["parent_empirical_result"]["result_sha256"] == "f5d19fa50c7c18cbf2a110c0afb9c70dcd543c44b77521c015938013843e72fb"
     assert all(value is False for value in protocol["outcome_firewall"].values())
