@@ -24,6 +24,14 @@ def test_conditional_successor_is_two_panel_and_response_blind() -> None:
     assert census["exclusions"]["old_new_overlap"] == 0
     assert all(value is False for value in census["outcome_firewall"].values())
 
+    geometry = census["response_blind_geometry_artifacts"]
+    assert geometry["development"]["geometry_csv_sha256"] == "d4affc28a2f9da89d0566b0f52123f4711009c99e985baff9f44767da996a9cd"
+    assert geometry["development"]["manifest_sha256"] == "f78bc6fa735010270db287764be0f818ef09ce416b00e0cb0c1aa1f00f7513ac"
+    assert geometry["confirmatory"]["geometry_csv_sha256"] == "fc93f1aaac2abc369f3e94c99b73e1d139f635638e197d1f71f977a49a44dbba"
+    assert geometry["confirmatory"]["manifest_sha256"] == "debe44fabd10c53b2cf5fad13ad0c182e57429edd193619fa7a5c34e4dbdb880"
+    assert geometry["development"]["exact_geometry_reconstructed_without_nucleotide_identity"] is True
+    assert geometry["confirmatory"]["exact_geometry_reconstructed_without_nucleotide_identity"] is True
+
     assert census["development_panel"]["support_500km"]["coverage_ge_0_25"]["target_species_with_ge_5_sources"] == 113
     assert census["confirmatory_panel"]["support_500km"]["coverage_ge_0_25"]["target_species_with_ge_5_sources"] == 108
     assert census["development_panel"]["support_500km"]["coverage_ge_0_25_same_order"]["target_species_with_ge_5_sources"] == 79
