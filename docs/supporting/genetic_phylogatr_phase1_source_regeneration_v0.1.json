@@ -1,0 +1,51 @@
+{
+  "schema": "ttf_genetic_phylogatr_phase1_source_regeneration_v0.1",
+  "status": "FROZEN_BEFORE_PHASE4_IDENTITY_OPENING",
+  "purpose": "Regenerate the exact response-blind Phase-1 manifest and selected_panels metadata from the same authenticated broader phylogatR archive after the original ephemeral Phase-1 files were lost. Regeneration must reproduce the frozen Phase-1 manifest byte-for-byte before any nucleotide identity, pairwise genetic distance, or empirical TTF statistic is opened.",
+  "raw_source": {
+    "archive_name_at_original_intake": "phylogatr_results.zip",
+    "archive_size_bytes": 274988692,
+    "raw_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+  },
+  "expected_phase1": {
+    "phase1_manifest_sha256": "daeedabbeb99fa304568f0f2b2e1c46e0dd6221fbac02b0491faf2435ef7b7b3",
+    "phase1_geometry_csv_sha256": "d6f0b1f360a77de279263145386e7956af0d43c9386048f319117522f933cb74",
+    "dataset_digest_sha256": "088274dafdcd1e82d7688db07f7734172887972f3e72bfac394df6b0bb3fab59",
+    "geometry_fingerprint_sha256": "23938478d839348c6d5ea08eafdf88da57feb0fb35a65f932c283a1df04c5d03",
+    "species_count": 250,
+    "train_count": 125,
+    "eval_count": 125
+  },
+  "expected_projection": {
+    "original_row_count": 93884,
+    "retained_animalia_row_count": 80495,
+    "removed_non_animalia_row_count": 13389,
+    "projected_genes_sha256": "3a09b31e466985e1120cef94f5805f5bb23ebc76b4f3b650f3e9188239415e0e",
+    "cite_sha256": "e257b2c12ce5e6fe33d40f7064ae4a64b0c9462ddd85f58b0ce0a672759e9eb6"
+  },
+  "required_method": {
+    "projected_phase1_entrypoint": "scripts/run_phylogatr_projected_phase1_intake.py",
+    "inner_phase1_entrypoint": "scripts/run_phylogatr_confirmatory_phase1_intake.py",
+    "phase1_freezer": "scripts/freeze_phylogatr_confirmatory_phase1.py",
+    "selection_rule": "rerun the unchanged deterministic response-blind Phase-1 code; do not reconstruct selected_panels from partial downstream summaries",
+    "acceptance_rule": "the regenerated phase1_manifest.json SHA-256 and phase1_geometry.csv SHA-256 must exactly equal the frozen hashes"
+  },
+  "authority": {
+    "can_change_species_selection": false,
+    "can_change_train_eval_split": false,
+    "can_change_phase2_survivors": false,
+    "can_change_gate_d": false,
+    "can_change_thresholds_or_estimands": false,
+    "can_open_sequence_identity": false,
+    "can_open_pairwise_genetic_distances": false,
+    "can_open_empirical_ttf": false,
+    "can_authorize_phase4_by_itself": false
+  },
+  "outcome_firewall": {
+    "confirmatory_sequence_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_ttf_statistic_opened": false,
+    "decker_empirical_genetic_outcomes_opened": false
+  },
+  "claim_boundary": "A PASS means only that the exact missing Phase-1 response-blind manifest and selected_panels metadata were deterministically regenerated from the exact original archive. It is not an empirical result and does not itself authorize nucleotide identity opening."
+}
