@@ -1,8 +1,10 @@
 # Genetic TTF development contract
 
-Status: **development only; genetic outcomes not authorized for interpretation**.
+Status: **historical response-blind development contract — preserved after empirical completion**.
 
-This document defines the response-blind path for testing whether the geography of within-species genetic differentiation transfers to unseen evolutionary lineages. It does not declare the genetic interface qualified.
+**Post-opening resolution (2026-09-18):** the independent fresh phylogatR route completed under this development lineage. The exact survivor geometry passed cross-species Gate-D and self-detectability qualification, and the single authorized Phase-4 opening resolved to `LINEAGE_CONDITIONED_SPATIAL_STRUCTURE_WITHIN_TESTED_DOMAIN` (`place_beyond_ibd T=0.0325655`, profiled-private `p=0.739261`; self `S=-0.226098`, upper-tail `p=0.00899101`). See `benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json` and `manuscript/genetic_ttf_flagship_v0.2.md`. The development-only rules below are retained as the audit trail and must not be read as the current empirical state.
+
+This document defines the response-blind development path for testing whether the geography of within-species genetic differentiation transfers to unseen evolutionary lineages.
 
 ## 1. Scientific target
 

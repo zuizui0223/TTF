@@ -1,0 +1,24 @@
+{
+  "decision": "LINEAGE_CONDITIONED_SPATIAL_STRUCTURE_WITHIN_TESTED_DOMAIN",
+  "evaluation_species_count": 108,
+  "geometry_fingerprint_sha256": "cca0714047523793c609c51c7a2377e120a9ca0d5e18f61816283bafa692fe40",
+  "input_interpretation_text_used": false,
+  "mode": "empirical_summary",
+  "output_sha256": {
+    "results.md": "1134d232954eea39010a517eecb40e3d518fe63c186d71b38d1d53cd65d4fb03",
+    "species_scores.csv": "39928e60ceafbfbfbd66727b1ef97bced0217df99a603962f7f6b53f9a186705"
+  },
+  "receipt_consistency_checked": true,
+  "schema": "ttf_genetic_manuscript_export_v0.1",
+  "sequence_identity_read": false,
+  "source_sha256": {
+    "authorization": "a66edba0a6378f2fa2e24eba73aa5d48f6a58905420e13b53be802f603c3a0e1",
+    "phase4_rule": "50cc4a3eeb331896b1117a894004d96a3f405b35c0590027c22ebde65f8950d6",
+    "qualification": "2dd0561d0fc663fc3c10dff529763bbe33f84c8323e09c8ff950e65b86f2e2aa",
+    "result": "f5d19fa50c7c18cbf2a110c0afb9c70dcd543c44b77521c015938013843e72fb",
+    "self_qualification": "d00ab81d3f97ef4f59a27e6f5421ef0b8644a41cd3debeafcebd57e8cb1074fb",
+    "self_rule": "e32f92abccc157276230a7698c0a662ceae70ac6273b8661f42bfbe314b6c774"
+  },
+  "statistical_analysis_rerun": false,
+  "training_species_count": 103
+}

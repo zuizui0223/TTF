@@ -253,7 +253,7 @@ A spatial pattern of within-species genetic differentiation can be detectable wi
 
 ## Data and code availability
 
-All method code, prospective protocols, failed qualification attempts, terminal receipts, and opening-state ledgers are versioned in the TTF repository. Failed designs are preserved rather than overwritten. The exact empirical Phase-4 handoff is frozen in `benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json`. Sequence identities and edge-level genetic-distance vectors are not serialized in the reporting artifacts. The source archive is handled according to its provenance and redistribution conditions.
+All method code, prospective protocols, failed qualification attempts, terminal receipts, and opening-state ledgers are versioned in the TTF repository. Failed designs are preserved rather than overwritten. The exact empirical Phase-4 handoff is frozen in `benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json`. The validated receipt-only reporting bundle is versioned under `manuscript/generated/genetic_ttf_phase4_v0.1/`; its `species_scores.csv` is Table S6 and contains all 108 frozen evaluation species, while `export_manifest.json` records the source and output SHA-256 values. Sequence identities and edge-level genetic-distance vectors are not serialized in the reporting artifacts. The source archive is handled according to its provenance and redistribution conditions.
 
 ---
 
