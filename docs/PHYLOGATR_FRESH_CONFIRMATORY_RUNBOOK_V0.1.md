@@ -93,18 +93,6 @@ The v0.1 opening-state file is intentionally the immutable Phase-4 authorization
 
 Do not inspect nucleotide identity until the authorization receipt status is exactly `AUTHORIZE_EXACT_FRESH_NUCLEOTIDE_IDENTITY_OPENING`.
 
-### Frozen recovery for the executed 2026-09-16 lineage
-
-The executed projected Phase-1 manifest was generated response-blindly and its exact SHA-256 was frozen into the Phase-3 authorization before Phase 3 ran, but the ephemeral manifest bytes are no longer retained. Do **not** reconstruct that file from partial summaries. For this one exact lineage, use the repository-frozen recovery record `docs/supporting/genetic_phylogatr_phase1_provenance_recovery_v0.1.json`.
-
-Replace only the `--phase1-manifest ...` argument above with:
-
-```bash
-  --use-frozen-phase1-provenance-recovery \
-```
-
-The recovery path is accepted only when the frozen Phase-1 manifest SHA-256, exact Phase-2 manifest SHA-256, exact Phase-3 authorization SHA-256, Phase-1 summary, source-integrity witness, and outcome firewalls all match. It cannot reconstruct the missing manifest, alter Gate-D, change thresholds/estimands, or authorize Phase 4 by itself.
-
 ## 7. One empirical test
 
 After valid authorization only, run `scripts/run_phylogatr_phase4_empirical_test.py` with the exact authorized files. Do not change species, marker, graph, split, bandwidth, reference family, or thresholds. The primary estimand is `place_beyond_ibd`; total genetic transfer is descriptive and cannot rescue the primary result.
@@ -116,6 +104,6 @@ After valid authorization only, run `scripts/run_phylogatr_phase4_empirical_test
 - cross-species non-significant without qualified self support: `NOT_EVALUABLE_FOR_LINEAGE_CONDITIONING`;
 - any failed geometry, mask, Type-I, power, source-integrity, or provenance gate: `NOT_EVALUABLE`, never a biological null.
 
-## Current executed lineage
+## Current blocker
 
-The authenticated broader portal archive has already been projected response-blindly to the frozen Animalia universe. Phase 1 and Phase 2 completed; formal fresh Phase 3 passed; fresh self-detectability completed; and the response-blind fragility curve completed. The remaining pre-identity step is the exact Phase-4 authorization above. No fresh nucleotide identity, pairwise genetic distance, or empirical TTF statistic may be opened before that authorization receipt exists.
+Until one untouched authenticated phylogatR portal archive is supplied, stop before Step 1. No further same-purpose source hunting, public-substitute search, threshold tuning, or empirical opening is authorized.
