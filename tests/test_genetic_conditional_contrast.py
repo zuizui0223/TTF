@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 import numpy as np
 
 from ttf.genetic_conditional_contrast import (
@@ -100,3 +103,18 @@ def test_order_contrast_world_batch_is_paired_same_minus_different() -> None:
             atol=0.0,
             rtol=0.0,
         )
+
+
+def test_v02_protocol_freezes_disjoint_formal_seed_namespace_and_closed_firewall() -> None:
+    rule = json.loads(
+        Path("docs/supporting/genetic_conditional_order_contrast_qualification_rule_v0.2.json").read_text()
+    )
+    assert rule["status"] == "FROZEN_BEFORE_V02_FORMAL_QUALIFICATION_AND_ANY_CONDITIONAL_EMPIRICAL_IDENTITY"
+    assert rule["frozen_estimator"]["minimum_same_order_source_species"] == 5
+    assert rule["frozen_estimator"]["minimum_different_order_source_species"] == 5
+    assert rule["development_panel"]["jointly_supported_eval_species"] == 52
+    assert rule["confirmatory_reserve"]["jointly_supported_eval_species_before_character_masks"] == 77
+    assert rule["synthetic_worlds"]["world_seed_tag"] == WORLD_SEED_TAG
+    assert rule["synthetic_worlds"]["bootstrap_seed_tag"] == BOOTSTRAP_SEED_TAG
+    assert all(value is False for value in rule["outcome_firewall"].values())
+    assert rule["development_pilot_disclosure"]["status"] == "METHOD_DEVELOPMENT_ONLY_NOT_FORMAL_QUALIFICATION"
