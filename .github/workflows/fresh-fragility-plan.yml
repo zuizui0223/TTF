@@ -1,0 +1,147 @@
+name: fresh phylogatR fragility response-blind plan
+
+on:
+  push:
+    branches:
+      - ops/fresh-fragility-plan-20260918
+    paths:
+      - ".github/workflows/fresh-fragility-plan.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+
+      - name: Download exact response-blind Phase3 input
+        uses: actions/download-artifact@v4
+        with:
+          name: phase3-input
+          path: phase3-input
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35211192698
+
+      - name: Download formal Gate-D qualification
+        uses: actions/download-artifact@v4
+        with:
+          name: phase3-qualification
+          path: formal
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35211192698
+
+      - name: Download self-detectability qualification
+        uses: actions/download-artifact@v4
+        with:
+          name: self-qualification
+          path: self
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35244879828
+
+      - name: Verify response-blind prerequisites
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          for path in (
+              Path("phase3-input/phase2_geometry.csv"),
+              Path("phase3-input/phase2_manifest.json"),
+              Path("phase3-input/authorization.json"),
+              Path("formal/qualification.json"),
+              Path("self/qualification.json"),
+          ):
+              assert path.is_file() and path.stat().st_size > 0, path
+
+          auth = json.loads(Path("phase3-input/authorization.json").read_text())
+          formal = json.loads(Path("formal/qualification.json").read_text())
+          selfq = json.loads(Path("self/qualification.json").read_text())
+          compact = json.loads(
+              Path("docs/supporting/genetic_phylogatr_fragility_compact_execution_v0.1.json").read_text()
+          )
+
+          assert auth["schema"] == "ttf_genetic_phylogatr_phase3_gate_d_authorization_v0.1"
+          assert formal["schema"] == "ttf_genetic_phylogatr_phase3_qualification_v0.1"
+          assert formal["status"] == "PASS" and formal["passed"] is True
+          assert selfq["schema"] == "ttf_genetic_phylogatr_phase3_self_qualification_v0.1"
+          assert selfq["status"] == "PASS" and selfq["passed"] is True
+
+          for payload in (formal, selfq):
+              assert payload["confirmatory_sequence_identity_opened"] is False
+              assert payload["confirmatory_pairwise_genetic_distances_opened"] is False
+          assert formal["confirmatory_ttf_statistic_opened"] is False
+          assert selfq["confirmatory_ttf_statistic_opened"] is False
+
+          assert compact["status"] == (
+              "FROZEN_AFTER_GATE_D_AND_SELF_PASS_BEFORE_FRAGILITY_SYNTHETIC_RESULT_OR_IDENTITY_OPENING"
+          )
+          assert compact["trigger"]["fragility_synthetic_result_seen_before_amendment"] is False
+          assert all(value is False for value in compact["firewall"].values())
+
+          for script in (
+              Path("scripts/run_phylogatr_gate_d_fragility_reference_shard.py"),
+              Path("scripts/run_phylogatr_gate_d_fragility_observed_shard.py"),
+          ):
+              source = script.read_text()
+              assert "prepare_phylogatr_compact_ttf_design" in source
+              assert "prepare_phylogatr_compact_cached_transfer" in source
+              assert "score_phylogatr_compact_world_batch" in source
+              assert "prepare_genetic_ttf_design(" not in source
+              assert "score_genetic_world_batch(" not in source
+          PY
+
+      - name: Build deterministic nested fragility geometries
+        run: |
+          set -euo pipefail
+          python scripts/plan_phylogatr_gate_d_fragility.py \
+            --geometry phase3-input/phase2_geometry.csv \
+            --phase2-manifest phase3-input/phase2_manifest.json \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --fragility-rule docs/supporting/genetic_phylogatr_gate_d_fragility_diagnostic_v0.1.json \
+            --output-dir fragility
+
+      - name: Build diagnostic-only synthetic execution plan
+        run: |
+          set -euo pipefail
+          python scripts/plan_phylogatr_gate_d_fragility_synthetic.py \
+            --geometry-plan-receipt fragility/fragility_geometry_plan_receipt.json \
+            --phase2-manifest phase3-input/phase2_manifest.json \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --formal-qualification formal/qualification.json \
+            --execution-rule docs/supporting/genetic_phylogatr_gate_d_fragility_execution_v0.1.json \
+            --output fragility/execution_plan.json
+
+      - name: Emit plan summary without synthetic results
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("fragility/execution_plan.json").read_text())
+          print("formal_anchor:", p["formal_anchor"]["formal_status"])
+          for level in p["levels"]:
+              print(
+                  level["retention_fraction"],
+                  level["status"],
+                  "min_ibd=", level["metrics"]["minimum_endpoint_disjoint_ibd_training_edges"],
+                  "ref_jobs=", level["reference_job_count"],
+                  "obs_jobs=", level["observed_job_count"],
+              )
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fragility-plan
+          path: fragility/
+          retention-days: 2
