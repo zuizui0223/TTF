@@ -12,6 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: "55ff72a4273d2119a361c3978aa3bea873ed8243"
           fetch-depth: 1
       - name: Freeze checkout snapshot
         run: |
