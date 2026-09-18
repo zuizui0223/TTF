@@ -1,0 +1,32 @@
+name: export exact main source 20260918
+
+on:
+  push:
+    branches:
+      - ops/export-main-source-20260918
+    paths:
+      - ".github/workflows/export-main-source-20260918.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: b80f6858b1b2932642fe072c8590b0f02f4df15e
+          fetch-depth: 1
+      - name: Verify exact commit and archive source
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "b80f6858b1b2932642fe072c8590b0f02f4df15e"
+          git archive --format=zip --output=ttf-main-b80f6858.zip HEAD
+          sha256sum ttf-main-b80f6858.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-main-b80f6858
+          path: ttf-main-b80f6858.zip
+          retention-days: 1
