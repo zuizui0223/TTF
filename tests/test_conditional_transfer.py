@@ -264,3 +264,75 @@ def test_conditioned_pool_preserves_total_training_species_weight_mass() -> None
             atol=0.0,
             rtol=0.0,
         )
+
+
+def test_full_projection_cache_matches_existing_cached_scorer_to_frozen_tolerance() -> None:
+    from ttf.conditional_transfer import (
+        prepare_cached_target_conditioned_transfer,
+        prepare_fully_cached_target_conditioned_transfer,
+        score_cached_target_conditioned_batch,
+        score_fully_cached_target_conditioned_batch,
+    )
+
+    train, evaluation, prepared = _fixture()
+    pools = prepare_target_source_pools(
+        prepared,
+        {x.species: x.midpoint for x in train},
+        {x.species: x.midpoint for x in evaluation},
+        support_radius=5.0,
+        minimum_target_coverage=0.50,
+        minimum_source_species=2,
+    )
+    partial = prepare_cached_target_conditioned_transfer(
+        prepared, pools, edge_chunk_size=3, train_chunk_size=5
+    )
+    full = prepare_fully_cached_target_conditioned_transfer(partial)
+    train_y = {
+        x.species: np.column_stack([x.turnover, x.turnover[::-1]])
+        for x in train
+    }
+    eval_y = {
+        x.species: np.column_stack([x.turnover, x.turnover[::-1]])
+        for x in evaluation
+    }
+    expected = score_cached_target_conditioned_batch(partial, train_y, eval_y)
+    observed = score_fully_cached_target_conditioned_batch(full, train_y, eval_y)
+
+    assert np.allclose(observed.statistics, expected.statistics, atol=1e-12, rtol=0.0)
+    assert np.array_equal(observed.n_eval_species, expected.n_eval_species)
+    for name in pools.eligible_eval_species:
+        assert np.allclose(
+            observed.species_scores[name],
+            expected.species_scores[name],
+            atol=1e-12,
+            rtol=0.0,
+        )
+
+
+def test_full_projection_cache_can_materialize_predeclared_target_subset() -> None:
+    from ttf.conditional_transfer import (
+        prepare_cached_target_conditioned_transfer,
+        prepare_fully_cached_target_conditioned_transfer,
+        score_fully_cached_target_conditioned_batch,
+    )
+
+    train, evaluation, prepared = _fixture()
+    pools = prepare_target_source_pools(
+        prepared,
+        {x.species: x.midpoint for x in train},
+        {x.species: x.midpoint for x in evaluation},
+        support_radius=5.0,
+        minimum_target_coverage=0.50,
+        minimum_source_species=2,
+    )
+    partial = prepare_cached_target_conditioned_transfer(prepared, pools)
+    subset = tuple(pools.eligible_eval_species[:3])
+    full = prepare_fully_cached_target_conditioned_transfer(
+        partial, eval_species=subset
+    )
+    train_y = {x.species: x.turnover[:, None] for x in train}
+    eval_y = {x.species: x.turnover[:, None] for x in evaluation}
+    scored = score_fully_cached_target_conditioned_batch(full, train_y, eval_y)
+    assert full.eval_species == subset
+    assert set(scored.species_scores) == set(subset)
+    assert np.array_equal(scored.n_eval_species, np.full(1, len(subset)))
