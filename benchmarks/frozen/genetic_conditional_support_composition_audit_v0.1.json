@@ -1,0 +1,59 @@
+{
+  "schema": "ttf_genetic_conditional_support_composition_audit_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_SUPPORT_COMPOSITION_AUDIT",
+  "frozen_on": "2026-09-19",
+  "purpose": "Quantify taxonomic concentration of the already-frozen same-order supported target set before any conditional empirical nucleotide identity is opened; this audit does not alter the primary estimand.",
+  "frozen_rule": {
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.5,
+    "minimum_source_species": 5,
+    "group_label": "exact non-empty phylogatR order",
+    "primary_estimand_unchanged": "species-equal mean of C_geo+order - C_geo over same-order-supported evaluation species"
+  },
+  "development": {
+    "geometry_csv_sha256": "d4affc28a2f9da89d0566b0f52123f4711009c99e985baff9f44767da996a9cd",
+    "geometry_manifest_sha256": "f78bc6fa735010270db287764be0f818ef09ce416b00e0cb0c1aa1f00f7513ac",
+    "total_evaluation_species": 125,
+    "same_order_supported_evaluation_species": 72,
+    "by_order": {
+      "Lepidoptera": 47,
+      "Diptera": 10,
+      "Coleoptera": 8,
+      "Hymenoptera": 5,
+      "Hemiptera": 2
+    },
+    "lepidoptera_fraction": 0.6527777777777778,
+    "order_hhi": 0.46334876543209874,
+    "effective_order_count": 2.158201498751041
+  },
+  "confirmatory_reserve": {
+    "geometry_csv_sha256": "fc93f1aaac2abc369f3e94c99b73e1d139f635638e197d1f71f977a49a44dbba",
+    "geometry_manifest_sha256": "debe44fabd10c53b2cf5fad13ad0c182e57429edd193619fa7a5c34e4dbdb880",
+    "total_evaluation_species": 125,
+    "same_order_supported_evaluation_species": 78,
+    "by_order": {
+      "Lepidoptera": 46,
+      "Diptera": 12,
+      "Coleoptera": 10,
+      "Hymenoptera": 10
+    },
+    "lepidoptera_fraction": 0.5897435897435898,
+    "order_hhi": 0.40433925049309666,
+    "effective_order_count": 2.473170731707317
+  },
+  "interpretation_guardrail": {
+    "primary_changed": false,
+    "required_reporting": [
+      "report supported-target order composition with the primary result",
+      "report per-order target increments as heterogeneity diagnostics",
+      "report a leave-Lepidoptera-out sensitivity summary as secondary unless separately qualified prospectively"
+    ],
+    "licensed_positive_wording": "same-order conditioning improves transfer across the supported target population",
+    "not_licensed_from_primary_alone": "taxonomic-order similarity generally improves transfer across taxa"
+  },
+  "outcome_firewall": {
+    "development_sequence_identity_opened": false,
+    "confirmatory_sequence_identity_opened": false,
+    "conditional_empirical_result_opened": false
+  }
+}
