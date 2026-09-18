@@ -13,7 +13,11 @@
     "train_digest_sha256": "1e2e9df9fa2af406841a0a382990d9b18667f5e76766233fbc2fbd57bd5abe81",
     "eval_digest_sha256": "965a2226fdca7b8026cd93ba0586adbcc13ae60e677981d027bb473742838a31",
     "empirical_sequence_identity_opened": false,
-    "empirical_genetic_outcome_opened": false
+    "empirical_genetic_outcome_opened": false,
+    "geometry_csv_sha256": "d4affc28a2f9da89d0566b0f52123f4711009c99e985baff9f44767da996a9cd",
+    "geometry_manifest_sha256": "f78bc6fa735010270db287764be0f818ef09ce416b00e0cb0c1aa1f00f7513ac",
+    "geometry_library_csv": "/TTF/conditional/development_geometry_v0.1.csv",
+    "geometry_library_manifest": "/TTF/conditional/development_geometry_manifest_v0.1.json"
   },
   "frozen_estimator": {
     "field_bandwidth_km": 500,
