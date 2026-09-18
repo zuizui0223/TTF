@@ -62,7 +62,7 @@ def prepare_conditional_order_qualification(
     eval_species: Sequence[str],
     bandwidth: float = 500.0,
     support_radius: float = 500.0,
-    minimum_target_coverage: float = 0.25,
+    minimum_target_coverage: float = 0.50,
     minimum_source_species: int = 5,
     prior_strength: float = 0.25,
     segment_points: int = 5,
