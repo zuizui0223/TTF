@@ -1,0 +1,27 @@
+name: conditional qualification snapshot
+
+on:
+  push:
+    branches:
+      - "ops/conditional-qualification-snapshot-20260919"
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: "71b5be509d9e5fad69bc2d6ba5b3ec7d70a3ce83"
+          fetch-depth: 1
+      - name: Pack repository
+        run: |
+          set -euo pipefail
+          tar --exclude=.git -czf /tmp/TTF-main-71b5be509d9e.tar.gz .
+          sha256sum /tmp/TTF-main-71b5be509d9e.tar.gz > /tmp/TTF-main-71b5be509d9e.tar.gz.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TTF-main-71b5be509d9e-snapshot
+          path: |
+            /tmp/TTF-main-71b5be509d9e.tar.gz
+            /tmp/TTF-main-71b5be509d9e.tar.gz.sha256
+          if-no-files-found: error
