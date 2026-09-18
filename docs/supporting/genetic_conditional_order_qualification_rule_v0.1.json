@@ -1,0 +1,107 @@
+{
+  "schema": "ttf_genetic_conditional_order_qualification_rule_v0.1",
+  "status": "FROZEN_BEFORE_ANY_CONDITIONAL_SYNTHETIC_QUALIFICATION_RESULT_OR_NEW_PANEL_NUCLEOTIDE_IDENTITY",
+  "frozen_on": "2026-09-19",
+  "purpose": "Qualify the paired same-order-beyond-geography transfer increment on the response-blind 250-species development geometry before any confirmatory-panel nucleotide identity can be opened.",
+  "parent_protocol": "docs/supporting/genetic_conditional_transfer_protocol_v0.1.json",
+  "response_blind_census": "benchmarks/frozen/genetic_conditional_two_panel_response_blind_census_v0.1.json",
+  "development_panel": {
+    "species": 250,
+    "train_species": 125,
+    "eval_species": 125,
+    "species_digest_sha256": "43ddab768fca83f995b8380069646d373cb112c7cb9b3042f19ffd311a4a6583",
+    "train_digest_sha256": "1e2e9df9fa2af406841a0a382990d9b18667f5e76766233fbc2fbd57bd5abe81",
+    "eval_digest_sha256": "965a2226fdca7b8026cd93ba0586adbcc13ae60e677981d027bb473742838a31",
+    "empirical_sequence_identity_opened": false,
+    "empirical_genetic_outcome_opened": false,
+    "geometry_csv_sha256": "d4affc28a2f9da89d0566b0f52123f4711009c99e985baff9f44767da996a9cd",
+    "geometry_manifest_sha256": "f78bc6fa735010270db287764be0f818ef09ce416b00e0cb0c1aa1f00f7513ac",
+    "geometry_library_csv": "/TTF/conditional/development_geometry_v0.1.csv",
+    "geometry_library_manifest": "/TTF/conditional/development_geometry_manifest_v0.1.json"
+  },
+  "frozen_estimator": {
+    "field_bandwidth_km": 500,
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.5,
+    "minimum_source_species": 5,
+    "group_label": "exact non-empty phylogatR order",
+    "eligible_same_order_eval_species": 72,
+    "estimand": "species-equal mean of [C_same_order_geo - C_geo] over the response-blind same-order-supported evaluation set",
+    "inference": "one-sided centered studentized held-out-species bootstrap of paired target increments",
+    "alpha": 0.05,
+    "bootstrap_resamples": 1999,
+    "source_mass_normalization": "multiply selected-source edge weights by N_train/N_selected for every target-specific field"
+  },
+  "synthetic_worlds": {
+    "master_seed": 20260919,
+    "ibd_strength": 1,
+    "noise_sd": 0.1,
+    "transition_width": 0.2,
+    "noise_dimensions": 2,
+    "private_null_cells": [
+      {
+        "cell": "private_A0p5",
+        "group_rule": "unique group per species",
+        "residual_amplitude": 0.5,
+        "worlds": 500
+      },
+      {
+        "cell": "private_A1",
+        "group_rule": "unique group per species",
+        "residual_amplitude": 1,
+        "worlds": 500
+      },
+      {
+        "cell": "private_A2",
+        "group_rule": "unique group per species",
+        "residual_amplitude": 2,
+        "worlds": 500
+      },
+      {
+        "cell": "private_A3",
+        "group_rule": "unique group per species",
+        "residual_amplitude": 3,
+        "worlds": 500
+      }
+    ],
+    "positive_control": {
+      "cell": "same_order_A2",
+      "group_rule": "exact frozen phylogatR order shared within order, independent across orders",
+      "residual_amplitude": 2,
+      "worlds": 500
+    },
+    "world_seed_rule": "SHA256('<master_seed>|conditional-order|<cell>|<absolute-replicate-index>') first 8 bytes as unsigned integer",
+    "bootstrap_seed_rule": "SHA256('<master_seed>|conditional-order-bootstrap|<cell>|<absolute-replicate-index>') first 8 bytes as unsigned integer"
+  },
+  "qualification": {
+    "type1_gate": "for every private-null cell, Wilson 95% upper bound of p<=0.05 rejection rate must be <=0.10",
+    "type1_wilson95_upper_ceiling": 0.1,
+    "power_gate": "same_order_A2 Wilson 95% lower bound of p<=0.05 rejection rate must be >=0.80",
+    "power_wilson95_lower_floor": 0.8,
+    "overall_pass": "all four private Type-I cells pass AND same_order_A2 power passes",
+    "failure": "NOT_EVALUABLE_CONDITIONAL_ORDER; do not open confirmatory nucleotide identity"
+  },
+  "execution": {
+    "response_world_batching_allowed": true,
+    "sharding_semantics": "absolute replicate index only; shard/batch partition must not alter world or bootstrap identity",
+    "exact_cached_geometry_allowed": true,
+    "cached_and_uncached_scorers_must_match": "to absolute tolerance 1e-12 on fixed test fixtures",
+    "result_selection_reruns_allowed": false
+  },
+  "forbidden_after_freeze": [
+    "changing taxonomic rank from order",
+    "changing support radius, 0.50 target-coverage threshold, source-mass normalization, minimum source count, field bandwidth, alpha or bootstrap resamples",
+    "dropping response-blind supported targets based on synthetic or empirical scores",
+    "changing private amplitudes or positive-control amplitude after qualification outcomes",
+    "opening development-panel empirical nucleotide identity",
+    "opening confirmatory-panel nucleotide identity before qualification PASS and confirmatory exact-geometry requalification",
+    "using the completed parent 211-species outcomes to tune this qualification"
+  ],
+  "outcome_firewall": {
+    "development_sequence_identity_opened": false,
+    "development_pairwise_genetic_distances_opened": false,
+    "confirmatory_sequence_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "conditional_empirical_result_opened": false
+  }
+}

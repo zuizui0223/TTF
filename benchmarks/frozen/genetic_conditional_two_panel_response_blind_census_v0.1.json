@@ -1,0 +1,137 @@
+{
+  "schema": "ttf_genetic_conditional_two_panel_response_blind_census_v0.1",
+  "status": "RESPONSE_BLIND_TWO_PANEL_FEASIBILITY_COMPLETE",
+  "executed_on": "2026-09-19",
+  "source_archive": {
+    "name": "phylogatr_results.zip",
+    "size_bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+  },
+  "exclusions": {
+    "prior_fresh_confirmatory_species": 250,
+    "decker_species_excluded": true,
+    "aves_excluded": true,
+    "chiroptera_excluded": true,
+    "old_new_overlap": 0
+  },
+  "census": {
+    "metadata_eligible_species_after_exclusions": 14612,
+    "selected_total": 500,
+    "ranked_candidates_checked": 500,
+    "geometry_failures_before_500": 0,
+    "development_species": 250,
+    "confirmatory_species": 250,
+    "development_confirmatory_overlap": 0
+  },
+  "selection": {
+    "ranking_rule": "SHA256('conditional-ttf-v0.1|<source_sha256>|<species>'), species as tie-break; skip only predeclared geometry-support failures",
+    "development_rank_range_one_based": [
+      1,
+      250
+    ],
+    "confirmatory_rank_range_one_based": [
+      251,
+      500
+    ],
+    "development_species_digest_sha256": "43ddab768fca83f995b8380069646d373cb112c7cb9b3042f19ffd311a4a6583",
+    "confirmatory_species_digest_sha256": "66aee97afdd5d0906703de723b24796643543eb1a4ea8fb9685bc714b144062c",
+    "combined_species_digest_sha256": "78d827678f4245cc39855c3e402fc53dbd692b18013eb1a96197938f2074833b"
+  },
+  "development_panel": {
+    "split": {
+      "train": 125,
+      "eval": 125,
+      "train_digest_sha256": "1e2e9df9fa2af406841a0a382990d9b18667f5e76766233fbc2fbd57bd5abe81",
+      "eval_digest_sha256": "965a2226fdca7b8026cd93ba0586adbcc13ae60e677981d027bb473742838a31"
+    },
+    "taxonomic_summary": {
+      "insecta": 203,
+      "orders": 33,
+      "families": 117
+    },
+    "localities_median": 20,
+    "edges_median": 39,
+    "support_500km": {
+      "coverage_ge_0_25": {
+        "target_species_with_ge_5_sources": 113,
+        "median_sources": 33
+      },
+      "coverage_ge_0_25_same_order": {
+        "target_species_with_ge_5_sources": 79,
+        "median_sources": 6
+      },
+      "coverage_ge_0_25_same_family": {
+        "target_species_with_ge_5_sources": 1,
+        "median_sources": 0
+      },
+      "coverage_ge_0_50": {
+        "target_species_with_ge_5_sources": 109,
+        "median_sources": 24
+      },
+      "coverage_ge_0_50_same_order": {
+        "target_species_with_ge_5_sources": 72,
+        "median_sources": 5
+      }
+    }
+  },
+  "confirmatory_panel": {
+    "split": {
+      "train": 125,
+      "eval": 125,
+      "train_digest_sha256": "fb3062f347a4d72a1c08e28952549b1988f7eb1fe05a62c9d01489e145c8b34a",
+      "eval_digest_sha256": "25c962f4c07f7fb5db15b5fd48249bda966cb2f992a35efdac9a2f37d9f6207a"
+    },
+    "taxonomic_summary": {
+      "insecta": 215,
+      "orders": 28,
+      "families": 124
+    },
+    "localities_median": 19,
+    "edges_median": 37,
+    "support_500km": {
+      "coverage_ge_0_25": {
+        "target_species_with_ge_5_sources": 108,
+        "median_sources": 35
+      },
+      "coverage_ge_0_25_same_order": {
+        "target_species_with_ge_5_sources": 86,
+        "median_sources": 8
+      },
+      "coverage_ge_0_25_same_family": {
+        "target_species_with_ge_5_sources": 8,
+        "median_sources": 0
+      },
+      "coverage_ge_0_50": {
+        "target_species_with_ge_5_sources": 105,
+        "median_sources": 28
+      },
+      "coverage_ge_0_50_same_order": {
+        "target_species_with_ge_5_sources": 78,
+        "median_sources": 6
+      }
+    }
+  },
+  "full_local_census_sha256": "9fd5c52ae743668909b6f05c85b972140cf75eb44535c64c3e9e2ffc9869744c",
+  "outcome_firewall": {
+    "new_development_sequence_identity_opened": false,
+    "new_confirmatory_sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "empirical_conditional_ttf_opened": false
+  },
+  "response_blind_geometry_artifacts": {
+    "development": {
+      "library_csv": "/TTF/conditional/development_geometry_v0.1.csv",
+      "geometry_csv_sha256": "d4affc28a2f9da89d0566b0f52123f4711009c99e985baff9f44767da996a9cd",
+      "library_manifest": "/TTF/conditional/development_geometry_manifest_v0.1.json",
+      "manifest_sha256": "f78bc6fa735010270db287764be0f818ef09ce416b00e0cb0c1aa1f00f7513ac",
+      "exact_geometry_reconstructed_without_nucleotide_identity": true
+    },
+    "confirmatory": {
+      "library_csv": "/TTF/conditional/confirmatory_geometry_v0.1.csv",
+      "geometry_csv_sha256": "fc93f1aaac2abc369f3e94c99b73e1d139f635638e197d1f71f977a49a44dbba",
+      "library_manifest": "/TTF/conditional/confirmatory_geometry_manifest_v0.1.json",
+      "manifest_sha256": "debe44fabd10c53b2cf5fad13ad0c182e57429edd193619fa7a5c34e4dbdb880",
+      "exact_geometry_reconstructed_without_nucleotide_identity": true
+    }
+  }
+}
