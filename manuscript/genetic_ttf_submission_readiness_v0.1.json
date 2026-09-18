@@ -1,0 +1,60 @@
+{
+  "schema": "ttf_genetic_submission_readiness_v0.1",
+  "status": "SCIENCE_COMPLETE_HUMAN_METADATA_AND_JOURNAL_FORMATTING_PENDING",
+  "frozen_science": {
+    "decision": "LINEAGE_CONDITIONED_SPATIAL_STRUCTURE_WITHIN_TESTED_DOMAIN",
+    "survivor_species": 211,
+    "training_species": 103,
+    "evaluation_species": 108,
+    "primary_place_beyond_ibd": {
+      "statistic": 0.03256548471362711,
+      "profiled_private_p_value": 0.7392607392607392,
+      "positive": false
+    },
+    "within_species_self": {
+      "statistic": -0.226097652897688,
+      "upper_tail_p_value": 0.008991008991008992,
+      "significant_relative_to_frozen_null": true,
+      "raw_sign_interpreted_against_zero": false
+    },
+    "secondary_total_genetic_transfer": {
+      "statistic": 0.015501562599030518,
+      "inferentially_qualified": false,
+      "used_for_primary_decision": false
+    },
+    "empirical_result_sha256": "f5d19fa50c7c18cbf2a110c0afb9c70dcd543c44b77521c015938013843e72fb",
+    "phase4_authorization_sha256": "a66edba0a6378f2fa2e24eba73aa5d48f6a58905420e13b53be802f603c3a0e1",
+    "one_shot_completed": true,
+    "empirical_rerun_allowed": false,
+    "post_result_retuning_allowed": false
+  },
+  "manuscript": {
+    "path": "manuscript/genetic_ttf_flagship_v0.2.md",
+    "title": "Within-species genetic structure is detectable but not detectably transferable across unseen lineages",
+    "title_character_count": 101,
+    "approximate_word_count": 5517,
+    "abstract_word_count": 260,
+    "author_list_finalized": false,
+    "target_journal_selected": false
+  },
+  "frozen_artifacts": {
+    "figure_count": 2,
+    "figures": [
+      "manuscript/figures/genetic_phase4_v0.1/figure1_qualification_margins.svg",
+      "manuscript/figures/genetic_phase4_v0.1/figure2_post_ibd_species_scores.svg"
+    ],
+    "supplementary_results": "manuscript/generated/genetic_ttf_phase4_v0.1/results.md",
+    "supplementary_species_table": "manuscript/generated/genetic_ttf_phase4_v0.1/species_scores.csv",
+    "supplementary_evaluation_species": 108,
+    "supplementary_manifest": "manuscript/generated/genetic_ttf_phase4_v0.1/export_manifest.json",
+    "terminal_handoff": "benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json"
+  },
+  "remaining_human_inputs": [
+    "author_order_affiliations_and_corresponding_author",
+    "target_journal_and_journal_specific_formatting",
+    "funding_competing_interest_author_contribution_and_acknowledgement_statements",
+    "source_archive_data_availability_and_redistribution_wording",
+    "journal_specific_supplement_and_figure_file_requirements"
+  ],
+  "claim_boundary": "Within the frozen phylogatR COI/COX1 domain and tested spatial scale, cross-species transfer of post-IBD differentiation was not detected while the separately qualified within-species self statistic was significant relative to its frozen null. This is consistent with lineage-conditioned spatial structure within the tested domain; it is not proof of zero transfer, a universal result, or identification of a specific historical mechanism."
+}
