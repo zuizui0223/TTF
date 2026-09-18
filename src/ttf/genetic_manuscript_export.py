@@ -20,7 +20,7 @@ OPEN_FLAGS = (
 )
 DECISIONS = {
     "TRANSFERABLE_PLACE_COMPONENT": "The qualified test detected out-of-species transfer of post-IBD genetic differentiation within the frozen panel and model family. This supports transferable geographic information, not a causal separation of place from shared demographic history.",
-    "LINEAGE_CONDITIONED_SPATIAL_STRUCTURE_WITHIN_TESTED_DOMAIN": "The qualified cross-species test was non-significant, while the separately qualified within-species self test was significant. This is consistent with lineage-conditioned spatial structure in the tested domain; it does not establish zero transfer or a lineage-specific historical cause.",
+    "LINEAGE_CONDITIONED_SPATIAL_STRUCTURE_WITHIN_TESTED_DOMAIN": "The qualified cross-species test was non-significant, while the separately qualified within-species self statistic was significant relative to its frozen structural-null reference. This is consistent with lineage-conditioned spatial structure in the tested domain; it does not establish zero transfer or a lineage-specific historical cause.",
     "NOT_EVALUABLE_FOR_LINEAGE_CONDITIONING": "The qualified cross-species test was non-significant. Qualified empirical self support was insufficient for a lineage-conditioning interpretation. This is not evidence that spatial genetic structure is absent.",
 }
 
@@ -152,6 +152,7 @@ def build_empirical_export(*, result: Path, authorization: Path, qualification: 
     _require(primary.get("alpha") == rule["primary_estimand"]["alpha"] == 0.05, "primary alpha drift")
     _require(rule["primary_estimand"].get("name") == "place_beyond_ibd", "primary estimand drift")
     _require(self_result.get("alpha") == sr["inference"]["alpha"] == 0.05, "self alpha drift")
+    _require(str(sr["inference"].get("p_value", "")).startswith("upper Monte Carlo p"), "self inference-tail drift")
     _require(primary.get("positive") is (p <= 0.05), "primary significance mismatch")
     _require(self_result.get("positive") is (sp <= 0.05), "self significance mismatch")
     selected, components = primary["selected_configurations"], primary["component_p_values"]
@@ -195,8 +196,8 @@ def build_empirical_export(*, result: Path, authorization: Path, qualification: 
         f"(ceiling 0.10), and the shared-A2 power lower bound was {lower:.6g} (floor 0.80).\n\n"
         f"The species-equal post-IBD transfer statistic was T = {primary['statistic']:.6g} "
         f"(profiled-private p = {p:.6g}; alpha = 0.05). {DECISIONS[decision]}\n\n"
-        f"Within-species self-detectability was S = {self_result['statistic']:.6g} (p = {sp:.6g}); "
-        f"its separate synthetic qualification was {self_status}.\n\n"
+        f"Within-species self-detectability was S = {self_result['statistic']:.6g} (upper-tail p = {sp:.6g}); "
+        f"its separate synthetic qualification was {self_status}. The self statistic is calibrated against its frozen structural-null distribution, so its raw numerical sign is not interpreted against zero.\n\n"
         f"{total_text} This is before biological IBD adjustment while retaining the training-only geometric length control. "
         "It has no significance test and cannot rescue the primary result. Differences between these rank correlations are not fractions of genetic variation explained.\n\n"
         "Inference is limited to the frozen phylogatR COI/COX1 panel, graph, split, marker, scale and qualified reference family. "
