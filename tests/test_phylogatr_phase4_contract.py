@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import json
+import runpy
 import subprocess
 import sys
 from pathlib import Path
@@ -11,7 +12,9 @@ import pytest
 from ttf.genetic_geometry_io import load_frozen_genetic_geometry_csv, sha256_path
 from ttf.geometry import SpeciesGeometry, geometry_fingerprint
 from ttf.phylogatr_phase4 import load_phylogatr_phase4_context
-from scripts.authorize_phylogatr_phase4_identity_opening import _validate_phase1_provenance_recovery
+_validate_phase1_provenance_recovery = runpy.run_path(
+    "scripts/authorize_phylogatr_phase4_identity_opening.py"
+)["_validate_phase1_provenance_recovery"]
 
 
 PHASE3_RULE = Path("docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json")
