@@ -1,0 +1,62 @@
+{
+  "schema": "ttf_conditional_genetic_response_blind_census_summary_v0.1",
+  "status": "RESPONSE_BLIND_CONDITIONAL_PANEL_FEASIBLE",
+  "source_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "parent_phase1_species_excluded": 250,
+  "parent_new_species_overlap": 0,
+  "metadata_eligible_species_after_exclusions": 14612,
+  "selection": {
+    "selected_species": 250,
+    "reserve_ranks_checked": 250,
+    "geometry_failures_before_250": 0,
+    "species_manifest_sha256": "75e987f1e7ddf342e91c756fd5d3f5a19140d3ed1486e270c68b3dce0a776847",
+    "species_list_sha256": "e4a2def8ced3973bc7d3480f8626177b1e13b9a337bb6aa3e41e4e672eb2077f"
+  },
+  "split": {
+    "train": 125,
+    "eval": 125,
+    "train_species_list_sha256": "787b396805eed23fb2e5ede53d02c7433f2ec3ad67ac97cdc100d04c96ed2a10",
+    "eval_species_list_sha256": "d95b77b24ffb612576035b383737bbeade9c16eb7e198d54b2ae27bd7e2f4216"
+  },
+  "taxonomy": {
+    "Insecta": 203,
+    "Arachnida": 19,
+    "Actinopterygii": 14,
+    "Mammalia": 3,
+    "orders": 33,
+    "families": 117
+  },
+  "response_blind_support": {
+    "geographic_coverage_definition": "fraction of target edge midpoints within 500 km of at least one source edge midpoint",
+    "geo_coverage_at_least_0_25": {
+      "source_count_median": 33,
+      "source_count_q25": 20,
+      "source_count_q75": 39,
+      "targets_with_at_least_3_sources": 113,
+      "targets_with_zero_sources": 2
+    },
+    "geo_coverage_at_least_0_25_same_order": {
+      "source_count_median": 6,
+      "source_count_q25": 2,
+      "source_count_q75": 13,
+      "targets_with_at_least_3_sources": 80,
+      "targets_with_zero_sources": 23
+    },
+    "geo_coverage_at_least_0_25_same_family": {
+      "targets_with_at_least_3_sources": 11,
+      "targets_with_zero_sources": 87,
+      "decision": "DO_NOT_USE_AS_CONFIRMATORY_CONDITION"
+    }
+  },
+  "raw_census": {
+    "library_path": "/TTF/conditional-genetic/conditional_response_blind_census_v0.1.json",
+    "sha256": "c9c8ed89d3fd16386ecf01f27b52eea83aa582b26d3c7fea86f63757ef4e1f15"
+  },
+  "pair_support": {
+    "library_path": "/TTF/conditional-genetic/conditional_pair_support_v0.1.json",
+    "sha256": "eac32a14c63984e7370e0208698c763522be1486a71db4069c5dab1ee86b7f0e"
+  },
+  "sequence_identity_opened": false,
+  "pairwise_genetic_distances_opened": false,
+  "empirical_ttf_opened": false
+}
