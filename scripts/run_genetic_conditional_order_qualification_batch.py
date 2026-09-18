@@ -11,8 +11,9 @@ import numpy as np
 
 from ttf.genetic_conditional_qualification import (
     make_conditional_order_worlds,
+    prepare_conditional_order_full_projection_execution,
     prepare_conditional_order_qualification,
-    score_conditional_order_world_batch,
+    score_conditional_order_world_batch_full_projection,
 )
 from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
 
@@ -164,6 +165,8 @@ def main() -> int:
             f"{len(design.eligible_eval_species)} != {estimator['eligible_same_order_eval_species']}"
         )
 
+    execution = prepare_conditional_order_full_projection_execution(design)
+
     worlds_cfg = rule["synthetic_worlds"]
     worlds = make_conditional_order_worlds(
         design,
@@ -178,8 +181,9 @@ def main() -> int:
         noise_dimensions=int(worlds_cfg["noise_dimensions"]),
         master_seed=int(worlds_cfg["master_seed"]),
     )
-    scored = score_conditional_order_world_batch(
+    scored = score_conditional_order_world_batch_full_projection(
         design,
+        execution,
         worlds,
         cell=str(args.cell),
         absolute_start=int(args.start),
