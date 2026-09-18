@@ -83,6 +83,7 @@ jobs:
           tests/test_genetic_phase4_figures.py
           tests/test_genetic_manuscript_current_state.py
           tests/test_genetic_submission_readiness.py
+          tests/test_genetic_molecular_ecology_adapter.py
           tests/test_phylogatr_confirmatory.py
           tests/test_phylogatr_phase1_intake.py
           tests/test_phylogatr_projected_phase1_intake.py
