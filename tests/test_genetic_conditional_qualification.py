@@ -130,3 +130,58 @@ def test_order_world_batch_produces_paired_statistic_and_bootstrap_pvalue() -> N
             atol=0.0,
             rtol=0.0,
         )
+
+
+def test_full_projection_execution_matches_frozen_partial_cache_on_fixture() -> None:
+    from ttf.genetic_conditional_qualification import (
+        prepare_conditional_order_full_projection_execution,
+        score_conditional_order_world_batch_full_projection,
+    )
+
+    design = _fixture()
+    execution = prepare_conditional_order_full_projection_execution(design)
+    worlds = make_conditional_order_worlds(
+        design,
+        cell="same_order_A2",
+        residual_amplitude=2.0,
+        absolute_start=17,
+        count=2,
+        group_mode="same_order",
+    )
+    expected = score_conditional_order_world_batch(
+        design,
+        worlds,
+        cell="same_order_A2",
+        absolute_start=17,
+        bootstrap_resamples=199,
+    )
+    observed = score_conditional_order_world_batch_full_projection(
+        design,
+        execution,
+        worlds,
+        cell="same_order_A2",
+        absolute_start=17,
+        bootstrap_resamples=199,
+    )
+    assert observed.n_eval_species == expected.n_eval_species
+    assert np.allclose(observed.statistics, expected.statistics, atol=1e-12, rtol=0.0)
+    assert np.allclose(observed.p_values, expected.p_values, atol=0.0, rtol=0.0)
+    for name in design.eligible_eval_species:
+        assert np.allclose(
+            observed.species_increments[name],
+            expected.species_increments[name],
+            atol=1e-12,
+            rtol=0.0,
+        )
+        assert np.allclose(
+            observed.geographic_species_scores[name],
+            expected.geographic_species_scores[name],
+            atol=1e-12,
+            rtol=0.0,
+        )
+        assert np.allclose(
+            observed.order_species_scores[name],
+            expected.order_species_scores[name],
+            atol=1e-12,
+            rtol=0.0,
+        )

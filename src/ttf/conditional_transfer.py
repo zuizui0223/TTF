@@ -43,6 +43,25 @@ class CachedTargetConditionedTransferGeometry:
 
 
 @dataclass(frozen=True)
+class FullyCachedTargetConditionedTransferGeometry:
+    """Response-blind full projection cache for target-conditioned fields.
+
+    This is an execution-only materialization of the exact Gaussian projection
+    already defined by CachedTargetConditionedTransferGeometry. It stores no
+    response values and changes neither source pools nor inference.
+    """
+
+    base: ChunkedTransferGeometry
+    pools: TargetSourcePoolDesign
+    eval_species: tuple[str, ...]
+    active_indices: Mapping[str, np.ndarray]
+    projection: Mapping[str, np.ndarray]
+    prior_edge: Mapping[str, np.ndarray]
+    edge_chunk_size: int
+    train_chunk_size: int
+
+
+@dataclass(frozen=True)
 class ConditionalIncrementBatch:
     """Paired target-level improvement over a reference TTF field."""
 
@@ -287,6 +306,127 @@ def prepare_cached_target_conditioned_transfer(
         pool_weight_scale=scale_map,
         edge_chunk_size=int(edge_chunk_size),
         train_chunk_size=int(train_chunk_size),
+    )
+
+
+def prepare_fully_cached_target_conditioned_transfer(
+    cached: CachedTargetConditionedTransferGeometry,
+    *,
+    eval_species: tuple[str, ...] | None = None,
+) -> FullyCachedTargetConditionedTransferGeometry:
+    """Materialize exact target-by-source Gaussian projection matrices.
+
+    Only response-blind geometry, frozen source pools, kernel weights and prior
+    denominators are read. The optional target subset must come from the
+    already frozen eligible evaluation species.
+    """
+    prepared = cached.base
+    allowed = tuple(cached.pools.eligible_eval_species)
+    labels = allowed if eval_species is None else tuple(map(str, eval_species))
+    if not labels or len(set(labels)) != len(labels):
+        raise ValueError("full projection cache requires unique evaluation species")
+    if not set(labels) <= set(allowed):
+        raise ValueError("full projection cache contains unsupported evaluation species")
+
+    h2 = prepared.bandwidth * prepared.bandwidth
+    projection_map: dict[str, np.ndarray] = {}
+    prior_map: dict[str, np.ndarray] = {}
+    active_map: dict[str, np.ndarray] = {}
+
+    for species in labels:
+        active = np.asarray(cached.active_indices[species], dtype=np.int64)
+        positions = prepared.train_positions[active]
+        weights = prepared.train_weights[active] * float(
+            cached.pool_weight_scale[species]
+        )
+        points = np.asarray(cached.eval_points[species], dtype=float)
+        denominator = np.asarray(cached.eval_denominator[species], dtype=float)
+        n_edges = len(prepared.eval_start[species])
+        matrix = np.empty((n_edges, len(active)), dtype=float)
+
+        for e0 in range(0, n_edges, cached.edge_chunk_size):
+            e1 = min(e0 + cached.edge_chunk_size, n_edges)
+            flat = points[e0:e1].reshape(-1, points.shape[-1])
+            denom = denominator[e0:e1, :].reshape(-1, 1)
+            for p0 in range(0, len(active), cached.train_chunk_size):
+                p1 = min(p0 + cached.train_chunk_size, len(active))
+                delta = flat[:, None, :] - positions[p0:p1][None, :, :]
+                distance2 = np.sum(delta * delta, axis=2)
+                kernel = (
+                    np.exp(-0.5 * distance2 / h2)
+                    * weights[p0:p1][None, :]
+                )
+                normalized = kernel / denom
+                matrix[e0:e1, p0:p1] = normalized.reshape(
+                    e1 - e0, prepared.segment_points, p1 - p0
+                ).mean(axis=1)
+
+        prior = (
+            prepared.prior_strength * prepared.prior_mean / denominator
+        ).mean(axis=1)
+        if not np.isfinite(matrix).all() or not np.isfinite(prior).all():
+            raise RuntimeError("non-finite full projection cache")
+        active_map[species] = active.copy()
+        projection_map[species] = matrix
+        prior_map[species] = prior
+
+    return FullyCachedTargetConditionedTransferGeometry(
+        base=prepared,
+        pools=cached.pools,
+        eval_species=labels,
+        active_indices=active_map,
+        projection=projection_map,
+        prior_edge=prior_map,
+        edge_chunk_size=int(cached.edge_chunk_size),
+        train_chunk_size=int(cached.train_chunk_size),
+    )
+
+
+def score_fully_cached_target_conditioned_batch(
+    cached: FullyCachedTargetConditionedTransferGeometry,
+    train_turnover: Mapping[str, np.ndarray],
+    eval_turnover: Mapping[str, np.ndarray],
+) -> BatchTransferResult:
+    """Score the exact target-conditioned field using a full geometry cache."""
+    prepared = cached.base
+    train, evaluation, width = _validate_batch_values(
+        prepared, train_turnover, eval_turnover
+    )
+    packed = np.empty((len(prepared.train_positions), width), dtype=float)
+    for name in prepared.train_species:
+        packed[prepared.train_slices[name], :] = train[name]
+
+    score_map: dict[str, np.ndarray] = {}
+    sums = np.zeros(width, dtype=float)
+    counts = np.zeros(width, dtype=np.int64)
+    for species in cached.eval_species:
+        active = cached.active_indices[species]
+        predicted = np.repeat(cached.prior_edge[species][:, None], width, axis=1)
+        projection = cached.projection[species]
+        values = packed[active, :]
+        for p0 in range(0, len(active), cached.train_chunk_size):
+            p1 = min(p0 + cached.train_chunk_size, len(active))
+            chunk_values = values[p0:p1, :]
+            for e0 in range(0, len(predicted), cached.edge_chunk_size):
+                e1 = min(e0 + cached.edge_chunk_size, len(predicted))
+                predicted[e0:e1, :] += (
+                    projection[e0:e1, p0:p1] @ chunk_values
+                )
+        target = evaluation[species]
+        scores = np.asarray(
+            [spearman_rho(predicted[:, i], target[:, i]) for i in range(width)],
+            dtype=float,
+        )
+        score_map[species] = scores
+        finite = np.isfinite(scores)
+        sums[finite] += scores[finite]
+        counts[finite] += 1
+    if np.any(counts == 0):
+        raise ValueError("one or more worlds had no finite conditional species scores")
+    return BatchTransferResult(
+        statistics=sums / counts,
+        species_scores=score_map,
+        n_eval_species=counts,
     )
 
 
@@ -678,15 +818,18 @@ def infer_conditioning_increment(
 
 __all__ = [
     "CachedTargetConditionedTransferGeometry",
+    "FullyCachedTargetConditionedTransferGeometry",
     "ConditionalIncrementBatch",
     "ConditionalIncrementInference",
     "TargetSourcePoolDesign",
     "infer_conditioning_increment",
     "prepare_cached_target_conditioned_transfer",
+    "prepare_fully_cached_target_conditioned_transfer",
     "prepare_target_source_pools",
     "score_cached_conditioning_increment_batch",
     "score_cached_pool_difference_batch",
     "score_cached_target_conditioned_batch",
+    "score_fully_cached_target_conditioned_batch",
     "score_conditioning_increment_batch",
     "score_pool_difference_batch",
     "score_target_conditioned_batch",
