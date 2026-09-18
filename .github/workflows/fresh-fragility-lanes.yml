@@ -1,0 +1,367 @@
+name: fresh phylogatR fragility diagnostic lanes
+
+on:
+  push:
+    branches:
+      - ops/fresh-fragility-lanes-20260918
+    paths:
+      - ".github/workflows/fresh-fragility-lanes.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      - run: python -m pip install -e .
+
+      - name: Download exact formal Phase3 response-blind input
+        uses: actions/download-artifact@v4
+        with:
+          name: phase3-input
+          path: phase3-input
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35211192698
+
+      - name: Download frozen fragility plan
+        uses: actions/download-artifact@v4
+        with:
+          name: fragility-plan
+          path: fragility
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35299124844
+
+      - name: Download frozen self qualification
+        uses: actions/download-artifact@v4
+        with:
+          name: self-qualification
+          path: self
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35244879828
+
+      - name: Verify orchestration-only equivalence and frozen prerequisites
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          scheduler=json.loads(Path("ops/fragility_lane_scheduler_receipt_20260918.json").read_text())
+          plan=json.loads(Path("fragility/execution_plan.json").read_text())
+          selfq=json.loads(Path("self/qualification.json").read_text())
+          auth=json.loads(Path("phase3-input/authorization.json").read_text())
+
+          assert scheduler["schema"] == "ttf_phylogatr_fragility_lane_scheduler_receipt_v0.1"
+          assert scheduler["trigger"]["fragility_metric_values_inspected_before_lane_freeze"] is False
+          assert scheduler["execution_equivalence"]["world_identity_changed"] is False
+          assert scheduler["execution_equivalence"]["shard_boundary_changed"] is False
+          assert scheduler["execution_equivalence"]["statistic_changed"] is False
+          assert all(v is False for v in scheduler["authority_firewall"].values())
+          assert all(v is False for v in scheduler["outcome_firewall"].values())
+
+          assert plan["schema"] == "ttf_genetic_phylogatr_gate_d_fragility_execution_plan_v0.1"
+          assert plan["formal_anchor"]["formal_status"] == "PASS"
+          assert plan["confirmatory_sequence_identity_opened"] is False
+          assert plan["confirmatory_pairwise_genetic_distances_opened"] is False
+          assert plan["confirmatory_ttf_statistic_opened"] is False
+          assert selfq["status"] == "PASS" and selfq["passed"] is True
+          assert auth["schema"] == "ttf_genetic_phylogatr_phase3_gate_d_authorization_v0.1"
+
+          levels=[x for x in plan["levels"] if x["status"] == "SYNTHETIC_DIAGNOSTIC_RUNNABLE"]
+          refs=[j for level in levels for j in level["reference_jobs"]]
+          obs=[j for level in levels for j in level["observed_jobs"]]
+          assert [float(x["retention_fraction"]) for x in levels] == [0.875,0.75,0.625,0.5]
+          assert len(refs) == 256
+          assert len(obs) == 40
+
+          for script in (
+              Path("scripts/run_phylogatr_gate_d_fragility_reference_shard.py"),
+              Path("scripts/run_phylogatr_gate_d_fragility_observed_shard.py"),
+          ):
+              source=script.read_text()
+              assert "prepare_phylogatr_compact_ttf_design" in source
+              assert "prepare_phylogatr_compact_cached_transfer" in source
+              assert "score_phylogatr_compact_world_batch" in source
+              assert "prepare_genetic_ttf_design(" not in source
+              assert "score_genetic_world_batch(" not in source
+          PY
+
+      - name: Bundle response-blind execution inputs
+        run: |
+          mkdir -p execution-bundle
+          cp -a phase3-input execution-bundle/
+          cp -a fragility execution-bundle/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fragility-lane-input
+          path: execution-bundle/
+          retention-days: 2
+
+  reference_lanes:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        lane: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: fragility-lane-input
+          path: bundle
+
+      - name: Execute exact frozen reference shards assigned to lane
+        env:
+          LANE: ${{ matrix.lane }}
+          NUMBA_NUM_THREADS: "2"
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+
+          lane=int(os.environ["LANE"])
+          plan=json.loads(Path("bundle/fragility/execution_plan.json").read_text())
+          flat=[]
+          for level in plan["levels"]:
+              if level["status"] != "SYNTHETIC_DIAGNOSTIC_RUNNABLE":
+                  continue
+              retention=float(level["retention_fraction"])
+              rlabel=str(level["retention_label"]).replace(".","p")
+              for job in level["reference_jobs"]:
+                  flat.append((retention,rlabel,job))
+
+          selected=[entry for i,entry in enumerate(flat) if i % 20 == lane]
+          assert selected, lane
+          print(f"lane={lane} exact_reference_shards={len(selected)}")
+          for retention,rlabel,job in selected:
+              label=str(job["configuration"])
+              start=int(job["start"]); stop=int(job["stop"])
+              output=Path("out") / f"ref_{rlabel}_{label}_{start}_{stop}.json"
+              cmd=[
+                  "python","scripts/run_phylogatr_gate_d_fragility_reference_shard.py",
+                  "--execution-plan","bundle/fragility/execution_plan.json",
+                  "--geometry-dir","bundle/fragility",
+                  "--phase2-manifest","bundle/phase3-input/phase2_manifest.json",
+                  "--phase3-rule","docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json",
+                  "--retention",repr(retention),
+                  "--config-label",label,
+                  "--start",str(start),
+                  "--stop",str(stop),
+                  "--output",str(output),
+              ]
+              print("RUN",retention,label,start,stop,flush=True)
+              subprocess.run(cmd,check=True)
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frag-lane-ref-${{ matrix.lane }}
+          path: out/*.json
+          retention-days: 2
+
+  aggregate_references:
+    needs: [prepare, reference_lanes]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include:
+          - retention: 0.875
+            label: 0p875
+          - retention: 0.75
+            label: 0p75
+          - retention: 0.625
+            label: 0p625
+          - retention: 0.5
+            label: 0p5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: fragility-lane-input
+          path: bundle
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: frag-lane-ref-*
+          path: ref-shards
+          merge-multiple: true
+
+      - name: Aggregate complete frozen reference family
+        run: |
+          set -euo pipefail
+          python scripts/aggregate_phylogatr_gate_d_fragility_references.py \
+            --input-dir ref-shards \
+            --execution-plan bundle/fragility/execution_plan.json \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --retention '${{ matrix.retention }}' \
+            --output 'references_${{ matrix.label }}.json'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frag-lane-references-${{ matrix.label }}
+          path: references_${{ matrix.label }}.json
+          retention-days: 2
+
+  observed_lanes:
+    needs: [prepare, aggregate_references]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        lane: [0,1,2,3,4,5,6,7,8,9]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: fragility-lane-input
+          path: bundle
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: frag-lane-references-*
+          path: refs
+          merge-multiple: true
+
+      - name: Execute exact frozen observed shards assigned to lane
+        env:
+          LANE: ${{ matrix.lane }}
+          NUMBA_NUM_THREADS: "2"
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+
+          lane=int(os.environ["LANE"])
+          plan=json.loads(Path("bundle/fragility/execution_plan.json").read_text())
+          flat=[]
+          for level in plan["levels"]:
+              if level["status"] != "SYNTHETIC_DIAGNOSTIC_RUNNABLE":
+                  continue
+              retention=float(level["retention_fraction"])
+              rlabel=str(level["retention_label"]).replace(".","p")
+              for job in level["observed_jobs"]:
+                  flat.append((retention,rlabel,job))
+
+          selected=[entry for i,entry in enumerate(flat) if i % 10 == lane]
+          assert selected, lane
+          print(f"lane={lane} exact_observed_shards={len(selected)}")
+          for retention,rlabel,job in selected:
+              shared=float(job["shared_fraction"])
+              amplitude=float(job["residual_amplitude"])
+              start=int(job["start"]); stop=int(job["stop"])
+              cell=(f"s{shared:g}_a{amplitude:g}").replace(".","p")
+              output=Path("out") / f"obs_{rlabel}_{cell}_{start}_{stop}.json"
+              refs=Path("refs") / f"references_{rlabel}.json"
+              assert refs.is_file(), refs
+              cmd=[
+                  "python","scripts/run_phylogatr_gate_d_fragility_observed_shard.py",
+                  "--execution-plan","bundle/fragility/execution_plan.json",
+                  "--geometry-dir","bundle/fragility",
+                  "--phase2-manifest","bundle/phase3-input/phase2_manifest.json",
+                  "--phase3-rule","docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json",
+                  "--retention",repr(retention),
+                  "--references",str(refs),
+                  "--shared-fraction",repr(shared),
+                  "--residual-amplitude",repr(amplitude),
+                  "--start",str(start),
+                  "--stop",str(stop),
+                  "--output",str(output),
+              ]
+              print("RUN",retention,shared,amplitude,start,stop,flush=True)
+              subprocess.run(cmd,check=True)
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frag-lane-obs-${{ matrix.lane }}
+          path: out/*.json
+          retention-days: 2
+
+  curve:
+    needs: [prepare, observed_lanes]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: fragility-lane-input
+          path: bundle
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: frag-lane-obs-*
+          path: observed
+          merge-multiple: true
+
+      - name: Aggregate complete diagnostic fragility curve
+        run: |
+          set -euo pipefail
+          python scripts/aggregate_phylogatr_gate_d_fragility_curve.py \
+            --input-dir observed \
+            --execution-plan bundle/fragility/execution_plan.json \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --output fragility_curve.json
+          python - <<'PY'
+          import json
+          q=json.load(open("fragility_curve.json"))
+          assert q["schema"] == "ttf_genetic_phylogatr_gate_d_fragility_curve_v0.1"
+          assert q["status"] == "DIAGNOSTIC_FRAGILITY_CURVE_COMPLETE"
+          assert q["formal_full_geometry_status"] == "PASS"
+          assert [float(x["retention_fraction"]) for x in q["curve"]] == [1.0,0.875,0.75,0.625,0.5]
+          assert q["confirmatory_sequence_identity_opened"] is False
+          assert q["confirmatory_pairwise_genetic_distances_opened"] is False
+          assert q["confirmatory_ttf_statistic_opened"] is False
+          assert q["formal_gate_d_decision_made_by_this_curve"] is False
+          assert q["phase4_identity_opening_authorized_by_this_curve"] is False
+          assert q["diagnostic_completion_is_procedural_prerequisite_only"] is True
+          print(json.dumps({
+              "status":q["status"],
+              "formal_full_geometry_status":q["formal_full_geometry_status"],
+              "retentions":[x["retention_fraction"] for x in q["curve"]],
+              "identity_opened":q["confirmatory_sequence_identity_opened"],
+          },sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fragility-curve-lanes
+          path: fragility_curve.json
+          retention-days: 2
