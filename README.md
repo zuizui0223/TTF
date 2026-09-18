@@ -8,19 +8,20 @@ TTF is a standalone, trait-agnostic methods repository for asking whether **with
 
 The active genetic question is whether **within-species genetic differentiation learned from training species predicts differentiation in unseen species beyond the declared IBD adjustment**.
 
-The canonical state is [`genetic_empirical_opening_state_v0.3.json`](benchmarks/frozen/genetic_empirical_opening_state_v0.3.json). The [manuscript spine](docs/GENETIC_TTF_MANUSCRIPT_SPINE.md) and [pre-data draft](manuscript/genetic_ttf_flagship_v0.1.md) preserve the outcome firewall.
+The terminal fresh genetic state is [`genetic_phylogatr_phase4_empirical_handoff_v0.1.json`](benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json). The [pre-data manuscript spine](docs/GENETIC_TTF_MANUSCRIPT_SPINE.md) is preserved as the outcome-blind contract; the resolved empirical draft is [`genetic_ttf_flagship_v0.2.md`](manuscript/genetic_ttf_flagship_v0.2.md).
 
 | Layer | Frozen state | Meaning |
 | --- | --- | --- |
 | Decker development cross-species Gate-D | `NOT_EVALUABLE` | Private-A3 Wilson upper 0.1003347533 exceeds 0.10; shared-A2 power lower 0.8355052093 passes 0.80. |
-| Decker within-species self-detectability | Synthetic `PASS` | Detectability on the declared simulated family, not a measured genetic result. |
-| Fresh phylogatR Phases 1–4 | Implemented; awaiting untouched authenticated archive | No fresh empirical genetic transfer conclusion exists. |
+| Decker within-species self-detectability | Synthetic `PASS` | Detectability on the declared simulated family; Decker genetic outcomes remain unopened. |
+| Fresh phylogatR Phase 1 | exact response-blind regeneration `PASS` | 250 species; regenerated manifest and geometry are byte-identical to the original frozen Phase 1. |
+| Fresh phylogatR Phase 2 | `PASS_TO_SYNTHETIC_GATE` | 211 survivors; inherited split becomes 103 training / 108 evaluation species without resplitting. |
+| Fresh phylogatR Phase 3 | Gate-D `PASS`; self `PASS` | Cross-species Type-I upper 0.06808; shared-A2 power lower 0.97139; self Type-I upper 0.08895 and private-A2 power lower 0.99238. |
+| Fresh phylogatR Phase 4 | `EMPIRICAL_PHASE4_COMPLETE` | `place_beyond_ibd`: T=0.03257, p=0.7393; calibrated self test p=0.00899. Frozen decision: `LINEAGE_CONDITIONED_SPATIAL_STRUCTURE_WITHIN_TESTED_DOMAIN`. |
 
-The next empirical step is response-blind Phase 1 on an untouched authenticated phylogatR archive, tracked in [issue #21](https://github.com/zuizui0223/TTF/issues/21). Phase 1 reads provenance, headers and geometry. Phase 2 may open character-validity masks after Phase-1 PASS; nucleotide identity requires complete Phase-3 qualification on the exact surviving geometry. The Decker empirical outcomes remain closed under the failed design.
+The fresh confirmatory route is complete. The empirical result is a qualified non-detection of cross-species post-IBD transfer together with significant within-species self-detectability relative to its frozen structural null. The numerical self statistic is negative, so it must not be described as a positive raw correlation; the inference is null-relative. The Decker empirical outcomes remain closed under the failed design, and the one-shot fresh result may not be retuned or rerun for result selection.
 
-Anonymous portal access, BOLD contingency access and public GitHub source substitution have frozen closure/hold decisions. Resume those searches only on new external evidence of an untouched archive or a material service-access change.
-
-The earlier trait and paired-state qualification history follows below; it does not authorize the genetic empirical route.
+The earlier trait and paired-state qualification history follows below; it is separate from this completed genetic result.
 
 ## Core estimand
 
@@ -184,9 +185,9 @@ pytest -q
 
 ## Current claim ceiling
 
-TTF currently licenses bounded method statements only.
+TTF licenses bounded method statements plus one frozen fresh genetic empirical conclusion.
 
-- Genetic TTF has a frozen prospective route, but no empirical genetic transfer conclusion; Decker Gate-D remains `NOT_EVALUABLE`.
+- Genetic TTF: on the exact fresh phylogatR COI/COX1 panel, the qualified primary test did not detect cross-species post-IBD transfer (`T=0.03257`, profiled-private `p=0.7393`), while the separately qualified within-species self test was significant relative to its frozen null (`p=0.00899`). This is consistent with lineage-conditioned spatial structure within the tested domain, not proof of universal zero transfer or a specific historical cause. Decker Gate-D remains `NOT_EVALUABLE` and its empirical genetic outcomes remain closed.
 - Core TTF v0.11 is qualified on its declared synthetic/frozen-geometry design.
 - The actual flower-colour route stopped at v0.12 as **NOT EVALUABLE before any empirical TTF statistic was opened**.
 - TTF-M and TTF-C are both qualified on their balanced idealized family, and Q4.1 passes its strict-private directional family.
