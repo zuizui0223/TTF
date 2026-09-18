@@ -1,0 +1,28 @@
+name: repo snapshot transfer
+
+on:
+  push:
+    branches:
+      - "method/repo-snapshot-transfer-20260918"
+  workflow_dispatch:
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Freeze checkout snapshot
+        run: |
+          git rev-parse HEAD > /tmp/repo_snapshot_head.txt
+          tar --exclude=.git -czf /tmp/TTF-repo-snapshot.tar.gz .
+          sha256sum /tmp/TTF-repo-snapshot.tar.gz > /tmp/TTF-repo-snapshot.tar.gz.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-repo-snapshot
+          path: |
+            /tmp/TTF-repo-snapshot.tar.gz
+            /tmp/TTF-repo-snapshot.tar.gz.sha256
+            /tmp/repo_snapshot_head.txt
+          if-no-files-found: error
