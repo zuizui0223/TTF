@@ -1,0 +1,288 @@
+name: fresh phylogatR fragility diagnostic
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      reference_matrix: ${{ steps.plan.outputs.reference_matrix }}
+      retention_matrix: ${{ steps.plan.outputs.retention_matrix }}
+      observed_matrix: ${{ steps.plan.outputs.observed_matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - name: Download exact formal Phase3 input
+        uses: actions/download-artifact@v4
+        with:
+          name: phase3-input
+          path: phase3-input
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35211192698
+      - name: Download exact formal Gate-D qualification
+        uses: actions/download-artifact@v4
+        with:
+          name: phase3-qualification
+          path: formal-qualification
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35211192698
+      - name: Download completed self-detectability qualification
+        uses: actions/download-artifact@v4
+        with:
+          name: self-qualification
+          path: self-qualification
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35244879828
+      - name: Verify response-blind preconditions and build fragility plan
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          auth=json.loads(Path('phase3-input/authorization.json').read_text())
+          q=json.loads(Path('formal-qualification/qualification.json').read_text())
+          sq=json.loads(Path('self-qualification/qualification.json').read_text())
+          assert auth['schema']=='ttf_genetic_phylogatr_phase3_gate_d_authorization_v0.1'
+          assert q['schema']=='ttf_genetic_phylogatr_phase3_qualification_v0.1'
+          assert q['status']=='PASS' and q['passed'] is True
+          assert sq['schema']=='ttf_genetic_phylogatr_phase3_self_qualification_v0.1'
+          assert sq['status']=='PASS' and sq['passed'] is True
+          for payload in (auth,q,sq):
+              for key in ('confirmatory_sequence_identity_opened','confirmatory_pairwise_genetic_distances_opened'):
+                  if key in payload:
+                      assert payload[key] is False
+          rule=json.loads(Path('docs/supporting/genetic_phylogatr_fragility_compact_execution_v0.1.json').read_text())
+          assert rule['status']=='FROZEN_AFTER_GATE_D_AND_SELF_PASS_BEFORE_FRAGILITY_SYNTHETIC_RESULT_OR_IDENTITY_OPENING'
+          assert all(v is False for v in rule['firewall'].values())
+          for script in (
+              Path('scripts/run_phylogatr_gate_d_fragility_reference_shard.py'),
+              Path('scripts/run_phylogatr_gate_d_fragility_observed_shard.py'),
+          ):
+              src=script.read_text()
+              assert 'prepare_phylogatr_compact_ttf_design' in src
+              assert 'prepare_phylogatr_compact_cached_transfer' in src
+              assert 'score_phylogatr_compact_world_batch' in src
+              assert 'prepare_genetic_ttf_design(' not in src
+          PY
+          python scripts/plan_phylogatr_gate_d_fragility.py \
+            --geometry phase3-input/phase2_geometry.csv \
+            --phase2-manifest phase3-input/phase2_manifest.json \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --fragility-rule docs/supporting/genetic_phylogatr_gate_d_fragility_diagnostic_v0.1.json \
+            --output-dir fragility-plan
+          python scripts/plan_phylogatr_gate_d_fragility_synthetic.py \
+            --geometry-plan-receipt fragility-plan/fragility_geometry_plan_receipt.json \
+            --phase2-manifest phase3-input/phase2_manifest.json \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --formal-qualification formal-qualification/qualification.json \
+            --execution-rule docs/supporting/genetic_phylogatr_gate_d_fragility_execution_v0.1.json \
+            --output fragility-plan/execution_plan.json
+      - name: Emit exact dynamic matrices
+        id: plan
+        run: |
+          set -euo pipefail
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          p=json.load(open('fragility-plan/execution_plan.json'))
+          assert p['schema']=='ttf_genetic_phylogatr_gate_d_fragility_execution_plan_v0.1'
+          assert p['formal_anchor']['formal_status']=='PASS'
+          refs=[]; obs=[]; levels=[]
+          for level in p['levels']:
+              if level['status']!='SYNTHETIC_DIAGNOSTIC_RUNNABLE':
+                  continue
+              r=float(level['retention_fraction'])
+              label=str(level['retention_label'])
+              levels.append({'retention':r,'retention_label':label})
+              for job in level['reference_jobs']:
+                  refs.append({'retention':r,'retention_label':label,**job})
+              for job in level['observed_jobs']:
+                  obs.append({'retention':r,'retention_label':label,**job})
+          assert levels, 'expected at least one runnable thinned fragility level'
+          assert len(refs) <= 256
+          print('reference_matrix='+json.dumps({'include':refs},separators=(',',':')))
+          print('retention_matrix='+json.dumps({'include':levels},separators=(',',':')))
+          print('observed_matrix='+json.dumps({'include':obs},separators=(',',':')))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fragility-input
+          path: |
+            phase3-input/
+            formal-qualification/
+            self-qualification/
+            fragility-plan/
+          retention-days: 1
+
+  references:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 64
+      matrix: ${{ fromJSON(needs.prepare.outputs.reference_matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: fragility-input
+          path: input
+      - name: Run diagnostic private-reference shard
+        env:
+          NUMBA_NUM_THREADS: '2'
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python scripts/run_phylogatr_gate_d_fragility_reference_shard.py \
+            --execution-plan input/fragility-plan/execution_plan.json \
+            --geometry-dir input/fragility-plan \
+            --phase2-manifest input/phase3-input/phase2_manifest.json \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --retention '${{ matrix.retention }}' \
+            --config-label '${{ matrix.configuration }}' \
+            --start '${{ matrix.start }}' \
+            --stop '${{ matrix.stop }}' \
+            --output 'out/ref_${{ matrix.retention_label }}_${{ matrix.configuration }}_${{ matrix.start }}_${{ matrix.stop }}.json'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frag-ref-${{ matrix.retention_label }}-${{ matrix.configuration }}-${{ matrix.start }}-${{ matrix.stop }}
+          path: out/*.json
+          retention-days: 1
+
+  aggregate_references:
+    needs: [prepare, references]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.prepare.outputs.retention_matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: fragility-input
+          path: input
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: frag-ref-${{ matrix.retention_label }}-*
+          path: refs
+          merge-multiple: true
+      - name: Aggregate reference family at retention
+        run: |
+          set -euo pipefail
+          python scripts/aggregate_phylogatr_gate_d_fragility_references.py \
+            --input-dir refs \
+            --execution-plan input/fragility-plan/execution_plan.json \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --retention '${{ matrix.retention }}' \
+            --output references.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frag-refs-${{ matrix.retention_label }}
+          path: references.json
+          retention-days: 1
+
+  observed:
+    needs: [prepare, aggregate_references]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 40
+      matrix: ${{ fromJSON(needs.prepare.outputs.observed_matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: fragility-input
+          path: input
+      - uses: actions/download-artifact@v4
+        with:
+          name: frag-refs-${{ matrix.retention_label }}
+          path: refs
+      - name: Run diagnostic mandatory-cell shard
+        env:
+          NUMBA_NUM_THREADS: '2'
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python scripts/run_phylogatr_gate_d_fragility_observed_shard.py \
+            --execution-plan input/fragility-plan/execution_plan.json \
+            --geometry-dir input/fragility-plan \
+            --phase2-manifest input/phase3-input/phase2_manifest.json \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --retention '${{ matrix.retention }}' \
+            --references refs/references.json \
+            --shared-fraction '${{ matrix.shared_fraction }}' \
+            --residual-amplitude '${{ matrix.residual_amplitude }}' \
+            --start '${{ matrix.start }}' \
+            --stop '${{ matrix.stop }}' \
+            --output 'out/obs_${{ matrix.retention_label }}_${{ matrix.shared_fraction }}_${{ matrix.residual_amplitude }}_${{ matrix.start }}_${{ matrix.stop }}.json'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frag-obs-${{ matrix.retention_label }}-${{ strategy.job-index }}
+          path: out/*.json
+          retention-days: 1
+
+  curve:
+    needs: [prepare, observed]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: fragility-input
+          path: input
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: frag-obs-*
+          path: observed
+          merge-multiple: true
+      - name: Aggregate completed diagnostic curve
+        run: |
+          set -euo pipefail
+          python scripts/aggregate_phylogatr_gate_d_fragility_curve.py \
+            --input-dir observed \
+            --execution-plan input/fragility-plan/execution_plan.json \
+            --phase3-rule docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json \
+            --output fragility_curve.json
+          python - <<'PY'
+          import json
+          q=json.load(open('fragility_curve.json'))
+          assert q['status']=='DIAGNOSTIC_FRAGILITY_CURVE_COMPLETE'
+          assert q['formal_full_geometry_status']=='PASS'
+          assert q['confirmatory_sequence_identity_opened'] is False
+          assert q['confirmatory_pairwise_genetic_distances_opened'] is False
+          assert q['formal_gate_d_decision_made_by_this_curve'] is False
+          assert q['phase4_identity_opening_authorized_by_this_curve'] is False
+          assert q['diagnostic_completion_is_procedural_prerequisite_only'] is True
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fragility-curve
+          path: fragility_curve.json
+          retention-days: 1
