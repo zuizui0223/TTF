@@ -1,6 +1,8 @@
 # Genetic TTF flagship manuscript spine
 
-Status: **outcome-blind pre-data manuscript contract**.
+Status: **outcome-blind pre-data manuscript contract — preserved after opening**.
+
+**Post-opening resolution (2026-09-18):** the fresh route completed under the frozen contract and resolved to Branch B, `LINEAGE_CONDITIONED_SPATIAL_STRUCTURE_WITHIN_TESTED_DOMAIN`. Primary `place_beyond_ibd`: `T=0.0325655`, profiled-private `p=0.739261`; independently qualified within-species self test: `S=-0.226098`, upper-tail `p=0.008991`. The negative raw self-statistic sign is not interpreted against zero because the self test is calibrated against its frozen structural-null distribution. See `benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json` and `manuscript/genetic_ttf_flagship_v0.2.md`. The pre-data branch definitions below are retained unchanged as the audit trail.
 
 This document fixes the biological story, estimands, section order, figure logic, and result-interpretation branches for the genetic TTF flagship **before** a fresh confirmatory nucleotide identity or empirical TTF statistic is opened.
 
