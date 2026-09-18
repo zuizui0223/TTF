@@ -8,12 +8,18 @@ import json
 from pathlib import Path
 
 import matplotlib as mpl
+
 mpl.use("Agg")
 import matplotlib.pyplot as plt
 
 
 SCORES = Path("manuscript/generated/genetic_ttf_phase4_v0.1/species_scores.csv")
-HANDOFF = Path("benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json")
+EMPIRICAL_HANDOFF = Path(
+    "benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json"
+)
+PRE_EMPIRICAL_HANDOFF = Path(
+    "benchmarks/frozen/genetic_phylogatr_phase4_pre_empirical_handoff_v0.1.json"
+)
 OUTPUT = Path("manuscript/figures/genetic_phase4_v0.1")
 
 
@@ -27,8 +33,9 @@ def main() -> int:
 
     with SCORES.open(newline="") as handle:
         rows = list(csv.DictReader(handle))
-    handoff = json.loads(HANDOFF.read_text())
-    empirical = handoff["empirical_result"]
+    empirical_handoff = json.loads(EMPIRICAL_HANDOFF.read_text())
+    pre_empirical_handoff = json.loads(PRE_EMPIRICAL_HANDOFF.read_text())
+    empirical = empirical_handoff["empirical_result"]
 
     primary = sorted(float(row["post_ibd_transfer"]) for row in rows)
     mean_primary = sum(primary) / len(primary)
@@ -58,8 +65,8 @@ def main() -> int:
     fig.savefig(species_figure, format="svg", metadata={"Date": None})
     plt.close(fig)
 
-    cross = handoff["formal_phase3_gate_d"]
-    self_gate = handoff["self_detectability"]
+    cross = pre_empirical_handoff["formal_phase3_gate_d"]
+    self_gate = pre_empirical_handoff["self_detectability"]
     labels = [
         "Cross-species Type-I upper bound",
         "Within-species self Type-I upper bound",
@@ -121,7 +128,8 @@ def main() -> int:
         "post_result_retuning_performed": False,
         "input_sha256": {
             "species_scores.csv": _sha256(SCORES),
-            "phase4_empirical_handoff.json": _sha256(EMPIRICAL_HANDOFF),\n            "phase4_pre_empirical_handoff.json": _sha256(PRE_EMPIRICAL_HANDOFF),
+            "phase4_empirical_handoff.json": _sha256(EMPIRICAL_HANDOFF),
+            "phase4_pre_empirical_handoff.json": _sha256(PRE_EMPIRICAL_HANDOFF),
         },
         "output_sha256": {
             qualification_figure.name: _sha256(qualification_figure),
@@ -131,7 +139,12 @@ def main() -> int:
     (OUTPUT / "figure_manifest.json").write_text(
         json.dumps(manifest, indent=2, sort_keys=True) + "\n"
     )
-    print(json.dumps({"status": manifest["status"], "output": str(OUTPUT)}, sort_keys=True))
+    print(
+        json.dumps(
+            {"status": manifest["status"], "output": str(OUTPUT)},
+            sort_keys=True,
+        )
+    )
     return 0
 
 
