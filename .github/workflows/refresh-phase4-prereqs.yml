@@ -1,0 +1,106 @@
+name: refresh response-blind Phase4 prerequisites
+
+on:
+  push:
+    branches:
+      - ops/refresh-phase4-prereqs-20260918
+    paths:
+      - ".github/workflows/refresh-phase4-prereqs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Phase3 input
+        uses: actions/download-artifact@v4
+        with:
+          name: phase3-input
+          path: bundle/phase3-input
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35211192698
+
+      - name: Download formal Phase3 references
+        uses: actions/download-artifact@v4
+        with:
+          name: phase3-references
+          path: bundle/phase3-references
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35211192698
+
+      - name: Download formal Phase3 qualification
+        uses: actions/download-artifact@v4
+        with:
+          name: phase3-qualification
+          path: bundle/phase3-qualification
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35211192698
+
+      - name: Download self references
+        uses: actions/download-artifact@v4
+        with:
+          name: self-references
+          path: bundle/self-references
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35244879828
+
+      - name: Download self qualification
+        uses: actions/download-artifact@v4
+        with:
+          name: self-qualification
+          path: bundle/self-qualification
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35244879828
+
+      - name: Verify all empirical firewalls remain closed
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          p3refs=json.loads(Path("bundle/phase3-references/references.json").read_text())
+          p3q=json.loads(Path("bundle/phase3-qualification/qualification.json").read_text())
+          srefs=json.loads(Path("bundle/self-references/references.json").read_text())
+          sq=json.loads(Path("bundle/self-qualification/qualification.json").read_text())
+          auth=json.loads(Path("bundle/phase3-input/authorization.json").read_text())
+
+          assert auth["schema"] == "ttf_genetic_phylogatr_phase3_gate_d_authorization_v0.1"
+          assert p3refs["schema"] == "ttf_genetic_phylogatr_phase3_references_v0.1"
+          assert p3refs["status"] == "ordered_private_reference_families_complete"
+          assert p3q["schema"] == "ttf_genetic_phylogatr_phase3_qualification_v0.1"
+          assert p3q["status"] == "PASS" and p3q["passed"] is True
+          assert srefs["schema"] == "ttf_genetic_phylogatr_phase3_self_references_v0.1"
+          assert srefs["status"] == "complete_independent_null_reference"
+          assert sq["schema"] == "ttf_genetic_phylogatr_phase3_self_qualification_v0.1"
+          assert sq["status"] == "PASS" and sq["passed"] is True
+
+          for payload in (p3refs,p3q,srefs,sq):
+              assert payload["confirmatory_sequence_identity_opened"] is False
+              assert payload["confirmatory_pairwise_genetic_distances_opened"] is False
+          assert p3q["confirmatory_ttf_statistic_opened"] is False
+          assert sq["confirmatory_ttf_statistic_opened"] is False
+
+          fp=auth["geometry_fingerprint_sha256"]
+          assert p3refs["geometry_fingerprint_sha256"] == fp
+          assert p3q["geometry_fingerprint_sha256"] == fp
+          assert srefs["geometry_fingerprint_sha256"] == fp
+          assert sq["geometry_fingerprint_sha256"] == fp
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase4-response-blind-prereqs
+          path: bundle/
+          retention-days: 2
