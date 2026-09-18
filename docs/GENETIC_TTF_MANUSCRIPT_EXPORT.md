@@ -1,5 +1,7 @@
 # Genetic TTF result-to-manuscript export
 
+Current terminal state: the exporter has been run on the frozen fresh Phase-4 receipt chain (103 training / 108 evaluation species; Branch B), and the validated scalar prose is incorporated into `manuscript/genetic_ttf_flagship_v0.2.md`.
+
 The exporter converts already-completed scalar receipts into a manuscript Results passage and a complete evaluation-species table. It does not read FASTA/occurrence files, fit a model, recompute a test, qualify a geometry, or authorize identity opening.
 
 ## Empirical report
@@ -29,7 +31,7 @@ The output directory must be new. Validation happens before any report files are
 
 ## Closed or non-evaluable route
 
-The current repository state can be reported without empirical data:
+Historical or failed routes can still be reported without empirical data:
 
 ```bash
 PYTHONPATH=src python scripts/export_genetic_ttf_manuscript.py \
@@ -52,10 +54,10 @@ The report checks consistency of supplied frozen receipts, not their external au
 - Duplicate JSON keys, non-finite numbers, missing species and contradictory receipts are rejected.
 - The Results text is selected from validated numeric/boolean fields. Free-form `interpretation` text in the input is not copied.
 
-A significant transfer result supports predictive geographic information within the qualified domain. It does not causally distinguish place from shared demographic history. A qualified non-significant result with qualified positive self support is described as **consistent with** lineage conditioning, not proof of zero transfer.
+A significant transfer result supports predictive geographic information within the qualified domain. It does not causally distinguish place from shared demographic history. A qualified non-significant result with qualified significant self support is described as **consistent with** lineage conditioning, not proof of zero transfer. The self statistic uses a frozen upper-tail structural-null reference; its raw numerical sign is not interpreted against zero.
 
 The runner remains covered by existing Phase-4 authorization code hashes. The exporter is downstream reporting software: it cannot reopen or rerun the empirical analysis. This change does not revise any frozen gate, null family or source-access restriction.
 
 ## Development evidence
 
-The tests use fabricated numeric reporting fixtures and the real canonical closed opening-state receipt. They exercise all decision branches, alpha-boundary behavior, complete species tables, unavailable descriptors, mismatched receipt hashes, incorrect species means, forged pass labels with failing bounds, source-integrity drift, JSON ambiguity, CLI behavior, input immutability and overwrite refusal. No empirical genetic result has been generated during development.
+The tests use fabricated numeric reporting fixtures plus frozen receipts. They exercise all decision branches, alpha-boundary behavior, complete species tables, unavailable descriptors, mismatched receipt hashes, incorrect species means, forged pass labels with failing bounds, source-integrity drift, JSON ambiguity, CLI behavior, input immutability and overwrite refusal. The terminal empirical export was generated only after the one-shot Phase-4 result had been frozen.
