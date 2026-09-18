@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
@@ -12,6 +13,10 @@ from ttf.precision import wilson_interval
 
 RULE_SCHEMA = "ttf_genetic_conditional_order_qualification_rule_v0.1"
 SHARD_SCHEMA = "ttf_genetic_conditional_order_qualification_shard_v0.1"
+
+
+def sha256_path(path: Path) -> str:
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def load_json(path: Path, schema: str) -> dict:
@@ -39,6 +44,7 @@ def main() -> int:
     args = parser.parse_args()
 
     rule = load_json(args.rule, RULE_SCHEMA)
+    actual_rule_sha = sha256_path(args.rule)
     cells = expected_cells(rule)
     by_cell: dict[str, dict[int, dict]] = {name: {} for name in cells}
     metadata: dict[str, tuple[str, str, int]] = {}
@@ -86,6 +92,8 @@ def main() -> int:
         geometry_csv_sha,
         n_eval_species,
     ) = next(iter(metadata.items()))
+    if rule_sha != actual_rule_sha:
+        raise RuntimeError("qualification shard rule hash does not match supplied frozen rule")
 
     results = {}
     for name, spec in cells.items():
