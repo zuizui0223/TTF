@@ -202,6 +202,19 @@ def test_failed_phases_do_not_become_biological_nulls(tmp_path, schema, status):
     with pytest.raises(ValueError): build_closed_export(path)
 
 
+
+def test_negative_self_statistic_is_reported_null_relative(tmp_path):
+    paths = _chain(tmp_path, primary_p=0.2, self_p=0.01, qualified=True)
+    payload = json.loads(paths['result'].read_text())
+    payload['within_species_self_diagnostic']['statistic'] = -0.25
+    for name in payload['within_species_self_diagnostic']['species_scores']:
+        payload['within_species_self_diagnostic']['species_scores'][name] = -0.25
+    _write(paths['result'], payload)
+    report = build_empirical_export(**paths)
+    assert 'structural-null reference' in report.markdown
+    assert 'raw numerical sign is not interpreted against zero' in report.markdown
+    assert report.manifest['decision'] == 'LINEAGE_CONDITIONED_SPATIAL_STRUCTURE_WITHIN_TESTED_DOMAIN'
+
 def test_duplicate_json_keys_rejected(tmp_path):
     path = tmp_path / 'bad.json'
     path.write_text('{"status":"PASS","status":"NOT_EVALUABLE"}')
