@@ -64,6 +64,9 @@ def test_conditional_order_qualification_is_frozen_before_outcomes() -> None:
     assert panel["empirical_sequence_identity_opened"] is False
     assert panel["empirical_genetic_outcome_opened"] is False
 
+    assert panel["geometry_csv_sha256"] == "d4affc28a2f9da89d0566b0f52123f4711009c99e985baff9f44767da996a9cd"
+    assert panel["geometry_manifest_sha256"] == "f78bc6fa735010270db287764be0f818ef09ce416b00e0cb0c1aa1f00f7513ac"
+
     estimator = rule["frozen_estimator"]
     assert estimator["support_radius_km"] == 500.0
     assert estimator["minimum_target_coverage"] == 0.25
