@@ -19,7 +19,7 @@ def _sha256(path: Path) -> str:
 
 def test_frozen_phase4_figures_are_receipt_backed_descriptions() -> None:
     manifest = json.loads((FIGURES / "figure_manifest.json").read_text())
-    handoff = json.loads(HANDOFF.read_text())
+    handoff = json.loads(EMPIRICAL_HANDOFF.read_text())\n    pre_handoff = json.loads(PRE_EMPIRICAL_HANDOFF.read_text())
     rows = list(csv.DictReader(SCORES.open(newline="")))
 
     assert manifest["schema"] == "ttf_genetic_phase4_figure_manifest_v0.1"
@@ -29,7 +29,7 @@ def test_frozen_phase4_figures_are_receipt_backed_descriptions() -> None:
     assert manifest["evaluation_species_count"] == len(rows) == 108
 
     assert manifest["input_sha256"]["species_scores.csv"] == _sha256(SCORES)
-    assert manifest["input_sha256"]["phase4_empirical_handoff.json"] == _sha256(HANDOFF)
+    assert manifest["input_sha256"]["phase4_empirical_handoff.json"] == _sha256(EMPIRICAL_HANDOFF)\n    assert manifest["input_sha256"]["phase4_pre_empirical_handoff.json"] == _sha256(PRE_EMPIRICAL_HANDOFF)
     assert (
         manifest["terminal_empirical_result_sha256"]
         == handoff["empirical_result"]["result_json_sha256"]
