@@ -1,0 +1,46 @@
+{
+  "schema": "ttf_genetic_phylogatr_fragility_compact_execution_v0.1",
+  "status": "FROZEN_AFTER_GATE_D_AND_SELF_PASS_BEFORE_FRAGILITY_SYNTHETIC_RESULT_OR_IDENTITY_OPENING",
+  "purpose": "Use the already-validated exact compact endpoint-safe rank-IBD plus blocked private-strength execution for the response-blind fragility diagnostic, because the original fragility scripts still instantiate the historical quadratic IBD cache on large thinned geometries.",
+  "trigger": {
+    "formal_gate_d_status": "PASS",
+    "self_detectability_status": "PASS",
+    "fragility_synthetic_result_seen_before_amendment": false,
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "computational_defect": "The frozen fragility reference and observed CLIs still called prepare_genetic_ttf_design and therefore recreated the quadratic endpoint-safe IBD cache that was already shown to exceed the execution memory ceiling on the fresh panel."
+  },
+  "equivalence_contract": {
+    "estimand": "unchanged diagnostic synthetic TTF statistic and private-strength profile on each frozen thinned geometry",
+    "ibd_execution": "same exact compact endpoint-safe rank-IBD implementation validated against the historical reference implementation",
+    "private_strength_execution": "same exact blocked nearest-midpoint indices already validated against the dense implementation",
+    "transfer_execution": "same cached chunked transfer estimator",
+    "retention_fractions": "unchanged",
+    "thinned_geometries": "unchanged",
+    "reference_family": "unchanged",
+    "mandatory_cells": "unchanged",
+    "world_counts": "unchanged",
+    "seed_namespaces": "unchanged",
+    "alpha_and_wilson_reference_lines": "unchanged"
+  },
+  "scope": {
+    "fragility_reference_cli": true,
+    "fragility_observed_cli": true,
+    "formal_gate_d_decision": false,
+    "self_detectability_decision": false,
+    "phase4_identity_opening": false,
+    "empirical_genetic_test": false
+  },
+  "authority": {
+    "can_change_formal_gate_d_status": false,
+    "can_change_self_detectability_status": false,
+    "can_authorize_phase4": false,
+    "can_rescue_not_evaluable": false
+  },
+  "firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_empirical_ttf_statistic_opened": false,
+    "fragility_synthetic_result_seen_before_amendment": false
+  }
+}
