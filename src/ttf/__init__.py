@@ -13,11 +13,16 @@ from .calibration import (
     run_geometry_calibration,
 )
 from .conditional_transfer import (
+    CachedTargetConditionedTransferGeometry,
     ConditionalIncrementBatch,
     ConditionalIncrementInference,
     TargetSourcePoolDesign,
     infer_conditioning_increment,
+    prepare_cached_target_conditioned_transfer,
     prepare_target_source_pools,
+    score_cached_conditioning_increment_batch,
+    score_cached_pool_difference_batch,
+    score_cached_target_conditioned_batch,
     score_conditioning_increment_batch,
     score_pool_difference_batch,
     score_target_conditioned_batch,
@@ -85,6 +90,7 @@ from .transfer import (
 )
 
 __all__ = [
+    "CachedTargetConditionedTransferGeometry",
     "CalibrationCell",
     "ConditionalIncrementBatch",
     "ConditionalIncrementInference",
@@ -122,7 +128,11 @@ __all__ = [
     "heldout_species_bootstrap_test",
     "inclusion_counts",
     "infer_conditioning_increment",
+    "prepare_cached_target_conditioned_transfer",
     "prepare_target_source_pools",
+    "score_cached_conditioning_increment_batch",
+    "score_cached_pool_difference_batch",
+    "score_cached_target_conditioned_batch",
     "score_conditioning_increment_batch",
     "score_pool_difference_batch",
     "score_target_conditioned_batch",
