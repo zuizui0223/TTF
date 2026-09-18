@@ -36,6 +36,9 @@ PHASE4_CODE_PATHS = (
     "scripts/aggregate_phylogatr_gate_d_fragility_curve.py",
     "scripts/authorize_phylogatr_phase4_identity_opening.py",
     "scripts/run_phylogatr_phase4_empirical_test.py",
+    "scripts/run_phylogatr_projected_phase4_empirical_test.py",
+    "src/ttf/phylogatr_source_projection.py",
+    "docs/supporting/genetic_phylogatr_source_projection_rule_v0.1.json",
     "docs/supporting/genetic_phylogatr_phase4_compact_execution_v0.1.json",
 )
 
