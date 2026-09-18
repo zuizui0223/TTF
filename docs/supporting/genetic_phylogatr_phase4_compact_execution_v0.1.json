@@ -1,0 +1,46 @@
+{
+  "schema": "ttf_genetic_phylogatr_phase4_compact_execution_v0.1",
+  "status": "FROZEN_BEFORE_PHASE4_IDENTITY_OPENING_OR_EMPIRICAL_RESULT",
+  "purpose": "Execute the one authorized fresh phylogatR empirical genetic test with the same exact compact endpoint-safe rank-IBD and blocked private-strength implementation already qualified response-blind, avoiding the historical quadratic IBD cache after nucleotide identity is opened.",
+  "trigger": {
+    "formal_gate_d_status": "PASS",
+    "self_detectability_status": "PASS",
+    "fragility_procedural_completion_at_freeze": false,
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_empirical_ttf_statistic_opened": false,
+    "computational_defect": "The pre-existing Phase4 empirical CLI called prepare_genetic_ttf_design only after identity opening, which would recreate the quadratic endpoint-safe IBD cache on the exact 211-species geometry and risk opening identity without producing the frozen empirical decision."
+  },
+  "equivalence_contract": {
+    "primary_estimand": "unchanged place-beyond-IBD TTF statistic",
+    "within_species_self_diagnostic": "unchanged frozen self-field statistic",
+    "total_genetic_transfer_descriptor": "unchanged descriptive raw-distance transfer",
+    "ibd_execution": "same exact compact endpoint-safe rank-IBD implementation validated against the historical reference implementation",
+    "private_strength_execution": "same exact blocked nearest-midpoint indices validated against the dense implementation",
+    "transfer_kernel": "same frozen chunked transfer geometry and bandwidth",
+    "species_geometry_split": "unchanged",
+    "reference_family_and_pvalue": "unchanged",
+    "alpha_and_interpretation": "unchanged"
+  },
+  "scope": {
+    "phase4_empirical_primary": true,
+    "phase4_empirical_self": true,
+    "phase4_descriptive_total": true,
+    "formal_gate_d": false,
+    "self_qualification": false,
+    "fragility_diagnostic": false,
+    "identity_opening_decision": false
+  },
+  "authority": {
+    "can_authorize_identity_opening": false,
+    "can_change_formal_gate_d_status": false,
+    "can_change_self_detectability_status": false,
+    "can_change_fragility_completion": false,
+    "can_change_empirical_interpretation_rule": false
+  },
+  "firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_empirical_ttf_statistic_opened": false
+  }
+}
