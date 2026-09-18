@@ -1,0 +1,41 @@
+{
+  "schema": "ttf_genetic_phylogatr_phase1_provenance_recovery_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_PHASE1_PROVENANCE_RECOVERY",
+  "purpose": "Permit Phase-4 authorization to verify the exact fresh projected Phase-1 provenance chain when the ephemeral Phase-1 manifest bytes are no longer retained, without reconstructing or reopening any sequence-derived outcome. The exact Phase-1 manifest SHA-256 was frozen inside the Phase-3 authorization before Phase-3 execution; the exact Phase-2 manifest and Phase-3 authorization are additionally pinned here.",
+  "phase1_manifest_sha256": "daeedabbeb99fa304568f0f2b2e1c46e0dd6221fbac02b0491faf2435ef7b7b3",
+  "phase2_manifest_sha256": "c47d29c90fcc359855dea7c36d20453dcd5c360e85aa4576216d13ee5fa4f9e4",
+  "phase3_authorization_sha256": "fcc56eeb28718fcb657bff4b94045fd851f7642dad9719614a67912f2c9c547b",
+  "phase1_summary": {
+    "dataset_digest_sha256": "088274dafdcd1e82d7688db07f7734172887972f3e72bfac394df6b0bb3fab59",
+    "eval_count": 125,
+    "geometry_csv_sha256": "d6f0b1f360a77de279263145386e7956af0d43c9386048f319117522f933cb74",
+    "geometry_fingerprint_sha256": "23938478d839348c6d5ea08eafdf88da57feb0fb35a65f932c283a1df04c5d03",
+    "species_count": 250,
+    "train_count": 125
+  },
+  "source_integrity": {
+    "cite_sha256": "e257b2c12ce5e6fe33d40f7064ae4a64b0c9462ddd85f58b0ce0a672759e9eb6",
+    "genes_sha256": "3a09b31e466985e1120cef94f5805f5bb23ebc76b4f3b650f3e9188239415e0e",
+    "per_species_aligned_header_sha256_verified": true,
+    "per_species_occurrence_sha256_verified": true,
+    "phase1_csv_sha256_verified": true
+  },
+  "authority": {
+    "can_reconstruct_missing_phase1_manifest_bytes": false,
+    "can_change_phase1_or_phase2_selection": false,
+    "can_change_phase3_decision": false,
+    "can_change_thresholds_or_estimands": false,
+    "can_open_sequence_identity": false,
+    "can_open_pairwise_genetic_distances": false,
+    "can_open_empirical_ttf": false,
+    "can_authorize_phase4_by_itself": false,
+    "permitted_use": "Substitute only the already-frozen Phase-1 manifest SHA-256 witness when the exact manifest bytes are unavailable; all later Phase-4 gates and code/provenance checks remain mandatory."
+  },
+  "outcome_firewall": {
+    "confirmatory_sequence_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_ttf_statistic_opened": false,
+    "decker_empirical_genetic_outcomes_opened": false
+  },
+  "claim_boundary": "This recovery record is response-blind provenance repair only. It does not recreate the missing manifest, change any scientific decision, or authorize empirical opening by itself."
+}
