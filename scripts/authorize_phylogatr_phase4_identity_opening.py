@@ -16,6 +16,10 @@ PHASE4_CODE_PATHS = (
     "src/ttf/phylogatr_phase4.py",
     "src/ttf/phylogatr_empirical.py",
     "src/ttf/genetic_empirical_score.py",
+    "src/ttf/phylogatr_compact_empirical.py",
+    "src/ttf/phylogatr_compact_execution.py",
+    "src/ttf/phylogatr_compact_ibd.py",
+    "src/ttf/phylogatr_compact_self_detectability.py",
     "src/ttf/phylogatr_character_mask.py",
     "src/ttf/phylogatr_confirmatory.py",
     "src/ttf/genetic_self_detectability.py",
@@ -23,6 +27,8 @@ PHASE4_CODE_PATHS = (
     "src/ttf/profiled_private_null.py",
     "src/ttf/phylogatr_fragility_execution.py",
     "src/ttf/phylogatr_fragility_formal_anchor.py",
+    "scripts/run_phylogatr_phase3_self_reference_shard.py",
+    "scripts/run_phylogatr_phase3_self_evaluation_shard.py",
     "scripts/plan_phylogatr_gate_d_fragility_synthetic.py",
     "scripts/run_phylogatr_gate_d_fragility_reference_shard.py",
     "scripts/aggregate_phylogatr_gate_d_fragility_references.py",
@@ -30,6 +36,7 @@ PHASE4_CODE_PATHS = (
     "scripts/aggregate_phylogatr_gate_d_fragility_curve.py",
     "scripts/authorize_phylogatr_phase4_identity_opening.py",
     "scripts/run_phylogatr_phase4_empirical_test.py",
+    "docs/supporting/genetic_phylogatr_phase4_compact_execution_v0.1.json",
 )
 
 
