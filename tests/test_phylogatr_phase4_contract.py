@@ -6,9 +6,12 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 from ttf.genetic_geometry_io import load_frozen_genetic_geometry_csv, sha256_path
 from ttf.geometry import SpeciesGeometry, geometry_fingerprint
 from ttf.phylogatr_phase4 import load_phylogatr_phase4_context
+from scripts.authorize_phylogatr_phase4_identity_opening import _validate_phase1_provenance_recovery
 
 
 PHASE3_RULE = Path("docs/supporting/genetic_phylogatr_phase3_gate_d_rule_v0.1.json")
@@ -18,6 +21,7 @@ FRAGILITY_EXECUTION_RULE = Path(
 )
 PHASE4_RULE = Path("docs/supporting/genetic_phylogatr_phase4_response_rule_v0.1.json")
 OPENING_STATE = Path("benchmarks/frozen/genetic_empirical_opening_state_v0.1.json")
+PHASE1_RECOVERY = Path("docs/supporting/genetic_phylogatr_phase1_provenance_recovery_v0.1.json")
 FIELDS = [
     "species",
     "locality_index",
@@ -348,3 +352,44 @@ def test_phase4_authorization_rejects_fragility_provenance_drift(tmp_path: Path)
     assert completed.returncode != 0
     assert "formal qualification provenance drift" in completed.stderr
     assert not authorization.exists()
+
+
+def test_phase1_provenance_recovery_accepts_only_the_frozen_downstream_witness() -> None:
+    recovery = json.loads(PHASE1_RECOVERY.read_text())
+    phase2 = {
+        "phase1": recovery["phase1_summary"],
+        "source_integrity": recovery["source_integrity"],
+    }
+    phase3_auth = {
+        "phase1_manifest_sha256": recovery["phase1_manifest_sha256"],
+        "dataset_digest_sha256": recovery["phase1_summary"]["dataset_digest_sha256"],
+    }
+    observed = _validate_phase1_provenance_recovery(
+        recovery,
+        phase2,
+        phase3_auth,
+        phase2_manifest_sha256=recovery["phase2_manifest_sha256"],
+        phase3_authorization_sha256=recovery["phase3_authorization_sha256"],
+    )
+    assert observed == recovery["phase1_manifest_sha256"]
+
+
+def test_phase1_provenance_recovery_rejects_downstream_summary_drift() -> None:
+    recovery = json.loads(PHASE1_RECOVERY.read_text())
+    phase2 = {
+        "phase1": dict(recovery["phase1_summary"]),
+        "source_integrity": recovery["source_integrity"],
+    }
+    phase2["phase1"]["train_count"] = 124
+    phase3_auth = {
+        "phase1_manifest_sha256": recovery["phase1_manifest_sha256"],
+        "dataset_digest_sha256": recovery["phase1_summary"]["dataset_digest_sha256"],
+    }
+    with pytest.raises(RuntimeError, match="summary differs"):
+        _validate_phase1_provenance_recovery(
+            recovery,
+            phase2,
+            phase3_auth,
+            phase2_manifest_sha256=recovery["phase2_manifest_sha256"],
+            phase3_authorization_sha256=recovery["phase3_authorization_sha256"],
+        )
