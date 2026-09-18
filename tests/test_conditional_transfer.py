@@ -234,3 +234,33 @@ def test_cached_conditioned_scoring_matches_uncached_exactly() -> None:
         baseline_cache, cached_cond, train_y, eval_y
     )
     assert increment.statistics.shape == (2,)
+
+
+def test_conditioned_pool_preserves_total_training_species_weight_mass() -> None:
+    from ttf.conditional_transfer import prepare_cached_target_conditioned_transfer
+
+    train, evaluation, prepared = _fixture()
+    pools = prepare_target_source_pools(
+        prepared,
+        {x.species: x.midpoint for x in train},
+        {x.species: x.midpoint for x in evaluation},
+        support_radius=5.0,
+        minimum_target_coverage=0.50,
+        minimum_source_species=2,
+    )
+    cached = prepare_cached_target_conditioned_transfer(prepared, pools)
+
+    full_mass = float(np.sum(prepared.train_weights))
+    assert np.isclose(full_mass, float(len(prepared.train_species)))
+    for target in pools.eligible_eval_species:
+        active = cached.active_indices[target]
+        scaled_mass = float(
+            np.sum(prepared.train_weights[active]) * cached.pool_weight_scale[target]
+        )
+        assert np.isclose(scaled_mass, full_mass, atol=1e-12, rtol=0.0)
+        assert np.isclose(
+            cached.pool_weight_scale[target],
+            len(prepared.train_species) / len(pools.source_pool[target]),
+            atol=0.0,
+            rtol=0.0,
+        )
