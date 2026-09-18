@@ -1,0 +1,53 @@
+{
+  "schema": "ttf_phylogatr_fragility_lane_scheduler_receipt_v0.1",
+  "status": "FROZEN_ORCHESTRATION_ONLY_AFTER_RUNNER_STARVATION_BEFORE_FRAGILITY_CURVE_COMPLETION",
+  "purpose": "Reduce GitHub Actions runner-allocation overhead without changing any frozen fragility synthetic world, shard boundary, seed, geometry, reference family, mandatory cell, statistic, or aggregation rule.",
+  "trigger": {
+    "original_execution_run_id": 35299347831,
+    "original_execution_head_sha": "627952fcad46f65916f131ad7154756e928b37ac",
+    "observed_scheduler_state_before_lane_freeze": {
+      "completed_success_jobs": 24,
+      "failed_jobs": 0,
+      "queued_jobs": 231,
+      "in_progress_jobs": 2
+    },
+    "fragility_metric_values_inspected_before_lane_freeze": false,
+    "reason": "GitHub-hosted runner starvation left more than two hundred exact matrix jobs queued after the first successful waves."
+  },
+  "execution_equivalence": {
+    "source_plan_artifact_run_id": 35299124844,
+    "source_plan_artifact_name": "fragility-plan",
+    "reference_job_contract": "Every invocation must exactly match one object already present in execution_plan.json level.reference_jobs.",
+    "observed_job_contract": "Every invocation must exactly match one object already present in execution_plan.json level.observed_jobs.",
+    "reference_lane_assignment": "flatten frozen reference_jobs in execution-plan order and assign by zero-based flattened_index modulo 20",
+    "observed_lane_assignment": "flatten frozen observed_jobs in execution-plan order and assign by zero-based flattened_index modulo 10",
+    "job_identity_changed": false,
+    "world_identity_changed": false,
+    "seed_changed": false,
+    "shard_boundary_changed": false,
+    "geometry_changed": false,
+    "statistic_changed": false,
+    "aggregation_changed": false,
+    "scientific_authority_changed": false
+  },
+  "duplicate_execution_policy": {
+    "original_run_may_continue": true,
+    "duplicate_exact_shards_are_not_combined": true,
+    "first_complete_execution_path_may_supply_a_curve_only_if_it_is_internally_complete": true,
+    "mixing_partial_shards_across_execution_paths": false,
+    "if_two_complete_curves_exist_they_must_be_byte_or_value_equivalent_under_the_same_frozen_plan_before_one_is_used": true
+  },
+  "authority_firewall": {
+    "can_change_formal_gate_d_status": false,
+    "can_change_self_detectability_status": false,
+    "can_change_fragility_metrics": false,
+    "can_authorize_phase4": false,
+    "can_open_identity": false,
+    "can_rescue_or_reclassify": false
+  },
+  "outcome_firewall": {
+    "confirmatory_sequence_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_ttf_statistic_opened": false
+  }
+}
