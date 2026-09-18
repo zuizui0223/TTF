@@ -26,6 +26,7 @@ class TargetSourcePoolDesign:
     minimum_target_coverage: float
     minimum_source_species: int
     require_same_group: bool
+    require_different_group: bool
 
 
 @dataclass(frozen=True)
@@ -116,14 +117,15 @@ def prepare_target_source_pools(
     train_group: Mapping[str, str] | None = None,
     eval_group: Mapping[str, str] | None = None,
     require_same_group: bool = False,
+    require_different_group: bool = False,
     distance_chunk_size: int = 128,
 ) -> TargetSourcePoolDesign:
     """Freeze target-specific source pools from geometry and optional labels.
 
     A source enters a target's pool only when the predeclared fraction of target
     edge midpoints lies within the support radius of a source edge midpoint.
-    Optional same-group filtering accepts only response-blind labels such as
-    taxonomic order. Targets with too few sources are prospectively unsupported;
+    Optional same-group or different-group filtering accepts only response-blind
+    labels such as taxonomic order. Targets with too few sources are prospectively unsupported;
     thresholds are never relaxed by this function.
     """
     if not 0.0 <= float(minimum_target_coverage) <= 1.0:
@@ -136,9 +138,11 @@ def prepare_target_source_pools(
         raise ValueError("train midpoint species mismatch")
     if set(eval_midpoint) != set(eval_names):
         raise ValueError("evaluation midpoint species mismatch")
-    if require_same_group:
+    if require_same_group and require_different_group:
+        raise ValueError("source pools cannot require both same and different groups")
+    if require_same_group or require_different_group:
         if train_group is None or eval_group is None:
-            raise ValueError("same-group pools require train and evaluation labels")
+            raise ValueError("group-filtered pools require train and evaluation labels")
         if set(train_group) != set(train_names) or set(eval_group) != set(eval_names):
             raise ValueError("group-label species mismatch")
 
@@ -159,9 +163,14 @@ def prepare_target_source_pools(
             )
             row[source] = coverage
             group_ok = True
-            if require_same_group:
-                source_group = str(train_group[source])
-                group_ok = bool(target_group) and source_group == target_group
+            if require_same_group or require_different_group:
+                source_group = str(train_group[source]).strip()
+                target_nonempty = bool(target_group.strip())
+                source_nonempty = bool(source_group)
+                if require_same_group:
+                    group_ok = target_nonempty and source_nonempty and source_group == target_group
+                else:
+                    group_ok = target_nonempty and source_nonempty and source_group != target_group
             if group_ok and coverage >= float(minimum_target_coverage):
                 selected.append(source)
         selected_tuple = tuple(selected)
@@ -183,6 +192,7 @@ def prepare_target_source_pools(
         minimum_target_coverage=float(minimum_target_coverage),
         minimum_source_species=int(minimum_source_species),
         require_same_group=bool(require_same_group),
+        require_different_group=bool(require_different_group),
     )
 
 
