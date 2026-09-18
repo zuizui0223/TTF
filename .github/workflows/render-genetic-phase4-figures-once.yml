@@ -1,0 +1,41 @@
+name: render genetic Phase4 figures once
+
+on:
+  push:
+    branches:
+      - "docs/genetic-phase4-figures-v0-1"
+    paths:
+      - "scripts/render_genetic_phase4_figures.py"
+      - "pyproject.toml"
+      - "manuscript/generated/genetic_ttf_phase4_v0.1/species_scores.csv"
+      - "benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json"
+      - ".github/workflows/render-genetic-phase4-figures-once.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    if: github.actor != 'github-actions[bot]' && !contains(github.event.head_commit.message, '[no-figure-render]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: "docs/genetic-phase4-figures-v0-1"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[figure]"
+      - run: python scripts/render_genetic_phase4_figures.py
+      - name: Commit generated frozen figures
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add manuscript/figures/genetic_phase4_v0.1
+          if git diff --cached --quiet; then
+            echo "No generated figure changes."
+            exit 0
+          fi
+          git commit -m "figures: render frozen genetic Phase4 results"
+          git push origin HEAD:docs/genetic-phase4-figures-v0-1
