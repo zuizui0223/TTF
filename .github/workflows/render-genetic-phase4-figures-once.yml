@@ -8,7 +8,7 @@ on:
       - "scripts/render_genetic_phase4_figures.py"
       - "pyproject.toml"
       - "manuscript/generated/genetic_ttf_phase4_v0.1/species_scores.csv"
-      - "benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json"
+      - "benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json"\n      - "benchmarks/frozen/genetic_phylogatr_phase4_pre_empirical_handoff_v0.1.json"
       - ".github/workflows/render-genetic-phase4-figures-once.yml"
 
 permissions:
