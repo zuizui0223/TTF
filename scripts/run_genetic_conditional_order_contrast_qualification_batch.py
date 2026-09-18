@@ -147,6 +147,12 @@ def main() -> int:
     if args.start + args.count > int(cell["worlds"]):
         raise RuntimeError("requested shard exceeds frozen cell world count")
     estimator = rule["frozen_estimator"]
+    same_min = int(estimator["minimum_same_order_source_species"])
+    different_min = int(estimator["minimum_different_order_source_species"])
+    if same_min != different_min:
+        raise RuntimeError(
+            "v0.2 runner requires the frozen symmetric same/different source minimum"
+        )
     design = prepare_conditional_order_contrast(
         geometries,
         taxonomy_order,
@@ -155,7 +161,7 @@ def main() -> int:
         bandwidth=float(estimator["field_bandwidth_km"]),
         support_radius=float(estimator["support_radius_km"]),
         minimum_target_coverage=float(estimator["minimum_target_coverage"]),
-        minimum_source_species=int(estimator["minimum_same_order_source_species"]),
+        minimum_source_species=same_min,
         edge_chunk_size=int(args.edge_chunk_size),
         train_chunk_size=int(args.train_chunk_size),
     )
