@@ -7,7 +7,7 @@
     "result_sha256": "f5d19fa50c7c18cbf2a110c0afb9c70dcd543c44b77521c015938013843e72fb",
     "rule": "The completed 211-species one-shot result is an immutable unconditional baseline. This protocol cannot rescue, rerun, retune, or reinterpret that result."
   },
-  "scientific_question": "When does post-IBD spatial genetic differentiation become transferable across species, after requiring source species to share geographic support with the unseen target and then asking whether coarse lineage similarity adds further predictive value?",
+  "scientific_question": "Among species that already share geographic support, does coarse lineage similarity improve transfer of post-IBD spatial genetic differentiation to unseen species?",
   "source_and_panels": {
     "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
     "same_archive_not_independent_source_replication": true,
@@ -29,26 +29,28 @@
     "source_weighting_within_pool": "equal total weight per selected training species, inherited from core TTF; equal weight within a species is divided over its frozen graph edges"
   },
   "primary_estimand": {
-    "name": "geographic_conditioning_increment",
-    "per_target": "Spearman(geographically conditioned prediction, target post-IBD turnover) - Spearman(unconditional prediction, target post-IBD turnover)",
-    "panel_statistic": "arithmetic mean of the paired increment across response-blind supported evaluation species",
-    "baseline": "the unchanged unconditional TTF field using all frozen training species",
-    "alpha": 0.05,
-    "inference": "one-sided centered studentized bootstrap over held-out evaluation species",
-    "bootstrap_resamples": 1999,
-    "positive_claim": "Geographic co-coverage improves out-of-species prediction of post-IBD differentiation relative to the unconditional field."
-  },
-  "secondary_estimand": {
     "name": "same_order_increment_beyond_geography",
     "group_label": "exact non-empty phylogatR order",
-    "source_in_pool": "same geographic support rule as the primary estimand AND source order equals target order",
+    "source_in_pool": "same geographic support rule as the support-control field AND source order equals target order",
     "minimum_source_species_per_target": 5,
     "per_target": "Spearman(same-order + geographic prediction, target post-IBD turnover) - Spearman(geographic-only prediction, target post-IBD turnover)",
     "panel_statistic": "arithmetic mean of the paired increment across response-blind same-order-supported evaluation species",
     "alpha": 0.05,
     "inference": "one-sided centered studentized bootstrap over held-out evaluation species",
     "bootstrap_resamples": 1999,
-    "interpretation": "coarse lineage similarity adds transfer skill beyond geographic co-coverage; order is a proxy for biological similarity, not a direct measurement of dispersal ability or demographic history"
+    "positive_claim": "Coarse lineage similarity adds out-of-species transfer skill after geographic co-coverage has already been matched.",
+    "interpretation": "taxonomic order is a pre-outcome proxy for broad biological similarity, not a direct measurement of dispersal ability, generation time, demographic history, or barrier response"
+  },
+  "secondary_estimand": {
+    "name": "geographic_conditioning_increment_support_diagnostic",
+    "per_target": "Spearman(geographically conditioned prediction, target post-IBD turnover) - Spearman(unconditional prediction, target post-IBD turnover)",
+    "panel_statistic": "arithmetic mean of the paired increment across response-blind geographically supported evaluation species",
+    "baseline": "the unchanged unconditional TTF field using all frozen training species",
+    "role": "support-control diagnostic, not the primary biological test, because the inherited 500-km Gaussian field is already spatially local",
+    "alpha": 0.05,
+    "inference": "one-sided centered studentized bootstrap over held-out evaluation species",
+    "bootstrap_resamples": 1999,
+    "interpretation": "tests whether explicit source-range support adds anything beyond the locality weighting already implicit in the 500-km Gaussian kernel"
   },
   "excluded_estimands": {
     "same_family": "not pursued because response-blind development support is too sparse for a panel-wide estimand",
@@ -56,7 +58,7 @@
   },
   "development_and_qualification": {
     "development_panel_empirical_genetic_outcomes_opened": false,
-    "next_step": "freeze synthetic private-null, geography-conditioned-positive, and order-conditioned-positive world generators; qualify Type-I and power on the development geometry before touching confirmatory character identity",
+    "next_step": "freeze private-null and same-order-shared positive-control world generators for the primary estimand, plus a geography-conditioned diagnostic positive control; qualify Type-I and power on the development geometry before touching confirmatory character identity",
     "type1_requirement": "Wilson 95% upper rejection bound <= 0.10 under private lineage-specific residual structure",
     "power_requirement": "Wilson 95% lower rejection bound >= 0.80 for the predeclared positive-control world appropriate to each estimand",
     "confirmatory_identity_opening_requires": "development qualification PASS, confirmatory character-mask admissibility PASS, and exact confirmatory survivor-geometry requalification PASS"
@@ -68,7 +70,7 @@
     "do not replace same-order with a finer or coarser taxonomic rank after seeing empirical transfer",
     "do not use the new result to rewrite the completed unconditional one-shot result"
   ],
-  "claim_boundary": "This study tests whether transferability is conditional on shared geographic support and, secondarily, coarse taxonomic order. It does not identify dispersal ability, historical range dynamics, or a causal mechanism unless those variables are introduced under a separate prospective protocol.",
+  "claim_boundary": "The primary study tests whether coarse lineage similarity adds transferability among source and target species that already share geographic support. Geographic conditioning alone is a support-control diagnostic because core TTF is already spatially local. Taxonomic order remains only a proxy: dispersal ability, historical range dynamics and causal mechanisms are not identified unless introduced under a separate prospective external-data protocol.",
   "outcome_firewall": {
     "development_sequence_identity_opened": false,
     "confirmatory_sequence_identity_opened": false,
