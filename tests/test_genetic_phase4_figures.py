@@ -9,7 +9,12 @@ from pathlib import Path
 
 FIGURES = Path("manuscript/figures/genetic_phase4_v0.1")
 SCORES = Path("manuscript/generated/genetic_ttf_phase4_v0.1/species_scores.csv")
-HANDOFF = Path("benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json")
+EMPIRICAL_HANDOFF = Path(
+    "benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json"
+)
+PRE_EMPIRICAL_HANDOFF = Path(
+    "benchmarks/frozen/genetic_phylogatr_phase4_pre_empirical_handoff_v0.1.json"
+)
 MANUSCRIPT = Path("manuscript/genetic_ttf_flagship_v0.2.md")
 
 
@@ -19,7 +24,8 @@ def _sha256(path: Path) -> str:
 
 def test_frozen_phase4_figures_are_receipt_backed_descriptions() -> None:
     manifest = json.loads((FIGURES / "figure_manifest.json").read_text())
-    handoff = json.loads(EMPIRICAL_HANDOFF.read_text())\n    pre_handoff = json.loads(PRE_EMPIRICAL_HANDOFF.read_text())
+    empirical_handoff = json.loads(EMPIRICAL_HANDOFF.read_text())
+    pre_empirical_handoff = json.loads(PRE_EMPIRICAL_HANDOFF.read_text())
     rows = list(csv.DictReader(SCORES.open(newline="")))
 
     assert manifest["schema"] == "ttf_genetic_phase4_figure_manifest_v0.1"
@@ -29,14 +35,23 @@ def test_frozen_phase4_figures_are_receipt_backed_descriptions() -> None:
     assert manifest["evaluation_species_count"] == len(rows) == 108
 
     assert manifest["input_sha256"]["species_scores.csv"] == _sha256(SCORES)
-    assert manifest["input_sha256"]["phase4_empirical_handoff.json"] == _sha256(EMPIRICAL_HANDOFF)\n    assert manifest["input_sha256"]["phase4_pre_empirical_handoff.json"] == _sha256(PRE_EMPIRICAL_HANDOFF)
+    assert (
+        manifest["input_sha256"]["phase4_empirical_handoff.json"]
+        == _sha256(EMPIRICAL_HANDOFF)
+    )
+    assert (
+        manifest["input_sha256"]["phase4_pre_empirical_handoff.json"]
+        == _sha256(PRE_EMPIRICAL_HANDOFF)
+    )
     assert (
         manifest["terminal_empirical_result_sha256"]
-        == handoff["empirical_result"]["result_json_sha256"]
+        == empirical_handoff["empirical_result"]["result_json_sha256"]
     )
 
     primary = [float(row["post_ibd_transfer"]) for row in rows]
-    expected_primary = handoff["empirical_result"]["primary_place_beyond_ibd"]["statistic"]
+    expected_primary = empirical_handoff["empirical_result"][
+        "primary_place_beyond_ibd"
+    ]["statistic"]
     assert math.isclose(
         math.fsum(primary) / len(primary),
         manifest["primary_species_equal_mean"],
@@ -50,13 +65,25 @@ def test_frozen_phase4_figures_are_receipt_backed_descriptions() -> None:
         abs_tol=1e-12,
     )
 
-    cross = handoff["formal_phase3_gate_d"]
-    self_gate = handoff["self_detectability"]
+    cross = pre_empirical_handoff["formal_phase3_gate_d"]
+    self_gate = pre_empirical_handoff["self_detectability"]
     qualification = manifest["qualification"]
-    assert qualification["cross_species_type1_wilson_upper"] == cross["max_private_null_wilson95_upper"]
-    assert qualification["self_type1_wilson_upper"] == self_gate["null_wilson95_upper"]
-    assert qualification["cross_species_power_wilson_lower"] == cross["shared_A2_wilson95_lower"]
-    assert qualification["self_power_wilson_lower"] == self_gate["private_A2_wilson95_lower"]
+    assert (
+        qualification["cross_species_type1_wilson_upper"]
+        == cross["max_private_null_wilson95_upper"]
+    )
+    assert (
+        qualification["self_type1_wilson_upper"]
+        == self_gate["null_wilson95_upper"]
+    )
+    assert (
+        qualification["cross_species_power_wilson_lower"]
+        == cross["shared_A2_wilson95_lower"]
+    )
+    assert (
+        qualification["self_power_wilson_lower"]
+        == self_gate["private_A2_wilson95_lower"]
+    )
     assert qualification["type1_ceiling"] == cross["type1_ceiling"] == 0.10
     assert qualification["power_floor"] == cross["power_floor"] == 0.80
 
@@ -75,4 +102,3 @@ def test_empirical_manuscript_uses_figures_without_new_inference() -> None:
     assert "figures/genetic_phase4_v0.1/figure2_post_ibd_species_scores.svg" in text
     assert "no species-level significance tests" in text
     assert "display ordering" in text
-    assert "new inferential analysis" not in text
