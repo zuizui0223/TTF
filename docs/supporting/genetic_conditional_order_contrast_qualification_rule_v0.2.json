@@ -152,5 +152,11 @@
     "confirmatory_sequence_identity_opened": false,
     "confirmatory_pairwise_genetic_distances_opened": false,
     "conditional_empirical_result_opened": false
+  },
+  "execution": {
+    "world_batch_size": 20,
+    "sharding_semantics": "absolute replicate index only; internal batch partition must not alter world or bootstrap identity",
+    "exact_full_projection_cache_allowed": true,
+    "formal_cell_output": "one complete 500-replicate shard per frozen qualification cell"
   }
 }
