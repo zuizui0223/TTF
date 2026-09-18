@@ -30,7 +30,7 @@ Parent: `docs/supporting/genetic_phylogatr_phase4_response_rule_v0.1.json`, `sec
 
 The runner computes the descriptor after fixing its primary decision and adds `secondary_total_genetic_transfer` to the existing result payload. Primary and self calculations remain unchanged. Sequence identities and edge-distance arrays are not serialized.
 
-The modified scorer and runner are already in `PHASE4_CODE_PATHS`: a future Phase-4 authorization binds their exact code hashes. Existing authorizations cannot silently execute changed code. No frozen qualification threshold, null family, graph or source-access decision is revised.
+The modified scorer and runner were already in `PHASE4_CODE_PATHS` before the completed empirical opening, and the exact-manifest Phase-4 authorization bound their code hashes. That authorization and the one-shot empirical result are now frozen; later code changes cannot retroactively alter the executed analysis. No frozen qualification threshold, null family, graph or source-access decision is revised.
 
 ## Validation
 
