@@ -90,4 +90,5 @@ jobs:
           tests/test_phylogatr_phase3_contract.py
           tests/test_phylogatr_phase3_self_qualification.py
           tests/test_phylogatr_phase4_contract.py
+          tests/test_phylogatr_phase4_compact_empirical.py
           tests/test_phylogatr_method_closure.py
