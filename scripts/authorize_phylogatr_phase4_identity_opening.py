@@ -11,6 +11,7 @@ from ttf.geometry import SpeciesGeometry, geometry_fingerprint
 
 
 FRAGILITY_EXECUTION_RULE_GIT_BLOB_SHA = "731928fef0435921e7d4966e67e04e1f3435d493"
+PHASE1_PROVENANCE_RECOVERY = Path("docs/supporting/genetic_phylogatr_phase1_provenance_recovery_v0.1.json")
 
 PHASE4_CODE_PATHS = (
     "src/ttf/phylogatr_phase4.py",
@@ -39,6 +40,7 @@ PHASE4_CODE_PATHS = (
     "scripts/run_phylogatr_projected_phase4_empirical_test.py",
     "src/ttf/phylogatr_source_projection.py",
     "docs/supporting/genetic_phylogatr_source_projection_rule_v0.1.json",
+    "docs/supporting/genetic_phylogatr_phase1_provenance_recovery_v0.1.json",
     "docs/supporting/genetic_phylogatr_phase4_compact_execution_v0.1.json",
 )
 
@@ -59,6 +61,50 @@ def _git_blob_sha1(path: Path) -> str:
     data = path.read_bytes()
     header = f"blob {len(data)}\0".encode("ascii")
     return hashlib.sha1(header + data).hexdigest()
+
+
+def _validate_phase1_provenance_recovery(
+    recovery: dict,
+    phase2: dict,
+    phase3_auth: dict,
+    *,
+    phase2_manifest_sha256: str,
+    phase3_authorization_sha256: str,
+) -> str:
+    if recovery.get("status") != "FROZEN_RESPONSE_BLIND_PHASE1_PROVENANCE_RECOVERY":
+        raise RuntimeError("Phase-1 provenance recovery is not frozen")
+    _closed(recovery.get("outcome_firewall", {}), "Phase-1 provenance recovery firewall")
+
+    authority = recovery.get("authority")
+    if not isinstance(authority, dict):
+        raise RuntimeError("Phase-1 provenance recovery authority block missing")
+    for key in (
+        "can_reconstruct_missing_phase1_manifest_bytes",
+        "can_change_phase1_or_phase2_selection",
+        "can_change_phase3_decision",
+        "can_change_thresholds_or_estimands",
+        "can_open_sequence_identity",
+        "can_open_pairwise_genetic_distances",
+        "can_open_empirical_ttf",
+        "can_authorize_phase4_by_itself",
+    ):
+        if authority.get(key) is not False:
+            raise RuntimeError(f"Phase-1 provenance recovery gained forbidden authority: {key}")
+
+    manifest_sha = str(recovery.get("phase1_manifest_sha256", ""))
+    if manifest_sha != str(phase3_auth.get("phase1_manifest_sha256", "")):
+        raise RuntimeError("Phase-1 recovery manifest hash differs from Phase-3 authorization")
+    if recovery.get("phase2_manifest_sha256") != phase2_manifest_sha256:
+        raise RuntimeError("Phase-1 recovery Phase-2 manifest provenance drift")
+    if recovery.get("phase3_authorization_sha256") != phase3_authorization_sha256:
+        raise RuntimeError("Phase-1 recovery Phase-3 authorization provenance drift")
+    if recovery.get("phase1_summary") != phase2.get("phase1"):
+        raise RuntimeError("Phase-1 recovery summary differs from exact Phase-2 witness")
+    if recovery.get("source_integrity") != phase2.get("source_integrity"):
+        raise RuntimeError("Phase-1 recovery source-integrity witness drift")
+    if recovery["phase1_summary"].get("dataset_digest_sha256") != phase3_auth.get("dataset_digest_sha256"):
+        raise RuntimeError("Phase-1 recovery dataset digest differs from Phase-3 authorization")
+    return manifest_sha
 
 
 def _validate_fragility_completion(
@@ -154,7 +200,9 @@ def main() -> int:
         description="Authorize exact fresh phylogatR nucleotide-identity opening after Phase-3 qualification and completed response-blind fragility diagnostics."
     )
     ap.add_argument("--geometry", type=Path, required=True)
-    ap.add_argument("--phase1-manifest", type=Path, required=True)
+    phase1_source = ap.add_mutually_exclusive_group(required=True)
+    phase1_source.add_argument("--phase1-manifest", type=Path)
+    phase1_source.add_argument("--use-frozen-phase1-provenance-recovery", action="store_true")
     ap.add_argument("--phase2-manifest", type=Path, required=True)
     ap.add_argument("--phase3-rule", type=Path, required=True)
     ap.add_argument("--phase3-authorization", type=Path, required=True)
@@ -171,9 +219,18 @@ def main() -> int:
     ap.add_argument("--output", type=Path, required=True)
     args = ap.parse_args()
 
-    phase1 = _load(
-        args.phase1_manifest, "ttf_genetic_phylogatr_confirmatory_phase1_geometry_v0.1"
-    )
+    repo_root = args.repo_root.resolve()
+    phase1 = None
+    phase1_recovery = None
+    phase1_recovery_path = repo_root / PHASE1_PROVENANCE_RECOVERY
+    if args.phase1_manifest is not None:
+        phase1 = _load(
+            args.phase1_manifest, "ttf_genetic_phylogatr_confirmatory_phase1_geometry_v0.1"
+        )
+    else:
+        phase1_recovery = _load(
+            phase1_recovery_path, "ttf_genetic_phylogatr_phase1_provenance_recovery_v0.1"
+        )
     phase2 = _load(
         args.phase2_manifest, "ttf_genetic_phylogatr_confirmatory_phase2_mask_v0.1"
     )
@@ -249,7 +306,6 @@ def main() -> int:
             raise RuntimeError(f"fresh genetic distances were opened in {label}")
 
     hashes = {
-        "phase1_manifest_sha256": sha256_path(args.phase1_manifest),
         "phase2_manifest_sha256": sha256_path(args.phase2_manifest),
         "phase3_rule_sha256": sha256_path(args.phase3_rule),
         "phase3_authorization_sha256": sha256_path(args.phase3_authorization),
@@ -264,6 +320,19 @@ def main() -> int:
         "opening_state_sha256": sha256_path(args.opening_state),
         "geometry_csv_sha256": sha256_path(args.geometry),
     }
+    if phase1 is not None:
+        hashes["phase1_manifest_sha256"] = sha256_path(args.phase1_manifest)
+        phase1_provenance_mode = "exact_manifest"
+    else:
+        hashes["phase1_manifest_sha256"] = _validate_phase1_provenance_recovery(
+            phase1_recovery,
+            phase2,
+            phase3_auth,
+            phase2_manifest_sha256=hashes["phase2_manifest_sha256"],
+            phase3_authorization_sha256=hashes["phase3_authorization_sha256"],
+        )
+        hashes["phase1_provenance_recovery_sha256"] = sha256_path(phase1_recovery_path)
+        phase1_provenance_mode = "frozen_downstream_hash_witness"
     if phase3_auth.get("phase1_manifest_sha256") != hashes["phase1_manifest_sha256"]:
         raise RuntimeError("Phase-1 manifest differs from Phase-3 authorization")
     if phase3_auth.get("phase2_manifest_sha256") != hashes["phase2_manifest_sha256"]:
@@ -335,6 +404,12 @@ def main() -> int:
         "dataset_digest_sha256": dataset_digest,
         "geometry_fingerprint_sha256": fingerprint,
         "species": phase3_auth["species"],
+        "phase1_provenance": {
+            "mode": phase1_provenance_mode,
+            "manifest_sha256": hashes["phase1_manifest_sha256"],
+            "recovery_sha256": hashes.get("phase1_provenance_recovery_sha256"),
+            "recovery_changes_scientific_gate": False,
+        },
         "phase3_gate_d": {
             "status": qualification["status"],
             "passed": True,
