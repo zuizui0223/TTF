@@ -57,6 +57,8 @@ def main() -> int:
             raise RuntimeError(f"unexpected cell in {path}: {shard['cell']}")
         if any(value is not False for value in shard["outcome_firewall"].values()):
             raise RuntimeError(f"open empirical outcome firewall in {path}")
+        if str(shard["rule_sha256"]) != actual_rule_sha:
+            raise RuntimeError("qualification shard rule hash does not match supplied frozen rule")
         meta = (
             str(shard["rule_sha256"]),
             str(shard["geometry_csv_sha256"]),
