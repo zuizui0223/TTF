@@ -77,7 +77,9 @@ jobs:
           tests/test_genetic_simulate.py
           tests/test_genetic_gate.py
           tests/test_genetic_self_detectability.py
-          tests/test_genetic_empirical_score.py\n          tests/test_genetic_manuscript_export.py\n          tests/test_genetic_phase4_supplementary.py
+          tests/test_genetic_empirical_score.py
+          tests/test_genetic_manuscript_export.py
+          tests/test_genetic_phase4_supplementary.py
           tests/test_phylogatr_confirmatory.py
           tests/test_phylogatr_phase1_intake.py
           tests/test_phylogatr_projected_phase1_intake.py
