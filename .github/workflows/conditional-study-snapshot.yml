@@ -1,0 +1,27 @@
+name: conditional study snapshot
+
+on:
+  push:
+    branches:
+      - "ops/conditional-study-snapshot-20260918"
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: "937544357475ab177ee89f8878dfc2acc97dff8d"
+          fetch-depth: 1
+      - name: Pack repository
+        run: |
+          set -euo pipefail
+          tar --exclude=.git -czf /tmp/TTF-main-937544357475.tar.gz .
+          sha256sum /tmp/TTF-main-937544357475.tar.gz > /tmp/TTF-main-937544357475.tar.gz.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TTF-main-937544357475-snapshot
+          path: |
+            /tmp/TTF-main-937544357475.tar.gz
+            /tmp/TTF-main-937544357475.tar.gz.sha256
+          if-no-files-found: error
