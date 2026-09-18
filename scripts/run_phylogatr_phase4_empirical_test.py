@@ -7,14 +7,17 @@ from pathlib import Path
 
 import numpy as np
 
-from ttf.genetic_empirical_score import (
-    score_genetic_distance_mapping,
-    score_self_detectability_mapping,
-    score_total_genetic_distance_mapping,
-)
-from ttf.genetic_gate import prepare_genetic_ttf_design
+from ttf.genetic_empirical_score import score_total_genetic_distance_mapping
 from ttf.genetic_self_detectability import prepare_genetic_self_detectability
 from ttf.phylogatr_character_mask import canonical_mask_sha256, read_canonical_mask_alignment
+from ttf.phylogatr_compact_empirical import (
+    score_phylogatr_compact_distance_mapping,
+    score_phylogatr_compact_self_mapping,
+)
+from ttf.phylogatr_compact_execution import (
+    prepare_phylogatr_compact_cached_transfer,
+    prepare_phylogatr_compact_ttf_design,
+)
 from ttf.phylogatr_confirmatory import fasta_header_sha256, fasta_headers_only, sha256_path
 from ttf.phylogatr_empirical import extract_species_frozen_edge_distances
 from ttf.phylogatr_phase4 import load_phylogatr_phase4_context
@@ -115,7 +118,7 @@ def main() -> int:
         }
 
     core = context.phase3_rule["core_method"]
-    design = prepare_genetic_ttf_design(
+    design = prepare_phylogatr_compact_ttf_design(
         context.geometries,
         train_species=context.train_species,
         eval_species=context.eval_species,
@@ -130,11 +133,15 @@ def main() -> int:
         strength_neighbours=int(core["strength_neighbours"]),
     )
     execution = context.phase3_authorization["execution"]
-    primary = score_genetic_distance_mapping(
+    cached_transfer = prepare_phylogatr_compact_cached_transfer(
         design,
-        genetic_distance,
         edge_chunk_size=int(execution["edge_chunk_size"]),
         train_chunk_size=int(execution["train_chunk_size"]),
+    )
+    primary = score_phylogatr_compact_distance_mapping(
+        design,
+        genetic_distance,
+        cached_transfer,
     )
     reference_family = {
         label: (
@@ -161,7 +168,9 @@ def main() -> int:
         prior_mean=float(self_geometry["prior_mean"]),
         segment_points=int(self_geometry["segment_points"]),
     )
-    empirical_self = score_self_detectability_mapping(design, self_design, genetic_distance)
+    empirical_self = score_phylogatr_compact_self_mapping(
+        design, self_design, genetic_distance
+    )
     self_reference = np.asarray(context.self_references["statistics"], dtype=float)
     self_p = float(upper_monte_carlo_pvalue(empirical_self.statistic, self_reference))
     self_alpha = float(context.self_rule["inference"]["alpha"])
