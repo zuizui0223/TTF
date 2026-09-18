@@ -21,11 +21,13 @@ The response-blind census found 14,612 eligible species after exclusions and no 
 
 ## Geographic support control
 
-For each held-out target species, a training species is geographically supported only when at least **25% of the target's graph-edge midpoints lie within 500 km of a source graph-edge midpoint**. At least five source species are required.
+For each held-out target species, a training species is geographically supported only when at least **50% of the target's graph-edge midpoints lie within 500 km of a source graph-edge midpoint**. At least five source species are required.
 
 This support rule is not the main biological hypothesis. It creates a matched geographic opportunity set before lineage similarity is tested.
 
-Feasibility is adequate before outcomes: 113/125 development targets and 108/125 confirmatory targets have at least five geographically supported source species.
+To prevent a smaller source pool from changing the comparison merely by reducing total training weight, every target-specific field rescales selected-source edge weights by `N_train / N_selected`. Thus the unconditional, geography-conditioned and geography+order fields retain the same total pre-kernel training-species weight mass; only source composition and its realized spatial kernel geometry change. The synthetic qualification calibrates the remaining finite-geometry behavior.
+
+Feasibility is adequate before outcomes: 109/125 development targets and 105/125 confirmatory targets have at least five geographically supported source species.
 
 A paired diagnostic remains available:
 
@@ -49,7 +51,7 @@ The inferential statistic is the species-equal mean of this paired increment.
 
 This is deliberately stronger than asking whether one favorable order has a positive TTF score. The same rule is applied to every response-blind supported target, and the comparison is within target against a geography-matched reference field.
 
-Seventy-nine of 125 development targets and 86 of 125 confirmatory targets already have at least five geographically supported same-order source species.
+Seventy-two of 125 development targets and 78 of 125 confirmatory targets already have at least five geographically supported same-order source species.
 
 Family-level conditioning is excluded prospectively because response-blind support is too sparse.
 
