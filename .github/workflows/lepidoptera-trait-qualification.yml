@@ -10,12 +10,15 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install -e . pytest
-      - name: Download frozen phylogatR archive
-        env:
-          ARCHIVE_URL: ${{ secrets.PHYLOGATR_ARCHIVE_URL }}
+      - name: Restore frozen archive cache
+        id: archive
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/phylogatr.zip
+          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5
+      - name: Require frozen archive
         run: |
-          test -n "$ARCHIVE_URL"
-          curl -L "$ARCHIVE_URL" -o /tmp/phylogatr.zip
+          test -f /tmp/phylogatr.zip || { echo "Frozen archive cache is absent. Seed it once with the response-blind archive-seed workflow."; exit 2; }
           echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5  /tmp/phylogatr.zip" | sha256sum -c -
       - run: python scripts/build_lepidoptera_trait_gradient_design.py --archive /tmp/phylogatr.zip --leptraits data/external/leptraits_consensus_v1.0.csv --output results/lepidoptera_trait_gradient_design_v0.1.json
       - run: |
