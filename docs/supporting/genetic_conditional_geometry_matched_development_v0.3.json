@@ -1,0 +1,132 @@
+{
+  "schema": "ttf_genetic_conditional_geometry_matched_development_v0.3",
+  "status": "FROZEN_BEFORE_V03_PRIVATE_ENVELOPE_DEVELOPMENT_SCREEN",
+  "frozen_on": "2026-09-19",
+  "purpose": "Develop a response-blind same-order versus different-order transfer test that separates taxonomic composition from source-geometry composition and calibrates the paired statistic against the exact deployment geometry rather than assuming a zero-centered structural null.",
+  "parent_failure": {
+    "receipt": "benchmarks/frozen/genetic_conditional_order_contrast_survivor_requalification_v0.2.json",
+    "status": "NOT_EVALUABLE_CONDITIONAL_ORDER_CONTRAST_V02_SURVIVOR_GEOMETRY",
+    "interpretation": "inferential deployment-geometry failure only; not a biological rejection of lineage-conditioned transfer"
+  },
+  "response_blind_geometry_diagnosis": {
+    "development_joint_targets_v02": 52,
+    "survivor_joint_targets_v02": 63,
+    "median_source_geometry": {
+      "development": {
+        "same_target_to_source_coverage": 0.822,
+        "different_target_to_source_coverage": 0.772,
+        "same_source_to_target_coverage": 0.735,
+        "different_source_to_target_coverage": 0.632,
+        "same_symmetric_min_coverage": 0.645,
+        "different_symmetric_min_coverage": 0.533,
+        "same_centroid_distance_km": 1132,
+        "different_centroid_distance_km": 1657,
+        "same_edge_ratio": 1.55,
+        "different_edge_ratio": 2.55,
+        "same_locality_ratio": 1.16,
+        "different_locality_ratio": 1.32
+      },
+      "confirmatory_survivor": {
+        "same_target_to_source_coverage": 0.878,
+        "different_target_to_source_coverage": 0.809,
+        "same_source_to_target_coverage": 0.781,
+        "different_source_to_target_coverage": 0.621,
+        "same_symmetric_min_coverage": 0.707,
+        "different_symmetric_min_coverage": 0.564,
+        "same_centroid_distance_km": 653,
+        "different_centroid_distance_km": 1490,
+        "same_edge_ratio": 1.65,
+        "different_edge_ratio": 3.84,
+        "same_locality_ratio": 1.18,
+        "different_locality_ratio": 1.48
+      }
+    },
+    "diagnostic_conclusion": "The v0.2 same-order and different-order source pools differ materially in overlap, centroid distance and graph size, with larger imbalance on the character-mask survivor geometry. A taxonomic source contrast can therefore inherit a geometry contrast."
+  },
+  "estimator_development": {
+    "base_geographic_support_radius_km": 500,
+    "minimum_target_to_source_coverage": 0.5,
+    "minimum_sources_per_side_after_matching": 5,
+    "group_label": "exact non-empty phylogatR order",
+    "paired_statistic": "species-equal mean of C_same_order_matched - C_different_order_matched",
+    "source_mass_normalization": "retain the existing N_train/N_selected scaling separately in each equal-count matched pool",
+    "matching": {
+      "response_blind": true,
+      "one_to_one_without_replacement": true,
+      "equal_source_counts_required": true,
+      "caliper": null,
+      "smaller_group_rule": "use every source in the smaller supported group and down-select the larger group",
+      "algorithm": "deterministic hardest-first greedy nearest-neighbour matching in target-standardized feature space with lexical tie breaking",
+      "features": [
+        "target_to_source_coverage",
+        "source_to_target_coverage",
+        "log1p_centroid_distance_over_support_radius",
+        "log_source_to_target_edge_ratio",
+        "log_source_to_target_locality_ratio"
+      ],
+      "standardization": "within each target across the complete geographically supported source universe; population SD with unit fallback for constant features"
+    }
+  },
+  "development_inference": {
+    "primary_calibration": "worst-case upper-tail Monte Carlo envelope across independent exact-geometry private-null reference distributions",
+    "zero_centered_species_bootstrap_primary": false,
+    "private_reference_cells": [
+      {"cell": "private_A0p5", "residual_amplitude": 0.5, "worlds": 99},
+      {"cell": "private_A1", "residual_amplitude": 1.0, "worlds": 99},
+      {"cell": "private_A2", "residual_amplitude": 2.0, "worlds": 99},
+      {"cell": "private_A3", "residual_amplitude": 3.0, "worlds": 99}
+    ],
+    "evaluation_cells": [
+      {"cell": "private_A0p5", "group_mode": "private", "residual_amplitude": 0.5, "worlds": 50},
+      {"cell": "private_A1", "group_mode": "private", "residual_amplitude": 1.0, "worlds": 50},
+      {"cell": "private_A2", "group_mode": "private", "residual_amplitude": 2.0, "worlds": 50},
+      {"cell": "private_A3", "group_mode": "private", "residual_amplitude": 3.0, "worlds": 50},
+      {"cell": "same_order_A2", "group_mode": "same_order", "residual_amplitude": 2.0, "worlds": 50}
+    ],
+    "alpha": 0.05,
+    "screening_success": {
+      "private_cells": "each private evaluation cell must have <=5 rejections among 50 worlds on both the development geometry and the exact confirmatory survivor geometry",
+      "positive_cell": "same_order_A2 must have >=35 rejections among 50 worlds on both geometries",
+      "scope": "method-development screen only; these thresholds do not authorize empirical opening"
+    }
+  },
+  "synthetic_worlds": {
+    "master_seed": 20260919,
+    "reference_seed_tag": "conditional-order-geometry-match-v03-dev-reference",
+    "evaluation_seed_tag": "conditional-order-geometry-match-v03-dev-evaluation",
+    "ibd_strength": 1.0,
+    "noise_sd": 0.1,
+    "transition_width": 0.2,
+    "noise_dimensions": 2
+  },
+  "development_domains": {
+    "original_development_geometry": {
+      "species": 250,
+      "geometry_csv_sha256": "d4affc28a2f9da89d0566b0f52123f4711009c99e985baff9f44767da996a9cd",
+      "geometry_manifest_sha256": "f78bc6fa735010270db287764be0f818ef09ce416b00e0cb0c1aa1f00f7513ac"
+    },
+    "confirmatory_survivor_geometry": {
+      "species": 214,
+      "train_species": 103,
+      "eval_species": 111,
+      "survivor_geometry_csv_sha256": "2c921ac40da2569b619c02132c5c72cb187352067f6b7793570d06c7aef6862e",
+      "mask_manifest_sha256": "3a0bbf3bbac3c23edcb2848dc82502c3046ae470f205cfbed0ce21319279f510"
+    }
+  },
+  "pre_protocol_exploration_disclosure": {
+    "status": "NOT_PART_OF_V03_PRIVATE_ENVELOPE_SCREEN",
+    "note": "Before this protocol was frozen, two-world local exploratory checks were used only to see whether geometry matching alone obviously solved the v0.2 centered-bootstrap failure. They used a different development seed tag and are excluded from all v0.3 reference and evaluation worlds.",
+    "old_seed_tag": "conditional-order-geometry-match-v03-dev",
+    "worlds": 2
+  },
+  "formalization_rule": {
+    "if_screen_passes": "freeze a separately named formal v0.3 qualification with entirely new formal reference/evaluation seed namespaces and high-precision Type-I/power gates before any formal result is generated",
+    "if_screen_fails": "do not tune thresholds on the same worlds; either abandon the order route or define a newly named development estimator with new development seeds"
+  },
+  "outcome_firewall": {
+    "development_sequence_identity_opened": false,
+    "confirmatory_sequence_identity_opened_for_conditional_study": false,
+    "confirmatory_pairwise_genetic_distances_opened_for_conditional_study": false,
+    "conditional_empirical_result_opened": false
+  }
+}
