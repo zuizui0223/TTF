@@ -53,6 +53,21 @@ class ConditionalOrderBatchScore:
 
 
 @dataclass(frozen=True)
+class ConditionalOrderBreadthDiagnostic:
+    """Outcome-agnostic breadth summaries for a scored conditional-order batch."""
+
+    species_equal_statistics: np.ndarray
+    order_balanced_statistics: np.ndarray
+    order_mean_increments: Mapping[str, np.ndarray]
+    leave_one_order_out_statistics: Mapping[str, np.ndarray]
+    order_species_counts: Mapping[str, int]
+    included_orders: tuple[str, ...]
+    excluded_orders: tuple[str, ...]
+    top_order: str
+    top_order_fraction: float
+
+
+@dataclass(frozen=True)
 class ConditionalOrderFullProjectionExecution:
     """Execution-only full geometry caches for the frozen order estimand."""
 
@@ -354,6 +369,93 @@ def score_conditional_order_world_batch(
     )
 
 
+def summarize_conditional_order_breadth(
+    design: ConditionalOrderQualificationDesign,
+    species_increments: Mapping[str, np.ndarray],
+    *,
+    minimum_targets_per_order: int = 5,
+) -> ConditionalOrderBreadthDiagnostic:
+    """Summarize whether a paired same-order increment is broad across orders.
+
+    This diagnostic never changes the frozen species-equal primary estimand.
+    It exposes response-blind taxonomic imbalance by reporting an equal-order
+    summary over sufficiently represented orders and leave-one-order-out
+    species-equal summaries. It supplies no p-value and cannot rescue or
+    overturn the primary decision.
+    """
+    if minimum_targets_per_order < 1:
+        raise ValueError("minimum_targets_per_order must be positive")
+    eligible = tuple(design.eligible_eval_species)
+    if set(species_increments) != set(eligible):
+        raise ValueError("breadth diagnostic requires the exact eligible target set")
+
+    arrays: dict[str, np.ndarray] = {}
+    widths: set[int] = set()
+    by_order: dict[str, list[str]] = {}
+    for name in eligible:
+        values = np.asarray(species_increments[name], dtype=float)
+        if values.ndim != 1 or len(values) < 1 or not np.isfinite(values).all():
+            raise ValueError(f"invalid species increment vector for {name}")
+        widths.add(len(values))
+        arrays[name] = values
+        label = str(design.order_by_species[name]).strip()
+        if not label:
+            raise ValueError(f"blank order label for eligible target {name}")
+        by_order.setdefault(label, []).append(name)
+    if len(widths) != 1:
+        raise ValueError("species increment batch widths disagree")
+
+    counts = {label: len(names) for label, names in sorted(by_order.items())}
+    included = tuple(
+        label for label, count in counts.items()
+        if count >= int(minimum_targets_per_order)
+    )
+    excluded = tuple(label for label in counts if label not in included)
+    if len(included) < 2:
+        raise ValueError("fewer than two adequately represented orders")
+
+    order_means = {
+        label: np.mean(
+            np.vstack([arrays[name] for name in by_order[label]]),
+            axis=0,
+        )
+        for label in included
+    }
+    species_equal = np.mean(np.vstack([arrays[name] for name in eligible]), axis=0)
+    order_balanced = np.mean(
+        np.vstack([order_means[label] for label in included]),
+        axis=0,
+    )
+    leave_one_out: dict[str, np.ndarray] = {}
+    for label, names in sorted(by_order.items()):
+        removed = set(names)
+        retained = [name for name in eligible if name not in removed]
+        if retained:
+            leave_one_out[label] = np.mean(
+                np.vstack([arrays[name] for name in retained]),
+                axis=0,
+            )
+
+    top_order = sorted(counts, key=lambda label: (-counts[label], label))[0]
+    return ConditionalOrderBreadthDiagnostic(
+        species_equal_statistics=np.asarray(species_equal, dtype=float).copy(),
+        order_balanced_statistics=np.asarray(order_balanced, dtype=float).copy(),
+        order_mean_increments={
+            label: np.asarray(values, dtype=float).copy()
+            for label, values in order_means.items()
+        },
+        leave_one_order_out_statistics={
+            label: np.asarray(values, dtype=float).copy()
+            for label, values in leave_one_out.items()
+        },
+        order_species_counts=counts,
+        included_orders=included,
+        excluded_orders=excluded,
+        top_order=top_order,
+        top_order_fraction=float(counts[top_order] / len(eligible)),
+    )
+
+
 def make_conditional_order_worlds(
     design: ConditionalOrderQualificationDesign,
     *,
@@ -406,6 +508,7 @@ def make_conditional_order_worlds(
 
 __all__ = [
     "ConditionalOrderBatchScore",
+    "ConditionalOrderBreadthDiagnostic",
     "ConditionalOrderFullProjectionExecution",
     "ConditionalOrderQualificationDesign",
     "frozen_seed",
@@ -414,4 +517,5 @@ __all__ = [
     "prepare_conditional_order_qualification",
     "score_conditional_order_world_batch",
     "score_conditional_order_world_batch_full_projection",
+    "summarize_conditional_order_breadth",
 ]
