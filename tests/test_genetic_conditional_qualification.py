@@ -130,3 +130,54 @@ def test_order_world_batch_produces_paired_statistic_and_bootstrap_pvalue() -> N
             atol=0.0,
             rtol=0.0,
         )
+
+
+def test_world_batch_partition_preserves_absolute_replicate_results() -> None:
+    design = _fixture()
+    worlds = make_conditional_order_worlds(
+        design,
+        cell="private_A2",
+        residual_amplitude=2.0,
+        absolute_start=11,
+        count=4,
+        group_mode="private",
+    )
+    together = score_conditional_order_world_batch(
+        design,
+        worlds,
+        cell="private_A2",
+        absolute_start=11,
+        bootstrap_resamples=199,
+    )
+    first = score_conditional_order_world_batch(
+        design,
+        worlds[:2],
+        cell="private_A2",
+        absolute_start=11,
+        bootstrap_resamples=199,
+    )
+    second = score_conditional_order_world_batch(
+        design,
+        worlds[2:],
+        cell="private_A2",
+        absolute_start=13,
+        bootstrap_resamples=199,
+    )
+    assert np.array_equal(
+        together.statistics,
+        np.concatenate([first.statistics, second.statistics]),
+    )
+    assert np.array_equal(
+        together.p_values,
+        np.concatenate([first.p_values, second.p_values]),
+    )
+    for name in design.eligible_eval_species:
+        assert np.array_equal(
+            together.species_increments[name],
+            np.concatenate(
+                [
+                    first.species_increments[name],
+                    second.species_increments[name],
+                ]
+            ),
+        )
