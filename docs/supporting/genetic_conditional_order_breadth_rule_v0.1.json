@@ -1,0 +1,69 @@
+{
+  "schema": "ttf_genetic_conditional_order_breadth_rule_v0.1",
+  "status": "FROZEN_BEFORE_ANY_CONDITIONAL_EMPIRICAL_GENETIC_OUTCOME",
+  "frozen_on": "2026-09-19",
+  "purpose": "Prospectively diagnose whether a future positive same-order paired transfer increment is broad across taxonomic orders or dominated by one response-blind order. This diagnostic cannot change, rescue, or overturn the frozen species-equal primary decision.",
+  "parent_primary_rule": "docs/supporting/genetic_conditional_order_qualification_rule_v0.1.json",
+  "primary_estimand_unchanged": "species-equal mean of C_same_order_geo - C_geo over the frozen same-order-supported evaluation set",
+  "breadth_diagnostic": {
+    "minimum_targets_per_order": 5,
+    "order_balanced_statistic": "equal-weight mean of within-order mean paired increments among orders with at least 5 eligible evaluation species",
+    "leave_one_order_out": "species-equal primary increment recomputed descriptively after removing each target order in turn",
+    "inference": "descriptive_only_no_p_value",
+    "claim_limit": "A positive primary result does not by itself establish generality across taxonomic orders. Breadth summaries describe concentration only."
+  },
+  "response_blind_support_census": {
+    "development": {
+      "eligible_same_order_targets": 72,
+      "order_counts": {
+        "Lepidoptera": 47,
+        "Diptera": 10,
+        "Coleoptera": 8,
+        "Hymenoptera": 5,
+        "Hemiptera": 2
+      },
+      "orders_meeting_minimum_targets": [
+        "Coleoptera",
+        "Diptera",
+        "Hymenoptera",
+        "Lepidoptera"
+      ],
+      "largest_order": "Lepidoptera",
+      "largest_order_fraction": 0.6527777777777778
+    },
+    "confirmatory": {
+      "eligible_same_order_targets": 78,
+      "order_counts": {
+        "Lepidoptera": 46,
+        "Diptera": 12,
+        "Coleoptera": 10,
+        "Hymenoptera": 10
+      },
+      "orders_meeting_minimum_targets": [
+        "Coleoptera",
+        "Diptera",
+        "Hymenoptera",
+        "Lepidoptera"
+      ],
+      "largest_order": "Lepidoptera",
+      "largest_order_fraction": 0.5897435897435898
+    }
+  },
+  "geometry_hashes": {
+    "development_csv_sha256": "d4affc28a2f9da89d0566b0f52123f4711009c99e985baff9f44767da996a9cd",
+    "development_manifest_sha256": "f78bc6fa735010270db287764be0f818ef09ce416b00e0cb0c1aa1f00f7513ac",
+    "confirmatory_csv_sha256": "fc93f1aaac2abc369f3e94c99b73e1d139f635638e197d1f71f977a49a44dbba",
+    "confirmatory_manifest_sha256": "debe44fabd10c53b2cf5fad13ad0c182e57429edd193619fa7a5c34e4dbdb880"
+  },
+  "interpretation": {
+    "primary_positive_breadth_consistent": "same-order transfer improvement is not confined to the numerically dominant target order under the frozen descriptive diagnostics",
+    "primary_positive_breadth_concentrated": "same-order transfer improvement is concentrated in one or a small number of orders; report the primary result at the supported-species level and do not generalize it across orders",
+    "primary_null": "breadth diagnostics cannot rescue a non-significant primary result"
+  },
+  "outcome_firewall": {
+    "development_sequence_identity_opened": false,
+    "confirmatory_sequence_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "conditional_empirical_result_opened": false
+  }
+}
