@@ -1,0 +1,22 @@
+name: seed frozen phylogatr archive cache
+on:
+  workflow_dispatch:
+    inputs:
+      archive_url:
+        description: "Temporary authenticated download URL for exact frozen archive"
+        required: true
+        type: string
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download exact frozen archive
+        env:
+          ARCHIVE_URL: ${{ inputs.archive_url }}
+        run: |
+          curl --fail --location "$ARCHIVE_URL" -o /tmp/phylogatr.zip
+          echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5  /tmp/phylogatr.zip" | sha256sum -c -
+      - uses: actions/cache/save@v4
+        with:
+          path: /tmp/phylogatr.zip
+          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5
