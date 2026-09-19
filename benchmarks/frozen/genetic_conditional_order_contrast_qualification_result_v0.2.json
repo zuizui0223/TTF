@@ -1,0 +1,106 @@
+{
+  "schema": "ttf_genetic_conditional_order_contrast_qualification_result_v0.2",
+  "status": "PASS",
+  "executed_on": "2026-09-19",
+  "purpose": "Freeze the formal development-geometry qualification outcome for the v0.2 geography-matched same-order versus different-order transfer contrast.",
+  "frozen_rule": "docs/supporting/genetic_conditional_order_contrast_qualification_rule_v0.2.json",
+  "development_geometry": {
+    "species": 250,
+    "train_species": 125,
+    "eval_species": 125,
+    "jointly_supported_eval_species": 52,
+    "geometry_csv_sha256": "d4affc28a2f9da89d0566b0f52123f4711009c99e985baff9f44767da996a9cd",
+    "geometry_manifest_sha256": "f78bc6fa735010270db287764be0f818ef09ce416b00e0cb0c1aa1f00f7513ac"
+  },
+  "estimator": {
+    "contrast": "C_same_order_geo - C_different_order_geo",
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.5,
+    "minimum_same_order_source_species": 5,
+    "minimum_different_order_source_species": 5,
+    "bootstrap_resamples": 1999,
+    "alpha": 0.05,
+    "world_seed_tag": "conditional-order-contrast-v02",
+    "bootstrap_seed_tag": "conditional-order-contrast-v02-bootstrap"
+  },
+  "cells": {
+    "private_A0p5": {
+      "worlds": 500,
+      "rejections": 21,
+      "rejection_rate": 0.042,
+      "wilson95_low": 0.027632310108451703,
+      "wilson95_high": 0.06335158575433016,
+      "mean_statistic": -0.007447838124087697,
+      "median_p_value": 0.5465,
+      "execution_output_sha256": "f1cd9d22973410167a78247166822ef135bd150bb140dc44ceddb94221ec298d"
+    },
+    "private_A1": {
+      "worlds": 500,
+      "rejections": 24,
+      "rejection_rate": 0.048,
+      "wilson95_low": 0.03246520694135317,
+      "wilson95_high": 0.07042719683589006,
+      "mean_statistic": -0.0060242305492512966,
+      "median_p_value": 0.574,
+      "execution_output_sha256": "8d51330d78e32c44fb56ee53c61ef6d9d8b78f583917c2f4bcd25d6590188581"
+    },
+    "private_A2": {
+      "worlds": 500,
+      "rejections": 12,
+      "rejection_rate": 0.024,
+      "wilson95_low": 0.013781314655496986,
+      "wilson95_high": 0.041477057463900756,
+      "mean_statistic": -0.009724516302670736,
+      "median_p_value": 0.5785,
+      "execution_output_sha256": "897b3a922bf67bd3766417caf6c12408a62f49d8089992567d1a599d2a3f6721"
+    },
+    "private_A3": {
+      "worlds": 500,
+      "rejections": 9,
+      "rejection_rate": 0.018,
+      "wilson95_low": 0.009498193296197078,
+      "wilson95_high": 0.033851670908739286,
+      "mean_statistic": -0.016209779633109128,
+      "median_p_value": 0.6095,
+      "execution_output_sha256": "f3670e9900eb689342fb535145a582a6286b3939d3bac0db17ca1f628bc68755"
+    },
+    "same_order_A2": {
+      "worlds": 500,
+      "rejections": 441,
+      "rejection_rate": 0.882,
+      "wilson95_low": 0.8507680121388806,
+      "wilson95_high": 0.9074069917484936,
+      "mean_statistic": 0.18360737184555967,
+      "median_p_value": 0.001,
+      "execution_output_sha256": "0cee6582bf321f6f8aaf7e09d8204f5c900aed95adaf439874983cc924e58820"
+    }
+  },
+  "gates": {
+    "type1_pass": true,
+    "type1_wilson95_upper_ceiling": 0.1,
+    "max_private_wilson95_upper": 0.07042719683589006,
+    "power_pass": true,
+    "power_wilson95_lower_floor": 0.8,
+    "same_order_A2_wilson95_lower": 0.8507680121388806,
+    "overall_pass": true
+  },
+  "execution_verification": {
+    "response_blind_support_reproduced": {
+      "geographic_supported_eval_species": 109,
+      "same_order_supported_eval_species": 72,
+      "different_order_supported_eval_species": 86,
+      "jointly_supported_eval_species": 52
+    },
+    "compact_ibd_vs_independent_leave_two_localities_out_reference_max_abs_difference": 0.0,
+    "full_projection_vs_direct_normalized_projection_max_abs_difference": 1.14e-16,
+    "execution_note": "Formal frozen seed namespaces and estimator were executed through an independent exact local numerical replication of the repository path; numerical primitives were cross-checked before the 500-world cells were opened."
+  },
+  "interpretation": "The v0.2 same-order versus different-order contrast is qualified on the exact response-blind development geometry: private Type-I control and same-order positive-control power both satisfy the frozen gates. This is method qualification, not an empirical genetic result.",
+  "next_step": "Open canonical-valid character masks only for the untouched confirmatory reserve, then rebuild the exact survivor geometry and repeat v0.2 synthetic qualification before any confirmatory nucleotide identity is opened.",
+  "outcome_firewall": {
+    "development_empirical_sequence_identity_opened": false,
+    "confirmatory_sequence_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "conditional_empirical_result_opened": false
+  }
+}
