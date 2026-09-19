@@ -1,6 +1,8 @@
 # Conditional genetic TTF successor study
 
-Status: **response-blind successor frozen before any nucleotide identity from the new panels is opened**.
+Status: **taxonomic-order successor closed after v0.3 screen; confirmatory nucleotide identity remains unopened**.
+
+**Terminal update (2026-09-19):** v0.2 passed on the original development geometry but failed Type-I requalification after confirmatory character-mask attrition. A newly named v0.3 response-blind successor matched same-order and different-order sources one-to-one on source geometry and calibrated against independent private-null envelopes. v0.3 fixed the survivor Type-I inflation, but its same-order A2 positive-control power was inadequate on the 214-species survivor geometry (19/50 rejections; frozen requirement >=35/50). The taxonomic-order route is therefore stopped before formal v0.3 qualification or any confirmatory nucleotide-identity opening. See benchmarks/frozen/genetic_conditional_geometry_matched_development_screen_v0.3.json.
 
 The completed 211-species phylogatR result remains an immutable unconditional baseline. Its empirical conclusion is not being repaired or re-tested. The successor asks a different question:
 
@@ -85,3 +87,17 @@ The key future branches are:
 - **geographic diagnostic null:** the inherited Gaussian field already handles geographic mismatch adequately.
 
 None of these outcomes identifies dispersal ability or historical range dynamics by itself.
+
+## Terminal taxonomic-order development outcome
+
+The taxonomic-order path ended at the v0.3 development screen rather than an empirical genetic result.
+
+- v0.2 development qualification: PASS.
+- v0.2 exact survivor-geometry requalification: FAIL from private-null Type-I inflation.
+- v0.3 geometry matching + private-envelope calibration:
+  - original development geometry: PASS screen (private 1/3/2/0 of 50; same_order_A2 40/50);
+  - exact 214-species survivor geometry: private screen PASS (0/0/1/0 of 50) but positive-control power FAIL (same_order_A2 19/50, requirement >=35/50).
+
+Thus v0.3 solved the false-positive problem but did not retain enough deployment power. Under the predeclared stop rule, no further taxonomic-rank, matching-threshold, support-threshold or null-family tuning is permitted on these panels.
+
+The next scientific layer is not a finer taxonomic rescue. It is a separately frozen external-predictor study asking whether directly measured ecological or life-history similarity—such as dispersal, generation time, habitat association or climatic niche—conditions transferability on a new untouched species panel.
