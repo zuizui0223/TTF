@@ -336,3 +336,64 @@ def test_full_projection_cache_can_materialize_predeclared_target_subset() -> No
     assert full.eval_species == subset
     assert set(scored.species_scores) == set(subset)
     assert np.array_equal(scored.n_eval_species, np.full(1, len(subset)))
+
+
+def test_different_group_pool_is_disjoint_from_same_group_pool() -> None:
+    train, evaluation, prepared = _fixture()
+    train_mid = {x.species: x.midpoint for x in train}
+    eval_mid = {x.species: x.midpoint for x in evaluation}
+    train_group = {
+        "near_a": "A",
+        "near_b": "A",
+        "far_a": "B",
+        "far_b": "B",
+        "far_c": "B",
+    }
+    eval_group = {x.species: "A" for x in evaluation}
+    same = prepare_target_source_pools(
+        prepared,
+        train_mid,
+        eval_mid,
+        support_radius=1000.0,
+        minimum_target_coverage=0.0,
+        minimum_source_species=2,
+        train_group=train_group,
+        eval_group=eval_group,
+        require_same_group=True,
+    )
+    different = prepare_target_source_pools(
+        prepared,
+        train_mid,
+        eval_mid,
+        support_radius=1000.0,
+        minimum_target_coverage=0.0,
+        minimum_source_species=2,
+        train_group=train_group,
+        eval_group=eval_group,
+        require_different_group=True,
+    )
+    assert same.require_same_group is True
+    assert same.require_different_group is False
+    assert different.require_same_group is False
+    assert different.require_different_group is True
+    for target in same.eligible_eval_species:
+        assert same.source_pool[target] == ("near_a", "near_b")
+        assert different.source_pool[target] == ("far_a", "far_b", "far_c")
+        assert set(same.source_pool[target]).isdisjoint(different.source_pool[target])
+
+
+def test_source_pool_rejects_conflicting_group_rules() -> None:
+    train, evaluation, prepared = _fixture()
+    train_group = {x.species: "A" for x in train}
+    eval_group = {x.species: "A" for x in evaluation}
+    import pytest
+    with pytest.raises(ValueError, match="both same and different"):
+        prepare_target_source_pools(
+            prepared,
+            {x.species: x.midpoint for x in train},
+            {x.species: x.midpoint for x in evaluation},
+            train_group=train_group,
+            eval_group=eval_group,
+            require_same_group=True,
+            require_different_group=True,
+        )

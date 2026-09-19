@@ -1,0 +1,162 @@
+{
+  "schema": "ttf_genetic_conditional_order_contrast_qualification_rule_v0.2",
+  "status": "FROZEN_BEFORE_V02_FORMAL_QUALIFICATION_AND_ANY_CONDITIONAL_EMPIRICAL_IDENTITY",
+  "frozen_on": "2026-09-19",
+  "purpose": "Qualify a geography-matched same-order versus different-order paired transfer contrast after development-stage evidence that the v0.1 same-order-versus-all-geographic baseline dilutes the lineage-composition signal.",
+  "parent_v01_rule": "docs/supporting/genetic_conditional_order_qualification_rule_v0.1.json",
+  "estimator_change": {
+    "v01": "C_same_order_geo - C_all_geo",
+    "v02": "C_same_order_geo - C_different_order_geo",
+    "rationale": "The v0.1 reference pool contains same-order sources and therefore partially contains the condition being tested. v0.2 uses disjoint source-lineage pools under the identical geographic support rule.",
+    "empirical_outcome_used_for_change": false
+  },
+  "development_panel": {
+    "species": 250,
+    "train_species": 125,
+    "eval_species": 125,
+    "geometry_csv_sha256": "d4affc28a2f9da89d0566b0f52123f4711009c99e985baff9f44767da996a9cd",
+    "geometry_manifest_sha256": "f78bc6fa735010270db287764be0f818ef09ce416b00e0cb0c1aa1f00f7513ac",
+    "jointly_supported_eval_species": 52,
+    "jointly_supported_by_order": {
+      "Lepidoptera": 27,
+      "Diptera": 10,
+      "Coleoptera": 8,
+      "Hymenoptera": 5,
+      "Hemiptera": 2
+    },
+    "development_empirical_sequence_identity_opened": false
+  },
+  "confirmatory_reserve": {
+    "species": 250,
+    "train_species": 125,
+    "eval_species": 125,
+    "geometry_csv_sha256": "fc93f1aaac2abc369f3e94c99b73e1d139f635638e197d1f71f977a49a44dbba",
+    "geometry_manifest_sha256": "debe44fabd10c53b2cf5fad13ad0c182e57429edd193619fa7a5c34e4dbdb880",
+    "jointly_supported_eval_species_before_character_masks": 77,
+    "jointly_supported_by_order_before_character_masks": {
+      "Lepidoptera": 46,
+      "Diptera": 11,
+      "Coleoptera": 10,
+      "Hymenoptera": 10
+    },
+    "confirmatory_sequence_identity_opened": false
+  },
+  "frozen_estimator": {
+    "field_bandwidth_km": 500,
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.5,
+    "minimum_same_order_source_species": 5,
+    "minimum_different_order_source_species": 5,
+    "group_label": "exact non-empty phylogatR order",
+    "estimand": "species-equal mean of [C_same_order_geo - C_different_order_geo] over evaluation species supported by both disjoint source pools",
+    "source_pool_disjointness_required": true,
+    "source_mass_normalization": "multiply each target-specific pool's edge weights by N_train/N_selected so both fields preserve the full training panel's total pre-kernel species-weight mass",
+    "inference": "one-sided centered studentized held-out-species bootstrap of paired target increments",
+    "alpha": 0.05,
+    "bootstrap_resamples": 1999
+  },
+  "development_pilot_disclosure": {
+    "status": "METHOD_DEVELOPMENT_ONLY_NOT_FORMAL_QUALIFICATION",
+    "empirical_genetic_outcomes_opened": false,
+    "note": "Local development pilots used the older conditional-order seed namespace to compare reference-pool definitions. Those worlds are excluded from v0.2 formal qualification by new seed tags.",
+    "observed_examples": {
+      "same_order_A2": {
+        "worlds": 20,
+        "rejections": 18
+      },
+      "private_A0p5": {
+        "worlds": 20,
+        "rejections": 0
+      },
+      "private_A1": {
+        "worlds": 20,
+        "rejections": 3
+      },
+      "private_A2": {
+        "worlds": 20,
+        "rejections": 1
+      },
+      "private_A3": {
+        "worlds": 20,
+        "rejections": 1
+      }
+    },
+    "interpretation": "Pilot counts motivated freezing a clean contrast; they are not used to claim Type-I control or power."
+  },
+  "synthetic_worlds": {
+    "master_seed": 20260919,
+    "world_seed_tag": "conditional-order-contrast-v02",
+    "bootstrap_seed_tag": "conditional-order-contrast-v02-bootstrap",
+    "ibd_strength": 1,
+    "noise_sd": 0.1,
+    "transition_width": 0.2,
+    "noise_dimensions": 2,
+    "private_null_cells": [
+      {
+        "cell": "private_A0p5",
+        "group_rule": "unique group per species",
+        "residual_amplitude": 0.5,
+        "worlds": 500
+      },
+      {
+        "cell": "private_A1",
+        "group_rule": "unique group per species",
+        "residual_amplitude": 1,
+        "worlds": 500
+      },
+      {
+        "cell": "private_A2",
+        "group_rule": "unique group per species",
+        "residual_amplitude": 2,
+        "worlds": 500
+      },
+      {
+        "cell": "private_A3",
+        "group_rule": "unique group per species",
+        "residual_amplitude": 3,
+        "worlds": 500
+      }
+    ],
+    "positive_control": {
+      "cell": "same_order_A2",
+      "group_rule": "exact frozen phylogatR order shared within order, independent across orders",
+      "residual_amplitude": 2,
+      "worlds": 500
+    }
+  },
+  "qualification": {
+    "type1_gate": "for every private-null cell, Wilson 95% upper bound of p<=0.05 rejection rate must be <=0.10",
+    "type1_wilson95_upper_ceiling": 0.1,
+    "power_gate": "same_order_A2 Wilson 95% lower bound of p<=0.05 rejection rate must be >=0.80",
+    "power_wilson95_lower_floor": 0.8,
+    "overall_pass": "all four private Type-I cells pass AND same_order_A2 power passes",
+    "failure": "NOT_EVALUABLE_CONDITIONAL_ORDER_CONTRAST_V02; do not open confirmatory nucleotide identity"
+  },
+  "confirmatory_sequence": [
+    "formal v0.2 synthetic qualification on development geometry must PASS",
+    "confirmatory character-mask admissibility under frozen sequence rules",
+    "rebuild exact survivor geometry without changing source-pool rules",
+    "repeat exact-geometry v0.2 synthetic qualification on survivor geometry",
+    "only then authorize one confirmatory nucleotide-identity opening"
+  ],
+  "forbidden_after_freeze": [
+    "changing same-versus-different contrast after formal qualification is seen",
+    "changing support radius, 50 percent coverage threshold, or five-source minima",
+    "changing taxonomic rank from order",
+    "reusing development-pilot seed tags as formal qualification worlds",
+    "dropping difficult supported targets based on synthetic or empirical increments",
+    "opening confirmatory nucleotide identity before all qualification and admissibility gates pass"
+  ],
+  "outcome_firewall": {
+    "development_sequence_identity_opened": false,
+    "confirmatory_sequence_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "conditional_empirical_result_opened": false
+  },
+  "execution": {
+    "world_batch_size": 20,
+    "sharding_semantics": "absolute replicate index only; internal batch partition must not alter world or bootstrap identity",
+    "exact_full_projection_cache_allowed": true,
+    "formal_cell_output": "one complete 500-replicate shard per frozen qualification cell"
+  }
+}
