@@ -1,0 +1,29 @@
+name: lepidoptera trait qualification
+on:
+  workflow_dispatch:
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -e . pytest
+      - name: Download frozen phylogatR archive
+        env:
+          ARCHIVE_URL: ${{ secrets.PHYLOGATR_ARCHIVE_URL }}
+        run: |
+          test -n "$ARCHIVE_URL"
+          curl -L "$ARCHIVE_URL" -o /tmp/phylogatr.zip
+          echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5  /tmp/phylogatr.zip" | sha256sum -c -
+      - run: python scripts/build_lepidoptera_trait_gradient_design.py --archive /tmp/phylogatr.zip --leptraits data/external/leptraits_consensus_v1.0.csv --output results/lepidoptera_trait_gradient_design_v0.1.json
+      - run: |
+          for cell in private trait_gradient_positive geometry_confounded_trap; do
+            python scripts/run_lepidoptera_trait_gradient_qualification_batch.py --design-json results/lepidoptera_trait_gradient_design_v0.1.json --cell "$cell" --count 500 --output "results/${cell}.json"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lepidoptera-trait-qualification
+          path: results/*.json
+          retention-days: 30
