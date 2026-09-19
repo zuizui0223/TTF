@@ -118,10 +118,21 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--edge-chunk-size", type=int, default=32)
     parser.add_argument("--train-chunk-size", type=int, default=4096)
+    parser.add_argument(
+        "--world-batch-size",
+        type=int,
+        default=16,
+        help=(
+            "Execution-only synthetic-world batch width; absolute replicate "
+            "identities are unchanged."
+        ),
+    )
     args = parser.parse_args()
 
     if args.start < 0 or args.count < 1:
         parser.error("--start must be >=0 and --count must be >=1")
+    if args.world_batch_size < 1:
+        parser.error("--world-batch-size must be >=1")
     rule = load_json(args.rule, RULE_SCHEMA)
     if not str(rule.get("status", "")).startswith("FROZEN_BEFORE_ANY_CONDITIONAL"):
         raise RuntimeError("qualification rule is not frozen pre-outcome")
@@ -165,38 +176,48 @@ def main() -> int:
         )
 
     worlds_cfg = rule["synthetic_worlds"]
-    worlds = make_conditional_order_worlds(
-        design,
-        cell=str(args.cell),
-        residual_amplitude=float(cell["residual_amplitude"]),
-        absolute_start=int(args.start),
-        count=int(args.count),
-        group_mode=mode,
-        ibd_strength=float(worlds_cfg["ibd_strength"]),
-        noise_sd=float(worlds_cfg["noise_sd"]),
-        transition_width=float(worlds_cfg["transition_width"]),
-        noise_dimensions=int(worlds_cfg["noise_dimensions"]),
-        master_seed=int(worlds_cfg["master_seed"]),
-    )
-    scored = score_conditional_order_world_batch(
-        design,
-        worlds,
-        cell=str(args.cell),
-        absolute_start=int(args.start),
-        bootstrap_resamples=int(estimator["bootstrap_resamples"]),
-        master_seed=int(worlds_cfg["master_seed"]),
-    )
-
     rows = []
-    for offset in range(args.count):
-        rows.append(
-            {
-                "absolute_replicate_index": int(args.start + offset),
-                "statistic": float(scored.statistics[offset]),
-                "p_value": float(scored.p_values[offset]),
-                "reject": bool(scored.p_values[offset] <= float(estimator["alpha"])),
-            }
+    for batch_start in range(
+        int(args.start),
+        int(args.start + args.count),
+        int(args.world_batch_size),
+    ):
+        batch_count = min(
+            int(args.world_batch_size),
+            int(args.start + args.count) - batch_start,
         )
+        worlds = make_conditional_order_worlds(
+            design,
+            cell=str(args.cell),
+            residual_amplitude=float(cell["residual_amplitude"]),
+            absolute_start=batch_start,
+            count=batch_count,
+            group_mode=mode,
+            ibd_strength=float(worlds_cfg["ibd_strength"]),
+            noise_sd=float(worlds_cfg["noise_sd"]),
+            transition_width=float(worlds_cfg["transition_width"]),
+            noise_dimensions=int(worlds_cfg["noise_dimensions"]),
+            master_seed=int(worlds_cfg["master_seed"]),
+        )
+        scored = score_conditional_order_world_batch(
+            design,
+            worlds,
+            cell=str(args.cell),
+            absolute_start=batch_start,
+            bootstrap_resamples=int(estimator["bootstrap_resamples"]),
+            master_seed=int(worlds_cfg["master_seed"]),
+        )
+        for offset in range(batch_count):
+            rows.append(
+                {
+                    "absolute_replicate_index": int(batch_start + offset),
+                    "statistic": float(scored.statistics[offset]),
+                    "p_value": float(scored.p_values[offset]),
+                    "reject": bool(
+                        scored.p_values[offset] <= float(estimator["alpha"])
+                    ),
+                }
+            )
     payload = {
         "schema": "ttf_genetic_conditional_order_qualification_shard_v0.1",
         "status": "SYNTHETIC_QUALIFICATION_SHARD_COMPLETE",
@@ -205,7 +226,8 @@ def main() -> int:
         "residual_amplitude": float(cell["residual_amplitude"]),
         "start": int(args.start),
         "count": int(args.count),
-        "n_eval_species": int(scored.n_eval_species),
+        "n_eval_species": int(len(design.eligible_eval_species)),
+        "world_batch_size": int(args.world_batch_size),
         "rule_sha256": sha256_path(args.rule),
         "geometry_manifest_sha256": sha256_path(args.geometry_manifest),
         "geometry_csv_sha256": sha256_path(args.geometry_csv),
@@ -225,8 +247,11 @@ def main() -> int:
                 "start": args.start,
                 "count": args.count,
                 "rejections": sum(row["reject"] for row in rows),
-                "mean_statistic": float(np.mean(scored.statistics)),
-                "n_eval_species": scored.n_eval_species,
+                "mean_statistic": float(
+                    np.mean([row["statistic"] for row in rows])
+                ),
+                "n_eval_species": len(design.eligible_eval_species),
+                "world_batch_size": int(args.world_batch_size),
             },
             sort_keys=True,
         )
