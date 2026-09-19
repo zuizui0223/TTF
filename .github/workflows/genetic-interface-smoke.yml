@@ -89,6 +89,7 @@ jobs:
           tests/test_genetic_conditional_qualification_cli.py
           tests/test_genetic_conditional_contrast.py
           tests/test_genetic_conditional_geometry_match.py
+          tests/test_genetic_conditional_v03_screen.py
           tests/test_conditional_transfer.py
           tests/test_genetic_molecular_ecology_adapter.py
           tests/test_phylogatr_confirmatory.py
