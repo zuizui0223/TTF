@@ -177,3 +177,21 @@ def test_v02_breadth_rule_is_response_blind_and_descriptive_only() -> None:
     assert conf["order_counts"]["Lepidoptera"] == 46
     assert conf["largest_order_fraction"] == 46 / 77
     assert all(value is False for value in rule["outcome_firewall"].values())
+
+
+def test_survivor_requalification_failure_keeps_identity_closed() -> None:
+    receipt = json.loads(
+        Path(
+            "benchmarks/frozen/genetic_conditional_order_contrast_survivor_requalification_v0.2.json"
+        ).read_text()
+    )
+    assert receipt["status"] == "NOT_EVALUABLE_CONDITIONAL_ORDER_CONTRAST_V02_SURVIVOR_GEOMETRY"
+    assert receipt["character_mask_stage"]["survivors"] == 214
+    assert receipt["survivor_support"]["jointly_supported_eval_species"] == 63
+    assert receipt["frozen_gate"]["maximum_private_rejections_compatible_with_type1_pass"] == 36
+    assert receipt["deterministic_partial_execution"]["cells"]["private_A1"]["rejections"] == 45
+    assert receipt["deterministic_partial_execution"]["cells"]["private_A2"]["rejections"] == 55
+    assert receipt["deterministic_partial_execution"]["cells"]["private_A3"]["rejections"] == 44
+    assert receipt["decision"]["type1_gate"] == "FAIL_IRREVERSIBLY_BEFORE_500"
+    assert receipt["decision"]["confirmatory_identity_opening_authorized"] is False
+    assert all(value is False for value in receipt["outcome_firewall"].values())
