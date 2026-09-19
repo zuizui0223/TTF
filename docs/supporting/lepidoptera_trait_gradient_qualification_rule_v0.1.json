@@ -1,0 +1,68 @@
+{
+  "schema": "ttf_lepidoptera_trait_gradient_qualification_rule_v0.1",
+  "status": "FROZEN_BEFORE_ANY_LEPIDOPTERA_EMPIRICAL_TRANSFER_RESPONSE",
+  "parent_census": "benchmarks/frozen/lepidoptera_trait_transfer_census_result_v0.1.json",
+  "scientific_question": "Within Lepidoptera, does out-of-species spatial-genetic transfer increase continuously with ecological similarity after geographic co-support is controlled?",
+  "domain": {
+    "order": "Lepidoptera",
+    "trait_panel": "major_complete exact-name lower-bound panel",
+    "census_species": 345,
+    "train_species": 172,
+    "evaluation_species": 173,
+    "geographically_supported_evaluation_species": 164,
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.5,
+    "minimum_source_species": 5
+  },
+  "estimands": {
+    "baseline": {
+      "name": "within_lepidoptera_geography_conditioned_transfer",
+      "definition": "For each evaluation species, predict post-IBD edge turnover from all geographically supported training Lepidoptera using the unchanged core TTF field and equal total species weight; score by Spearman correlation with target post-IBD turnover.",
+      "panel_statistic": "arithmetic mean across response-blind supported evaluation species",
+      "role": "second rung between the completed all-animal unconditional baseline and the trait-gradient estimand"
+    },
+    "trait_gradient": {
+      "name": "trait_similarity_transfer_gradient",
+      "unit": "target-source species pair within the target geographic support pool",
+      "trait_axes": {
+        "wing_size": "continuous log-scaled size proxy standardized within the frozen panel",
+        "voltinism": "ordered/categorical life-cycle similarity from LepTraits",
+        "host_breadth": "log1p(NumberOfHostplantFamilies), standardized",
+        "habitat": "Gower-style similarity over CanopyAffinity, EdgeAffinity, MoistureAffinity, DisturbanceAffinity"
+      },
+      "composite_similarity": "mean of available predeclared axis similarities after each axis is scaled to [0,1]; major-complete panel implies all four axes are present",
+      "geographic_control": "Residualize pairwise trait similarity against frozen response-blind geometry covariates within each target support pool before estimating the gradient.",
+      "geometry_covariates": ["target-source coverage", "centroid distance", "edge-count ratio", "locality-count ratio"],
+      "primary_statistic": "Across target-source pairs, slope linking residualized trait similarity to source-specific transfer contribution, aggregated with equal total weight per evaluation target.",
+      "inference": "two-sided target-cluster bootstrap; 1999 resamples; alpha=0.05",
+      "positive_claim": "Within Lepidoptera, ecologically more similar species share more reusable post-IBD spatial-genetic structure beyond geographic co-support."
+    }
+  },
+  "synthetic_qualification": {
+    "private_null": {
+      "shared_residual_field": "none; each species receives an independent residual field",
+      "requirement": "Wilson 95% upper rejection bound <= 0.10"
+    },
+    "trait_gradient_positive": {
+      "shared_residual_field": "pairwise/shared component increases monotonically with frozen trait similarity while marginal private structure is retained",
+      "requirement": "Wilson 95% lower rejection bound >= 0.80"
+    },
+    "geometry_confounded_trap": {
+      "shared_residual_field": "shared amplitude depends only on response-blind geometry similarity; trait similarity is correlated with geometry but has no causal/shared-field role",
+      "requirement": "Wilson 95% upper rejection bound <= 0.10"
+    },
+    "worlds_per_cell": 500,
+    "master_seed": 20260920
+  },
+  "stopping_rules": [
+    "Do not inspect or compute empirical Lepidoptera nucleotide-identity transfer outcomes before all three synthetic cells pass.",
+    "Do not alter trait axes, composite rule, geographic covariates, support radius, coverage threshold, minimum source count, alpha, bootstrap count, or panel split after synthetic outcomes are inspected.",
+    "If any cell fails, retire this estimator version. Any replacement must receive a new estimator name/version and a new disjoint synthetic seed namespace.",
+    "Do not use the prior v0.2/v0.3 confirmatory geometry as the empirical confirmation panel for this new estimand."
+  ],
+  "outcome_firewall": {
+    "lepidoptera_empirical_sequence_identity_opened": false,
+    "lepidoptera_empirical_pairwise_genetic_distances_opened": false,
+    "lepidoptera_empirical_transfer_statistic_computed": false
+  }
+}
