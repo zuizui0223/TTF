@@ -1,0 +1,58 @@
+{
+  "schema": "ttf_genetic_conditional_confirmatory_character_mask_result_v0.1",
+  "status": "PASS_TO_EXACT_SURVIVOR_REQUALIFICATION",
+  "executed_on": "2026-09-19",
+  "source_archive": {
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "bytes": 274988692
+  },
+  "frozen_confirmatory_geometry": {
+    "species": 250,
+    "train_species": 125,
+    "eval_species": 125,
+    "geometry_csv_sha256": "fc93f1aaac2abc369f3e94c99b73e1d139f635638e197d1f71f977a49a44dbba",
+    "geometry_manifest_sha256": "debe44fabd10c53b2cf5fad13ad0c182e57429edd193619fa7a5c34e4dbdb880"
+  },
+  "character_mask": {
+    "canonical_valid_characters": ["A","C","G","T","a","c","g","t"],
+    "minimum_comparable_fraction": 0.5,
+    "survivors": 214,
+    "failed_character_support": 36,
+    "survivor_train_species": 103,
+    "survivor_eval_species": 111,
+    "full_mask_manifest_sha256": "3a0bbf3bbac3c23edcb2848dc82502c3046ae470f205cfbed0ce21319279f510",
+    "survivor_geometry_csv_sha256": "2c921ac40da2569b619c02132c5c72cb187352067f6b7793570d06c7aef6862e"
+  },
+  "failed_species_by_order": {
+    "Lepidoptera": 16,
+    "Coleoptera": 5,
+    "Diptera": 4,
+    "Hymenoptera": 4,
+    "Perciformes": 2,
+    "Odonata": 1,
+    "Psocodea": 1,
+    "Hemiptera": 1,
+    "Plecoptera": 1,
+    "Trichoptera": 1
+  },
+  "exact_survivor_support_before_synthetic_requalification": {
+    "geographic_supported_eval_species": 92,
+    "same_order_supported_eval_species": 66,
+    "different_order_supported_eval_species": 88,
+    "jointly_supported_eval_species": 63,
+    "jointly_supported_by_order": {
+      "Lepidoptera": 38,
+      "Hymenoptera": 10,
+      "Diptera": 8,
+      "Coleoptera": 7
+    }
+  },
+  "execution_contract": {
+    "nucleotide_identity_persisted": false,
+    "pairwise_nucleotide_differences_computed": false,
+    "genetic_distances_computed": false,
+    "conditional_empirical_statistic_computed": false,
+    "note": "Aligned sequence bytes were converted immediately to canonical-valid boolean masks; only boolean mask support and mask hashes were retained."
+  },
+  "next_step": "Repeat the frozen v0.2 same-order-versus-different-order synthetic qualification on this exact 214-species survivor geometry. Confirmatory nucleotide identity remains closed until that gate passes."
+}
