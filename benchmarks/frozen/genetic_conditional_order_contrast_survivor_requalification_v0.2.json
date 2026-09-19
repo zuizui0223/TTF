@@ -1,0 +1,93 @@
+{
+  "schema": "ttf_genetic_conditional_order_contrast_survivor_requalification_v0.2",
+  "status": "NOT_EVALUABLE_CONDITIONAL_ORDER_CONTRAST_V02_SURVIVOR_GEOMETRY",
+  "executed_on": "2026-09-19",
+  "purpose": "Freeze the exact confirmatory character-mask survivor-geometry requalification outcome before any confirmatory nucleotide identity or pairwise genetic distance is opened.",
+  "parent_development_qualification": {
+    "receipt": "benchmarks/frozen/genetic_conditional_order_contrast_qualification_v0.2.json",
+    "status": "PASS",
+    "development_species": 250,
+    "jointly_supported_eval_species": 52
+  },
+  "character_mask_stage": {
+    "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "source_geometry_csv_sha256": "fc93f1aaac2abc369f3e94c99b73e1d139f635638e197d1f71f977a49a44dbba",
+    "source_geometry_manifest_sha256": "debe44fabd10c53b2cf5fad13ad0c182e57429edd193619fa7a5c34e4dbdb880",
+    "mask_manifest_sha256": "3a0bbf3bbac3c23edcb2848dc82502c3046ae470f205cfbed0ce21319279f510",
+    "survivor_geometry_csv_sha256": "2c921ac40da2569b619c02132c5c72cb187352067f6b7793570d06c7aef6862e",
+    "phase1_species": 250,
+    "survivors": 214,
+    "failed_character_support": 36,
+    "train_species": 103,
+    "eval_species": 111,
+    "nucleotide_identity_opened": false,
+    "pairwise_genetic_distances_opened": false
+  },
+  "survivor_support": {
+    "geographic_supported_eval_species": 92,
+    "same_order_supported_eval_species": 66,
+    "different_order_supported_eval_species": 88,
+    "jointly_supported_eval_species": 63,
+    "jointly_supported_by_order": {
+      "Lepidoptera": 38,
+      "Hymenoptera": 10,
+      "Diptera": 8,
+      "Coleoptera": 7
+    }
+  },
+  "frozen_gate": {
+    "private_type1_requirement": "for every private-null cell, final 500-world Wilson 95% upper bound of p<=0.05 rejection rate must be <=0.10",
+    "positive_power_requirement": "same_order_A2 final 500-world Wilson 95% lower bound must be >=0.80",
+    "final_worlds_per_cell": 500,
+    "maximum_private_rejections_compatible_with_type1_pass": 36
+  },
+  "deterministic_partial_execution": {
+    "note": "The frozen seed namespace and exact survivor geometry were re-executed. Independent repeated runs matched batch rejection counts exactly over their overlapping absolute replicate indices. Execution was stopped once final PASS became mathematically impossible because rejection counts can only increase.",
+    "cells": {
+      "private_A0p5": {
+        "completed_worlds": 240,
+        "rejections": 22,
+        "rejection_rate": 0.09166666666666666,
+        "pass_still_mathematically_possible": true
+      },
+      "private_A1": {
+        "completed_worlds": 360,
+        "rejections": 45,
+        "rejection_rate": 0.125,
+        "pass_still_mathematically_possible": false
+      },
+      "private_A2": {
+        "completed_worlds": 240,
+        "rejections": 55,
+        "rejection_rate": 0.22916666666666666,
+        "pass_still_mathematically_possible": false
+      },
+      "private_A3": {
+        "completed_worlds": 240,
+        "rejections": 44,
+        "rejection_rate": 0.18333333333333332,
+        "pass_still_mathematically_possible": false
+      },
+      "same_order_A2": {
+        "completed_worlds": 240,
+        "rejections": 162,
+        "rejection_rate": 0.675,
+        "power_gate_not_interpreted_after_type1_failure": true
+      }
+    }
+  },
+  "decision": {
+    "type1_gate": "FAIL_IRREVERSIBLY_BEFORE_500",
+    "overall": "NOT_EVALUABLE_CONDITIONAL_ORDER_CONTRAST_V02_SURVIVOR_GEOMETRY",
+    "reasoning": "At least three private-null cells already exceeded 36 rejections, the maximum count compatible with the frozen 500-world Wilson upper <= 0.10 gate. Therefore no continuation to 500 worlds can yield PASS.",
+    "biological_interpretation": "None. This is a deployment-geometry inferential failure, not evidence against lineage-conditioned transfer.",
+    "confirmatory_identity_opening_authorized": false
+  },
+  "outcome_firewall": {
+    "development_sequence_identity_opened": false,
+    "confirmatory_sequence_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "conditional_empirical_result_opened": false
+  },
+  "next_step": "Diagnose response-blind geometry/source-pool imbalance and develop a newly named successor with fresh synthetic-development seeds; do not open confirmatory nucleotide identity."
+}
