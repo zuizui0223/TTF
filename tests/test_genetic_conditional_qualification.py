@@ -7,6 +7,7 @@ from ttf.genetic_conditional_qualification import (
     make_conditional_order_worlds,
     prepare_conditional_order_qualification,
     score_conditional_order_world_batch,
+    summarize_conditional_order_breadth,
 )
 from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
 
@@ -183,5 +184,61 @@ def test_full_projection_execution_matches_frozen_partial_cache_on_fixture() -> 
             observed.order_species_scores[name],
             expected.order_species_scores[name],
             atol=1e-12,
+            rtol=0.0,
+        )
+
+
+def test_order_breadth_diagnostic_keeps_primary_species_equal_and_exposes_order_balance() -> None:
+    design = _fixture()
+    values = {
+        name: np.asarray([float(i), float(i + 1)], dtype=float)
+        for i, name in enumerate(design.eligible_eval_species)
+    }
+    diagnostic = summarize_conditional_order_breadth(
+        design,
+        values,
+        minimum_targets_per_order=2,
+    )
+
+    matrix = np.vstack([values[name] for name in design.eligible_eval_species])
+    assert np.allclose(
+        diagnostic.species_equal_statistics,
+        matrix.mean(axis=0),
+        atol=0.0,
+        rtol=0.0,
+    )
+    assert diagnostic.order_species_counts == {"A": 3, "B": 3}
+    assert diagnostic.included_orders == ("A", "B")
+    assert diagnostic.excluded_orders == ()
+    assert diagnostic.top_order == "A"
+    assert diagnostic.top_order_fraction == 0.5
+
+    expected_order_means = {
+        label: np.mean(
+            np.vstack([
+                values[name]
+                for name in design.eligible_eval_species
+                if design.order_by_species[name] == label
+            ]),
+            axis=0,
+        )
+        for label in ("A", "B")
+    }
+    assert np.allclose(
+        diagnostic.order_balanced_statistics,
+        np.mean(np.vstack(list(expected_order_means.values())), axis=0),
+        atol=0.0,
+        rtol=0.0,
+    )
+    for label in ("A", "B"):
+        retained = [
+            values[name]
+            for name in design.eligible_eval_species
+            if design.order_by_species[name] != label
+        ]
+        assert np.allclose(
+            diagnostic.leave_one_order_out_statistics[label],
+            np.mean(np.vstack(retained), axis=0),
+            atol=0.0,
             rtol=0.0,
         )
