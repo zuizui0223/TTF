@@ -7,6 +7,7 @@ from pathlib import Path
 CENSUS = Path("benchmarks/frozen/genetic_conditional_two_panel_response_blind_census_v0.1.json")
 PROTOCOL = Path("docs/supporting/genetic_conditional_transfer_protocol_v0.1.json")
 QUALIFICATION = Path("docs/supporting/genetic_conditional_order_qualification_rule_v0.1.json")
+BREADTH = Path("docs/supporting/genetic_conditional_order_breadth_rule_v0.1.json")
 
 
 def test_conditional_successor_is_two_panel_and_response_blind() -> None:
@@ -86,4 +87,29 @@ def test_conditional_order_qualification_is_frozen_before_outcomes() -> None:
 
     assert rule["qualification"]["type1_wilson95_upper_ceiling"] == 0.10
     assert rule["qualification"]["power_wilson95_lower_floor"] == 0.80
+    assert all(value is False for value in rule["outcome_firewall"].values())
+
+
+def test_conditional_order_breadth_is_frozen_as_descriptive_only() -> None:
+    rule = json.loads(BREADTH.read_text())
+
+    assert rule["schema"] == "ttf_genetic_conditional_order_breadth_rule_v0.1"
+    assert rule["status"] == "FROZEN_BEFORE_ANY_CONDITIONAL_EMPIRICAL_GENETIC_OUTCOME"
+    assert rule["breadth_diagnostic"]["minimum_targets_per_order"] == 5
+    assert rule["breadth_diagnostic"]["inference"] == "descriptive_only_no_p_value"
+
+    development = rule["response_blind_support_census"]["development"]
+    confirmatory = rule["response_blind_support_census"]["confirmatory"]
+    assert development["eligible_same_order_targets"] == 72
+    assert development["order_counts"]["Lepidoptera"] == 47
+    assert development["largest_order_fraction"] == 47 / 72
+    assert confirmatory["eligible_same_order_targets"] == 78
+    assert confirmatory["order_counts"]["Lepidoptera"] == 46
+    assert confirmatory["largest_order_fraction"] == 46 / 78
+    assert development["orders_meeting_minimum_targets"] == [
+        "Coleoptera", "Diptera", "Hymenoptera", "Lepidoptera"
+    ]
+    assert confirmatory["orders_meeting_minimum_targets"] == [
+        "Coleoptera", "Diptera", "Hymenoptera", "Lepidoptera"
+    ]
     assert all(value is False for value in rule["outcome_firewall"].values())
