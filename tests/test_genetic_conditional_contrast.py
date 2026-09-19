@@ -13,6 +13,7 @@ from ttf.genetic_conditional_contrast import (
     prepare_conditional_order_contrast,
     prepare_conditional_order_contrast_execution,
     score_conditional_order_contrast_world_batch,
+    summarize_conditional_order_contrast_breadth,
 )
 from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
 
@@ -120,3 +121,59 @@ def test_v02_protocol_freezes_disjoint_formal_seed_namespace_and_closed_firewall
     assert rule["development_pilot_disclosure"]["status"] == "METHOD_DEVELOPMENT_ONLY_NOT_FORMAL_QUALIFICATION"
     assert rule["execution"]["world_batch_size"] == 20
     assert "absolute replicate index" in rule["execution"]["sharding_semantics"]
+
+
+def test_v02_breadth_diagnostic_keeps_species_equal_primary_unchanged() -> None:
+    design = _fixture()
+    values = {
+        name: np.asarray([float(i), float(i + 1)], dtype=float)
+        for i, name in enumerate(design.eligible_eval_species)
+    }
+    diagnostic = summarize_conditional_order_contrast_breadth(
+        design,
+        values,
+        minimum_targets_per_order=2,
+    )
+    matrix = np.vstack([values[name] for name in design.eligible_eval_species])
+    assert np.allclose(
+        diagnostic.species_equal_statistics,
+        matrix.mean(axis=0),
+        atol=0.0,
+        rtol=0.0,
+    )
+    assert diagnostic.order_species_counts == {"A": 3, "B": 3}
+    assert diagnostic.included_orders == ("A", "B")
+    assert diagnostic.excluded_orders == ()
+    assert diagnostic.top_order == "A"
+    assert diagnostic.top_order_fraction == 0.5
+    for label in ("A", "B"):
+        retained = [
+            values[name]
+            for name in design.eligible_eval_species
+            if design.order_by_species[name] != label
+        ]
+        assert np.allclose(
+            diagnostic.leave_one_order_out_statistics[label],
+            np.mean(np.vstack(retained), axis=0),
+            atol=0.0,
+            rtol=0.0,
+        )
+
+
+def test_v02_breadth_rule_is_response_blind_and_descriptive_only() -> None:
+    rule = json.loads(
+        Path(
+            "docs/supporting/genetic_conditional_order_contrast_breadth_rule_v0.2.json"
+        ).read_text()
+    )
+    assert rule["status"].startswith("FROZEN_BEFORE_FORMAL_V02")
+    assert rule["breadth_diagnostic"]["inference"] == "descriptive_only_no_p_value"
+    dev = rule["response_blind_support_census"]["development"]
+    conf = rule["response_blind_support_census"]["confirmatory"]
+    assert dev["jointly_supported_targets"] == 52
+    assert dev["order_counts"]["Lepidoptera"] == 27
+    assert dev["largest_order_fraction"] == 27 / 52
+    assert conf["jointly_supported_targets_before_character_masks"] == 77
+    assert conf["order_counts"]["Lepidoptera"] == 46
+    assert conf["largest_order_fraction"] == 46 / 77
+    assert all(value is False for value in rule["outcome_firewall"].values())
