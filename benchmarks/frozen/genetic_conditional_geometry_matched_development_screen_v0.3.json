@@ -1,0 +1,150 @@
+{
+  "schema": "ttf_genetic_conditional_geometry_matched_development_screen_v0.3",
+  "status": "STOP_TAXONOMIC_ORDER_ROUTE_V03_SURVIVOR_POWER_FAIL",
+  "executed_on": "2026-09-19",
+  "purpose": "Freeze the predeclared v0.3 development screen on both the original development geometry and the exact confirmatory character-mask survivor geometry before any confirmatory nucleotide identity is opened.",
+  "source_main_sha": "4314f72d31213e7bad0511a071407134c000808c",
+  "parent": {
+    "v02_survivor_failure": "benchmarks/frozen/genetic_conditional_order_contrast_survivor_requalification_v0.2.json",
+    "v03_development_rule": "docs/supporting/genetic_conditional_geometry_matched_development_v0.3.json"
+  },
+  "estimator": {
+    "contrast": "C_same_order_geometry_matched - C_different_order_geometry_matched",
+    "source_matching": "one-to-one response-blind matching on target/source overlap, centroid distance, edge-count ratio and locality-count ratio",
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.5,
+    "minimum_source_species_per_side": 5,
+    "calibration": "worst-case upper-tail Monte Carlo envelope across independent exact-geometry private-null references",
+    "reference_worlds_per_private_cell": 99,
+    "evaluation_worlds_per_cell": 50,
+    "alpha": 0.05
+  },
+  "frozen_screen_rule": {
+    "private_cells": "each private evaluation cell must reject <=5 of 50 worlds on both domains",
+    "positive_cell": "same_order_A2 must reject >=35 of 50 worlds on both domains",
+    "formalization": "only if both domains pass may a separately seeded formal v0.3 qualification be frozen"
+  },
+  "development_geometry": {
+    "species": 250,
+    "train_species": 125,
+    "eval_species": 125,
+    "eligible_eval_species": 52,
+    "matched_source_pairs": {
+      "median": 9,
+      "min": 5,
+      "max": 17
+    },
+    "cells": {
+      "private_A0p5": {
+        "rejections": 1,
+        "worlds": 50,
+        "mean_statistic": 0.01174744865463538,
+        "median_p_value": 0.52
+      },
+      "private_A1": {
+        "rejections": 3,
+        "worlds": 50,
+        "mean_statistic": 0.004974763117340226,
+        "median_p_value": 0.685
+      },
+      "private_A2": {
+        "rejections": 2,
+        "worlds": 50,
+        "mean_statistic": 0.009021592628402842,
+        "median_p_value": 0.61
+      },
+      "private_A3": {
+        "rejections": 0,
+        "worlds": 50,
+        "mean_statistic": -0.006814692869618825,
+        "median_p_value": 0.58
+      },
+      "same_order_A2": {
+        "rejections": 40,
+        "worlds": 50,
+        "mean_statistic": 0.1778760220386734,
+        "median_p_value": 0.01
+      }
+    },
+    "private_screen_pass": true,
+    "positive_screen_pass": true,
+    "overall_screen_pass": true,
+    "local_execution_sha256": "bc503a9b4e33a3b29acc4d924c2832f161731bcf51b879977b9777d20c3f96f8"
+  },
+  "confirmatory_survivor_geometry": {
+    "character_mask_survivors": 214,
+    "train_species": 103,
+    "eval_species": 111,
+    "eligible_eval_species": 63,
+    "survivor_set_reconstructed_response_blind": true,
+    "failed_species_by_order": {
+      "Lepidoptera": 16,
+      "Coleoptera": 5,
+      "Diptera": 4,
+      "Hymenoptera": 4,
+      "Perciformes": 2,
+      "Odonata": 1,
+      "Psocodea": 1,
+      "Hemiptera": 1,
+      "Plecoptera": 1,
+      "Trichoptera": 1
+    },
+    "matched_source_pairs": {
+      "median": 7,
+      "min": 5,
+      "max": 12
+    },
+    "cells": {
+      "private_A0p5": {
+        "rejections": 0,
+        "worlds": 50,
+        "mean_statistic": 0.006157334279494841,
+        "median_p_value": 0.83
+      },
+      "private_A1": {
+        "rejections": 0,
+        "worlds": 50,
+        "mean_statistic": 0.013588590828763614,
+        "median_p_value": 0.8
+      },
+      "private_A2": {
+        "rejections": 1,
+        "worlds": 50,
+        "mean_statistic": 0.05052765707097239,
+        "median_p_value": 0.6
+      },
+      "private_A3": {
+        "rejections": 0,
+        "worlds": 50,
+        "mean_statistic": 0.042283672035561576,
+        "median_p_value": 0.605
+      },
+      "same_order_A2": {
+        "rejections": 19,
+        "worlds": 50,
+        "mean_statistic": 0.12632977773861045,
+        "median_p_value": 0.135
+      }
+    },
+    "private_screen_pass": true,
+    "positive_screen_pass": false,
+    "overall_screen_pass": false,
+    "positive_requirement_rejections": 35,
+    "local_execution_sha256": "6f8103ea193971755356854e3916c428caacc8638fcab2d1d34ee18a6b3890b6"
+  },
+  "decision": {
+    "type1_problem_from_v02_resolved_in_screen": true,
+    "survivor_positive_control_power_adequate": false,
+    "formal_v03_qualification_authorized": false,
+    "confirmatory_identity_opening_authorized": false,
+    "taxonomic_order_route_status": "STOP_AFTER_V03_SCREEN",
+    "biological_interpretation": "None. Failure is methodological/deployment-power failure, not evidence that taxonomic or ecological similarity cannot condition genetic transfer."
+  },
+  "next_step": "Stop tuning taxonomic order on these panels. Advance prospectively to the Layer-2 mechanism ladder using separately frozen external ecological/life-history predictors and preferably a new untouched species panel.",
+  "outcome_firewall": {
+    "development_sequence_identity_opened": false,
+    "confirmatory_sequence_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "conditional_empirical_result_opened": false
+  }
+}
