@@ -333,8 +333,13 @@ def score_cached_target_conditioned_batch(
             for e0 in range(0, len(start), cached.edge_chunk_size):
                 e1 = min(e0 + cached.edge_chunk_size, len(start))
                 flat = points[e0:e1].reshape(-1, start.shape[1])
-                delta = flat[:, None, :] - chunk_positions[None, :, :]
-                distance2 = np.sum(delta * delta, axis=2)
+                distance2 = np.zeros((len(flat), len(chunk_positions)), dtype=float)
+                for dimension in range(flat.shape[1]):
+                    delta = (
+                        flat[:, dimension, None]
+                        - chunk_positions[None, :, dimension]
+                    )
+                    distance2 += delta * delta
                 kernel = np.exp(-0.5 * distance2 / h2) * chunk_weights[None, :]
                 normalized = kernel / denominator[e0:e1, :].reshape(-1, 1)
                 projection = normalized.reshape(
