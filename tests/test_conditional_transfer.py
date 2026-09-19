@@ -5,6 +5,7 @@ import numpy as np
 from ttf.chunked_transfer import prepare_chunked_transfer, score_chunked_batch
 from ttf.conditional_transfer import (
     infer_conditioning_increment,
+    prepare_geometry_matched_group_source_pools,
     prepare_target_source_pools,
     score_conditioning_increment_batch,
     score_pool_difference_batch,
@@ -397,3 +398,110 @@ def test_source_pool_rejects_conflicting_group_rules() -> None:
             require_same_group=True,
             require_different_group=True,
         )
+
+
+def test_geometry_matched_group_pools_are_equal_disjoint_and_deterministic() -> None:
+    train, evaluation, prepared = _fixture()
+    train_mid = {x.species: x.midpoint for x in train}
+    eval_mid = {x.species: x.midpoint for x in evaluation}
+    train_group = {
+        "near_a": "A",
+        "near_b": "A",
+        "far_a": "B",
+        "far_b": "B",
+        "far_c": "B",
+    }
+    eval_group = {x.species: "A" for x in evaluation}
+    train_n = {x.species: 8 for x in train}
+    eval_n = {x.species: 8 for x in evaluation}
+
+    first = prepare_geometry_matched_group_source_pools(
+        prepared,
+        train_mid,
+        eval_mid,
+        train_group=train_group,
+        eval_group=eval_group,
+        train_locality_count=train_n,
+        eval_locality_count=eval_n,
+        support_radius=1000.0,
+        minimum_target_coverage=0.0,
+        minimum_source_species=2,
+    )
+    second = prepare_geometry_matched_group_source_pools(
+        prepared,
+        dict(reversed(list(train_mid.items()))),
+        dict(reversed(list(eval_mid.items()))),
+        train_group=dict(reversed(list(train_group.items()))),
+        eval_group=dict(reversed(list(eval_group.items()))),
+        train_locality_count=dict(reversed(list(train_n.items()))),
+        eval_locality_count=dict(reversed(list(eval_n.items()))),
+        support_radius=1000.0,
+        minimum_target_coverage=0.0,
+        minimum_source_species=2,
+    )
+
+    assert first.eligible_eval_species == tuple(x.species for x in evaluation)
+    assert first.eligible_eval_species == second.eligible_eval_species
+    assert first.feature_names == (
+        "target_to_source_coverage",
+        "source_to_target_coverage",
+        "log1p_centroid_distance_over_support_radius",
+        "log_source_to_target_edge_ratio",
+        "log_source_to_target_locality_ratio",
+    )
+    for target in first.eligible_eval_species:
+        same = first.same_group_pools.source_pool[target]
+        different = first.different_group_pools.source_pool[target]
+        assert len(same) == len(different) == 2
+        assert set(same).isdisjoint(different)
+        assert all(train_group[name] == "A" for name in same)
+        assert all(train_group[name] == "B" for name in different)
+        assert first.matched_pairs[target] == second.matched_pairs[target]
+        assert np.allclose(
+            first.pair_distances[target],
+            second.pair_distances[target],
+            atol=0.0,
+            rtol=0.0,
+        )
+        assert first.same_group_pools.source_pool[target] == (
+            second.same_group_pools.source_pool[target]
+        )
+        assert first.different_group_pools.source_pool[target] == (
+            second.different_group_pools.source_pool[target]
+        )
+
+
+def test_geometry_matched_group_pool_abstains_without_both_groups() -> None:
+    train, evaluation, prepared = _fixture()
+    train_mid = {x.species: x.midpoint for x in train}
+    eval_mid = {x.species: x.midpoint for x in evaluation}
+    train_group = {
+        "near_a": "A",
+        "near_b": "",
+        "far_a": "B",
+        "far_b": "B",
+        "far_c": "B",
+    }
+    eval_group = {x.species: "A" for x in evaluation}
+    matched = prepare_geometry_matched_group_source_pools(
+        prepared,
+        train_mid,
+        eval_mid,
+        train_group=train_group,
+        eval_group=eval_group,
+        train_locality_count={x.species: 8 for x in train},
+        eval_locality_count={x.species: 8 for x in evaluation},
+        support_radius=1000.0,
+        minimum_target_coverage=0.0,
+        minimum_source_species=2,
+    )
+    assert matched.eligible_eval_species == ()
+    assert matched.unsupported_eval_species == tuple(x.species for x in evaluation)
+    assert all(
+        matched.same_group_pools.source_pool[x.species] == ()
+        for x in evaluation
+    )
+    assert all(
+        matched.different_group_pools.source_pool[x.species] == ()
+        for x in evaluation
+    )

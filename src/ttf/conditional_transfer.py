@@ -30,6 +30,19 @@ class TargetSourcePoolDesign:
 
 
 @dataclass(frozen=True)
+class MatchedTargetSourcePoolDesign:
+    """Deterministic geometry-matched same/different-group source pools."""
+
+    same_group_pools: TargetSourcePoolDesign
+    different_group_pools: TargetSourcePoolDesign
+    matched_pairs: Mapping[str, tuple[tuple[str, str], ...]]
+    pair_distances: Mapping[str, tuple[float, ...]]
+    eligible_eval_species: tuple[str, ...]
+    unsupported_eval_species: tuple[str, ...]
+    feature_names: tuple[str, ...]
+
+
+@dataclass(frozen=True)
 class CachedTargetConditionedTransferGeometry:
     """Response-blind cache for target-specific source-pool denominators."""
 
@@ -193,6 +206,241 @@ def prepare_target_source_pools(
         minimum_source_species=int(minimum_source_species),
         require_same_group=bool(require_same_group),
         require_different_group=bool(require_different_group),
+    )
+
+
+def prepare_geometry_matched_group_source_pools(
+    prepared: ChunkedTransferGeometry,
+    train_midpoint: Mapping[str, np.ndarray],
+    eval_midpoint: Mapping[str, np.ndarray],
+    *,
+    train_group: Mapping[str, str],
+    eval_group: Mapping[str, str],
+    train_locality_count: Mapping[str, int],
+    eval_locality_count: Mapping[str, int],
+    support_radius: float = 500.0,
+    minimum_target_coverage: float = 0.50,
+    minimum_source_species: int = 5,
+    distance_chunk_size: int = 128,
+) -> MatchedTargetSourcePoolDesign:
+    """Match same- and different-group sources on response-blind geometry.
+
+    Matching begins from the ordinary geographic support universe, then pairs
+    same-group and different-group source species one-to-one within each target.
+    Pairing uses only geometry-derived features and deterministic lexical
+    tie-breaking.  The smaller group is used completely; the larger group is
+    down-selected to an equal source count.  No response value is read.
+    """
+    train_names = tuple(prepared.train_species)
+    eval_names = tuple(prepared.eval_species)
+    if set(train_group) != set(train_names) or set(eval_group) != set(eval_names):
+        raise ValueError("group-label species mismatch")
+    if set(train_locality_count) != set(train_names):
+        raise ValueError("train locality-count species mismatch")
+    if set(eval_locality_count) != set(eval_names):
+        raise ValueError("evaluation locality-count species mismatch")
+    if any(int(train_locality_count[name]) < 2 for name in train_names):
+        raise ValueError("train locality counts must be >=2")
+    if any(int(eval_locality_count[name]) < 2 for name in eval_names):
+        raise ValueError("evaluation locality counts must be >=2")
+
+    geographic = prepare_target_source_pools(
+        prepared,
+        train_midpoint,
+        eval_midpoint,
+        support_radius=float(support_radius),
+        minimum_target_coverage=float(minimum_target_coverage),
+        minimum_source_species=1,
+        distance_chunk_size=int(distance_chunk_size),
+    )
+
+    same_source_pool: dict[str, tuple[str, ...]] = {}
+    different_source_pool: dict[str, tuple[str, ...]] = {}
+    matched_pairs: dict[str, tuple[tuple[str, str], ...]] = {}
+    pair_distances: dict[str, tuple[float, ...]] = {}
+    eligible: list[str] = []
+    unsupported: list[str] = []
+    train_order = {name: index for index, name in enumerate(train_names)}
+    feature_names = (
+        "target_to_source_coverage",
+        "source_to_target_coverage",
+        "log1p_centroid_distance_over_support_radius",
+        "log_source_to_target_edge_ratio",
+        "log_source_to_target_locality_ratio",
+    )
+
+    for target in eval_names:
+        target_group = str(eval_group[target]).strip()
+        supported = tuple(geographic.source_pool[target])
+        same = tuple(
+            source for source in supported
+            if target_group
+            and str(train_group[source]).strip()
+            and str(train_group[source]).strip() == target_group
+        )
+        different = tuple(
+            source for source in supported
+            if target_group
+            and str(train_group[source]).strip()
+            and str(train_group[source]).strip() != target_group
+        )
+        if (
+            len(same) < int(minimum_source_species)
+            or len(different) < int(minimum_source_species)
+        ):
+            same_source_pool[target] = ()
+            different_source_pool[target] = ()
+            matched_pairs[target] = ()
+            pair_distances[target] = ()
+            unsupported.append(target)
+            continue
+
+        target_mid = np.asarray(eval_midpoint[target], dtype=float)
+        target_centroid = np.mean(target_mid, axis=0)
+        target_edges = len(target_mid)
+        target_localities = int(eval_locality_count[target])
+        rows: dict[str, np.ndarray] = {}
+        for source in supported:
+            source_mid = np.asarray(train_midpoint[source], dtype=float)
+            forward = float(geographic.pair_coverage[target][source])
+            reverse = _coverage_fraction(
+                source_mid,
+                target_mid,
+                radius=float(support_radius),
+                chunk_size=int(distance_chunk_size),
+            )
+            centroid_distance = float(
+                np.linalg.norm(np.mean(source_mid, axis=0) - target_centroid)
+            )
+            rows[source] = np.asarray(
+                [
+                    forward,
+                    reverse,
+                    np.log1p(centroid_distance / float(support_radius)),
+                    np.log(float(len(source_mid)) / float(target_edges)),
+                    np.log(
+                        float(train_locality_count[source])
+                        / float(target_localities)
+                    ),
+                ],
+                dtype=float,
+            )
+
+        matrix = np.vstack([rows[source] for source in supported])
+        center = np.mean(matrix, axis=0)
+        scale = np.std(matrix, axis=0, ddof=0)
+        scale[scale <= np.sqrt(np.finfo(float).eps)] = 1.0
+        standardized = {
+            source: (rows[source] - center) / scale
+            for source in supported
+        }
+
+        remaining_same = list(sorted(same))
+        remaining_different = list(sorted(different))
+        pairs: list[tuple[str, str, float]] = []
+        anchor_same = len(remaining_same) <= len(remaining_different)
+
+        while remaining_same and remaining_different:
+            anchors = remaining_same if anchor_same else remaining_different
+            partners = remaining_different if anchor_same else remaining_same
+            nearest: list[tuple[float, str, str]] = []
+            for anchor in anchors:
+                options = [
+                    (
+                        float(
+                            np.linalg.norm(
+                                standardized[anchor] - standardized[partner]
+                            )
+                        ),
+                        partner,
+                    )
+                    for partner in partners
+                ]
+                best_distance, best_partner = min(
+                    options, key=lambda item: (item[0], item[1])
+                )
+                nearest.append((best_distance, anchor, best_partner))
+
+            # Hardest-first greedy matching avoids leaving a geometrically
+            # isolated source until the end. Lexical labels make ties stable.
+            hardest_distance = max(item[0] for item in nearest)
+            candidates = [
+                item for item in nearest
+                if np.isclose(item[0], hardest_distance, atol=0.0, rtol=0.0)
+            ]
+            distance, anchor, partner = min(
+                candidates, key=lambda item: (item[1], item[2])
+            )
+            same_name, different_name = (
+                (anchor, partner) if anchor_same else (partner, anchor)
+            )
+            pairs.append((same_name, different_name, float(distance)))
+            remaining_same.remove(same_name)
+            remaining_different.remove(different_name)
+
+        if len(pairs) < int(minimum_source_species):
+            same_source_pool[target] = ()
+            different_source_pool[target] = ()
+            matched_pairs[target] = ()
+            pair_distances[target] = ()
+            unsupported.append(target)
+            continue
+
+        selected_same = {same_name for same_name, _, _ in pairs}
+        selected_different = {different_name for _, different_name, _ in pairs}
+        same_tuple = tuple(
+            name for name in train_names if name in selected_same
+        )
+        different_tuple = tuple(
+            name for name in train_names if name in selected_different
+        )
+        if len(same_tuple) != len(different_tuple):
+            raise RuntimeError("geometry matching produced unequal source counts")
+        if set(same_tuple) & set(different_tuple):
+            raise RuntimeError("geometry-matched source pools overlap")
+
+        same_source_pool[target] = same_tuple
+        different_source_pool[target] = different_tuple
+        matched_pairs[target] = tuple(
+            (same_name, different_name) for same_name, different_name, _ in pairs
+        )
+        pair_distances[target] = tuple(float(distance) for _, _, distance in pairs)
+        eligible.append(target)
+
+    same_design = TargetSourcePoolDesign(
+        train_species=train_names,
+        eval_species=eval_names,
+        source_pool=same_source_pool,
+        pair_coverage=geographic.pair_coverage,
+        eligible_eval_species=tuple(eligible),
+        unsupported_eval_species=tuple(unsupported),
+        support_radius=float(support_radius),
+        minimum_target_coverage=float(minimum_target_coverage),
+        minimum_source_species=int(minimum_source_species),
+        require_same_group=True,
+        require_different_group=False,
+    )
+    different_design = TargetSourcePoolDesign(
+        train_species=train_names,
+        eval_species=eval_names,
+        source_pool=different_source_pool,
+        pair_coverage=geographic.pair_coverage,
+        eligible_eval_species=tuple(eligible),
+        unsupported_eval_species=tuple(unsupported),
+        support_radius=float(support_radius),
+        minimum_target_coverage=float(minimum_target_coverage),
+        minimum_source_species=int(minimum_source_species),
+        require_same_group=False,
+        require_different_group=True,
+    )
+    return MatchedTargetSourcePoolDesign(
+        same_group_pools=same_design,
+        different_group_pools=different_design,
+        matched_pairs=matched_pairs,
+        pair_distances=pair_distances,
+        eligible_eval_species=tuple(eligible),
+        unsupported_eval_species=tuple(unsupported),
+        feature_names=feature_names,
     )
 
 
@@ -831,10 +1079,12 @@ __all__ = [
     "FullyCachedTargetConditionedTransferGeometry",
     "ConditionalIncrementBatch",
     "ConditionalIncrementInference",
+    "MatchedTargetSourcePoolDesign",
     "TargetSourcePoolDesign",
     "infer_conditioning_increment",
     "prepare_cached_target_conditioned_transfer",
     "prepare_fully_cached_target_conditioned_transfer",
+    "prepare_geometry_matched_group_source_pools",
     "prepare_target_source_pools",
     "score_cached_conditioning_increment_batch",
     "score_cached_pool_difference_batch",
