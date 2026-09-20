@@ -1,0 +1,80 @@
+{
+  "schema": "ttf_lepidoptera_trait_gradient_v02_survivor_requalification_result_v0.1",
+  "status": "PASS",
+  "executed_on": "2026-09-20",
+  "parent_mask_census": "benchmarks/frozen/lepidoptera_trait_gradient_phase2_mask_census_v0.1.json",
+  "survivor_design": {
+    "species": 240,
+    "train_species": 118,
+    "eval_species": 122,
+    "geographically_supported_eval_species": 110,
+    "target_source_pairs": 2428,
+    "source_count_quantiles": {
+      "min": 5.0,
+      "q25": 13.25,
+      "median": 22.0,
+      "q75": 32.0,
+      "max": 33.0
+    },
+    "design_npz_sha256": "15de10eb15d54cf929287e2a27762a1882b7d46ca6251481616639ca7805bc1c",
+    "construction": "Exact subset of the frozen v0.2 339-species pair surface: surviving species only, inherited train/eval split, unchanged geographic support rule, and exact retained 128-edge-capped pair alignments."
+  },
+  "reference": {
+    "private_worlds": 499,
+    "geometry_confounded_trap_worlds": 499,
+    "private_mean_statistic": 0.000661022609120177,
+    "geometry_mean_statistic": 0.011625195439972513,
+    "seed_tags": {
+      "reference": "lepidoptera-trait-gradient-v02-survivor-reference",
+      "evaluation": "lepidoptera-trait-gradient-v02-survivor-evaluation"
+    }
+  },
+  "evaluation": {
+    "private": {
+      "worlds": 500,
+      "rejections": 10,
+      "rejection_rate": 0.02,
+      "wilson95_lower": 0.010899183596210813,
+      "wilson95_upper": 0.036420183246879345,
+      "mean_statistic": -0.00011797066231563247,
+      "median_statistic": -0.00039974265922894847,
+      "median_envelope_p": 0.694,
+      "minimum_envelope_p": 0.014
+    },
+    "geometry_confounded_trap": {
+      "worlds": 500,
+      "rejections": 18,
+      "rejection_rate": 0.036,
+      "wilson95_lower": 0.02289106098029272,
+      "wilson95_upper": 0.056184326968027755,
+      "mean_statistic": 0.011457891029234148,
+      "median_statistic": 0.012558202203919249,
+      "median_envelope_p": 0.497,
+      "minimum_envelope_p": 0.004
+    },
+    "trait_gradient_positive": {
+      "worlds": 500,
+      "rejections": 435,
+      "rejection_rate": 0.87,
+      "wilson95_lower": 0.8376786384230859,
+      "wilson95_upper": 0.8966793496353656,
+      "mean_statistic": 0.09269730560839444,
+      "median_statistic": 0.09290501454056677,
+      "median_envelope_p": 0.004,
+      "minimum_envelope_p": 0.002
+    }
+  },
+  "gates": {
+    "private_type1_pass": true,
+    "geometry_trap_type1_pass": true,
+    "trait_gradient_positive_power_pass": true,
+    "all_three_pass": true
+  },
+  "empirical_identity_opening_authorized": true,
+  "outcome_firewall": {
+    "new_lepidoptera_empirical_sequence_identity_opened": false,
+    "new_lepidoptera_empirical_pairwise_genetic_distances_opened": false,
+    "new_lepidoptera_empirical_transfer_statistic_computed": false
+  },
+  "next_step": "Freeze exact empirical response computation and one-shot decision rule on the 240-species survivor panel before opening any new Lepidoptera nucleotide identity."
+}
