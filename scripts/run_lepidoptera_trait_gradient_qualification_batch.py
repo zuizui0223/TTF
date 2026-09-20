@@ -4,7 +4,7 @@ import argparse,hashlib,json
 from pathlib import Path
 import numpy as np
 from ttf.core import average_ranks
-from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
+try:\n    from scipy.stats import rankdata as _scipy_rankdata\nexcept ImportError:\n    _scipy_rankdata=None\nfrom ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
 from ttf.lepidoptera_trait_gradient import residualize_within_target,equal_target_gradient
 from ttf.lepidoptera_trait_gradient_simulate import prepare_trait_gradient_simulator,simulate_prepared_trait_gradient_world,frozen_seed
 
@@ -28,7 +28,7 @@ def centered_two_sided_target_bootstrap(slopes,*,seed,n_bootstrap=1999):
     p=float((1+np.count_nonzero(np.abs(t)>=abs(obs)))/(int(n_bootstrap)+1))
     return mean,p
 
-def prepare_pair_surface(pairs):
+def _rank(values):\n    x=np.asarray(values,dtype=float)\n    if _scipy_rankdata is None:\n        return np.asarray(average_ranks(x),dtype=float)\n    return np.asarray(_scipy_rankdata(x,method="average"),dtype=float)\n\ndef prepare_pair_surface(pairs):
     similarity=np.asarray([float(p["trait_similarity"]) for p in pairs])
     geometry=np.asarray([[float(p[k]) for k in ("coverage","centroid_distance","edge_count_ratio","locality_count_ratio")] for p in pairs])
     target=np.asarray([str(p["target"]) for p in pairs])
@@ -47,7 +47,7 @@ def score_pair_contributions(world,pairs,target,residual,execution=None):
     pair_target,pair_source,source_index=execution
     target_rank={}
     for name in set(pair_target):
-        rank=np.asarray(average_ranks(np.asarray(world.edge_response[name])),dtype=float)
+        rank=_rank(np.asarray(world.edge_response[name]))
         centered=rank-float(rank.mean())
         target_rank[name]=(centered,float(np.dot(centered,centered)))
     y=np.empty(len(pairs),float)
@@ -58,7 +58,7 @@ def score_pair_contributions(world,pairs,target,residual,execution=None):
         if len(aligned)<3:
             y[i]=0.0
             continue
-        rank=np.asarray(average_ranks(aligned),dtype=float)
+        rank=_rank(aligned)
         dy=rank-float(rank.mean())
         den=float(np.sqrt(xx*np.dot(dy,dy)))
         y[i]=0.0 if den<=np.finfo(float).eps else float(np.dot(dx,dy)/den)
