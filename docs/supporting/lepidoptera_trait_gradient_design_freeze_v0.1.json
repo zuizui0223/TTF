@@ -26,25 +26,30 @@
     "operator_exposure_species_excluded": "Acrolophus arcanella"
   },
   "formal_design": {
-    "design_json_sha256": "6eff3a634a3d4c94ca389392055b96c8183b4a5e82b272297a132f19a3031336",
+    "design_json_sha256": "f2f2088c294ecfac3c49659439fd7858330452bd8fbea090513a6b3d590c98f8",
     "major_complete_species": 339,
     "train_species": 169,
     "evaluation_species": 170,
     "geographically_supported_evaluation_species": 160,
     "target_source_pairs": 4839,
     "source_count_quantiles": {
-      "min": 5.0,
-      "q25": 17.0,
-      "median": 29.0,
-      "q75": 47.0,
-      "max": 50.0
+      "min": 5,
+      "q25": 17,
+      "median": 29,
+      "q75": 47,
+      "max": 50
     },
     "support_radius_km": 500,
     "minimum_target_coverage": 0.5,
-    "minimum_source_species": 5
+    "minimum_source_species": 5,
+    "execution_representation": "source_edge_index is stored per pair; target edge index is the implicit canonical 0..n-1 sequence"
   },
   "qualification": {
-    "cells": ["private", "trait_gradient_positive", "geometry_confounded_trap"],
+    "cells": [
+      "private",
+      "trait_gradient_positive",
+      "geometry_confounded_trap"
+    ],
     "worlds_per_cell": 500,
     "bootstrap_resamples_per_world": 1999,
     "alpha": 0.05,
@@ -56,5 +61,6 @@
     "empirical_sequence_identity_opened_for_trait_study": false,
     "empirical_pairwise_genetic_distances_opened_for_trait_study": false,
     "empirical_trait_gradient_statistic_computed": false
-  }
+  },
+  "pre_outcome_amendment": "Design hash updated before any formal synthetic outcome after removing a redundant serialized target_edge_index and switching to an exact KD-tree execution path. Species, split, support rule, pair set, trait similarities, geometry covariates, nearest-source alignment, estimator and seed namespace are unchanged."
 }
