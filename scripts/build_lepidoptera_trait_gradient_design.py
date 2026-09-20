@@ -70,7 +70,7 @@ def main():
             if len(gene_members)!=1: raise RuntimeError("archive root drift")
             genes_member=gene_members[0]; prefix=str(Path(genes_member).parent).replace("\\\\","/")
             raw=z.read(genes_member).decode("utf-8")
-            reader=csv.DictReader(io.StringIO(raw),delimiter="\\t")
+            reader=csv.DictReader(io.StringIO(raw),delimiter="\t")
             if tuple(reader.fieldnames or ())!=tuple(GENES_HEADERS): raise RuntimeError("genes.txt schema drift")
             rows=[]
             for row in reader:
