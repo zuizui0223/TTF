@@ -1,0 +1,82 @@
+{
+  "schema": "ttf_lepidoptera_pair_axis_exploratory_v0.1",
+  "status": "POST_PRIMARY_EXPLORATORY_ONLY",
+  "executed_on": "2026-09-20",
+  "parent_primary_result": "benchmarks/frozen/lepidoptera_trait_gradient_empirical_primary_result_v0.1.json",
+  "parent_primary_decision": "NO_DETECTED_POSITIVE_TRAIT_SIMILARITY_GRADIENT",
+  "pairs": 2428,
+  "source_species": 106,
+  "target_species": 110,
+  "baseline": {
+    "geometry_only_rmse": 0.26552226409077134,
+    "geometry_only_correlation": 0.06031496374101677
+  },
+  "models": {
+    "wing_similarity": {
+      "augmented_rmse": 0.26560340575414937,
+      "rmse_improvement": -0.00008114166337802597,
+      "augmented_correlation": 0.05720792322484558,
+      "correlation_gain": -0.0031070405161711875
+    },
+    "host_breadth_similarity": {
+      "augmented_rmse": 0.26570077555455085,
+      "rmse_improvement": -0.0001785114637795071,
+      "augmented_correlation": 0.05363074359633128,
+      "correlation_gain": -0.00668422014468549
+    },
+    "voltinism_similarity": {
+      "augmented_rmse": 0.2655663650579987,
+      "rmse_improvement": -0.000044100967227345134,
+      "augmented_correlation": 0.058855346101005,
+      "correlation_gain": -0.0014596176400117691
+    },
+    "habitat_similarity": {
+      "augmented_rmse": 0.26570579588467114,
+      "rmse_improvement": -0.0001835317938997938,
+      "augmented_correlation": 0.05293116085942282,
+      "correlation_gain": -0.0073838028815939455
+    },
+    "wing_plus_host": {
+      "augmented_rmse": 0.2657818115046673,
+      "rmse_improvement": -0.00025954741389594416,
+      "augmented_correlation": 0.050570153899946124,
+      "correlation_gain": -0.009744809841070644
+    },
+    "wing_host_joint_match": {
+      "augmented_rmse": 0.2656285944847238,
+      "rmse_improvement": -0.00010633039395246957,
+      "augmented_correlation": 0.05634732768270605,
+      "correlation_gain": -0.003967636058310721
+    },
+    "four_axes_separate": {
+      "augmented_rmse": 0.2660073732323798,
+      "rmse_improvement": -0.00048510914160843077,
+      "augmented_correlation": 0.04211708015197715,
+      "correlation_gain": -0.01819788358903962
+    },
+    "four_axes_plus_wing_host_interaction": {
+      "augmented_rmse": 0.26608538401551113,
+      "rmse_improvement": -0.0005631199247397856,
+      "augmented_correlation": 0.0390778219468688,
+      "correlation_gain": -0.02123714179414797
+    }
+  },
+  "trait_feature_spread": {
+    "wing_similarity": {"min": 0.015179984379950493, "median": 0.4046791333368811, "max": 1.0, "sd": 0.2656390359586073},
+    "host_breadth_similarity": {"min": 0.025962503914099506, "median": 0.4376989779646791, "max": 1.0, "sd": 0.3450810527023914},
+    "voltinism_similarity": {"min": 0.0, "median": 0.0, "max": 1.0, "sd": 0.4996714884204769},
+    "habitat_similarity": {"min": 0.0, "median": 0.25, "max": 1.0, "sd": 0.24459402915072206},
+    "wing_host_joint_match": {"min": 0.0016182006766922762, "median": 0.14709594729308495, "max": 1.0, "sd": 0.22810643434286917}
+  },
+  "interpretation": "The null composite-gradient result is not explained by cancellation among the four measured LepTraits axes. In deterministic held-out target-source pair prediction, none of wing-size similarity, host-breadth similarity, voltinism similarity, habitat similarity, separate four-axis terms, or a wing-by-host joint-match term improved prediction beyond the frozen geometry covariates. The measured coarse traits therefore do not identify the residual relational structure.",
+  "next_hypothesis_boundary": "Host breadth is not host-resource geography. A future independent analysis may test whether overlap or congruence in the realized geographic distribution of larval host resources predicts pairwise spatial-genetic congruence, but that mechanism is not tested here.",
+  "claim_boundary": {
+    "confirmatory": false,
+    "p_values_computed": false,
+    "primary_result_rewritten": false,
+    "purpose": "Generate candidate relational predictors for an independent future confirmatory panel."
+  },
+  "serialized_sequence_identity": false,
+  "serialized_edge_genetic_distance_vectors": false,
+  "post_result_retuning_allowed": false
+}
