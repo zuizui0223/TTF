@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
-      - run: pip install -e . pytest
+      - run: pip install -e ".[lepidoptera]" pytest
       - name: Restore frozen archive cache
         id: archive
         uses: actions/cache/restore@v4
