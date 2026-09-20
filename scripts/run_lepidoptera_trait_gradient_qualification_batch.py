@@ -57,9 +57,21 @@ def main():
     geos={n:prepare_density_scaled_genetic_geometry(np.asarray(x,float),neighbor_fraction=.15) for n,x in d["coordinates"].items()}
     species_order=tuple(map(str,d["species_order"])); tk=np.asarray(d["trait_kernel"],float); gk=np.asarray(d["geometry_kernel"],float)
     target,residual=prepare_pair_surface(d["pairs"])
-    worlds=make_worlds(geos,species_order,tk,gk,cell=a.cell,start=a.start,count=a.count)
+    simulator=prepare_trait_gradient_simulator(
+        geos,species_order,tk,gk,shared_fraction=0.85
+    )
     stats=[]; pvals=[]; target_counts=[]
-    for offset,w in enumerate(worlds):
+    for offset in range(a.count):
+        replicate=a.start+offset
+        w=simulate_prepared_trait_gradient_world(
+            simulator,
+            cell=a.cell,
+            seed=frozen_seed(20260920,a.cell,replicate),
+            private_amplitude=0.35,
+            noise_sd=0.10,
+            transition_width=0.20,
+            latent_fields=6,
+        )
         stat,slopes=score_pair_contributions(w,d["pairs"],target,residual)
         mean,p=centered_two_sided_target_bootstrap(slopes,seed=bootstrap_seed(a.cell,replicate),n_bootstrap=1999)
         if not np.isclose(stat,mean,atol=1e-12,rtol=0): raise RuntimeError("target slope mean drift")
