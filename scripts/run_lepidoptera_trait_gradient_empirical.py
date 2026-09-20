@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import argparse,csv,hashlib,json,stat,tempfile,zipfile
+import argparse,csv,hashlib,io,json,stat,tempfile,zipfile
 from pathlib import Path
 import numpy as np
 
@@ -40,21 +40,47 @@ def sha256_path(path:Path)->str:
         for chunk in iter(lambda:f.read(1<<20),b""): h.update(chunk)
     return h.hexdigest()
 
-def safe_extract(archive:Path,dest:Path)->None:
+def selective_extract(archive:Path,dest:Path,survivors:set[str])->Path:
     with zipfile.ZipFile(archive) as z:
-        for info in z.infolist():
+        infos={info.filename:info for info in z.infolist()}
+        for info in infos.values():
             p=Path(info.filename)
             if p.is_absolute() or ".." in p.parts:
                 raise RuntimeError("unsafe archive member")
             mode=(int(info.external_attr)>>16)&0o170000
             if mode==stat.S_IFLNK:
                 raise RuntimeError("symlink archive member forbidden")
-        z.extractall(dest)
-
-def find_root(dest:Path)->Path:
-    roots=[p.parent for p in dest.rglob("genes.txt") if (p.parent/"cite.txt").is_file()]
-    if len(roots)!=1: raise RuntimeError("archive root drift")
-    return roots[0]
+        genes_members=[
+            name for name in infos
+            if name.endswith("genes.txt")
+            and str(Path(name).parent/"cite.txt").replace("\\","/") in infos
+        ]
+        if len(genes_members)!=1:
+            raise RuntimeError("archive root drift")
+        genes_member=genes_members[0]
+        prefix=str(Path(genes_member).parent).replace("\\","/")
+        genes_bytes=z.read(genes_member)
+        reader=csv.DictReader(io.StringIO(genes_bytes.decode("utf-8")),delimiter="\t")
+        selected={genes_member,str(Path(prefix)/"cite.txt").replace("\\","/")}
+        for row in reader:
+            species=str(row.get("species","")).strip()
+            if species not in survivors:
+                continue
+            rel=Path(str(row.get("dir","")))
+            if rel.is_absolute() or ".." in rel.parts:
+                raise RuntimeError("unsafe genes.txt dir")
+            gene=str(row.get("gene",""))
+            selected.add(str(Path(prefix)/rel/f"{gene}.afa").replace("\\","/"))
+            selected.add(str(Path(prefix)/rel/"occurrences.txt").replace("\\","/"))
+        missing=sorted(name for name in selected if name not in infos)
+        if missing:
+            raise RuntimeError(f"survivor source files missing: {missing[:5]}")
+        for name in sorted(selected):
+            z.extract(infos[name],dest)
+    root=dest/Path(genes_member).parent
+    if not (root/"genes.txt").is_file() or not (root/"cite.txt").is_file():
+        raise RuntimeError("selective archive extraction drift")
+    return root
 
 def load_design(path:Path,expected_sha:str):
     if sha256_path(path)!=expected_sha: raise RuntimeError("survivor design SHA drift")
@@ -146,8 +172,7 @@ def main()->int:
     # Everything before the marked transition below is response blind or mask only.
     with tempfile.TemporaryDirectory(prefix="ttf_lepidoptera_empirical_") as td:
         rootdir=Path(td)
-        safe_extract(args.archive,rootdir)
-        root=find_root(rootdir)
+        root=selective_extract(args.archive,rootdir,set(names))
         genes=read_genes_rows(root/"genes.txt")
         universe={str(row.get("species","")).strip() for row in genes}
         excluded=universe-set(names)
