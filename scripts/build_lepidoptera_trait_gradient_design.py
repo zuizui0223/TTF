@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse,csv,hashlib,json,zipfile,tempfile
+import argparse,csv,hashlib,io,json,zipfile,tempfile
 from pathlib import Path
 import numpy as np
-from ttf.phylogatr_confirmatory import _candidate_from_row,read_genes_rows,choose_one_panel_per_species,collapse_whitespace
+from ttf.phylogatr_confirmatory import _candidate_from_row,choose_one_panel_per_species,collapse_whitespace,GENES_HEADERS,is_coi_family_locus
 from ttf.conditional_transfer import prepare_target_source_pools
 from ttf.phylogatr_compact_execution import prepare_phylogatr_compact_ttf_design
 
@@ -63,17 +63,33 @@ def main():
     tr=traits(a.leptraits)
     complete_names={n for n,row in tr.items() if complete(row)}
     with tempfile.TemporaryDirectory() as td:
-        with zipfile.ZipFile(a.archive) as z:z.extractall(td)
-        roots=[p.parent for p in Path(td).rglob("genes.txt") if (p.parent/"cite.txt").is_file()]
-        if len(roots)!=1: raise RuntimeError("archive root drift")
-        root=roots[0]; candidates=[]
-        for row in read_genes_rows(root/"genes.txt"):
-            species=collapse_whitespace(row.get("species",""))
-            if species not in complete_names or species in excluded: continue
-            if str(row.get("kingdom",""))!="Animalia" or str(row.get("order",""))!="Lepidoptera": continue
-            candidate,status=_candidate_from_row(root,row,aliases=ALIASES,excluded_species=excluded,min_localities=12,min_endpoint_training_edges=5,neighbor_fraction=.15)
-            if candidate is not None: candidates.append(candidate)
-        panels=choose_one_panel_per_species(candidates)
+        temp=Path(td)
+        with zipfile.ZipFile(a.archive) as z:
+            names=set(z.namelist())
+            gene_members=[n for n in names if n.endswith("genes.txt") and (str(Path(n).parent/"cite.txt").replace("\\\\","/") in names)]
+            if len(gene_members)!=1: raise RuntimeError("archive root drift")
+            genes_member=gene_members[0]; prefix=str(Path(genes_member).parent).replace("\\\\","/")
+            raw=z.read(genes_member).decode("utf-8")
+            reader=csv.DictReader(io.StringIO(raw),delimiter="\\t")
+            if tuple(reader.fieldnames or ())!=tuple(GENES_HEADERS): raise RuntimeError("genes.txt schema drift")
+            rows=[]
+            for row in reader:
+                species=collapse_whitespace(row.get("species",""))
+                if species not in complete_names or species in excluded: continue
+                if str(row.get("kingdom",""))!="Animalia" or str(row.get("order",""))!="Lepidoptera": continue
+                if not is_coi_family_locus(str(row.get("gene","")),species,ALIASES): continue
+                rows.append({k:str(v or "") for k,v in row.items()})
+            root=temp/prefix; root.mkdir(parents=True,exist_ok=True)
+            for row in rows:
+                rel=Path(str(row["dir"])); gene=str(row["gene"])
+                wanted=[str(Path(prefix)/rel/"occurrences.txt").replace("\\\\","/"),str(Path(prefix)/rel/f"{gene}.afa").replace("\\\\","/")]
+                for member in wanted:
+                    if member in names: z.extract(member,temp)
+            candidates=[]
+            for row in rows:
+                candidate,status=_candidate_from_row(root,row,aliases=ALIASES,excluded_species=excluded,min_localities=12,min_endpoint_training_edges=5,neighbor_fraction=.15)
+                if candidate is not None: candidates.append(candidate)
+            panels=choose_one_panel_per_species(candidates)
     chosen={p.species:p for p in panels}
     names=tuple(sorted(chosen,key=lambda n:(hashlib.sha256(f"lepidoptera-trait-transfer-v0.1|major_complete|{n}".encode()).hexdigest(),n)))
     if len(names)<180: raise RuntimeError("species-disjoint major-complete panel fell below predeclared feasibility floor")
