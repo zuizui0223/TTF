@@ -1,0 +1,58 @@
+{
+  "design_npz_sha256": "e90568668f8263e3b454ddab21a281dc6fe2e3b33bd88324b8fb1cc012082b3f",
+  "empirical_opening_authorized": true,
+  "evaluation": {
+    "geometry_confounded_trap": {
+      "mean_statistic": 0.012036486253295071,
+      "median_envelope_p": 0.46699999999999997,
+      "median_statistic": 0.011316313856711262,
+      "minimum_envelope_p": 0.004,
+      "rejection_rate": 0.042,
+      "rejections": 21,
+      "wilson95_lower": 0.027632310108451703,
+      "wilson95_upper": 0.06335158575433016,
+      "worlds": 500
+    },
+    "private": {
+      "mean_statistic": -0.00022234053674563282,
+      "median_envelope_p": 0.688,
+      "median_statistic": 0.00006416453298695967,
+      "minimum_envelope_p": 0.008,
+      "rejection_rate": 0.012,
+      "rejections": 6,
+      "wilson95_lower": 0.005510995174027703,
+      "wilson95_upper": 0.025930361116447292,
+      "worlds": 500
+    },
+    "trait_gradient_positive": {
+      "mean_statistic": 0.08966123443740222,
+      "median_envelope_p": 0.002,
+      "median_statistic": 0.0882237054622232,
+      "minimum_envelope_p": 0.002,
+      "rejection_rate": 0.942,
+      "rejections": 471,
+      "wilson95_lower": 0.917943812143745,
+      "wilson95_upper": 0.9593162708882429,
+      "worlds": 500
+    }
+  },
+  "gates": {
+    "all_three_pass": true,
+    "geometry_trap_type1_pass": true,
+    "private_type1_pass": true,
+    "trait_gradient_positive_power_pass": true
+  },
+  "outcome_firewall": {
+    "new_lepidoptera_empirical_pairwise_genetic_distances_opened": false,
+    "new_lepidoptera_empirical_sequence_identity_opened": false,
+    "new_lepidoptera_empirical_transfer_statistic_computed": false
+  },
+  "reference": {
+    "geometry_confounded_trap_worlds": 499,
+    "geometry_mean_statistic": 0.010460681108294323,
+    "private_mean_statistic": -0.00186163411486747,
+    "private_worlds": 499
+  },
+  "schema": "ttf_lepidoptera_trait_gradient_v02_qualification_result",
+  "status": "PASS"
+}
