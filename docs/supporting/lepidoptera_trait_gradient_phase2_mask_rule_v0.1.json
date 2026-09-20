@@ -1,0 +1,48 @@
+{
+  "schema": "ttf_lepidoptera_trait_gradient_phase2_mask_rule_v0.1",
+  "status": "FROZEN_AFTER_V02_SYNTHETIC_PASS_BEFORE_NEW_LEPIDOPTERA_CHARACTER_MASK_OPENING",
+  "parent_qualification": "benchmarks/frozen/lepidoptera_trait_gradient_v02_qualification_result.json",
+  "purpose": "Admit a species-disjoint Lepidoptera empirical panel using only canonical-valid versus noncanonical aligned-character masks before any new nucleotide identity, pairwise genetic distance, or empirical transfer statistic is computed.",
+  "mask_contract": {
+    "canonical_valid": ["A","C","G","T","a","c","g","t"],
+    "minimum_comparable_fraction": 0.5,
+    "valid_frozen_edge": "At least one sequence pair across the two frozen endpoint localities has canonical-valid overlap >= ceil(0.5 * alignment_length).",
+    "admissible_species": "Every frozen edge is valid.",
+    "failed_species": "Drop the species only; do not rewire its graph, switch marker, or substitute a different locus."
+  },
+  "panel_contract": {
+    "pre_mask_species": 339,
+    "pre_mask_train": 169,
+    "pre_mask_eval": 170,
+    "inherit_split_without_resplitting": true,
+    "minimum_total_survivors": 200,
+    "minimum_train_survivors": 90,
+    "minimum_eval_survivors": 90,
+    "minimum_geographically_supported_eval_targets": 90,
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.5,
+    "minimum_sources": 5
+  },
+  "post_mask_requalification": {
+    "required_if_any_species_is_removed": true,
+    "estimator_and_all_thresholds_unchanged": true,
+    "reference_seed_tag": "lepidoptera-trait-gradient-v02-survivor-reference",
+    "evaluation_seed_tag": "lepidoptera-trait-gradient-v02-survivor-evaluation",
+    "reference_worlds_per_nuisance_cell": 499,
+    "evaluation_worlds_per_cell": 500,
+    "private_type1": "Wilson 95% upper <= 0.10",
+    "geometry_trap_type1": "Wilson 95% upper <= 0.10",
+    "positive_power": "Wilson 95% lower >= 0.80"
+  },
+  "forbidden": [
+    "Persist nucleotide identities or pairwise nucleotide differences during the mask stage.",
+    "Change trait axes, trait-similarity rule, geometry covariates, alignment cap, support rule, simulator amplitudes, alpha, or qualification gates after mask opening.",
+    "Resplit or rebalance train/evaluation species after mask opening.",
+    "Open the new Lepidoptera empirical genetic response before the exact survivor-geometry requalification passes."
+  ],
+  "outcome_firewall": {
+    "new_lepidoptera_empirical_sequence_identity_opened": false,
+    "new_lepidoptera_empirical_pairwise_genetic_distances_opened": false,
+    "new_lepidoptera_empirical_transfer_statistic_computed": false
+  }
+}
