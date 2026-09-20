@@ -2,11 +2,11 @@
   "schema": "ttf_lepidoptera_trait_gradient_empirical_authorization_v0.1",
   "status": "AUTHORIZE_ONE_SHOT_LEPIDOPTERA_IDENTITY_OPENING",
   "authorized_on": "2026-09-20",
-  "method_commit_sha": "03b243bfbe263ab01423371a29ef2e4d5911f33c",
+  "method_commit_sha": "5e5e08b936c07fe118913e63b8ceaf7f803b8d42",
   "frozen_sha256": {
     "empirical_rule": "e96c2699fed23f23abf1d59a6cc0f1cd42ea464e6410b74e92d6908a1f21dbf9",
     "empirical_scorer": "d941febd3d7f55ff4ccbfcb9fd177b8230b413e82caf880fe17418fdceae42b1",
-    "empirical_runner": "bedbee163f1fd13ba141491a10b74987aca45af61626dfb5b7b4ec553c01edab",
+    "empirical_runner": "53b846fb3199028e0173c8f26b22172cbf835e54e90b7023cf7cb7d3d17bcd99",
     "survivor_requalification": "5f486fd9be522a151404ae5e8e714f8d518f52f72e9f7d1bdfbc38c53e4a1081",
     "source_archive": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
     "survivor_design_npz": "15de10eb15d54cf929287e2a27762a1882b7d46ca6251481616639ca7805bc1c",
