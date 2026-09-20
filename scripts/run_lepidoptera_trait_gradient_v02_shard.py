@@ -9,7 +9,10 @@ from pathlib import Path
 import numpy as np
 
 from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
-from ttf.lepidoptera_trait_gradient_simulate import (\n    prepare_trait_gradient_simulator,\n    simulate_prepared_trait_gradient_world,\n)
+from ttf.lepidoptera_trait_gradient_simulate import (
+    prepare_trait_gradient_simulator,
+    simulate_prepared_trait_gradient_world,
+)
 from ttf.lepidoptera_trait_gradient_v02 import (
     EVALUATION_TAG,
     REFERENCE_TAG,
