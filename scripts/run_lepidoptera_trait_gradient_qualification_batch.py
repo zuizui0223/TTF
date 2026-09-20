@@ -32,7 +32,13 @@ def centered_two_sided_target_bootstrap(slopes,*,seed,n_bootstrap=1999):
     p=float((1+np.count_nonzero(np.abs(t)>=abs(obs)))/(int(n_bootstrap)+1))
     return mean,p
 
-def _rank(values):\n    x=np.asarray(values,dtype=float)\n    if _scipy_rankdata is None:\n        return np.asarray(average_ranks(x),dtype=float)\n    return np.asarray(_scipy_rankdata(x,method="average"),dtype=float)\n\ndef prepare_pair_surface(pairs):
+def _rank(values):
+    x=np.asarray(values,dtype=float)
+    if _scipy_rankdata is None:
+        return np.asarray(average_ranks(x),dtype=float)
+    return np.asarray(_scipy_rankdata(x,method="average"),dtype=float)
+
+def prepare_pair_surface(pairs):
     similarity=np.asarray([float(p["trait_similarity"]) for p in pairs])
     geometry=np.asarray([[float(p[k]) for k in ("coverage","centroid_distance","edge_count_ratio","locality_count_ratio")] for p in pairs])
     target=np.asarray([str(p["target"]) for p in pairs])
