@@ -1,0 +1,2722 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_metadata_census_v0.1",
+  "status": "RESPONSE_BLIND_HOSTS_METADATA_CENSUS",
+  "source": {
+    "hosts_repo": "globalbioticinteractions/HOSTS",
+    "hosts_commit": "808e0b869f9ec1adf8efff87cf6a395adda103e0",
+    "resource_blob_sha": "06749c04bd5b7a754d6f7717a31c01c51357cae8"
+  },
+  "candidate_universe": {
+    "unused_lepidoptera_coi_with_leptraits_wing": 1846,
+    "prior_domains_excluded_before_match": true
+  },
+  "exact_species_match": {
+    "species_with_at_least_one_species_level_host": 672,
+    "fraction_of_candidates": 0.3640303358613218,
+    "distinct_host_species_quantiles": {
+      "min": 1,
+      "q25": 1,
+      "median": 3,
+      "q75": 6,
+      "max": 48
+    },
+    "species_with_at_least_2_host_species": 469,
+    "species_with_at_least_3_host_species": 369,
+    "species_with_at_least_5_host_species": 219
+  },
+  "matched_species": [
+    {
+      "species": "Abraximorpha davidii",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Achalarus toxeus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Achlyodes busirus",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Acraea andromacha",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Acraea issoria",
+      "distinct_host_species": 11
+    },
+    {
+      "species": "Acraea umbra",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Actinote anteas",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Actinote mamita",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Actinote pellenea",
+      "distinct_host_species": 13
+    },
+    {
+      "species": "Actinote thalia",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Actizera lucida",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Acytolepis puspa",
+      "distinct_host_species": 26
+    },
+    {
+      "species": "Adelpha basiloides",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Adelpha cytherea",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Adelpha epizygis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Adelpha iphiclus",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Adelpha syma",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Aguna metophis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Amblyscirtes aesculapius",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Amblyscirtes belli",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Amblyscirtes carolina",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Amblyscirtes celia",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Amblyscirtes hegon",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Amblyscirtes nysa",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Amblyscirtes reversa",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Anaea aidea",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Anaea andria",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Anaea troglodyta",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Anartia amathea",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Anastrus sempiternus",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Ancistroides nigrita",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Anthene amarah",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Anthene definita",
+      "distinct_host_species": 11
+    },
+    {
+      "species": "Anthene emolus",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Anthene lycaenoides",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Anthocharis cethura",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Aphnaeus hutchinsonii",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Aphnaeus orcas",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Aphrissa statira",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Aporia agathon",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Appias ada",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Appias albina",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Appias lyncida",
+      "distinct_host_species": 9
+    },
+    {
+      "species": "Appias nero",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Appias paulina",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Archon apollinus",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Arethusana arethusa",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Arhopala abseus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Arhopala centaurus",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Ariadne ariadne",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Ariadne merione",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Arrhenes dschilus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Arrhenes marnas",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Arteurotia tractipennis",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Asbolis capucinus",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Aslauga purpurascens",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Aslauga vininga",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Asterocampa clyton",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Asterocampa leilia",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Astraptes alardus",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Astraptes alector",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Astraptes anaphus",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Astraptes creteus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Astraptes fulgerator",
+      "distinct_host_species": 9
+    },
+    {
+      "species": "Astraptes talus",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Athyma nefte",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Athyma selenophora",
+      "distinct_host_species": 9
+    },
+    {
+      "species": "Atlides halesus",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Atrytone arogos",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Atrytonopsis hianna",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Autochton cellus",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Azanus mirza",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Azanus ubaldus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Badamia exclamationis",
+      "distinct_host_species": 12
+    },
+    {
+      "species": "Barbicornis basilis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Battus belus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Battus lycidas",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Bicyclus vulgaris",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Bindahara phocides",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Boloria euphrosyne",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Boloria natazhati",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Borbo borbonica",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Borbo cinnara",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Brenthis hecate",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Brenthis ino",
+      "distinct_host_species": 11
+    },
+    {
+      "species": "Brintesia circe",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Bungalotis diophorus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Bungalotis erythus",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Byblia ilithyia",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cabares potrillo",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Calephelis borealis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Calephelis laverna",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Calephelis nemesis",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Calephelis virginiensis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Calephelis wrighti",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Caligo idomeneus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Caligo illioneus",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Callophrys dumetorum",
+      "distinct_host_species": 11
+    },
+    {
+      "species": "Callophrys sheridanii",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Carcharodus baeticus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Carcharodus floccifera",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Caria ino",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Carterocephalus silvicola",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Carystus phorcus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Castalius rosimon",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Castilia ofella",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Catoblepia amphirhoe",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Catochrysops panormus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Catochrysops strabo",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Catonephele numilia",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Catopsilia florella",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Catopsilia scylla",
+      "distinct_host_species": 12
+    },
+    {
+      "species": "Celastrina neglectamajor",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Celotes nessus",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Cephrenes augiades",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cepora abnormis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cepora perimale",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Ceratinia tutia",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Cercyonis meadii",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Cercyonis sthenele",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cethosia cyane",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Cethosia cydippe",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Cethosia hypsea",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Cethosia penthesilea",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Charaxes acuminatus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Charaxes ameliae",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Charaxes ansorgei",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Charaxes anticlea",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Charaxes aubyni",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Charaxes baumanni",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Charaxes bernardus",
+      "distinct_host_species": 13
+    },
+    {
+      "species": "Charaxes boueti",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Charaxes brutus",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Charaxes candiope",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Charaxes castor",
+      "distinct_host_species": 14
+    },
+    {
+      "species": "Charaxes cithaeron",
+      "distinct_host_species": 15
+    },
+    {
+      "species": "Charaxes cynthia",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Charaxes druceanus",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Charaxes ethalion",
+      "distinct_host_species": 16
+    },
+    {
+      "species": "Charaxes etheocles",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Charaxes eupale",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Charaxes fulvescens",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Charaxes guderiana",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Charaxes jahlusa",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Charaxes latona",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Charaxes lucretius",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Charaxes marieps",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Charaxes numenes",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Charaxes pleione",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Charaxes pollux",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Charaxes pondoensis",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Charaxes protoclea",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Charaxes saturnus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Charaxes tiridates",
+      "distinct_host_species": 14
+    },
+    {
+      "species": "Charaxes vansoni",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Charaxes varanes",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Charaxes viola",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Charaxes zingha",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Charaxes zoolina",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Chazara prieuri",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cheritra freja",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Chersonesia risa",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Chilades lajus",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Chioides catillus",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Chiomara asychis",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Chiomara mithrax",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Chloroselas pseudozeritis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Chlorostrymon simaethis",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Chlosyne californica",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Chlosyne janais",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Chlosyne rosita",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Cobalus calvina",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cobalus virbius",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Codatractus alcaeus",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Coenonympha dorus",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Coenonympha hero",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Cogia caicus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cogia calchas",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cogia outis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Colias alfacariensis",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Colias behrii",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Colias electo",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Colias hyperborea",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Colias lesbia",
+      "distinct_host_species": 14
+    },
+    {
+      "species": "Colias meadii",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Colias occidentalis",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Colias scudderii",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Colotis auxo",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Colotis erone",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Colotis etrida",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Colotis fausta",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Colotis phisadia",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Colotis vesta",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Consul fabius",
+      "distinct_host_species": 9
+    },
+    {
+      "species": "Copaeodes aurantiaca",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Corticea corticea",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cressida cressida",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Cupha erymanthis",
+      "distinct_host_species": 13
+    },
+    {
+      "species": "Cupha prosope",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Curetis bulis",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Cyaniris semiargus",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Cycloglypha thrasibulus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cyllopsis gemma",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cyllopsis pertepida",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Cymaenes alumna",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cymaenes odilia",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Cymaenes tripunctus",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Cymothoe alcimeda",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cymothoe caenis",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Cymothoe coccinata",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cymothoe coranus",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Cymothoe sangaris",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cyrestis nivea",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Cyrestis thyodamas",
+      "distinct_host_species": 21
+    },
+    {
+      "species": "Danaus affinis",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Danaus erippus",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Delias eucharis",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Delias pasithoe",
+      "distinct_host_species": 13
+    },
+    {
+      "species": "Deudorix epijarbas",
+      "distinct_host_species": 17
+    },
+    {
+      "species": "Deudorix livia",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Diaethria astala",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Diaethria candrena",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Diaethria clymena",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Dione moneta",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Dircenna dero",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Dircenna klugii",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Discophora sondaica",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Doleschallia bisaltide",
+      "distinct_host_species": 18
+    },
+    {
+      "species": "Doxocopa cyane",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Doxocopa pavon",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Drupadia ravindra",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Drupadia theda",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Dryadula phaetusa",
+      "distinct_host_species": 13
+    },
+    {
+      "species": "Dymasia dymas",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Dynamine agacles",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Dynamine artemisia",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Dynamine dyonis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Dynamine myrrhina",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Dynamine tithia",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Dynastor darius",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Ebusus ebusus",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Elymnias nesaea",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Emesis diogenia",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Emesis emesia",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Emesis mandana",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Emesis russula",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Eooxylides tharis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Epargyreus socus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Epargyreus zestos",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Epiphile adrasta",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Epityches eupompe",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Erebia aethiops",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Erebia alberganus",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Erebia christi",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Erebia embla",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Erebia epiphron",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Erebia epistygne",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Erebia eriphyle",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Erebia flavofasciata",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Erebia ligea",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Erebia magdalena",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Erebia melampus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Erebia meolans",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Erebia neoridas",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Erebia oeme",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Erebia palarica",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Erebia pluto",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Erebia scipio",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Erebia tyndarus",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Erebia zapateri",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Eronia cleodora",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Erora laeta",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Erynnis afranius",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Erynnis funeralis",
+      "distinct_host_species": 15
+    },
+    {
+      "species": "Erynnis lucilius",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Erynnis pacuvius",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Erynnis propertius",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Erynnis telemachus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Erynnis zarucco",
+      "distinct_host_species": 12
+    },
+    {
+      "species": "Euchloe ausonides",
+      "distinct_host_species": 23
+    },
+    {
+      "species": "Euchloe hyantis",
+      "distinct_host_species": 20
+    },
+    {
+      "species": "Euchloe olympia",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Euchrysops malathana",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Euchrysops osiris",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Eueides lybia",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Eumaeus atala",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Eumaeus toxea",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Eumedonia eumedon",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Eunica margarita",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Eunica tatila",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Euphilotes battoides",
+      "distinct_host_species": 18
+    },
+    {
+      "species": "Euphilotes enoptes",
+      "distinct_host_species": 19
+    },
+    {
+      "species": "Euphilotes mojave",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Euphilotes rita",
+      "distinct_host_species": 13
+    },
+    {
+      "species": "Euphilotes spaldingi",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Euphydryas anicia",
+      "distinct_host_species": 22
+    },
+    {
+      "species": "Euphydryas chalcedona",
+      "distinct_host_species": 48
+    },
+    {
+      "species": "Euphydryas maturna",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Euphydryas phaeton",
+      "distinct_host_species": 22
+    },
+    {
+      "species": "Euphyes arpa",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Euphyes bimacula",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Euphyes dion",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Euphyes dukesi",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Euploea alcathoe",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Euploea leucostictos",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Euploea midamus",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Euploea mulciber",
+      "distinct_host_species": 17
+    },
+    {
+      "species": "Euploea sylvester",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Euploea tulliolus",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Euptoieta hegesia",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Eurema albula",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Eurema alitha",
+      "distinct_host_species": 9
+    },
+    {
+      "species": "Eurema blanda",
+      "distinct_host_species": 36
+    },
+    {
+      "species": "Eurema brigitta",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Eurema deva",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Eurema elathea",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Eurema herla",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Eurema sari",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Euripus nyctelius",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Euryades corethrus",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Eurytides marcellus",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Euthalia monina",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Euthalia phemius",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Euxanthe crossleyi",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Famegana alsulus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Faunis canens",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Feniseca tarquinius",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Forbestra olivencia",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Fountainea eurypyle",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Fountainea glycerium",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Freyeria putli",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Freyeria trochylus",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Gandaca harina",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Ganyra josephina",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Gegenes niso",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Gesta gesta",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Glaucopsyche alexis",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Glaucopsyche piasus",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Gonepteryx farinosa",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Grais stigmaticus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Graphium agamemnon",
+      "distinct_host_species": 31
+    },
+    {
+      "species": "Graphium antiphates",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Graphium aristeus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Graphium eurypylus",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Graphium macleayanus",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Habrodais grunus",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Hamadryas amphichloe",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Hamadryas amphinome",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Hamadryas epinome",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Hamadryas feronia",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Hamadryas fornax",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Hamadryas guatemalena",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Hamadryas iphthime",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Hamadryas laodamia",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Hamearis lucina",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Hasora chromus",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Hebomoia glaucippe",
+      "distinct_host_species": 15
+    },
+    {
+      "species": "Heliconius erato",
+      "distinct_host_species": 32
+    },
+    {
+      "species": "Heliconius hecale",
+      "distinct_host_species": 13
+    },
+    {
+      "species": "Heliconius sapho",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Heliconius sara",
+      "distinct_host_species": 16
+    },
+    {
+      "species": "Heliopetes ericetorum",
+      "distinct_host_species": 13
+    },
+    {
+      "species": "Heliopetes laviana",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Heliopetes macaira",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Heliopetes omrina",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Heliophorus sena",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Hemiargus hanno",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Hermeuptychia hermes",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Hermeuptychia sosybius",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Hesperia attalus",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Hesperia columbia",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Hesperia lindseyi",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Hesperia meskei",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Hesperia metea",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Hesperia nevada",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Hesperia ottoe",
+      "distinct_host_species": 9
+    },
+    {
+      "species": "Hesperia pahaska",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Hesperia uncas",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Hesperia woodgatei",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Hesperopsis alpheus",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Hesperopsis libya",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Heteronympha merope",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Heteropterus morpheus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Hipparchia fidia",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Hipparchia hermione",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Hipparchia statilinus",
+      "distinct_host_species": 18
+    },
+    {
+      "species": "Hypanartia lethe",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Hypaurotis crysalus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Hypna clytemnestra",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Hypochrysops apelles",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Hypochrysops apollo",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Hypocysta adiante",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Hypocysta metirius",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Hypoleria lavinia",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Hypolimnas alimena",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Hypolimnas anomala",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Hypolimnas bolina",
+      "distinct_host_species": 44
+    },
+    {
+      "species": "Hypolimnas misippus",
+      "distinct_host_species": 18
+    },
+    {
+      "species": "Hypolycaena erylus",
+      "distinct_host_species": 23
+    },
+    {
+      "species": "Hypolycaena philippus",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Hypothyris euclea",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Hypothyris fluonia",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Idea hypermnestra",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Idea leuconoe",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Idea lynceus",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Idea stolli",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Ideopsis gaura",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Ideopsis similis",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Iolana iolas",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Ithomia agnosia",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Ixias marianne",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Jamides alecto",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Jamides celeno",
+      "distinct_host_species": 13
+    },
+    {
+      "species": "Junonia atlites",
+      "distinct_host_species": 11
+    },
+    {
+      "species": "Junonia hedonia",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Junonia hierta",
+      "distinct_host_species": 9
+    },
+    {
+      "species": "Junonia iphita",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Junonia villida",
+      "distinct_host_species": 16
+    },
+    {
+      "species": "Kaniska canace",
+      "distinct_host_species": 11
+    },
+    {
+      "species": "Laeosopis roboris",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Lamproptera meges",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Leptidea morsei",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Leptomyrina lara",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Leptophobia aripa",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Leptotes plinius",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Lethe chandica",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Lethe europa",
+      "distinct_host_species": 9
+    },
+    {
+      "species": "Lethe verma",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Lexias dirtea",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Limenitis populi",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Loxura atymnus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Lycas argentea",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Lysandra bellargus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Lysandra coridon",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Marpesia eleuchea",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Marpesia petreus",
+      "distinct_host_species": 9
+    },
+    {
+      "species": "Mechanitis mazaeus",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Mechanitis polymnia",
+      "distinct_host_species": 24
+    },
+    {
+      "species": "Megathymus cofaqui",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Megathymus yuccae",
+      "distinct_host_species": 24
+    },
+    {
+      "species": "Megisto cymela",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Melanargia ines",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Melanargia lachesis",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Melanargia occitanica",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Melanargia russiae",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Melanis pixe",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Melanitis phedima",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Melitaea arduinna",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Melitaea cinxia",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Melitaea diamina",
+      "distinct_host_species": 9
+    },
+    {
+      "species": "Memphis oenomais",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Memphis pithyusa",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Methona themisto",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Milanion leucaspis",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Ministrymon clytie",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Moduza procris",
+      "distinct_host_species": 13
+    },
+    {
+      "species": "Morpho achilles",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Morpho polyphemus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Mycalesis gotama",
+      "distinct_host_species": 16
+    },
+    {
+      "species": "Mycalesis terminus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Myscelia orsis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Myscelus amystis",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Nacaduba kurava",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Nascus broteas",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Nascus phocus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Nastra lherminier",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Neomyrina nivea",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Neophasia menapia",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Neopithecops zalmora",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Neorina lowii",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Neptis clinia",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Neptis hylas",
+      "distinct_host_species": 35
+    },
+    {
+      "species": "Neptis leucoporos",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Neptis praslini",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Neptis rivularis",
+      "distinct_host_species": 12
+    },
+    {
+      "species": "Neptis saclava",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Nica flavilla",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Nisoniades castolus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Nisoniades rubescens",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Nyctelius nyctelius",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Nymphalis californica",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Ochlodes sylvanoides",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Ocybadistes hypomeloma",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Oeneis chryxus",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Oeneis glacialis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Oenomaus ortygnus",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Oerane microthyrus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Opsiphanes cassina",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Opsiphanes invirae",
+      "distinct_host_species": 12
+    },
+    {
+      "species": "Opsiphanes quiteria",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Oriens gola",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Orsotriaena medus",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Ortilia ithra",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Ortilia orthia",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Pachliopta hector",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Palla decius",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Palla ussheri",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Panoquina panoquin",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Panoquina panoquinoides",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Pantoporia consimilis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Pantoporia venilia",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Papilio alexanor",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Papilio ambrax",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Papilio anactus",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Papilio bianor",
+      "distinct_host_species": 15
+    },
+    {
+      "species": "Papilio brevicauda",
+      "distinct_host_species": 11
+    },
+    {
+      "species": "Papilio demodocus",
+      "distinct_host_species": 13
+    },
+    {
+      "species": "Papilio helenus",
+      "distinct_host_species": 16
+    },
+    {
+      "species": "Papilio indra",
+      "distinct_host_species": 22
+    },
+    {
+      "species": "Papilio joanae",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Papilio nephelus",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Papilio paris",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Papilio protenor",
+      "distinct_host_species": 27
+    },
+    {
+      "species": "Papilio ulysses",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Parantica agleoides",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Parantica melaneus",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Pareronia valeria",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Parides neophilus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Parides sesostris",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Parnara ganga",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Parnara guttatus",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Parnara naso",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Parnassius apollo",
+      "distinct_host_species": 14
+    },
+    {
+      "species": "Parnassius clodius",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Parnassius eversmanni",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Parrhasius m-album",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Parrhasius polibetes",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Passova passova",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Phaedyma columella",
+      "distinct_host_species": 9
+    },
+    {
+      "species": "Phaedyma shepherdi",
+      "distinct_host_species": 9
+    },
+    {
+      "species": "Phaeostrymon alcestis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Phalanta alcippe",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Phareas coeleste",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Philaethria dido",
+      "distinct_host_species": 9
+    },
+    {
+      "species": "Philotes sonorensis",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Philotiella speciosa",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Phoebis argante",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Phyciodes batesii",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Phyciodes mylitta",
+      "distinct_host_species": 9
+    },
+    {
+      "species": "Phyciodes orseis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Phyciodes phaon",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Phystis simois",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Pieris virginiensis",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Pithecops corvus",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Plebejus argus",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Plebulina emigdionis",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Poanes aaroni",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Poanes massasoit",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Poanes viator",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Poanes zabulon",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Poladryas minuta",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Polites sabuleti",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Polites sonora",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Polygonia faunus",
+      "distinct_host_species": 9
+    },
+    {
+      "species": "Polygonia interrogationis",
+      "distinct_host_species": 14
+    },
+    {
+      "species": "Polygonia oreas",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Polygonus leo",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Polythrix caunus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Polythrix octomaculata",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Polytremis lubricans",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Polyura athamas",
+      "distinct_host_species": 22
+    },
+    {
+      "species": "Polyura hebe",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Polyura sempronius",
+      "distinct_host_species": 30
+    },
+    {
+      "species": "Pompeius verna",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Pontia beckerii",
+      "distinct_host_species": 13
+    },
+    {
+      "species": "Pontia helice",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Pontia sisymbrii",
+      "distinct_host_species": 12
+    },
+    {
+      "species": "Potanthus omaha",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Praepedaliodes phanias",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Prepona laertes",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Problema bulenta",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Problema byssus",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Prosotas dubiosa",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Prosotas nora",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Protesilaus protesilaus",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Pseudocoladenia dan",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Pseudocopaeodes eunus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Pseudolycaena marsyas",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Pseudopieris nehemia",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Pteronymia vestilla",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Pyrgus albescens",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Pyrgus ruralis",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Pyrgus xanthus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Pyronia bathseba",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Pyronia cecilia",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Pyronia tithonus",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Pyrrhogyra neaerea",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Pyrrhopygopsis socrates",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Quinta cannae",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Rapala iarbus",
+      "distinct_host_species": 13
+    },
+    {
+      "species": "Saliana antoninus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Satyrium auretorum",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Satyrium behrii",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Satyrium calanus",
+      "distinct_host_species": 18
+    },
+    {
+      "species": "Satyrium edwardsii",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Satyrium liparops",
+      "distinct_host_species": 25
+    },
+    {
+      "species": "Satyrium saepium",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Satyrus actaea",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Satyrus ferula",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Siderone galanthis",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Spathilepia clonius",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Spialia spio",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Staphylus hayhurstii",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Strymon avalona",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Strymon bazochii",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Strymon mulucha",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Stygionympha robertsoni",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Suastus gremius",
+      "distinct_host_species": 13
+    },
+    {
+      "species": "Symbrenthia lilaea",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Synapte silius",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Synargis calyce",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Systasea zampa",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Tagiades japetus",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Tagiades litigiosa",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Tagiades toba",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Talides sergestus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Tanaecia pelea",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Tarucus theophrastus",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Tatochila autodice",
+      "distinct_host_species": 14
+    },
+    {
+      "species": "Taygetis ypthima",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Telemiades nicomedes",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Telicota ancilla",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Telicota augias",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Telicota bambusae",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Telicota colon",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Telicota ohara",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Temenis laothoe",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Terinos terpander",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Thargella caura",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Thauria aliris",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Theope eudocia",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Thorybes diversus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Thracides nanea",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Thracides phidon",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Thymelicus acteon",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Thyridia psidii",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Tirumala hamata",
+      "distinct_host_species": 5
+    },
+    {
+      "species": "Tirumala limniace",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Tithorea harmonia",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Tmolus echion",
+      "distinct_host_species": 13
+    },
+    {
+      "species": "Tongeia fischeri",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Tuxentius margaritaceus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Typhedanus undulatus",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Udaspes folus",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Udranomia orcinus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Urbanus albimargo",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Urbanus doryssus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Urbanus esmeraldus",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Urbanus procne",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Urbanus simplicius",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Urbanus teleus",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Vagrans egista",
+      "distinct_host_species": 7
+    },
+    {
+      "species": "Vanessa annabella",
+      "distinct_host_species": 23
+    },
+    {
+      "species": "Vanessa carye",
+      "distinct_host_species": 12
+    },
+    {
+      "species": "Vanessa indica",
+      "distinct_host_species": 10
+    },
+    {
+      "species": "Vanessa itea",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Vanessa kershawi",
+      "distinct_host_species": 6
+    },
+    {
+      "species": "Vettius fantasos",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Vindula arsinoe",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Vindula erota",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Wallengrenia premnas",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Xeniades orchamus",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Xenophanes tryxus",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Yasoda pita",
+      "distinct_host_species": 1
+    },
+    {
+      "species": "Yoma sabina",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Ypthima pandocus",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Zaretis itys",
+      "distinct_host_species": 8
+    },
+    {
+      "species": "Zemeros flegyas",
+      "distinct_host_species": 4
+    },
+    {
+      "species": "Zerene eurydice",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Zestusa dorus",
+      "distinct_host_species": 2
+    },
+    {
+      "species": "Zizeeria karsandra",
+      "distinct_host_species": 3
+    },
+    {
+      "species": "Zizeeria knysna",
+      "distinct_host_species": 6
+    }
+  ],
+  "outcome_firewall": {
+    "new_followup_sequence_identity_opened": false,
+    "new_followup_pairwise_genetic_distances_opened": false,
+    "new_followup_transfer_statistic_computed": false
+  }
+}
