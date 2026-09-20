@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse,hashlib,json
 from pathlib import Path
 import numpy as np
-from scipy.stats import rankdata
+from ttf.core import average_ranks
 from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
 from ttf.lepidoptera_trait_gradient import residualize_within_target,equal_target_gradient
 from ttf.lepidoptera_trait_gradient_simulate import prepare_trait_gradient_simulator,simulate_prepared_trait_gradient_world,frozen_seed
@@ -41,7 +41,7 @@ def prepare_pair_surface(pairs):
 def score_pair_contributions(world,pairs,target,residual,pair_target,pair_source,source_index):
     target_rank={}
     for name in set(pair_target):
-        rank=np.asarray(rankdata(np.asarray(world.edge_response[name]),method="average"),dtype=float)
+        rank=np.asarray(average_ranks(np.asarray(world.edge_response[name])),dtype=float)
         centered=rank-float(rank.mean())
         target_rank[name]=(centered,float(np.dot(centered,centered)))
     y=np.empty(len(pairs),float)
@@ -52,7 +52,7 @@ def score_pair_contributions(world,pairs,target,residual,pair_target,pair_source
         if len(aligned)<3:
             y[i]=0.0
             continue
-        rank=np.asarray(rankdata(aligned,method="average"),dtype=float)
+        rank=np.asarray(average_ranks(aligned),dtype=float)
         dy=rank-float(rank.mean())
         den=float(np.sqrt(xx*np.dot(dy,dy)))
         y[i]=0.0 if den<=np.finfo(float).eps else float(np.dot(dx,dy)/den)
