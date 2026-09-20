@@ -32,6 +32,14 @@ The predeclared within-Lepidoptera geography-conditioned baseline was recovered 
 
 This baseline is **descriptive only**. It must not be tested against, or interpreted as significantly larger than, the all-animal result because the taxonomic domain, species panel and survivor geometry differ.
 
+## Exploratory: is transferability itself a species property?
+
+After the frozen primary decision was complete, we asked a separate exploratory question: perhaps ecological similarity fails because transferability is not a property of pairwise similarity but a repeatable property of individual species. We therefore decomposed the exact primary pairwise congruence surface into a source-species **exportability** effect, a target-species **receptivity** effect, and pair-specific residual variation after the same response-blind geometry covariates were removed.
+
+This analysis used 2,428 supported target-source pairs, 106 training species that entered at least one supported pair, and the 110 supported evaluation targets. Source identity accounted for 0.48% of geometry-adjusted pairwise variation, target identity for 1.36%, and 98.16% remained pair-specific/residual. In deterministic 10-fold held-out-pair prediction, adding source and target species identity did not improve RMSE over geometry alone (RMSE 0.265592 versus 0.265568), although the prediction correlation increased only slightly (0.0669 versus 0.0582).
+
+Because this estimand was defined after the primary empirical result, it carries no confirmatory p-value and cannot alter the frozen primary conclusion. Its role is hypothesis-generating. The pattern suggests that transferability is not strongly repeatable as a coarse species-level attribute in this panel. Together with the failed ecological-similarity gradient, this points toward a more relational view: whether spatial genetic structure transfers may depend chiefly on the specific source-target pairing, shared historical exposure, barrier context, or finer interactions rather than on one species' general tendency to export or receive a spatial pattern.
+
 ## Ecological message
 
 The useful result is not merely “traits were nonsignificant.” The method was explicitly challenged on the exact deployment geometry and could recover a predeclared trait-gradient world while rejecting geometry-only pseudo-gradients. Yet the empirical Lepidoptera panel showed no positive gradient.
