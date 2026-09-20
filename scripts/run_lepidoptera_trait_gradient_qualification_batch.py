@@ -6,7 +6,7 @@ import numpy as np
 from ttf.core import spearman_rho
 from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
 from ttf.lepidoptera_trait_gradient import residualize_within_target,equal_target_gradient
-from ttf.lepidoptera_trait_gradient_simulate import make_worlds
+from ttf.lepidoptera_trait_gradient_simulate import prepare_trait_gradient_simulator,simulate_prepared_trait_gradient_world,frozen_seed
 
 def wilson(k,n,z=1.959963984540054):
     p=k/n; d=1+z*z/n; c=(p+z*z/(2*n))/d; h=z*np.sqrt(p*(1-p)/n+z*z/(4*n*n))/d
@@ -61,7 +61,7 @@ def main():
     stats=[]; pvals=[]; target_counts=[]
     for offset,w in enumerate(worlds):
         stat,slopes=score_pair_contributions(w,d["pairs"],target,residual)
-        mean,p=centered_two_sided_target_bootstrap(slopes,seed=bootstrap_seed(a.cell,a.start+offset),n_bootstrap=1999)
+        mean,p=centered_two_sided_target_bootstrap(slopes,seed=bootstrap_seed(a.cell,replicate),n_bootstrap=1999)
         if not np.isclose(stat,mean,atol=1e-12,rtol=0): raise RuntimeError("target slope mean drift")
         stats.append(stat); pvals.append(p); target_counts.append(len(slopes))
     stats=np.asarray(stats); pvals=np.asarray(pvals)
