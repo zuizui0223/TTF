@@ -48,8 +48,8 @@
   },
   "integrity_requirements": [
     "Exact source archive SHA-256 must match before any nucleotide identity is decoded.",
-    "Recompute the canonical-valid mask stage and recover the exact frozen 240-species survivor set before identity opening.",
-    "Reconstruct the exact survivor design and require its SHA-256 to equal the frozen survivor design hash.",
+    "Reconstruct all 240 frozen survivor source panels using FASTA headers and occurrence coordinates only, and require exact geometry equality with the survivor design.",
+    "Recompute canonical-valid masks for all 240 frozen survivors and require every frozen survivor edge to remain admissible before identity opening; the exact archive SHA and frozen survivor-design SHA jointly fix the excluded species.",
     "Use only the frozen v0.2 survivor nuisance-reference distributions; no new null selection after the empirical statistic is seen.",
     "Run the empirical statistic exactly once; no threshold, trait, geometry covariate, alignment, response, split or nuisance-family changes after opening."
   ],
