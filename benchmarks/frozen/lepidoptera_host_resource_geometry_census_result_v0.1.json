@@ -1,0 +1,68 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_geometry_census_result_v0.1",
+  "status": "NOT_EVALUABLE_RESPONSE_BLIND_SUPPORT_GATE",
+  "executed_on": "2026-09-20",
+  "parent_rule": "docs/supporting/lepidoptera_host_resource_geography_followup_rule_v0.1.json",
+  "parent_metadata_census": "benchmarks/frozen/lepidoptera_host_resource_metadata_census_v0.1.json",
+  "full_local_geometry_receipt_sha256": "04bf70af1c4800294f7bc4043ed745775a04c8d4749574b9a6bccff822a7368e",
+  "independence": {
+    "prior_broad_phase1_species_excluded": 250,
+    "completed_trait_gradient_pre_mask_species_excluded": 339,
+    "operator_exposure_species_excluded": ["Acrolophus arcanella"],
+    "new_empirical_identity_opened": false
+  },
+  "response_blind_funnel": {
+    "unused_lepidoptera_coi_metadata_species": 26577,
+    "unused_species_with_exact_leptraits_wing": 1846,
+    "species_with_species_level_HOSTS_match": 672,
+    "geometry_eligible_species": 147
+  },
+  "geometry_eligibility": {
+    "minimum_unique_localities": 12,
+    "minimum_endpoint_disjoint_training_edges": 5,
+    "geometry_eligible_fraction_of_HOSTS_matched": 0.21875,
+    "locality_quantiles": {
+      "min": 12.0,
+      "q25": 19.0,
+      "median": 27.0,
+      "q75": 44.0,
+      "max": 192.0
+    },
+    "distinct_host_species_quantiles": {
+      "min": 1.0,
+      "q25": 1.0,
+      "median": 3.0,
+      "q75": 6.0,
+      "max": 44.0
+    },
+    "species_with_at_least_2_host_species": 106,
+    "species_with_at_least_3_host_species": 84
+  },
+  "taxonomic_description": {
+    "Nymphalidae": 79,
+    "Hesperiidae": 41,
+    "Lycaenidae": 15,
+    "Pieridae": 8,
+    "Papilionidae": 2,
+    "Cosmopterigidae": 1,
+    "Riodinidae": 1
+  },
+  "frozen_gate": {
+    "minimum_total_species_with_host_geography_and_wing": 180,
+    "minimum_train_species": 80,
+    "minimum_eval_species": 80,
+    "minimum_geographically_supported_eval_targets": 90,
+    "total_species_gate_pass": false,
+    "overall_pass": false
+  },
+  "decision": "STOP_BEFORE_WCVP_CHARACTER_MASK_OR_NEW_IDENTITY",
+  "interpretation": "The fully species-disjoint host-resource geography follow-up v0.1 is not confirmatorily evaluable under its frozen support contract. This is a response-blind panel-size failure, not evidence against host-resource geography as a biological mechanism.",
+  "successor_boundary": "Any successor must receive a new protocol version. The v0.1 species-level HOSTS matching rule, wing requirement and frozen thresholds may not be silently relaxed or reinterpreted as having passed.",
+  "outcome_firewall": {
+    "wcvp_host_distribution_opened_for_candidate_selection": false,
+    "new_followup_character_masks_opened": false,
+    "new_followup_sequence_identity_opened": false,
+    "new_followup_pairwise_genetic_distances_opened": false,
+    "new_followup_transfer_statistic_computed": false
+  }
+}
