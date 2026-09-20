@@ -1,15 +1,14 @@
 {
   "schema": "ttf_lepidoptera_trait_gradient_qualification_rule_v0.1",
-  "status": "FROZEN_BEFORE_ANY_LEPIDOPTERA_EMPIRICAL_TRANSFER_RESPONSE",
-  "parent_census": "benchmarks/frozen/lepidoptera_trait_transfer_census_result_v0.1.json",
+  "status": "FROZEN_BEFORE_ANY_LEPIDOPTERA_SYNTHETIC_OR_EMPIRICAL_TRANSFER_OUTCOME",
+  "parent_feasibility_census": "benchmarks/frozen/lepidoptera_trait_transfer_census_result_v0.1.json",
+  "prior_identity_exclusion": "docs/supporting/lepidoptera_prior_identity_opened_species_exclusion_v0.1.json",
   "scientific_question": "Within Lepidoptera, does out-of-species spatial-genetic transfer increase continuously with ecological similarity after geographic co-support is controlled?",
   "domain": {
     "order": "Lepidoptera",
-    "trait_panel": "major_complete exact-name lower-bound panel",
-    "census_species": 345,
-    "train_species": 172,
-    "evaluation_species": 173,
-    "geographically_supported_evaluation_species": 164,
+    "trait_panel": "major-complete exact-name LepTraits species after excluding every species from the prior 250-species identity-opened route plus the operator-exposure exception",
+    "formal_species_count": "determined response-blind by the frozen design builder before synthetic outcomes; must be >=180 or stop",
+    "split": "SHA256('lepidoptera-trait-transfer-v0.1|major_complete|species'), lower half train and upper half evaluation",
     "support_radius_km": 500,
     "minimum_target_coverage": 0.5,
     "minimum_source_species": 5
@@ -22,45 +21,50 @@
       "role": "second rung between the completed all-animal unconditional baseline and the trait-gradient estimand"
     },
     "trait_gradient": {
-      "name": "trait_similarity_transfer_gradient",
+      "name": "trait_similarity_transfer_gradient_v0.1",
       "unit": "target-source species pair within the target geographic support pool",
       "trait_axes": {
-        "wing_size": "continuous log-scaled size proxy standardized within the frozen panel",
-        "voltinism": "ordered/categorical life-cycle similarity from LepTraits",
-        "host_breadth": "log1p(NumberOfHostplantFamilies), standardized",
-        "habitat": "Gower-style similarity over CanopyAffinity, EdgeAffinity, MoistureAffinity, DisturbanceAffinity"
+        "wing_size": "exp(-absolute difference in panel-standardized log1p wing-size proxy)",
+        "voltinism": "exact-category similarity",
+        "host_breadth": "exp(-absolute difference in panel-standardized log1p NumberOfHostplantFamilies)",
+        "habitat": "mean exact-category similarity across CanopyAffinity, EdgeAffinity, MoistureAffinity, DisturbanceAffinity"
       },
-      "composite_similarity": "mean of available predeclared axis similarities after each axis is scaled to [0,1]; major-complete panel implies all four axes are present",
-      "geographic_control": "Residualize pairwise trait similarity against frozen response-blind geometry covariates within each target support pool before estimating the gradient.",
+      "composite_similarity": "arithmetic mean of the four frozen axis similarities",
+      "source_specific_transfer_contribution": "Spearman correlation between target synthetic edge response and response-blind nearest-edge-aligned source synthetic edge response",
+      "geographic_control": "Within each target support pool, regress pairwise trait similarity on an intercept plus target-source coverage, centroid distance, edge-count ratio and locality-count ratio; use the residual similarity as the gradient predictor.",
       "geometry_covariates": ["target-source coverage", "centroid distance", "edge-count ratio", "locality-count ratio"],
-      "primary_statistic": "Across target-source pairs, slope linking residualized trait similarity to source-specific transfer contribution, aggregated with equal total weight per evaluation target.",
-      "inference": "two-sided target-cluster bootstrap; 1999 resamples; alpha=0.05",
+      "primary_statistic": "For each evaluation target, through-origin slope of source-specific transfer contribution on residualized trait similarity; panel statistic is the equal-target arithmetic mean of those slopes.",
+      "inference": "two-sided centered target-cluster bootstrap; 1999 resamples; alpha=0.05",
       "positive_claim": "Within Lepidoptera, ecologically more similar species share more reusable post-IBD spatial-genetic structure beyond geographic co-support."
     }
   },
   "synthetic_qualification": {
     "private_null": {
-      "shared_residual_field": "none; each species receives an independent residual field",
-      "requirement": "Wilson 95% upper rejection bound <= 0.10"
+      "construction": "species loadings on shared spatial basis fields are independent across species",
+      "requirement": "among 500 worlds, Wilson 95% upper bound of two-sided rejection rate <=0.10"
     },
     "trait_gradient_positive": {
-      "shared_residual_field": "pairwise/shared component increases monotonically with frozen trait similarity while marginal private structure is retained",
-      "requirement": "Wilson 95% lower rejection bound >= 0.80"
+      "construction": "species loadings have covariance given by the frozen composite trait-similarity kernel, blended 0.85 with 0.15 independent variance",
+      "requirement": "among 500 worlds, positive-direction two-sided rejections have Wilson 95% lower bound >=0.80"
     },
     "geometry_confounded_trap": {
-      "shared_residual_field": "shared amplitude depends only on response-blind geometry similarity; trait similarity is correlated with geometry but has no causal/shared-field role",
-      "requirement": "Wilson 95% upper rejection bound <= 0.10"
+      "construction": "species loadings have covariance given only by a response-blind geometry RBF kernel, blended 0.85 with 0.15 independent variance; trait similarity has no role in world generation",
+      "requirement": "among 500 worlds, Wilson 95% upper bound of two-sided rejection rate <=0.10"
     },
+    "latent_spatial_fields": 6,
     "worlds_per_cell": 500,
-    "master_seed": 20260920
+    "master_seed": 20260920,
+    "formal_seed_tag": "lepidoptera-trait-gradient-v01-formal"
   },
   "stopping_rules": [
     "Do not inspect or compute empirical Lepidoptera nucleotide-identity transfer outcomes before all three synthetic cells pass.",
-    "Do not alter trait axes, composite rule, geographic covariates, support radius, coverage threshold, minimum source count, alpha, bootstrap count, or panel split after synthetic outcomes are inspected.",
-    "If any cell fails, retire this estimator version. Any replacement must receive a new estimator name/version and a new disjoint synthetic seed namespace.",
+    "Do not alter trait axes, composite rule, geographic covariates, support radius, coverage threshold, minimum source count, alpha, bootstrap count, panel split, simulator kernel blend or formal seed namespace after any formal synthetic outcome is inspected.",
+    "If any cell fails, retire trait_similarity_transfer_gradient_v0.1. Any replacement must receive a new estimator version and a disjoint synthetic seed namespace.",
+    "The formal panel must exclude all 250 species from the prior identity-opened Phase-1 route, not merely its 211 survivors.",
     "Do not use the prior v0.2/v0.3 confirmatory geometry as the empirical confirmation panel for this new estimand."
   ],
   "outcome_firewall": {
+    "formal_synthetic_outcome_opened": false,
     "lepidoptera_empirical_sequence_identity_opened": false,
     "lepidoptera_empirical_pairwise_genetic_distances_opened": false,
     "lepidoptera_empirical_transfer_statistic_computed": false
