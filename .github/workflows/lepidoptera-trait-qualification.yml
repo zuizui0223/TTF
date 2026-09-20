@@ -21,6 +21,8 @@ jobs:
           test -f /tmp/phylogatr.zip || { echo "Frozen archive cache is absent. Seed it once with the response-blind archive-seed workflow."; exit 2; }
           echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5  /tmp/phylogatr.zip" | sha256sum -c -
       - run: python scripts/build_lepidoptera_trait_gradient_design.py --archive /tmp/phylogatr.zip --leptraits data/external/leptraits_consensus_v1.0.csv --output results/lepidoptera_trait_gradient_design_v0.1.json
+      - name: Verify frozen design hash
+        run: echo "6eff3a634a3d4c94ca389392055b96c8183b4a5e82b272297a132f19a3031336  results/lepidoptera_trait_gradient_design_v0.1.json" | sha256sum -c -
       - run: |
           for cell in private trait_gradient_positive geometry_confounded_trap; do
             python scripts/run_lepidoptera_trait_gradient_qualification_batch.py --design-json results/lepidoptera_trait_gradient_design_v0.1.json --cell "$cell" --count 500 --output "results/${cell}.json"
