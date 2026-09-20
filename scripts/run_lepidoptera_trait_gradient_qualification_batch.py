@@ -33,12 +33,18 @@ def prepare_pair_surface(pairs):
     geometry=np.asarray([[float(p[k]) for k in ("coverage","centroid_distance","edge_count_ratio","locality_count_ratio")] for p in pairs])
     target=np.asarray([str(p["target"]) for p in pairs])
     residual=residualize_within_target(similarity,geometry,target)
+    return target,residual
+
+def prepare_pair_execution(pairs):
     pair_target=tuple(str(p["target"]) for p in pairs)
     pair_source=tuple(str(p["source"]) for p in pairs)
     source_index=tuple(np.asarray(p["source_edge_index"],dtype=np.int64) for p in pairs)
-    return target,residual,pair_target,pair_source,source_index
+    return pair_target,pair_source,source_index
 
-def score_pair_contributions(world,pairs,target,residual,pair_target,pair_source,source_index):
+def score_pair_contributions(world,pairs,target,residual,execution=None):
+    if execution is None:
+        execution=prepare_pair_execution(pairs)
+    pair_target,pair_source,source_index=execution
     target_rank={}
     for name in set(pair_target):
         rank=np.asarray(average_ranks(np.asarray(world.edge_response[name])),dtype=float)
@@ -70,7 +76,7 @@ def main():
     if any(d["outcome_firewall"].values()): raise RuntimeError("design firewall open")
     geos={n:prepare_density_scaled_genetic_geometry(np.asarray(x,float),neighbor_fraction=.15) for n,x in d["coordinates"].items()}
     species_order=tuple(map(str,d["species_order"])); tk=np.asarray(d["trait_kernel"],float); gk=np.asarray(d["geometry_kernel"],float)
-    target,residual,pair_target,pair_source,source_index=prepare_pair_surface(d["pairs"])
+    target,residual=prepare_pair_surface(d["pairs"])\n    pair_execution=prepare_pair_execution(d["pairs"])
     simulator=prepare_trait_gradient_simulator(geos,species_order,tk,gk,shared_fraction=0.85)
     stats=[]; pvals=[]; target_counts=[]
     for offset in range(a.count):
@@ -80,7 +86,7 @@ def main():
             private_amplitude=0.35,noise_sd=0.10,transition_width=0.20,latent_fields=6,
         )
         stat,slopes=score_pair_contributions(
-            w,d["pairs"],target,residual,pair_target,pair_source,source_index
+            w,d["pairs"],target,residual,execution=pair_execution
         )
         mean,p=centered_two_sided_target_bootstrap(
             slopes,seed=bootstrap_seed(a.cell,replicate),n_bootstrap=1999
