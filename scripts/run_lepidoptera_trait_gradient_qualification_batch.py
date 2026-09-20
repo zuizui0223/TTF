@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse,json
+import argparse,hashlib,json
 from pathlib import Path
 import numpy as np
+from ttf.core import spearman_rho
+from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
 from ttf.lepidoptera_trait_gradient import residualize_within_target,equal_target_gradient
 from ttf.lepidoptera_trait_gradient_simulate import make_worlds
 
@@ -10,26 +12,68 @@ def wilson(k,n,z=1.959963984540054):
     p=k/n; d=1+z*z/n; c=(p+z*z/(2*n))/d; h=z*np.sqrt(p*(1-p)/n+z*z/(4*n*n))/d
     return float(c-h),float(c+h)
 
-def score_pair_contributions(world, pairs):
-    # Frozen qualification surface: each row supplies target/source, four geometry
-    # covariates, trait similarity, and an edge-alignment operator precomputed
-    # without empirical response. The operator maps source and target synthetic
-    # edge responses to one source-specific transfer contribution.
-    y=[]; s=[]; g=[]; t=[]
-    for p in pairs:
+def bootstrap_seed(cell,replicate):
+    x=f"20260920|lepidoptera-trait-gradient-v01-bootstrap|{cell}|{replicate}".encode()
+    return int.from_bytes(hashlib.sha256(x).digest()[:8],"big")
+
+def centered_two_sided_target_bootstrap(slopes,*,seed,n_bootstrap=1999):
+    x=np.asarray(slopes,float); x=x[np.isfinite(x)]
+    if len(x)<6: raise ValueError("at least six target slopes required")
+    mean=float(np.mean(x)); sd=float(np.std(x,ddof=1)); se=sd/np.sqrt(len(x))
+    obs=0.0 if se<=np.finfo(float).tiny and mean==0 else (np.inf*np.sign(mean) if se<=np.finfo(float).tiny else mean/se)
+    centered=x-mean; rng=np.random.default_rng(int(seed)); ind=rng.integers(0,len(x),size=(int(n_bootstrap),len(x)))
+    draws=centered[ind]; means=np.mean(draws,axis=1); sds=np.std(draws,axis=1,ddof=1); ses=sds/np.sqrt(len(x))
+    t=np.zeros(int(n_bootstrap)); ok=ses>np.finfo(float).tiny; t[ok]=means[ok]/ses[ok]
+    t[~ok & (means>0)]=np.inf; t[~ok & (means<0)]=-np.inf
+    p=float((1+np.count_nonzero(np.abs(t)>=abs(obs)))/(int(n_bootstrap)+1))
+    return mean,p
+
+def prepare_pair_surface(pairs):
+    similarity=np.asarray([float(p["trait_similarity"]) for p in pairs])
+    geometry=np.asarray([[float(p[k]) for k in ("coverage","centroid_distance","edge_count_ratio","locality_count_ratio")] for p in pairs])
+    target=np.asarray([str(p["target"]) for p in pairs])
+    residual=residualize_within_target(similarity,geometry,target)
+    return target,residual
+
+def score_pair_contributions(world,pairs,target,residual):
+    y=np.empty(len(pairs),float)
+    for i,p in enumerate(pairs):
         a=np.asarray(world.edge_response[p["target"]]); b=np.asarray(world.edge_response[p["source"]])
         ia=np.asarray(p["target_edge_index"],int); ib=np.asarray(p["source_edge_index"],int)
-        y.append(float(np.corrcoef(a[ia],b[ib])[0,1]) if len(ia)>=3 else 0.)
-        s.append(float(p["trait_similarity"])); g.append([float(p[k]) for k in ("coverage","centroid_distance","edge_count_ratio","locality_count_ratio")]); t.append(p["target"])
-    r=residualize_within_target(np.asarray(s),np.asarray(g),np.asarray(t))
-    return equal_target_gradient(np.asarray(y),r,np.asarray(t))[0]
+        value=spearman_rho(a[ia],b[ib]) if len(ia)>=3 else np.nan
+        y[i]=0.0 if not np.isfinite(value) else float(value)
+    stat,slopes=equal_target_gradient(y,residual,target)
+    return float(stat),np.asarray(list(slopes.values()),float)
 
 def main():
-    ap=argparse.ArgumentParser(); ap.add_argument("--design-json",type=Path,required=True); ap.add_argument("--cell",choices=["private","trait_gradient_positive","geometry_confounded_trap"],required=True); ap.add_argument("--start",type=int,default=0); ap.add_argument("--count",type=int,required=True); ap.add_argument("--output",type=Path,required=True); a=ap.parse_args()
-    d=json.loads(a.design_json.read_text()); from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
+    ap=argparse.ArgumentParser()
+    ap.add_argument("--design-json",type=Path,required=True)
+    ap.add_argument("--cell",choices=["private","trait_gradient_positive","geometry_confounded_trap"],required=True)
+    ap.add_argument("--start",type=int,default=0); ap.add_argument("--count",type=int,required=True)
+    ap.add_argument("--output",type=Path,required=True); a=ap.parse_args()
+    d=json.loads(a.design_json.read_text())
+    if d.get("schema")!="ttf_lepidoptera_trait_gradient_design_v0.1": raise RuntimeError("design schema drift")
+    if any(d["outcome_firewall"].values()): raise RuntimeError("design firewall open")
     geos={n:prepare_density_scaled_genetic_geometry(np.asarray(x,float),neighbor_fraction=.15) for n,x in d["coordinates"].items()}
-    worlds=make_worlds(geos,d["trait_score"],d["geometry_score"],cell=a.cell,start=a.start,count=a.count)
-    stats=np.asarray([score_pair_contributions(w,d["pairs"]) for w in worlds])
-    out={"schema":"ttf_lepidoptera_trait_gradient_qualification_shard_v0.1","cell":a.cell,"start":a.start,"count":a.count,"statistics":stats.tolist(),"outcome_firewall":{"empirical_sequence_identity_opened":False,"empirical_transfer_statistic_computed":False}}
+    species_order=tuple(map(str,d["species_order"])); tk=np.asarray(d["trait_kernel"],float); gk=np.asarray(d["geometry_kernel"],float)
+    target,residual=prepare_pair_surface(d["pairs"])
+    worlds=make_worlds(geos,species_order,tk,gk,cell=a.cell,start=a.start,count=a.count)
+    stats=[]; pvals=[]; target_counts=[]
+    for offset,w in enumerate(worlds):
+        stat,slopes=score_pair_contributions(w,d["pairs"],target,residual)
+        mean,p=centered_two_sided_target_bootstrap(slopes,seed=bootstrap_seed(a.cell,a.start+offset),n_bootstrap=1999)
+        if not np.isclose(stat,mean,atol=1e-12,rtol=0): raise RuntimeError("target slope mean drift")
+        stats.append(stat); pvals.append(p); target_counts.append(len(slopes))
+    stats=np.asarray(stats); pvals=np.asarray(pvals)
+    if a.cell=="trait_gradient_positive":
+        rejected=(pvals<=0.05)&(stats>0)
+    else:
+        rejected=pvals<=0.05
+    k=int(np.count_nonzero(rejected)); lo,hi=wilson(k,len(rejected))
+    gate=None
+    if a.start==0 and a.count==500:
+        gate=(lo>=0.80) if a.cell=="trait_gradient_positive" else (hi<=0.10)
+    out={"schema":"ttf_lepidoptera_trait_gradient_qualification_shard_v0.1","cell":a.cell,"start":a.start,"count":a.count,"statistics":stats.tolist(),"p_values":pvals.tolist(),"target_count_min":int(min(target_counts)),"target_count_max":int(max(target_counts)),"rejections":k,"rejection_rate":float(k/len(rejected)),"wilson95_lower":lo,"wilson95_upper":hi,"gate_pass":gate,"bootstrap":{"resamples":1999,"two_sided":True,"sampling_unit":"evaluation target"},"outcome_firewall":{"empirical_sequence_identity_opened":False,"empirical_transfer_statistic_computed":False}}
     a.output.parent.mkdir(parents=True,exist_ok=True); a.output.write_text(json.dumps(out,indent=2)+"\n")
+    print(json.dumps({k:out[k] for k in ("cell","rejections","rejection_rate","wilson95_lower","wilson95_upper","gate_pass")},indent=2))
 if __name__=="__main__":main()
