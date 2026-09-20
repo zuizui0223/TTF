@@ -103,17 +103,20 @@ def main() -> int:
     z,names,geos,pairs,target,residual,pair_id,global_target,global_source=load_design(args.design_npz)
     tag=REFERENCE_TAG if args.namespace=="reference" else EVALUATION_TAG
     fraction={"private":0.0,"geometry_confounded_trap":0.85,"trait_gradient_positive":0.90}[args.cell]
+    prepared_simulator=prepare_trait_gradient_simulator(
+        geos,
+        names,
+        np.asarray(z["trait_kernel"],float),
+        np.asarray(z["geometry_kernel"],float),
+        shared_fraction=fraction,
+    )
     statistics=[]
     target_counts=[]
     for replicate in range(args.start,args.start+args.count):
-        world=simulate_trait_gradient_world(
-            geos,
-            names,
-            np.asarray(z["trait_kernel"],float),
-            np.asarray(z["geometry_kernel"],float),
+        world=simulate_prepared_trait_gradient_world(
+            prepared_simulator,
             cell=args.cell,
             seed=frozen_v02_seed(20260920,tag,args.cell,replicate),
-            shared_fraction=fraction,
             private_amplitude=0.35,
             noise_sd=0.10,
             transition_width=0.20,
