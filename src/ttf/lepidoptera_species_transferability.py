@@ -99,6 +99,8 @@ def _blup(
     source_variance: float,
     target_variance: float,
     residual_variance: float,
+    *,
+    compute_se: bool = True,
 ) -> tuple[np.ndarray,np.ndarray,np.ndarray,np.ndarray]:
     n=len(residual)
     q=n_source+n_target
@@ -114,8 +116,11 @@ def _blup(
     precision[j,j] += 1.0/tv
     rhs=(Z.T@residual)/residual_variance
     effects=np.linalg.solve(precision,rhs)
-    covariance=np.linalg.inv(precision)
-    se=np.sqrt(np.maximum(np.diag(covariance),0.0))
+    if compute_se:
+        covariance=np.linalg.inv(precision)
+        se=np.sqrt(np.maximum(np.diag(covariance),0.0))
+    else:
+        se=np.full(q,np.nan,dtype=float)
     return effects[:n_source],effects[n_source:],se[:n_source],se[n_source:]
 
 
@@ -206,7 +211,10 @@ def crossvalidated_species_property_gain(
         si=np.asarray([smap[x] for x in source[train]],np.int64)
         ti=np.asarray([tmap[x] for x in target[train]],np.int64)
         sv,tv,ev=moment_variance_components(residual_train,si,ti)
-        us,vt,_,_=_blup(residual_train,si,ti,len(source_names),len(target_names),sv,tv,ev)
+        us,vt,_,_=_blup(
+            residual_train,si,ti,len(source_names),len(target_names),sv,tv,ev,
+            compute_se=False,
+        )
         extra=np.zeros(np.count_nonzero(test),float)
         test_sources=source[test]; test_targets=target[test]
         for i,(sname,tname) in enumerate(zip(test_sources,test_targets)):
