@@ -143,48 +143,50 @@ def main():
     if len(names)<180:
         raise RuntimeError("species-disjoint major-complete panel fell below predeclared feasibility floor")
     cut=len(names)//2; train=names[:cut]; evaluation=names[cut:]
-    comp=prepare_phylogatr_compact_ttf_design(
-        geos,train_species=train,eval_species=evaluation,bandwidth=500.,
-        prior_strength=.25,segment_points=5,min_training_edges=5
-    )
-    tm={n:comp.template_edges[n].midpoint for n in train}
-    em={n:comp.template_edges[n].midpoint for n in evaluation}
-    pools=prepare_target_source_pools(
-        comp.prepared,tm,em,support_radius=500.,minimum_target_coverage=.5,minimum_source_species=5
-    )
+    def midpoint(g):
+        nodes=np.asarray(g.edge_nodes,dtype=int)
+        xyz=np.asarray(g.coordinates,float)
+        return 0.5*(xyz[nodes[:,0]]+xyz[nodes[:,1]])
+    tm={n:midpoint(geos[n]) for n in train}
+    em={n:midpoint(geos[n]) for n in evaluation}
+    trees={n:cKDTree(tm[n]) for n in train}
+    centroids={n:np.mean(geos[n].coordinates,axis=0) for n in names}
     kt,axes=trait_kernel(names,tr); kg,gfeat=geometry_kernel(names,geos); idx={n:i for i,n in enumerate(names)}
     pairs=[]
     source_counts=[]
-    for target in pools.eligible_eval_species:
-        tc=np.mean(geos[target].coordinates,axis=0)
-        source_counts.append(len(pools.source_pool[target]))
-        for source in pools.source_pool[target]:
-            sc=np.mean(geos[source].coordinates,axis=0)
-            A=em[target]; B=tm[source]
-            dist2=np.sum((A[:,None,:]-B[None,:,:])**2,axis=2)
-            ib=np.argmin(dist2,axis=1); ia=np.arange(len(A))
-            coverage=float(np.mean(np.sqrt(np.min(dist2,axis=1))<=500.))
-            pairs.append({
+    eligible=[]
+    for target in evaluation:
+        tc=centroids[target]; A=em[target]; rows=[]
+        for source in train:
+            nearest,ib=trees[source].query(A,k=1)
+            coverage=float(np.mean(nearest<=500.0))
+            if coverage<0.5: continue
+            rows.append({
                 "target":target,"source":source,
                 "trait_similarity":float(kt[idx[target],idx[source]]),
                 "coverage":coverage,
-                "centroid_distance":float(np.linalg.norm(tc-sc)),
+                "centroid_distance":float(np.linalg.norm(tc-centroids[source])),
                 "edge_count_ratio":float(geos[source].n_edges/geos[target].n_edges),
                 "locality_count_ratio":float(geos[source].n_localities/geos[target].n_localities),
-                "target_edge_index":ia.tolist(),"source_edge_index":ib.tolist(),
+                "target_edge_index":np.arange(len(A),dtype=int).tolist(),
+                "source_edge_index":np.asarray(ib,dtype=int).tolist(),
             })
+        if len(rows)>=5:
+            eligible.append(target)
+            source_counts.append(len(rows))
+            pairs.extend(rows)
     source_counts=np.asarray(source_counts,float)
     out={
         "schema":"ttf_lepidoptera_trait_gradient_design_v0.1",
         "species_order":list(names),
         "coordinates":{n:geos[n].coordinates.tolist() for n in names},
         "train_species":list(train),"eval_species":list(evaluation),
-        "eligible_eval_species":list(pools.eligible_eval_species),
+        "eligible_eval_species":list(eligible),
         "trait_kernel":kt.tolist(),"geometry_kernel":kg.tolist(),
         "trait_axes":axes,"geometry_features":gfeat.tolist(),"pairs":pairs,
         "support_summary":{
             "species":len(names),"train_species":len(train),"eval_species":len(evaluation),
-            "supported_eval_species":len(pools.eligible_eval_species),"pair_count":len(pairs),
+            "supported_eval_species":len(eligible),"pair_count":len(pairs),
             "source_count_quantiles":dict(zip(
                 ("min","q25","median","q75","max"),
                 map(float,np.quantile(source_counts,[0,.25,.5,.75,1]))
