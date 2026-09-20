@@ -4,7 +4,11 @@ import argparse,hashlib,json
 from pathlib import Path
 import numpy as np
 from ttf.core import average_ranks
-try:\n    from scipy.stats import rankdata as _scipy_rankdata\nexcept ImportError:\n    _scipy_rankdata=None\nfrom ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
+try:
+    from scipy.stats import rankdata as _scipy_rankdata
+except ImportError:
+    _scipy_rankdata=None
+from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
 from ttf.lepidoptera_trait_gradient import residualize_within_target,equal_target_gradient
 from ttf.lepidoptera_trait_gradient_simulate import prepare_trait_gradient_simulator,simulate_prepared_trait_gradient_world,frozen_seed
 
