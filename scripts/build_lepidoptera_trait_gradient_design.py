@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse,csv,hashlib,json,zipfile,tempfile
 from pathlib import Path
 import numpy as np
-from ttf.phylogatr_confirmatory import scan_phylogatr_phase1,choose_one_panel_per_species
+from ttf.phylogatr_confirmatory import _candidate_from_row,read_genes_rows,choose_one_panel_per_species,collapse_whitespace
 from ttf.conditional_transfer import prepare_target_source_pools
 from ttf.phylogatr_compact_execution import prepare_phylogatr_compact_ttf_design
 
@@ -60,13 +60,21 @@ def main():
     exclusion=json.loads(a.exclusion_json.read_text())
     if exclusion.get("schema")!="ttf_lepidoptera_prior_identity_opened_species_exclusion_v0.1": raise RuntimeError("exclusion schema drift")
     excluded=set(map(str,exclusion["species"]))|set(map(str,exclusion.get("additional_operator_exposure_exclusion",[])))
+    tr=traits(a.leptraits)
+    complete_names={n for n,row in tr.items() if complete(row)}
     with tempfile.TemporaryDirectory() as td:
         with zipfile.ZipFile(a.archive) as z:z.extractall(td)
         roots=[p.parent for p in Path(td).rglob("genes.txt") if (p.parent/"cite.txt").is_file()]
         if len(roots)!=1: raise RuntimeError("archive root drift")
-        scan=scan_phylogatr_phase1(roots[0],aliases=ALIASES,excluded_species=excluded,min_localities=12,min_endpoint_training_edges=5,neighbor_fraction=.15)
-        panels=choose_one_panel_per_species(scan.candidates)
-    tr=traits(a.leptraits); chosen={p.species:p for p in panels if p.order=="Lepidoptera" and p.species in tr and complete(tr[p.species])}
+        root=roots[0]; candidates=[]
+        for row in read_genes_rows(root/"genes.txt"):
+            species=collapse_whitespace(row.get("species",""))
+            if species not in complete_names or species in excluded: continue
+            if str(row.get("kingdom",""))!="Animalia" or str(row.get("order",""))!="Lepidoptera": continue
+            candidate,status=_candidate_from_row(root,row,aliases=ALIASES,excluded_species=excluded,min_localities=12,min_endpoint_training_edges=5,neighbor_fraction=.15)
+            if candidate is not None: candidates.append(candidate)
+        panels=choose_one_panel_per_species(candidates)
+    chosen={p.species:p for p in panels}
     names=tuple(sorted(chosen,key=lambda n:(hashlib.sha256(f"lepidoptera-trait-transfer-v0.1|major_complete|{n}".encode()).hexdigest(),n)))
     if len(names)<180: raise RuntimeError("species-disjoint major-complete panel fell below predeclared feasibility floor")
     cut=len(names)//2; train=names[:cut]; evaluation=names[cut:]; geos={n:chosen[n].geometry for n in names}
