@@ -12,6 +12,7 @@ from ttf.conditional_transfer import (
     score_fully_cached_target_conditioned_batch,
 )
 from ttf.geometry_control import length_orthogonalized_turnover
+import ttf.lepidoptera_trait_gradient_empirical as empirical_module
 from ttf.lepidoptera_trait_gradient_empirical import (
     post_ibd_edge_response,
     score_empirical_trait_gradient,
@@ -103,13 +104,31 @@ def main()->int:
     ap.add_argument("--geometry-reference-npy",type=Path,required=True)
     ap.add_argument("--rule",type=Path,required=True)
     ap.add_argument("--survivor-requalification",type=Path,required=True)
+    ap.add_argument("--authorization",type=Path,required=True)
     ap.add_argument("--output",type=Path,required=True)
     args=ap.parse_args()
 
+    authorization=json.loads(args.authorization.read_text())
+    if authorization.get("schema")!="ttf_lepidoptera_trait_gradient_empirical_authorization_v0.1" or authorization.get("status")!="AUTHORIZE_ONE_SHOT_LEPIDOPTERA_IDENTITY_OPENING":
+        raise RuntimeError("empirical opening authorization missing")
     rule=json.loads(args.rule.read_text())
     if rule.get("schema")!=RULE_SCHEMA or rule.get("status")!="FROZEN_BEFORE_NEW_LEPIDOPTERA_NUCLEOTIDE_IDENTITY_OPENING":
         raise RuntimeError("empirical rule is not frozen")
     if any(rule["outcome_firewall"].values()): raise RuntimeError("empirical rule firewall open")
+    frozen=authorization["frozen_sha256"]
+    checks={
+        "empirical_rule":sha256_path(args.rule),
+        "empirical_scorer":sha256_path(Path(empirical_module.__file__)),
+        "empirical_runner":sha256_path(Path(__file__)),
+        "survivor_requalification":sha256_path(args.survivor_requalification),
+        "source_archive":sha256_path(args.archive),
+        "survivor_design_npz":sha256_path(args.survivor_design_npz),
+        "private_reference_npy":sha256_path(args.private_reference_npy),
+        "geometry_reference_npy":sha256_path(args.geometry_reference_npy),
+    }
+    if checks!=frozen:
+        drift={key:(frozen.get(key),value) for key,value in checks.items() if frozen.get(key)!=value}
+        raise RuntimeError(f"empirical authorization hash drift: {drift}")
     rq=json.loads(args.survivor_requalification.read_text())
     if rq.get("status")!="PASS" or rq.get("empirical_identity_opening_authorized") is not True:
         raise RuntimeError("survivor requalification has not authorized opening")
