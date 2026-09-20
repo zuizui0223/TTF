@@ -1,0 +1,22 @@
+{
+  "schema": "ttf_lepidoptera_trait_gradient_v01_development_diagnostic",
+  "status": "RETIRED_AFTER_EARLY_GEOMETRY_CONFOUNDING_DIAGNOSTIC",
+  "executed_on": "2026-09-20",
+  "scope": "Development-only synthetic diagnostic before any new Lepidoptera empirical genetic response was computed.",
+  "estimator": "target-equal mean of within-target slope of pairwise transfer congruence on geometry-residualized trait similarity",
+  "diagnostic_worlds_per_cell": 30,
+  "cells": {
+    "private": {"rejections": 3, "trials": 30, "mean_statistic": -0.02195971871487173},
+    "trait_gradient_positive": {"rejections": 25, "trials": 30, "mean_statistic": 0.18280415126426464},
+    "geometry_confounded_trap": {"rejections": 6, "trials": 30, "mean_statistic": 0.04570127895642693}
+  },
+  "decision": "RETIRE_V0_1_WITHOUT_FORMAL_500_WORLD_GATE",
+  "reason": "The geometry-confounded trap showed an unacceptably large early rejection fraction. The frozen v0.1 stopping rule therefore forbids tuning this estimator on the same seed namespace.",
+  "successor_rule": "Any successor must use a new estimator name/version and disjoint reference/evaluation seed namespaces.",
+  "biological_interpretation": "None. This is method development only.",
+  "outcome_firewall": {
+    "lepidoptera_empirical_sequence_identity_opened": false,
+    "lepidoptera_empirical_pairwise_genetic_distances_opened": false,
+    "lepidoptera_empirical_transfer_statistic_computed": false
+  }
+}
