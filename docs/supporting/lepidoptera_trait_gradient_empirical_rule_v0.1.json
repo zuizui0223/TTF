@@ -57,5 +57,11 @@
     "new_lepidoptera_empirical_sequence_identity_opened": false,
     "new_lepidoptera_empirical_pairwise_genetic_distances_opened": false,
     "new_lepidoptera_empirical_transfer_statistic_computed": false
+  },
+  "survivor_references": {
+    "private_npy_sha256": "8bbf56334d78bab5eb01723acec1265de32843f934e4089177d80cbdc3de29dc",
+    "geometry_confounded_npy_sha256": "2fcad861c7f1a7a8eed59116a22e7e6d54bdbec37b0ec5df419f6156564cc39b",
+    "worlds_each": 499,
+    "calibration": "maximum of +1 corrected one-sided upper-tail Monte Carlo p-values"
   }
 }
