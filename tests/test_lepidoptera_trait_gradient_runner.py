@@ -41,3 +41,23 @@ def test_pair_surface_residual_is_geometry_orthogonal_within_target():
 def test_wilson_bounds_contain_rate():
     lo,hi=mod.wilson(25,500)
     assert lo<0.05<hi
+
+
+def test_score_pair_contributions_uses_implicit_canonical_target_edges():
+    class World:
+        edge_response={
+            "t":np.asarray([0.,1.,3.,7.]),
+            "s1":np.asarray([7.,3.,1.,0.]),
+            "s2":np.asarray([0.,3.,1.,7.]),
+            "s3":np.asarray([0.,1.,3.,7.]),
+        }
+    pairs=[
+        {"target":"t","source":"s1","source_edge_index":[0,1,2,3]},
+        {"target":"t","source":"s2","source_edge_index":[0,1,2,3]},
+        {"target":"t","source":"s3","source_edge_index":[0,1,2,3]},
+    ]
+    target=np.asarray(["t","t","t"])
+    residual=np.asarray([-1.,0.5,1.5])
+    stat,slopes=mod.score_pair_contributions(World(),pairs,target,residual)
+    assert np.isfinite(stat)
+    assert slopes.shape==(1,)
