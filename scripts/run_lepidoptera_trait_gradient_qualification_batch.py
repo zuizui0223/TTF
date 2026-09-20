@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse,hashlib,json
 from pathlib import Path
 import numpy as np
-from ttf.core import spearman_rho
+from scipy.stats import rankdata
 from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
 from ttf.lepidoptera_trait_gradient import residualize_within_target,equal_target_gradient
 from ttf.lepidoptera_trait_gradient_simulate import prepare_trait_gradient_simulator,simulate_prepared_trait_gradient_world,frozen_seed
@@ -33,16 +33,29 @@ def prepare_pair_surface(pairs):
     geometry=np.asarray([[float(p[k]) for k in ("coverage","centroid_distance","edge_count_ratio","locality_count_ratio")] for p in pairs])
     target=np.asarray([str(p["target"]) for p in pairs])
     residual=residualize_within_target(similarity,geometry,target)
-    return target,residual
+    pair_target=tuple(str(p["target"]) for p in pairs)
+    pair_source=tuple(str(p["source"]) for p in pairs)
+    source_index=tuple(np.asarray(p["source_edge_index"],dtype=np.int64) for p in pairs)
+    return target,residual,pair_target,pair_source,source_index
 
-def score_pair_contributions(world,pairs,target,residual):
+def score_pair_contributions(world,pairs,target,residual,pair_target,pair_source,source_index):
+    target_rank={}
+    for name in set(pair_target):
+        rank=np.asarray(rankdata(np.asarray(world.edge_response[name]),method="average"),dtype=float)
+        centered=rank-float(rank.mean())
+        target_rank[name]=(centered,float(np.dot(centered,centered)))
     y=np.empty(len(pairs),float)
-    for i,p in enumerate(pairs):
-        a=np.asarray(world.edge_response[p["target"]]); b=np.asarray(world.edge_response[p["source"]])
-        ib=np.asarray(p["source_edge_index"],int)
-        if len(ib)!=len(a): raise RuntimeError("nearest-edge alignment length drift")
-        value=spearman_rho(a,b[ib]) if len(a)>=3 else np.nan
-        y[i]=0.0 if not np.isfinite(value) else float(value)
+    for i in range(len(pairs)):
+        dx,xx=target_rank[pair_target[i]]
+        aligned=np.asarray(world.edge_response[pair_source[i]])[source_index[i]]
+        if len(aligned)!=len(dx): raise RuntimeError("nearest-edge alignment length drift")
+        if len(aligned)<3:
+            y[i]=0.0
+            continue
+        rank=np.asarray(rankdata(aligned,method="average"),dtype=float)
+        dy=rank-float(rank.mean())
+        den=float(np.sqrt(xx*np.dot(dy,dy)))
+        y[i]=0.0 if den<=np.finfo(float).eps else float(np.dot(dx,dy)/den)
     stat,slopes=equal_target_gradient(y,residual,target)
     return float(stat),np.asarray(list(slopes.values()),float)
 
@@ -57,24 +70,21 @@ def main():
     if any(d["outcome_firewall"].values()): raise RuntimeError("design firewall open")
     geos={n:prepare_density_scaled_genetic_geometry(np.asarray(x,float),neighbor_fraction=.15) for n,x in d["coordinates"].items()}
     species_order=tuple(map(str,d["species_order"])); tk=np.asarray(d["trait_kernel"],float); gk=np.asarray(d["geometry_kernel"],float)
-    target,residual=prepare_pair_surface(d["pairs"])
-    simulator=prepare_trait_gradient_simulator(
-        geos,species_order,tk,gk,shared_fraction=0.85
-    )
+    target,residual,pair_target,pair_source,source_index=prepare_pair_surface(d["pairs"])
+    simulator=prepare_trait_gradient_simulator(geos,species_order,tk,gk,shared_fraction=0.85)
     stats=[]; pvals=[]; target_counts=[]
     for offset in range(a.count):
         replicate=a.start+offset
         w=simulate_prepared_trait_gradient_world(
-            simulator,
-            cell=a.cell,
-            seed=frozen_seed(20260920,a.cell,replicate),
-            private_amplitude=0.35,
-            noise_sd=0.10,
-            transition_width=0.20,
-            latent_fields=6,
+            simulator,cell=a.cell,seed=frozen_seed(20260920,a.cell,replicate),
+            private_amplitude=0.35,noise_sd=0.10,transition_width=0.20,latent_fields=6,
         )
-        stat,slopes=score_pair_contributions(w,d["pairs"],target,residual)
-        mean,p=centered_two_sided_target_bootstrap(slopes,seed=bootstrap_seed(a.cell,replicate),n_bootstrap=1999)
+        stat,slopes=score_pair_contributions(
+            w,d["pairs"],target,residual,pair_target,pair_source,source_index
+        )
+        mean,p=centered_two_sided_target_bootstrap(
+            slopes,seed=bootstrap_seed(a.cell,replicate),n_bootstrap=1999
+        )
         if not np.isclose(stat,mean,atol=1e-12,rtol=0): raise RuntimeError("target slope mean drift")
         stats.append(stat); pvals.append(p); target_counts.append(len(slopes))
     stats=np.asarray(stats); pvals=np.asarray(pvals)
@@ -86,7 +96,17 @@ def main():
     gate=None
     if a.start==0 and a.count==500:
         gate=(lo>=0.80) if a.cell=="trait_gradient_positive" else (hi<=0.10)
-    out={"schema":"ttf_lepidoptera_trait_gradient_qualification_shard_v0.1","cell":a.cell,"start":a.start,"count":a.count,"statistics":stats.tolist(),"p_values":pvals.tolist(),"target_count_min":int(min(target_counts)),"target_count_max":int(max(target_counts)),"rejections":k,"rejection_rate":float(k/len(rejected)),"wilson95_lower":lo,"wilson95_upper":hi,"gate_pass":gate,"bootstrap":{"resamples":1999,"two_sided":True,"sampling_unit":"evaluation target"},"outcome_firewall":{"empirical_sequence_identity_opened":False,"empirical_transfer_statistic_computed":False}}
-    a.output.parent.mkdir(parents=True,exist_ok=True); a.output.write_text(json.dumps(out,indent=2)+"\n")
+    out={
+        "schema":"ttf_lepidoptera_trait_gradient_qualification_shard_v0.1",
+        "cell":a.cell,"start":a.start,"count":a.count,
+        "statistics":stats.tolist(),"p_values":pvals.tolist(),
+        "target_count_min":int(min(target_counts)),"target_count_max":int(max(target_counts)),
+        "rejections":k,"rejection_rate":float(k/len(rejected)),
+        "wilson95_lower":lo,"wilson95_upper":hi,"gate_pass":gate,
+        "bootstrap":{"resamples":1999,"two_sided":True,"sampling_unit":"evaluation target"},
+        "outcome_firewall":{"empirical_sequence_identity_opened":False,"empirical_transfer_statistic_computed":False},
+    }
+    a.output.parent.mkdir(parents=True,exist_ok=True)
+    a.output.write_text(json.dumps(out,indent=2)+"\n")
     print(json.dumps({k:out[k] for k in ("cell","rejections","rejection_rate","wilson95_lower","wilson95_upper","gate_pass")},indent=2))
-if __name__=="__main__":main()
+if __name__=="__main__": main()
