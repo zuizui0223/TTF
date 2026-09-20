@@ -121,6 +121,24 @@ def _rows_from_zip(archive:Path, complete_names:set[str], excluded:set[str]):
         selected[species]=sorted(candidates,key=lambda x:(-x[0],-x[1],x[2]))[0][3]
     return selected
 
+def _midpoint(g):
+    nodes=np.asarray(g.edge_nodes,dtype=int)
+    xyz=np.asarray(g.coordinates,float)
+    return 0.5*(xyz[nodes[:,0]]+xyz[nodes[:,1]])
+
+def _passes_support(tree,target_midpoint):
+    n=len(target_midpoint); need=(n+1)//2; covered=0
+    for start in range(0,n,512):
+        stop=min(start+512,n)
+        distance,_=tree.query(
+            target_midpoint[start:stop],k=1,distance_upper_bound=500.0,workers=1
+        )
+        covered += int(np.count_nonzero(np.isfinite(distance)))
+        remaining=n-stop
+        if covered>=need: return True
+        if covered+remaining<need: return False
+    return covered>=need
+
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--archive",type=Path,required=True)
@@ -142,45 +160,48 @@ def main():
     if len(names)<180:
         raise RuntimeError("species-disjoint major-complete panel fell below predeclared feasibility floor")
     cut=len(names)//2; train=names[:cut]; evaluation=names[cut:]
-    def midpoint(g):
-        nodes=np.asarray(g.edge_nodes,dtype=int)
-        xyz=np.asarray(g.coordinates,float)
-        return 0.5*(xyz[nodes[:,0]]+xyz[nodes[:,1]])
-    tm={n:midpoint(geos[n]) for n in train}
-    em={n:midpoint(geos[n]) for n in evaluation}
+    tm={n:_midpoint(geos[n]) for n in train}; em={n:_midpoint(geos[n]) for n in evaluation}
     trees={n:cKDTree(tm[n]) for n in train}
-    centroids={n:np.mean(geos[n].coordinates,axis=0) for n in names}
+    source_bounds={}
+    for n in train:
+        center=np.mean(tm[n],axis=0)
+        source_bounds[n]=(center,float(np.max(np.linalg.norm(tm[n]-center,axis=1))))
     kt,axes=trait_kernel(names,tr); kg,gfeat=geometry_kernel(names,geos); idx={n:i for i,n in enumerate(names)}
-    pairs=[]
-    source_counts=[]
-    eligible=[]
+    pairs=[]; eligible=[]; source_counts=[]
     for target in evaluation:
-        tc=centroids[target]; A=em[target]; rows=[]
+        A=em[target]
+        midpoint_center=np.mean(A,axis=0)
+        midpoint_radius=float(np.max(np.linalg.norm(A-midpoint_center,axis=1)))
+        target_centroid=np.mean(geos[target].coordinates,axis=0)
+        rows=[]
         for source in train:
-            nearest,ib=trees[source].query(A,k=1)
-            coverage=float(np.mean(nearest<=500.0))
-            if coverage<0.5: continue
+            source_center,source_radius=source_bounds[source]
+            if np.linalg.norm(midpoint_center-source_center)>midpoint_radius+source_radius+500.0:
+                continue
+            tree=trees[source]
+            if not _passes_support(tree,A):
+                continue
+            distance,source_index=tree.query(A,k=1,workers=1)
+            coverage=float(np.mean(distance<=500.0))
+            source_centroid=np.mean(geos[source].coordinates,axis=0)
             rows.append({
                 "target":target,"source":source,
                 "trait_similarity":float(kt[idx[target],idx[source]]),
                 "coverage":coverage,
-                "centroid_distance":float(np.linalg.norm(tc-centroids[source])),
+                "centroid_distance":float(np.linalg.norm(target_centroid-source_centroid)),
                 "edge_count_ratio":float(geos[source].n_edges/geos[target].n_edges),
                 "locality_count_ratio":float(geos[source].n_localities/geos[target].n_localities),
-                "target_edge_index":np.arange(len(A),dtype=int).tolist(),
-                "source_edge_index":np.asarray(ib,dtype=int).tolist(),
+                "source_edge_index":np.asarray(source_index,dtype=int).tolist(),
             })
         if len(rows)>=5:
-            eligible.append(target)
-            source_counts.append(len(rows))
-            pairs.extend(rows)
+            eligible.append(target); source_counts.append(len(rows)); pairs.extend(rows)
     source_counts=np.asarray(source_counts,float)
     out={
         "schema":"ttf_lepidoptera_trait_gradient_design_v0.1",
         "species_order":list(names),
         "coordinates":{n:geos[n].coordinates.tolist() for n in names},
         "train_species":list(train),"eval_species":list(evaluation),
-        "eligible_eval_species":list(eligible),
+        "eligible_eval_species":eligible,
         "trait_kernel":kt.tolist(),"geometry_kernel":kg.tolist(),
         "trait_axes":axes,"geometry_features":gfeat.tolist(),"pairs":pairs,
         "support_summary":{
