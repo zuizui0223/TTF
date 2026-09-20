@@ -4,6 +4,7 @@ import argparse,csv,hashlib,io,json,zipfile
 from collections import defaultdict
 from pathlib import Path
 import numpy as np
+from scipy.spatial import cKDTree
 from ttf.phylogatr_confirmatory import (
     GENES_HEADERS,
     collapse_whitespace,
@@ -12,8 +13,6 @@ from ttf.phylogatr_confirmatory import (
     latlon_to_ecef_km,
 )
 from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
-from ttf.conditional_transfer import prepare_target_source_pools
-from ttf.phylogatr_compact_execution import prepare_phylogatr_compact_ttf_design
 
 ALIASES=("COI","CO1","COX1","COXI","CYTOCHROME C OXIDASE SUBUNIT I","CYTOCHROME C OXIDASE SUBUNIT 1")
 DEFAULT_EXCLUSION=Path("docs/supporting/lepidoptera_prior_identity_opened_species_exclusion_v0.1.json")
