@@ -1,6 +1,11 @@
 import numpy as np
 from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
-from ttf.lepidoptera_trait_gradient_simulate import (\n    frozen_seed,\n    prepare_trait_gradient_simulator,\n    simulate_prepared_trait_gradient_world,\n    simulate_trait_gradient_world,\n)
+from ttf.lepidoptera_trait_gradient_simulate import (
+    frozen_seed,
+    prepare_trait_gradient_simulator,
+    simulate_prepared_trait_gradient_world,
+    simulate_trait_gradient_world,
+)
 
 def geometries():
     out={}
