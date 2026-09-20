@@ -1,0 +1,60 @@
+{
+  "schema": "ttf_lepidoptera_trait_gradient_design_freeze_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_BEFORE_FORMAL_SYNTHETIC_OUTCOMES",
+  "frozen_on": "2026-09-20",
+  "source_archive": {
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "bytes": 274988692
+  },
+  "leptraits": {
+    "sha256": "6ec35b8a31e96c971aeaa228a48aae9f107c40c33695f0d470aa4382ca6d635b",
+    "match_mode": "exact species name; no synonym rescue in the formal v0.1 panel"
+  },
+  "prior_identity_exclusion": {
+    "file": "docs/supporting/lepidoptera_prior_identity_opened_species_exclusion_v0.1.json",
+    "sha256": "315fdd470a8d1d0bc625f9b0df83810f45fb7521e1be76575040c2b5a4d9f14e",
+    "prior_phase1_species_excluded": 250,
+    "major_complete_overlap_removed": 6,
+    "removed_major_complete_species": [
+      "Euchloe ausonia",
+      "Eurema daira",
+      "Hesperia leonardus",
+      "Mycalesis mineus",
+      "Pieris canidia",
+      "Pontia daplidice"
+    ],
+    "operator_exposure_species_excluded": "Acrolophus arcanella"
+  },
+  "formal_design": {
+    "design_json_sha256": "6eff3a634a3d4c94ca389392055b96c8183b4a5e82b272297a132f19a3031336",
+    "major_complete_species": 339,
+    "train_species": 169,
+    "evaluation_species": 170,
+    "geographically_supported_evaluation_species": 160,
+    "target_source_pairs": 4839,
+    "source_count_quantiles": {
+      "min": 5.0,
+      "q25": 17.0,
+      "median": 29.0,
+      "q75": 47.0,
+      "max": 50.0
+    },
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.5,
+    "minimum_source_species": 5
+  },
+  "qualification": {
+    "cells": ["private", "trait_gradient_positive", "geometry_confounded_trap"],
+    "worlds_per_cell": 500,
+    "bootstrap_resamples_per_world": 1999,
+    "alpha": 0.05,
+    "private_and_trap_gate": "Wilson 95% upper rejection bound <= 0.10",
+    "positive_gate": "Wilson 95% lower positive-rejection bound >= 0.80"
+  },
+  "outcome_firewall": {
+    "formal_synthetic_outcomes_opened": false,
+    "empirical_sequence_identity_opened_for_trait_study": false,
+    "empirical_pairwise_genetic_distances_opened_for_trait_study": false,
+    "empirical_trait_gradient_statistic_computed": false
+  }
+}
