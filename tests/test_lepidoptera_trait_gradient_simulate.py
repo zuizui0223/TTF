@@ -1,6 +1,6 @@
 import numpy as np
 from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
-from ttf.lepidoptera_trait_gradient_simulate import frozen_seed,simulate_trait_gradient_world
+from ttf.lepidoptera_trait_gradient_simulate import (\n    frozen_seed,\n    prepare_trait_gradient_simulator,\n    simulate_prepared_trait_gradient_world,\n    simulate_trait_gradient_world,\n)
 
 def geometries():
     out={}
@@ -38,3 +38,13 @@ def test_positive_and_trap_use_distinct_kernels():
     a=simulate_trait_gradient_world(g,names,t,q,cell="trait_gradient_positive",seed=5)
     b=simulate_trait_gradient_world(g,names,t,q,cell="geometry_confounded_trap",seed=5)
     assert any(not np.array_equal(a.edge_response[n],b.edge_response[n]) for n in names)
+
+
+def test_prepared_simulator_is_bitwise_identical_to_direct_execution():
+    g=geometries(); names=tuple(sorted(g)); t,q=kernels(names)
+    for cell,fraction in (("private",0.0),("geometry_confounded_trap",0.85),("trait_gradient_positive",0.90)):
+        prepared=prepare_trait_gradient_simulator(g,names,t,q,shared_fraction=fraction)
+        a=simulate_trait_gradient_world(g,names,t,q,cell=cell,seed=17,shared_fraction=fraction)
+        b=simulate_prepared_trait_gradient_world(prepared,cell=cell,seed=17)
+        for name in names:
+            assert np.array_equal(a.edge_response[name],b.edge_response[name])
