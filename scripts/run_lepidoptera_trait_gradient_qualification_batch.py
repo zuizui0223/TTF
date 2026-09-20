@@ -76,7 +76,8 @@ def main():
     if any(d["outcome_firewall"].values()): raise RuntimeError("design firewall open")
     geos={n:prepare_density_scaled_genetic_geometry(np.asarray(x,float),neighbor_fraction=.15) for n,x in d["coordinates"].items()}
     species_order=tuple(map(str,d["species_order"])); tk=np.asarray(d["trait_kernel"],float); gk=np.asarray(d["geometry_kernel"],float)
-    target,residual=prepare_pair_surface(d["pairs"])\n    pair_execution=prepare_pair_execution(d["pairs"])
+    target,residual=prepare_pair_surface(d["pairs"])
+    pair_execution=prepare_pair_execution(d["pairs"])
     simulator=prepare_trait_gradient_simulator(geos,species_order,tk,gk,shared_fraction=0.85)
     stats=[]; pvals=[]; target_counts=[]
     for offset in range(a.count):
