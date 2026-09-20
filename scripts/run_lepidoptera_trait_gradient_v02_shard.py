@@ -91,8 +91,8 @@ def main() -> int:
     ap.add_argument("--count",type=int,required=True)
     ap.add_argument("--output",type=Path,required=True)
     args=ap.parse_args()
-    if args.start<0 or args.count<1 or args.count>50:
-        raise RuntimeError("v0.2 shards require start>=0 and 1<=count<=50")
+    if args.start<0 or args.count<1 or args.count>500:
+        raise RuntimeError("v0.2 shards require start>=0 and 1<=count<=500")
     if args.namespace=="reference" and args.cell=="trait_gradient_positive":
         raise RuntimeError("positive cell has no reference distribution")
     if args.namespace=="reference" and args.start+args.count>499:
