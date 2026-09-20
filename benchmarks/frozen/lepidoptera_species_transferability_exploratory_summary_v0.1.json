@@ -1,0 +1,58 @@
+{
+  "schema": "ttf_lepidoptera_species_transferability_exploratory_summary_v0.1",
+  "status": "EXPLORATORY_SPECIES_PROPERTY_WEAK",
+  "executed_on": "2026-09-20",
+  "parent_primary_result": "benchmarks/frozen/lepidoptera_trait_gradient_empirical_primary_result_v0.1.json",
+  "parent_primary_decision": "NO_DETECTED_POSITIVE_TRAIT_SIMILARITY_GRADIENT",
+  "full_local_receipt_sha256": "5b5671fbd42326c21d5af4397b57e37af9b1affd21441964951bbd2a475a56c1",
+  "survivor_design_npz_sha256": "15de10eb15d54cf929287e2a27762a1882b7d46ca6251481616639ca7805bc1c",
+  "analysis": {
+    "pairwise_response": "Pearson congruence between the exact frozen aligned post-IBD edge responses used by the primary study",
+    "pairs": 2428,
+    "source_species_with_supported_pairs": 106,
+    "target_species": 110,
+    "geometry_control": [
+      "target_to_source_coverage",
+      "log1p_centroid_distance_over_500km",
+      "log_edge_count_ratio",
+      "log_locality_count_ratio",
+      "pairwise_geometry_kernel_similarity"
+    ],
+    "decomposition": "geometry-adjusted crossed source/target species effects; source effect is exportability and target effect is receptivity",
+    "validation": "deterministic 10-fold held-out target-source pair prediction"
+  },
+  "variance_decomposition": {
+    "source_exportability_variance": 0.00033495030944065613,
+    "target_receptivity_variance": 0.0009563159130025018,
+    "pair_residual_variance": 0.06881114991246502,
+    "source_fraction": 0.004778013767686167,
+    "target_fraction": 0.013641696901888878,
+    "residual_fraction": 0.981580289330425
+  },
+  "pair_cross_validation": {
+    "folds": 10,
+    "geometry_only_rmse": 0.26556831610282944,
+    "species_property_rmse": 0.26559232754287915,
+    "rmse_improvement": -0.000024011440049709343,
+    "geometry_only_correlation": 0.05820423070297798,
+    "species_property_correlation": 0.06691291397101051,
+    "correlation_gain": 0.008708683268032535
+  },
+  "effect_ranges": {
+    "source_exportability_min": -0.02074534117598604,
+    "source_exportability_max": 0.011808835691485834,
+    "target_receptivity_min": -0.03841157058172189,
+    "target_receptivity_max": 0.03967854710504753
+  },
+  "interpretation": "After frozen geometry control, source-species identity explains about 0.5% and target-species identity about 1.4% of residual pairwise transfer variation, while about 98.2% remains pair-specific/residual. Adding source and target species identity does not improve held-out-pair RMSE. In this panel, transferability is therefore not strongly repeatable as a coarse species-level property; the remaining heterogeneity is predominantly relational or context-specific.",
+  "claim_boundary": {
+    "confirmatory": false,
+    "p_value": null,
+    "trait_predictors_tested": false,
+    "primary_decision_rewritten": false,
+    "reason": "The species-property estimand was defined after the frozen empirical trait-gradient result and is exploratory only."
+  },
+  "serialized_sequence_identity": false,
+  "serialized_edge_genetic_distance_vectors": false,
+  "post_result_retuning_allowed": false
+}
