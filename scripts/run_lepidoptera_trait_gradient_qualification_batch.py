@@ -39,8 +39,9 @@ def score_pair_contributions(world,pairs,target,residual):
     y=np.empty(len(pairs),float)
     for i,p in enumerate(pairs):
         a=np.asarray(world.edge_response[p["target"]]); b=np.asarray(world.edge_response[p["source"]])
-        ia=np.asarray(p["target_edge_index"],int); ib=np.asarray(p["source_edge_index"],int)
-        value=spearman_rho(a[ia],b[ib]) if len(ia)>=3 else np.nan
+        ib=np.asarray(p["source_edge_index"],int)
+        if len(ib)!=len(a): raise RuntimeError("nearest-edge alignment length drift")
+        value=spearman_rho(a,b[ib]) if len(a)>=3 else np.nan
         y[i]=0.0 if not np.isfinite(value) else float(value)
     stat,slopes=equal_target_gradient(y,residual,target)
     return float(stat),np.asarray(list(slopes.values()),float)
