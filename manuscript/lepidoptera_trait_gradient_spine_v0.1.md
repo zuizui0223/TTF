@@ -40,6 +40,14 @@ This analysis used 2,428 supported target-source pairs, 106 training species tha
 
 Because this estimand was defined after the primary empirical result, it carries no confirmatory p-value and cannot alter the frozen primary conclusion. Its role is hypothesis-generating. The pattern suggests that transferability is not strongly repeatable as a coarse species-level attribute in this panel. Together with the failed ecological-similarity gradient, this points toward a more relational view: whether spatial genetic structure transfers may depend chiefly on the specific source-target pairing, shared historical exposure, barrier context, or finer interactions rather than on one species' general tendency to export or receive a spatial pattern.
 
+## Exploratory: which pairwise ecological axis carries the remaining relational signal?
+
+Because the primary composite similarity score was null, we next asked whether that result could reflect cancellation among individual ecological axes. This was defined only after the frozen primary decision and is therefore exploratory. Using the same 2,428 supported target-source pairs, we compared deterministic 10-fold held-out-pair prediction from the frozen geometry covariates alone against geometry augmented by wing-size similarity, host-breadth similarity, voltinism similarity, habitat similarity, the four axes entered separately, and a wing-by-host joint-match term.
+
+None improved held-out-pair RMSE. The geometry-only RMSE was 0.265522. Augmented RMSEs were 0.265603 for wing-size similarity, 0.265701 for host-breadth similarity, 0.265566 for voltinism similarity, 0.265706 for habitat similarity, 0.265782 for wing plus host breadth, 0.265629 for their joint-match product, and 0.266007 when all four axes were entered separately. Prediction correlations likewise did not improve.
+
+This rules out a simple masking explanation within the measured LepTraits variables: the composite null was not produced by one positive trait axis being cancelled by another negative axis. Importantly, host breadth is not the same quantity as the geography of larval host resources. A future independent test can therefore target host-resource geography directly without reinterpreting the present result.
+
 ## Ecological message
 
 The useful result is not merely “traits were nonsignificant.” The method was explicitly challenged on the exact deployment geometry and could recover a predeclared trait-gradient world while rejecting geometry-only pseudo-gradients. Yet the empirical Lepidoptera panel showed no positive gradient.
