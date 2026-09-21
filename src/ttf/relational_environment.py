@@ -61,6 +61,35 @@ def haversine_km(a: tuple[float, float], b: tuple[float, float]) -> float:
     return 2.0 * radius * math.asin(min(1.0, math.sqrt(h)))
 
 
+def nearest_coverage(
+    target: np.ndarray,
+    source: np.ndarray,
+    *,
+    radius: float = 500.0,
+    chunk: int = 256,
+) -> float:
+    """Directed fraction of target edge midpoints within radius of any source midpoint."""
+    t = np.asarray(target, dtype=float)
+    s = np.asarray(source, dtype=float)
+    if (
+        t.ndim != 2
+        or s.ndim != 2
+        or t.shape[1] != 3
+        or s.shape[1] != 3
+        or not len(t)
+        or not len(s)
+    ):
+        raise ValueError("edge midpoints must be non-empty n x 3")
+    hit = 0
+    radius2 = float(radius) ** 2
+    for start in range(0, len(t), int(chunk)):
+        block = t[start : start + int(chunk)]
+        delta = block[:, None, :] - s[None, :, :]
+        nearest = np.min(np.sum(delta * delta, axis=2), axis=1)
+        hit += int(np.count_nonzero(nearest <= radius2))
+    return hit / len(t)
+
+
 def filter_and_thin_occurrences(
     species: str,
     records: Iterable[Mapping[str, object]],
