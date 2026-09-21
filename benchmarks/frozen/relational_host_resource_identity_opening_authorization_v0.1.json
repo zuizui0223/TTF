@@ -1,0 +1,150 @@
+{
+  "schema": "ttf_relational_host_resource_identity_opening_authorization_v0.1",
+  "status": "AUTHORIZE_RELATIONAL_HOST_RESOURCE_NUCLEOTIDE_IDENTITY_OPENING",
+  "authorized_on": "2026-09-21",
+  "purpose": "Authorize one empirical opening of nucleotide identity for the exact fresh host-resource relational TTF design after response-blind mask filtering and exact survivor-geometry synthetic requalification passed.",
+  "parent_scientific_program": "docs/supporting/relational_program_v0.2.json",
+  "parent_protocol": "docs/supporting/relational_host_resource_protocol_v0.1.json",
+  "source": {
+    "archive_name": "phylogatr_results_exact_20260918.zip",
+    "archive_size_bytes": 274988692,
+    "archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "genes_txt_sha256": "e8470b6a9500ab5f79f47dc0dda3ad034f3107882ca150148d6d91ab98483ba6",
+    "cite_txt_sha256": "e257b2c12ce5e6fe33d40f7064ae4a64b0c9462ddd85f58b0ce0a672759e9eb6"
+  },
+  "input_sha256": {
+    "design_npz": "597b1499dbdf8d4fb5a30f10a32686a60185305d12a8772019279bda08b82897",
+    "mask_result": "d9e4b39c51181a4268e391a95ac5d0da61c9e9528b1de4cd1b0c55aca6299eca",
+    "survivor_species_csv": "4d33ff2afb09b8ce0cc22666f9e6b32ababa5ae57eddea3c3fa8138031158463",
+    "genes_txt": "e8470b6a9500ab5f79f47dc0dda3ad034f3107882ca150148d6d91ab98483ba6",
+    "cite_txt": "e257b2c12ce5e6fe33d40f7064ae4a64b0c9462ddd85f58b0ce0a672759e9eb6"
+  },
+  "frozen_preopening_receipts": {
+    "character_mask_receipt": {
+      "path": "benchmarks/frozen/relational_host_resource_character_mask_receipt_v0.1.json",
+      "git_blob_sha": "f524d9f08fe5cbfc4e754b7194bd8669cf1ad77f",
+      "status": "PASS_TO_SURVIVOR_REQUALIFICATION",
+      "surviving_species": 423
+    },
+    "survivor_requalification": {
+      "path": "benchmarks/frozen/relational_host_resource_survivor_requalification_v0.1.json",
+      "git_blob_sha": "e9d40db591788f86908b6b474adc30cc3d1edc14",
+      "file_sha256": "71d9a042af6cabf26d81640e411d9246cea3166b5dab85bf91b2fd51130aa3c1",
+      "status": "PASS_TO_EMPIRICAL_IDENTITY_OPENING_PREPARATION",
+      "private_type1_pass": true,
+      "relational_power_pass": true
+    }
+  },
+  "species": {
+    "survivor_count": 423,
+    "survivor_digest_sha256": "321ca497bd612fd1468d93ab301ced7693cc305f6296be2e379acbb545c88b3b",
+    "empirical_source_count": 204,
+    "empirical_target_count": 198,
+    "empirical_union_count": 402,
+    "directed_pairs": 11902,
+    "source_digest_sha256": "14288ce98eb5c454ea97cc4901d3149950e6cb2cbe4d470666721a777adf5f05",
+    "target_digest_sha256": "7dfd4713d6e21be0cb99242bde23dc0211ac8b9349858e35d49260f05f4c3497",
+    "empirical_digest_sha256": "44e988127d596de1b420608fa71f67a7209a57d68eaafa503c6775219186e81c",
+    "roles": "inherit the response-blind host-resource design; no resplitting; only survivor-supported targets with >=5 surviving sources enter the estimand"
+  },
+  "response_contract": {
+    "marker": "mitochondrial COI/COX1 family",
+    "marker_aliases": [
+      "COI",
+      "CO1",
+      "COX1",
+      "COXI",
+      "MT-CO1",
+      "CYTOCHROME C OXIDASE SUBUNIT I",
+      "CYTOCHROME OXIDASE I"
+    ],
+    "panel_selection": "largest exact unique locality count, then larger aligned header count, then lexicographic raw locus identifier; fixed before identity",
+    "sequence_pair_distance": "uncorrected p-distance = canonical A/C/G/T mismatches / jointly canonical columns",
+    "valid_sequence_pair": "jointly canonical columns >= ceil(0.50 * frozen alignment length)",
+    "locality_pair_distance": "arithmetic mean over all valid cross-locality sequence-pair p-distances",
+    "edge_response": "locality-pair distance on the unchanged frozen density-scaled kNN edge",
+    "ibd_adjustment": "endpoint-safe leave-two-localities-out rank IBD",
+    "source_training_response": "post-IBD turnover rank orthogonalized against within-source edge-length rank",
+    "target_evaluation_response": "raw post-IBD turnover rank",
+    "source_to_target_score": "Spearman correlation of the source-only TTF field prediction with target post-IBD turnover",
+    "kernel": {
+      "bandwidth_km": 500,
+      "prior_strength": 0.25,
+      "prior_mean": 0,
+      "segment_points": 5,
+      "training_species_per_field": 1
+    },
+    "serialization": {
+      "nucleotide_identity": false,
+      "edge_level_genetic_distance_vectors": false,
+      "dyad_level_T_st": true
+    }
+  },
+  "relational_model": {
+    "estimand": "beta_R on z(host_resource_jaccard)",
+    "alternative": "beta_R > 0",
+    "predictors": [
+      "z_host_resource_jaccard",
+      "z_geographic_coverage",
+      "z_log1p_centroid_distance_km",
+      "z_abs_log_locality_count_ratio",
+      "centered_same_family_indicator"
+    ],
+    "source_fixed_effect": true,
+    "target_fixed_effect": true,
+    "covariance": "two-way source/target cluster-robust sandwich with dyad intersection subtraction and finite-cluster corrections",
+    "alpha": 0.05,
+    "predictor_condition_number": 7.639880336112983,
+    "positive_decision": "p_one_sided <= 0.05 AND beta_R > 0",
+    "null_decision": "otherwise RELATIONAL_HOST_RESOURCE_NULL_WITH_QUALIFIED_POWER; the formal survivor synthetic power gate has already passed"
+  },
+  "exact_code": {
+    "relational_empirical_module": {
+      "path": "src/ttf/relational_genetic_empirical.py",
+      "git_blob_sha": "df5dacb281a8edfdbb6b7ca7dbe90a735ec005ca"
+    },
+    "dyadic_inference": {
+      "path": "src/ttf/relational_dyadic.py",
+      "git_blob_sha": "2b418399c2d9a51f23b37b26f58f910ed92e6db1"
+    },
+    "empirical_cli": {
+      "path": "scripts/run_relational_host_resource_empirical.py",
+      "git_blob_sha": "87614607ca91c6316c7fe1b4e609c0557a7b6b0f"
+    },
+    "p_distance": {
+      "path": "src/ttf/phylogatr_empirical.py",
+      "git_blob_sha": "bd7024bc29e958405167e52e4c6afb712ce4bd22"
+    },
+    "compact_ibd": {
+      "path": "src/ttf/phylogatr_compact_ibd.py",
+      "git_blob_sha": "cee7d6c7c48512b5bf17641de3d45fd4ddebf608"
+    },
+    "length_control": {
+      "path": "src/ttf/geometry_control.py",
+      "git_blob_sha": "d982b76a56392a3c9b0ef029f4c7058b30fc222d"
+    },
+    "kernel_transfer": {
+      "path": "src/ttf/transfer.py",
+      "git_blob_sha": "99aef6d2e97187aa0d0477e3b6d14c2ba4adab29"
+    }
+  },
+  "interpretation": {
+    "positive": "Among the frozen fresh Lepidoptera dyads, species facing more similar larval host-resource landscapes show greater transfer of post-IBD spatial genetic structure after geographic opportunity, broad family membership, source quality, target predictability, and sampling-geometry mismatch are controlled.",
+    "null": "Under qualified power, the frozen host-resource relation does not explain source-target transfer heterogeneity in the tested Lepidoptera design.",
+    "limits": "Neither branch rewrites the completed unconditional TTF result; this is a new prospective relational hypothesis."
+  },
+  "one_shot_rules": [
+    "Open identity only for the 402 species in the frozen empirical union.",
+    "Do not add or drop species, dyads, host covariates, controls, or taxonomic groups after opening.",
+    "Do not change p-distance, IBD residualization, bandwidth, prior, segment points, source-only field definition, covariance, alpha, or decision rule after opening.",
+    "Do not select a favorable host-overlap threshold or alternative ecological relation from the empirical result.",
+    "Do not use the empirical result to rescue or reinterpret the completed unconditional TTF result or failed conditional-order deployment.",
+    "No result-selection rerun is authorized."
+  ],
+  "opening_state_before_authorized_run": {
+    "nucleotide_identity_opened_for_relational_host_study": false,
+    "pairwise_genetic_distances_opened_for_relational_host_study": false,
+    "T_st_opened": false,
+    "beta_R_opened": false
+  }
+}
