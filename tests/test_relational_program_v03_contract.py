@@ -136,3 +136,18 @@ def test_retrospective_five_test_holm_requires_both_future_p_values():
     assert label["requires_B_and_C_p_values"] is True
     assert label["no_imputed_p_for_unopened_slot"] is True
     assert "Do not report a five-test Holm result" in label["if_C_unopened_after_DETECTED_B"]
+
+
+def test_s3_prior_evidence_points_to_repaired_exact_result():
+    program = load("docs/supporting/relational_program_v0.3.json")
+    s3 = next(
+        item for item in program["completed_predictor_tests_reported_as_prior_evidence"]
+        if item["label"] == "S3 relational larval host-resource similarity"
+    )
+    assert s3["p_one_sided"] == 0.6376882940222616
+    assert s3["receipt"] == (
+        "benchmarks/frozen/relational_host_resource_empirical_repaired_receipt_v0.2.json"
+    )
+    assert s3["reproduction_audit"] == (
+        "benchmarks/frozen/relational_host_resource_empirical_reproduction_v0.2.json"
+    )
