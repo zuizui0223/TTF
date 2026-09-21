@@ -49,3 +49,11 @@ def test_identity_reader_normalizes_case_but_retains_noncanonical_bytes(tmp_path
     assert alignment.alignment_length == 6
     assert bytes(alignment.sequences[0]) == b"ACGTN-"
     assert bytes(alignment.sequences[1]) == b"ACGTRY"
+
+
+def test_identity_reader_preserves_duplicate_header_rows_in_file_order(tmp_path: Path) -> None:
+    path = tmp_path / "duplicate.afa"
+    path.write_bytes(b">dup\nAAAA\n>dup\nAATT\n>other\nCCCC\n")
+    alignment = read_aligned_nucleotide_identity(path)
+    assert alignment.headers == ("dup", "dup", "other")
+    assert [bytes(x) for x in alignment.sequences] == [b"AAAA", b"AATT", b"CCCC"]
