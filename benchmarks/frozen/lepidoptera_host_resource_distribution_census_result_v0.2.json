@@ -1,0 +1,110 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_distribution_census_result_v0.2",
+  "status": "PASS_TO_CHARACTER_MASK_GATE",
+  "executed_on": "2026-09-21",
+  "parent_rule": "docs/supporting/lepidoptera_host_resource_distribution_admissibility_rule_v0.2.json",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "wcvp_v13_sidecar": {
+    "rWCVPdata_commit": "65bed76bae9d644ccb6ad200c05f9f5071d89e05",
+    "HOSTS_commit": "808e0b869f9ec1adf8efff87cf6a395adda103e0",
+    "host_name_resolution_sha256": "7e7e93c3f68155e6c4b326bc628e93d07941a5c2f7981e94980dae6c932d1eff",
+    "insect_host_accepted_sha256": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "native_extant_nondoubtful_wgsrpd3_sha256": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558"
+  },
+  "wcvp_name_resolution": {
+    "HOSTS_rows": 140485,
+    "distinct_species_level_host_binomials": 11795,
+    "exact_unambiguous_WCVP_matches": 9367,
+    "ambiguous_binomials": 1345,
+    "unmatched_binomials": 1083,
+    "matched_accepted_hosts_with_primary_native_units": 8937,
+    "distinct_insect_species_with_WCVP_resolved_hosts": 16833,
+    "distinct_insect_x_accepted_host_pairs": 53449
+  },
+  "independent_followup_universe": {
+    "prior_phase1_species_excluded": 250,
+    "completed_trait_gradient_pre_mask_species_excluded": 339,
+    "operator_exposure_species_excluded": ["Acrolophus arcanella"],
+    "host_footprint_species_before_geometry": 16833,
+    "aligned_count_ge_12_host_footprint_species_scanned": 3530,
+    "geometry_and_host_footprint_eligible_species": 2578
+  },
+  "frozen_panel": {
+    "selected_species": 500,
+    "train_species": 250,
+    "eval_species": 250,
+    "geographically_supported_eval_species": 235,
+    "unsupported_eval_species": 15,
+    "supported_target_source_pairs": 15937,
+    "source_count_quantiles": {
+      "min": 5.0,
+      "q25": 44.0,
+      "median": 75.0,
+      "q75": 102.5,
+      "max": 106.0
+    },
+    "selected_species_sha256": "035059fe6fae6d8c39ab191bcd911d184e4f1b27d6ca78dbe69de06d07c46c42",
+    "train_species_sha256": "f537a96698b20918e3bba4b18253a91cd4c92462d3bd475c607be5d41218d876",
+    "eval_species_sha256": "9a2a5d279f64b3f0e012522f041be334a4bc9d787609ef9609c129f4965f2ac1"
+  },
+  "host_resource_predictor_spread": {
+    "supported_pair_Jaccard_quantiles": {
+      "min": 0.0,
+      "q25": 0.17647058823529413,
+      "median": 0.3488372093023256,
+      "q75": 0.514792899408284,
+      "max": 1.0
+    },
+    "supported_pairs_zero_overlap": 1210,
+    "supported_pairs_identical_footprint": 42,
+    "selected_species_native_WGSRPD3_unit_quantiles": {
+      "min": 1.0,
+      "q25": 33.0,
+      "median": 59.5,
+      "q75": 95.25,
+      "max": 298.0
+    },
+    "selected_species_native_host_species_quantiles": {
+      "min": 1.0,
+      "q25": 1.0,
+      "median": 2.0,
+      "q75": 6.0,
+      "max": 141.0
+    }
+  },
+  "taxonomic_description_top_families": {
+    "Noctuidae": 90,
+    "Geometridae": 72,
+    "Tortricidae": 55,
+    "Crambidae": 31,
+    "Erebidae": 29,
+    "Sphingidae": 22,
+    "Gelechiidae": 19,
+    "Pyralidae": 18,
+    "Gracillariidae": 16,
+    "Notodontidae": 16,
+    "Nymphalidae": 14,
+    "Saturniidae": 14
+  },
+  "frozen_files": {
+    "full_census_receipt_sha256": "6bd4915a7337ba9f3916c04fdc5673338cde81815a097daca9084bff7822bdf7",
+    "design_npz_sha256": "597b1499dbdf8d4fb5a30f10a32686a60185305d12a8772019279bda08b82897",
+    "library_full_receipt": "/TTF/host-resource/lepidoptera_host_resource_distribution_census_v0.2.json",
+    "library_design_npz": "/TTF/host-resource/lepidoptera_host_resource_design_v0.2.npz"
+  },
+  "gate": {
+    "minimum_total_species": 180,
+    "minimum_train_species": 80,
+    "minimum_eval_species": 80,
+    "minimum_geographically_supported_eval_targets": 90,
+    "all_pass": true
+  },
+  "decision": "PASS_TO_CHARACTER_MASK_GATE",
+  "interpretation": "The fully species-disjoint host-resource follow-up has ample geometry support and broad response-blind host-resource Jaccard variation. Host-resource geography can therefore proceed to character-mask admissibility without relaxing species, geography, or host-distribution rules.",
+  "outcome_firewall": {
+    "character_masks_opened": false,
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "transfer_statistic_computed": false
+  }
+}
