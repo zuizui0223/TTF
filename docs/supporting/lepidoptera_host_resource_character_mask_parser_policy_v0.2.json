@@ -1,0 +1,22 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_character_mask_parser_policy_v0.2",
+  "status": "FROZEN_BEFORE_V02_CHARACTER_MASK_OPENING",
+  "frozen_on": "2026-09-21",
+  "parent_rule": "docs/supporting/lepidoptera_host_resource_character_mask_rule_v0.2.json",
+  "policy": {
+    "duplicate_aligned_fasta_header": "species inadmissible; drop species only",
+    "any_other_character_mask_parser_structural_error": "species inadmissible; drop species only",
+    "repair_or_deduplicate_records": false,
+    "switch_marker_or_panel": false,
+    "rewire_graph": false,
+    "resplit_train_eval": false,
+    "relax_comparable_fraction": false
+  },
+  "rationale": "Structural parser ambiguity is an admissibility failure, not a biological response. Failing closed at the species level preserves the frozen graph, marker, host footprint and split without introducing a post-mask record-selection rule.",
+  "outcome_firewall": {
+    "character_masks_opened_under_v02": false,
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "transfer_statistic_computed": false
+  }
+}
