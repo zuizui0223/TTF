@@ -8,6 +8,7 @@ import numpy as np
 from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
 from ttf.lepidoptera_host_resource_qualification import frozen_alignment_indices
 from ttf.phylogatr_character_mask import (
+    CharacterMaskError,
     edge_mask_support,
     masks_by_frozen_locality,
     read_canonical_mask_alignment,
@@ -123,18 +124,26 @@ def main()->int:
         survives=np.zeros(len(names),dtype=bool)
         failed_edges=np.zeros(len(names),dtype=np.int64)
         min_best=np.zeros(len(names),dtype=np.int64)
+        parser_failures={}
         for i,name in enumerate(names):
             panel=panels[name]
             if not np.array_equal(panel.geometry.coordinates,expected_coords[name]):
                 raise RuntimeError(f"geometry drift for {name}")
-            alignment=read_canonical_mask_alignment(panel.fasta_path)
-            occ=read_occurrence_rows(panel.occurrence_path)
-            grouped=masks_by_frozen_locality(alignment,occ,panel.canonical_latlon)
-            support=edge_mask_support(
-                grouped,panel.geometry.edge_nodes,
-                alignment_length=alignment.alignment_length,
-                minimum_comparable_fraction=.5,
-            )
+            try:
+                alignment=read_canonical_mask_alignment(panel.fasta_path)
+                occ=read_occurrence_rows(panel.occurrence_path)
+                grouped=masks_by_frozen_locality(alignment,occ,panel.canonical_latlon)
+                support=edge_mask_support(
+                    grouped,panel.geometry.edge_nodes,
+                    alignment_length=alignment.alignment_length,
+                    minimum_comparable_fraction=.5,
+                )
+            except CharacterMaskError as exc:
+                survives[i]=False
+                failed_edges[i]=int(panel.geometry.n_edges)
+                min_best[i]=0
+                parser_failures[name]=type(exc).__name__+":"+str(exc)
+                continue
             survives[i]=support.all_edges_valid
             failed_edges[i]=int(np.count_nonzero(~support.valid_edges))
             min_best[i]=int(np.min(support.best_comparable_columns))
@@ -239,6 +248,8 @@ def main()->int:
         "failed_species_sha256":hashlib.sha256(("\n".join(sorted(names[int(i)] for i in failed_idx))+"\n").encode()).hexdigest(),
         "survivor_design_npz_sha256":sha256_path(args.output_survivor_npz),
         "character_support":{
+            "parser_structural_failures":int(len(parser_failures)),
+            "parser_structural_failure_species":sorted(parser_failures),
             "failed_edges_total":int(np.sum(failed_edges)),
             "failed_edges_per_failed_species_quantiles":q(failed_edges[failed_idx]) if len(failed_idx) else None,
             "minimum_best_comparable_columns_quantiles":q(min_best),
