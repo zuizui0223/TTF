@@ -133,7 +133,10 @@ def main() -> int:
         args.output_summary.parent.mkdir(parents=True, exist_ok=True)
         args.output_summary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
         print(json.dumps(payload, sort_keys=True))
-        return 2
+        # A frozen feasibility failure is a valid NOT_EVALUABLE program state,
+        # not an infrastructure error. Return success so the workflow can
+        # persist the gate receipt and stop downstream response-blind stages.
+        return 0
 
     pca_sample_rows = []
     pca_sample_species = []
