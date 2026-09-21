@@ -22,7 +22,9 @@
     "coordinate_requirements": "finite valid latitude/longitude; reject zero coordinates and records with declared coordinate issues under the acquisition contract",
     "temporal_window_candidate": "2010-present",
     "spatial_thinning_candidate_km": 10,
-    "note": "candidate occurrence thresholds are feasibility parameters, not yet the final primary relation definition; feasibility results cannot be joined to genetic outcomes"
+    "note": "candidate occurrence thresholds are feasibility parameters, not yet the final primary relation definition; feasibility results cannot be joined to genetic outcomes",
+    "gbif_taxon_match": "accept EXACT/CONFIDENCE; also accept FUZZY only when GBIF canonicalName exactly equals the requested species name and matched rank is SPECIES",
+    "match_rule_frozen_before_precensus": true
   },
   "environment_contract": {
     "representation": "one common environmental feature space across all retained species",
