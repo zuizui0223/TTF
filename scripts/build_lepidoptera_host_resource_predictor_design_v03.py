@@ -179,17 +179,17 @@ def main()->int:
             "minimum_rows_per_pair":3,
             "rows_per_pair_quantiles":q(align_lengths),
             "total_alignment_rows":int(len(flat_target)),
-            "deterministic_pair_specific_cap":true
+            "deterministic_pair_specific_cap":True
         },
         "kernel_spread":{
             "geometry_pair_similarity_quantiles":q(geometry_kernel[target,source]),
             "resource_breadth_pair_similarity_quantiles":q(breadth_kernel[target,source]),
         },
         "outcome_firewall":{
-            "character_masks_opened":false,
-            "sequence_identity_opened":false,
-            "pairwise_genetic_distances_opened":false,
-            "transfer_statistic_computed":false
+            "character_masks_opened":False,
+            "sequence_identity_opened":False,
+            "pairwise_genetic_distances_opened":False,
+            "transfer_statistic_computed":False
         }
     }
     args.output_json.parent.mkdir(parents=True,exist_ok=True)
