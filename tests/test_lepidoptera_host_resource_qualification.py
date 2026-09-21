@@ -6,6 +6,7 @@ from ttf.lepidoptera_host_resource_qualification import (
     frozen_alignment_indices,
     geometry_kernel_from_features,
     resource_breadth_kernel,
+    resource_cosine_kernel,
     resource_jaccard_kernel,
 )
 
@@ -44,3 +45,16 @@ def test_alignment_is_deterministic_and_capped():
     assert len(a[0])==128
     assert np.array_equal(a[0],b[0])
     assert np.array_equal(a[1],b[1])
+
+
+def test_resource_cosine_kernel_is_psd_and_unit_diagonal():
+    h=np.asarray([
+        [1,1,0,0],
+        [0,1,1,0],
+        [0,0,0,1],
+    ],dtype=np.uint8)
+    k=resource_cosine_kernel(h)
+    assert np.allclose(k,k.T)
+    assert np.allclose(np.diag(k),1)
+    assert np.min(np.linalg.eigvalsh(k))>-1e-10
+    assert np.isclose(k[0,1],0.5)
