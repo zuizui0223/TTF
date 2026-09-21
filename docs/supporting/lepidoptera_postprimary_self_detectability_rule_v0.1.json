@@ -1,0 +1,69 @@
+{
+  "schema": "ttf_lepidoptera_postprimary_self_detectability_rule_v0.1",
+  "status": "FROZEN_BEFORE_INSECT_PANEL_SELF_STATISTICS",
+  "frozen_on": "2026-09-21",
+  "purpose": "Use the already-established endpoint-safe within-species self-detectability method as a positive structural anchor for the two completed insect panels, without changing either completed cross-species primary decision.",
+  "method_inheritance": {
+    "source_rule": "docs/supporting/genetic_phylogatr_phase3_self_detectability_rule_v0.1.json",
+    "changes_to_self_estimator": "none",
+    "bandwidth_km": 500.0,
+    "segment_points": 5,
+    "prior_strength": 0.25,
+    "prior_mean": 0.5,
+    "minimum_endpoint_disjoint_training_edges": 5,
+    "panel_statistic": "arithmetic mean of finite evaluation-species self-field Spearman scores",
+    "alpha": 0.05
+  },
+  "panels": {
+    "butterfly_trait_panel": {
+      "species": 240,
+      "train_species": 118,
+      "eval_species": 122,
+      "survivor_design_sha256": "15de10eb15d54cf929287e2a27762a1882b7d46ca6251481616639ca7805bc1c",
+      "cross_species_primary_known": true,
+      "self_statistic_known": false
+    },
+    "host_resource_panel": {
+      "species": 431,
+      "train_species": 213,
+      "eval_species": 218,
+      "survivor_design_sha256": "b1b9dab23676f6a1ea416c5889fc42676908a54d3abcf042dbaf8605cda2c3bf",
+      "cross_species_primary_known": true,
+      "self_statistic_known": false
+    }
+  },
+  "exact_geometry_qualification_per_panel": {
+    "independent_null_reference_worlds": 1000,
+    "null_evaluation_worlds": 500,
+    "private_A2_evaluation_worlds": 500,
+    "reference_world": {"shared_fraction": 0.0, "residual_amplitude": 0.0, "noise_sd": 0.10},
+    "null_evaluation_world": {"shared_fraction": 0.0, "residual_amplitude": 0.0, "noise_sd": 0.10},
+    "private_A2_evaluation_world": {"shared_fraction": 0.0, "residual_amplitude": 2.0, "noise_sd": 0.10},
+    "ibd_strength": 1.0,
+    "transition_width": 0.20,
+    "noise_dimensions": 2,
+    "type1_gate": "Wilson 95% upper <= 0.10",
+    "power_gate": "private-A2 Wilson 95% lower >= 0.80",
+    "both_required": true
+  },
+  "seed_namespaces": {
+    "master_seed": 20260921,
+    "butterfly_reference": "lepidoptera_self_butterfly_reference",
+    "butterfly_null": "lepidoptera_self_butterfly_null",
+    "butterfly_private_A2": "lepidoptera_self_butterfly_private_A2",
+    "host_reference": "lepidoptera_self_host_reference",
+    "host_null": "lepidoptera_self_host_null",
+    "host_private_A2": "lepidoptera_self_host_private_A2"
+  },
+  "empirical_rule": {
+    "compute_only_after_panel_specific_qualification_pass": true,
+    "response": "the exact already-frozen post-IBD edge response definition used in that panel",
+    "p_value": "upper Monte Carlo p against the panel-specific 1000-world null reference",
+    "no_species_dropping": true,
+    "no_parameter_retuning": true
+  },
+  "interpretation": {
+    "if_self_positive_and_cross_species_negative": "Spatial genetic structure is detectable within species but not reusable across species under the tested cross-species predictor; this provides a positive structural contrast rather than a global absence-of-signal explanation.",
+    "claim_boundary": "This application was frozen after the cross-species primary outcomes were known. It is a post-primary structural anchor using a pre-existing method, not a prospective rescue of either primary test."
+  }
+}
