@@ -1,14 +1,14 @@
-# Lepidoptera trait-gradient study — result spine v0.1
+# Butterfly trait-gradient study with independent Lepidoptera host-resource follow-up — result spine v0.1
 
 ## Central question
 
-Within Lepidoptera, does ecological similarity make post-IBD spatial genetic differentiation more reusable across species once geographic sampling geometry is controlled?
+Within butterflies, does ecological similarity make post-IBD spatial genetic differentiation more reusable across species once geographic sampling geometry is controlled, and does an independent broader Lepidoptera panel reveal a role for native larval host-resource geography?
 
 ## Design ladder
 
 1. The completed all-animal study provides the broad-domain reference: cross-species post-IBD transfer was not detected in the fresh phylogatR panel.
-2. The new study restricts the domain to Lepidoptera and excludes every species from the prior identity-opened Phase-1 route.
-3. Within this species-disjoint Lepidoptera domain, the primary test asks whether pairwise transfer congruence increases with a frozen four-axis ecological similarity score (wing size, voltinism, host breadth and habitat affinity), after response-blind geometry control.
+2. The trait study restricts the domain to the butterfly species represented in the frozen LepTraits complete-case panel and excludes every species from the prior identity-opened Phase-1 route.
+3. Within this species-disjoint butterfly domain, the primary test asks whether pairwise transfer congruence increases with a frozen four-axis ecological similarity score (wing size, voltinism, host breadth and habitat affinity), after response-blind geometry control.
 
 The initial estimator v0.1 was retired before empirical opening because it leaked under a geometry-confounded synthetic trap. The successor v0.2 used target-fixed-effect geometry residualization and worst-case nuisance-null envelope calibration. On the exact 240-species character-mask survivor geometry, v0.2 passed all three predeclared gates:
 
@@ -18,17 +18,27 @@ The initial estimator v0.1 was retired before empirical opening because it leake
 
 Only after this exact-geometry requalification passed was nucleotide identity opened.
 
+## Taxonomic, geographic and trait scope of the butterfly panel
+
+A post-result descriptive audit reconstructed the exact frozen panel without changing any inference. The 339 pre-mask species belonged to six butterfly families: Nymphalidae (143), Lycaenidae (64), Hesperiidae (57), Pieridae (56), Papilionidae (18), and Riodinidae (1). After the character-mask gate, the 240 survivors retained the same butterfly-only scope. The 110 geographically supported evaluation species comprised Nymphalidae (59), Hesperiidae (18), Lycaenidae (15), Pieridae (13), and Papilionidae (5). Thus the completed trait-gradient result should not be described as representative of Lepidoptera as a whole.
+
+The evaluation panel was also geographically concentrated. Of 5,456 exact evaluation localities, 2,923 fell in Europe and 1,875 in North America under Natural Earth 110-m country polygons; 357 small-island or ocean localities were unassigned at that map resolution. By dominant continent, 67 evaluation species were North American and 43 European. The median locality latitude was 44.0 degrees (IQR 38.8–48.5 degrees), so the empirical trait-gradient domain is primarily a northern-temperate butterfly comparison.
+
+The null result was not caused by an absence of measured trait variation. Among the 110 supported evaluation species, the frozen wing-size proxy ranged from 1.95 to 11.32, host breadth from 1 to 11 host-plant families, and voltinism included all three frozen categories (U = 28, B = 16, M = 66). Wing size and log host breadth were only weakly correlated (r = 0.099). Using median splits, all four wing-size × host-breadth combinations were represented. These are descriptive scope checks only and do not alter the primary statistic.
+
+Character-mask dropout was reported rather than corrected post hoc. Family-specific dropout fractions were 0.245 for Nymphalidae, 0.281 for Lycaenidae, 0.333 for Hesperiidae, 0.375 for Pieridae, and 0.333 for Papilionidae. No family-specific reweighting or species replacement was introduced after observing these differences.
+
 ## Primary empirical result
 
 The one-shot primary statistic was -0.0166475 with worst-case envelope p = 0.89 across 110 finite evaluation-target correlations. Fifty target correlations were positive and 60 were negative; the median target correlation was -0.0224.
 
 Frozen decision: **NO_DETECTED_POSITIVE_TRAIT_SIMILARITY_GRADIENT**.
 
-Interpretation: within the exact frozen Lepidoptera survivor domain, ecologically more similar species did not show greater post-IBD spatial-genetic congruence after the frozen geometry control. This does not establish that the true ecological gradient is exactly zero or that ecological traits are universally irrelevant.
+Interpretation: within the exact frozen butterfly survivor domain, ecologically more similar species did not show greater post-IBD spatial-genetic congruence after the frozen geometry control. This does not establish that the true ecological gradient is exactly zero or that ecological traits are universally irrelevant.
 
 ## Descriptive second rung
 
-The predeclared within-Lepidoptera geography-conditioned baseline was recovered after the primary decision using the same frozen post-IBD edge responses. Its mean held-out Spearman transfer score was 0.0516743 across 110 supported evaluation species (median species score 0.0551; 62 positive, 48 negative).
+The predeclared within-butterfly geography-conditioned baseline was recovered after the primary decision using the same frozen post-IBD edge responses. Its mean held-out Spearman transfer score was 0.0516743 across 110 supported evaluation species (median species score 0.0551; 62 positive, 48 negative).
 
 This baseline is **descriptive only**. It must not be tested against, or interpreted as significantly larger than, the all-animal result because the taxonomic domain, species panel and survivor geometry differ.
 
@@ -72,7 +82,7 @@ The useful result is not merely “traits were nonsignificant.” The method was
 
 The bounded ecological conclusion is therefore:
 
-> Neither similarity in broad life-history traits nor overlap in native larval host-resource geography identifies which Lepidoptera share reusable post-IBD spatial genetic structure at the scale tested here.
+> In the butterfly trait panel, broad ecological similarity did not identify transferable pairs; in a separate, moth-rich broader Lepidoptera panel, overlap in native larval host-resource geography also failed to identify them.
 
 The independent host-resource follow-up strengthens the boundary around the null result: the failure of the coarse LepTraits gradient cannot be attributed simply to host breadth being an inadequate proxy for where larval resources occur. Together with the exploratory finding that source-species and target-species identity explain little pairwise transfer variation, the remaining structure appears predominantly relational or context-specific. Historical co-exposure, barrier-specific responses, demographic history, finer host configuration, symbiont-associated mitochondrial history, and other lineage-pair mechanisms remain hypotheses for independent future data rather than explanations demonstrated here.
 
