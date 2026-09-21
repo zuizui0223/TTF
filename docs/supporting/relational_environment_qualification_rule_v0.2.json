@@ -94,6 +94,7 @@
   "gate_numeric": {
     "p_value_cutoff": 0.025,
     "private_type1_wilson95_upper_max": 0.05,
-    "relational_power_wilson95_lower_min": 0.8
+    "relational_power_wilson95_lower_min": 0.8,
+    "predictor_condition_number_max_exclusive": 10000
   }
 }
