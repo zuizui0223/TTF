@@ -1,0 +1,34 @@
+{
+  "schema": "ttf_relational_program_v0.2",
+  "status": "FROZEN_ROLE_SPLIT_BEFORE_ANY_FRESH_RELATIONAL_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-21",
+  "supersedes_for_future_design_only": "The v0.1 umbrella treated environmental niche similarity as the default primary relation. No fresh relational genetic response was opened under that choice.",
+  "reason_for_role_split": "Response-blind external-data audits now show a mechanism-specific host-resource relation with a large fresh Lepidoptera dyad panel and weak dependence on geographic support, while the cross-taxon environmental relation still requires provider and raster feasibility work. This design update uses no nucleotide identity, pairwise genetic distance, T_st, beta_R, or ecology-genetics association.",
+  "study_A_mechanistic_primary": {
+    "domain": "Lepidoptera",
+    "relation": "larval host-resource spatial-footprint Jaccard",
+    "protocol": "docs/supporting/relational_host_resource_protocol_v0.1.json",
+    "audit": "benchmarks/frozen/relational_host_resource_response_blind_audit_v0.1.json",
+    "question": "Does source-target similarity in host-resource landscapes predict transferability of post-IBD spatial genetic structure?"
+  },
+  "study_B_cross_taxon_generalization": {
+    "domain": "fresh multi-order Animalia panel",
+    "relation": "environmental-niche similarity",
+    "rule": "docs/supporting/relational_environment_feasibility_rule_v0.1.json",
+    "question": "Does a general habitat relation predict transferability across broad taxa?",
+    "status": "response-blind feasibility only; it cannot rescue or redefine Study A"
+  },
+  "claim_logic": {
+    "A_positive": "mechanistic evidence that transferability is relational with respect to host-resource landscapes within Lepidoptera",
+    "B_positive": "external generalization to a broad habitat relation across taxa",
+    "A_null_with_power": "host-resource similarity does not explain dyadic transfer heterogeneity in the frozen Lepidoptera design",
+    "B_null_with_power": "the frozen broad environmental relation does not generalize relational transfer across the tested taxa",
+    "gate_failure": "NOT_EVALUABLE, never a biological null"
+  },
+  "response_firewall": {
+    "fresh_host_sequence_identity_opened": false,
+    "fresh_host_pairwise_genetic_distances_opened": false,
+    "fresh_host_T_st_computed": false,
+    "fresh_environment_T_st_computed": false
+  }
+}
