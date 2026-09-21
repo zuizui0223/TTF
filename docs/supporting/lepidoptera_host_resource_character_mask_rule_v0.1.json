@@ -1,0 +1,46 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_character_mask_rule_v0.1",
+  "status": "FROZEN_BEFORE_HOST_RESOURCE_CHARACTER_MASK_OPENING",
+  "frozen_on": "2026-09-21",
+  "parent_distribution_census": "benchmarks/frozen/lepidoptera_host_resource_distribution_census_result_v0.2.json",
+  "parent_qualification_rule": "docs/supporting/lepidoptera_host_resource_qualification_rule_v0.1.json",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "pre_mask_design_npz_sha256": "597b1499dbdf8d4fb5a30f10a32686a60185305d12a8772019279bda08b82897",
+  "panel": {
+    "species": 500,
+    "train": 250,
+    "eval": 250,
+    "roles_inherited_without_resplitting": true
+  },
+  "mask_contract": {
+    "aligned_fasta_only": true,
+    "per_character_information": "canonical A/C/G/T versus noncanonical only; nucleotide identity is not retained",
+    "minimum_comparable_fraction": 0.50,
+    "frozen_edge_valid": "at least one cross-locality sequence pair has jointly canonical columns >= ceil(0.50 * frozen alignment length)",
+    "species_survives": "every frozen graph edge is valid",
+    "edge_dropping": false,
+    "edge_rewiring": false,
+    "marker_switching": false
+  },
+  "post_mask_support": {
+    "train_eval_roles": "inherit original 250/250 role labels among survivors",
+    "geographic_support": "recompute the unchanged 500-km target coverage rule using surviving training species only",
+    "minimum_target_coverage": 0.50,
+    "minimum_source_species": 5,
+    "host_resource_footprints": "unchanged WCVP-v13 frozen sets"
+  },
+  "gate": {
+    "minimum_total_survivors": 200,
+    "minimum_train_survivors": 90,
+    "minimum_eval_survivors": 90,
+    "minimum_geographically_supported_eval_targets": 90,
+    "all_required": true,
+    "if_fail": "STOP before formal survivor qualification or nucleotide identity; report NOT_EVALUABLE_CHARACTER_SUPPORT"
+  },
+  "next_if_pass": "Build the exact survivor host-resource design with inherited roles and run all four frozen synthetic qualification gates before nucleotide identity.",
+  "outcome_firewall": {
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "transfer_statistic_computed": false
+  }
+}
