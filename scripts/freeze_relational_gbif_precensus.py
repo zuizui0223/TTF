@@ -15,7 +15,10 @@ import json
 import time
 from pathlib import Path
 
-try:\n    from scripts.freeze_gbif_animal_geometry import accepted_taxon_match, get_json\nexcept ModuleNotFoundError:  # direct `python scripts/...py` execution\n    from freeze_gbif_animal_geometry import accepted_taxon_match, get_json
+try:
+    from scripts.freeze_gbif_animal_geometry import accepted_taxon_match, get_json
+except ModuleNotFoundError:  # direct `python scripts/...py` execution
+    from freeze_gbif_animal_geometry import accepted_taxon_match, get_json
 
 SCHEMA = "ttf_relational_gbif_precensus_v0.1"
 
