@@ -21,7 +21,7 @@ from ttf.phylogatr_confirmatory import (
 )
 
 ALIASES=("COI","CO1","COX1","COXI","CYTOCHROME C OXIDASE SUBUNIT I","CYTOCHROME C OXIDASE SUBUNIT 1")
-RULE_SCHEMA="ttf_lepidoptera_host_resource_character_mask_rule_v0.1"
+RULE_SCHEMA="ttf_lepidoptera_host_resource_character_mask_rule_v0.2"
 
 
 def sha256_path(path:Path)->str:
@@ -229,12 +229,12 @@ def main()->int:
     )
 
     out={
-        "schema":"ttf_lepidoptera_host_resource_character_mask_census_v0.1",
+        "schema":"ttf_lepidoptera_host_resource_character_mask_census_v0.2",
         "status":"PASS_TO_EXACT_SURVIVOR_QUALIFICATION" if passed else "NOT_EVALUABLE_CHARACTER_SUPPORT",
         "executed_on":"2026-09-21",
         "parent_rule":str(args.rule),
         "source_archive_sha256":sha256_path(args.archive),
-        "pre_mask_design_npz_sha256":sha256_path(args.design_npz),
+        "pre_mask_census_design_npz_sha256":sha256_path(args.design_npz),\n        "pre_mask_predictor_design_npz_sha256":sha256_path(args.predictor_design_npz),
         "post_mask":{
             "survivors":int(len(survivor_idx)),
             "failed_character_support":int(len(failed_idx)),
