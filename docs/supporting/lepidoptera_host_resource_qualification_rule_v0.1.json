@@ -1,0 +1,117 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_qualification_rule_v0.1",
+  "status": "FROZEN_BEFORE_HOST_RESOURCE_CHARACTER_MASK_OPENING_AND_FORMAL_SYNTHETIC_WORLDS",
+  "frozen_on": "2026-09-21",
+  "parent_distribution_census": "benchmarks/frozen/lepidoptera_host_resource_distribution_census_result_v0.2.json",
+  "wing_support_receipt": "benchmarks/frozen/lepidoptera_host_resource_wing_support_v0.2.json",
+  "scientific_question": "Among fully species-disjoint Lepidoptera, does similarity in native larval host-resource geography predict greater congruence of post-IBD spatial genetic structure after sampling geometry is controlled?",
+  "pre_mask_domain": {
+    "species": 500,
+    "train_species": 250,
+    "eval_species": 250,
+    "geographically_supported_eval_species": 235,
+    "supported_target_source_pairs": 15937,
+    "design_npz_sha256": "597b1499dbdf8d4fb5a30f10a32686a60185305d12a8772019279bda08b82897",
+    "host_resource_jaccard_median": 0.3488372093023256
+  },
+  "primary_predictor": {
+    "name": "native_host_resource_geography_similarity",
+    "definition": "Jaccard similarity between the frozen WCVP-v13 native, extant, non-doubtful WGSRPD level-3 host-resource footprint sets of the target and source species",
+    "range": [0.0, 1.0],
+    "host_species_weighting": "union over distinct WCVP-resolved larval host species; duplicate HOSTS records do not increase weight"
+  },
+  "pairwise_transfer_surface": {
+    "response": "pairwise congruence of endpoint-safe post-IBD edge responses",
+    "alignment": "for each target edge, choose the nearest source edge midpoint; retain only alignments with nearest distance <=500 km",
+    "maximum_aligned_edges_per_pair": 128,
+    "cap_sampling": "response-blind deterministic target-source-pair hash sampling without replacement when more than 128 target edges are eligible",
+    "pair_transfer_congruence": "Pearson correlation between aligned source and target post-IBD edge responses",
+    "minimum_alignment_rows": 3
+  },
+  "predictor_geometry_control": {
+    "method": "pooled target-fixed-effect residualization of host-resource Jaccard before response scoring",
+    "covariates": [
+      "target_to_source_coverage",
+      "log1p_centroid_distance_over_500km",
+      "log_edge_count_ratio",
+      "log_locality_count_ratio",
+      "pairwise_insect_geometry_kernel_similarity"
+    ],
+    "standardization": "center predictor and covariates within target, then population-standardize geometry covariates across retained pairs",
+    "response_blind": true
+  },
+  "primary_statistic": {
+    "per_target": "Pearson correlation across supported source species between geometry-residualized host-resource Jaccard and pairwise post-IBD transfer congruence",
+    "panel": "arithmetic mean of finite per-target correlations",
+    "direction": "positive",
+    "alpha": 0.05
+  },
+  "synthetic_model": {
+    "latent_fields": 6,
+    "private_amplitude": 0.35,
+    "noise_sd": 0.10,
+    "transition_width": 0.20,
+    "cells": {
+      "private": {
+        "shared_fraction": 0.0,
+        "meaning": "each species has private residual spatial structure"
+      },
+      "geometry_confounded_trap": {
+        "shared_fraction": 0.85,
+        "kernel": "response-blind insect sampling-geometry RBF kernel",
+        "meaning": "shared spatial structure follows insect sampling geometry, not host-resource overlap"
+      },
+      "host_breadth_confounded_trap": {
+        "shared_fraction": 0.85,
+        "kernel": "Gaussian RBF over standardized log1p native host-resource WGSRPD3 unit count and log1p resolved larval host-species count",
+        "meaning": "shared structure follows broad resource breadth only, not which host-resource regions overlap"
+      },
+      "host_resource_gradient_positive": {
+        "shared_fraction": 0.90,
+        "kernel": "PSD cosine kernel of frozen binary native host-resource WGSRPD3 presence vectors",
+        "meaning": "species sharing more host-resource geography share more latent residual spatial structure"
+      }
+    }
+  },
+  "inference": {
+    "method": "worst-case one-sided upper-tail Monte Carlo envelope across all nuisance reference distributions",
+    "reference_worlds_per_nuisance_cell": 499,
+    "evaluation_worlds_per_cell": 500,
+    "nuisance_reference_cells": [
+      "private",
+      "geometry_confounded_trap",
+      "host_breadth_confounded_trap"
+    ],
+    "p_value": "maximum of the +1-corrected upper-tail Monte Carlo p-values across frozen nuisance reference cells"
+  },
+  "qualification_gates": {
+    "private_type1": "Wilson 95% upper rejection bound <=0.10",
+    "geometry_trap_type1": "Wilson 95% upper rejection bound <=0.10",
+    "host_breadth_trap_type1": "Wilson 95% upper rejection bound <=0.10",
+    "host_resource_positive_power": "Wilson 95% lower rejection bound >=0.80",
+    "all_four_required": true
+  },
+  "formal_seed_namespaces": {
+    "master_seed": 20260921,
+    "reference": "lepidoptera-host-resource-v01-reference",
+    "evaluation": "lepidoptera-host-resource-v01-evaluation"
+  },
+  "wing_axis": {
+    "confirmatory_status": "NOT_EVALUABLE_IN_THIS_PANEL",
+    "reason": "only 24/500 selected species and 7/235 geographically supported evaluation species have frozen LepTraits wing-size data",
+    "must_not_be_used_to_redefine_primary": true
+  },
+  "stopping_rules": [
+    "Character-mask filtering may remove species but may not rewire graphs, relax the 50% comparable-column threshold, resplit train/eval roles, alter host footprints, or select species using Jaccard values.",
+    "Formal qualification is repeated on the exact character-mask survivor geometry using the inherited species roles and the same host footprints.",
+    "If any formal nuisance Type-I gate or positive-power gate fails on exact survivor geometry, stop before nucleotide identity and report NOT_EVALUABLE.",
+    "Do not change Jaccard, geometry covariates, pair alignment, 128-edge cap, nuisance family, synthetic amplitudes, alpha, or gates after any formal reference/evaluation statistic is inspected.",
+    "No wing-size source may be added after genetic outcomes are opened."
+  ],
+  "outcome_firewall": {
+    "character_masks_opened": false,
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "transfer_statistic_computed": false
+  }
+}
