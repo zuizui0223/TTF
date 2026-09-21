@@ -132,6 +132,7 @@ def main() -> int:
     ap.add_argument("--root", type=Path, required=True)
     ap.add_argument("--candidates", type=Path, required=True)
     ap.add_argument("--source-archive-sha256", required=True)
+    ap.add_argument("--contract", type=Path, required=True)
     ap.add_argument("--neighbor-fraction", type=float, default=0.15)
     ap.add_argument("--output-localities", type=Path, required=True)
     ap.add_argument("--output-edges", type=Path, required=True)
@@ -146,10 +147,29 @@ def main() -> int:
     if not 0 < float(args.neighbor_fraction) <= 1:
         raise ValueError("neighbor fraction must be in (0,1]")
 
+    contract = json.loads(args.contract.read_text(encoding="utf-8"))
+    if contract.get("schema") != "ttf_relational_environment_geometry_reconstruction_contract_v0.1":
+        raise RuntimeError("unexpected geometry reconstruction contract")
+    if contract["source_archive"]["sha256"] != args.source_archive_sha256:
+        raise RuntimeError("source archive SHA drift from reconstruction contract")
+    if not np.isclose(
+        float(contract["locality_geometry"]["neighbor_fraction"]),
+        float(args.neighbor_fraction),
+        rtol=0.0,
+        atol=0.0,
+    ):
+        raise RuntimeError("neighbor fraction drift from reconstruction contract")
+    candidate_sha = sha256_path(args.candidates)
+    if candidate_sha != contract["candidates"]["sha256"]:
+        raise RuntimeError("candidate CSV SHA drift from reconstruction contract")
+
     with args.candidates.open(newline="", encoding="utf-8") as handle:
         candidates = list(csv.DictReader(handle))
-    if len(candidates) != 1000:
-        raise RuntimeError(f"expected exact fresh 1000 candidates, found {len(candidates)}")
+    expected_species = int(contract["candidates"]["species"])
+    if len(candidates) != expected_species:
+        raise RuntimeError(
+            f"expected exact {expected_species} candidates, found {len(candidates)}"
+        )
     if len({row["species"] for row in candidates}) != len(candidates):
         raise RuntimeError("duplicate candidate species")
 
@@ -188,11 +208,29 @@ def main() -> int:
             locality_count += len(lr)
             edge_count += len(er)
 
+    aggregate = contract["frozen_aggregate_invariants"]
+    observed_aggregate = {
+        "species": species_count,
+        "locality_rows": locality_count,
+        "edge_rows": edge_count,
+        "verification_failures": 0,
+    }
+    expected_aggregate = {
+        key: int(aggregate[key])
+        for key in ("species", "locality_rows", "edge_rows", "verification_failures")
+    }
+    if observed_aggregate != expected_aggregate:
+        raise RuntimeError(
+            f"aggregate frozen geometry drift: expected={expected_aggregate}, "
+            f"observed={observed_aggregate}"
+        )
+
     receipt = {
         "schema": "ttf_relational_environment_genetic_geometry_reconstruction_v0.2",
         "status": "PASS_RESPONSE_BLIND_FRESH_1000_GEOMETRY_RECONSTRUCTION",
+        "contract_sha256": sha256_path(args.contract),
         "source_archive_sha256": args.source_archive_sha256,
-        "candidate_csv_sha256": sha256_path(args.candidates),
+        "candidate_csv_sha256": candidate_sha,
         "neighbor_fraction": float(args.neighbor_fraction),
         "species": species_count,
         "locality_rows": locality_count,
