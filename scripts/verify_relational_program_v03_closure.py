@@ -44,6 +44,7 @@ def main() -> int:
         "b_mask": Path("docs/supporting/relational_environment_character_mask_rule_v0.1.json"),
         "b_empirical": Path("docs/supporting/relational_environment_empirical_opening_rule_v0.1.json"),
         "c_relation": Path("docs/supporting/relational_historical_climate_exposure_rule_v0.1.json"),
+        "c_opportunity": Path("docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json"),
         "c_qualification": Path("docs/supporting/relational_historical_climate_qualification_rule_v0.1.json"),
         "c_mask": Path("docs/supporting/relational_historical_climate_character_mask_rule_v0.1.json"),
         "c_empirical": Path("docs/supporting/relational_historical_climate_empirical_opening_rule_v0.1.json"),
@@ -101,7 +102,7 @@ def main() -> int:
         raise RuntimeError("repaired S3 dyad count drift")
 
     assert_closed_firewall(program)
-    for key in ("b_relation", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_qualification", "c_mask", "c_empirical"):
+    for key in ("b_relation", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
         assert_closed_firewall(p[key])
 
     b = program["slot_B"]
@@ -134,6 +135,7 @@ def main() -> int:
     c = program["slot_C"]
     expected_c_chain = [
         str(paths["c_relation"]),
+        str(paths["c_opportunity"]),
         str(paths["c_qualification"]),
         str(paths["c_mask"]),
         str(paths["c_empirical"]),
@@ -142,6 +144,21 @@ def main() -> int:
         raise RuntimeError("Study C execution-chain drift")
     if float(c["alpha_one_sided"]) != 0.025:
         raise RuntimeError("Study C alpha drift")
+    if c.get("opportunity_rule") != str(paths["c_opportunity"]):
+        raise RuntimeError("Study C opportunity-rule pointer drift")
+    c_opp = p["c_opportunity"]
+    if c_opp.get("schema") != "ttf_relational_historical_climate_opportunity_rule_v0.1":
+        raise RuntimeError("Study C opportunity schema drift")
+    inherited = p["b_opportunity"]["directed_geographic_opportunity"]
+    bound = c_opp["directed_geographic_opportunity"]
+    for key in ("support_radius_km", "minimum_target_coverage", "minimum_source_species_per_target"):
+        if bound[key] != inherited[key]:
+            raise RuntimeError(f"Study C inherited opportunity constant drift: {key}")
+    b_struct = p["b_opportunity"]["structural_gates_before_synthetic_qualification"]
+    c_struct = c_opp["structural_gates_before_synthetic_qualification"]
+    for key in ("minimum_supported_target_species", "minimum_supported_source_species", "minimum_supported_directed_dyads"):
+        if c_struct[key] != b_struct[key]:
+            raise RuntimeError(f"Study C inherited structural gate drift: {key}")
     if float(p["c_qualification"]["inference"]["alpha"]) != 0.025:
         raise RuntimeError("Study C qualification alpha drift")
     if float(p["c_qualification"]["gate_numeric"]["private_type1_wilson95_upper_max"]) != 0.05:
