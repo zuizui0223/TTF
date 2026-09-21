@@ -191,5 +191,6 @@
     "Study_C_T_st_computed": false,
     "Study_C_beta_hist_computed": false
   },
-  "qualification_rule": "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json"
+  "qualification_rule": "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json",
+  "opportunity_rule": "docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json"
 }
