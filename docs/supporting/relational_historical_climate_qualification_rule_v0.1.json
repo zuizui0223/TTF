@@ -64,6 +64,11 @@
       "A": 3,
       "beta_hist_latent": 0.03,
       "rationale": "The same standardized minimally meaningful relational-effect floor as Study B, frozen before Study B qualification."
+    },
+    "private_structure_numeric": {
+      "slope_sd_per_A": 0.12,
+      "source_predictor": "z_geographic_coverage",
+      "target_predictor": "centered_same_order"
     }
   },
   "gate_numeric": {
