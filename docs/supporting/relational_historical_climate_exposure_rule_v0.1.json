@@ -33,7 +33,10 @@
         "builder_git_blob_sha": "c29de34d629142e074f6c4216ae883d0f3cb70da",
         "expected_design_sha256": "f2f2088c294ecfac3c49659439fd7858330452bd8fbea090513a6b3d590c98f8",
         "expected_species": 339,
-        "rule": "Rebuild from the exact frozen source archive, LepTraits file and prior-identity exclusion; require exact design SHA before using species_order as an exclusion universe."
+        "rule": "Rebuild from the exact frozen source archive, LepTraits file and prior-identity exclusion; require exact design SHA before using species_order as an exclusion universe.",
+        "compact_exclusion_manifest": "benchmarks/frozen/relational_prior_S1_species_exclusion_v0.1.json",
+        "expected_species_list_sha256": "56d3e785134656b0393d448df12f9d3745bc5944812395e2c7db7c0e50688f4b",
+        "compact_manifest_note": "Response-blind compact derivative of the exact full design; species_order only."
       },
       "S2_host_resource_geography": {
         "builder": "scripts/census_lepidoptera_host_resource_distribution_v02.py",
@@ -44,14 +47,17 @@
         "HOSTS_commit": "808e0b869f9ec1adf8efff87cf6a395adda103e0",
         "insect_host_accepted_sha256": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
         "native_extant_nondoubtful_wgsrpd3_sha256": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558",
-        "rule": "Regenerate the exact selected 500 with the frozen builder, archive and sidecars; require the stored selected-species digest before using the regenerated selected species as exclusions."
+        "rule": "Regenerate the exact selected 500 with the frozen builder, archive and sidecars; require the stored selected-species digest before using the regenerated selected species as exclusions.",
+        "compact_exclusion_manifest": "benchmarks/frozen/relational_prior_S2_species_exclusion_v0.1.json",
+        "expected_full_census_sha256": "6bd4915a7337ba9f3916c04fdc5673338cde81815a097daca9084bff7822bdf7",
+        "compact_manifest_note": "Response-blind compact derivative of the exact full census; selected species only."
       },
       "B_environment_candidate_universe": {
         "file": "benchmarks/frozen/relational_fresh_candidate_species_v0.1.csv",
         "expected_species": 1000,
         "expected_sha256": "84a271fa65193a9ec87db95ad49e880aab08f77207a794b79483d4db7a9b1725"
       },
-      "union_rule": "C candidate scanning may begin only after all three prior universes are reconstructed/verified. Exclude their set union before hash ranking; no manually curated additions or removals are allowed."
+      "union_rule": "C candidate scanning may begin only after the compact S1/S2 exclusion manifests verify against their frozen source-artifact hashes/species digests and the Study-B candidate CSV verifies its frozen SHA. Exclude the exact set union before hash ranking; no manually curated additions or removals are allowed."
     }
   },
   "external_occurrences": {
