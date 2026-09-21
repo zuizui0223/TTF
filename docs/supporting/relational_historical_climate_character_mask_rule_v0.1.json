@@ -1,0 +1,62 @@
+{
+  "schema": "ttf_relational_historical_climate_character_mask_rule_v0.1",
+  "status": "FROZEN_BEFORE_STUDY_B_FORMAL_QUALIFICATION_AND_BEFORE_ANY_STUDY_C_EXTERNAL_RELATION_RESULT_OR_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-21",
+  "parent_program": "docs/supporting/relational_program_v0.3.json",
+  "parent_relation_rule": "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json",
+  "parent_qualification_rule": "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json",
+  "entry_condition": "Study C may reach this stage only after v0.3 permits opening slot C, all frozen external-data/asset/geometry gates pass, and development synthetic qualification passes at alpha=0.025.",
+  "panel": {
+    "role": "Study C confirmatory panel only; development genetic response remains permanently closed",
+    "inherit_species_and_source_target_roles": true,
+    "backfill": false,
+    "replacement_species": false,
+    "resplitting": false,
+    "graph_and_localities": "unchanged within every surviving species"
+  },
+  "allowed_view": "Reveal and persist only canonical-valid versus noncanonical/missing aligned-character masks: A/C/G/T -> 1; every other symbol -> 0. Nucleotide identity must not persist.",
+  "inherited_parser_contract": {
+    "source": "docs/supporting/genetic_phylogatr_phase2_mask_rule_v0.1.json",
+    "duplicate_aligned_header": "species inadmissible",
+    "unequal_or_zero_aligned_sequence_length": "species inadmissible",
+    "minimum_comparable_fraction": 0.50
+  },
+  "edge_admissibility": {
+    "valid_sequence_pair": "jointly canonical columns >= ceil(0.50 * frozen alignment length)",
+    "valid_frozen_edge": "at least one valid cross-locality sequence pair exists between unchanged frozen graph endpoints",
+    "species_admissible": "every frozen edge is valid",
+    "failed_species": "drop species; do not rewire, switch marker, delete sequences, relax threshold, or backfill"
+  },
+  "post_mask_dyad_support": {
+    "geographic_support": "unchanged Study C frozen opportunity contract",
+    "minimum_surviving_sources_per_target": 5,
+    "unsupported_target": "drop from confirmatory dyad estimand without replacement",
+    "adequacy_gate": "No post-hoc absolute cluster threshold. Exact survivor-geometry synthetic Type-I/power requalification under the already frozen C qualification rule is binding."
+  },
+  "required_survivor_requalification": {
+    "rule": "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json",
+    "same_predictors": true,
+    "same_estimator": true,
+    "same_seed_namespace": true,
+    "same_private_null_cells": true,
+    "same_positive_control_effect": 0.03,
+    "same_alpha": 0.025,
+    "same_wilson_gates": true,
+    "pass_required_before_nucleotide_identity": true,
+    "failure": "NOT_EVALUABLE_C_CHARACTER_MASK_OR_SURVIVOR_GEOMETRY; close v0.3 without replacement"
+  },
+  "forbidden": [
+    "inspect Study C nucleotide identity before survivor requalification passes",
+    "change the 0.50 comparable-site threshold after mask opening",
+    "retain duplicate-header species by changing the parser",
+    "backfill failed species or targets",
+    "replace R_hist, current-environment nuisance, climate variables, time slices, PCA/KDE, controls, alpha, estimator, or effect floor after mask opening",
+    "convert gate failure into a biological null"
+  ],
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
