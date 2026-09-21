@@ -38,7 +38,7 @@ def main()->int:
     args=ap.parse_args()
 
     rule=json.loads(args.rule.read_text()); summary=json.loads(args.opportunity_summary.read_text())
-    if rule.get("schema")!="ttf_relational_environment_qualification_rule_v0.1": raise RuntimeError("bad rule")
+    if rule.get("schema")!="ttf_relational_environment_qualification_rule_v0.2": raise RuntimeError("bad rule")
     if summary.get("status")!="PASS_TO_DEVELOPMENT_SYNTHETIC_QUALIFICATION": raise RuntimeError("development opportunity gate not passed")
     if any(bool(v) for v in summary["response_firewall"].values()): raise RuntimeError("Study B response firewall open")
     data=np.load(args.opportunity_design,allow_pickle=False)
@@ -52,7 +52,10 @@ def main()->int:
     prepared=prepare_dyadic_regression(remap(s),remap(t),x,primary_index=0)
     if prepared.condition_number>=1e4: raise RuntimeError("condition-number gate failed")
 
-    synth=rule["synthetic_worlds"]; worlds=int(synth["worlds_per_cell"]); design_sha=sha256_path(args.opportunity_design)
+    synth=rule["synthetic_worlds"]; gate=rule["gate_numeric"]; worlds=int(synth["worlds_per_cell"]); design_sha=sha256_path(args.opportunity_design)
+    alpha=float(gate["p_value_cutoff"])
+    if not np.isclose(alpha,float(rule["inference"]["alpha"])): raise RuntimeError("qualification alpha drift")
+    type1_upper=float(gate["private_type1_wilson95_upper_max"]); power_lower=float(gate["relational_power_wilson95_lower_min"])
     ns=prepared.absorber.n_source; nt=prepared.absorber.n_target; n=len(s); block=int(args.block_size)
     cells=list(synth["private_null_cells"])+[dict(synth["relational_positive_cell"])]
     out={}
@@ -70,16 +73,16 @@ def main()->int:
         fit=batch_primary_test(prepared,np.tanh(latent))
         if not (np.isfinite(fit.coefficient).all() and np.isfinite(fit.standard_error).all() and np.isfinite(fit.p_value_one_sided).all()):
             raise RuntimeError(f"non-finite world in {name}")
-        rejected+=int(np.count_nonzero(fit.p_value_one_sided<=.05));coefs.extend(map(float,fit.coefficient));ses.extend(map(float,fit.standard_error));completed+=w
+        rejected+=int(np.count_nonzero(fit.p_value_one_sided<=alpha));coefs.extend(map(float,fit.coefficient));ses.extend(map(float,fit.standard_error));completed+=w
       lo,hi=wilson_interval(rejected,worlds)
-      out[name]={"A":A,"beta_R_latent":beta,"worlds":worlds,"rejections_p_le_0p05":rejected,"rejection_rate":rejected/worlds,"wilson95_lower":lo,"wilson95_upper":hi,"coefficient_mean":float(np.mean(coefs)),"coefficient_sd":float(np.std(coefs)),"standard_error_median":float(np.median(ses)),"master_seed_uint64":seed_for(synth["seed_namespace"],design_sha,name)}
+      out[name]={"A":A,"beta_R_latent":beta,"worlds":worlds,"alpha":alpha,"rejections_p_le_alpha":rejected,"rejection_rate":rejected/worlds,"wilson95_lower":lo,"wilson95_upper":hi,"coefficient_mean":float(np.mean(coefs)),"coefficient_sd":float(np.std(coefs)),"standard_error_median":float(np.median(ses)),"master_seed_uint64":seed_for(synth["seed_namespace"],design_sha,name)}
 
-    type1=all(out[c["name"]]["wilson95_upper"]<=.10 for c in synth["private_null_cells"])
-    pos=synth["relational_positive_cell"]["name"]; power=out[pos]["wilson95_lower"]>=.80
+    type1=all(out[c["name"]]["wilson95_upper"]<=type1_upper for c in synth["private_null_cells"])
+    pos=synth["relational_positive_cell"]["name"]; power=out[pos]["wilson95_lower"]>=power_lower
     status="PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION" if type1 and power else "NOT_EVALUABLE_ENVIRONMENT_SYNTHETIC_QUALIFICATION"
-    payload={"schema":"ttf_relational_environment_qualification_result_v0.1","status":status,"rule_sha256":sha256_path(args.rule),"opportunity_design_sha256":design_sha,
+    payload={"schema":"ttf_relational_environment_qualification_result_v0.2","status":status,"rule_sha256":sha256_path(args.rule),"opportunity_design_sha256":design_sha,"alpha":alpha,
       "geometry":{"dyads":n,"source_clusters":ns,"target_clusters":nt,"predictor_condition_number":prepared.condition_number},"cells":out,
-      "gates":{"private_type1_pass":type1,"relational_power_pass":power,"overall_pass":bool(type1 and power)},
+      "gates":{"private_type1_wilson95_upper_max":type1_upper,"relational_power_wilson95_lower_min":power_lower,"private_type1_pass":type1,"relational_power_pass":power,"overall_pass":bool(type1 and power)},
       "response_firewall":{"Study_B_sequence_identity_opened":False,"Study_B_pairwise_genetic_distances_opened":False,"Study_B_T_st_computed":False,"Study_B_beta_R_computed":False}}
     args.output.parent.mkdir(parents=True,exist_ok=True);args.output.write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
     print(json.dumps({"status":status,"gates":payload["gates"],"geometry":payload["geometry"],"cells":out},sort_keys=True));return 0
