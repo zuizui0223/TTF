@@ -81,14 +81,18 @@
     "qualification_rule": "docs/supporting/relational_environment_qualification_rule_v0.2.json",
     "freshness_rule": "docs/supporting/relational_future_family_freshness_amendment_v0.1.json",
     "alpha_one_sided": 0.025,
-    "status_at_freeze": "RULES_FROZEN_QUALIFICATION_NOT_YET_OPENED",
+    "status_at_freeze": "FULL_RELATION_QUALIFICATION_MASK_AND_EMPIRICAL_CONTRACT_FROZEN_BEFORE_STUDY_B_RELATION_BUILD_RESULT",
     "gate_failure": "NOT_EVALUABLE_B; forfeit the B slot and its alpha; proceed to C without replacement or alpha transfer",
     "opportunity_rule": "docs/supporting/relational_environment_opportunity_rule_v0.2.json",
     "execution_chain": [
       "docs/supporting/relational_environment_relation_rule_v0.3.json",
       "docs/supporting/relational_environment_opportunity_rule_v0.2.json",
-      "docs/supporting/relational_environment_qualification_rule_v0.2.json"
-    ]
+      "docs/supporting/relational_environment_qualification_rule_v0.2.json",
+      "docs/supporting/relational_environment_character_mask_rule_v0.1.json",
+      "docs/supporting/relational_environment_empirical_opening_rule_v0.1.json"
+    ],
+    "character_mask_rule": "docs/supporting/relational_environment_character_mask_rule_v0.1.json",
+    "empirical_opening_rule": "docs/supporting/relational_environment_empirical_opening_rule_v0.1.json"
   },
   "slot_C": {
     "name": "historical climate displacement similarity",
