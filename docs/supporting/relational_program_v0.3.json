@@ -1,0 +1,121 @@
+{
+  "schema": "ttf_relational_program_v0.3",
+  "status": "FROZEN_FINITE_PROSPECTIVE_FAMILY_BEFORE_STUDY_B_FORMAL_QUALIFICATION",
+  "frozen_on": "2026-09-21",
+  "supersedes_for_future_program_control": "docs/supporting/relational_program_v0.2.json",
+  "dependency_resolution": {
+    "required_prior_pr": 72,
+    "required_prior_pr_merged": true,
+    "merge_commit": "0c1bfe55f60d162c1a5951730de1f8b65958c081",
+    "reason": "S1 and S2 receipts and contracts must be repository-resolvable before the v0.3 family is frozen."
+  },
+  "scientific_scope": "A finite prospective search for a source-target ecological relation that predicts dyad-level transferability of post-IBD spatial genetic structure.",
+  "completed_predictor_tests_reported_as_prior_evidence": [
+    {
+      "label": "S1 butterfly trait similarity",
+      "p_one_sided": 0.89,
+      "result": "NO_DETECTED_POSITIVE_TRAIT_SIMILARITY_GRADIENT",
+      "receipt": "benchmarks/frozen/lepidoptera_trait_gradient_empirical_primary_result_v0.1.json"
+    },
+    {
+      "label": "S2 larval host-resource geography similarity",
+      "p_one_sided": 0.698,
+      "result": "NO_DETECTED_POSITIVE_HOST_RESOURCE_GEOGRAPHY_GRADIENT",
+      "receipt": "benchmarks/frozen/lepidoptera_host_resource_empirical_primary_result_v0.1.json"
+    },
+    {
+      "label": "S3 relational larval host-resource similarity",
+      "p_one_sided": 0.6626129807437091,
+      "result": "RELATIONAL_HOST_RESOURCE_NULL_WITH_QUALIFIED_POWER",
+      "receipt": "benchmarks/frozen/relational_host_resource_empirical_receipt_v0.1.json",
+      "overlap_audit": "benchmarks/frozen/relational_prior_host_test_overlap_audit_v0.1.json",
+      "independence_note": "S2 and S3 are not independent species replications; repaired S3 survivors are contained in the S2 survivor set."
+    }
+  ],
+  "prospective_family": {
+    "family_id": "relational-v0.3",
+    "familywise_alpha": 0.05,
+    "maximum_confirmatory_openings": 2,
+    "slots_fixed_before_first_v03_qualification": [
+      "B",
+      "C"
+    ],
+    "allocation": {
+      "B_environmental_niche_similarity": 0.025,
+      "C_historical_climate_exposure_similarity": 0.025
+    },
+    "alpha_method": "fixed weighted Bonferroni with equal weights",
+    "no_alpha_recycling": true,
+    "no_replacement_slots": true,
+    "interpretation": "This 0.05 FWER applies to the newly frozen v0.3 prospective family only. The three completed tests are prior evidence, not members whose unused alpha is reclaimed."
+  },
+  "retrospective_all_history_label": {
+    "tests": 5,
+    "members": [
+      "S1",
+      "S2",
+      "S3",
+      "B",
+      "C"
+    ],
+    "method": "Holm step-down at family alpha 0.05",
+    "smallest_p_threshold": 0.01,
+    "role": "secondary retrospective sensitivity label only; it does not alter the primary v0.3 decision rule"
+  },
+  "descriptive_only": {
+    "conditional_order_contrast_v0_3": {
+      "inferential_alpha": 0,
+      "decision_authority": false,
+      "role": "descriptive only",
+      "reason": "same-order and same-family structure is already controlled in Study B; promoting this contrast would create a third confirmatory slot without a distinct primary mechanism."
+    }
+  },
+  "slot_B": {
+    "name": "environmental niche similarity",
+    "relation_rule": "docs/supporting/relational_environment_relation_rule_v0.3.json",
+    "qualification_rule": "docs/supporting/relational_environment_qualification_rule_v0.2.json",
+    "freshness_rule": "docs/supporting/relational_future_family_freshness_amendment_v0.1.json",
+    "alpha_one_sided": 0.025,
+    "status_at_freeze": "RULES_FROZEN_QUALIFICATION_NOT_YET_OPENED",
+    "gate_failure": "NOT_EVALUABLE_B; forfeit the B slot and its alpha; proceed to C without replacement or alpha transfer"
+  },
+  "slot_C": {
+    "name": "historical climate displacement similarity",
+    "relation_rule": "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json",
+    "alpha_one_sided": 0.025,
+    "status_at_freeze": "FULL_RELATION_PANEL_AND_QUALIFICATION_CONTRACT_FROZEN_BEFORE_B_QUALIFICATION",
+    "gate_failure": "NOT_EVALUABLE_C; forfeit the C slot and its alpha; close the program without replacement"
+  },
+  "execution_order": [
+    "Freeze B, C, alpha allocation, freshness rules and stopping states.",
+    "Run Study B external-data/geometry and formal synthetic qualification at alpha=0.025.",
+    "If B rejects on its one-shot empirical test, close v0.3 as DETECTED_B and do not open C.",
+    "If B is a qualified null or NOT_EVALUABLE, proceed to the already frozen C route.",
+    "Run C gates and, only if they pass, its one-shot empirical test at alpha=0.025.",
+    "Close permanently after C; no fourth ecological predictor is authorized."
+  ],
+  "terminal_states": {
+    "DETECTED_B": "B rejects at one-sided p<=0.025; ecological predictor detected in v0.3; C remains unopened.",
+    "DETECTED_C_AFTER_B_NULL": "B is a qualified null and C rejects at p<=0.025; ecological predictor detected in v0.3.",
+    "DETECTED_C_AFTER_B_NOT_EVALUABLE": "B is NOT_EVALUABLE and C rejects at p<=0.025; ecological predictor detected in the evaluable C slot only.",
+    "CLOSED_TWO_NULLS": "B and C are both evaluable qualified nulls; the finite two-slot ecological-predictor program is null and no additional predictor search is authorized.",
+    "CLOSED_PARTIAL_NOT_EVALUABLE": "One slot is a qualified null and the other is NOT_EVALUABLE; search is closed, but this is not a two-null biological conclusion.",
+    "CLOSED_NO_EVALUABLE_TEST": "Both B and C fail gates; search is closed with no biological null conclusion."
+  },
+  "claim_boundary": {
+    "detection_claim": "At least one prospectively frozen v0.3 ecological relation predicts transferability under its licensed domain and controls.",
+    "two_null_claim": "Only CLOSED_TWO_NULLS licenses the statement that neither of the two final frozen ecological relations was detected with qualified power.",
+    "partial_gate_failure": "NOT_EVALUABLE is never converted into a biological null.",
+    "prior_tests": "Completed S1-S3 outcomes remain immutable and cannot be retuned, rerun, or used to choose B/C specifications."
+  },
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false,
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
