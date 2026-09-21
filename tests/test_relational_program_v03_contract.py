@@ -53,6 +53,7 @@ def test_study_b_chain_is_bound_to_alpha_0p025_and_v03_freshness():
 def test_study_c_is_frozen_before_b_and_disjoint_from_entire_b_candidate_universe():
     program = load("docs/supporting/relational_program_v0.3.json")
     history = load("docs/supporting/relational_historical_climate_exposure_rule_v0.1.json")
+    qualification = load("docs/supporting/relational_historical_climate_qualification_rule_v0.1.json")
     freshness = load("docs/supporting/relational_future_family_freshness_amendment_v0.1.json")
 
     assert program["slot_C"]["alpha_one_sided"] == 0.025
@@ -60,11 +61,26 @@ def test_study_c_is_frozen_before_b_and_disjoint_from_entire_b_candidate_univers
         "FULL_RELATION_PANEL_AND_QUALIFICATION_CONTRACT_FROZEN_BEFORE_B_QUALIFICATION"
     )
     assert history["alpha_one_sided"] == 0.025
+    assert program["slot_C"]["qualification_rule"] == "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json"
+    assert history["qualification_rule"] == program["slot_C"]["qualification_rule"]
     assert history["synthetic_qualification"]["alpha"] == 0.025
+    assert qualification["inference"]["alpha"] == 0.025
+    assert qualification["gate_numeric"] == {
+        "predictor_condition_number_max_exclusive": 10000.0,
+        "p_value_cutoff": 0.025,
+        "private_type1_wilson95_upper_max": 0.05,
+        "historical_power_wilson95_lower_min": 0.8,
+        "required_finite_worlds_per_cell": 1000,
+    }
+    assert qualification["synthetic_worlds"]["seed_namespace"] == "relational-history-formal-v0.1"
+    assert qualification["synthetic_worlds"]["source_intercept_sd"] == 0.18
+    assert qualification["synthetic_worlds"]["target_intercept_sd"] == 0.18
+    assert qualification["synthetic_worlds"]["dyad_noise_sd"] == 0.32
     assets = history["historical_climate"]["asset_contract"]
     assert assets["version"] == "1.0"
     assert assets["time_index"] == {"LGM_21ka_BP": -190, "present_0_BP": 20}
     assert len(assets["required_basenames"]) == 8
+    assert all("TraCE21K" in name for name in assets["required_basenames"])
     assert set(name.split("_")[2] for name in assets["required_basenames"]) == {
         "bio01", "bio07", "bio12", "bio15"
     }
@@ -72,6 +88,11 @@ def test_study_c_is_frozen_before_b_and_disjoint_from_entire_b_candidate_univers
     assert history["independent_species_domain"]["exclude_entire_study_B_candidate_universe"] == (
         "benchmarks/frozen/relational_fresh_candidate_species_v0.1.csv"
     )
+    geometry = history["independent_species_domain"]["geometry_eligibility"]
+    assert geometry["minimum_unique_localities"] == 12
+    assert geometry["neighbor_fraction"] == 0.15
+    assert geometry["minimum_endpoint_disjoint_ibd_training_edges"] == 5
+    assert geometry["candidate_cap"] == 1000
 
 
 def test_terminal_states_distinguish_two_nulls_from_not_evaluable():
@@ -107,3 +128,11 @@ def test_workflows_bind_relation_artifact_and_geometry_contract():
     ) in qualification
     assert '"INCOMPLETE_TECHNICAL_EXECUTION"' in qualification
     assert '"NOT_EVALUABLE_B"' in qualification
+
+
+def test_retrospective_five_test_holm_requires_both_future_p_values():
+    program = load("docs/supporting/relational_program_v0.3.json")
+    label = program["retrospective_all_history_label"]
+    assert label["requires_B_and_C_p_values"] is True
+    assert label["no_imputed_p_for_unopened_slot"] is True
+    assert "Do not report a five-test Holm result" in label["if_C_unopened_after_DETECTED_B"]
