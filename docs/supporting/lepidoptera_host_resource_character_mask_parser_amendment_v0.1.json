@@ -1,0 +1,23 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_character_mask_parser_amendment_v0.1",
+  "status": "FROZEN_AFTER_FIRST_STRUCTURAL_MASK_PARSE_ERROR_BEFORE_ANY_PANEL_SURVIVAL_RESULT",
+  "frozen_on": "2026-09-21",
+  "parent_rule": "docs/supporting/lepidoptera_host_resource_character_mask_rule_v0.1.json",
+  "trigger": "The first mask-census execution stopped on a duplicate aligned FASTA header before a complete survivor census or any nucleotide-identity-based statistic was produced.",
+  "policy": {
+    "duplicate_aligned_fasta_header": "species inadmissible; drop species only",
+    "other_character_mask_parser_structural_error": "species inadmissible; drop species only",
+    "repair_or_deduplicate_records": false,
+    "switch_marker_or_panel": false,
+    "rewire_graph": false,
+    "resplit_train_eval": false,
+    "relax_comparable_fraction": false
+  },
+  "rationale": "Structural ambiguity cannot be resolved without introducing a new record-selection rule after character-mask opening began. Fail-closed species removal preserves the frozen graph and response contract and cannot create a favorable genetic outcome.",
+  "outcome_firewall": {
+    "complete_survivor_census_seen": false,
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "transfer_statistic_computed": false
+  }
+}
