@@ -9,8 +9,8 @@ from .lepidoptera_trait_gradient_v02 import target_fe_geometry_residual
 from .private_null_inference import envelope_upper_pvalues
 
 
-REFERENCE_TAG="lepidoptera-host-resource-v03-survivor-reference"
-EVALUATION_TAG="lepidoptera-host-resource-v03-survivor-evaluation"
+REFERENCE_TAG="lepidoptera-host-resource-v01-reference"
+EVALUATION_TAG="lepidoptera-host-resource-v01-evaluation"
 ALLOWED_CELLS=("private","geometry_confounded_trap","resource_breadth_trap","host_resource_positive")
 
 
