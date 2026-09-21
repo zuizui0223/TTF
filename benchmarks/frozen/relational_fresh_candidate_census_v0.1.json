@@ -42,14 +42,15 @@
       "Odonata": 9,
       "Rodentia": 7,
       "Cypriniformes": 7
-    }
+    },
+    "largest_order_fraction": 0.45
   },
   "geometry_summary": {
-    "localities_median": 20.0,
-    "localities_q10": 13.0,
-    "localities_q90": 49.0,
-    "edges_median": 40.0,
-    "min_endpoint_disjoint_median": 29.0
+    "localities_median": 20,
+    "localities_q10": 13,
+    "localities_q90": 49,
+    "edges_median": 40,
+    "min_endpoint_disjoint_median": 29
   },
   "response_firewall": {
     "sequence_identity_opened_for_fresh_1000": false,
@@ -57,5 +58,10 @@
     "T_st_computed_for_fresh_1000": false,
     "ecology_genetics_association_computed": false
   },
-  "next_gate": "GBIF taxon-match + 2010-present coordinate-count pre-census; no environmental metric or genetic response yet"
+  "next_gate": "GBIF taxon-match + 2010-present coordinate-count pre-census; no environmental metric or genetic response yet",
+  "candidate_species_file": {
+    "path": "benchmarks/frozen/relational_fresh_candidate_species_v0.1.csv",
+    "sha256": "84a271fa65193a9ec87db95ad49e880aab08f77207a794b79483d4db7a9b1725",
+    "species_count": 1000
+  }
 }
