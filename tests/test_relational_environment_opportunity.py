@@ -1,5 +1,5 @@
 import numpy as np
-from scripts.attach_relational_environment_opportunity import nearest_coverage
+from ttf.relational_environment import nearest_coverage
 
 
 def test_directed_coverage_is_target_fraction():
