@@ -1,0 +1,109 @@
+{
+  "schema": "ttf_lepidoptera_pair_repeatability_rule_v0.1",
+  "status": "FROZEN_BEFORE_ANY_HOST_PANEL_SPLIT_HALF_PAIR_REPEATABILITY_STATISTIC",
+  "frozen_on": "2026-09-21",
+  "motivation": "The completed butterfly study found weak source and target species main effects and predominantly pair-specific residual variation. The independent host-resource panel has a completed aggregate primary result, but no split-half pair-repeatability statistic has been computed or inspected.",
+  "development_context": {
+    "butterfly_panel_role": "hypothesis-generating development only",
+    "source_exportability_fraction": 0.004778013767686167,
+    "target_receptivity_fraction": 0.013641696901888878,
+    "pair_residual_fraction": 0.981580289330425
+  },
+  "replication_domain": {
+    "panel": "independent moth-rich host-resource Lepidoptera survivor panel",
+    "species": 431,
+    "train_species": 213,
+    "eval_species": 218,
+    "geographically_supported_eval_targets": 204,
+    "frozen_target_source_pairs": 12358,
+    "design_npz_sha256": "b1b9dab23676f6a1ea416c5889fc42676908a54d3abcf042dbaf8605cda2c3bf",
+    "aggregate_host_resource_primary_result_known": true,
+    "split_half_pair_repeatability_known": false
+  },
+  "scientific_question": "After measured pair geometry, host-resource descriptors, and general source/target species tendencies are removed, is cross-species spatial-genetic congruence repeatable for the same source-target species pair across independent halves of the frozen edge alignment?",
+  "split_half_design": {
+    "unit": "frozen target-source species pair",
+    "frozen_alignment": "exact v0.2 host-resource pair alignment; no new edges or species",
+    "row_order": "sort aligned rows by SHA256('pair-repeatability-v01|<target>|<source>|<target_edge_index>|<source_edge_index>')",
+    "split": "first floor(n/2) rows = A; remaining rows = B",
+    "minimum_rows_per_half": 8,
+    "minimum_total_alignment_rows": 16,
+    "response_blind_feasibility": {
+      "retained_pairs": 11034,
+      "source_species": 199,
+      "target_species": 195,
+      "target_species_with_at_least_5_retained_pairs": 191
+    }
+  },
+  "half_score": {
+    "definition": "Pearson correlation between frozen post-IBD source and target edge responses within each deterministic half",
+    "transform": "Fisher z after clipping correlation to [-0.999999,0.999999]"
+  },
+  "known_structure_control": {
+    "fit_separately_in_each_half": true,
+    "pair_covariates": [
+      "all frozen v0.2 host-resource nuisance covariates",
+      "raw native host-resource Jaccard similarity",
+      "log1p total frozen alignment rows"
+    ],
+    "species_terms": [
+      "source species fixed intercept",
+      "target species fixed intercept"
+    ],
+    "primary_residual": "half-specific Fisher-z congruence after ordinary least-squares removal of the frozen pair covariates and source/target fixed intercepts"
+  },
+  "primary_estimand": {
+    "name": "pair_specific_transfer_repeatability",
+    "statistic": "Pearson correlation across retained source-target pairs between half-A and half-B residual congruence",
+    "direction": "positive",
+    "interpretation_positive": "The identity of the source-target pair carries repeatable spatial-genetic congruence beyond measured pair covariates and general source/target tendencies.",
+    "secondary_descriptors": [
+      "cross-half covariance",
+      "split-half pair variance fraction = covariance / mean half variance",
+      "number of retained pairs and species"
+    ]
+  },
+  "synthetic_qualification": {
+    "exact_geometry": true,
+    "reference_worlds_per_nuisance_cell": 499,
+    "evaluation_worlds_per_cell": 500,
+    "nuisance_cells": [
+      "private",
+      "geometry_confounded_trap",
+      "host_breadth_confounded_trap",
+      "host_resource_gradient_trap"
+    ],
+    "positive_cell": {
+      "name": "relational_latent_positive",
+      "construction": "A fixed response-blind PSD species-pair kernel generated from normalized 8-dimensional deterministic species embeddings; latent shared fields follow this kernel with shared_fraction=0.90, plus the unchanged private and noise components.",
+      "purpose": "Represent stable pairwise compatibility that is not reducible to source or target main effects or any observed pair descriptor."
+    },
+    "simulator": {
+      "latent_fields": 6,
+      "private_amplitude": 0.35,
+      "noise_sd": 0.10,
+      "transition_width": 0.20
+    },
+    "inference": "worst-case one-sided upper-tail Monte Carlo envelope across all four nuisance reference distributions",
+    "alpha": 0.05,
+    "gates": {
+      "each_nuisance_type1": "Wilson 95% upper rejection bound <= 0.10",
+      "relational_positive_power": "Wilson 95% lower rejection bound >= 0.80",
+      "all_required": true
+    },
+    "master_seed": 20260921,
+    "reference_seed_tag": "lepidoptera-pair-repeatability-v01-reference",
+    "evaluation_seed_tag": "lepidoptera-pair-repeatability-v01-evaluation"
+  },
+  "stopping_rules": [
+    "Do not compute or inspect the empirical host-panel split-half repeatability statistic until synthetic qualification passes all nuisance and positive gates.",
+    "Do not change the row split, minimum rows, covariates, source/target fixed effects, positive kernel dimension, amplitudes, alpha, or gates after any formal synthetic statistic is inspected.",
+    "If qualification fails, retire v0.1; any successor requires a new name and disjoint synthetic seed namespaces.",
+    "The completed host-resource primary decision remains unchanged regardless of the pair-repeatability result."
+  ],
+  "claim_boundary": {
+    "fully_outcome_blind_confirmatory": false,
+    "reason": "The host-resource aggregate primary result was known before this structural hypothesis was frozen, although the split-half pair-repeatability statistic itself was uncomputed and uninspected.",
+    "butterfly_panel_confirmatory": false
+  }
+}
