@@ -97,5 +97,6 @@
     "Study_C_pairwise_genetic_distances_opened": false,
     "Study_C_T_st_computed": false,
     "Study_C_beta_hist_computed": false
-  }
+  },
+  "parent_opportunity_rule": "docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json"
 }
