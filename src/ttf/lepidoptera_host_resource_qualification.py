@@ -28,6 +28,20 @@ def resource_jaccard_kernel(host_presence: np.ndarray) -> np.ndarray:
     return out
 
 
+def resource_cosine_kernel(host_presence: np.ndarray) -> np.ndarray:
+    h=np.asarray(host_presence,dtype=float)
+    if h.ndim!=2 or len(h)<2:
+        raise ValueError("host_presence must be a species x unit matrix")
+    norm=np.linalg.norm(h,axis=1)
+    if np.any(norm<=np.finfo(float).tiny):
+        raise ValueError("every species must have at least one host-resource unit")
+    z=h/norm[:,None]
+    k=z@z.T
+    k=np.clip(k,-1.0,1.0)
+    np.fill_diagonal(k,1.0)
+    return k
+
+
 def resource_breadth_kernel(
     native_host_species_count: np.ndarray,
     footprint_unit_count: np.ndarray,
@@ -142,5 +156,6 @@ __all__=[
     "nuisance_envelope_pvalues",
     "residualize_host_resource_similarity",
     "resource_breadth_kernel",
+    "resource_cosine_kernel",
     "resource_jaccard_kernel",
 ]
