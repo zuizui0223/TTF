@@ -1,0 +1,42 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_v02_development_diagnostic",
+  "status": "DEVELOPMENT_ON_SPENT_V01_NAMESPACE_ONLY",
+  "executed_on": "2026-09-21",
+  "parent_v01_failure": "benchmarks/frozen/lepidoptera_host_resource_survivor_qualification_result_v0.1.json",
+  "candidate_change": "Add pairwise resource-breadth similarity itself to the response-blind predictor residualization nuisance matrix; keep every other predictor, geometry covariate, pair alignment, simulator amplitude, nuisance family and gate unchanged.",
+  "response_blind_diagnostic": {
+    "v01_residual_correlation_with_pairwise_breadth_similarity": 0.45425388904031766,
+    "v02_candidate_residual_correlation_with_pairwise_breadth_similarity": 4.126769676310603e-16,
+    "v02_candidate_residual_sd": 0.14449597324797417,
+    "supported_targets": 204,
+    "targets_with_within_target_residual_sd_gt_0_05": 202,
+    "targets_with_within_target_residual_sd_gt_0_10": 166
+  },
+  "spent_namespace_synthetic_diagnostic": {
+    "reference_worlds_per_nuisance_cell": 30,
+    "evaluation_worlds_per_cell": 30,
+    "private": {
+      "rejections": 0,
+      "trials": 30,
+      "mean_statistic": 0.00045150155054641573
+    },
+    "geometry_confounded_trap": {
+      "rejections": 1,
+      "trials": 30,
+      "mean_statistic": -0.001937635169497536
+    },
+    "host_breadth_confounded_trap": {
+      "rejections": 0,
+      "trials": 30,
+      "mean_statistic": -0.008084193932020766
+    },
+    "host_resource_gradient_positive": {
+      "rejections": 27,
+      "trials": 30,
+      "mean_statistic": 0.07607717962803112
+    }
+  },
+  "interpretation": "The v0.1 power failure arose because host-resource Jaccard retained strong pairwise breadth similarity after the original nuisance adjustment. Directly controlling that response-blind pairwise breadth similarity separates the breadth trap from the host-resource positive world while retaining substantial within-target predictor variation.",
+  "empirical_outcomes_used": false,
+  "new_followup_sequence_identity_opened": false
+}
