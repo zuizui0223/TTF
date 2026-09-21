@@ -25,11 +25,13 @@
     },
     {
       "label": "S3 relational larval host-resource similarity",
-      "p_one_sided": 0.6626129807437091,
+      "p_one_sided": 0.6376882940222616,
       "result": "RELATIONAL_HOST_RESOURCE_NULL_WITH_QUALIFIED_POWER",
-      "receipt": "benchmarks/frozen/relational_host_resource_empirical_receipt_v0.1.json",
+      "receipt": "benchmarks/frozen/relational_host_resource_empirical_repaired_receipt_v0.2.json",
       "overlap_audit": "benchmarks/frozen/relational_prior_host_test_overlap_audit_v0.1.json",
-      "independence_note": "S2 and S3 are not independent species replications; repaired S3 survivors are contained in the S2 survivor set."
+      "independence_note": "S2 and S3 are not independent species replications; repaired S3 survivors are contained in the S2 survivor set.",
+      "reproduction_audit": "benchmarks/frozen/relational_host_resource_empirical_reproduction_v0.2.json",
+      "repair_note": "Current S3 inference uses the response-independent duplicate-header repair: 420 mask survivors, 399 empirical species, 11696 directed dyads."
     }
   ],
   "prospective_family": {
