@@ -1,0 +1,35 @@
+{
+  "schema": "ttf_relational_host_resource_provenance_audit_v0.2",
+  "status": "PROVENANCE_NOTE_REQUALIFICATION_ESTIMATOR_SHA_TYPO_NUMERICALLY_RESOLVED",
+  "audited_on": "2026-09-21",
+  "scope": "Audit only. This does not alter the frozen relational hypothesis, repaired species set, synthetic gates, empirical T_st values, beta_R, decision rule, or biological interpretation.",
+  "issue": {
+    "artifact": "benchmarks/frozen/relational_host_resource_repaired_survivor_requalification_v0.1.json",
+    "recorded_dyadic_estimator_git_blob_sha": "2b4183fa4ac93b4c06a6c438e26b09fa91f3ccff",
+    "github_resolution": "NOT_FOUND",
+    "authorization_bound_dyadic_estimator_git_blob_sha": "2b418399c2d9a51f23b37b26f58f910ed92e6db1",
+    "authorization": "benchmarks/frozen/relational_host_resource_identity_opening_authorization_v0.2.json"
+  },
+  "independent_numeric_reproduction": {
+    "design_npz_sha256": "597b1499dbdf8d4fb5a30f10a32686a60185305d12a8772019279bda08b82897",
+    "repaired_mask_survivors": 420,
+    "dyads": 11696,
+    "source_clusters": 203,
+    "target_clusters": 196,
+    "predictor_condition_number": 7.76754597755416,
+    "source_digest_sha256": "dd5259c1a26293a6f39e09430d60fd67dc3e26747fae96af596a0260a2fc068b",
+    "target_digest_sha256": "e38283abaeb0fd190d185eed3435ddc77e6b9369232721bed5e62c23b6ef49d2",
+    "empirical_union_digest_sha256": "a3ba1b675546ade34d04f6bee8128b737ab0317380cd585d1f5de13fd58bc7dc",
+    "estimator_git_blob_sha_used": "2b418399c2d9a51f23b37b26f58f910ed92e6db1",
+    "seed_namespace": "relational-host-resource-formal-v0.1",
+    "cells": {
+      "private_A0p5": {"rejections": 53, "wilson95_lower": 0.04074650524859452, "wilson95_upper": 0.06867461683749176, "coefficient_mean": -0.00009749192764809775, "standard_error_median": 0.004144754478556523},
+      "private_A1": {"rejections": 43, "wilson95_lower": 0.03207865341171336, "wilson95_upper": 0.057419003844084014, "coefficient_mean": -0.0002590024524443841, "standard_error_median": 0.0046885033749590735},
+      "private_A2": {"rejections": 55, "wilson95_lower": 0.04249742737476844, "wilson95_upper": 0.07090838767737563, "coefficient_mean": 0.00020990071425581802, "standard_error_median": 0.006095009845704789},
+      "private_A3": {"rejections": 55, "wilson95_lower": 0.04249742737476844, "wilson95_upper": 0.07090838767737563, "coefficient_mean": -0.0000032284982073996217, "standard_error_median": 0.007559531150632168},
+      "host_relation_A3_beta0p03": {"rejections": 921, "wilson95_lower": 0.9026250851159918, "wilson95_upper": 0.9361527842391708, "coefficient_mean": 0.022745301030933026, "standard_error_median": 0.00754177175932305}
+    },
+    "matches_frozen_requalification_cell_summaries_exactly": true
+  },
+  "interpretation": "The unresolved recorded estimator SHA is treated as a provenance-record typo. The repaired synthetic gate is numerically reproducible with the estimator explicitly frozen by the v0.2 empirical authorization. This audit does not retroactively change the pre-response gate and does not license any new analysis."
+}
