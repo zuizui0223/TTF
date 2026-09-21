@@ -48,15 +48,33 @@ None improved held-out-pair RMSE. The geometry-only RMSE was 0.265522. Augmented
 
 This rules out a simple masking explanation within the measured LepTraits variables: the composite null was not produced by one positive trait axis being cancelled by another negative axis. Importantly, host breadth is not the same quantity as the geography of larval host resources. A future independent test can therefore target host-resource geography directly without reinterpreting the present result.
 
+## Independent prospective test: native larval host-resource geography
+
+The completed trait study left one biologically specific alternative unresolved. Host breadth counts how many host taxa a larva can use, but it does not describe **where those resources occur**. We therefore defined a new test on a fully species-disjoint Lepidoptera panel before opening any genetic outcome from that panel.
+
+Larval hosts were taken from the frozen HOSTS database and normalized exactly against WCVP version 13. For each insect species, the primary host-resource footprint was the union of native, extant, non-doubtful WGSRPD level-3 units occupied by its WCVP-resolved larval host plants. Pairwise resource similarity was the Jaccard overlap of these frozen geographic footprints. The new panel excluded all 250 species from the earlier broad-animal identity-opening route, all 339 species from the completed trait-gradient pre-mask universe, and the separately recorded operator-exposure species.
+
+Response-blind screening yielded 500 frozen species before the character-mask gate. The exact survivor panel contained 431 species, inheriting 213 training and 218 evaluation roles; 204 evaluation targets retained the unchanged 500-km geographic support rule, giving 12,358 target-source pairs.
+
+The first host-resource estimator, v0.1, controlled all three nuisance Type-I cells but failed its predeclared positive-power gate: only 115/500 true host-resource-gradient worlds rejected, with Wilson 95% lower power bound 0.195. It was therefore retired before nucleotide identity was opened. Response-blind diagnosis showed that raw host-resource Jaccard still carried strong pairwise resource-breadth similarity. The single v0.2 successor change added pairwise resource-breadth similarity to the frozen nuisance residualization; all other predictor, geometry, alignment, simulator and decision components were unchanged, and a fully disjoint formal seed namespace was used.
+
+On the exact 431-species survivor geometry, v0.2 passed all four gates. Private structure rejected in 1/500 worlds (Wilson 95% upper = 0.0112), the insect-geometry trap in 12/500 (upper = 0.0415), and the host-breadth trap in 29/500 (upper = 0.0821). The true host-resource-gradient cell rejected in 465/500 worlds, with Wilson 95% lower power bound = 0.9042. Only after these four gates passed was nucleotide identity opened once.
+
+The one-shot empirical host-resource statistic was **-0.00704**, with worst-case nuisance-envelope **p = 0.698**. Of 201 finite evaluation-target correlations, 101 were positive and 100 negative; the median was 0.00171 (Q1 = -0.0902, Q3 = 0.0806).
+
+Frozen decision: **NO_DETECTED_POSITIVE_HOST_RESOURCE_GEOGRAPHY_GRADIENT**.
+
+Thus, even when larval resource constraint was represented by the realized native geography of recorded host plants rather than by host breadth alone, species sharing more host-resource geography did not show greater congruence in post-IBD mitochondrial spatial differentiation after insect sampling geometry and simple resource breadth were controlled. This is not evidence that larval resources never affect gene flow; it is evidence that the specific cross-species geographic-overlap gradient tested here was absent in an independently qualified panel.
+
 ## Ecological message
 
 The useful result is not merely “traits were nonsignificant.” The method was explicitly challenged on the exact deployment geometry and could recover a predeclared trait-gradient world while rejecting geometry-only pseudo-gradients. Yet the empirical Lepidoptera panel showed no positive gradient.
 
 The bounded ecological conclusion is therefore:
 
-> Broad taxonomic restriction can define a more homogeneous comparison domain, but similarity in wing size, voltinism, host breadth and habitat affinity does not predict which Lepidoptera share reusable spatial genetic structure after geography is controlled.
+> Neither similarity in broad life-history traits nor overlap in native larval host-resource geography identifies which Lepidoptera share reusable post-IBD spatial genetic structure at the scale tested here.
 
-This shifts the biological explanation away from simple contemporary ecological similarity and toward unmeasured lineage-specific history, barriers, demographic responses, or finer biological mechanisms. Those alternatives are hypotheses for independent future data, not post hoc explanations tested here.
+The independent host-resource follow-up strengthens the boundary around the null result: the failure of the coarse LepTraits gradient cannot be attributed simply to host breadth being an inadequate proxy for where larval resources occur. Together with the exploratory finding that source-species and target-species identity explain little pairwise transfer variation, the remaining structure appears predominantly relational or context-specific. Historical co-exposure, barrier-specific responses, demographic history, finer host configuration, symbiont-associated mitochondrial history, and other lineage-pair mechanisms remain hypotheses for independent future data rather than explanations demonstrated here.
 
 ## Claim boundaries
 
@@ -64,4 +82,6 @@ This shifts the biological explanation away from simple contemporary ecological 
 - No claim that the ecological gradient is exactly zero.
 - No inferential comparison between the descriptive within-Lepidoptera baseline and the earlier all-animal statistic.
 - No claim that any specific historical mechanism caused the observed idiosyncrasy.
-- The empirical conclusion is restricted to the frozen 240-species survivor domain and the COI-family response definition.
+- The original trait-gradient conclusion is restricted to its frozen 240-species survivor domain; the independent host-resource conclusion is restricted to its distinct frozen 431-species survivor domain. Both use the declared COI-family response definition.
+- The host-resource analysis tests overlap of native host-resource footprints, not a direct causal effect of host-plant distribution on gene flow.
+- No post-result tuning of WCVP matching, host footprints, resource-breadth control, geometry covariates or nuisance references is permitted.
