@@ -11,7 +11,7 @@ from .private_null_inference import envelope_upper_pvalues
 
 REFERENCE_TAG="lepidoptera-host-resource-v01-reference"
 EVALUATION_TAG="lepidoptera-host-resource-v01-evaluation"
-ALLOWED_CELLS=("private","geometry_confounded_trap","resource_breadth_trap","host_resource_positive")
+ALLOWED_CELLS=("private","geometry_confounded_trap","host_breadth_confounded_trap","host_resource_gradient_positive")
 
 
 def resource_jaccard_kernel(host_presence: np.ndarray) -> np.ndarray:
@@ -140,7 +140,7 @@ def nuisance_envelope_pvalues(
         {
             "private":np.asarray(private_reference,float),
             "geometry_confounded_trap":np.asarray(geometry_reference,float),
-            "resource_breadth_trap":np.asarray(breadth_reference,float),
+            "host_breadth_confounded_trap":np.asarray(breadth_reference,float),
         },
     )
     return np.asarray(p,float)
