@@ -1,0 +1,28 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_survivor_predictor_design_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_EXACT_SURVIVOR_DESIGN",
+  "executed_on": "2026-09-21",
+  "parent_character_mask": "benchmarks/frozen/lepidoptera_host_resource_character_mask_census_v0.1.json",
+  "parent_qualification_rule": "docs/supporting/lepidoptera_host_resource_qualification_rule_v0.1.json",
+  "survivor_design_npz_sha256": "cef1fb5d34476692a0168eaf527ccea8b676b68409b88cdcf40db202d62f6e6c",
+  "predictor_design_npz_sha256": "60cadfab5b8cf57462ee0e03be92ba44de52c628ad66e2bc8e209f1a40d786a2",
+  "domain": {
+    "species": 431,
+    "train_species": 213,
+    "eval_species": 218,
+    "geographically_supported_eval_targets": 204,
+    "supported_target_source_pairs": 12358,
+    "total_aligned_edge_rows": 709846
+  },
+  "primary_predictor": {
+    "raw": "Jaccard similarity of native WCVP-v13 WGSRPD3 host-resource footprints",
+    "geometry_control": "target-fixed-effect residualization using frozen geometry covariates plus source host-species count and source footprint-unit count",
+    "residual_sd": 0.1710482729975539,
+    "positive_world_kernel": "PSD cosine similarity of binary native host-resource WGSRPD3 presence vectors"
+  },
+  "outcome_firewall": {
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "transfer_statistic_computed": false
+  }
+}
