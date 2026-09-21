@@ -1,3 +1,6 @@
+import json
+from pathlib import Path
+
 import numpy as np
 
 from ttf.relational_environment import (
@@ -58,3 +61,31 @@ def test_pca_sign_and_schoener_d_contracts():
     assert list(s) == [0, 0]
     assert list(t) == [0, 1]
     assert np.isclose(r[0], 1.0)
+
+
+def test_v03_future_family_contract_is_finite_and_alpha_locked():
+    freshness=json.loads(Path("docs/supporting/relational_future_family_freshness_amendment_v0.1.json").read_text())
+    relation=json.loads(Path("docs/supporting/relational_environment_relation_rule_v0.3.json").read_text())
+    qualification=json.loads(Path("docs/supporting/relational_environment_qualification_rule_v0.2.json").read_text())
+    historical=json.loads(Path("docs/supporting/relational_historical_climate_exposure_rule_v0.1.json").read_text())
+
+    excluded=freshness["exact_overlap_with_study_B_candidates"]["union_species"]
+    assert len(excluded)==70
+    assert len(set(excluded))==70
+    assert freshness["execution_rule"]["backfill"] is False
+    assert freshness["execution_rule"]["replacement_candidates"] is False
+    assert freshness["study_C_reservation"]["rule"].startswith("Study C must exclude")
+
+    assert relation["schema"]=="ttf_relational_environment_relation_rule_v0.3"
+    assert relation["freshness_before_pca_and_panel"]["backfill"] is False
+    assert relation["panel_assignment_after_environment_admissibility"]["minimum_admissible_species_after_freshness_exclusion"]==500
+
+    assert qualification["inference"]["alpha"]==0.025
+    assert qualification["gate_numeric"]["p_value_cutoff"]==0.025
+    assert qualification["gate_numeric"]["private_type1_wilson95_upper_max"]==0.05
+    assert qualification["gate_numeric"]["relational_power_wilson95_lower_min"]==0.80
+
+    assert historical["slot"]=="C"
+    assert historical["alpha_one_sided"]==0.025
+    assert historical["independent_species_domain"]["backfill_after_any_C_external_data_or_qualification_result"] is False
+    assert historical["synthetic_qualification"]["alpha"]==0.025
