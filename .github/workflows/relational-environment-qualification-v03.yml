@@ -92,21 +92,27 @@ jobs:
             --output-edges results/qualification/relational_environment_edges_v0.2.csv \
             --output-receipt results/qualification/relational_environment_geometry_reconstruction_v0.2.json
 
-      - name: Require exact frozen geometry reproduction
+      - name: Require frozen semantic geometry reproduction
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          expected=json.loads(Path("benchmarks/frozen/relational_environment_genetic_geometry_receipt_v0.1.json").read_text())
+          legacy=json.loads(Path("benchmarks/frozen/relational_environment_genetic_geometry_receipt_v0.1.json").read_text())
+          contract=json.loads(Path("docs/supporting/relational_environment_geometry_reconstruction_contract_v0.1.json").read_text())
           got=json.loads(Path("results/qualification/relational_environment_geometry_reconstruction_v0.2.json").read_text())
           for key in ("source_archive_sha256","candidate_csv_sha256","species","locality_rows","edge_rows"):
-              assert got[key] == expected[key], (key,got[key],expected[key])
-          assert got["locality_csv_sha256"] == expected["locality_csv_sha256"], (
-              got["locality_csv_sha256"],expected["locality_csv_sha256"])
-          assert got["edge_csv_sha256"] == expected["edge_csv_sha256"], (
-              got["edge_csv_sha256"],expected["edge_csv_sha256"])
+              assert got[key] == legacy[key], (key,got[key],legacy[key])
+          assert got["verification_failures"] == 0
+          assert contract["legacy_byte_hash_policy"]["exact_byte_match_required"] is False
           assert all(v is False for v in got["response_firewall"].values()), got["response_firewall"]
-          print("exact frozen response-blind geometry reproduced")
+          print(json.dumps({
+              "status":got["status"],
+              "species":got["species"],
+              "locality_rows":got["locality_rows"],
+              "edge_rows":got["edge_rows"],
+              "new_locality_sha256":got["locality_csv_sha256"],
+              "new_edge_sha256":got["edge_csv_sha256"],
+          },sort_keys=True))
           PY
 
       - name: Attach frozen geographic opportunity
@@ -126,6 +132,10 @@ jobs:
           import json, os
           p=json.load(open("results/qualification/relational_environment_opportunity_design_v0.2.json"))
           assert all(v is False for v in p["response_firewall"].values()), p["response_firewall"]
+          assert p["status"] in {
+              "PASS_TO_DEVELOPMENT_SYNTHETIC_QUALIFICATION",
+              "NOT_EVALUABLE_ENVIRONMENT_OPPORTUNITY_GEOMETRY",
+          }, p["status"]
           passed=p["status"]=="PASS_TO_DEVELOPMENT_SYNTHETIC_QUALIFICATION"
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write(f"passed={'true' if passed else 'false'}\n")
@@ -152,6 +162,45 @@ jobs:
           print(json.dumps({"status":p["status"],"gates":p["gates"],"geometry":p["geometry"]},sort_keys=True))
           PY
 
+      - name: Freeze response-blind Study-B pre-genetic state
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          out=Path("results/qualification")
+          relation=json.loads(Path("input/relation/relational_environment_design_v0.3.json").read_text())
+          payload={
+              "schema":"ttf_relational_environment_pregenetic_state_v0.3",
+              "relation_status":relation["status"],
+              "response_opened":False,
+          }
+          opp=out/"relational_environment_opportunity_design_v0.2.json"
+          qual=out/"relational_environment_qualification_result_v0.2.json"
+          if opp.exists():
+              payload["opportunity_status"]=json.loads(opp.read_text())["status"]
+          if qual.exists():
+              q=json.loads(qual.read_text())
+              payload["qualification_status"]=q["status"]
+              payload["qualification_alpha"]=q["alpha"]
+          if payload.get("opportunity_status") == "NOT_EVALUABLE_ENVIRONMENT_OPPORTUNITY_GEOMETRY":
+              payload["program_state"]="NOT_EVALUABLE_B"
+              payload["terminal_stage"]="geographic_opportunity"
+          elif payload.get("qualification_status") == "PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION":
+              payload["program_state"]="PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION"
+              payload["terminal_stage"]=None
+          elif "qualification_status" in payload:
+              payload["program_state"]="NOT_EVALUABLE_B"
+              payload["terminal_stage"]="synthetic_qualification"
+          else:
+              payload["program_state"]="INCOMPLETE_TECHNICAL_EXECUTION"
+              payload["terminal_stage"]="infrastructure_or_missing_input"
+          (out/"relational_environment_pregenetic_state_v0.3.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps(payload,sort_keys=True))
+          PY
+
       - name: Upload response-blind qualification bundle
         if: always()
         uses: actions/upload-artifact@v4
@@ -162,5 +211,6 @@ jobs:
             results/qualification/relational_environment_opportunity_design_v0.2.json
             results/qualification/relational_environment_opportunity_design_v0.2.npz
             results/qualification/relational_environment_qualification_result_v0.2.json
+            results/qualification/relational_environment_pregenetic_state_v0.3.json
           retention-days: 30
           if-no-files-found: warn
