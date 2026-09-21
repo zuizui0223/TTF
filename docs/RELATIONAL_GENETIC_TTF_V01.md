@@ -1,6 +1,29 @@
 # Relational genetic TTF v0.1 — fresh hypothesis contract
 
-Status: **prospective successor; response must remain closed until the relational design is frozen and qualified**.
+Status: **Study A empirical complete; host-resource relation null under qualified power. Study B environmental generalization remains response-blind.**
+
+## Post-opening resolution — Study A
+
+The prospectively frozen Lepidoptera host-resource study is complete. A response-independent mask-parser repair removed exactly three species that violated the pre-existing generic Phase-2 duplicate-aligned-header inadmissibility rule. The repair was frozen after the first identity-opening attempt stopped but before any source-target transfer score, `beta_R`, or relational decision existed. The repaired survivor geometry retained 420 mask-admissible species and an empirical union of 399 species, giving 203 source species, 196 target species, and 11,696 directed dyads.
+
+The unchanged synthetic requalification passed on that repaired geometry: all four private-null cells had Wilson 95% rejection-rate upper bounds below 0.10, and the frozen small positive-control world had power 0.921 with Wilson 95% lower bound 0.903. The one authorized empirical continuation then resolved to:
+
+- `beta_R = -0.00147409`;
+- two-way source/target cluster-robust SE `= 0.00418434`;
+- one-sided `p = 0.637688`;
+- decision: `RELATIONAL_HOST_RESOURCE_NULL_WITH_QUALIFIED_POWER`.
+
+Thus, within the frozen fresh Lepidoptera design, similarity in larval host-resource landscape footprints did **not** predict source-target transferability of post-IBD spatial genetic structure. This is not a rescue or reinterpretation of the earlier unconditional TTF result.
+
+An exact reproduction audit confirmed all 11,696 repaired `T_st` values bit-for-bit against the authorized source vector and reproduced the same coefficient, SE and p-value. A later accelerated p-distance shortcut that altered floating-point summation/tie behavior is explicitly discarded for inference. A provenance audit also records that one estimator SHA string in the pre-response repaired-requalification receipt is unresolvable; rerunning the frozen synthetic worlds with the estimator blob explicitly bound by the v0.2 authorization reproduces every cell summary exactly.
+
+Current authoritative receipts:
+- `benchmarks/frozen/relational_host_resource_empirical_repaired_receipt_v0.2.json`;
+- `benchmarks/frozen/relational_host_resource_empirical_reproduction_v0.2.json`;
+- `benchmarks/frozen/relational_host_resource_provenance_audit_v0.2.json`.
+
+No further host/resource retuning, alternative host metric selection, subgroup search, or result-selection rerun is authorized. Study B below remains a separately predeclared response-blind environmental-generalization study.
+
 
 ## Separation from completed TTF studies
 
@@ -160,6 +183,6 @@ Failure of a gate means NOT_EVALUABLE. It never authorizes tuning against empiri
 
 ## Immediate next step
 
-Run a response-blind feasibility census for environmental-niche similarity on a fresh candidate species universe. The census may inspect species identity, taxonomy, coordinates, occurrence availability, environmental coverage, and candidate R_st distributions. It must not compute or inspect fresh-panel genetic distances or T_st.
+Study A is closed. Continue only the separately predeclared Study B response-blind feasibility path: run the fresh 1,000-species GBIF occurrence/environment census without opening any genetic response for that panel. The census may inspect species identity, taxonomy, coordinates, occurrence availability, environmental coverage, and candidate ecological-relation distributions. It must not compute or inspect fresh-panel genetic distances or T_st.
 
-Only after that census should the exact niche metric and fresh development/confirmatory panel sizes be frozen.
+If the frozen cross-taxon environmental representation is not ecologically coherent or fails its prospective feasibility/breadth gates, Study B is `NOT_EVALUABLE`; it must not be retuned into a favorable subset after the Study-A result.
