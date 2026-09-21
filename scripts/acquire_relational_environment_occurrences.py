@@ -53,7 +53,7 @@ def fetch_species(species: str) -> tuple[list[dict[str, object]], dict[str, obje
             "has_geospatial_issue": "false",
             "occurrence_status": "present",
             "year": "2010,2026",
-            "limit": 0,
+            "limit": 1,
         },
     )
     total = int(count_payload.get("count") or 0)
