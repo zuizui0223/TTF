@@ -1,0 +1,59 @@
+name: relational-gbif-precensus
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - ".github/workflows/relational-gbif-precensus.yml"
+      - "benchmarks/frozen/relational_fresh_candidate_species_v0.1.csv"
+      - "scripts/freeze_relational_gbif_precensus.py"
+      - "scripts/freeze_gbif_animal_geometry.py"
+
+permissions:
+  contents: read
+
+jobs:
+  gbif-count-precensus:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install TTF
+        run: python -m pip install -e .
+
+      - name: Run response-blind GBIF count pre-census
+        run: |
+          mkdir -p results/relational_gbif_precensus
+          python scripts/freeze_relational_gbif_precensus.py \
+            --candidates benchmarks/frozen/relational_fresh_candidate_species_v0.1.csv \
+            --output-csv results/relational_gbif_precensus/species_counts.csv \
+            --output-ledger results/relational_gbif_precensus/ledger.json \
+            --start-year 2010 \
+            --end-year 2026 \
+            --minimum-count 30 \
+            --pause-seconds 0.15 \
+            --allow-canonical-fuzzy
+
+      - name: Assert genetic-response firewall
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open("results/relational_gbif_precensus/ledger.json"))
+          fw=p["response_firewall"]
+          assert all(v is False for v in fw.values()), fw
+          assert p["slice"]["species_requested"] == 1000
+          print(p["status_counts"])
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-gbif-precensus-v0.1
+          path: results/relational_gbif_precensus/
+          if-no-files-found: error
