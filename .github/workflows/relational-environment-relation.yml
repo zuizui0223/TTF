@@ -7,7 +7,8 @@ on:
       - relational-ttf-v01
     paths:
       - ".github/workflows/relational-environment-relation.yml"
-      - "docs/supporting/relational_environment_relation_rule_v0.2.json"
+      - "docs/supporting/relational_environment_relation_rule_v0.3.json"
+      - "docs/supporting/relational_future_family_freshness_amendment_v0.1.json"
       - "benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv"
       - "src/ttf/relational_environment.py"
       - "src/ttf/relational_external.py"
@@ -91,23 +92,28 @@ jobs:
           python scripts/build_relational_environment_relation.py \
             --occurrences results/environment/occurrences_v0.2.csv \
             --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv \
-            --rule docs/supporting/relational_environment_relation_rule_v0.2.json \
+            --rule docs/supporting/relational_environment_relation_rule_v0.3.json \
+            --freshness-rule docs/supporting/relational_future_family_freshness_amendment_v0.1.json \
             --raster rasters/CHELSA_bio1_1981-2010_V.2.1.tif \
             --raster rasters/CHELSA_bio7_1981-2010_V.2.1.tif \
             --raster rasters/CHELSA_bio12_1981-2010_V.2.1.tif \
             --raster rasters/CHELSA_bio15_1981-2010_V.2.1.tif \
-            --output-npz results/environment/relational_environment_design_v0.2.npz \
-            --output-summary results/environment/relational_environment_design_v0.2.json
+            --output-npz results/environment/relational_environment_design_v0.3.npz \
+            --output-summary results/environment/relational_environment_design_v0.3.json
 
       - name: Assert Study-B genetic firewall
         run: |
           python - <<'PY'
           import json
-          p=json.load(open("results/environment/relational_environment_design_v0.2.json"))
+          p=json.load(open("results/environment/relational_environment_design_v0.3.json"))
           assert p["status"] == "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN", p["status"]
           assert all(v is False for v in p["response_firewall"].values()), p["response_firewall"]
           assert p["environment_admissible_species"] >= 500
+          assert p["freshness_excluded_total"] == 70
+          assert p["environment_admissible_species"] == p["environment_admissible_before_freshness"] - p["freshness_excluded_environment_admissible"]
           print(json.dumps({
+              "environment_admissible_before_freshness": p["environment_admissible_before_freshness"],
+              "freshness_excluded_environment_admissible": p["freshness_excluded_environment_admissible"],
               "environment_admissible_species": p["environment_admissible_species"],
               "development_dyads": p["development_dyads"],
               "confirmatory_dyads": p["confirmatory_dyads"],
@@ -117,10 +123,10 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: relational-environment-relation-v0.2
+          name: relational-environment-relation-v0.3
           path: |
             results/environment/occurrence_ledger_v0.2.json
-            results/environment/relational_environment_design_v0.2.npz
-            results/environment/relational_environment_design_v0.2.json
+            results/environment/relational_environment_design_v0.3.npz
+            results/environment/relational_environment_design_v0.3.json
           retention-days: 30
           if-no-files-found: error
