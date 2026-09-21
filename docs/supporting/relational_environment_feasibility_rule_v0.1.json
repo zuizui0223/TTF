@@ -26,7 +26,13 @@
   },
   "environment_contract": {
     "representation": "one common environmental feature space across all retained species",
-    "candidate_variables": ["temperature summary", "precipitation summary", "seasonality", "aridity/moisture", "elevation"],
+    "candidate_variables": [
+      "temperature summary",
+      "precipitation summary",
+      "seasonality",
+      "aridity/moisture",
+      "elevation"
+    ],
     "pca": "global PCA fit without genetic outcomes; exact rasters, versions, scaling and retained axes must be frozen after feasibility and before response opening",
     "primary_overlap_candidate": "Schoener's D",
     "primary_overlap_candidate_authorized": false
@@ -53,7 +59,7 @@
     "species_with_usable_external_niche": ">= 500 fresh species before final panel split",
     "nondegenerate_relation": "candidate R_st must not be effectively binary or constant; report quantiles and effective unique values",
     "geography_separability": "candidate R_st must retain substantial within-geographic-support variation; no pass/fail numeric threshold may be invented after seeing genetic response",
-    "taxonomic_breadth": "report order composition and concentration; final panel must not silently collapse to one order",
+    "taxonomic_breadth": "largest order fraction <=0.50 and at least four orders each contributing >=0.05 of the ecology-admissible fresh pool",
     "dyad_support": "report eligible dyads per source and target before choosing final development/confirmatory sizes"
   },
   "decision_states": [
@@ -65,5 +71,13 @@
     "genetic_response_opened": false,
     "T_st_computed": false,
     "empirical_relation_response_association_computed": false
+  },
+  "taxonomic_breadth_guardrail": {
+    "rationale": "The primary claim is cross-taxon relational transfer, so a response-blind ecological filter must not turn the final test into a de facto single-order study.",
+    "largest_single_order_fraction_max": 0.5,
+    "minimum_orders_with_fraction_ge_0_05": 4,
+    "evaluation_time": "after external-ecology admissibility and before development/confirmatory panel freeze",
+    "if_failed": "NOT_EVALUABLE_GENERAL_CROSS_TAXON_RELATIONAL_TTF; a taxon-specific successor requires a new name and new prospective protocol",
+    "leave_largest_order_out": "secondary breadth sensitivity only; cannot rescue or overturn the frozen primary decision"
   }
 }
