@@ -13,9 +13,20 @@
     "exclude_entire_study_B_candidate_universe": "benchmarks/frozen/relational_fresh_candidate_species_v0.1.csv",
     "reason": "C must be species-disjoint from all prior confirmatory design universes and from the entire B fresh-1000, regardless of B feasibility or outcome.",
     "ranking": "SHA256('relational-history-candidate-v0.1|<phylogatr_source_sha256>|<species>'), species tie-break",
-    "scan_rule": "Scan geometry-eligible source-archive species in frozen hash order after all exclusions; retain the first 1000 if available.",
+    "scan_rule": "After all frozen exclusions, scan source-archive metadata in SHA256('relational-history-candidate-v0.1|<phylogatr_source_sha256>|<species>') order; evaluate the exact frozen geometry eligibility above without nucleotide identity; retain the first 1000 eligible species, or all eligible species if 500-999; fewer than 500 is NOT_EVALUABLE.",
     "minimum_candidate_species": 500,
-    "backfill_after_any_C_external_data_or_qualification_result": false
+    "backfill_after_any_C_external_data_or_qualification_result": false,
+    "geometry_eligibility": {
+      "taxon": "Animalia excluding Aves and Chiroptera, matching the inherited relational candidate firewall",
+      "marker": "COI-family locus under the frozen aliases in docs/supporting/relational_genetic_protocol_v0.1.json",
+      "minimum_unique_localities": 12,
+      "neighbor_fraction": 0.15,
+      "minimum_endpoint_disjoint_ibd_training_edges": 5,
+      "character_identity_used": false,
+      "candidate_cap": 1000,
+      "selection_if_eligible_between_500_and_999": "retain all eligible species in frozen hash order; do not lower the minimum or scan a response-dependent replacement universe",
+      "failure_if_fewer_than_500": "NOT_EVALUABLE_HISTORICAL_CANDIDATE_GEOMETRY"
+    }
   },
   "external_occurrences": {
     "provider": "GBIF occurrence/search",
@@ -64,24 +75,26 @@
       "official_download_surface": "CHELSA EnviCloud distribution linked by the official dataset page",
       "version": "1.0",
       "file_format": "COG GeoTIFF",
-      "basename_pattern": "CHELSA_TraCE21k_<variable>_<time_index>_V1.0.tif",
+      "basename_pattern": "CHELSA_TraCE21K_<variable>_<time_index>_V1.0.tif",
       "time_index": {
         "LGM_21ka_BP": -190,
         "present_0_BP": 20
       },
       "required_basenames": [
-        "CHELSA_TraCE21k_bio01_-190_V1.0.tif",
-        "CHELSA_TraCE21k_bio07_-190_V1.0.tif",
-        "CHELSA_TraCE21k_bio12_-190_V1.0.tif",
-        "CHELSA_TraCE21k_bio15_-190_V1.0.tif",
-        "CHELSA_TraCE21k_bio01_20_V1.0.tif",
-        "CHELSA_TraCE21k_bio07_20_V1.0.tif",
-        "CHELSA_TraCE21k_bio12_20_V1.0.tif",
-        "CHELSA_TraCE21k_bio15_20_V1.0.tif"
+        "CHELSA_TraCE21K_bio01_-190_V1.0.tif",
+        "CHELSA_TraCE21K_bio07_-190_V1.0.tif",
+        "CHELSA_TraCE21K_bio12_-190_V1.0.tif",
+        "CHELSA_TraCE21K_bio15_-190_V1.0.tif",
+        "CHELSA_TraCE21K_bio01_20_V1.0.tif",
+        "CHELSA_TraCE21K_bio07_20_V1.0.tif",
+        "CHELSA_TraCE21K_bio12_20_V1.0.tif",
+        "CHELSA_TraCE21K_bio15_20_V1.0.tif"
       ],
       "first_download_freeze": "Before any Study-C character mask, nucleotide identity, T_st, or beta_hist is opened, record the exact resolved object URL and SHA256 of all eight required rasters in a response-blind asset receipt.",
       "substitution_rule": "No alternate time slice, variable, version, paleoclimate product, or best-performing asset may replace a missing required raster. Missing/unresolvable required assets make slot C NOT_EVALUABLE_EXTERNAL_DATA.",
-      "raster_sampling": "Require a geographic CRS and sample each frozen current occurrence at its longitude/latitude. Do not interpolate across nodata; a row is retained only when all eight primary raster values are finite."
+      "raster_sampling": "Require a geographic CRS and sample each frozen current occurrence at its longitude/latitude. Do not interpolate across nodata; a row is retained only when all eight primary raster values are finite.",
+      "filename_evidence": "Published CHELSA-TraCE21k usage identifies the 0-BP and LGM bio01 assets as CHELSA_TraCE21K_bio01_20_V1.0.tif and CHELSA_TraCE21K_bio01_-190_V1.0.tif; the frozen logical asset set applies the same provider naming convention to bio07, bio12 and bio15.",
+      "case_policy": "Provider-object lookup may resolve a case-only spelling difference in the literal object key, but variable, time index, version and dataset identity must exactly match the frozen logical asset. The exact resolved URL and SHA256 are frozen on first response-blind download; no alternate scientific asset is allowed."
     }
   },
   "historical_displacement_relation": {
@@ -130,11 +143,11 @@
     "alternative": "beta_hist > 0"
   },
   "synthetic_qualification": {
+    "rule": "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json",
     "alpha": 0.025,
     "worlds_per_cell": 1000,
     "minimally_meaningful_beta_hist_latent": 0.03,
-    "private_null_family": "inherit the A=0.5,1,2,3 source/target-private world family from Study B, with current-environment and geographic controls included",
-    "private_type1_gate": "Wilson 95% upper bound of p<=0.025 rejection rate <=0.05 in every null cell",
+    "private_type1_gate": "Wilson 95% upper bound of p<=0.025 rejection rate <=0.05 in every frozen private-null cell",
     "positive_power_gate": "Wilson 95% lower bound of p<=0.025 rejection rate >=0.80 for beta_hist_latent=0.03",
     "numerical_gate": "1000/1000 worlds finite",
     "failure": "NOT_EVALUABLE_HISTORICAL_SYNTHETIC_QUALIFICATION; slot C is forfeited with no replacement and no alpha reassignment"
@@ -144,12 +157,13 @@
     "Do not substitute ice-sheet/permafrost presence, refugial overlap, barrier crossing, or another historical predictor if this frozen C route fails.",
     "Any external-data, geometry, mask, or synthetic gate failure is NOT_EVALUABLE, not a biological null.",
     "No alternative C slot may be added.",
-    "Do not alter the frozen LGM time index -190, 0-BP time index 20, or required eight-raster basename set after asset resolution begins."
+    "Do not alter the frozen LGM time index -190, 0-BP time index 20, or required eight logical raster-asset set after asset resolution begins."
   ],
   "response_firewall": {
     "Study_C_sequence_identity_opened": false,
     "Study_C_pairwise_genetic_distances_opened": false,
     "Study_C_T_st_computed": false,
     "Study_C_beta_hist_computed": false
-  }
+  },
+  "qualification_rule": "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json"
 }
