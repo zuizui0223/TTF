@@ -17,8 +17,19 @@ from pathlib import Path
 
 try:
     from scripts.freeze_gbif_animal_geometry import accepted_taxon_match, get_json
-except ModuleNotFoundError:  # direct `python scripts/...py` execution
-    from freeze_gbif_animal_geometry import accepted_taxon_match, get_json
+except ModuleNotFoundError:
+    # Support both direct CLI execution and importlib-based test loading without
+    # requiring scripts/ to be an importable package.
+    import importlib.util
+
+    _sibling = Path(__file__).with_name("freeze_gbif_animal_geometry.py")
+    _spec = importlib.util.spec_from_file_location("_ttf_freeze_gbif_animal_geometry", _sibling)
+    if _spec is None or _spec.loader is None:
+        raise RuntimeError(f"cannot load GBIF helper module from {_sibling}")
+    _module = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(_module)
+    accepted_taxon_match = _module.accepted_taxon_match
+    get_json = _module.get_json
 
 SCHEMA = "ttf_relational_gbif_precensus_v0.1"
 
