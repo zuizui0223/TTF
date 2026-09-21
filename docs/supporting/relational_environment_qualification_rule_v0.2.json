@@ -1,0 +1,94 @@
+{
+  "schema": "ttf_relational_environment_qualification_rule_v0.2",
+  "status": "FROZEN_AT_ALPHA_0P025_BEFORE_FORMAL_SYNTHETIC_RESULTS_AND_BEFORE_ANY_STUDY_B_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-21",
+  "parent_relation_rule": "docs/supporting/relational_environment_relation_rule_v0.3.json",
+  "parent_opportunity_rule": "docs/supporting/relational_environment_opportunity_rule_v0.1.json",
+  "inference": {
+    "inheritance": "Use the same source-fixed-effect + target-fixed-effect, two-way source/target cluster-robust one-sided beta_R test that passed the prospective host-resource study. It is requalified on Study B development geometry rather than assumed valid.",
+    "predictors_in_order": [
+      "z_R_env",
+      "z_geographic_coverage",
+      "centered_same_class",
+      "centered_same_order",
+      "centered_same_family",
+      "z_abs_log_locality_count_ratio"
+    ],
+    "primary_index": 0,
+    "alternative": "beta_R > 0",
+    "alpha": 0.025,
+    "ordinary_iid_dyad_inference_forbidden": true,
+    "fallback_after_failure": "none; a failed formal qualification is NOT_EVALUABLE, not authority to choose another estimator"
+  },
+  "synthetic_worlds": {
+    "worlds_per_cell": 1000,
+    "seed_namespace": "relational-environment-formal-v0.1",
+    "seed_rule": "uint64 from first 16 hex characters of SHA256('<namespace>|<opportunity_design_sha256>|<cell_name>')",
+    "response_link": "T_st_synthetic = tanh(latent_st)",
+    "source_intercept_sd": 0.18,
+    "target_intercept_sd": 0.18,
+    "dyad_noise_sd": 0.32,
+    "fixed_control_effects": {
+      "z_geographic_coverage": 0.1,
+      "centered_same_class": 0.03,
+      "centered_same_order": 0.04,
+      "centered_same_family": 0.04,
+      "z_abs_log_locality_count_ratio": 0.05
+    },
+    "private_structure": "source-specific slope on z_geographic_coverage plus target-specific slope on centered_same_order; each slope SD = 0.12*A",
+    "private_null_cells": [
+      {
+        "name": "private_A0p5",
+        "A": 0.5,
+        "beta_R_latent": 0
+      },
+      {
+        "name": "private_A1",
+        "A": 1,
+        "beta_R_latent": 0
+      },
+      {
+        "name": "private_A2",
+        "A": 2,
+        "beta_R_latent": 0
+      },
+      {
+        "name": "private_A3",
+        "A": 3,
+        "beta_R_latent": 0
+      }
+    ],
+    "relational_positive_cell": {
+      "name": "environment_relation_A3_beta0p03",
+      "A": 3,
+      "beta_R_latent": 0.03,
+      "rationale": "Same standardized minimally meaningful relational-effect floor used prospectively in the predecessor qualification; retained unchanged while the v0.3 family lowers only the decision alpha to 0.025."
+    }
+  },
+  "gates": {
+    "predictor_condition_number": "< 1e4 after exact two-way FE absorption on development eligible dyads",
+    "private_type1": "Wilson 95% upper bound of p<=0.025 rejection rate <=0.05 for every frozen private-null cell",
+    "relational_power": "Wilson 95% lower bound of p<=0.025 rejection rate >=0.80 for environment_relation_A3_beta0p03",
+    "numerical": "1000/1000 worlds in every cell finite"
+  },
+  "after_development_pass": "Only then may the confirmatory panel open canonical-valid/noncanonical masks. Nucleotide identity remains closed until exact confirmatory survivor geometry reruns this same v0.2 qualification rule at alpha=0.025 and passes.",
+  "forbidden": [
+    "change beta_R floor after seeing environment relation or Study B genetic response",
+    "change world generator, estimator, alpha, or Wilson gates after formal results",
+    "use Study A host-resource empirical result as a tuning input",
+    "interpret qualification failure as evidence that environmental similarity lacks biological effect",
+    "evaluate formal qualification at p<=0.05 after the v0.3 family freeze",
+    "relax the private-null Wilson upper gate from 0.05 after seeing qualification results"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  },
+  "gate_numeric": {
+    "p_value_cutoff": 0.025,
+    "private_type1_wilson95_upper_max": 0.05,
+    "relational_power_wilson95_lower_min": 0.8
+  }
+}
