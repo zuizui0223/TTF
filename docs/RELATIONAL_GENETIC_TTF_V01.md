@@ -28,33 +28,41 @@ A positive result licenses the statement that transferability is relational: eco
 
 A null result licenses only that the frozen ecological relation did not predict transfer in the tested domain.
 
-## Primary relational covariate: habitat / environmental-niche similarity
+## Primary relational covariate resolved response-blind: host-resource similarity
 
-v0.1 uses **environmental-niche similarity** as the sole primary relation because it can be defined consistently across the full taxonomic panel.
+The primary fresh test is now **Lepidoptera host-resource similarity**, not a global environmental PCA.
 
-The exact environmental variables, occurrence source, temporal filter, spatial thinning, background domain, minimum occurrence count, niche representation, overlap metric, missing-data rule, and transformations must be frozen before any genetic response for the fresh panel is opened.
+This choice was made before opening any fresh genetic response. A pre-existing host-resource design had already been constructed under an explicit zero-response firewall: sequence identity, pairwise genetic distance and transfer statistics were all unopened. It provides a direct biological relation rather than a generic similarity proxy.
 
-Preferred implementation target:
+The base host design contains 500 Lepidoptera. To make panel separation maximally conservative, 13 species that also appeared in the earlier conditional response-blind panel are dropped even though their nucleotide identity and genetic transfer outcomes were never opened. The resulting primary panel has:
 
-- construct each species' environmental niche from external occurrence records;
-- use one common predeclared environmental feature space for every species;
-- define R_st with a symmetric continuous niche-overlap statistic;
-- retain the continuous value; do not choose a high/low similarity threshold from genetic outcomes.
+- 487 species: 246 inherited source/train species and 241 inherited target/evaluation species;
+- 226 evaluation targets with at least five geographically supported sources;
+- 15,094 eligible directed source-target pairs;
+- 47 families.
 
-Candidate default for the next response-blind feasibility step is Schoener's D in a frozen environmental PCA space. This is **not yet authorized** until occurrence coverage and missingness are audited without genetic outcomes.
+For each supported pair, the primary relation is
+
+    R_host_st = Jaccard(primary-native larval host-resource WGSrpd3 footprint_s,
+                        primary-native larval host-resource WGSrpd3 footprint_t)
+
+It remains continuous. No high/low overlap threshold may be selected.
+
+The response-blind distribution is strongly non-degenerate: the supported-pair Jaccard spans 0 to 1 with median approximately 0.350. Importantly, it is not simply a repackaging of geographic support: its response-blind Spearman association is about 0.043 with geographic coverage, -0.087 with source-target centroid distance, and near zero with edge/locality sampling-size ratios.
+
+The exact primary contract is frozen in `docs/supporting/relational_host_resource_protocol_v0.1.json`, with its response-blind audit in `benchmarks/frozen/relational_host_resource_response_blind_audit_v0.1.json`.
+
+## Habitat / environmental niche becomes external generalization
+
+The 1,000-species cross-taxon candidate census remains useful, but it no longer gates the primary result. The panel mixes terrestrial, freshwater and marine animals, making a single terrestrial bioclimate PCA a weaker biological definition of habitat similarity.
+
+The GBIF feasibility workflow therefore continues under a strict response firewall as a **future external-generalization study**. If a coherent cross-realm environmental representation can be frozen prospectively, it can ask whether relational transfer extends beyond Lepidoptera host resources. It cannot replace, rescue or reinterpret the host-resource primary test.
+
+Schoener's D in an environmental PCA remains only a candidate for that successor and is not authorized by the host-resource study.
 
 ## Secondary relations
 
-Host/resource similarity may be scientifically stronger for taxa where a defensible external interaction ontology exists, but it is not allowed to replace the primary relation after response opening.
-
-It may enter only under a separately frozen secondary protocol with:
-- taxon-specific applicability declared in advance;
-- external provenance;
-- a fixed similarity definition;
-- a fixed missingness rule;
-- no use of genetic response for coverage thresholds or ontology choices.
-
-Taxonomic/phylogenetic similarity is a covariate/control, not the primary mechanism.
+Within the primary Lepidoptera study, host breadth and host identity are secondary descriptors. Taxonomic family membership is a predeclared control. Any environmental relation remains a separately frozen external-generalization analysis and cannot be selected after genetic response opening.
 
 ## Do not repeat the same-order source-pool contrast
 
