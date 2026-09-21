@@ -7,6 +7,11 @@ on:
         description: "Completed relational-environment-relation workflow run ID containing relational-environment-relation-v0.3"
         required: true
         type: string
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_relation_artifact_binding_v0.3.json"
 
 permissions:
   contents: read
@@ -19,6 +24,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Resolve exact frozen relation workflow run
+        id: relation
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "run_id=${{ inputs.relation_run_id }}" >> "$GITHUB_OUTPUT"
+          else
+            python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_relation_artifact_binding_v0.3.json").read_text())
+          assert p["schema"] == "ttf_relational_environment_relation_artifact_binding_v0.3"
+          assert p["status"] == "FROZEN_RESPONSE_BLIND_RELATION_ARTIFACT"
+          assert p["artifact_name"] == "relational-environment-relation-v0.3"
+          run_id=int(p["workflow_run_id"])
+          assert run_id > 0
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"run_id={run_id}\n")
+          print(json.dumps({"workflow_run_id":run_id,"head_sha":p["head_sha"]},sort_keys=True))
+          PY
+          fi
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -30,18 +57,26 @@ jobs:
         with:
           name: relational-environment-relation-v0.3
           path: input/relation
-          run-id: ${{ inputs.relation_run_id }}
+          run-id: ${{ steps.relation.outputs.run_id }}
           github-token: ${{ github.token }}
 
       - name: Verify relation artifact is response-blind v0.3
         run: |
           python - <<'PY'
-          import json
+          import hashlib, json
           from pathlib import Path
+          def sha(path):
+              h=hashlib.sha256()
+              with Path(path).open("rb") as f:
+                  for b in iter(lambda:f.read(1<<20),b""): h.update(b)
+              return h.hexdigest()
           p=json.loads(Path("input/relation/relational_environment_design_v0.3.json").read_text())
           assert p["schema"] == "ttf_relational_environment_relation_design_v0.3", p["schema"]
           assert p["status"] == "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN", p["status"]
           assert p["freshness_excluded_total"] == 70
+          assert p["inputs"]["rule_sha256"] == sha("docs/supporting/relational_environment_relation_rule_v0.3.json")
+          assert p["inputs"]["freshness_rule_sha256"] == sha("docs/supporting/relational_future_family_freshness_amendment_v0.1.json")
+          assert p["inputs"]["candidate_csv_sha256"] == sha("benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv")
           assert all(v is False for v in p["response_firewall"].values()), p["response_firewall"]
           print({k:p[k] for k in (
               "environment_admissible_before_freshness",
