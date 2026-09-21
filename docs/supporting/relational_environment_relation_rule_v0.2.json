@@ -1,0 +1,109 @@
+{
+  "schema": "ttf_relational_environment_relation_rule_v0.2",
+  "status": "FROZEN_BEFORE_FULL_ENVIRONMENTAL_RELATION_RESULT_AND_BEFORE_ANY_STUDY_B_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-21",
+  "parent_program": "docs/supporting/relational_program_v0.2.json",
+  "parent_feasibility_rule": "docs/supporting/relational_environment_feasibility_rule_v0.1.json",
+  "gbif_feasibility_run": {
+    "workflow_run_id": 35553457312,
+    "commit": "824a92209f600ddb138d286a7e96c917b736e507",
+    "status": "PASS_OCCURRENCE_AVAILABILITY",
+    "fresh_species_tested": 1000,
+    "usable_ge_30_after_provisional_10km_thinning": 756
+  },
+  "separation_from_host_result": {
+    "study_A_host_result_may_not_modify_this_rule": true,
+    "pre_host_candidate_followed": "Schoener's D in a common environmental PCA space",
+    "study_B_genetic_response_opened": false
+  },
+  "occurrence_acquisition": {
+    "provider": "GBIF occurrence/search",
+    "taxon_match": "exact canonical species-rank match only",
+    "year": "2010-2026 inclusive",
+    "has_coordinate": true,
+    "has_geospatial_issue": false,
+    "occurrence_status": "present",
+    "search_hard_limit_acknowledged": 100000,
+    "page_size": 300,
+    "maximum_pages_per_species": 20,
+    "page_selection": "if <=6000 indexed rows, retrieve sequential pages; otherwise retrieve 20 deterministic evenly spaced page offsets across [0,min(count,100000)-300]",
+    "exact_coordinate_duplicates": "retain the lowest GBIF key at each exact coordinate",
+    "priority": "SHA256('relational-env-occ-v0.1|<species>|<gbif_key>'), then gbif_key",
+    "spatial_thinning_km": 10,
+    "greedy_thinning_order": "frozen priority order",
+    "maximum_retained_occurrences_per_species": 200,
+    "minimum_retained_occurrences_per_species": 30
+  },
+  "environment": {
+    "dataset": "CHELSA V2.1 bioclim 1981-2010",
+    "resolution": "30 arc-sec (~1 km)",
+    "variables": [
+      {"name": "bio1", "meaning": "mean annual near-surface air temperature"},
+      {"name": "bio7", "meaning": "annual near-surface air temperature range"},
+      {"name": "bio12", "meaning": "annual precipitation"},
+      {"name": "bio15", "meaning": "precipitation seasonality"}
+    ],
+    "urls": [
+      "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio/CHELSA_bio1_1981-2010_V.2.1.tif",
+      "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio/CHELSA_bio7_1981-2010_V.2.1.tif",
+      "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio/CHELSA_bio12_1981-2010_V.2.1.tif",
+      "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio/CHELSA_bio15_1981-2010_V.2.1.tif"
+    ],
+    "missing_environment": "drop an occurrence if any of four variables is non-finite/nodata; species must still retain >=30 points"
+  },
+  "common_environment_space": {
+    "species_equal_pca_cap": 50,
+    "pca_sampling": "first up to 50 retained occurrence points per species in frozen occurrence-priority order",
+    "standardization": "pooled PCA-sample mean and population SD for each of four variables",
+    "pca": "eigendecomposition of standardized pooled covariance; canonicalize each eigenvector sign so its largest-absolute loading is positive",
+    "axes_retained": 2,
+    "whitening": "divide PC1 and PC2 scores by sqrt of their pooled eigenvalues",
+    "variance_explained_report_only": true
+  },
+  "schoener_d": {
+    "grid": "50 x 50 fixed grid in whitened PC1-PC2 space",
+    "grid_bounds": "pooled PCA-sample 0.5th to 99.5th percentile on each axis plus 10% range padding",
+    "species_density": "isotropic Gaussian KDE evaluated at grid-cell centers",
+    "bandwidth": "Scott factor n_species^(-1/6) in the globally whitened two-dimensional space",
+    "normalization": "each species KDE grid sums to 1",
+    "relation": "R_env_st = 1 - 0.5 * sum_grid(abs(p_source - p_target))",
+    "range": "[0,1]",
+    "thresholding_forbidden": true
+  },
+  "panel_assignment_after_environment_admissibility": {
+    "minimum_admissible_species": 500,
+    "ranking": "SHA256('relational-env-panel-v0.1|<phylogatr_source_sha256>|<species>'), species tie-break",
+    "development_species": "first 250 admissible species",
+    "confirmatory_species": "all remaining admissible species",
+    "within_panel_roles": "sort each panel by SHA256('relational-env-role-v0.1|<phylogatr_source_sha256>|<species>'); lower floor(n/2) are sources, remainder targets",
+    "development_empirical_genetic_response": "permanently closed; geometry + environment + synthetic worlds only",
+    "confirmatory_empirical_genetic_response": "one-shot only after exact geometry/mask/requalification gates"
+  },
+  "future_pair_controls": {
+    "geographic_opportunity": "directed target-edge coverage within 500 km of source edges, reconstructed from frozen genetic geometry before identity",
+    "lineage": ["same class", "same order", "same family"],
+    "sampling_geometry": "absolute log locality-count ratio",
+    "source_fixed_effect": true,
+    "target_fixed_effect": true
+  },
+  "allowed_outputs_before_genetics": [
+    "occurrence and environmental admissibility",
+    "PCA loadings and explained variance",
+    "R_env distribution",
+    "R_env correlation with response-blind geographic opportunity and lineage controls",
+    "panel and dyad support geometry",
+    "synthetic Type-I and power"
+  ],
+  "forbidden": [
+    "using host Study A beta_R or T_st to select environmental variables, PCA axes, KDE bandwidth, grid, or panel",
+    "using Study B nucleotide identity or genetic distance before all gates pass",
+    "selecting a favorable subset of orders after Study B response opening",
+    "replacing Schoener's D after seeing Study B genetic response"
+  ],
+  "response_firewall": {
+    "study_B_sequence_identity_opened": false,
+    "study_B_pairwise_genetic_distances_opened": false,
+    "study_B_T_st_computed": false,
+    "study_B_beta_R_computed": false
+  }
+}
