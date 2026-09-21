@@ -77,7 +77,13 @@
     "freshness_rule": "docs/supporting/relational_future_family_freshness_amendment_v0.1.json",
     "alpha_one_sided": 0.025,
     "status_at_freeze": "RULES_FROZEN_QUALIFICATION_NOT_YET_OPENED",
-    "gate_failure": "NOT_EVALUABLE_B; forfeit the B slot and its alpha; proceed to C without replacement or alpha transfer"
+    "gate_failure": "NOT_EVALUABLE_B; forfeit the B slot and its alpha; proceed to C without replacement or alpha transfer",
+    "opportunity_rule": "docs/supporting/relational_environment_opportunity_rule_v0.2.json",
+    "execution_chain": [
+      "docs/supporting/relational_environment_relation_rule_v0.3.json",
+      "docs/supporting/relational_environment_opportunity_rule_v0.2.json",
+      "docs/supporting/relational_environment_qualification_rule_v0.2.json"
+    ]
   },
   "slot_C": {
     "name": "historical climate displacement similarity",
