@@ -1,0 +1,78 @@
+{
+  "schema": "ttf_relational_host_resource_qualification_rule_v0.1",
+  "status": "FROZEN_BEFORE_FORMAL_SYNTHETIC_RESULTS_AND_ANY_FRESH_HOST_PANEL_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-21",
+  "parent_protocol": "docs/supporting/relational_host_resource_protocol_v0.1.json",
+  "response_blind_audit": "benchmarks/frozen/relational_host_resource_response_blind_audit_v0.1.json",
+  "design_source": {
+    "library_file": "lepidoptera_host_resource_design_v0.2.npz",
+    "sha256": "597b1499dbdf8d4fb5a30f10a32686a60185305d12a8772019279bda08b82897",
+    "base_species": 500,
+    "drop_prior_conditional_overlap": 13,
+    "fresh_species": 487,
+    "supported_directed_pairs": 15094,
+    "supported_source_clusters": 238,
+    "supported_target_clusters": 226
+  },
+  "estimator": {
+    "response": "synthetic or future empirical directed T_st",
+    "fixed_effect_absorption": "exact source and target fixed effects by solving the bipartite normal equations; one target reference column is omitted only for numerical identification",
+    "predictors_in_order": [
+      "z_host_resource_jaccard",
+      "z_geographic_coverage",
+      "z_log1p_centroid_distance_km",
+      "z_abs_log_locality_count_ratio",
+      "centered_same_family_indicator"
+    ],
+    "primary_coefficient_index": 0,
+    "covariance": "two-way source/target cluster-robust sandwich with dyad intersection subtraction and finite-cluster corrections",
+    "test": "one-sided normal upper-tail test for beta_R > 0",
+    "alpha": 0.05,
+    "ordinary_iid_dyad_inference_forbidden": true
+  },
+  "synthetic_worlds": {
+    "worlds_per_cell": 1000,
+    "seed_namespace": "relational-host-resource-formal-v0.1",
+    "seed_rule": "uint64 from the first 16 hex characters of SHA256('<seed_namespace>|<design_sha256>|<cell_name>')",
+    "response_link": "T_st_synthetic = tanh(latent_st)",
+    "source_intercept_sd": 0.18,
+    "target_intercept_sd": 0.18,
+    "dyad_noise_sd": 0.32,
+    "fixed_control_effects": {
+      "z_geographic_coverage": 0.10,
+      "z_log1p_centroid_distance_km": -0.08,
+      "z_abs_log_locality_count_ratio": 0.05,
+      "centered_same_family_indicator": 0.04
+    },
+    "private_structure": "source-specific slope on z_geographic_coverage and target-specific slope on z_log1p_centroid_distance_km; each slope SD = 0.12 * A",
+    "private_null_cells": [
+      {"name": "private_A0p5", "A": 0.5, "beta_R_latent": 0.0},
+      {"name": "private_A1", "A": 1.0, "beta_R_latent": 0.0},
+      {"name": "private_A2", "A": 2.0, "beta_R_latent": 0.0},
+      {"name": "private_A3", "A": 3.0, "beta_R_latent": 0.0}
+    ],
+    "relational_positive_cell": {
+      "name": "host_relation_A3_beta0p03",
+      "A": 3.0,
+      "beta_R_latent": 0.03,
+      "rationale": "A deliberately small positive relation under the strongest frozen private-structure stress; this is a method detection floor, not an expected empirical effect."
+    }
+  },
+  "gates": {
+    "private_type1": "for every private-null cell, Wilson 95% upper bound of p<=0.05 rejection rate <= 0.10",
+    "relational_power": "for host_relation_A3_beta0p03, Wilson 95% lower bound of p<=0.05 rejection rate >= 0.80",
+    "numerical": "all fitted worlds finite and response-blind predictor crossproduct condition number < 1e4"
+  },
+  "stopping_rules": [
+    "If any formal Type-I cell fails, do not open nucleotide identity or T_st.",
+    "If positive-control power fails, do not open nucleotide identity or T_st.",
+    "Do not alter the host relation, controls, effect floor, world generator, alpha, or inference using future empirical genetic response.",
+    "A failed qualification is NOT_EVALUABLE and is not evidence against host-conditioned transfer."
+  ],
+  "response_firewall": {
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "T_st_computed": false,
+    "beta_R_computed": false
+  }
+}
