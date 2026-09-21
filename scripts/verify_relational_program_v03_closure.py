@@ -38,6 +38,8 @@ def main() -> int:
         "s3_receipt": Path("benchmarks/frozen/relational_host_resource_empirical_repaired_receipt_v0.2.json"),
         "s3_reproduction": Path("benchmarks/frozen/relational_host_resource_empirical_reproduction_v0.2.json"),
         "s3_overlap": Path("benchmarks/frozen/relational_prior_host_test_overlap_audit_v0.1.json"),
+        "c_s1_exclusion": Path("benchmarks/frozen/relational_prior_S1_species_exclusion_v0.1.json"),
+        "c_s2_exclusion": Path("benchmarks/frozen/relational_prior_S2_species_exclusion_v0.1.json"),
         "b_relation": Path("docs/supporting/relational_environment_relation_rule_v0.3.json"),
         "b_opportunity": Path("docs/supporting/relational_environment_opportunity_rule_v0.2.json"),
         "b_qualification": Path("docs/supporting/relational_environment_qualification_rule_v0.2.json"),
@@ -171,6 +173,28 @@ def main() -> int:
         raise RuntimeError("Study C empirical alpha drift")
     if p["c_empirical"]["relational_model"]["predictors_in_order"][:2] != ["z_R_hist", "z_R_current"]:
         raise RuntimeError("Study C primary/current-environment relation drift")
+
+    c_source_contract = p["c_relation"]["independent_species_domain"]["prior_universe_reproduction"]
+    c_s1 = p["c_s1_exclusion"]
+    c_s2 = p["c_s2_exclusion"]
+    if c_s1.get("schema") != "ttf_relational_prior_S1_species_exclusion_v0.1":
+        raise RuntimeError("Study C S1 compact exclusion schema drift")
+    if c_s2.get("schema") != "ttf_relational_prior_S2_species_exclusion_v0.1":
+        raise RuntimeError("Study C S2 compact exclusion schema drift")
+    if int(c_s1["species_count"]) != int(c_source_contract["S1_butterfly_trait"]["expected_species"]):
+        raise RuntimeError("Study C S1 compact exclusion count drift")
+    if c_s1["source_design_sha256"] != c_source_contract["S1_butterfly_trait"]["expected_design_sha256"]:
+        raise RuntimeError("Study C S1 compact source-design hash drift")
+    if c_s1["species_list_sha256"] != c_source_contract["S1_butterfly_trait"]["expected_species_list_sha256"]:
+        raise RuntimeError("Study C S1 compact species digest drift")
+    if int(c_s2["species_count"]) != int(c_source_contract["S2_host_resource_geography"]["expected_species"]):
+        raise RuntimeError("Study C S2 compact exclusion count drift")
+    if c_s2["source_full_census_sha256"] != c_source_contract["S2_host_resource_geography"]["expected_full_census_sha256"]:
+        raise RuntimeError("Study C S2 compact source-census hash drift")
+    if c_s2["species_list_sha256"] != c_source_contract["S2_host_resource_geography"]["expected_selected_species_sha256"]:
+        raise RuntimeError("Study C S2 compact species digest drift")
+    for key in ("c_s1_exclusion", "c_s2_exclusion"):
+        assert_closed_firewall(p[key])
 
     freshness = p["freshness"]
     if int(freshness["exact_overlap_with_study_B_candidates"]["union_overlap_species"]) != 70:
