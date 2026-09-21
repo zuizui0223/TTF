@@ -4,7 +4,7 @@ Status: **frozen before Study B formal synthetic qualification**.
 
 ## What changed
 
-The ecological-predictor search now has a finite end. Three completed predictor tests remain immutable prior evidence: butterfly trait similarity (p=0.89), host-resource geography (p=0.698), and relational host-resource similarity (p=0.6626). S2 and S3 are not described as independent species confirmations; after strict parser repair, the 420 S3 survivors are contained within the 431 S2 survivors.
+The ecological-predictor search now has a finite end. Three completed predictor tests remain immutable prior evidence: butterfly trait similarity (p=0.89), host-resource geography (p=0.698), and relational host-resource similarity (p=0.6377). S2 and S3 are not described as independent species confirmations; after the response-independent duplicate-header parser repair, the 420 S3 mask survivors are contained within the 431 S2 survivors. The current S3 inferential result is the repaired 399-species / 11,696-dyad analysis (one-sided p=0.637688); the earlier v0.1 receipts remain only as audit history.
 
 The new prospective v0.3 family has exactly two confirmatory slots:
 
