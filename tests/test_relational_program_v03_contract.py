@@ -44,6 +44,12 @@ def test_study_b_chain_is_bound_to_alpha_0p025_and_v03_freshness():
         "p_value_cutoff": 0.025,
         "private_type1_wilson95_upper_max": 0.05,
         "relational_power_wilson95_lower_min": 0.8,
+        "predictor_condition_number_max_exclusive": 10000.0,
+    }
+    assert qualification["synthetic_worlds"]["private_structure_numeric"] == {
+        "slope_sd_per_A": 0.12,
+        "source_predictor": "z_geographic_coverage",
+        "target_predictor": "centered_same_order",
     }
     assert freshness["exact_overlap_with_study_B_candidates"]["union_overlap_species"] == 70
     assert freshness["execution_rule"]["backfill"] is False
