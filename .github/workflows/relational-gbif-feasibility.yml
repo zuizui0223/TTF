@@ -1,0 +1,74 @@
+name: Relational TTF GBIF feasibility
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_fresh_species_census_v0.1.json"
+      - "src/ttf/relational_external.py"
+      - "scripts/census_relational_gbif_occurrence.py"
+      - "scripts/aggregate_relational_gbif_occurrence.py"
+      - ".github/workflows/relational-gbif-feasibility.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  census:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        shard: [0,1,2,3,4,5,6,7,8,9]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Run response-blind GBIF availability shard
+        run: |
+          mkdir -p results/relational_gbif
+          python scripts/census_relational_gbif_occurrence.py \
+            --census benchmarks/frozen/relational_fresh_species_census_v0.1.json \
+            --output results/relational_gbif/shard-${{ matrix.shard }}.json \
+            --shard-index ${{ matrix.shard }} \
+            --shards 10 \
+            --year-range 2010,2026 \
+            --thin-km 10 \
+            --required-thinned 30 \
+            --fetch-cap 1200
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-gbif-shard-${{ matrix.shard }}
+          path: results/relational_gbif/shard-${{ matrix.shard }}.json
+          retention-days: 7
+
+  aggregate:
+    needs: census
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: relational-gbif-shard-*
+          path: results/shards
+          merge-multiple: true
+      - name: Aggregate response-blind availability
+        run: |
+          python scripts/aggregate_relational_gbif_occurrence.py \
+            --input-dir results/shards \
+            --output results/relational_gbif_feasibility_v0.1.json \
+            --expected-species 1000
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-gbif-feasibility
+          path: results/relational_gbif_feasibility_v0.1.json
+          retention-days: 14
