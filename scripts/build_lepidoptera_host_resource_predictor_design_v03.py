@@ -87,6 +87,7 @@ def main()->int:
         geometry_kernel[target,source],
         np.log1p(native_hosts[source]),
         np.log1p(footprint_units[source]),
+        breadth_kernel[target,source],
     ])
     residual=residualize_host_resource_similarity(raw,nuisance,target)
 
@@ -163,6 +164,7 @@ def main()->int:
             "pairwise_geometry_kernel_similarity",
             "log1p_source_native_host_species_count",
             "log1p_source_host_footprint_WGSRPD3_unit_count",
+            "pairwise_resource_breadth_similarity",
         ],
         "host_resource_predictor":{
             "raw_jaccard_quantiles":q(raw),
