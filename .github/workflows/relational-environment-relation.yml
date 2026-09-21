@@ -8,20 +8,13 @@ on:
     paths:
       - ".github/workflows/relational-environment-relation.yml"
       - "docs/supporting/relational_environment_relation_rule_v0.3.json"
-      - "docs/supporting/relational_environment_opportunity_rule_v0.2.json"
-      - "docs/supporting/relational_environment_qualification_rule_v0.2.json"
       - "docs/supporting/relational_future_family_freshness_amendment_v0.1.json"
       - "benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv"
-      - "benchmarks/frozen/relational_environment_genetic_geometry_receipt_v0.1.json"
       - "src/ttf/relational_environment.py"
       - "src/ttf/relational_external.py"
-      - "src/ttf/relational_dyadic.py"
       - "scripts/acquire_relational_environment_occurrences.py"
       - "scripts/aggregate_relational_environment_occurrences.py"
       - "scripts/build_relational_environment_relation.py"
-      - "scripts/reconstruct_relational_environment_geometry.py"
-      - "scripts/attach_relational_environment_opportunity.py"
-      - "scripts/run_relational_environment_qualification.py"
 
 concurrency:
   group: relational-environment-relation-${{ github.ref }}
@@ -64,7 +57,7 @@ jobs:
   relation:
     needs: occurrence
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -98,7 +91,7 @@ jobs:
           done
           ls -lh rasters/
 
-      - name: Build common-PCA Schoener relation
+      - name: Build frozen response-blind relation
         run: |
           python scripts/build_relational_environment_relation.py \
             --occurrences results/environment/occurrences_v0.2.csv \
@@ -112,208 +105,38 @@ jobs:
             --output-npz results/environment/relational_environment_design_v0.3.npz \
             --output-summary results/environment/relational_environment_design_v0.3.json
 
-      - name: Inspect Study-B relation gate
-        id: relation_gate
+      - name: Record relation gate without converting NOT_EVALUABLE to CI failure
         run: |
           python - <<'PY'
-          import json, os
+          import json
           p=json.load(open("results/environment/relational_environment_design_v0.3.json"))
           assert all(v is False for v in p["response_firewall"].values()), p["response_firewall"]
-          allowed={
+          assert p["status"] in {
               "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN",
               "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS",
-          }
-          assert p["status"] in allowed, p["status"]
-          proceed=p["status"] == "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN"
-          if proceed:
+          }, p["status"]
+          if p["status"] == "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN":
               assert p["environment_admissible_species"] >= 500
               assert p["freshness_excluded_total"] == 70
               assert p["environment_admissible_species"] == (
                   p["environment_admissible_before_freshness"]
                   - p["freshness_excluded_environment_admissible"]
               )
-          with open(os.environ["GITHUB_OUTPUT"],"a") as h:
-              h.write(f"proceed={'true' if proceed else 'false'}\n")
           print(json.dumps({
               "status":p["status"],
-              "proceed":proceed,
-              "environment_admissible_species":p.get("environment_admissible_species"),
+              "environment_admissible_before_freshness":p.get("environment_admissible_before_freshness"),
               "freshness_excluded_environment_admissible":p.get("freshness_excluded_environment_admissible"),
+              "environment_admissible_species":p.get("environment_admissible_species"),
           },sort_keys=True))
-          PY
-
-      - name: Restore frozen phylogatR archive cache
-        if: steps.relation_gate.outputs.proceed == 'true'
-        uses: actions/cache/restore@v4
-        with:
-          path: /tmp/phylogatr.zip
-          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5
-
-      - name: Require and unpack frozen phylogatR archive
-        if: steps.relation_gate.outputs.proceed == 'true'
-        id: archive_root
-        run: |
-          set -euo pipefail
-          test -f /tmp/phylogatr.zip || {
-            echo "Frozen phylogatR archive cache is absent."; exit 2;
-          }
-          echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5  /tmp/phylogatr.zip" | sha256sum -c -
-          rm -rf /tmp/phylogatr-unpacked
-          mkdir -p /tmp/phylogatr-unpacked
-          unzip -q /tmp/phylogatr.zip -d /tmp/phylogatr-unpacked
-          mapfile -t genes < <(find /tmp/phylogatr-unpacked -type f -name genes.txt -print)
-          test "${#genes[@]}" -eq 1 || {
-            printf 'Expected exactly one genes.txt, found %s\n' "${#genes[@]}"; exit 2;
-          }
-          root="$(dirname "${genes[0]}")"
-          test -f "$root/cite.txt"
-          echo "root=$root" >> "$GITHUB_OUTPUT"
-
-      - name: Reconstruct exact response-blind genetic geometry
-        if: steps.relation_gate.outputs.proceed == 'true'
-        run: |
-          python scripts/reconstruct_relational_environment_geometry.py \
-            --root "${{ steps.archive_root.outputs.root }}" \
-            --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv \
-            --source-archive-sha256 5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5 \
-            --neighbor-fraction 0.15 \
-            --output-localities results/environment/relational_environment_localities_v0.2.csv \
-            --output-edges results/environment/relational_environment_edges_v0.2.csv \
-            --output-receipt results/environment/relational_environment_genetic_geometry_reconstruction_v0.2.json
-
-      - name: Verify reconstructed geometry against frozen structural receipt
-        if: steps.relation_gate.outputs.proceed == 'true'
-        run: |
-          python - <<'PY'
-          import json
-          frozen=json.load(open("benchmarks/frozen/relational_environment_genetic_geometry_receipt_v0.1.json"))
-          rebuilt=json.load(open("results/environment/relational_environment_genetic_geometry_reconstruction_v0.2.json"))
-          for key in ("source_archive_sha256","candidate_csv_sha256","species","locality_rows","edge_rows"):
-              assert rebuilt[key] == frozen[key], (key, rebuilt[key], frozen[key])
-          assert rebuilt["verification_failures"] == 0
-          assert all(v is False for v in rebuilt["response_firewall"].values())
-          print(json.dumps({
-              "species":rebuilt["species"],
-              "locality_rows":rebuilt["locality_rows"],
-              "edge_rows":rebuilt["edge_rows"],
-              "edge_csv_sha256":rebuilt["edge_csv_sha256"],
-          },sort_keys=True))
-          PY
-
-      - name: Attach frozen geographic opportunity
-        if: steps.relation_gate.outputs.proceed == 'true'
-        run: |
-          python scripts/attach_relational_environment_opportunity.py \
-            --environment-design results/environment/relational_environment_design_v0.3.npz \
-            --edges results/environment/relational_environment_edges_v0.2.csv \
-            --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv \
-            --opportunity-rule docs/supporting/relational_environment_opportunity_rule_v0.2.json \
-            --output-npz results/environment/relational_environment_opportunity_v0.2.npz \
-            --output-summary results/environment/relational_environment_opportunity_v0.2.json
-
-      - name: Inspect Study-B opportunity gate
-        if: steps.relation_gate.outputs.proceed == 'true'
-        id: opportunity_gate
-        run: |
-          python - <<'PY'
-          import json, os
-          p=json.load(open("results/environment/relational_environment_opportunity_v0.2.json"))
-          assert all(v is False for v in p["response_firewall"].values())
-          allowed={
-              "PASS_TO_DEVELOPMENT_SYNTHETIC_QUALIFICATION",
-              "NOT_EVALUABLE_ENVIRONMENT_OPPORTUNITY_GEOMETRY",
-          }
-          assert p["status"] in allowed, p["status"]
-          proceed=p["status"] == "PASS_TO_DEVELOPMENT_SYNTHETIC_QUALIFICATION"
-          with open(os.environ["GITHUB_OUTPUT"],"a") as h:
-              h.write(f"proceed={'true' if proceed else 'false'}\n")
-          print(json.dumps({"status":p["status"],"proceed":proceed,"development":p["panels"]["development"]},sort_keys=True))
-          PY
-
-      - name: Run alpha-0.025 development qualification
-        if: steps.opportunity_gate.outputs.proceed == 'true'
-        run: |
-          python scripts/run_relational_environment_qualification.py \
-            --opportunity-design results/environment/relational_environment_opportunity_v0.2.npz \
-            --opportunity-summary results/environment/relational_environment_opportunity_v0.2.json \
-            --rule docs/supporting/relational_environment_qualification_rule_v0.2.json \
-            --output results/environment/relational_environment_qualification_v0.2.json
-
-      - name: Inspect Study-B qualification decision
-        if: steps.opportunity_gate.outputs.proceed == 'true'
-        run: |
-          python - <<'PY'
-          import json
-          p=json.load(open("results/environment/relational_environment_qualification_v0.2.json"))
-          assert p["alpha"] == 0.025
-          assert p["gates"]["private_type1_wilson95_upper_max"] == 0.05
-          assert p["gates"]["relational_power_wilson95_lower_min"] == 0.8
-          assert p["status"] in {
-              "PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION",
-              "NOT_EVALUABLE_ENVIRONMENT_SYNTHETIC_QUALIFICATION",
-          }
-          assert all(v is False for v in p["response_firewall"].values())
-          print(json.dumps({
-              "status":p["status"],
-              "alpha":p["alpha"],
-              "gates":p["gates"],
-              "geometry":p["geometry"],
-          },sort_keys=True))
-          PY
-
-      - name: Freeze pre-genetic Study-B stage state
-        if: always()
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          base=Path("results/environment")
-          relation=json.load(open(base/"relational_environment_design_v0.3.json"))
-          payload={
-              "schema":"ttf_relational_environment_pregenetic_state_v0.3",
-              "response_opened":False,
-              "relation_status":relation["status"],
-          }
-          opportunity=base/"relational_environment_opportunity_v0.2.json"
-          qualification=base/"relational_environment_qualification_v0.2.json"
-          if opportunity.exists():
-              payload["opportunity_status"]=json.load(open(opportunity))["status"]
-          if qualification.exists():
-              q=json.load(open(qualification))
-              payload["qualification_status"]=q["status"]
-              payload["qualification_alpha"]=q["alpha"]
-          if relation["status"] != "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN":
-              payload["program_state"]="NOT_EVALUABLE_B"
-              payload["terminal_stage"]="environment_relation_freshness"
-          elif payload.get("opportunity_status") != "PASS_TO_DEVELOPMENT_SYNTHETIC_QUALIFICATION":
-              payload["program_state"]="NOT_EVALUABLE_B"
-              payload["terminal_stage"]="geographic_opportunity"
-          elif payload.get("qualification_status") == "PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION":
-              payload["program_state"]="PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION"
-              payload["terminal_stage"]=None
-          else:
-              payload["program_state"]="NOT_EVALUABLE_B"
-              payload["terminal_stage"]="synthetic_qualification"
-          (base/"relational_environment_pregenetic_state_v0.3.json").write_text(
-              json.dumps(payload,indent=2,sort_keys=True)+"\n"
-          )
-          print(json.dumps(payload,sort_keys=True))
           PY
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: relational-environment-v0.3-pregenetic
+          name: relational-environment-relation-v0.3
           path: |
             results/environment/occurrence_ledger_v0.2.json
             results/environment/relational_environment_design_v0.3.npz
             results/environment/relational_environment_design_v0.3.json
-            results/environment/relational_environment_genetic_geometry_reconstruction_v0.2.json
-            results/environment/relational_environment_localities_v0.2.csv
-            results/environment/relational_environment_edges_v0.2.csv
-            results/environment/relational_environment_opportunity_v0.2.npz
-            results/environment/relational_environment_opportunity_v0.2.json
-            results/environment/relational_environment_qualification_v0.2.json
-            results/environment/relational_environment_pregenetic_state_v0.3.json
           retention-days: 30
           if-no-files-found: warn
