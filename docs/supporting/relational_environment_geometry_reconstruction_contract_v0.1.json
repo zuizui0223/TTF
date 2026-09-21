@@ -1,0 +1,52 @@
+{
+  "schema": "ttf_relational_environment_geometry_reconstruction_contract_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_RECONSTRUCTION_CONTRACT_BEFORE_STUDY_B_QUALIFICATION",
+  "frozen_on": "2026-09-21",
+  "source_archive": {
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "bytes": 274988692
+  },
+  "candidates": {
+    "path": "benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv",
+    "sha256": "08dca43252ea93d43f3095f17b0267ec7ff049f0ec8b3e9c412dd784319ab575",
+    "species": 1000,
+    "exact_panel_locator": "Use each frozen row's raw_dir and raw_gene directly; do not reselect among markers or metadata rows."
+  },
+  "allowed_archive_view": {
+    "aligned_fasta": "headers only via binary header reader; sequence lines must not be decoded, hashed, counted, validated, or otherwise interpreted",
+    "occurrences": "exact frozen occurrence table joined to aligned headers by the inherited exact phylogatr_id/accession rule",
+    "response_information_allowed": false
+  },
+  "locality_geometry": {
+    "coordinate_rule": "retain finite header-linked latitude/longitude; collapse exact duplicate lat/lon rows with np.unique",
+    "coordinate_space": "convert canonical exact-unique lat/lon to ECEF kilometers with inherited Earth radius",
+    "neighbor_fraction": 0.15,
+    "graph_rule": "prepare_density_scaled_genetic_geometry, identical inherited v0.11 density-scaled k rule"
+  },
+  "per_species_required_equality": [
+    "n_localities",
+    "graph_k",
+    "edges",
+    "min_endpoint_disjoint_training_edges"
+  ],
+  "frozen_aggregate_invariants": {
+    "species": 1000,
+    "locality_rows": 28355,
+    "edge_rows": 167828,
+    "verification_failures": 0
+  },
+  "legacy_working_artifact_receipt": "benchmarks/frozen/relational_environment_genetic_geometry_receipt_v0.1.json",
+  "legacy_byte_hash_policy": {
+    "old_locality_csv_sha256": "f0aac3380095c2805deef6131fbdcd9d56ff190cb2124148c3bb949809028cf7",
+    "old_edge_csv_sha256": "da8df8b6ce6793383f6f348ce13568bda0bd7144c37a0f5f114cc2816ef5323c",
+    "exact_byte_match_required": false,
+    "reason": "The original response-blind working-table serializer/column formatting was not frozen in the repository. Byte identity therefore cannot be required prospectively without risking a formatting-only failure. The biological geometry is instead required to reproduce every frozen species-level graph invariant under the exact archive, panel locator, coordinate join, and graph algorithm."
+  },
+  "output_requirement": "Write a new reconstruction receipt containing the new canonical output hashes so all later reruns can require byte identity to this version.",
+  "response_firewall": {
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "T_st_computed": false,
+    "beta_R_computed": false
+  }
+}
