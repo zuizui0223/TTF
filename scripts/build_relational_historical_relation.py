@@ -180,9 +180,10 @@ def main() -> int:
                 "current": np.asarray(current_values[i], float),
             })
 
+    minimum_occurrences = int(rule["external_occurrences"]["minimum_retained_occurrences_per_species"])
     admissible = sorted(
         name for name in metadata
-        if len(by_species.get(name, ())) >= int(rule["historical_climate"]["missing_rule"].split(">=")[-1].split()[0])
+        if len(by_species.get(name, ())) >= minimum_occurrences
     )
     minimum = int(rule["panel_assignment_after_historical_admissibility"]["minimum_admissible_species"])
     if len(admissible) < minimum:
