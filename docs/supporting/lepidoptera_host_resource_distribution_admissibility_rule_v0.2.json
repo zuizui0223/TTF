@@ -68,5 +68,14 @@
     "new_followup_sequence_identity_opened": false,
     "new_followup_pairwise_genetic_distances_opened": false,
     "new_followup_transfer_statistic_computed": false
+  },
+  "panel_construction": {
+    "eligible_universe": "species passing frozen phylogatR geometry eligibility and the frozen primary host-resource footprint admissibility rule after all prior species exclusions",
+    "maximum_species": 500,
+    "ranking": "SHA256('lepidoptera-host-resource-v0.2|5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5|<species>'), species as tie-break",
+    "selection": "first min(500, N eligible) species under the frozen ranking",
+    "split": "lower half of the selected ranking is training; upper half is evaluation; floor(N/2) training when N is odd",
+    "response_blind": true,
+    "rationale": "cap exact-geometry synthetic qualification and future one-shot empirical computation at a tractable size without using host-overlap values or genetic outcomes for species selection"
   }
 }
