@@ -118,6 +118,19 @@ Then create at least two species-disjoint sets under a deterministic response-bl
 
 If an independent archive/source can supply a genuinely external confirmatory panel, prefer it over another slice of the same archive. If not, explicitly label same-archive confirmation as panel replication rather than source replication.
 
+## Response-blind fresh-candidate census
+
+The exact phylogatR source archive and prior-panel exclusions now yield a fresh 1,000-species geometry-eligible candidate set under the relational hash namespace. Reaching 1,000 eligible species required scanning 1,876 ranked candidates; 875 failed the inherited 12-locality geometry requirement and one lacked usable header-occurrence matches. The selected 1,000 have zero overlap with the prior 750 original-fresh and conditional-panel species.
+
+The candidate pool spans 67 orders and 288 families. Lepidoptera is the largest order at 45%, followed by Diptera, Hymenoptera and Coleoptera. Because the intended primary claim is cross-taxon, taxonomic breadth is now a prospective ecological-feasibility guardrail rather than a post-result sensitivity choice:
+
+- after external-ecology admissibility, no single order may exceed 50% of the fresh pool;
+- at least four orders must each contribute at least 5%;
+- failure closes the general cross-taxon route as `NOT_EVALUABLE_GENERAL_CROSS_TAXON_RELATIONAL_TTF`;
+- a leave-largest-order-out analysis is secondary only and cannot rescue or overturn the primary decision.
+
+The frozen candidate receipt is `benchmarks/frozen/relational_fresh_candidate_census_v0.1.json`. The full response-blind candidate table is retained outside the repository data source and can be regenerated with `scripts/freeze_relational_fresh_candidate_census.py`.
+
 ## Required pre-response gates
 
 1. **Ecological-data feasibility** — enough species and dyads have externally defined R_st under the frozen missingness rule.
