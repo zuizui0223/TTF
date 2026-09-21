@@ -29,6 +29,8 @@ Study C excludes the entire Study-B fresh-1000 in addition to all prior confirma
 
 The environmental relation remains Schoener's D in a common two-axis whitened PCA of CHELSA V2.1 bio1, bio7, bio12 and bio15. Geography, class/order/family proximity, locality-count imbalance, and source/target fixed effects remain controls.
 
+The machine-readable B chain is `relational_environment_relation_rule_v0.3.json` → `relational_environment_opportunity_rule_v0.2.json` → `relational_environment_qualification_rule_v0.2.json`. The opportunity rule changes no geography threshold; v0.2 exists only to bind the unchanged 500-km / 0.50-coverage / five-source contract to the exact post-freshness v0.3 panel.
+
 The qualification is now locked to the inferential alpha actually used by the family:
 
 - p-value cutoff: **0.025**
