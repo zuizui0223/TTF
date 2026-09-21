@@ -1,0 +1,80 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_v02_qualification_result",
+  "status": "PASS",
+  "executed_on": "2026-09-21",
+  "parent_rule": "docs/supporting/lepidoptera_host_resource_qualification_rule_v0.2.json",
+  "design_npz_sha256": "b1b9dab23676f6a1ea416c5889fc42676908a54d3abcf042dbaf8605cda2c3bf",
+  "reference_sha256": {
+    "private": "31f8ee6088131287809d14284af4f3d6a289cc3ab2e6de45e1037dc2c8cafbcb",
+    "geometry_confounded_trap": "5a327c08252f5b7b55bdc59f4785101d2c9d44507218de5ac3a65f0d64c58d3f",
+    "host_breadth_confounded_trap": "e51a4c8971911f65d224865f2bc7ac06071f1c59196b6fb41d2f675a2dd46fb2"
+  },
+  "reference": {
+    "private_worlds": 499,
+    "geometry_confounded_trap_worlds": 499,
+    "host_breadth_confounded_trap_worlds": 499,
+    "private_mean_statistic": -0.0005916942263783112,
+    "geometry_mean_statistic": -0.00132731584722775,
+    "host_breadth_mean_statistic": -0.0045949592827613725
+  },
+  "evaluation": {
+    "private": {
+      "worlds": 500,
+      "rejections": 1,
+      "rejection_rate": 0.002,
+      "wilson95_lower": 0.00035313639455927456,
+      "wilson95_upper": 0.011240706705146758,
+      "mean_statistic": -0.0008124685734307355,
+      "median_statistic": -0.00035664331674106135,
+      "median_envelope_p": 0.496,
+      "minimum_envelope_p": 0.03
+    },
+    "geometry_confounded_trap": {
+      "worlds": 500,
+      "rejections": 12,
+      "rejection_rate": 0.024,
+      "wilson95_lower": 0.013781314655496986,
+      "wilson95_upper": 0.041477057463900756,
+      "mean_statistic": 0.0006024963670910662,
+      "median_statistic": 0.0007730705080544423,
+      "median_envelope_p": 0.458,
+      "minimum_envelope_p": 0.008
+    },
+    "host_breadth_confounded_trap": {
+      "worlds": 500,
+      "rejections": 29,
+      "rejection_rate": 0.058,
+      "wilson95_lower": 0.0406837291117572,
+      "wilson95_upper": 0.08205618785625499,
+      "mean_statistic": -0.0031244752253018902,
+      "median_statistic": -0.002932494050619721,
+      "median_envelope_p": 0.584,
+      "minimum_envelope_p": 0.002
+    },
+    "host_resource_gradient_positive": {
+      "worlds": 500,
+      "rejections": 465,
+      "rejection_rate": 0.93,
+      "wilson95_lower": 0.9042028101480832,
+      "wilson95_upper": 0.949240257054982,
+      "mean_statistic": 0.06941900486297846,
+      "median_statistic": 0.06728370922249556,
+      "median_envelope_p": 0.002,
+      "minimum_envelope_p": 0.002
+    }
+  },
+  "gates": {
+    "private_type1_pass": true,
+    "geometry_trap_type1_pass": true,
+    "host_breadth_trap_type1_pass": true,
+    "host_resource_positive_power_pass": true,
+    "all_four_pass": true
+  },
+  "empirical_identity_opening_eligible": true,
+  "interpretation": "The v0.2 host-resource estimator controls false positives under private structure, insect-geometry confounding and resource-breadth confounding while retaining high power for a true host-resource geography gradient on the exact 431-species survivor geometry.",
+  "outcome_firewall": {
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "transfer_statistic_computed": false
+  }
+}

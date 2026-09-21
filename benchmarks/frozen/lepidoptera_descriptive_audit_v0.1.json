@@ -1,0 +1,98 @@
+{
+  "schema": "ttf_lepidoptera_descriptive_audit_v0.1",
+  "status": "DESCRIPTIVE_ONLY_NO_INFERENTIAL_ROLE",
+  "executed_on": "2026-09-21",
+  "parent_trait_design": "ttf_lepidoptera_trait_gradient_design_v0.1",
+  "mask_reproduction": {
+    "pre_mask_species": 339,
+    "survivors": 240,
+    "failed_character_support": 99,
+    "survivor_train": 118,
+    "survivor_eval": 122,
+    "supported_eval": 110,
+    "parser_structural_failures": 1,
+    "survivor_species_sha256": "b35b1db351323397c4ef86d3d9138e4a9f950dc54ec28417fd13d759ce800c34",
+    "failed_species_sha256": "d5b9418b0ac5d381b4c2518922f6ff40d3ce43fce71637d90e8f17a5a06d96a9"
+  },
+  "taxonomic_scope": {
+    "interpretation": "The completed trait-gradient panel is a butterfly panel, not a representative sample of Lepidoptera as a whole.",
+    "pre_mask_family_counts": {
+      "Nymphalidae": 143,
+      "Lycaenidae": 64,
+      "Hesperiidae": 57,
+      "Pieridae": 56,
+      "Papilionidae": 18,
+      "Riodinidae": 1
+    },
+    "survivor_family_counts": {
+      "Nymphalidae": 108,
+      "Lycaenidae": 46,
+      "Hesperiidae": 38,
+      "Pieridae": 35,
+      "Papilionidae": 12,
+      "Riodinidae": 1
+    },
+    "supported_eval_family_counts": {
+      "Nymphalidae": 59,
+      "Hesperiidae": 18,
+      "Lycaenidae": 15,
+      "Pieridae": 13,
+      "Papilionidae": 5
+    },
+    "supported_eval_n_families": 5,
+    "supported_eval_nymphalidae_fraction": 0.5363636363636364
+  },
+  "character_mask_dropout_by_family": {
+    "role": "descriptive only; no post-hoc selection or inferential correction",
+    "Nymphalidae": {"pre_mask": 143, "failed": 35, "dropout_fraction": 0.24475524475524477},
+    "Lycaenidae": {"pre_mask": 64, "failed": 18, "dropout_fraction": 0.28125},
+    "Hesperiidae": {"pre_mask": 57, "failed": 19, "dropout_fraction": 0.3333333333333333},
+    "Pieridae": {"pre_mask": 56, "failed": 21, "dropout_fraction": 0.375},
+    "Papilionidae": {"pre_mask": 18, "failed": 6, "dropout_fraction": 0.3333333333333333},
+    "Riodinidae": {"pre_mask": 1, "failed": 0, "dropout_fraction": 0.0}
+  },
+  "geographic_scope": {
+    "method": "Exact frozen locality ECEF coordinates converted to latitude/longitude and intersected with Natural Earth 110m country polygons; small-island/ocean localities may remain unassigned.",
+    "survivors": {
+      "species": 240,
+      "exact_localities": 11584,
+      "country_polygon_assignment_fraction": 0.9327520718232044,
+      "dominant_continent_species": {"North America": 133, "Europe": 80, "Asia": 16, "Africa": 7, "South America": 4},
+      "latitude_quantiles": {"min": -34.64, "q25": 38.12975, "median": 43.6835, "q75": 48.71625, "max": 80.1}
+    },
+    "supported_eval": {
+      "species": 110,
+      "exact_localities": 5456,
+      "country_polygon_assignment_fraction": 0.9345674486803519,
+      "dominant_continent_species": {"North America": 67, "Europe": 43},
+      "locality_counts_by_continent": {"Europe": 2923, "North America": 1875, "Unassigned_110m": 357, "Africa": 136, "Asia": 107, "South America": 55, "Oceania": 3},
+      "latitude_quantiles": {"min": -32.1861, "q25": 38.80075, "median": 44.013, "q75": 48.486, "max": 80.1}
+    }
+  },
+  "trait_scope": {
+    "survivors": {
+      "wing_size_proxy_quantiles": {"min": 1.7, "q25": 2.895486111125, "median": 3.936111111083333, "q75": 5.201875, "max": 13.2},
+      "host_plant_family_count_quantiles": {"min": 1.0, "q25": 1.0, "median": 2.0, "q75": 3.0, "max": 11.0},
+      "voltinism_counts": {"U": 63, "B": 40, "M": 137},
+      "wing_vs_log1p_host_breadth_pearson": 0.15404240203729075
+    },
+    "supported_eval": {
+      "wing_size_proxy_quantiles": {"min": 1.949259259333333, "q25": 3.0078009259166665, "median": 4.037916666666667, "q75": 5.19375, "max": 11.317291665},
+      "host_plant_family_count_quantiles": {"min": 1.0, "q25": 1.0, "median": 2.0, "q75": 3.0, "max": 11.0},
+      "voltinism_counts": {"U": 28, "B": 16, "M": 66},
+      "wing_vs_log1p_host_breadth_pearson": 0.09931035500110295,
+      "median_split_wing_by_host_quadrants": {
+        "lower_wing_lower_or_equal_host": 40,
+        "lower_wing_higher_host": 15,
+        "higher_or_equal_wing_lower_or_equal_host": 39,
+        "higher_or_equal_wing_higher_host": 16
+      }
+    }
+  },
+  "interpretation": "The trait-gradient analysis had substantial within-butterfly variation in wing-size and host-breadth proxies, with weak correlation between those axes, but was taxonomically restricted to butterflies and geographically concentrated in North America and Europe. These facts refine the scope of the completed null result without changing its frozen statistic or decision.",
+  "claim_boundary": {
+    "new_inference_performed": false,
+    "primary_result_rewritten": false,
+    "dropout_bias_used_for_selection": false
+  }
+}

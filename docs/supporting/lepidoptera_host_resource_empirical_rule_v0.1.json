@@ -1,0 +1,79 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_empirical_rule_v0.1",
+  "status": "FROZEN_BEFORE_HOST_RESOURCE_NUCLEOTIDE_IDENTITY_OPENING",
+  "frozen_on": "2026-09-21",
+  "parent_qualification": "benchmarks/frozen/lepidoptera_host_resource_v02_qualification_result.json",
+  "scientific_question": "Among fully species-disjoint Lepidoptera, does overlap in native larval host-resource geography predict congruent post-IBD spatial genetic structure beyond insect sampling geometry and simple resource breadth?",
+  "source_archive": {
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "bytes": 274988692
+  },
+  "survivor_design": {
+    "species": 431,
+    "train_species": 213,
+    "eval_species": 218,
+    "geographically_supported_eval_targets": 204,
+    "target_source_pairs": 12358,
+    "design_npz_sha256": "b1b9dab23676f6a1ea416c5889fc42676908a54d3abcf042dbaf8605cda2c3bf"
+  },
+  "empirical_response": {
+    "marker": "frozen COI-family aligned FASTA selected before identity opening",
+    "edge_genetic_distance": "uncorrected p-distance, arithmetic mean across all canonical A/C/G/T cross-locality sequence pairs meeting the frozen comparable-column threshold",
+    "minimum_comparable_fraction": 0.5,
+    "ibd_adjustment": "endpoint-disjoint cross-fit rank-IBD residualization on each species frozen graph",
+    "edge_response": "rank01 of the endpoint-disjoint cross-fit IBD residual; identical response definition for source and target species",
+    "serialized_sequence_identity": false,
+    "serialized_edge_genetic_distance_vectors": false
+  },
+  "host_resource_estimand": {
+    "pair_alignment": "exact response-blind survivor-design target/source edge alignment inherited from v0.2 qualification",
+    "pair_transfer_congruence": "Pearson correlation between aligned source and target post-IBD edge-response values",
+    "raw_predictor": "Jaccard similarity of native, extant, non-doubtful WCVP-v13 WGSRPD3 larval host-resource footprint sets",
+    "predictor_residualization": [
+      "target_to_source_coverage",
+      "log1p_centroid_distance_over_500km",
+      "log_edge_count_ratio",
+      "log_locality_count_ratio",
+      "pairwise_insect_geometry_kernel_similarity",
+      "log1p_source_native_host_species_count",
+      "log1p_source_host_footprint_WGSRPD3_unit_count",
+      "pairwise_resource_breadth_similarity"
+    ],
+    "per_target_statistic": "Pearson correlation across supported source species between residualized host-resource Jaccard and pairwise transfer congruence",
+    "panel_statistic": "arithmetic mean over finite supported evaluation-target correlations",
+    "direction": "positive",
+    "alpha": 0.05,
+    "inference": "worst-case one-sided upper-tail Monte Carlo envelope across independent v0.2 private, geometry-confounded and host-breadth-confounded nuisance reference distributions"
+  },
+  "reference_distributions": {
+    "worlds_each": 499,
+    "private_npy_sha256": "31f8ee6088131287809d14284af4f3d6a289cc3ab2e6de45e1037dc2c8cafbcb",
+    "geometry_confounded_npy_sha256": "5a327c08252f5b7b55bdc59f4785101d2c9d44507218de5ac3a65f0d64c58d3f",
+    "host_breadth_confounded_npy_sha256": "e51a4c8971911f65d224865f2bc7ac06071f1c59196b6fb41d2f675a2dd46fb2",
+    "calibration": "maximum of +1 corrected one-sided upper-tail Monte Carlo p-values"
+  },
+  "one_shot_decision": {
+    "positive": "panel statistic > 0 and worst-case envelope p <= 0.05",
+    "negative": "worst-case envelope p > 0.05",
+    "interpretation_positive": "Within the exact frozen host-resource survivor domain, Lepidoptera sharing more native larval host-resource geography show greater congruence in post-IBD mitochondrial spatial differentiation beyond sampling geometry and simple resource breadth.",
+    "interpretation_negative": "The frozen study does not detect a positive host-resource-geography gradient within the tested survivor domain; this does not establish that host-resource geography has zero effect."
+  },
+  "integrity_requirements": [
+    "Exact source archive SHA-256 must match before nucleotide identity is decoded.",
+    "Reconstruct all 431 frozen survivor source panels from headers and occurrence coordinates and require exact geometry equality with the v0.2 survivor design.",
+    "Recompute canonical-valid masks and require every survivor frozen edge to remain admissible before identity opening.",
+    "Use only the exact frozen v0.2 nuisance reference distributions; no null reselection after the empirical statistic is seen.",
+    "Run the empirical statistic exactly once; no predictor, host taxonomy, WCVP footprint, geometry covariate, alignment, response, split, threshold or nuisance-family change after opening."
+  ],
+  "one_shot": {
+    "allowed_runs": 1,
+    "post_result_retuning_allowed": false,
+    "sequence_identity_serialization_allowed": false,
+    "edge_genetic_distance_vector_serialization_allowed": false
+  },
+  "outcome_firewall": {
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "host_resource_transfer_statistic_computed": false
+  }
+}

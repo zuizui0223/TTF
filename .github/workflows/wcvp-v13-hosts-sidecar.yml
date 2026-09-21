@@ -1,0 +1,235 @@
+name: WCVP v13 HOSTS sidecar
+on:
+  push:
+    branches: [feature/lepidoptera-trait-transfer-census-v0-1]
+    paths:
+      - ".github/workflows/wcvp-v13-hosts-sidecar.yml"
+      - "docs/supporting/lepidoptera_host_resource_distribution_admissibility_rule_v0.2.json"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout TTF
+        uses: actions/checkout@v4
+
+      - name: Checkout exact WCVP v13 redistribution snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: matildabrown/rWCVPdata
+          ref: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
+          path: _wcvp
+
+      - name: Checkout exact HOSTS mirror
+        uses: actions/checkout@v4
+        with:
+          repository: globalbioticinteractions/HOSTS
+          ref: 808e0b869f9ec1adf8efff87cf6a395adda103e0
+          path: _hosts
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+
+      - name: Build exact host-name and native-WGSRPD3 sidecar
+        shell: Rscript {0}
+        run: |
+          dir.create("results/wcvp_v13_hosts_sidecar", recursive=TRUE, showWarnings=FALSE)
+
+          e <- new.env(parent=emptyenv())
+          load("_wcvp/data/wcvp_names.rda", envir=e)
+          load("_wcvp/data/wcvp_distributions.rda", envir=e)
+          stopifnot(exists("wcvp_names", envir=e), exists("wcvp_distributions", envir=e))
+          names_df <- get("wcvp_names", envir=e)
+          dist_df <- get("wcvp_distributions", envir=e)
+
+          hosts <- read.csv(
+            "_hosts/resource.csv",
+            stringsAsFactors=FALSE,
+            check.names=FALSE,
+            na.strings=c("")
+          )
+          required_hosts <- c("Hostplant Genus","Hostplant Species")
+          stopifnot(all(required_hosts %in% names(hosts)))
+
+          genus <- trimws(ifelse(is.na(hosts[["Hostplant Genus"]]), "", hosts[["Hostplant Genus"]]))
+          species <- trimws(ifelse(is.na(hosts[["Hostplant Species"]]), "", hosts[["Hostplant Species"]]))
+          keep <- nzchar(genus) & nzchar(species)
+          host_names <- sort(unique(paste(genus[keep], species[keep])))
+
+          required_names <- c(
+            "plant_name_id","taxon_rank","taxon_status","family","taxon_name",
+            "accepted_plant_name_id"
+          )
+          stopifnot(all(required_names %in% names(names_df)))
+
+          rank_species <- tolower(trimws(as.character(names_df$taxon_rank))) == "species"
+          exact <- names_df[
+            rank_species & as.character(names_df$taxon_name) %in% host_names,
+            required_names,
+            drop=FALSE
+          ]
+          exact$plant_name_id <- as.character(exact$plant_name_id)
+          exact$accepted_plant_name_id <- as.character(exact$accepted_plant_name_id)
+
+          status_lower <- tolower(trimws(as.character(exact$taxon_status)))
+          missing_acc <- is.na(exact$accepted_plant_name_id) | !nzchar(exact$accepted_plant_name_id)
+          exact$accepted_plant_name_id[missing_acc & status_lower=="accepted"] <-
+            exact$plant_name_id[missing_acc & status_lower=="accepted"]
+
+          id_to_name <- setNames(
+            as.character(names_df$taxon_name),
+            as.character(names_df$plant_name_id)
+          )
+          id_to_family <- setNames(
+            as.character(names_df$family),
+            as.character(names_df$plant_name_id)
+          )
+
+          split_ids <- split(exact$accepted_plant_name_id, as.character(exact$taxon_name))
+          resolved <- lapply(host_names, function(nm) {
+            ids <- unique(split_ids[[nm]])
+            ids <- ids[!is.na(ids) & nzchar(ids)]
+            if (length(ids)==0) {
+              return(data.frame(
+                input_host_name=nm, match_status="unmatched",
+                accepted_plant_name_id="", accepted_name="", family="",
+                stringsAsFactors=FALSE
+              ))
+            }
+            if (length(ids)>1) {
+              return(data.frame(
+                input_host_name=nm, match_status="ambiguous",
+                accepted_plant_name_id=paste(sort(ids), collapse=";"),
+                accepted_name="", family="", stringsAsFactors=FALSE
+              ))
+            }
+            id <- ids[[1]]
+            data.frame(
+              input_host_name=nm, match_status="matched",
+              accepted_plant_name_id=id,
+              accepted_name=ifelse(is.na(id_to_name[[id]]),"",id_to_name[[id]]),
+              family=ifelse(is.na(id_to_family[[id]]),"",id_to_family[[id]]),
+              stringsAsFactors=FALSE
+            )
+          })
+          resolved <- do.call(rbind, resolved)
+          write.csv(
+            resolved,
+            "results/wcvp_v13_hosts_sidecar/host_name_resolution.csv",
+            row.names=FALSE, na=""
+          )
+
+          insect_genus <- trimws(ifelse(is.na(hosts[["Insect Genus"]]), "", hosts[["Insect Genus"]]))
+          insect_species_epithet <- trimws(ifelse(is.na(hosts[["Insect Species"]]), "", hosts[["Insect Species"]]))
+          insect_keep <- keep & nzchar(insect_genus) & nzchar(insect_species_epithet)
+          interaction <- data.frame(
+            insect_species=paste(insect_genus[insect_keep], insect_species_epithet[insect_keep]),
+            input_host_name=paste(genus[insect_keep], species[insect_keep]),
+            stringsAsFactors=FALSE
+          )
+          interaction <- unique(interaction)
+          interaction <- merge(
+            interaction,
+            resolved[resolved$match_status=="matched",
+                     c("input_host_name","accepted_plant_name_id","accepted_name","family"),
+                     drop=FALSE],
+            by="input_host_name",
+            all=FALSE,
+            sort=FALSE
+          )
+          interaction <- unique(interaction)
+          interaction <- interaction[
+            order(interaction$insect_species, interaction$accepted_plant_name_id),
+            ,
+            drop=FALSE
+          ]
+          write.csv(
+            interaction,
+            "results/wcvp_v13_hosts_sidecar/insect_host_accepted.csv",
+            row.names=FALSE, na=""
+          )
+
+          matched_ids <- unique(resolved$accepted_plant_name_id[resolved$match_status=="matched"])
+          required_dist <- c(
+            "plant_name_id","area_code_l3","introduced","extinct","location_doubtful"
+          )
+          stopifnot(all(required_dist %in% names(dist_df)))
+
+          d <- dist_df[
+            as.character(dist_df$plant_name_id) %in% matched_ids &
+            as.integer(dist_df$introduced)==0L &
+            as.integer(dist_df$extinct)==0L &
+            as.integer(dist_df$location_doubtful)==0L,
+            required_dist,
+            drop=FALSE
+          ]
+          d$plant_name_id <- as.character(d$plant_name_id)
+          d$area_code_l3 <- as.character(d$area_code_l3)
+          d <- unique(d[c("plant_name_id","area_code_l3")])
+          d <- d[nzchar(d$area_code_l3),,drop=FALSE]
+          names(d)[1] <- "accepted_plant_name_id"
+          d$accepted_name <- unname(id_to_name[d$accepted_plant_name_id])
+          d <- d[order(d$accepted_plant_name_id,d$area_code_l3),]
+          write.csv(
+            d,
+            "results/wcvp_v13_hosts_sidecar/native_extant_nondoubtful_wgsrpd3.csv",
+            row.names=FALSE, na=""
+          )
+
+          matched <- resolved[resolved$match_status=="matched",,drop=FALSE]
+          with_dist <- unique(d$accepted_plant_name_id)
+          counts <- data.frame(
+            key=c(
+              "hosts_resource_rows",
+              "distinct_species_level_host_binomials",
+              "wcvp_exact_unambiguous_matches",
+              "wcvp_ambiguous_binomials",
+              "wcvp_unmatched_binomials",
+              "matched_accepted_hosts_with_primary_native_units",
+              "primary_native_host_x_wgsrpd3_rows",
+              "distinct_insect_species_with_wcvp_resolved_hosts",
+              "distinct_insect_x_accepted_host_pairs"
+            ),
+            value=c(
+              nrow(hosts),
+              length(host_names),
+              sum(resolved$match_status=="matched"),
+              sum(resolved$match_status=="ambiguous"),
+              sum(resolved$match_status=="unmatched"),
+              length(intersect(unique(matched$accepted_plant_name_id), with_dist)),
+              nrow(d),
+              length(unique(interaction$insect_species)),
+              nrow(interaction)
+            )
+          )
+          write.table(
+            counts,
+            "results/wcvp_v13_hosts_sidecar/counts.tsv",
+            row.names=FALSE, quote=FALSE, sep="\t"
+          )
+
+      - name: Freeze sidecar hashes and provenance
+        shell: bash
+        run: |
+          cd results/wcvp_v13_hosts_sidecar
+          sha256sum host_name_resolution.csv insect_host_accepted.csv native_extant_nondoubtful_wgsrpd3.csv counts.tsv > SHA256SUMS
+          cat > provenance.txt <<'EOF'
+          WCVP redistribution repository: matildabrown/rWCVPdata
+          WCVP redistribution commit: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
+          WCVP snapshot: version 13, 21 May 2024
+          HOSTS mirror repository: globalbioticinteractions/HOSTS
+          HOSTS mirror commit: 808e0b869f9ec1adf8efff87cf6a395adda103e0
+          Primary distribution: introduced=0, extinct=0, location_doubtful=0, WGSRPD level 3
+          EOF
+          cat counts.tsv
+          cat SHA256SUMS
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wcvp-v13-hosts-sidecar
+          path: results/wcvp_v13_hosts_sidecar/
+          retention-days: 30

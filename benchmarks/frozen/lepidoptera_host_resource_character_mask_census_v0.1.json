@@ -1,0 +1,59 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_character_mask_census_v0.1",
+  "status": "PASS_TO_EXACT_SURVIVOR_QUALIFICATION",
+  "executed_on": "2026-09-21",
+  "parent_rule": "docs/supporting/lepidoptera_host_resource_character_mask_rule_v0.1.json",
+  "parser_amendment": "docs/supporting/lepidoptera_host_resource_character_mask_parser_amendment_v0.1.json",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "pre_mask_design_npz_sha256": "597b1499dbdf8d4fb5a30f10a32686a60185305d12a8772019279bda08b82897",
+  "post_mask": {
+    "survivors": 431,
+    "failed_character_support": 69,
+    "train_survivors": 213,
+    "eval_survivors": 218,
+    "geographically_supported_eval_targets": 204,
+    "supported_target_source_pairs": 12358,
+    "source_count_quantiles": {
+      "min": 5.0,
+      "q25": 42.75,
+      "median": 66.0,
+      "q75": 89.0,
+      "max": 92.0
+    }
+  },
+  "character_support": {
+    "parser_structural_failures": 4,
+    "parser_structural_failure_species": [
+      "Cladara limitaria",
+      "Euchlaena johnsonaria",
+      "Lobophora nivigerata",
+      "Protoboarmia porcelaria"
+    ],
+    "failed_edges_total": 1179,
+    "failed_edges_per_failed_species_quantiles": {
+      "min": 1.0,
+      "q25": 4.0,
+      "median": 6.0,
+      "q75": 15.0,
+      "max": 259.0
+    },
+    "nucleotide_identity_persisted": false,
+    "pairwise_nucleotide_differences_computed": false
+  },
+  "survivor_species_sha256": "64a109d450d07453352ca7a0999db20df0f3c1b86d793dd18240054a67b2c502",
+  "failed_species_sha256": "bda70774123672749f63fe2269f2955c6d95811e6c1935e2792e3b7786963b1e",
+  "survivor_design_npz_sha256": "cef1fb5d34476692a0168eaf527ccea8b676b68409b88cdcf40db202d62f6e6c",
+  "gate": {
+    "minimum_total_survivors": 200,
+    "minimum_train_survivors": 90,
+    "minimum_eval_survivors": 90,
+    "minimum_geographically_supported_eval_targets": 90,
+    "all_pass": true
+  },
+  "decision": "PASS_TO_EXACT_SURVIVOR_QUALIFICATION",
+  "outcome_firewall": {
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "transfer_statistic_computed": false
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "schema": "ttf_lepidoptera_trait_gradient_qualification_rule_v0.2",
+  "status": "FROZEN_BEFORE_V02_REFERENCE_OR_EVALUATION_WORLDS",
+  "frozen_on": "2026-09-20",
+  "parent_census": "benchmarks/frozen/lepidoptera_trait_transfer_census_result_v0.1.json",
+  "retired_predecessor": "benchmarks/frozen/lepidoptera_trait_gradient_v01_development_diagnostic.json",
+  "scientific_question": "Within Lepidoptera, does response-blind ecological similarity predict greater cross-species spatial-genetic congruence beyond geographic sampling geometry?",
+  "species_disjoint_domain": {
+    "major_complete_species_after_excluding_all_prior_phase1_identity_route_species": 339,
+    "train_species": 169,
+    "evaluation_species": 170,
+    "geographically_supported_evaluation_species": 160,
+    "target_source_pairs": 4839,
+    "prior_phase1_species_excluded": 250,
+    "additional_operator_exposure_species_excluded": ["Acrolophus arcanella"],
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.5,
+    "minimum_sources": 5,
+    "frozen_design_npz_sha256": "e90568668f8263e3b454ddab21a281dc6fe2e3b33bd88324b8fb1cc012082b3f"
+  },
+  "pairwise_transfer_surface": {
+    "alignment": "nearest source edge midpoint for each target edge, retaining only target edges whose nearest source edge midpoint is <=500 km",
+    "maximum_aligned_edges_per_pair": 128,
+    "cap_sampling": "response-blind deterministic pair-specific sampling without replacement",
+    "pair_transfer_congruence": "Pearson correlation between aligned source and target post-IBD edge-response values",
+    "minimum_alignment_rows": 3
+  },
+  "trait_similarity": {
+    "axes": ["wing_size", "voltinism", "host_breadth", "habitat_four_axis"],
+    "composite": "mean of the four frozen [0,1] axis similarities",
+    "geometry_control": {
+      "method": "pooled target-fixed-effect residualization of trait similarity before response scoring",
+      "covariates": [
+        "target_to_source_coverage",
+        "log1p_centroid_distance_over_500km",
+        "log_edge_count_ratio",
+        "log_locality_count_ratio",
+        "pairwise_geometry_kernel_similarity"
+      ],
+      "standardization": "center within target, then population-standardize each geometry covariate across all target-source pairs",
+      "response_blind": true
+    }
+  },
+  "primary_statistic": {
+    "per_target": "Pearson correlation across supported sources between geometry-residualized trait similarity and pairwise transfer congruence",
+    "panel": "arithmetic mean of finite per-target correlations",
+    "direction": "positive",
+    "alpha": 0.05
+  },
+  "inference": {
+    "method": "worst-case one-sided upper-tail Monte Carlo envelope over independent nuisance-null reference distributions",
+    "reference_cells": {
+      "private": 499,
+      "geometry_confounded_trap": 499
+    },
+    "p_value": "maximum of the +1 corrected upper-tail Monte Carlo p-values from the private and geometry-confounded reference cells",
+    "zero_centered_target_bootstrap_primary": false
+  },
+  "synthetic_worlds": {
+    "master_seed": 20260920,
+    "reference_seed_tag": "lepidoptera-trait-gradient-v02-reference",
+    "evaluation_seed_tag": "lepidoptera-trait-gradient-v02-evaluation",
+    "latent_fields": 6,
+    "private_amplitude": 0.35,
+    "noise_sd": 0.10,
+    "transition_width": 0.20,
+    "cells": {
+      "private": {"shared_fraction": 0.0, "evaluation_worlds": 500},
+      "geometry_confounded_trap": {"shared_fraction": 0.85, "evaluation_worlds": 500},
+      "trait_gradient_positive": {"shared_fraction": 0.90, "evaluation_worlds": 500}
+    }
+  },
+  "qualification_gates": {
+    "private_type1": "Wilson 95% upper bound of p<=0.05 rejection rate <=0.10",
+    "geometry_trap_type1": "Wilson 95% upper bound of p<=0.05 rejection rate <=0.10",
+    "positive_power": "Wilson 95% lower bound of p<=0.05 rejection rate >=0.80",
+    "all_three_required": true
+  },
+  "development_disclosure": {
+    "v01_worlds_used_for_v02_design": true,
+    "note": "The retired v0.1 worlds showed centered-bootstrap geometry-trap leakage. Separate exploratory calculations on that already-spent namespace motivated target-level correlation and nuisance-null envelope calibration. No v0.2 reference or evaluation seed is shared with v0.1."
+  },
+  "stopping_rules": [
+    "Do not alter the v0.2 estimator, alignment cap, nuisance family, synthetic amplitudes, alpha, or gates after any v0.2 reference/evaluation statistic is inspected.",
+    "If any v0.2 gate fails, retire v0.2; any successor must use a new name and fully disjoint seed namespaces.",
+    "Do not compute the new 339-species empirical genetic response before v0.2 passes all three gates."
+  ],
+  "outcome_firewall": {
+    "new_lepidoptera_empirical_sequence_identity_opened": false,
+    "new_lepidoptera_empirical_pairwise_genetic_distances_opened": false,
+    "new_lepidoptera_empirical_transfer_statistic_computed": false
+  }
+}

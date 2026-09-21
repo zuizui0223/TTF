@@ -1,0 +1,107 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_qualification_rule_v0.3",
+  "status": "FROZEN_BEFORE_CHARACTER_MASK_OPENING_AND_FORMAL_SURVIVOR_SYNTHETIC_WORLDS",
+  "frozen_on": "2026-09-21",
+  "supersedes_before_use": [
+    "docs/supporting/lepidoptera_host_resource_qualification_rule_v0.1.json"
+  ],
+  "supersession_reason": "The response-blind predictor design, built before character masks, explicitly controls source host-resource breadth in addition to insect sampling geometry. No character mask, nucleotide identity, genetic distance, transfer statistic, or formal synthetic world had been opened under v0.1.",
+  "parent_distribution_census": "benchmarks/frozen/lepidoptera_host_resource_distribution_census_result_v0.2.json",
+  "parent_predictor_design": "benchmarks/frozen/lepidoptera_host_resource_predictor_design_result_v0.3.json",
+  "pre_mask_predictor_design_npz_sha256": "04acaa1a122f0f6f461309c1749b7cb5ce7469ed5c20e1021db746a6754afe7a",
+  "scientific_question": "Do independently sampled Lepidoptera species with more similar native larval host-resource geography show more congruent post-IBD spatial genetic structure, beyond insect sampling geometry and simple host-resource breadth?",
+  "primary_predictor": {
+    "name": "native_host_resource_geography_jaccard",
+    "definition": "Jaccard similarity of frozen WCVP-v13 native, extant, non-doubtful WGSRPD3 host-resource footprints",
+    "survivor_recomputation": "After the character-mask gate, retain the same host footprints but recompute all pair pools, kernels, standardization and target-fixed-effect residuals on the exact survivor species set with inherited train/eval roles."
+  },
+  "predictor_nuisance_control": {
+    "method": "pooled target-fixed-effect residualization",
+    "covariates": [
+      "target_to_source_coverage",
+      "log1p_centroid_distance_over_500km",
+      "log_edge_count_ratio",
+      "log_locality_count_ratio",
+      "pairwise_geometry_kernel_similarity",
+      "log1p_source_native_host_species_count",
+      "log1p_source_host_footprint_WGSRPD3_unit_count"
+    ],
+    "reason_for_resource_breadth_terms": "Jaccard overlap must not be interpreted as geography-specific evidence merely because broad host-resource footprints overlap many species."
+  },
+  "pairwise_transfer_surface": {
+    "alignment": "nearest source edge midpoint for each target edge within 500 km",
+    "maximum_rows_per_pair": 128,
+    "minimum_rows_per_pair": 3,
+    "cap_sampling": "SHA256('host-resource-v03-alignment|<target>|<source>') deterministic sampling without replacement",
+    "pair_transfer_congruence": "Pearson correlation between aligned source and target endpoint-safe post-IBD edge responses"
+  },
+  "primary_statistic": {
+    "per_target": "Pearson correlation across supported sources between residualized host-resource Jaccard and pairwise transfer congruence",
+    "panel": "arithmetic mean of finite target correlations",
+    "direction": "positive",
+    "alpha": 0.05
+  },
+  "synthetic_cells": {
+    "private": {
+      "shared_fraction": 0.0,
+      "kernel": "identity"
+    },
+    "geometry_confounded_trap": {
+      "shared_fraction": 0.85,
+      "kernel": "Gaussian RBF kernel of frozen insect geometry features"
+    },
+    "resource_breadth_trap": {
+      "shared_fraction": 0.85,
+      "kernel": "mean of Laplacian kernels on standardized log1p native host-species count and WGSRPD3 footprint-unit count"
+    },
+    "host_resource_positive": {
+      "shared_fraction": 0.90,
+      "kernel": "exact Jaccard/Tanimoto kernel of binary native WGSRPD3 host-resource presence"
+    }
+  },
+  "synthetic_shared_parameters": {
+    "latent_fields": 6,
+    "private_amplitude": 0.35,
+    "noise_sd": 0.10,
+    "transition_width": 0.20
+  },
+  "formal_inference": {
+    "method": "worst-case one-sided upper-tail Monte Carlo envelope",
+    "reference_cells": [
+      "private",
+      "geometry_confounded_trap",
+      "resource_breadth_trap"
+    ],
+    "reference_worlds_per_cell": 499,
+    "evaluation_worlds_per_cell": 500,
+    "master_seed": 20260921,
+    "reference_seed_tag": "lepidoptera-host-resource-v03-survivor-reference",
+    "evaluation_seed_tag": "lepidoptera-host-resource-v03-survivor-evaluation",
+    "p_value": "maximum +1-corrected upper-tail p-value across the three nuisance reference cells"
+  },
+  "qualification_gates": {
+    "private_type1": "Wilson 95% upper rejection bound <=0.10",
+    "geometry_trap_type1": "Wilson 95% upper rejection bound <=0.10",
+    "resource_breadth_trap_type1": "Wilson 95% upper rejection bound <=0.10",
+    "host_resource_positive_power": "Wilson 95% lower rejection bound >=0.80",
+    "all_four_required": true
+  },
+  "wing_axis": {
+    "status": "NOT_EVALUABLE_IN_THIS_INDEPENDENT_PANEL",
+    "receipt": "benchmarks/frozen/lepidoptera_host_resource_wing_support_v0.2.json",
+    "not_part_of_formal_qualification": true
+  },
+  "stopping_rules": [
+    "No formal synthetic reference or evaluation statistic may be inspected before the exact character-mask survivor design is frozen.",
+    "The character-mask gate may remove species but may not resplit roles, alter host footprints, relax support rules, drop individual graph edges, or change marker.",
+    "If any exact-survivor formal gate fails, stop before nucleotide identity and report NOT_EVALUABLE.",
+    "Do not change nuisance covariates, Jaccard, alignment cap, synthetic kernels, amplitudes, seed tags, alpha or gates after formal worlds are inspected.",
+    "Any successor after a failed formal gate requires a new method version and fully disjoint seed namespaces."
+  ],
+  "outcome_firewall": {
+    "character_masks_opened": false,
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "transfer_statistic_computed": false
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_qualification_rule_v0.2",
+  "status": "FROZEN_BEFORE_ANY_V02_FORMAL_REFERENCE_OR_EVALUATION_WORLD",
+  "frozen_on": "2026-09-21",
+  "parent_v01_failure": "benchmarks/frozen/lepidoptera_host_resource_survivor_qualification_result_v0.1.json",
+  "development_diagnostic": "benchmarks/frozen/lepidoptera_host_resource_v02_development_diagnostic.json",
+  "scientific_question": "Among fully species-disjoint Lepidoptera, does overlap in native larval host-resource geography predict congruent post-IBD spatial genetic structure beyond insect sampling geometry and simple resource-breadth similarity?",
+  "exact_survivor_domain": {
+    "species": 431,
+    "train_species": 213,
+    "eval_species": 218,
+    "geographically_supported_eval_targets": 204,
+    "target_source_pairs": 12358,
+    "v01_predictor_design_npz_sha256": "60cadfab5b8cf57462ee0e03be92ba44de52c628ad66e2bc8e209f1a40d786a2"
+  },
+  "single_successor_change": {
+    "add_nuisance_covariate": "pairwise resource-breadth similarity",
+    "definition": "mean of Laplacian similarities in panel-standardized log1p resolved native host-species count and log1p native WGSRPD3 footprint-unit count",
+    "purpose": "distinguish which host-resource regions overlap from merely having similarly broad host-resource repertoires",
+    "all_other_estimator_components_unchanged": true
+  },
+  "primary_predictor": {
+    "raw": "Jaccard similarity of frozen native WCVP-v13 WGSRPD3 host-resource footprint sets",
+    "residualization": [
+      "target_to_source_coverage",
+      "log1p_centroid_distance_over_500km",
+      "log_edge_count_ratio",
+      "log_locality_count_ratio",
+      "pairwise_insect_geometry_kernel_similarity",
+      "log1p_source_native_host_species_count",
+      "log1p_source_host_footprint_WGSRPD3_unit_count",
+      "pairwise_resource_breadth_similarity"
+    ],
+    "target_fixed_effect_centering": true,
+    "candidate_residual_sd": 0.14449597324797417
+  },
+  "pairwise_transfer_surface": {
+    "alignment": "unchanged nearest-source-edge mapping within 500 km",
+    "maximum_aligned_edges_per_pair": 128,
+    "pair_transfer_congruence": "Pearson correlation between aligned source and target post-IBD edge responses",
+    "per_target_statistic": "Pearson correlation across sources between v0.2 residualized host-resource similarity and transfer congruence",
+    "panel_statistic": "arithmetic mean of finite target correlations",
+    "direction": "positive",
+    "alpha": 0.05
+  },
+  "synthetic_model": {
+    "latent_fields": 6,
+    "private_amplitude": 0.35,
+    "noise_sd": 0.10,
+    "transition_width": 0.20,
+    "cells": {
+      "private": {"shared_fraction": 0.0},
+      "geometry_confounded_trap": {"shared_fraction": 0.85},
+      "host_breadth_confounded_trap": {"shared_fraction": 0.85},
+      "host_resource_gradient_positive": {"shared_fraction": 0.90}
+    }
+  },
+  "inference": {
+    "nuisance_reference_cells": ["private","geometry_confounded_trap","host_breadth_confounded_trap"],
+    "reference_worlds_per_nuisance_cell": 499,
+    "evaluation_worlds_per_cell": 500,
+    "p_value": "maximum of +1 corrected one-sided upper-tail Monte Carlo p-values across all three nuisance references"
+  },
+  "formal_seed_namespaces": {
+    "master_seed": 20260921,
+    "reference": "lepidoptera-host-resource-v02-reference",
+    "evaluation": "lepidoptera-host-resource-v02-evaluation"
+  },
+  "qualification_gates": {
+    "private_type1": "Wilson 95% upper <= 0.10",
+    "geometry_trap_type1": "Wilson 95% upper <= 0.10",
+    "host_breadth_trap_type1": "Wilson 95% upper <= 0.10",
+    "host_resource_positive_power": "Wilson 95% lower >= 0.80",
+    "all_four_required": true
+  },
+  "stopping_rules": [
+    "The v0.1 formal namespace is spent and cannot be reused for v0.2 qualification.",
+    "No v0.2 estimator component may change after any v0.2 formal statistic is inspected.",
+    "If any v0.2 gate fails, retire v0.2 and keep nucleotide identity closed.",
+    "No empirical genetic outcome from the new host-resource panel may be opened before all four gates pass."
+  ],
+  "outcome_firewall": {
+    "v02_formal_statistics_inspected": false,
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "transfer_statistic_computed": false
+  }
+}

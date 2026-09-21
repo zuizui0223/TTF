@@ -1,0 +1,47 @@
+{
+  "schema": "ttf_lepidoptera_trait_gradient_phase2_mask_census_v0.1",
+  "status": "PASS_TO_SURVIVOR_REQUALIFICATION",
+  "executed_on": "2026-09-20",
+  "parent_qualification": "benchmarks/frozen/lepidoptera_trait_gradient_v02_qualification_result.json",
+  "full_local_receipt_sha256": "7ba2ebcc76645a080bb72b38378a680c20a6af90f3b5e44d25b792d3dc7f6cef",
+  "pre_mask": {
+    "species": 339,
+    "train": 169,
+    "eval": 170,
+    "geographically_supported_eval": 160
+  },
+  "post_mask": {
+    "survivors": 240,
+    "failed_character_support": 99,
+    "train": 118,
+    "eval": 122,
+    "geographically_supported_eval": 110,
+    "source_count_quantiles": {
+      "min": 5.0,
+      "q25": 13.25,
+      "median": 22.0,
+      "q75": 32.0,
+      "max": 33.0
+    }
+  },
+  "survivor_species_sha256": "b35b1db351323397c4ef86d3d9138e4a9f950dc54ec28417fd13d759ce800c34",
+  "failed_species_sha256": "d5b9418b0ac5d381b4c2518922f6ff40d3ce43fce71637d90e8f17a5a06d96a9",
+  "mask_contract": {
+    "minimum_comparable_fraction": 0.5,
+    "nucleotide_identity_persisted": false,
+    "pairwise_nucleotide_differences_computed": false
+  },
+  "panel_gate": {
+    "minimum_total_survivors": 200,
+    "minimum_train_survivors": 90,
+    "minimum_eval_survivors": 90,
+    "minimum_geographically_supported_eval_targets": 90,
+    "all_pass": true
+  },
+  "next_gate": "repeat the unchanged v0.2 synthetic qualification on the exact 240-species survivor geometry with the frozen survivor seed namespaces",
+  "outcome_firewall": {
+    "new_lepidoptera_empirical_sequence_identity_opened": false,
+    "new_lepidoptera_empirical_pairwise_genetic_distances_opened": false,
+    "new_lepidoptera_empirical_transfer_statistic_computed": false
+  }
+}

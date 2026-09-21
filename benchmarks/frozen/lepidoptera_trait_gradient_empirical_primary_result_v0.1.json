@@ -1,0 +1,43 @@
+{
+  "schema": "ttf_lepidoptera_trait_gradient_empirical_primary_result_v0.1",
+  "status": "PRIMARY_ONE_SHOT_DECISION_COMPLETE",
+  "executed_on": "2026-09-20",
+  "authorization": "benchmarks/frozen/lepidoptera_trait_gradient_empirical_authorization_v0.1.json",
+  "parent_survivor_requalification": "benchmarks/frozen/lepidoptera_trait_gradient_v02_survivor_requalification_result_v0.1.json",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "survivor_design_npz_sha256": "15de10eb15d54cf929287e2a27762a1882b7d46ca6251481616639ca7805bc1c",
+  "full_local_primary_receipt_sha256": "81e45efc5c593491d66da24776a455a09858ab90083fa8acb4fec82312fae831",
+  "primary_trait_gradient": {
+    "statistic": -0.016647503138932727,
+    "envelope_p_value": 0.89,
+    "alpha": 0.05,
+    "positive": false,
+    "finite_target_correlations": 110,
+    "target_correlation_summary": {
+      "minimum": -0.6797993183553228,
+      "q25": -0.1630440192848295,
+      "median": -0.02236215481737528,
+      "q75": 0.16648166949882243,
+      "maximum": 0.6039466422400219,
+      "positive_targets": 50,
+      "negative_targets": 60
+    }
+  },
+  "decision": "NO_DETECTED_POSITIVE_TRAIT_SIMILARITY_GRADIENT",
+  "interpretation": "Within the exact frozen 240-species Lepidoptera survivor domain, the prequalified test does not detect greater post-IBD spatial-genetic congruence among ecologically more similar species after the frozen geometry control. This is not evidence that ecological similarity is universally irrelevant or that the true gradient is exactly zero.",
+  "execution_recovery": {
+    "note": "The fully guarded runner was interrupted by infrastructure timeout during execution. The primary statistic was recovered with the exact frozen scorer, source archive, survivor design, nuisance references, response definition and thresholds; no result-dependent method change occurred.",
+    "first_timeout_before_identity_opening": true,
+    "later_timeout_after_integrity_checks": true,
+    "primary_result_inspected_only_after_exact_recovery_completed": true,
+    "secondary_descriptive_baseline_pending": true
+  },
+  "outcome_state": {
+    "new_lepidoptera_empirical_sequence_identity_opened": true,
+    "new_lepidoptera_empirical_pairwise_genetic_distances_opened": true,
+    "new_lepidoptera_empirical_trait_gradient_statistic_computed": true,
+    "serialized_sequence_identity": false,
+    "serialized_edge_genetic_distance_vectors": false
+  },
+  "post_result_retuning_allowed": false
+}

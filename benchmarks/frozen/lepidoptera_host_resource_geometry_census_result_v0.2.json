@@ -1,0 +1,79 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_geometry_census_result_v0.2",
+  "status": "PASS_RESPONSE_BLIND_GEOMETRY_FEASIBILITY",
+  "executed_on": "2026-09-20",
+  "parent_metadata_census": "benchmarks/frozen/lepidoptera_host_resource_metadata_census_v0.2.json",
+  "full_local_geometry_receipt_sha256": "0f42765bc704c9150263921132c38d5707f28e9c170d9e29297d5349468ec9bd",
+  "independence": {
+    "prior_broad_phase1_species_excluded": 250,
+    "completed_trait_gradient_pre_mask_species_excluded": 339,
+    "operator_exposure_species_excluded": ["Acrolophus arcanella"],
+    "new_empirical_identity_opened": false
+  },
+  "response_blind_funnel": {
+    "unused_lepidoptera_coi_metadata_species": 26577,
+    "species_with_species_level_HOSTS_match": 6767,
+    "aligned_count_ge_12_candidates_scanned": 3779,
+    "geometry_eligible_species": 2757
+  },
+  "geometry_eligibility": {
+    "minimum_unique_localities": 12,
+    "minimum_endpoint_disjoint_training_edges": 5,
+    "geometry_eligible_fraction_of_HOSTS_matched": 0.4074183537756761,
+    "locality_quantiles": {
+      "min": 12.0,
+      "q25": 16.0,
+      "median": 23.0,
+      "q75": 35.0,
+      "max": 352.0
+    },
+    "distinct_host_species_quantiles": {
+      "min": 1.0,
+      "q25": 1.0,
+      "median": 3.0,
+      "q75": 7.0,
+      "max": 174.0
+    }
+  },
+  "taxonomic_description_top_families": {
+    "Noctuidae": 564,
+    "Geometridae": 407,
+    "Tortricidae": 291,
+    "Crambidae": 141,
+    "Erebidae": 133,
+    "Sphingidae": 120,
+    "Nymphalidae": 120,
+    "Gracillariidae": 114,
+    "Gelechiidae": 112,
+    "Pyralidae": 85,
+    "Notodontidae": 70,
+    "Saturniidae": 68,
+    "Elachistidae": 55,
+    "Hesperiidae": 45,
+    "Nepticulidae": 45,
+    "Arctiidae": 37,
+    "Pterophoridae": 25,
+    "Oecophoridae": 25,
+    "Lycaenidae": 21,
+    "Yponomeutidae": 20
+  },
+  "frozen_v01_thresholds_reused_without_relaxation": {
+    "minimum_total_species": 180,
+    "minimum_train_species": 80,
+    "minimum_eval_species": 80,
+    "minimum_geographically_supported_eval_targets": 90,
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.5,
+    "minimum_source_species": 5,
+    "total_species_gate_pass": true
+  },
+  "decision": "PASS_TO_HOST_PLANT_DISTRIBUTION_ADMISSIBILITY_CENSUS",
+  "interpretation": "Removing wing-size complete-case status from primary panel inclusion restores ample support without relaxing any geographic or panel-size threshold. The candidate domain is moth-rich and taxonomically broad. This is geometry feasibility only; host-resource geography has not yet been constructed and no new genetic outcome has been opened.",
+  "outcome_firewall": {
+    "wcvp_host_distribution_opened_for_candidate_selection": false,
+    "new_followup_character_masks_opened": false,
+    "new_followup_sequence_identity_opened": false,
+    "new_followup_pairwise_genetic_distances_opened": false,
+    "new_followup_transfer_statistic_computed": false
+  }
+}

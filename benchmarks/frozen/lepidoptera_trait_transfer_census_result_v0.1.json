@@ -1,0 +1,57 @@
+{
+  "schema": "ttf_lepidoptera_trait_transfer_census_result_v0.1",
+  "status": "GREEN_EXACT_MATCH_LOWER_BOUND",
+  "executed_on": "2026-09-19",
+  "scope": "Exact-name LepTraits matches only; no GBIF synonym normalization yet. This is therefore a conservative matched-trait feasibility result, not the final normalized census.",
+  "source_archive": {
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "bytes": 274988692
+  },
+  "leptraits": {
+    "source": "RiesLabGU/LepTraits consensus/consensus.csv",
+    "sha256": "6ec35b8a31e96c971aeaa228a48aae9f107c40c33695f0d470aa4382ca6d635b",
+    "rows_including_header": 12449,
+    "unique_species_names": 12172
+  },
+  "funnel": {
+    "leptraits_exact_name_matched_and_phylogatr_geometry_eligible": 770,
+    "wing_size": 750,
+    "voltinism": 545,
+    "host_breadth": 616,
+    "habitat_any": 662,
+    "habitat_complete4": 379,
+    "major_complete": 345
+  },
+  "major_complete_geographic_support": {
+    "split_rule": "SHA256('lepidoptera-trait-transfer-v0.1|major_complete|<species>'), lower half train, upper half evaluation",
+    "train_species": 172,
+    "eval_species": 173,
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.5,
+    "minimum_source_species": 5,
+    "supported_eval_species": 164,
+    "supported_eval_fraction": 0.9479768786127167,
+    "source_count_quantiles": {
+      "min": 1,
+      "q25": 15,
+      "median": 29,
+      "q75": 47,
+      "max": 51
+    }
+  },
+  "decision": {
+    "frozen_green_threshold": "supported evaluation targets >= 90",
+    "observed_supported_evaluation_targets": 164,
+    "result": "GREEN",
+    "margin_above_green_threshold": 74,
+    "interpretation": "The within-Lepidoptera trait-gradient study is feasible even before synonym normalization or moth-trait augmentation. Trait completeness does not collapse the panel, and geographic source support is not concentrated at the five-source minimum."
+  },
+  "identity_firewall_note": {
+    "census_statistics_use_nucleotide_identity": false,
+    "pairwise_genetic_distances_computed_for_census": false,
+    "empirical_transfer_statistic_computed": false,
+    "operator_exposure_exception": "During archive-layout inspection, raw sequence text for Acrolophus arcanella was inadvertently rendered. That species is outside the exact LepTraits-matched eligible set used for every result in this receipt and must remain excluded from any future trait-transfer panel.",
+    "affected_species_in_reported_panel": 0
+  },
+  "next_step": "Freeze a new within-Lepidoptera baseline-plus-trait-gradient estimator and synthetic qualification cells (private, trait-gradient positive, geometry-confounded trap) before any empirical response is computed."
+}

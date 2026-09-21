@@ -1,0 +1,42 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_empirical_primary_result_v0.1",
+  "status": "PRIMARY_ONE_SHOT_DECISION_COMPLETE",
+  "executed_on": "2026-09-21",
+  "authorization": "benchmarks/frozen/lepidoptera_host_resource_empirical_authorization_v0.1.json",
+  "parent_qualification": "benchmarks/frozen/lepidoptera_host_resource_v02_qualification_result.json",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "survivor_design_npz_sha256": "b1b9dab23676f6a1ea416c5889fc42676908a54d3abcf042dbaf8605cda2c3bf",
+  "full_local_primary_receipt_sha256": "2a3330950a14ed30e2cd0df424fab7fe3ef531fa5aa9d08fd3be4eda8a9e1f65",
+  "primary_host_resource_gradient": {
+    "statistic": -0.00704481173406459,
+    "envelope_p_value": 0.698,
+    "alpha": 0.05,
+    "positive": false,
+    "finite_target_correlations": 201,
+    "target_correlation_summary": {
+      "minimum": -0.6150419811380315,
+      "q25": -0.09023377569929675,
+      "median": 0.0017058551504592647,
+      "q75": 0.08062985549712282,
+      "maximum": 0.6826834414800462,
+      "positive_targets": 101,
+      "negative_targets": 100
+    }
+  },
+  "decision": "NO_DETECTED_POSITIVE_HOST_RESOURCE_GEOGRAPHY_GRADIENT",
+  "interpretation": "Within the exact frozen 431-species host-resource survivor domain, the prequalified one-shot test does not detect greater post-IBD spatial-genetic congruence among Lepidoptera sharing more native larval host-resource geography after controlling insect sampling geometry and simple resource breadth. This does not establish a zero host-resource effect.",
+  "qualification_context": {
+    "private_type1_wilson95_upper": 0.011240706705146758,
+    "geometry_trap_type1_wilson95_upper": 0.041477057463900756,
+    "host_breadth_trap_type1_wilson95_upper": 0.08205618785625499,
+    "host_resource_positive_power_wilson95_lower": 0.9042028101480832
+  },
+  "outcome_state": {
+    "sequence_identity_opened": true,
+    "pairwise_genetic_distances_opened": true,
+    "host_resource_transfer_statistic_computed": true,
+    "serialized_sequence_identity": false,
+    "serialized_edge_genetic_distance_vectors": false
+  },
+  "post_result_retuning_allowed": false
+}

@@ -1,0 +1,67 @@
+{
+  "schema": "ttf_lepidoptera_trait_gradient_empirical_rule_v0.1",
+  "status": "FROZEN_BEFORE_NEW_LEPIDOPTERA_NUCLEOTIDE_IDENTITY_OPENING",
+  "frozen_on": "2026-09-20",
+  "parent_survivor_requalification": "benchmarks/frozen/lepidoptera_trait_gradient_v02_survivor_requalification_result_v0.1.json",
+  "source_archive": {
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "bytes": 274988692
+  },
+  "survivor_design": {
+    "species": 240,
+    "train_species": 118,
+    "eval_species": 122,
+    "geographically_supported_eval_species": 110,
+    "target_source_pairs": 2428,
+    "design_npz_sha256": "15de10eb15d54cf929287e2a27762a1882b7d46ca6251481616639ca7805bc1c"
+  },
+  "empirical_response": {
+    "marker": "frozen COI-family aligned FASTA selected before identity opening",
+    "edge_genetic_distance": "uncorrected p-distance, arithmetic mean across all canonical A/C/G/T cross-locality sequence pairs meeting the frozen comparable-column threshold",
+    "minimum_comparable_fraction": 0.5,
+    "ibd_adjustment": "endpoint-disjoint cross-fit rank-IBD residualization on each species frozen graph",
+    "edge_response": "rank01 of the endpoint-disjoint cross-fit IBD residual; the same response definition is used for source and target species",
+    "serialized_sequence_identity": false,
+    "serialized_edge_genetic_distance_vectors": false
+  },
+  "trait_gradient_estimand": {
+    "pair_alignment": "exact response-blind survivor-design target/source edge alignment inherited from v0.2 qualification",
+    "pair_transfer_congruence": "Pearson correlation between aligned source and target post-IBD edge-response values",
+    "trait_predictor": "frozen geometry-residualized four-axis LepTraits similarity from the survivor design",
+    "per_target_statistic": "Pearson correlation across supported source species between residualized trait similarity and pairwise transfer congruence",
+    "panel_statistic": "arithmetic mean over finite supported evaluation-target correlations",
+    "direction": "positive",
+    "alpha": 0.05,
+    "inference": "worst-case one-sided upper-tail Monte Carlo envelope across the independent survivor private and geometry-confounded nuisance reference distributions"
+  },
+  "secondary_baseline": {
+    "name": "within_lepidoptera_geography_conditioned_transfer",
+    "role": "descriptive second rung only in v0.1 empirical opening",
+    "definition": "mean held-out Spearman transfer score using all geographically supported survivor training Lepidoptera under the unchanged 500-km target-conditioned field",
+    "inferential_claim_authorized": false
+  },
+  "one_shot_decision": {
+    "positive": "envelope p <= 0.05 and panel statistic > 0",
+    "negative": "envelope p > 0.05",
+    "interpretation_positive": "Within the frozen Lepidoptera survivor domain, ecologically more similar species show greater geographic congruence in post-IBD mitochondrial differentiation beyond measured sampling geometry.",
+    "interpretation_negative": "The frozen study does not detect a positive trait-similarity gradient within the tested Lepidoptera survivor domain; this does not establish zero trait dependence."
+  },
+  "integrity_requirements": [
+    "Exact source archive SHA-256 must match before any nucleotide identity is decoded.",
+    "Reconstruct all 240 frozen survivor source panels using FASTA headers and occurrence coordinates only, and require exact geometry equality with the survivor design.",
+    "Recompute canonical-valid masks for all 240 frozen survivors and require every frozen survivor edge to remain admissible before identity opening; the exact archive SHA and frozen survivor-design SHA jointly fix the excluded species.",
+    "Use only the frozen v0.2 survivor nuisance-reference distributions; no new null selection after the empirical statistic is seen.",
+    "Run the empirical statistic exactly once; no threshold, trait, geometry covariate, alignment, response, split or nuisance-family changes after opening."
+  ],
+  "outcome_firewall": {
+    "new_lepidoptera_empirical_sequence_identity_opened": false,
+    "new_lepidoptera_empirical_pairwise_genetic_distances_opened": false,
+    "new_lepidoptera_empirical_transfer_statistic_computed": false
+  },
+  "survivor_references": {
+    "private_npy_sha256": "8bbf56334d78bab5eb01723acec1265de32843f934e4089177d80cbdc3de29dc",
+    "geometry_confounded_npy_sha256": "2fcad861c7f1a7a8eed59116a22e7e6d54bdbec37b0ec5df419f6156564cc39b",
+    "worlds_each": 499,
+    "calibration": "maximum of +1 corrected one-sided upper-tail Monte Carlo p-values"
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_geography_followup_rule_v0.1",
+  "status": "FROZEN_BEFORE_HOST_RESOURCE_GEOGRAPHY_CENSUS_AND_ANY_NEW_EMPIRICAL_IDENTITY",
+  "frozen_on": "2026-09-20",
+  "motivation": "The completed Lepidoptera primary analysis found no positive gradient for composite ecological similarity, and post-primary exploratory prediction showed that wing-size similarity, host-breadth similarity, voltinism similarity and habitat similarity do not individually improve held-out pair prediction. Host breadth does not measure the geographic distribution of larval resources. This follow-up prospectively tests host-resource geography on a fully species-disjoint panel.",
+  "scientific_question": "Do Lepidoptera species that experience more similar larval host-resource geography show more congruent post-IBD spatial genetic structure, and does adult dispersal capacity modify that relationship?",
+  "biological_rationale": {
+    "adult_axis": "Wing size is a predeclared proxy for adult dispersal capacity.",
+    "larval_axis": "Larvae are tied to host resources; the realized geographic availability of host plants can constrain connectivity through a route distinct from adult movement capacity.",
+    "critical_boundary": "The mechanism 'host-resource geography constrains gene flow' is a hypothesis to be tested, not a conclusion imported from the completed study."
+  },
+  "independent_species_domain": {
+    "taxon": "Lepidoptera",
+    "exclude_prior_broad_phase1_species": 250,
+    "exclude_completed_trait_gradient_pre_mask_species": 339,
+    "exclude_operator_exposure_species": ["Acrolophus arcanella"],
+    "rule": "A species used in either prior empirical-design universe is permanently excluded even if it later failed a character-mask gate. No species may contribute to both the completed study and this confirmatory follow-up."
+  },
+  "external_host_data": {
+    "dataset": "HOSTS - a Database of the World's Lepidopteran Hostplants",
+    "provider": "Natural History Museum, London",
+    "dataset_doi": "10.5519/havt50xw",
+    "resource_id": "877f387a-36a3-486c-a0c1-b8d5fb69f85a",
+    "globi_mirror_repository": "globalbioticinteractions/HOSTS",
+    "globi_mirror_commit": "808e0b869f9ec1adf8efff87cf6a395adda103e0",
+    "primary_host_taxon_level": "host plant species only: non-empty Hostplant Genus + Hostplant Species",
+    "exclude_from_primary": [
+      "family-only host records",
+      "genus-only host records",
+      "non-taxonomic labels such as Polyphagous",
+      "records lacking a resolvable host plant species"
+    ],
+    "host_record_location": "retained for descriptive/sensitivity use only; not the primary host-resource distribution surface"
+  },
+  "plant_distribution_data": {
+    "dataset": "World Checklist of Vascular Plants / Plants of the World Online distribution backbone",
+    "version": "WCVP version 13",
+    "distribution": "native WGSRPD level-3 units only",
+    "introduced_ranges_primary": false,
+    "download_sha256": "TO_BE_FROZEN_BEFORE_CENSUS",
+    "taxonomy_normalization": "Host plant names are normalized against the frozen WCVP name backbone before any insect genetic response is opened."
+  },
+  "host_resource_footprint": {
+    "per_insect_species": "Union of native WGSRPD level-3 units occupied by all species-level larval host plants recorded for that insect in the frozen HOSTS source.",
+    "host_weighting_primary": "equal weight per distinct host plant species before union; duplicate interaction records do not increase geographic weight",
+    "minimum_distinct_host_species": 1,
+    "primary_pair_similarity": "Jaccard similarity between source and target host-resource WGSRPD-unit sets",
+    "secondary_descriptors_response_blind": [
+      "host-resource footprint area/unit count",
+      "number of distinct host plant species",
+      "HOSTS interaction-record count",
+      "fraction of host taxa successfully matched to WCVP"
+    ]
+  },
+  "adult_dispersal_axis": {
+    "source": "LepTraits 1.0 frozen consensus",
+    "trait": "wing size",
+    "similarity": "exp(-absolute difference in panel-standardized log1p wing-size proxy)",
+    "role": "predeclared adult-mobility predictor distinct from host-resource geography"
+  },
+  "prospective_estimands": {
+    "primary": {
+      "name": "host_resource_geography_similarity_gradient",
+      "unit": "geographically supported target-source species pair",
+      "response": "pairwise congruence of the same endpoint-safe post-IBD edge response used by the completed genetic framework",
+      "predictor": "host-resource geography Jaccard similarity",
+      "geometry_control": "unchanged response-blind pair geometry covariates from v0.2: target-to-source coverage, centroid distance, edge-count ratio, locality-count ratio and geometry-kernel similarity",
+      "direction": "positive"
+    },
+    "secondary_predeclared": {
+      "adult_wing_similarity": "increment of wing-size similarity beyond geometry",
+      "joint_constraint": "increment of host-resource geography similarity x wing-size similarity beyond both main effects and geometry",
+      "interpretation": "tests whether matching both larval resource geography and adult dispersal capacity identifies pairs with greater spatial-genetic congruence"
+    }
+  },
+  "response_blind_census_gate": {
+    "minimum_total_species_with_host_geography_and_wing": 180,
+    "minimum_train_species": 80,
+    "minimum_eval_species": 80,
+    "minimum_geographically_supported_eval_targets": 90,
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.5,
+    "minimum_source_species": 5,
+    "if_fail": "STOP before character masks or new nucleotide identity; redesign requires a new protocol version."
+  },
+  "future_synthetic_qualification": {
+    "required_cells": [
+      "private spatial structure",
+      "host-resource-gradient positive",
+      "geometry-confounded trap",
+      "wing-only gradient",
+      "joint host-resource x wing positive"
+    ],
+    "rule": "Synthetic amplitudes, nuisance reference family, seed namespaces and qualification thresholds must be frozen only after the response-blind census passes and before character masks or nucleotide identity are opened."
+  },
+  "stopping_rules": [
+    "Do not use the completed 240-species empirical pairwise outcomes to tune the host-resource predictor, host-plant matching rule, WCVP footprint rule or census thresholds.",
+    "Do not relax species-level host identification to genus/family after seeing census or response results under this version.",
+    "Do not include introduced WCVP plant ranges in the primary footprint after seeing outcomes.",
+    "Do not open new-panel nucleotide identity until the host-geography census, character-mask gate and exact-survivor synthetic qualification all pass.",
+    "Any failed confirmatory gate yields NOT_EVALUABLE, not evidence against the host-resource mechanism."
+  ],
+  "outcome_firewall": {
+    "new_followup_sequence_identity_opened": false,
+    "new_followup_pairwise_genetic_distances_opened": false,
+    "new_followup_transfer_statistic_computed": false
+  }
+}

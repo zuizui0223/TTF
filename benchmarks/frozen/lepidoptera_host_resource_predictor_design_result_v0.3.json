@@ -1,0 +1,64 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_predictor_design_result_v0.3",
+  "status": "FROZEN_RESPONSE_BLIND_BEFORE_CHARACTER_MASKS",
+  "executed_on": "2026-09-21",
+  "parent_distribution_census": "benchmarks/frozen/lepidoptera_host_resource_distribution_census_result_v0.2.json",
+  "parent_census_design_sha256": "597b1499dbdf8d4fb5a30f10a32686a60185305d12a8772019279bda08b82897",
+  "predictor_design_npz_sha256": "04acaa1a122f0f6f461309c1749b7cb5ce7469ed5c20e1021db746a6754afe7a",
+  "predictor_design_json_sha256": "49a9d61f04d2c1c392e1555b189d551c1915ec50b6d524f90ff9449035ea27b1",
+  "species": 500,
+  "supported_eval_targets": 235,
+  "supported_pairs": 15937,
+  "nuisance_covariates": [
+    "target_to_source_coverage",
+    "log1p_centroid_distance_over_500km",
+    "log_edge_count_ratio",
+    "log_locality_count_ratio",
+    "pairwise_geometry_kernel_similarity",
+    "log1p_source_native_host_species_count",
+    "log1p_source_host_footprint_WGSRPD3_unit_count"
+  ],
+  "predictor_spread": {
+    "raw_jaccard_sd": 0.22844872303746103,
+    "residual_jaccard_sd": 0.17374646557124349,
+    "within_target_residual_sd_quantiles": {
+      "min": 0.03929231000123331,
+      "q25": 0.13030125095549416,
+      "median": 0.16276720517767226,
+      "q75": 0.19545569270478919,
+      "max": 0.4215634062659825
+    },
+    "targets_with_residual_sd_gt_0_05": 233,
+    "targets_with_residual_sd_gt_0_10": 214
+  },
+  "alignment": {
+    "radius_km": 500.0,
+    "maximum_rows_per_pair": 128,
+    "minimum_rows_per_pair": 3,
+    "total_alignment_rows": 935545,
+    "rows_per_pair_quantiles": {
+      "min": 7.0,
+      "q25": 22.0,
+      "median": 43.0,
+      "q75": 93.0,
+      "max": 128.0
+    }
+  },
+  "kernel_psd_check": {
+    "host_resource_jaccard_min_eigenvalue": -2.2060540217312354e-15,
+    "resource_breadth_min_eigenvalue": -3.643164285778749e-14,
+    "geometry_min_eigenvalue": 2.840730422521431e-13,
+    "eigenvalues_below_minus_1e_10": 0
+  },
+  "library_artifacts": {
+    "json": "/TTF/host-resource/lepidoptera_host_resource_predictor_design_v0.3.json",
+    "npz": "/TTF/host-resource/lepidoptera_host_resource_predictor_design_v0.3.npz"
+  },
+  "interpretation": "Host-resource Jaccard retains substantial within-target variation after both insect sampling geometry and source resource-breadth covariates are removed. The predictor is therefore observable in the frozen 500-species pre-mask panel. This is a response-blind design result, not an empirical genetic result.",
+  "outcome_firewall": {
+    "character_masks_opened": false,
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "transfer_statistic_computed": false
+  }
+}

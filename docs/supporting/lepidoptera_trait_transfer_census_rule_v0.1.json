@@ -1,0 +1,14 @@
+{
+  "schema": "ttf_lepidoptera_trait_transfer_census_rule_v0.1",
+  "status": "FROZEN_BEFORE_LEPIDOPTERA_TRAIT_CENSUS",
+  "purpose": "Response-blind feasibility census for a within-Lepidoptera trait-conditioned transfer study.",
+  "eligibility": {"order":"Lepidoptera","minimum_localities":12,"minimum_endpoint_disjoint_training_edges":5},
+  "trait_source": {"dataset":"LepTraits 1.0","level":"species consensus","citation":"Shirey et al. 2022 Scientific Data 9:382"},
+  "trait_funnel": ["name matched","wing size","voltinism","host breadth","habitat complete four-axis","major complete"],
+  "major_complete": "wing size + voltinism + NumberOfHostplantFamilies + CanopyAffinity + EdgeAffinity + MoistureAffinity + DisturbanceAffinity",
+  "geographic_support": {"radius_km":500,"minimum_target_coverage":0.5,"minimum_sources":5},
+  "panel_split": "Within each trait stage, rank species by SHA256(lepidoptera-trait-transfer-v0.1|stage|species); lower half train, upper half evaluation.",
+  "decision_thresholds_supported_eval_targets": {"green":">=90","amber":"60-89","intermediate":"41-59","red":"<=40"},
+  "interpretation": "The census selects no transfer estimator and opens no synthetic or empirical response. If coverage is insufficient, decide prospectively among moth-trait augmentation, marker expansion, or a different estimator before response analysis.",
+  "outcome_firewall": {"sequence_identity_opened":false,"pairwise_genetic_distances_opened":false,"synthetic_response_worlds_opened":false,"empirical_transfer_statistic_computed":false}
+}

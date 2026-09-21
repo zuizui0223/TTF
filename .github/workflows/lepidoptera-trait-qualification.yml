@@ -1,0 +1,34 @@
+name: lepidoptera trait qualification
+on:
+  workflow_dispatch:
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -e ".[lepidoptera]" pytest
+      - name: Restore frozen archive cache
+        id: archive
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/phylogatr.zip
+          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5
+      - name: Require frozen archive
+        run: |
+          test -f /tmp/phylogatr.zip || { echo "Frozen archive cache is absent. Seed it once with the response-blind archive-seed workflow."; exit 2; }
+          echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5  /tmp/phylogatr.zip" | sha256sum -c -
+      - run: python scripts/build_lepidoptera_trait_gradient_design.py --archive /tmp/phylogatr.zip --leptraits data/external/leptraits_consensus_v1.0.csv --output results/lepidoptera_trait_gradient_design_v0.1.json
+      - name: Verify frozen design hash
+        run: echo "f2f2088c294ecfac3c49659439fd7858330452bd8fbea090513a6b3d590c98f8  results/lepidoptera_trait_gradient_design_v0.1.json" | sha256sum -c -
+      - run: |
+          for cell in private trait_gradient_positive geometry_confounded_trap; do
+            python scripts/run_lepidoptera_trait_gradient_qualification_batch.py --design-json results/lepidoptera_trait_gradient_design_v0.1.json --cell "$cell" --count 500 --output "results/${cell}.json"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lepidoptera-trait-qualification
+          path: results/*.json
+          retention-days: 30

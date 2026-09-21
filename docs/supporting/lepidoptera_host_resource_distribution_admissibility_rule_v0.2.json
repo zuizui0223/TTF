@@ -1,0 +1,81 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_distribution_admissibility_rule_v0.2",
+  "status": "FROZEN_BEFORE_WCVP_V13_HOST_DISTRIBUTION_CENSUS",
+  "frozen_on": "2026-09-21",
+  "parent_rule": "docs/supporting/lepidoptera_host_resource_geography_followup_rule_v0.1.json",
+  "parent_geometry_census": "benchmarks/frozen/lepidoptera_host_resource_geometry_census_result_v0.2.json",
+  "purpose": "Freeze exact WCVP v13 name-resolution and native host-resource footprint rules before inspecting host-distribution coverage on the response-blind follow-up species universe.",
+  "wcvp_snapshot": {
+    "dataset": "World Checklist of Vascular Plants",
+    "version": 13,
+    "access_date": "2024-05-21",
+    "redistribution_repository": "matildabrown/rWCVPdata",
+    "redistribution_commit": "65bed76bae9d644ccb6ad200c05f9f5071d89e05",
+    "citation_snapshot_version": 13,
+    "citation_snapshot_date": "21 May 2024"
+  },
+  "host_name_resolution": {
+    "input": "exact Hostplant Genus + single-space + Hostplant Species from frozen HOSTS resource",
+    "species_level_only": true,
+    "subspecific_epithets_ignored_for_primary": true,
+    "match": "exact WCVP taxon_name at species rank",
+    "accepted_mapping": "map matched WCVP name to accepted_plant_name_id; accepted names map to their own plant_name_id",
+    "ambiguity_policy": "if one input binomial maps to multiple distinct accepted_plant_name_id values, mark ambiguous and exclude from the primary footprint",
+    "unmatched_policy": "exclude from primary footprint and count explicitly; no fuzzy matching after coverage is inspected"
+  },
+  "primary_native_distribution": {
+    "geographic_unit": "WGSRPD level 3 area_code_l3",
+    "introduced": 0,
+    "extinct": 0,
+    "location_doubtful": 0,
+    "interpretation": "current confidently native host-resource availability",
+    "duplicate_rows": "collapse to distinct accepted host plant species x WGSRPD3 unit"
+  },
+  "per_insect_footprint": {
+    "definition": "union of primary native WGSRPD3 units across all resolved distinct species-level larval hosts for that insect",
+    "duplicate_HOSTS_records": "do not increase host or geographic weight",
+    "minimum_resolved_host_species": 1,
+    "minimum_native_units": 1,
+    "pair_similarity": "Jaccard similarity between source and target footprint unit sets"
+  },
+  "admissibility_outputs": [
+    "number and fraction of HOSTS host binomials resolved unambiguously to WCVP accepted species",
+    "number and fraction of resolved host species with at least one primary native WGSRPD3 unit",
+    "per-insect counts of HOSTS species-level hosts, WCVP-resolved hosts, hosts with native distributions, and native WGSRPD3 units",
+    "response-blind species counts retaining host-resource footprints after the frozen geometry eligibility rule",
+    "train/eval and geographically-supported target counts under the inherited response-blind split"
+  ],
+  "gate": {
+    "minimum_total_species_with_host_resource_footprint": 180,
+    "minimum_train_species": 80,
+    "minimum_eval_species": 80,
+    "minimum_geographically_supported_eval_targets": 90,
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.5,
+    "minimum_source_species": 5,
+    "if_fail": "STOP before character masks or new nucleotide identity; any redesigned host taxonomy/distribution rule requires a new protocol version."
+  },
+  "sensitivity_only_not_primary": [
+    "introduced WCVP ranges",
+    "locally extinct native ranges",
+    "doubtful WCVP distributions",
+    "genus-level HOSTS records",
+    "family-level HOSTS records",
+    "fuzzy plant-name matching"
+  ],
+  "outcome_firewall": {
+    "new_followup_character_masks_opened": false,
+    "new_followup_sequence_identity_opened": false,
+    "new_followup_pairwise_genetic_distances_opened": false,
+    "new_followup_transfer_statistic_computed": false
+  },
+  "panel_construction": {
+    "eligible_universe": "species passing frozen phylogatR geometry eligibility and the frozen primary host-resource footprint admissibility rule after all prior species exclusions",
+    "maximum_species": 500,
+    "ranking": "SHA256('lepidoptera-host-resource-v0.2|5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5|<species>'), species as tie-break",
+    "selection": "first min(500, N eligible) species under the frozen ranking",
+    "split": "lower half of the selected ranking is training; upper half is evaluation; floor(N/2) training when N is odd",
+    "response_blind": true,
+    "rationale": "cap exact-geometry synthetic qualification and future one-shot empirical computation at a tractable size without using host-overlap values or genetic outcomes for species selection"
+  }
+}

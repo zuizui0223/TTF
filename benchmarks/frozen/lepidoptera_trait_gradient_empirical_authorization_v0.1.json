@@ -1,0 +1,30 @@
+{
+  "schema": "ttf_lepidoptera_trait_gradient_empirical_authorization_v0.1",
+  "status": "AUTHORIZE_ONE_SHOT_LEPIDOPTERA_IDENTITY_OPENING",
+  "authorized_on": "2026-09-20",
+  "method_commit_sha": "3f69bec0cfc7c6964d2976e071d29d861b893291",
+  "frozen_sha256": {
+    "empirical_rule": "e96c2699fed23f23abf1d59a6cc0f1cd42ea464e6410b74e92d6908a1f21dbf9",
+    "empirical_scorer": "d941febd3d7f55ff4ccbfcb9fd177b8230b413e82caf880fe17418fdceae42b1",
+    "empirical_runner": "1a4e224e518d06a5b82275f5ae0c35a399a406940d69b7548ffa132ece5d7686",
+    "survivor_requalification": "5f486fd9be522a151404ae5e8e714f8d518f52f72e9f7d1bdfbc38c53e4a1081",
+    "source_archive": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "survivor_design_npz": "15de10eb15d54cf929287e2a27762a1882b7d46ca6251481616639ca7805bc1c",
+    "private_reference_npy": "8bbf56334d78bab5eb01723acec1265de32843f934e4089177d80cbdc3de29dc",
+    "geometry_reference_npy": "2fcad861c7f1a7a8eed59116a22e7e6d54bdbec37b0ec5df419f6156564cc39b"
+  },
+  "authorization_basis": {
+    "pre_mask_v02_qualification": "PASS",
+    "character_mask_gate": "PASS_TO_SURVIVOR_REQUALIFICATION",
+    "exact_survivor_requalification": "PASS",
+    "survivor_private_type1_wilson95_upper": 0.036420183246879345,
+    "survivor_geometry_trap_type1_wilson95_upper": 0.056184326968027755,
+    "survivor_positive_power_wilson95_lower": 0.8376786384230859
+  },
+  "one_shot": {
+    "allowed_runs": 1,
+    "post_result_retuning_allowed": false,
+    "sequence_identity_serialization_allowed": false,
+    "edge_genetic_distance_vector_serialization_allowed": false
+  }
+}

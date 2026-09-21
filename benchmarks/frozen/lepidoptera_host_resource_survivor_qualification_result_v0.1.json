@@ -1,0 +1,59 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_survivor_qualification_result_v0.1",
+  "status": "FAIL_NOT_EVALUABLE_POWER",
+  "executed_on": "2026-09-21",
+  "parent_execution_rule": "docs/supporting/lepidoptera_host_resource_survivor_qualification_execution_v0.1.json",
+  "design_npz_sha256": "60cadfab5b8cf57462ee0e03be92ba44de52c628ad66e2bc8e209f1a40d786a2",
+  "reference": {
+    "private_worlds": 499,
+    "geometry_confounded_trap_worlds": 499,
+    "host_breadth_confounded_trap_worlds": 499,
+    "private_mean_statistic": -0.00036171694712411193,
+    "geometry_mean_statistic": 0.0023167827716495232,
+    "host_breadth_mean_statistic": 0.05016861140034826
+  },
+  "evaluation": {
+    "private": {
+      "worlds": 500,
+      "rejections": 0,
+      "rejection_rate": 0.0,
+      "wilson95_upper": 0.007624340461552241
+    },
+    "geometry_confounded_trap": {
+      "worlds": 500,
+      "rejections": 0,
+      "rejection_rate": 0.0,
+      "wilson95_upper": 0.007624340461552241
+    },
+    "host_breadth_confounded_trap": {
+      "worlds": 500,
+      "rejections": 22,
+      "rejection_rate": 0.044,
+      "wilson95_upper": 0.06571944287232845
+    },
+    "host_resource_gradient_positive": {
+      "worlds": 500,
+      "rejections": 115,
+      "rejection_rate": 0.23,
+      "wilson95_lower": 0.1952549251744704,
+      "wilson95_upper": 0.26886221867476784,
+      "mean_statistic": 0.08529243736297283,
+      "median_envelope_p": 0.133
+    }
+  },
+  "gates": {
+    "private_type1_pass": true,
+    "geometry_trap_type1_pass": true,
+    "host_breadth_trap_type1_pass": true,
+    "host_resource_positive_power_pass": false,
+    "all_four_pass": false
+  },
+  "decision": "RETIRE_V0_1_BEFORE_EMPIRICAL_IDENTITY",
+  "interpretation": "The exact survivor estimator controls all three nuisance Type-I cells but lacks the predeclared power to distinguish a true host-resource geography gradient from the frozen nuisance envelope. This is NOT_EVALUABLE for the host-resource biological hypothesis and is not evidence against the mechanism.",
+  "outcome_firewall": {
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "transfer_statistic_computed": false
+  },
+  "next_step_boundary": "Any successor must receive a new estimator version and fully disjoint synthetic seed namespaces. No new-panel nucleotide identity may be opened under v0.1."
+}
