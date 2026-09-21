@@ -3,7 +3,7 @@
   "status": "FROZEN_AT_ALPHA_0P025_BEFORE_FORMAL_SYNTHETIC_RESULTS_AND_BEFORE_ANY_STUDY_B_GENETIC_RESPONSE",
   "frozen_on": "2026-09-21",
   "parent_relation_rule": "docs/supporting/relational_environment_relation_rule_v0.3.json",
-  "parent_opportunity_rule": "docs/supporting/relational_environment_opportunity_rule_v0.1.json",
+  "parent_opportunity_rule": "docs/supporting/relational_environment_opportunity_rule_v0.2.json",
   "inference": {
     "inheritance": "Use the same source-fixed-effect + target-fixed-effect, two-way source/target cluster-robust one-sided beta_R test that passed the prospective host-resource study. It is requalified on Study B development geometry rather than assumed valid.",
     "predictors_in_order": [
@@ -22,7 +22,7 @@
   },
   "synthetic_worlds": {
     "worlds_per_cell": 1000,
-    "seed_namespace": "relational-environment-formal-v0.1",
+    "seed_namespace": "relational-environment-formal-v0.2",
     "seed_rule": "uint64 from first 16 hex characters of SHA256('<namespace>|<opportunity_design_sha256>|<cell_name>')",
     "response_link": "T_st_synthetic = tanh(latent_st)",
     "source_intercept_sd": 0.18,
