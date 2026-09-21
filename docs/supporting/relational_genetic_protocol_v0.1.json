@@ -1,0 +1,68 @@
+{
+  "schema": "ttf_relational_genetic_protocol_v0.1",
+  "status": "FROZEN_CONCEPTUAL_FIREWALL_BEFORE_FRESH_PANEL_RESPONSE_OPENING",
+  "frozen_on": "2026-09-21",
+  "scientific_question": "Is source-to-target transferability of post-IBD spatial genetic structure predictable from a pre-outcome ecological relationship between the source and target species?",
+  "separation": {
+    "unconditional_result": "immutable; no rescue, retune, rerun, or reinterpretation",
+    "conditional_order_v02": "immutable NOT_EVALUABLE survivor-geometry deployment; no tuning against that failure",
+    "exploratory_pair_structure": "motivation only; any species whose pair-specific response was inspected for hypothesis generation must be excluded from the fresh confirmatory universe"
+  },
+  "hypothesis": {
+    "unit": "directed source-target dyad",
+    "response": "T_st: source-only to target post-IBD transfer skill under a fixed transfer operator",
+    "primary_predictor": "R_st: continuous environmental-niche similarity frozen from external data before genetic response",
+    "direction": "beta_R > 0",
+    "controls": [
+      "G_st geographic opportunity/co-support",
+      "P_st broad lineage or phylogenetic proximity",
+      "source effect",
+      "target effect"
+    ]
+  },
+  "primary_relation": {
+    "domain": "environmental niche / habitat",
+    "continuous_required": true,
+    "thresholding_from_response_forbidden": true,
+    "candidate_metric": "Schoener's D in a common frozen environmental PCA space",
+    "candidate_metric_authorized": false,
+    "authorization_condition": "response-blind occurrence/environment feasibility census followed by explicit metric freeze"
+  },
+  "secondary_relations": {
+    "host_resource": "separate prospectively frozen taxon-applicable secondary protocol only",
+    "taxonomy_phylogeny": "control/proxy, not primary ecological mechanism"
+  },
+  "inference": {
+    "ordinary_dyad_independence_forbidden": true,
+    "crossed_dependence_required": true,
+    "candidate_families": [
+      "crossed source-target random effects",
+      "two-way source/target cluster bootstrap",
+      "source/target-label permutation preserving frozen dyadic geometry"
+    ],
+    "selection_basis": "synthetic Type-I/power and response-blind geometry only"
+  },
+  "fresh_panel_firewall": {
+    "exclude_prior_empirical_species": true,
+    "exclude_hypothesis_generating_pair_response_species": true,
+    "development_panel": "external ecology + geometry + synthetic worlds only; genetic response closed",
+    "confirmatory_panel": "species-disjoint one-shot empirical opening after all gates pass",
+    "prefer_independent_source_replication": true
+  },
+  "gates": {
+    "ecological_feasibility": "PASS required",
+    "relation_non_degeneracy": "PASS required",
+    "geometry_integrity": "PASS required",
+    "private_null_type1": "Wilson95 upper <= 0.10 in every frozen null cell",
+    "relational_power": "Wilson95 lower >= 0.80 at frozen minimally meaningful relational effect",
+    "survivor_requalification": "PASS required before response opening"
+  },
+  "prohibited": [
+    "select host/resource/habitat relation after inspecting fresh genetic response",
+    "choose similarity threshold from fresh genetic response",
+    "change panel composition because of T_st",
+    "replace the continuous dyad hypothesis with a favorable taxonomic subgroup after opening",
+    "use this study to rescue the completed unconditional result or conditional-order deployment"
+  ],
+  "next_step": "response-blind environmental-niche feasibility census on a fresh species universe; do not compute fresh-panel genetic distances or T_st"
+}
