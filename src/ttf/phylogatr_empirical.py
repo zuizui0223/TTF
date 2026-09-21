@@ -76,9 +76,10 @@ def read_aligned_nucleotide_identity(path: Path) -> AlignedNucleotideIdentity:
                 header = raw[1:].strip().decode("utf-8")
                 if not header:
                     raise EmpiricalSequenceError("empty aligned FASTA header")
-                if header in seen:
-                    raise EmpiricalSequenceError(f"duplicate aligned FASTA header: {header}")
-                seen.add(header)
+                # Phase-2 character-mask artifacts preserve aligned records in
+                # file order, including repeated header labels. Retain those
+                # rows here as well so identity opening reproduces the frozen
+                # mask digest exactly; occurrence joining remains header-based.
                 current_header = header
                 continue
             if current_header is None:
