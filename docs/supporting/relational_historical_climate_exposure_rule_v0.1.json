@@ -58,7 +58,31 @@
     ],
     "data_citation_doi": "10.16904/envidat.691",
     "model_citation": "Karger et al. 2023, Climate of the Past 19:439-456",
-    "missing_rule": "At a current occurrence coordinate, retain a row only if all four variables are finite at both 21 ka BP and 0 BP; species must retain >=30 rows."
+    "missing_rule": "At a current occurrence coordinate, retain a row only if all four variables are finite at both 21 ka BP and 0 BP; species must retain >=30 rows.",
+    "asset_contract": {
+      "official_dataset_page": "https://www.chelsa-climate.org/datasets/chelsa-trace21k-centennial-bioclim",
+      "official_download_surface": "CHELSA EnviCloud distribution linked by the official dataset page",
+      "version": "1.0",
+      "file_format": "COG GeoTIFF",
+      "basename_pattern": "CHELSA_TraCE21k_<variable>_<time_index>_V1.0.tif",
+      "time_index": {
+        "LGM_21ka_BP": -190,
+        "present_0_BP": 20
+      },
+      "required_basenames": [
+        "CHELSA_TraCE21k_bio01_-190_V1.0.tif",
+        "CHELSA_TraCE21k_bio07_-190_V1.0.tif",
+        "CHELSA_TraCE21k_bio12_-190_V1.0.tif",
+        "CHELSA_TraCE21k_bio15_-190_V1.0.tif",
+        "CHELSA_TraCE21k_bio01_20_V1.0.tif",
+        "CHELSA_TraCE21k_bio07_20_V1.0.tif",
+        "CHELSA_TraCE21k_bio12_20_V1.0.tif",
+        "CHELSA_TraCE21k_bio15_20_V1.0.tif"
+      ],
+      "first_download_freeze": "Before any Study-C character mask, nucleotide identity, T_st, or beta_hist is opened, record the exact resolved object URL and SHA256 of all eight required rasters in a response-blind asset receipt.",
+      "substitution_rule": "No alternate time slice, variable, version, paleoclimate product, or best-performing asset may replace a missing required raster. Missing/unresolvable required assets make slot C NOT_EVALUABLE_EXTERNAL_DATA.",
+      "raster_sampling": "Require a geographic CRS and sample each frozen current occurrence at its longitude/latitude. Do not interpolate across nodata; a row is retained only when all eight primary raster values are finite."
+    }
   },
   "historical_displacement_relation": {
     "per_occurrence_vector": "DeltaX = [bio01_21ka-bio01_0, bio07_21ka-bio07_0, bio12_21ka-bio12_0, bio15_21ka-bio15_0] at the frozen current occurrence coordinate.",
@@ -119,7 +143,8 @@
     "Do not inspect or use Study-B qualification or empirical genetic outcomes to change C candidate selection, climate variables, time slices, Delta definition, PCA/KDE settings, controls, estimator, effect floor, alpha, or gates.",
     "Do not substitute ice-sheet/permafrost presence, refugial overlap, barrier crossing, or another historical predictor if this frozen C route fails.",
     "Any external-data, geometry, mask, or synthetic gate failure is NOT_EVALUABLE, not a biological null.",
-    "No alternative C slot may be added."
+    "No alternative C slot may be added.",
+    "Do not alter the frozen LGM time index -190, 0-BP time index 20, or required eight-raster basename set after asset resolution begins."
   ],
   "response_firewall": {
     "Study_C_sequence_identity_opened": false,
