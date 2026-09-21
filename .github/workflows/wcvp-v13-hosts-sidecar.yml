@@ -123,6 +123,36 @@ jobs:
             row.names=FALSE, na=""
           )
 
+          insect_genus <- trimws(ifelse(is.na(hosts[["Insect Genus"]]), "", hosts[["Insect Genus"]]))
+          insect_species_epithet <- trimws(ifelse(is.na(hosts[["Insect Species"]]), "", hosts[["Insect Species"]]))
+          insect_keep <- keep & nzchar(insect_genus) & nzchar(insect_species_epithet)
+          interaction <- data.frame(
+            insect_species=paste(insect_genus[insect_keep], insect_species_epithet[insect_keep]),
+            input_host_name=paste(genus[insect_keep], species[insect_keep]),
+            stringsAsFactors=FALSE
+          )
+          interaction <- unique(interaction)
+          interaction <- merge(
+            interaction,
+            resolved[resolved$match_status=="matched",
+                     c("input_host_name","accepted_plant_name_id","accepted_name","family"),
+                     drop=FALSE],
+            by="input_host_name",
+            all=FALSE,
+            sort=FALSE
+          )
+          interaction <- unique(interaction)
+          interaction <- interaction[
+            order(interaction$insect_species, interaction$accepted_plant_name_id),
+            ,
+            drop=FALSE
+          ]
+          write.csv(
+            interaction,
+            "results/wcvp_v13_hosts_sidecar/insect_host_accepted.csv",
+            row.names=FALSE, na=""
+          )
+
           matched_ids <- unique(resolved$accepted_plant_name_id[resolved$match_status=="matched"])
           required_dist <- c(
             "plant_name_id","area_code_l3","introduced","extinct","location_doubtful"
@@ -160,7 +190,9 @@ jobs:
               "wcvp_ambiguous_binomials",
               "wcvp_unmatched_binomials",
               "matched_accepted_hosts_with_primary_native_units",
-              "primary_native_host_x_wgsrpd3_rows"
+              "primary_native_host_x_wgsrpd3_rows",
+              "distinct_insect_species_with_wcvp_resolved_hosts",
+              "distinct_insect_x_accepted_host_pairs"
             ),
             value=c(
               nrow(hosts),
@@ -169,7 +201,9 @@ jobs:
               sum(resolved$match_status=="ambiguous"),
               sum(resolved$match_status=="unmatched"),
               length(intersect(unique(matched$accepted_plant_name_id), with_dist)),
-              nrow(d)
+              nrow(d),
+              length(unique(interaction$insect_species)),
+              nrow(interaction)
             )
           )
           write.table(
@@ -182,7 +216,7 @@ jobs:
         shell: bash
         run: |
           cd results/wcvp_v13_hosts_sidecar
-          sha256sum host_name_resolution.csv native_extant_nondoubtful_wgsrpd3.csv counts.tsv > SHA256SUMS
+          sha256sum host_name_resolution.csv insect_host_accepted.csv native_extant_nondoubtful_wgsrpd3.csv counts.tsv > SHA256SUMS
           cat > provenance.txt <<'EOF'
           WCVP redistribution repository: matildabrown/rWCVPdata
           WCVP redistribution commit: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
