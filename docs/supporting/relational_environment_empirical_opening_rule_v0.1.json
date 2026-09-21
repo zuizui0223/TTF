@@ -1,0 +1,73 @@
+{
+  "schema": "ttf_relational_environment_empirical_opening_rule_v0.1",
+  "status": "FROZEN_BEFORE_STUDY_B_RELATION_BUILD_RESULT_FORMAL_QUALIFICATION_CHARACTER_MASK_AND_ANY_STUDY_B_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-21",
+  "parent_program": "docs/supporting/relational_program_v0.3.json",
+  "parent_relation_rule": "docs/supporting/relational_environment_relation_rule_v0.3.json",
+  "parent_qualification_rule": "docs/supporting/relational_environment_qualification_rule_v0.2.json",
+  "parent_character_mask_rule": "docs/supporting/relational_environment_character_mask_rule_v0.1.json",
+  "opening_condition": "One identity-opening authorization may be issued only after the exact confirmatory character-mask survivor geometry reruns the frozen Study B qualification at alpha=0.025 and passes every Type-I, power and numerical gate.",
+  "genetic_response": {
+    "marker": "mitochondrial COI/COX1 family under the inherited exact alias parser",
+    "panel_selection": "same response-blind one-panel-per-species rule inherited from fresh phylogatR: most exact unique localities, then more aligned headers, then lexicographic locus identifier",
+    "sequence_pair_distance": "uncorrected p-distance = canonical A/C/G/T mismatches / jointly canonical columns",
+    "minimum_comparable_fraction": 0.50,
+    "locality_pair_distance": "arithmetic mean across every valid cross-locality sequence-pair p-distance",
+    "edge_response": "locality-pair p-distance on the unchanged frozen density-scaled kNN edge",
+    "ibd_adjustment": "endpoint-safe leave-two-localities-out cross-fit rank IBD",
+    "source_training_response": "post-IBD turnover rank orthogonalized against within-source edge-length rank",
+    "target_evaluation_response": "raw post-IBD turnover rank",
+    "source_to_target_score": "T_st = Spearman correlation between source-only TTF field prediction and target post-IBD turnover",
+    "kernel": {
+      "bandwidth_km": 500,
+      "prior_strength": 0.25,
+      "prior_mean": 0.0,
+      "segment_points": 5,
+      "training_species_per_field": 1
+    }
+  },
+  "relational_model": {
+    "response": "directed T_st",
+    "predictors_in_order": [
+      "z_R_env",
+      "z_geographic_coverage",
+      "centered_same_class",
+      "centered_same_order",
+      "centered_same_family",
+      "z_abs_log_locality_count_ratio"
+    ],
+    "source_fixed_effect": true,
+    "target_fixed_effect": true,
+    "primary_index": 0,
+    "estimand": "beta_R on z_R_env",
+    "alternative": "beta_R > 0",
+    "covariance": "two-way source/target cluster-robust sandwich with dyad intersection subtraction and finite-cluster corrections",
+    "alpha_one_sided": 0.025,
+    "positive_decision": "beta_R > 0 AND one-sided p <= 0.025",
+    "qualified_null_decision": "otherwise STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER"
+  },
+  "serialization": {
+    "sequence_identity": false,
+    "edge_level_genetic_distance_vectors": false,
+    "dyad_level_T_st": true,
+    "relation_and_control_covariates": true
+  },
+  "program_transition": {
+    "positive": "close v0.3 as DETECTED_B; Study C remains unopened",
+    "qualified_null": "record B qualified null and proceed to already-frozen Study C",
+    "technical_or_gate_failure_before_opening": "NOT_EVALUABLE_B; proceed to already-frozen Study C",
+    "post_opening_execution_failure": "freeze failure receipt; no result-selection rerun or estimator change; program handling must distinguish technical incompletion from a biological null"
+  },
+  "one_shot_rules": [
+    "Do not alter species, dyads, R_env, controls, PCA/KDE representation, genetic response definition, IBD residualization, bandwidth, prior, segment points, covariance, alpha, or decision rule after identity opening.",
+    "Do not test an alternative environmental metric, taxonomic subgroup, threshold, or interaction as a replacement primary analysis.",
+    "No result-selection rerun is authorized.",
+    "The S1-S3 outcomes cannot be rewritten by Study B."
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
