@@ -1,0 +1,54 @@
+{
+  "schema": "ttf_relational_environment_opportunity_rule_v0.2",
+  "status": "FROZEN_FOR_V03_AFTER_EXACT_70_SPECIES_FRESHNESS_AMENDMENT_AND_BEFORE_STUDY_B_FORMAL_QUALIFICATION",
+  "frozen_on": "2026-09-21",
+  "parent_relation_rule": "docs/supporting/relational_environment_relation_rule_v0.3.json",
+  "genetic_geometry_receipt": "benchmarks/frozen/relational_environment_genetic_geometry_receipt_v0.1.json",
+  "inheritance": "The 500-km radius, 0.50 target-edge coverage threshold, and minimum five supported sources per target are inherited unchanged from the prior response-blind conditional TTF support-control contract; they are not selected from Study B environmental or genetic outcomes.",
+  "directed_geographic_opportunity": {
+    "edge_location": "midpoint of each unchanged within-species density-scaled genetic graph edge in ECEF kilometres",
+    "source_target_coverage": "fraction of target graph-edge midpoints whose nearest source graph-edge midpoint is <=500 km",
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.5,
+    "eligible_dyad": "coverage >= 0.50",
+    "eligible_target": "at least five eligible source species in its frozen panel role",
+    "minimum_source_species_per_target": 5
+  },
+  "primary_model_after_support_filter": {
+    "response": "future directed T_st",
+    "primary_predictor": "z(R_env_st)",
+    "controls": [
+      "z(continuous geographic coverage_st)",
+      "centered same-class indicator",
+      "centered same-order indicator",
+      "centered same-family indicator",
+      "z(abs(log(locality_count_source/locality_count_target)))"
+    ],
+    "source_fixed_effect": true,
+    "target_fixed_effect": true,
+    "ordinary_iid_dyad_inference_forbidden": true,
+    "inference_family": "two-way source/target dependence-aware method must be selected only by response-blind synthetic Type-I/power qualification on the development geometry"
+  },
+  "structural_gates_before_synthetic_qualification": {
+    "minimum_supported_target_species": 50,
+    "minimum_supported_source_species": 50,
+    "minimum_supported_directed_dyads": 1000,
+    "relation_non_degeneracy": "report R_env quantiles and effective unique values on eligible development dyads",
+    "taxonomic_breadth": "report supported target/source order composition; failure is NOT_EVALUABLE geometry, never a biological null"
+  },
+  "forbidden": [
+    "change 500 km, 0.50 coverage, or source>=5 after R_env or Study B genetic response is inspected",
+    "select a favorable taxonomic order after Study B response opening",
+    "use host-resource Study A empirical beta_R to alter Study B support geometry",
+    "open nucleotide identity before development synthetic qualification and confirmatory mask/survivor requalification pass"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  },
+  "parent_freshness_rule": "docs/supporting/relational_future_family_freshness_amendment_v0.1.json",
+  "supersedes_for_future_B_only": "docs/supporting/relational_environment_opportunity_rule_v0.1.json",
+  "freshness_requirement": "Opportunity geometry must be attached only to the exact post-70-species-exclusion v0.3 environment panel. No backfill or replacement species are allowed."
+}
