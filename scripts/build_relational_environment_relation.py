@@ -67,6 +67,7 @@ def main() -> int:
     ap.add_argument("--occurrences", type=Path, required=True)
     ap.add_argument("--candidates", type=Path, required=True)
     ap.add_argument("--rule", type=Path, required=True)
+    ap.add_argument("--freshness-rule", type=Path, required=True)
     ap.add_argument("--raster", type=Path, action="append", required=True)
     ap.add_argument("--output-npz", type=Path, required=True)
     ap.add_argument("--output-summary", type=Path, required=True)
@@ -75,8 +76,11 @@ def main() -> int:
     if len(args.raster) != 4:
         raise RuntimeError("exactly four frozen CHELSA rasters are required")
     rule = json.loads(args.rule.read_text())
-    if rule.get("schema") != "ttf_relational_environment_relation_rule_v0.2":
+    if rule.get("schema") != "ttf_relational_environment_relation_rule_v0.3":
         raise RuntimeError("unexpected environmental relation rule")
+    freshness = json.loads(args.freshness_rule.read_text())
+    if freshness.get("schema") != "ttf_relational_future_family_freshness_amendment_v0.1":
+        raise RuntimeError("unexpected future-family freshness rule")
     if any(bool(v) for v in rule["response_firewall"].values()):
         raise RuntimeError("Study B response firewall is open")
 
@@ -100,9 +104,36 @@ def main() -> int:
         if keep:
             valid_by_species[row["species"]].append((row, np.asarray(env, dtype=float)))
 
-    admissible = sorted(name for name, values in valid_by_species.items() if len(values) >= 30)
-    if len(admissible) < 500:
-        raise RuntimeError(f"environment-admissible species below frozen minimum: {len(admissible)}")
+    raw_admissible = sorted(name for name, values in valid_by_species.items() if len(values) >= 30)
+    excluded = set(map(str, freshness["exact_overlap_with_study_B_candidates"]["union_species"]))
+    if len(excluded) != int(freshness["exact_overlap_with_study_B_candidates"]["union_overlap_species"]):
+        raise RuntimeError("freshness exclusion count drift")
+    if not excluded.issubset(metadata):
+        raise RuntimeError("freshness exclusion species outside frozen candidate 1000")
+    excluded_admissible = sorted(set(raw_admissible) & excluded)
+    admissible = sorted(name for name in raw_admissible if name not in excluded)
+    minimum_after = int(rule["freshness_before_pca_and_panel"]["minimum_post_exclusion_environment_admissible_species"])
+    if len(admissible) < minimum_after:
+        payload = {
+            "schema": "ttf_relational_environment_relation_design_v0.3",
+            "status": "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS",
+            "fresh_candidate_species": 1000,
+            "environment_admissible_before_freshness": len(raw_admissible),
+            "freshness_excluded_total": len(excluded),
+            "freshness_excluded_environment_admissible": len(excluded_admissible),
+            "environment_admissible_species": len(admissible),
+            "minimum_required_after_freshness": minimum_after,
+            "response_firewall": {
+                "study_B_sequence_identity_opened": False,
+                "study_B_pairwise_genetic_distances_opened": False,
+                "study_B_T_st_computed": False,
+                "study_B_beta_R_computed": False,
+            },
+        }
+        args.output_summary.parent.mkdir(parents=True, exist_ok=True)
+        args.output_summary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+        print(json.dumps(payload, sort_keys=True))
+        return 2
 
     pca_sample_rows = []
     pca_sample_species = []
@@ -172,9 +203,13 @@ def main() -> int:
     q = np.quantile(relation_all, [0, .1, .25, .5, .75, .9, 1])
     order_counts = Counter(metadata[name]["order"] for name in admissible)
     summary = {
-        "schema": "ttf_relational_environment_relation_design_v0.2",
+        "schema": "ttf_relational_environment_relation_design_v0.3",
         "status": "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN",
         "fresh_candidate_species": 1000,
+        "environment_admissible_before_freshness": len(raw_admissible),
+        "freshness_excluded_total": len(excluded),
+        "freshness_excluded_environment_admissible": len(excluded_admissible),
+        "freshness_excluded_species_environment_admissible": excluded_admissible,
         "environment_admissible_species": len(admissible),
         "development_species": len(development),
         "development_sources": len(dev_source),
@@ -206,6 +241,7 @@ def main() -> int:
             "occurrence_csv_sha256": sha256_path(args.occurrences),
             "candidate_csv_sha256": sha256_path(args.candidates),
             "rule_sha256": sha256_path(args.rule),
+            "freshness_rule_sha256": sha256_path(args.freshness_rule),
             "rasters_sha256": {path.name: sha256_path(path) for path in args.raster},
         },
         "design_npz_sha256": sha256_path(args.output_npz),
@@ -215,7 +251,7 @@ def main() -> int:
             "study_B_T_st_computed": False,
             "study_B_beta_R_computed": False,
         },
-        "next_step": "Attach frozen phylogatR geographic-opportunity controls to these exact panel dyads, audit R_env non-degeneracy/separability, then freeze development synthetic qualification. Do not open Study B character masks or nucleotide identity.",
+        "next_step": "Attach frozen phylogatR geographic-opportunity controls to these exact panel dyads, then run the already frozen v0.2 development synthetic qualification at alpha=0.025. Do not open Study B character masks or nucleotide identity.",
     }
     args.output_summary.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
     print(json.dumps({k: summary[k] for k in ("status", "environment_admissible_species", "development_dyads", "confirmatory_dyads", "R_env_quantiles_all_panel_dyads")}, sort_keys=True))
