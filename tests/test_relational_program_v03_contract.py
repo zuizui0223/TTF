@@ -187,3 +187,29 @@ def test_study_b_postqualification_path_is_frozen_before_relation_result():
     }
     assert all(v is False for v in mask["response_firewall"].values())
     assert all(v is False for v in empirical["response_firewall"].values())
+
+
+def test_study_c_postqualification_path_is_frozen_before_b():
+    program = load("docs/supporting/relational_program_v0.3.json")
+    mask = load("docs/supporting/relational_historical_climate_character_mask_rule_v0.1.json")
+    empirical = load("docs/supporting/relational_historical_climate_empirical_opening_rule_v0.1.json")
+    slot = program["slot_C"]
+    assert slot["character_mask_rule"] == (
+        "docs/supporting/relational_historical_climate_character_mask_rule_v0.1.json"
+    )
+    assert slot["empirical_opening_rule"] == (
+        "docs/supporting/relational_historical_climate_empirical_opening_rule_v0.1.json"
+    )
+    assert slot["execution_chain"][-2:] == [
+        slot["character_mask_rule"],
+        slot["empirical_opening_rule"],
+    ]
+    assert mask["required_survivor_requalification"]["same_alpha"] == 0.025
+    assert mask["post_mask_dyad_support"]["minimum_surviving_sources_per_target"] == 5
+    assert empirical["relational_model"]["alpha_one_sided"] == 0.025
+    assert empirical["relational_model"]["predictors_in_order"][:2] == [
+        "z_R_hist", "z_R_current"
+    ]
+    assert empirical["genetic_response"]["kernel"]["bandwidth_km"] == 500
+    assert all(v is False for v in mask["response_firewall"].values())
+    assert all(v is False for v in empirical["response_firewall"].values())
