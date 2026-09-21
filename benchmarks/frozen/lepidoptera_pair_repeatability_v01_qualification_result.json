@@ -1,0 +1,29 @@
+{
+  "schema": "ttf_lepidoptera_pair_repeatability_v01_qualification_result",
+  "status": "FAIL_NOT_EVALUABLE_POWER",
+  "executed_on": "2026-09-21",
+  "parent_rule": "docs/supporting/lepidoptera_pair_repeatability_rule_v0.1.json",
+  "design_npz_sha256": "b1b9dab23676f6a1ea416c5889fc42676908a54d3abcf042dbaf8605cda2c3bf",
+  "retained_pairs": 11034,
+  "evaluation": {
+    "private": {"worlds":500,"rejections":25,"rejection_rate":0.05,"wilson95_upper":0.0727681611715476,"mean_statistic":0.5595144181272508},
+    "geometry_confounded_trap": {"worlds":500,"rejections":0,"rejection_rate":0.0,"wilson95_upper":0.007624340461552241,"mean_statistic":0.4516708491733344},
+    "host_breadth_confounded_trap": {"worlds":500,"rejections":0,"rejection_rate":0.0,"wilson95_upper":0.007624340461552241,"mean_statistic":0.4861058741724211},
+    "host_resource_gradient_trap": {"worlds":500,"rejections":0,"rejection_rate":0.0,"wilson95_upper":0.007624340461552241,"mean_statistic":0.4736902449190278},
+    "relational_latent_positive": {"worlds":500,"rejections":34,"rejection_rate":0.068,"wilson95_lower":0.04906650742490687,"wilson95_upper":0.0935209227338743,"mean_statistic":0.5686838020646642}
+  },
+  "gates": {
+    "private_type1_pass": true,
+    "geometry_confounded_trap_type1_pass": true,
+    "host_breadth_confounded_trap_type1_pass": true,
+    "host_resource_gradient_trap_type1_pass": true,
+    "relational_positive_power_pass": false,
+    "all_five_pass": false
+  },
+  "decision": "RETIRE_V0_1_KEEP_EMPIRICAL_SPLIT_HALF_STATISTIC_CLOSED",
+  "interpretation": "The deterministic edge split is strongly repeatable even under purely private species-specific spatial fields. The estimator therefore cannot distinguish stable source-target relational compatibility from repeatability induced by each species' own spatial field. This makes empirical pair-repeatability NOT_EVALUABLE under v0.1 and is not evidence that pair-specific relational structure is absent.",
+  "outcome_firewall": {
+    "empirical_split_half_repeatability_computed": false
+  },
+  "post_failure_retuning_allowed": false
+}
