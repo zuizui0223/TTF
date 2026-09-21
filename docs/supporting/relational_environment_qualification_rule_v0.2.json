@@ -63,6 +63,11 @@
       "A": 3,
       "beta_R_latent": 0.03,
       "rationale": "Same standardized minimally meaningful relational-effect floor used prospectively in the predecessor qualification; retained unchanged while the v0.3 family lowers only the decision alpha to 0.025."
+    },
+    "private_structure_numeric": {
+      "slope_sd_per_A": 0.12,
+      "source_predictor": "z_geographic_coverage",
+      "target_predictor": "centered_same_order"
     }
   },
   "gates": {
