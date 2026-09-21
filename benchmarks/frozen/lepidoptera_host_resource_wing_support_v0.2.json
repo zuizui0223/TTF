@@ -1,0 +1,36 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_wing_support_v0.2",
+  "status": "PRIMARY_HOST_RESOURCE_ONLY_WING_SECONDARY_NOT_EVALUABLE",
+  "executed_on": "2026-09-21",
+  "parent_distribution_census": "benchmarks/frozen/lepidoptera_host_resource_distribution_census_result_v0.2.json",
+  "source": "frozen LepTraits 1.0 consensus",
+  "frozen_panel": {
+    "species": 500,
+    "train": 250,
+    "eval": 250,
+    "geographically_supported_eval": 235
+  },
+  "wing_size_support": {
+    "all_species": 24,
+    "all_fraction": 0.048,
+    "train_species": 15,
+    "train_fraction": 0.06,
+    "eval_species": 9,
+    "eval_fraction": 0.036,
+    "geographically_supported_eval_species": 7,
+    "geographically_supported_eval_fraction": 0.029787234042553193
+  },
+  "decision": {
+    "primary_host_resource_geography": "RETAIN",
+    "wing_similarity_secondary": "NOT_EVALUABLE_IN_THIS_INDEPENDENT_PANEL",
+    "host_resource_x_wing_joint_secondary": "NOT_EVALUABLE_IN_THIS_INDEPENDENT_PANEL"
+  },
+  "interpretation": "The fully independent host-resource panel has ample host-geography and sampling-geometry support but sparse LepTraits wing coverage. Adult-dispersal and host-resource effects therefore cannot be separated confirmatorily in this panel without changing the frozen species domain or importing a new wing-trait source. The host-resource-geography primary estimand proceeds unchanged.",
+  "future_boundary": "Any future adult-dispersal comparison requires a separately frozen external wing-size source and a new response-blind support census; it cannot be added after genetic outcomes from this follow-up are opened.",
+  "outcome_firewall": {
+    "character_masks_opened": false,
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "transfer_statistic_computed": false
+  }
+}
