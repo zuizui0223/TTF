@@ -60,7 +60,10 @@
     ],
     "method": "Holm step-down at family alpha 0.05",
     "smallest_p_threshold": 0.01,
-    "role": "secondary retrospective sensitivity label only; it does not alter the primary v0.3 decision rule"
+    "role": "secondary retrospective sensitivity label only; it does not alter the primary v0.3 decision rule",
+    "requires_B_and_C_p_values": true,
+    "if_C_unopened_after_DETECTED_B": "Do not report a five-test Holm result. Report the primary v0.3 DETECTED_B decision and the observed historical p-values descriptively; an unopened C slot has no empirical p-value.",
+    "no_imputed_p_for_unopened_slot": true
   },
   "descriptive_only": {
     "conditional_order_contrast_v0_3": {
@@ -90,7 +93,12 @@
     "relation_rule": "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json",
     "alpha_one_sided": 0.025,
     "status_at_freeze": "FULL_RELATION_PANEL_AND_QUALIFICATION_CONTRACT_FROZEN_BEFORE_B_QUALIFICATION",
-    "gate_failure": "NOT_EVALUABLE_C; forfeit the C slot and its alpha; close the program without replacement"
+    "gate_failure": "NOT_EVALUABLE_C; forfeit the C slot and its alpha; close the program without replacement",
+    "qualification_rule": "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json",
+    "execution_chain": [
+      "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json",
+      "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json"
+    ]
   },
   "execution_order": [
     "Freeze B, C, alpha allocation, freshness rules and stopping states.",
