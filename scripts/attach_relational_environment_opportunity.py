@@ -141,7 +141,7 @@ def main()->int:
     args=ap.parse_args()
 
     rule=json.loads(args.opportunity_rule.read_text())
-    if rule.get("schema")!="ttf_relational_environment_opportunity_rule_v0.1": raise RuntimeError("bad opportunity rule")
+    if rule.get("schema")!="ttf_relational_environment_opportunity_rule_v0.2": raise RuntimeError("bad opportunity rule")
     if any(bool(v) for v in rule["response_firewall"].values()): raise RuntimeError("Study B response firewall open")
     data=np.load(args.environment_design,allow_pickle=False)
     species=np.asarray(data["species_order"]).astype(str)
@@ -168,7 +168,7 @@ def main()->int:
     args.output_npz.parent.mkdir(parents=True,exist_ok=True)
     np.savez_compressed(args.output_npz,species_order=species,**arrays)
     payload={
-      "schema":"ttf_relational_environment_opportunity_design_v0.1","status":status,
+      "schema":"ttf_relational_environment_opportunity_design_v0.2","status":status,
       "environment_design_sha256":sha256_path(args.environment_design),"edge_geometry_sha256":sha256_path(args.edges),
       "candidate_csv_sha256":sha256_path(args.candidates),"opportunity_rule_sha256":sha256_path(args.opportunity_rule),
       "panels":summaries,"structural_gate_pass":bool(structural),"design_npz_sha256":sha256_path(args.output_npz),
