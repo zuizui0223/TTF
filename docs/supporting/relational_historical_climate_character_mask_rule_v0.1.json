@@ -19,7 +19,7 @@
     "source": "docs/supporting/genetic_phylogatr_phase2_mask_rule_v0.1.json",
     "duplicate_aligned_header": "species inadmissible",
     "unequal_or_zero_aligned_sequence_length": "species inadmissible",
-    "minimum_comparable_fraction": 0.50
+    "minimum_comparable_fraction": 0.5
   },
   "edge_admissibility": {
     "valid_sequence_pair": "jointly canonical columns >= ceil(0.50 * frozen alignment length)",
@@ -31,7 +31,8 @@
     "geographic_support": "unchanged Study C frozen opportunity contract",
     "minimum_surviving_sources_per_target": 5,
     "unsupported_target": "drop from confirmatory dyad estimand without replacement",
-    "adequacy_gate": "No post-hoc absolute cluster threshold. Exact survivor-geometry synthetic Type-I/power requalification under the already frozen C qualification rule is binding."
+    "adequacy_gate": "No post-hoc absolute cluster threshold. Exact survivor-geometry synthetic Type-I/power requalification under the already frozen C qualification rule is binding.",
+    "opportunity_rule": "docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json"
   },
   "required_survivor_requalification": {
     "rule": "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json",
@@ -58,5 +59,6 @@
     "Study_C_pairwise_genetic_distances_opened": false,
     "Study_C_T_st_computed": false,
     "Study_C_beta_hist_computed": false
-  }
+  },
+  "parent_opportunity_rule": "docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json"
 }
