@@ -98,13 +98,17 @@
     "name": "historical climate displacement similarity",
     "relation_rule": "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json",
     "alpha_one_sided": 0.025,
-    "status_at_freeze": "FULL_RELATION_PANEL_AND_QUALIFICATION_CONTRACT_FROZEN_BEFORE_B_QUALIFICATION",
+    "status_at_freeze": "FULL_RELATION_PANEL_QUALIFICATION_MASK_AND_EMPIRICAL_CONTRACT_FROZEN_BEFORE_B_QUALIFICATION",
     "gate_failure": "NOT_EVALUABLE_C; forfeit the C slot and its alpha; close the program without replacement",
     "qualification_rule": "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json",
     "execution_chain": [
       "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json",
-      "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json"
-    ]
+      "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json",
+      "docs/supporting/relational_historical_climate_character_mask_rule_v0.1.json",
+      "docs/supporting/relational_historical_climate_empirical_opening_rule_v0.1.json"
+    ],
+    "character_mask_rule": "docs/supporting/relational_historical_climate_character_mask_rule_v0.1.json",
+    "empirical_opening_rule": "docs/supporting/relational_historical_climate_empirical_opening_rule_v0.1.json"
   },
   "execution_order": [
     "Freeze B, C, alpha allocation, freshness rules and stopping states.",
