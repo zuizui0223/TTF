@@ -1,11 +1,18 @@
+import importlib.util
+from pathlib import Path
+
 import numpy as np
 
-from scripts.reconstruct_relational_environment_geometry import (
-    edge_rows,
-    locality_rows,
-    verify_candidate,
-)
 from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
+
+_SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "reconstruct_relational_environment_geometry.py"
+_SPEC = importlib.util.spec_from_file_location("reconstruct_relational_environment_geometry", _SCRIPT)
+assert _SPEC is not None and _SPEC.loader is not None
+_MODULE = importlib.util.module_from_spec(_SPEC)
+_SPEC.loader.exec_module(_MODULE)
+edge_rows = _MODULE.edge_rows
+locality_rows = _MODULE.locality_rows
+verify_candidate = _MODULE.verify_candidate
 
 
 def toy_geometry():
