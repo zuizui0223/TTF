@@ -75,8 +75,8 @@ def main()->int:
     ap.add_argument("--output",type=Path,required=True)
     args=ap.parse_args()
 
-    if args.start<0 or args.count<1 or args.count>100:
-        raise RuntimeError("formal shards require start>=0 and 1<=count<=100")
+    if args.start<0 or args.count<1 or args.count>500:
+        raise RuntimeError("formal shards require start>=0 and 1<=count<=500")
     if args.namespace=="reference" and args.cell not in NUISANCE_CELLS:
         raise RuntimeError("relational positive has no reference distribution")
     if args.namespace=="reference" and args.start+args.count>499:
