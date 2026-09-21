@@ -61,6 +61,13 @@ def test_study_c_is_frozen_before_b_and_disjoint_from_entire_b_candidate_univers
     )
     assert history["alpha_one_sided"] == 0.025
     assert history["synthetic_qualification"]["alpha"] == 0.025
+    assets = history["historical_climate"]["asset_contract"]
+    assert assets["version"] == "1.0"
+    assert assets["time_index"] == {"LGM_21ka_BP": -190, "present_0_BP": 20}
+    assert len(assets["required_basenames"]) == 8
+    assert set(name.split("_")[2] for name in assets["required_basenames"]) == {
+        "bio01", "bio07", "bio12", "bio15"
+    }
     assert "entire 1000-species Study-B candidate universe" in freshness["study_C_reservation"]["rule"]
     assert history["independent_species_domain"]["exclude_entire_study_B_candidate_universe"] == (
         "benchmarks/frozen/relational_fresh_candidate_species_v0.1.csv"
