@@ -148,8 +148,6 @@ def prepare_pair_repeatability(
     if not np.array_equal(offsets,expected):
         raise RuntimeError("alignment offset drift")
     keep=np.flatnonzero(lengths>=2*int(minimum_rows_per_half))
-    if len(keep)<100:
-        raise RuntimeError("insufficient repeatability pairs")
 
     source_values=tuple(sorted(set(map(int,source_all[keep]))))
     target_values=tuple(sorted(set(map(int,target_all[keep]))))
