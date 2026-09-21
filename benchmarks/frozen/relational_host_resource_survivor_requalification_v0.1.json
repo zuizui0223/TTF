@@ -1,0 +1,88 @@
+{
+  "cells": {
+    "host_relation_A3_beta0p03": {
+      "A": 3,
+      "beta_R_latent": 0.03,
+      "coefficient_mean": 0.022608959822955837,
+      "coefficient_sd": 0.007750418388863621,
+      "master_seed_uint64": 6785319787311483558,
+      "rejection_rate": 0.905,
+      "rejections_p_le_0p05": 905,
+      "standard_error_median": 0.00754179016256819,
+      "wilson95_lower": 0.8852455602057479,
+      "wilson95_upper": 0.9216547654209526,
+      "worlds": 1000
+    },
+    "private_A0p5": {
+      "A": 0.5,
+      "beta_R_latent": 0.0,
+      "coefficient_mean": 0.00025720043625915935,
+      "coefficient_sd": 0.004199040298877338,
+      "master_seed_uint64": 17440775521785087836,
+      "rejection_rate": 0.063,
+      "rejections_p_le_0p05": 63,
+      "standard_error_median": 0.004139538320349435,
+      "wilson95_lower": 0.049549663211729086,
+      "wilson95_upper": 0.0797949237046461,
+      "worlds": 1000
+    },
+    "private_A1": {
+      "A": 1,
+      "beta_R_latent": 0.0,
+      "coefficient_mean": 0.00030187914964743004,
+      "coefficient_sd": 0.004467602567409299,
+      "master_seed_uint64": 1114811368612027,
+      "rejection_rate": 0.048,
+      "rejections_p_le_0p05": 48,
+      "standard_error_median": 0.004629418427431382,
+      "wilson95_lower": 0.036393301020807914,
+      "wilson95_upper": 0.06306608865013393,
+      "worlds": 1000
+    },
+    "private_A2": {
+      "A": 2,
+      "beta_R_latent": 0.0,
+      "coefficient_mean": -6.463229104717028e-06,
+      "coefficient_sd": 0.006001489755025521,
+      "master_seed_uint64": 8307638207407235397,
+      "rejection_rate": 0.056,
+      "rejections_p_le_0p05": 56,
+      "standard_error_median": 0.006070828343706593,
+      "wilson95_lower": 0.043374813385442,
+      "wilson95_upper": 0.07202334814973096,
+      "worlds": 1000
+    },
+    "private_A3": {
+      "A": 3,
+      "beta_R_latent": 0.0,
+      "coefficient_mean": 0.0006221338770344076,
+      "coefficient_sd": 0.007762006215584609,
+      "master_seed_uint64": 13225373558512890164,
+      "rejection_rate": 0.07,
+      "rejections_p_le_0p05": 70,
+      "standard_error_median": 0.0075340922519829085,
+      "wilson95_lower": 0.05577636414629404,
+      "wilson95_upper": 0.08751464815128336,
+      "worlds": 1000
+    }
+  },
+  "gates": {
+    "overall_pass": true,
+    "private_type1_pass": true,
+    "relational_power_pass": true
+  },
+  "geometry": {
+    "dyads": 11902,
+    "predictor_condition_number": 7.639880336112983,
+    "source_clusters": 204,
+    "target_clusters": 198
+  },
+  "response_firewall": {
+    "T_st_computed": false,
+    "beta_R_computed": false,
+    "nucleotide_identity_opened": false,
+    "pairwise_genetic_distances_opened": false
+  },
+  "schema": "ttf_relational_host_resource_survivor_requalification_v0.1",
+  "status": "PASS_TO_EMPIRICAL_IDENTITY_OPENING_PREPARATION"
+}
