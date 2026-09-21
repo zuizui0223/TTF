@@ -82,3 +82,28 @@ def test_terminal_states_distinguish_two_nulls_from_not_evaluable():
     assert "CLOSED_NO_EVALUABLE_TEST" in states
     assert "both evaluable qualified nulls" in states["CLOSED_TWO_NULLS"]
     assert "not a two-null biological conclusion" in states["CLOSED_PARTIAL_NOT_EVALUABLE"]
+
+
+def test_workflows_bind_relation_artifact_and_geometry_contract():
+    relation = (ROOT / ".github/workflows/relational-environment-relation.yml").read_text()
+    qualification = (
+        ROOT / ".github/workflows/relational-environment-qualification-v03.yml"
+    ).read_text()
+
+    artifact = "relational-environment-relation-v0.3"
+    assert f"name: {artifact}" in relation
+    assert f"name: {artifact}" in qualification
+    assert "relation_run_id:" in qualification
+    assert (
+        "--contract docs/supporting/"
+        "relational_environment_geometry_reconstruction_contract_v0.1.json"
+    ) in qualification
+    assert (
+        "--opportunity-rule "
+        "docs/supporting/relational_environment_opportunity_rule_v0.2.json"
+    ) in qualification
+    assert (
+        "--rule docs/supporting/relational_environment_qualification_rule_v0.2.json"
+    ) in qualification
+    assert '"INCOMPLETE_TECHNICAL_EXECUTION"' in qualification
+    assert '"NOT_EVALUABLE_B"' in qualification
