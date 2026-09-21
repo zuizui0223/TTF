@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter, defaultdict
+from dataclasses import dataclass
 import csv
 import hashlib
 import io
@@ -12,7 +13,6 @@ import zipfile
 
 import numpy as np
 
-from ttf.conditional_transfer import prepare_target_source_pools
 from ttf.genetic_geometry import prepare_density_scaled_genetic_geometry
 from ttf.lepidoptera_host_resource import (
     build_insect_host_footprints,
@@ -20,7 +20,6 @@ from ttf.lepidoptera_host_resource import (
     select_and_split_species,
     species_list_sha256,
 )
-from ttf.phylogatr_compact_execution import prepare_phylogatr_compact_ttf_design
 from ttf.phylogatr_confirmatory import (
     GENES_HEADERS,
     OCCURRENCE_HEADERS,
@@ -189,6 +188,88 @@ def scan_geometry(
     )
 
 
+@dataclass(frozen=True)
+class SupportPools:
+    source_pool: dict[str, tuple[str, ...]]
+    pair_coverage: dict[str, dict[str, float]]
+    eligible_eval_species: tuple[str, ...]
+    unsupported_eval_species: tuple[str, ...]
+
+
+def _edge_midpoints(geometry):
+    nodes=np.asarray(geometry.edge_nodes,dtype=np.int64)
+    coords=np.asarray(geometry.coordinates,dtype=float)
+    return 0.5*(coords[nodes[:,0]]+coords[nodes[:,1]])
+
+
+def _coverage_numpy(target_mid,source_mid,radius=500.0,chunk=128):
+    target_mid=np.asarray(target_mid,float)
+    source_mid=np.asarray(source_mid,float)
+    within=0
+    r2=float(radius)*float(radius)
+    for start in range(0,len(target_mid),int(chunk)):
+        stop=min(start+int(chunk),len(target_mid))
+        delta=target_mid[start:stop,None,:]-source_mid[None,:,:]
+        nearest2=np.min(np.sum(delta*delta,axis=2),axis=1)
+        within+=int(np.count_nonzero(nearest2<=r2))
+    return float(within/len(target_mid))
+
+
+def prepare_support_only_pools(
+    geos,
+    train,
+    evaluation,
+    *,
+    support_radius=500.0,
+    minimum_target_coverage=0.5,
+    minimum_source_species=5,
+):
+    train=tuple(map(str,train))
+    evaluation=tuple(map(str,evaluation))
+    mid={name:_edge_midpoints(geos[name]) for name in train+evaluation}
+    try:
+        from scipy.spatial import cKDTree
+    except ImportError:
+        cKDTree=None
+    trees=(
+        {name:cKDTree(mid[name]) for name in train}
+        if cKDTree is not None else {}
+    )
+    source_pool={}
+    pair_coverage={}
+    eligible=[]
+    unsupported=[]
+    for target in evaluation:
+        supported=[]
+        coverage={}
+        target_mid=mid[target]
+        for source in train:
+            if cKDTree is not None:
+                distance,_=trees[source].query(
+                    target_mid,k=1,distance_upper_bound=float(support_radius)
+                )
+                value=float(np.mean(np.isfinite(distance)))
+            else:
+                value=_coverage_numpy(
+                    target_mid,mid[source],radius=float(support_radius)
+                )
+            if value>=float(minimum_target_coverage):
+                supported.append(source)
+                coverage[source]=value
+        source_pool[target]=tuple(supported)
+        pair_coverage[target]=coverage
+        if len(supported)>=int(minimum_source_species):
+            eligible.append(target)
+        else:
+            unsupported.append(target)
+    return SupportPools(
+        source_pool=source_pool,
+        pair_coverage=pair_coverage,
+        eligible_eval_species=tuple(eligible),
+        unsupported_eval_species=tuple(unsupported),
+    )
+
+
 def save_design_npz(
     path:Path,
     selected,
@@ -320,21 +401,10 @@ def main()->int:
         raise RuntimeError("too few species for support census")
 
     selected_geos={name:geos[name] for name in selected}
-    compact=prepare_phylogatr_compact_ttf_design(
+    pools=prepare_support_only_pools(
         selected_geos,
-        train_species=train,
-        eval_species=evaluation,
-        bandwidth=500.,
-        prior_strength=.25,
-        segment_points=5,
-        min_training_edges=5,
-    )
-    train_mid={name:compact.template_edges[name].midpoint for name in compact.train_species}
-    eval_mid={name:compact.template_edges[name].midpoint for name in compact.eval_species}
-    pools=prepare_target_source_pools(
-        compact.prepared,
-        train_mid,
-        eval_mid,
+        train,
+        evaluation,
         support_radius=500.,
         minimum_target_coverage=.5,
         minimum_source_species=5,
