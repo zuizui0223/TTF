@@ -87,6 +87,7 @@ jobs:
             --root "${{ steps.source.outputs.root }}" \
             --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv \
             --source-archive-sha256 5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5 \
+            --contract docs/supporting/relational_environment_geometry_reconstruction_contract_v0.1.json \
             --neighbor-fraction 0.15 \
             --output-localities results/qualification/relational_environment_localities_v0.2.csv \
             --output-edges results/qualification/relational_environment_edges_v0.2.csv \
