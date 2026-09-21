@@ -1,0 +1,46 @@
+{
+  "schema": "ttf_lepidoptera_host_resource_character_mask_rule_v0.2",
+  "status": "FROZEN_BEFORE_HOST_RESOURCE_CHARACTER_MASK_OPENING",
+  "frozen_on": "2026-09-21",
+  "supersedes_before_use": "docs/supporting/lepidoptera_host_resource_character_mask_rule_v0.1.json",
+  "parent_qualification_rule": "docs/supporting/lepidoptera_host_resource_qualification_rule_v0.3.json",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "pre_mask_census_design_npz_sha256": "597b1499dbdf8d4fb5a30f10a32686a60185305d12a8772019279bda08b82897",
+  "pre_mask_predictor_design_npz_sha256": "04acaa1a122f0f6f461309c1749b7cb5ce7469ed5c20e1021db746a6754afe7a",
+  "panel": {
+    "species": 500,
+    "train": 250,
+    "eval": 250,
+    "roles_inherited_without_resplitting": true
+  },
+  "mask_contract": {
+    "canonical_characters": ["A","C","G","T","a","c","g","t"],
+    "persisted_information": "boolean canonical-valid mask only",
+    "minimum_comparable_fraction": 0.50,
+    "species_survives": "every frozen graph edge has at least one cross-locality sequence pair with jointly canonical columns >= ceil(0.50 * frozen alignment length)",
+    "edge_dropping": false,
+    "edge_rewiring": false,
+    "marker_switching": false
+  },
+  "exact_survivor_design": {
+    "roles": "inherit original train/eval role for each surviving species",
+    "geographic_support": "recompute unchanged 500-km target coverage >=0.50 using surviving training species only; minimum five sources",
+    "host_footprints": "unchanged WCVP-v13 sets",
+    "predictor": "recompute Jaccard residualization and nuisance kernels under qualification rule v0.3 on exact survivors",
+    "alignment": "recompute the same deterministic response-blind nearest-edge alignment on retained target-source pairs"
+  },
+  "gate": {
+    "minimum_total_survivors": 200,
+    "minimum_train_survivors": 90,
+    "minimum_eval_survivors": 90,
+    "minimum_geographically_supported_eval_targets": 90,
+    "all_required": true
+  },
+  "if_pass": "Freeze exact survivor design and run formal v0.3 synthetic qualification before nucleotide identity.",
+  "if_fail": "STOP and report NOT_EVALUABLE_CHARACTER_SUPPORT.",
+  "outcome_firewall": {
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "transfer_statistic_computed": false
+  }
+}
