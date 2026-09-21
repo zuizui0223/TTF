@@ -1,0 +1,130 @@
+{
+  "schema": "ttf_relational_historical_climate_exposure_rule_v0.1",
+  "status": "FROZEN_BEFORE_STUDY_B_FORMAL_QUALIFICATION_AND_BEFORE_ANY_STUDY_B_OR_STUDY_C_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-21",
+  "parent_program": "docs/supporting/relational_program_v0.3.json",
+  "slot": "C",
+  "question": "Does similarity in late-glacial-to-present climate displacement predict source-target transferability beyond current environmental similarity, geography, lineage, and sampling geometry?",
+  "direction": "higher historical-exposure similarity -> higher T_st",
+  "alpha_one_sided": 0.025,
+  "independent_species_domain": {
+    "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "prior_exclusion_rule": "docs/supporting/relational_future_family_freshness_amendment_v0.1.json",
+    "exclude_entire_study_B_candidate_universe": "benchmarks/frozen/relational_fresh_candidate_species_v0.1.csv",
+    "reason": "C must be species-disjoint from all prior confirmatory design universes and from the entire B fresh-1000, regardless of B feasibility or outcome.",
+    "ranking": "SHA256('relational-history-candidate-v0.1|<phylogatr_source_sha256>|<species>'), species tie-break",
+    "scan_rule": "Scan geometry-eligible source-archive species in frozen hash order after all exclusions; retain the first 1000 if available.",
+    "minimum_candidate_species": 500,
+    "backfill_after_any_C_external_data_or_qualification_result": false
+  },
+  "external_occurrences": {
+    "provider": "GBIF occurrence/search",
+    "inheritance": "Use the same exact-match, 2010-2026, coordinate/geospatial-status, duplicate, deterministic-priority, 10-km thinning, max-200 and min-30 occurrence rules frozen for Study B.",
+    "minimum_retained_occurrences_per_species": 30
+  },
+  "historical_climate": {
+    "dataset": "CHELSA-TraCE21k-centennial-bioclim",
+    "model": "CHELSA-TraCE21k",
+    "version": "1.0",
+    "temporal_coverage": "21 ka BP to 0 BP in centennial time steps",
+    "spatial_resolution": "30 arc-sec (~1 km)",
+    "primary_time_slices": [
+      "21 ka BP",
+      "0 BP"
+    ],
+    "primary_variables": [
+      {
+        "name": "bio01",
+        "meaning": "mean annual near-surface air temperature"
+      },
+      {
+        "name": "bio07",
+        "meaning": "annual near-surface air temperature range"
+      },
+      {
+        "name": "bio12",
+        "meaning": "annual precipitation"
+      },
+      {
+        "name": "bio15",
+        "meaning": "precipitation seasonality"
+      }
+    ],
+    "auxiliary_descriptive_only": [
+      {
+        "name": "glz",
+        "meaning": "ice-sheet surface altitude; descriptive only, no confirmatory alpha"
+      }
+    ],
+    "data_citation_doi": "10.16904/envidat.691",
+    "model_citation": "Karger et al. 2023, Climate of the Past 19:439-456",
+    "missing_rule": "At a current occurrence coordinate, retain a row only if all four variables are finite at both 21 ka BP and 0 BP; species must retain >=30 rows."
+  },
+  "historical_displacement_relation": {
+    "per_occurrence_vector": "DeltaX = [bio01_21ka-bio01_0, bio07_21ka-bio07_0, bio12_21ka-bio12_0, bio15_21ka-bio15_0] at the frozen current occurrence coordinate.",
+    "pooled_standardization": "Pool up to the first 50 retained occurrence rows per species in frozen occurrence-priority order; standardize each Delta variable by pooled mean and population SD.",
+    "pca": "Canonical-sign PCA on the pooled standardized Delta vectors; retain PC1-PC2 and whiten by pooled eigenvalues.",
+    "species_density": "50x50 fixed grid with pooled 0.5th-99.5th percentile bounds plus 10% padding; isotropic Gaussian KDE with Scott factor n_species^(-1/6); each density sums to 1.",
+    "primary_relation": "R_hist_st = Schoener's D between source and target historical-displacement densities.",
+    "range": "[0,1]",
+    "thresholding_forbidden": true
+  },
+  "current_environment_nuisance": {
+    "dataset": "CHELSA V2.1 1981-2010",
+    "variables": [
+      "bio1",
+      "bio7",
+      "bio12",
+      "bio15"
+    ],
+    "relation": "Compute the same current-environment Schoener-D representation as Study B on the C species only.",
+    "role": "nuisance control; it cannot replace R_hist or become a second primary test"
+  },
+  "panel_assignment_after_historical_admissibility": {
+    "minimum_admissible_species": 500,
+    "development_species": "first 250 by SHA256('relational-history-panel-v0.1|<source_sha>|<species>')",
+    "confirmatory_species": "all remaining admissible species",
+    "within_panel_roles": "SHA256('relational-history-role-v0.1|<source_sha>|<species>'); lower floor(n/2) source, remainder target",
+    "development_genetic_response": "permanently closed",
+    "confirmatory_response": "one-shot only after exact mask and survivor requalification"
+  },
+  "primary_model": {
+    "response": "T_st, the unchanged source-to-target post-IBD transfer skill",
+    "predictors_in_order": [
+      "z_R_hist",
+      "z_R_current",
+      "z_geographic_coverage",
+      "centered_same_class",
+      "centered_same_order",
+      "centered_same_family",
+      "z_abs_log_locality_count_ratio"
+    ],
+    "source_fixed_effect": true,
+    "target_fixed_effect": true,
+    "inference": "two-way source/target cluster-robust one-sided beta_hist test",
+    "primary_estimand": "beta_hist for z_R_hist",
+    "alternative": "beta_hist > 0"
+  },
+  "synthetic_qualification": {
+    "alpha": 0.025,
+    "worlds_per_cell": 1000,
+    "minimally_meaningful_beta_hist_latent": 0.03,
+    "private_null_family": "inherit the A=0.5,1,2,3 source/target-private world family from Study B, with current-environment and geographic controls included",
+    "private_type1_gate": "Wilson 95% upper bound of p<=0.025 rejection rate <=0.05 in every null cell",
+    "positive_power_gate": "Wilson 95% lower bound of p<=0.025 rejection rate >=0.80 for beta_hist_latent=0.03",
+    "numerical_gate": "1000/1000 worlds finite",
+    "failure": "NOT_EVALUABLE_HISTORICAL_SYNTHETIC_QUALIFICATION; slot C is forfeited with no replacement and no alpha reassignment"
+  },
+  "stopping_and_firewall": [
+    "Do not inspect or use Study-B qualification or empirical genetic outcomes to change C candidate selection, climate variables, time slices, Delta definition, PCA/KDE settings, controls, estimator, effect floor, alpha, or gates.",
+    "Do not substitute ice-sheet/permafrost presence, refugial overlap, barrier crossing, or another historical predictor if this frozen C route fails.",
+    "Any external-data, geometry, mask, or synthetic gate failure is NOT_EVALUABLE, not a biological null.",
+    "No alternative C slot may be added."
+  ],
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
