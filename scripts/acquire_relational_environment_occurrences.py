@@ -6,6 +6,7 @@ import csv
 import json
 import time
 from pathlib import Path
+from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
@@ -16,18 +17,39 @@ GBIF = "https://api.gbif.org/v1"
 USER_AGENT = "ttf-relational-environment/0.2 (https://github.com/zuizui0223/TTF)"
 
 
-def get_json(path: str, params: dict[str, object], retries: int = 5) -> dict:
+def get_json(path: str, params: dict[str, object], retries: int = 8) -> dict:
     url = f"{GBIF}/{path}?{urlencode(params)}"
     error: Exception | None = None
+    detail = ""
     for attempt in range(retries):
         try:
             request = Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"})
-            with urlopen(request, timeout=60) as response:
-                return json.loads(response.read().decode("utf-8"))
+            with urlopen(request, timeout=90) as response:
+                payload = json.loads(response.read().decode("utf-8"))
+            # Gentle per-request pacing. This changes no record-selection rule.
+            time.sleep(0.05)
+            return payload
+        except HTTPError as exc:
+            error = exc
+            try:
+                body = exc.read(512).decode("utf-8", errors="replace").replace("\n", " ")
+            except Exception:
+                body = ""
+            detail = f"HTTP {exc.code}: {body[:300]}"
+            if exc.code not in {429, 500, 502, 503, 504}:
+                break
+            retry_after = exc.headers.get("Retry-After")
+            try:
+                wait = float(retry_after) if retry_after else float(2 ** attempt)
+            except (TypeError, ValueError):
+                wait = float(2 ** attempt)
+            time.sleep(min(120.0, max(1.0, wait)))
         except Exception as exc:
             error = exc
-            time.sleep(min(30, 2**attempt))
-    raise RuntimeError(f"GBIF request failed: {url}") from error
+            detail = f"{type(exc).__name__}: {exc}"
+            time.sleep(min(60.0, float(2 ** attempt)))
+    suffix = f" ({detail})" if detail else ""
+    raise RuntimeError(f"GBIF request failed: {url}{suffix}") from error
 
 
 def fetch_species(species: str) -> tuple[list[dict[str, object]], dict[str, object]]:
@@ -48,10 +70,10 @@ def fetch_species(species: str) -> tuple[list[dict[str, object]], dict[str, obje
     count_payload = get_json(
         "occurrence/search",
         {
-            "taxon_key": usage_key,
-            "has_coordinate": "true",
-            "has_geospatial_issue": "false",
-            "occurrence_status": "present",
+            "taxonKey": usage_key,
+            "hasCoordinate": "true",
+            "hasGeospatialIssue": "false",
+            "occurrenceStatus": "PRESENT",
             "year": "2010,2026",
             "limit": 1,
         },
@@ -63,10 +85,10 @@ def fetch_species(species: str) -> tuple[list[dict[str, object]], dict[str, obje
         payload = get_json(
             "occurrence/search",
             {
-                "taxon_key": usage_key,
-                "has_coordinate": "true",
-                "has_geospatial_issue": "false",
-                "occurrence_status": "present",
+                "taxonKey": usage_key,
+                "hasCoordinate": "true",
+                "hasGeospatialIssue": "false",
+                "occurrenceStatus": "PRESENT",
                 "year": "2010,2026",
                 "limit": 300,
                 "offset": int(offset),
