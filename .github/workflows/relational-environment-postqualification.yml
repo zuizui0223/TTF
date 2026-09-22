@@ -144,6 +144,7 @@ jobs:
             --opportunity-design results/final/relational_environment_survivor_design_v0.1.npz \
             --opportunity-summary results/final/relational_environment_survivor_summary_v0.1.json \
             --rule docs/supporting/relational_environment_qualification_rule_v0.2.json \
+            --qualification-stage confirmatory_survivor \
             --output results/final/relational_environment_survivor_qualification_v0.1.json
           python - <<'PY'
           import json,os
