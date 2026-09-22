@@ -104,4 +104,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add benchmarks/frozen/relational_environment_relation_artifact_binding_v0.3.json
           git commit -m "Freeze authoritative Study B relation artifact"
+          git fetch origin relational-ttf-v01
+          git rebase origin/relational-ttf-v01
           git push origin HEAD:relational-ttf-v01
