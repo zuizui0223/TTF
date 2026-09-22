@@ -134,8 +134,8 @@ jobs:
           assert p["inputs"]["candidate_csv_sha256"] == sha("benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv")
           assert binding["rules_sha256"]["relational_environment_relation_rule_v0.3.json"] == p["inputs"]["rule_sha256"]
           assert binding["rules_sha256"]["relational_future_family_freshness_amendment_v0.1.json"] == p["inputs"]["freshness_rule_sha256"]
-          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.4.json").read_text())
-          assert transport["schema"]=="ttf_relational_environment_transport_execution_v0.4"
+          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.5.json").read_text())
+          assert transport["schema"]=="ttf_relational_environment_transport_execution_v0.5"
           assert transport["status"]=="FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT"
           assert int(binding["transport_integrity"]["relation_producer_workflow_run_id"]) == int(transport["relation_producer"]["workflow_run_id"])
           assert int(binding["transport_integrity"]["base_run_id"]) == int(transport["frozen_base_component"]["workflow_run_id"])
@@ -145,7 +145,7 @@ jobs:
           assert int(binding["transport_integrity"]["exact_species_ledgers"]) == 1000
           assert int(binding["transport_integrity"]["request_error_count"]) == 0
           assert int(binding["transport_integrity"]["status_counts"].get("REQUEST_ERROR",0)) == 0
-          assert binding["rules_sha256"]["relational_environment_transport_execution_v0.4.json"] == sha("benchmarks/frozen/relational_environment_transport_execution_v0.4.json")
+          assert binding["rules_sha256"]["relational_environment_transport_execution_v0.5.json"] == sha("benchmarks/frozen/relational_environment_transport_execution_v0.5.json")
           for filename in (
               "relational_environment_design_v0.3.json",
               "relational_environment_design_v0.3.npz",
