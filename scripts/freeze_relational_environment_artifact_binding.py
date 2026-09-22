@@ -9,7 +9,7 @@ from pathlib import Path
 
 SCHEMA = "ttf_relational_environment_relation_artifact_binding_v0.3"
 ARTIFACT = "relational-environment-relation-v0.3"
-TRANSPORT_EXECUTION_DEFAULT = Path("benchmarks/frozen/relational_environment_transport_execution_v0.2.json")
+TRANSPORT_EXECUTION_DEFAULT = Path("benchmarks/frozen/relational_environment_transport_execution_v0.3.json")
 
 
 def sha256_path(path: Path) -> str:
@@ -40,7 +40,7 @@ def main() -> int:
         raise ValueError("head-sha must be a 40-character hexadecimal commit SHA")
 
     transport = json.loads(args.transport_execution.read_text())
-    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.2":
+    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.3":
         raise RuntimeError("unexpected Study-B transport execution schema")
     if transport.get("status") != "FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT":
         raise RuntimeError("Study-B transport execution is not authoritative")
@@ -107,7 +107,7 @@ def main() -> int:
         "rules_sha256": {
             "relational_environment_relation_rule_v0.3.json": rule_sha,
             "relational_future_family_freshness_amendment_v0.1.json": freshness_sha,
-            "relational_environment_transport_execution_v0.2.json": sha256_path(args.transport_execution),
+            "relational_environment_transport_execution_v0.3.json": sha256_path(args.transport_execution),
         },
         "transport_integrity": {
             "exact_species_ledgers": int(occurrence["species"]),
