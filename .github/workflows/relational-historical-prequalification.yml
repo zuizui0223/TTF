@@ -9,7 +9,7 @@ on:
       - "benchmarks/frozen/relational_environment_program_transition_v0.3.json"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   authorize:
@@ -190,6 +190,18 @@ jobs:
           )
           print(json.dumps(payload,sort_keys=True))
           PY
+      - name: Commit terminal v0.3 state after candidate failure
+        run: |
+          cp results/final/relational_program_final_state_v0.3.json \
+            benchmarks/frozen/relational_program_final_state_v0.3.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/relational_program_final_state_v0.3.json
+          git commit -m "Freeze terminal relational v0.3 state"
+          git fetch origin relational-ttf-v01
+          git rebase origin/relational-ttf-v01
+          git push origin HEAD:relational-ttf-v01
+
       - uses: actions/upload-artifact@v4
         with:
           name: relational-historical-candidate-failure-v0.1
@@ -613,6 +625,40 @@ jobs:
           )
           print(json.dumps(payload,sort_keys=True))
           PY
+
+      - name: Persist terminal finite-program state
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("results/history/relational_program_final_state_v0.3.json")
+          if not p.is_file():
+              raise SystemExit(0)
+          state=json.loads(p.read_text()).get("final_state")
+          terminal={
+              "DETECTED_C_AFTER_B_NULL",
+              "DETECTED_C_AFTER_B_NOT_EVALUABLE",
+              "CLOSED_TWO_NULLS",
+              "CLOSED_PARTIAL_NOT_EVALUABLE",
+              "CLOSED_NO_EVALUABLE_TEST",
+          }
+          if state not in terminal:
+              print({"not_persisted_nonterminal_state":state})
+              raise SystemExit(0)
+          target=Path("benchmarks/frozen/relational_program_final_state_v0.3.json")
+          target.write_bytes(p.read_bytes())
+          print({"persist_terminal_state":state})
+          PY
+          if [ -f benchmarks/frozen/relational_program_final_state_v0.3.json ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add benchmarks/frozen/relational_program_final_state_v0.3.json
+            git commit -m "Freeze terminal relational v0.3 state"
+            git fetch origin relational-ttf-v01
+            git rebase origin/relational-ttf-v01
+            git push origin HEAD:relational-ttf-v01
+          fi
 
       - uses: actions/upload-artifact@v4
         if: always()
