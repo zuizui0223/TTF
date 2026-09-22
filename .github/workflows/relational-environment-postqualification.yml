@@ -252,6 +252,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add benchmarks/frozen/relational_environment_program_transition_v0.3.json
           git commit -m "Freeze Study B program transition"
+          git fetch origin relational-ttf-v01
+          git rebase origin/relational-ttf-v01
           git push origin HEAD:relational-ttf-v01
 
       - uses: actions/upload-artifact@v4
