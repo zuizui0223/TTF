@@ -1,22 +1,25 @@
 {
   "schema": "ttf_relational_environment_transport_assembly_trigger_v0.1",
-  "status": "AUTHORIZE_ASSEMBLY_AFTER_FROZEN_V06_COMPONENTS",
-  "frozen_on": "2026-09-22",
-  "transport_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.6.json",
-  "partition_audit": "benchmarks/frozen/relational_environment_transport_partition_audit_v0.6.json",
+  "status": "AUTHORIZE_ASSEMBLY_AFTER_FROZEN_V07_COMPONENTS",
+  "frozen_on": "2026-09-23",
+  "transport_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.7.json",
+  "partition_audit": "benchmarks/frozen/relational_environment_transport_partition_audit_v0.7.json",
   "base_run_id": 35691973637,
   "cutover_run_id": 35712027961,
-  "repair_run_id": 35735717833,
+  "short_repair_run_id": 35735717833,
+  "long_repair_run_id": 35749326437,
   "relation_result_seen": false,
   "genetic_response_used": false,
-  "instruction": "After the frozen repair run completes successfully, assemble only the exact v0.6 components, require exact 1000-species coverage and REQUEST_ERROR=0 after frozen technical retries, then build the frozen response-blind environmental relation.",
+  "instruction": "Wait only for the frozen long-repair run to complete successfully, then assemble the exact v0.7 components: 33 frozen base shards, 207 frozen cutover-success batches, accepted short-repair indices 2/3/4/5/7, and all three long-repair singleton artifacts. Require exact 1000-species coverage and REQUEST_ERROR=0 after frozen technical retries, then build the response-blind environmental relation.",
   "response_firewall": {
     "Study_B_sequence_identity_opened": false,
     "Study_B_pairwise_genetic_distances_opened": false,
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
   },
-  "technical_retrigger_note_v2": "Retrigger after making the relation-producer commit branch-safe via fetch/rebase/push. The frozen v0.6 transport components and all scientific contracts are unchanged.",
-  "obsolete_prior_assembly_run_id": 35737785915,
-  "technical_retrigger_note_v3": "Retrigger from the completed v0.3 scientific-contract code state after restoring the predeclared cross-taxon breadth gates and fixing only stale closure-verifier bookkeeping. The frozen v0.6 base/cutover/repair partition, GBIF query contract, Study-B ecological relation, alpha allocation, and all genetic-response firewalls are unchanged. The assembly workflow must wait for repair run 35735717833 to complete successfully before reading its artifacts."
+  "obsolete_prior_assembly_run_ids": [
+    35737785915,
+    35738880777,
+    35740715490
+  ]
 }
