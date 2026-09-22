@@ -223,6 +223,26 @@ jobs:
           print(p)
           PY
 
+      - name: Validate frozen B-to-C transition state
+        if: always()
+        run: |
+          test -f results/final/relational_environment_program_transition_v0.3.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          rule=json.loads(Path("docs/supporting/relational_program_transition_rule_v0.1.json").read_text())
+          p=json.loads(Path("results/final/relational_environment_program_transition_v0.3.json").read_text())
+          assert p["schema"]==rule["receipt_schema"]
+          state=p["B_state"]
+          contract=rule["allowed_B_states"][state]
+          assert p["C_open_authorized"] is contract["C_open_authorized"]
+          if contract["C_open_authorized"]:
+              assert p["C_entry_state"]==contract["C_entry_state"]
+          else:
+              assert "C_entry_state" not in p
+          print({"B_state":state,"C_open_authorized":p["C_open_authorized"]})
+          PY
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
