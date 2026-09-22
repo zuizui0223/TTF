@@ -44,6 +44,7 @@ jobs:
           allowed={
               "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN",
               "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS",
+              "NOT_EVALUABLE_GENERAL_CROSS_TAXON_RELATIONAL_TTF",
           }
           assert relation_status in allowed, relation_status
           relation_pass=relation_status=="PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN"
@@ -69,14 +70,19 @@ jobs:
           from pathlib import Path
           binding_path=Path("benchmarks/frozen/relational_environment_relation_artifact_binding_v0.3.json")
           binding=json.loads(binding_path.read_text())
-          assert binding["relation_status"]=="NOT_EVALUABLE_ENVIRONMENT_FRESHNESS"
+          relation_status=str(binding["relation_status"])
+          allowed_not_evaluable={
+              "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS":"environment_freshness_relation_gate",
+              "NOT_EVALUABLE_GENERAL_CROSS_TAXON_RELATIONAL_TTF":"taxonomic_breadth_relation_gate",
+          }
+          assert relation_status in allowed_not_evaluable, relation_status
           h=hashlib.sha256(binding_path.read_bytes()).hexdigest()
           payload={
               "schema":"ttf_relational_environment_program_transition_v0.3",
               "B_state":"NOT_EVALUABLE_B",
               "C_open_authorized":True,
               "C_entry_state":"PROCEED_TO_C_AFTER_B_NOT_EVALUABLE",
-              "source_stage":"environment_freshness_relation_gate",
+              "source_stage":allowed_not_evaluable[relation_status],
               "Study_B_empirical_response_opened":False,
               "relation_binding_sha256":h,
               "relation_status":binding["relation_status"],
