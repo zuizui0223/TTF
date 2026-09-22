@@ -1,6 +1,6 @@
 {
   "schema": "ttf_relational_environment_transport_execution_v0.6",
-  "status": "FROZEN_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT",
+  "status": "SUPERSEDED_PRE_RELATION_RESULT_BY_V0.7",
   "frozen_on": "2026-09-22",
   "supersedes": "benchmarks/frozen/relational_environment_transport_execution_v0.5.json",
   "scientific_contract": {
@@ -335,5 +335,8 @@
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
   },
-  "relation_producer_receipt": "benchmarks/frozen/relational_environment_relation_producer_v0.1.json"
+  "relation_producer_receipt": "benchmarks/frozen/relational_environment_relation_producer_v0.1.json",
+  "superseded_by": "benchmarks/frozen/relational_environment_transport_execution_v0.7.json",
+  "superseded_before_relation_result": true,
+  "supersession_reason": "Three singleton timeout-repair species required the predeclared longer technical timeout. Five completed singleton repairs remain frozen; only indices 0,1,6 are replaced by the long-retry component."
 }
