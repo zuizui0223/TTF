@@ -82,34 +82,111 @@ def main() -> int:
     sf = np.asarray(data[f"{prefix}_same_family"], float)
     lr = np.asarray(data[f"{prefix}_locality_count_ratio"], float)
 
-    x = np.column_stack((
-        zscore(r_hist),
-        zscore(r_current),
-        zscore(coverage),
-        sc - sc.mean(),
-        so - so.mean(),
-        sf - sf.mean(),
-        zscore(np.abs(np.log(lr))),
-    ))
     predictor_names = list(map(str, rule["inference"]["predictors_in_order"]))
-    if len(predictor_names) != x.shape[1]:
-        raise RuntimeError("historical predictor contract width drift")
-    predictor_index = {name: i for i, name in enumerate(predictor_names)}
     primary_index = int(rule["inference"]["primary_index"])
-    if primary_index != predictor_index.get("z_R_hist"):
-        raise RuntimeError("historical primary predictor contract drift")
-
-    source_group = remap(s)
-    target_group = remap(t)
-    prepared = prepare_dyadic_regression(
-        source_group, target_group, x, primary_index=primary_index
-    )
-
     synth = rule["synthetic_worlds"]
     gate = rule["gate_numeric"]
     condition_max = float(gate["predictor_condition_number_max_exclusive"])
+
+    try:
+        x = np.column_stack((
+            zscore(r_hist),
+            zscore(r_current),
+            zscore(coverage),
+            sc - sc.mean(),
+            so - so.mean(),
+            sf - sf.mean(),
+            zscore(np.abs(np.log(lr))),
+        ))
+        if len(predictor_names) != x.shape[1]:
+            raise RuntimeError("historical predictor contract width drift")
+        predictor_index = {name: i for i, name in enumerate(predictor_names)}
+        if primary_index != predictor_index.get("z_R_hist"):
+            raise RuntimeError("historical primary predictor contract drift")
+        source_group = remap(s)
+        target_group = remap(t)
+        prepared = prepare_dyadic_regression(
+            source_group, target_group, x, primary_index=primary_index
+        )
+    except (ValueError, np.linalg.LinAlgError) as exc:
+        failure_status = (
+            "NOT_EVALUABLE_HISTORICAL_SYNTHETIC_QUALIFICATION"
+            if args.qualification_stage == "development"
+            else "NOT_EVALUABLE_C_CHARACTER_MASK_OR_SURVIVOR_GEOMETRY"
+        )
+        payload = {
+            "schema": "ttf_relational_historical_climate_qualification_result_v0.1",
+            "status": failure_status,
+            "qualification_stage": args.qualification_stage,
+            "rule_sha256": sha256_path(args.rule),
+            "opportunity_design_sha256": sha256_path(args.opportunity_design),
+            "alpha": float(gate["p_value_cutoff"]),
+            "geometry": {
+                "dyads": int(len(s)),
+                "source_clusters": int(len(np.unique(s))),
+                "target_clusters": int(len(np.unique(t))),
+                "predictor_condition_number": None,
+            },
+            "gates": {
+                "predictor_condition_number_max_exclusive": condition_max,
+                "private_type1_wilson95_upper_max": float(gate["private_type1_wilson95_upper_max"]),
+                "historical_power_wilson95_lower_min": float(gate["historical_power_wilson95_lower_min"]),
+                "private_type1_pass": False,
+                "historical_power_pass": False,
+                "overall_pass": False,
+                "failure_reason": f"{type(exc).__name__}: {exc}",
+            },
+            "response_firewall": {
+                "Study_C_sequence_identity_opened": False,
+                "Study_C_pairwise_genetic_distances_opened": False,
+                "Study_C_T_st_computed": False,
+                "Study_C_beta_hist_computed": False,
+            },
+        }
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+        print(json.dumps({"status": failure_status, "gates": payload["gates"]}, sort_keys=True))
+        return 0
+
     if prepared.condition_number >= condition_max:
-        raise RuntimeError("historical condition-number gate failed")
+        failure_status = (
+            "NOT_EVALUABLE_HISTORICAL_SYNTHETIC_QUALIFICATION"
+            if args.qualification_stage == "development"
+            else "NOT_EVALUABLE_C_CHARACTER_MASK_OR_SURVIVOR_GEOMETRY"
+        )
+        payload = {
+            "schema": "ttf_relational_historical_climate_qualification_result_v0.1",
+            "status": failure_status,
+            "qualification_stage": args.qualification_stage,
+            "rule_sha256": sha256_path(args.rule),
+            "opportunity_design_sha256": sha256_path(args.opportunity_design),
+            "alpha": float(gate["p_value_cutoff"]),
+            "geometry": {
+                "dyads": int(len(s)),
+                "source_clusters": int(prepared.absorber.n_source),
+                "target_clusters": int(prepared.absorber.n_target),
+                "predictor_condition_number": float(prepared.condition_number),
+            },
+            "gates": {
+                "predictor_condition_number_max_exclusive": condition_max,
+                "private_type1_wilson95_upper_max": float(gate["private_type1_wilson95_upper_max"]),
+                "historical_power_wilson95_lower_min": float(gate["historical_power_wilson95_lower_min"]),
+                "private_type1_pass": False,
+                "historical_power_pass": False,
+                "overall_pass": False,
+                "failure_reason": "predictor_condition_number_gate_failed",
+            },
+            "response_firewall": {
+                "Study_C_sequence_identity_opened": False,
+                "Study_C_pairwise_genetic_distances_opened": False,
+                "Study_C_T_st_computed": False,
+                "Study_C_beta_hist_computed": False,
+            },
+        }
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+        print(json.dumps({"status": failure_status, "gates": payload["gates"]}, sort_keys=True))
+        return 0
 
     worlds = int(synth["worlds_per_cell"])
     required_finite = int(gate["required_finite_worlds_per_cell"])
