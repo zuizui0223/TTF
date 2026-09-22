@@ -22,5 +22,5 @@
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
   },
-  "technical_retrigger_note": "Retrigger after fixing only the GitHub artifact-download transport mechanism: use actions/download-artifact and then select the exact v0.7-authorized files. Scientific partition, GBIF queries, CHELSA variables, freshness, breadth, alpha, and genetic-response firewalls are unchanged."
+  "technical_retrigger_note": "Retrigger after fixing only artifact enumeration/downloading: page all workflow artifacts and download exactly the 248 v0.7-authorized artifacts with cross-host Authorization stripping. Scientific partition and all ecological/genetic contracts are unchanged."
 }
