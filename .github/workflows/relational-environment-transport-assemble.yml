@@ -41,6 +41,39 @@ jobs:
               f.write(f"repair_run_id={int(trigger['repair_run_id'])}\n")
           PY
 
+      - name: Wait for frozen timeout-repair component
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          REPAIR_RUN_ID: ${{ steps.frozen.outputs.repair_run_id }}
+        run: |
+          python - <<'PY'
+          import json,os,time,urllib.request
+          repo=os.environ["REPO"]; token=os.environ["GH_TOKEN"]; run_id=int(os.environ["REPAIR_RUN_ID"])
+          headers={
+              "Authorization":f"Bearer {token}",
+              "Accept":"application/vnd.github+json",
+              "X-GitHub-Api-Version":"2022-11-28",
+          }
+          deadline=time.time()+150*60
+          while True:
+              req=urllib.request.Request(
+                  f"https://api.github.com/repos/{repo}/actions/runs/{run_id}",
+                  headers=headers,
+              )
+              with urllib.request.urlopen(req,timeout=60) as response:
+                  payload=json.load(response)
+              status=payload["status"]; conclusion=payload.get("conclusion")
+              print(json.dumps({"repair_run_id":run_id,"status":status,"conclusion":conclusion},sort_keys=True))
+              if status=="completed":
+                  if conclusion!="success":
+                      raise SystemExit(f"frozen timeout-repair run did not complete successfully: {conclusion}")
+                  break
+              if time.time()>=deadline:
+                  raise SystemExit("timed out waiting for frozen timeout-repair run")
+              time.sleep(30)
+          PY
+
       - name: Freeze relation producer before relation result
         run: |
           python - <<'PY'
