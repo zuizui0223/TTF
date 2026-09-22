@@ -53,6 +53,7 @@ def main() -> int:
     ap.add_argument("--rule", type=Path, required=True)
     ap.add_argument("--output", type=Path, required=True)
     ap.add_argument("--block-size", type=int, default=100)
+    ap.add_argument("--qualification-stage", choices=("development", "confirmatory_survivor"), default="development")
     args = ap.parse_args()
 
     rule = json.loads(args.rule.read_text())
