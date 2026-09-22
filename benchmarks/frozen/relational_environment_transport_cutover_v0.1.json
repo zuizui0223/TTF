@@ -1,0 +1,3195 @@
+{
+  "schema": "ttf_relational_environment_transport_cutover_v0.1",
+  "status": "FROZEN_FINAL_TRANSPORT_CUTOVER_BEFORE_RELATION_RESULT",
+  "frozen_on": "2026-09-22",
+  "parent_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.3.json",
+  "base_run_id": 35691973637,
+  "base_partition": "200-way, 5 species per shard",
+  "frozen_successful_base_shards_200way": [
+    0,
+    2,
+    3,
+    5,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    21,
+    22,
+    24,
+    25,
+    26,
+    27,
+    29,
+    30,
+    31,
+    34,
+    37,
+    39,
+    41,
+    45,
+    46,
+    48
+  ],
+  "frozen_successful_base_species_count": 165,
+  "ignored_future_base_shards": true,
+  "cutover_species_count": 835,
+  "cutover_batch_size": 4,
+  "cutover_batch_count": 209,
+  "batches": [
+    {
+      "batch_index": 0,
+      "candidate_indices": [
+        1,
+        4,
+        6,
+        20
+      ],
+      "species": [
+        "Thrips flavidulus",
+        "Mulsantina picta",
+        "Syntomeida melanthus",
+        "Myoxocephalus polyacanthocephalus"
+      ]
+    },
+    {
+      "batch_index": 1,
+      "candidate_indices": [
+        23,
+        28,
+        32,
+        33
+      ],
+      "species": [
+        "Lasioglossum ephialtum",
+        "Saucrobotys futilalis",
+        "Limenitis archippus",
+        "Sceliphron caementarium"
+      ]
+    },
+    {
+      "batch_index": 2,
+      "candidate_indices": [
+        35,
+        36,
+        38,
+        40
+      ],
+      "species": [
+        "Leucania multilinea",
+        "Boloria pales",
+        "Caranx melampygus",
+        "Pyrgomorpha conica"
+      ]
+    },
+    {
+      "batch_index": 3,
+      "candidate_indices": [
+        42,
+        43,
+        44,
+        47
+      ],
+      "species": [
+        "Pseudargyrotoza conwagana",
+        "Condica cupentia",
+        "Leucoraja naevus",
+        "Oecomys rutilus"
+      ]
+    },
+    {
+      "batch_index": 4,
+      "candidate_indices": [
+        49,
+        50,
+        51,
+        52
+      ],
+      "species": [
+        "Culicoides orientalis",
+        "Isotoma viridis",
+        "Euxoa obelisca",
+        "Nemorimyza posticata"
+      ]
+    },
+    {
+      "batch_index": 5,
+      "candidate_indices": [
+        53,
+        54,
+        55,
+        56
+      ],
+      "species": [
+        "Pasiphila rectangulata",
+        "Periphyllus testudinaceus",
+        "Nebria rufescens",
+        "Peromyia borealis"
+      ]
+    },
+    {
+      "batch_index": 6,
+      "candidate_indices": [
+        57,
+        58,
+        59,
+        60
+      ],
+      "species": [
+        "Cerodontha longipennis",
+        "Isoperla holochlora",
+        "Tipula platymera",
+        "Salignus distinguendus"
+      ]
+    },
+    {
+      "batch_index": 7,
+      "candidate_indices": [
+        61,
+        62,
+        63,
+        64
+      ],
+      "species": [
+        "Scathophaga litorea",
+        "Clemensia cincinnata",
+        "Erebia montanus",
+        "Tetanolita mynesalis"
+      ]
+    },
+    {
+      "batch_index": 8,
+      "candidate_indices": [
+        65,
+        66,
+        67,
+        68
+      ],
+      "species": [
+        "Esomus danrica",
+        "Scoparia penumbralis",
+        "Deltote bankiana",
+        "Aulonothroscus constrictor"
+      ]
+    },
+    {
+      "batch_index": 9,
+      "candidate_indices": [
+        69,
+        70,
+        71,
+        72
+      ],
+      "species": [
+        "Tasgius melanarius",
+        "Chondrocyclus alabastris",
+        "Ginaldia corda",
+        "Cotesia yakutatensis"
+      ]
+    },
+    {
+      "batch_index": 10,
+      "candidate_indices": [
+        73,
+        74,
+        75,
+        76
+      ],
+      "species": [
+        "Parastacus brasiliensis",
+        "Pero behrensaria",
+        "Euxoa intrita",
+        "Oribatula tibialis"
+      ]
+    },
+    {
+      "batch_index": 11,
+      "candidate_indices": [
+        77,
+        78,
+        79,
+        80
+      ],
+      "species": [
+        "Pikonema alaskense",
+        "Pharmacis fusconebulosa",
+        "Dasychira obliquata",
+        "Incertella incerta"
+      ]
+    },
+    {
+      "batch_index": 12,
+      "candidate_indices": [
+        81,
+        82,
+        83,
+        84
+      ],
+      "species": [
+        "Colias pelidne",
+        "Mimumesa dahlbomi",
+        "Arctornis intacta",
+        "Agape chloropyga"
+      ]
+    },
+    {
+      "batch_index": 13,
+      "candidate_indices": [
+        85,
+        86,
+        87,
+        88
+      ],
+      "species": [
+        "Memphis proserpina",
+        "Segestria senoculata",
+        "Phylocentropus placidus",
+        "Helicoverpa punctigera"
+      ]
+    },
+    {
+      "batch_index": 14,
+      "candidate_indices": [
+        89,
+        90,
+        91,
+        92
+      ],
+      "species": [
+        "Megaselia ilca",
+        "Callopistria juventina",
+        "Ilybius quadriguttatus",
+        "Calaphis flava"
+      ]
+    },
+    {
+      "batch_index": 15,
+      "candidate_indices": [
+        93,
+        94,
+        95,
+        96
+      ],
+      "species": [
+        "Thymelicus lineola",
+        "Coenipeta tanais",
+        "Hylesia rufipes",
+        "Essigella wilsoni"
+      ]
+    },
+    {
+      "batch_index": 16,
+      "candidate_indices": [
+        97,
+        98,
+        99,
+        100
+      ],
+      "species": [
+        "Hypena variabilis",
+        "Diplocolenus configuratus",
+        "Pristiphora retusa",
+        "Alliopsis fractiseta"
+      ]
+    },
+    {
+      "batch_index": 17,
+      "candidate_indices": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "species": [
+        "Astyanax mexicanus",
+        "Alloxysta tscheki",
+        "Letis xylia",
+        "Aidos perfusa"
+      ]
+    },
+    {
+      "batch_index": 18,
+      "candidate_indices": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "species": [
+        "Thymelicus sylvestris",
+        "Exechia separata",
+        "Eumedonia eumedon",
+        "Ziegleria hesperitis"
+      ]
+    },
+    {
+      "batch_index": 19,
+      "candidate_indices": [
+        109,
+        110,
+        111,
+        112
+      ],
+      "species": [
+        "Cassida rubiginosa",
+        "Epitrimerus sabinae",
+        "Hyles sammuti",
+        "Anisarchus medius"
+      ]
+    },
+    {
+      "batch_index": 20,
+      "candidate_indices": [
+        113,
+        114,
+        115,
+        116
+      ],
+      "species": [
+        "Prosciara prosciaroides",
+        "Selagia spadicella",
+        "Apantesis nais",
+        "Nystalea aequipars"
+      ]
+    },
+    {
+      "batch_index": 21,
+      "candidate_indices": [
+        117,
+        118,
+        119,
+        120
+      ],
+      "species": [
+        "Hypoprepia fucosa",
+        "Zizina labradus",
+        "Carcharhinus leucas",
+        "Lutjanus synagris"
+      ]
+    },
+    {
+      "batch_index": 22,
+      "candidate_indices": [
+        121,
+        122,
+        123,
+        124
+      ],
+      "species": [
+        "Trixagus carinicollis",
+        "Malporus formicarius",
+        "Dyops cuprescens",
+        "Sarsina festiva"
+      ]
+    },
+    {
+      "batch_index": 23,
+      "candidate_indices": [
+        125,
+        126,
+        127,
+        128
+      ],
+      "species": [
+        "Chlosyne erodyle",
+        "Rhyacophila dorsalis",
+        "Acroneuria abnormis",
+        "Apamea centralis"
+      ]
+    },
+    {
+      "batch_index": 24,
+      "candidate_indices": [
+        129,
+        130,
+        131,
+        132
+      ],
+      "species": [
+        "Coxina hadenoides",
+        "Philometra metonalis",
+        "Taeniogonalos woodorum",
+        "Aporrectodea trapezoides"
+      ]
+    },
+    {
+      "batch_index": 25,
+      "candidate_indices": [
+        133,
+        134,
+        135,
+        136
+      ],
+      "species": [
+        "Autographa aemula",
+        "Epuraea melanocephala",
+        "Herminia pedipilalis",
+        "Corticaria rubripes"
+      ]
+    },
+    {
+      "batch_index": 26,
+      "candidate_indices": [
+        137,
+        138,
+        139,
+        140
+      ],
+      "species": [
+        "Aphelia paleana",
+        "Lycoriella stylata",
+        "Hylesia aeneides",
+        "Nomophila nearctica"
+      ]
+    },
+    {
+      "batch_index": 27,
+      "candidate_indices": [
+        141,
+        142,
+        143,
+        144
+      ],
+      "species": [
+        "Automeris managuana",
+        "Hyalinobatrachium fleischmanni",
+        "Ochrodota marina",
+        "Agrotis simplonia"
+      ]
+    },
+    {
+      "batch_index": 28,
+      "candidate_indices": [
+        145,
+        146,
+        147,
+        148
+      ],
+      "species": [
+        "Edwardsiana rosae",
+        "Contacyphon coarctatus",
+        "Anthela acuta",
+        "Subacronicta megacephala"
+      ]
+    },
+    {
+      "batch_index": 29,
+      "candidate_indices": [
+        149,
+        150,
+        151,
+        152
+      ],
+      "species": [
+        "Crambus saltuellus",
+        "Cerura vinula",
+        "Scymnus lacustris",
+        "Misumenoides formosipes"
+      ]
+    },
+    {
+      "batch_index": 30,
+      "candidate_indices": [
+        153,
+        154,
+        155,
+        156
+      ],
+      "species": [
+        "Hydropsyche siltalai",
+        "Dichomeris flavocostella",
+        "Bucculatrix thoracella",
+        "Antispila oinophylla"
+      ]
+    },
+    {
+      "batch_index": 31,
+      "candidate_indices": [
+        157,
+        158,
+        159,
+        160
+      ],
+      "species": [
+        "Wallago attu",
+        "Parnassius phoebus",
+        "Fisera hypoleuca",
+        "Daphnia pulex"
+      ]
+    },
+    {
+      "batch_index": 32,
+      "candidate_indices": [
+        161,
+        162,
+        163,
+        164
+      ],
+      "species": [
+        "Melanchra pulverulenta",
+        "Badis badis",
+        "Stagnicola elodes",
+        "Eugnosta sartana"
+      ]
+    },
+    {
+      "batch_index": 33,
+      "candidate_indices": [
+        165,
+        166,
+        167,
+        168
+      ],
+      "species": [
+        "Ocyurus chrysurus",
+        "Bida radiosella",
+        "Lygaeus kalmii",
+        "Banisia furva"
+      ]
+    },
+    {
+      "batch_index": 34,
+      "candidate_indices": [
+        169,
+        170,
+        171,
+        172
+      ],
+      "species": [
+        "Enallagma ebrium",
+        "Strangalepta abbreviata",
+        "Denticucullus pygmina",
+        "Sphex ichneumoneus"
+      ]
+    },
+    {
+      "batch_index": 35,
+      "candidate_indices": [
+        173,
+        174,
+        175,
+        176
+      ],
+      "species": [
+        "Cropia rivulosa",
+        "Stigmella ruficapitella",
+        "Chiasmodon niger",
+        "Aphis pomi"
+      ]
+    },
+    {
+      "batch_index": 36,
+      "candidate_indices": [
+        177,
+        178,
+        179,
+        180
+      ],
+      "species": [
+        "Rhyacia quadrangula",
+        "Anax speratus",
+        "Agrius cingulata",
+        "Baetis intercalaris"
+      ]
+    },
+    {
+      "batch_index": 37,
+      "candidate_indices": [
+        181,
+        182,
+        183,
+        184
+      ],
+      "species": [
+        "Carteris lineata",
+        "Colotis danae",
+        "Orthocladius dorenus",
+        "Ichneumon discoensis"
+      ]
+    },
+    {
+      "batch_index": 38,
+      "candidate_indices": [
+        185,
+        186,
+        187,
+        188
+      ],
+      "species": [
+        "Depressaria albipunctella",
+        "Mycetophila blanda",
+        "Platycentropus radiatus",
+        "Cordilura atrata"
+      ]
+    },
+    {
+      "batch_index": 39,
+      "candidate_indices": [
+        189,
+        190,
+        191,
+        192
+      ],
+      "species": [
+        "Erinnyis alope",
+        "Poecilia gillii",
+        "Acronicta aceris",
+        "Blepharomastix ianthealis"
+      ]
+    },
+    {
+      "batch_index": 40,
+      "candidate_indices": [
+        193,
+        194,
+        195,
+        196
+      ],
+      "species": [
+        "Ischiodon scutellaris",
+        "Heliothis peltigera",
+        "Amphipoea interoceanica",
+        "Synchlora expulsata"
+      ]
+    },
+    {
+      "batch_index": 41,
+      "candidate_indices": [
+        197,
+        198,
+        199,
+        201
+      ],
+      "species": [
+        "Grammonota gigas",
+        "Judolia montivagans",
+        "Aethes rutilana",
+        "Hydrotaea dentipes"
+      ]
+    },
+    {
+      "batch_index": 42,
+      "candidate_indices": [
+        204,
+        206,
+        220,
+        223
+      ],
+      "species": [
+        "Lygropia cernalis",
+        "Ichneumon memorator",
+        "Pisaura mirabilis",
+        "Oxythyrea funesta"
+      ]
+    },
+    {
+      "batch_index": 43,
+      "candidate_indices": [
+        228,
+        232,
+        233,
+        235
+      ],
+      "species": [
+        "Atomaria linearis",
+        "Stenoma completella",
+        "Lasioglossum perpunctatum",
+        "Erythroneura bakeri"
+      ]
+    },
+    {
+      "batch_index": 44,
+      "candidate_indices": [
+        236,
+        238,
+        240,
+        242
+      ],
+      "species": [
+        "Heterochroma hypatia",
+        "Orodrassus canadensis",
+        "Agonopterix ciliella",
+        "Yponomeuta plumbella"
+      ]
+    },
+    {
+      "batch_index": 45,
+      "candidate_indices": [
+        243,
+        244,
+        247,
+        249
+      ],
+      "species": [
+        "Zelleria hepariella",
+        "Tetragonisca angustula",
+        "Apis cerana",
+        "Hyadina albovenosa"
+      ]
+    },
+    {
+      "batch_index": 46,
+      "candidate_indices": [
+        250,
+        251,
+        252,
+        253
+      ],
+      "species": [
+        "Paracladopelma winnelli",
+        "Suillia humilis",
+        "Bythotrephes longimanus",
+        "Pheosia gnoma"
+      ]
+    },
+    {
+      "batch_index": 47,
+      "candidate_indices": [
+        254,
+        255,
+        256,
+        257
+      ],
+      "species": [
+        "Oxidercia thaumantis",
+        "Psilogramma casuarinae",
+        "Idaea trigeminata",
+        "Xylosandrus germanus"
+      ]
+    },
+    {
+      "batch_index": 48,
+      "candidate_indices": [
+        258,
+        259,
+        260,
+        261
+      ],
+      "species": [
+        "Endothenia gentianaeana",
+        "Achyra nigrirenalis",
+        "Anacrusis ellensatterleeae",
+        "Exocentrus adspersus"
+      ]
+    },
+    {
+      "batch_index": 49,
+      "candidate_indices": [
+        262,
+        263,
+        264,
+        265
+      ],
+      "species": [
+        "Cupido minimus",
+        "Gymnelia ethodaea",
+        "Mocis alterna",
+        "Mermessus tridentatus"
+      ]
+    },
+    {
+      "batch_index": 50,
+      "candidate_indices": [
+        266,
+        267,
+        268,
+        269
+      ],
+      "species": [
+        "Homotropus pallipes",
+        "Chilodes maritima",
+        "Cylindroiulus punctatus",
+        "Syneora lithina"
+      ]
+    },
+    {
+      "batch_index": 51,
+      "candidate_indices": [
+        270,
+        271,
+        272,
+        273
+      ],
+      "species": [
+        "Ogdoconta pulvilinea",
+        "Pachygnatha clercki",
+        "Polyphemus pediculus",
+        "Poecilia mexicana"
+      ]
+    },
+    {
+      "batch_index": 52,
+      "candidate_indices": [
+        274,
+        275,
+        276,
+        277
+      ],
+      "species": [
+        "Vitula edmandsii",
+        "Ctenochira haemosterna",
+        "Conchylodes nolckenialis",
+        "Siphona multifaria"
+      ]
+    },
+    {
+      "batch_index": 53,
+      "candidate_indices": [
+        278,
+        279,
+        280,
+        281
+      ],
+      "species": [
+        "Paectes oculatrix",
+        "Leucania uda",
+        "Ectoedemia rubivora",
+        "Sophista bifasciata"
+      ]
+    },
+    {
+      "batch_index": 54,
+      "candidate_indices": [
+        282,
+        283,
+        284,
+        285
+      ],
+      "species": [
+        "Dictyna foliacea",
+        "Neriene clathrata",
+        "Diacrisia sannio",
+        "Megaselia baileyae"
+      ]
+    },
+    {
+      "batch_index": 55,
+      "candidate_indices": [
+        286,
+        287,
+        288,
+        289
+      ],
+      "species": [
+        "Clusiodes ater",
+        "Mictris crispus",
+        "Rothschildia aurota",
+        "Hadena albimacula"
+      ]
+    },
+    {
+      "batch_index": 56,
+      "candidate_indices": [
+        290,
+        291,
+        292,
+        293
+      ],
+      "species": [
+        "Ectropis crepuscularia",
+        "Anorthoa munda",
+        "Heterarthrus ochropoda",
+        "Chromis viridis"
+      ]
+    },
+    {
+      "batch_index": 57,
+      "candidate_indices": [
+        294,
+        295,
+        296,
+        297
+      ],
+      "species": [
+        "Tetranychus urticae",
+        "Rheumaptera undulata",
+        "Eucereon baleris",
+        "Enargia paleacea"
+      ]
+    },
+    {
+      "batch_index": 58,
+      "candidate_indices": [
+        298,
+        299,
+        300,
+        301
+      ],
+      "species": [
+        "Anopheles crucians",
+        "Entomobrya multifasciatus",
+        "Euura brevivalvis",
+        "Hedya salicella"
+      ]
+    },
+    {
+      "batch_index": 59,
+      "candidate_indices": [
+        302,
+        303,
+        304,
+        305
+      ],
+      "species": [
+        "Limnephilus extractus",
+        "Clistopyga recurva",
+        "Bembidion transversale",
+        "Garrha absumptella"
+      ]
+    },
+    {
+      "batch_index": 60,
+      "candidate_indices": [
+        306,
+        307,
+        308,
+        309
+      ],
+      "species": [
+        "Euproctis chrysorrhoea",
+        "Phaonia fuscana",
+        "Phyllonorycter kuhlweiniella",
+        "Heorta pulchra"
+      ]
+    },
+    {
+      "batch_index": 61,
+      "candidate_indices": [
+        310,
+        311,
+        312,
+        313
+      ],
+      "species": [
+        "Autographa mappa",
+        "Hemidactylus frenatus",
+        "Stygnocoris sabulosus",
+        "Conisania luteago"
+      ]
+    },
+    {
+      "batch_index": 62,
+      "candidate_indices": [
+        314,
+        315,
+        316,
+        317
+      ],
+      "species": [
+        "Eudonia pallida",
+        "Pyrgus cinarae",
+        "Catarhoe rubidata",
+        "Atropacarus striculus"
+      ]
+    },
+    {
+      "batch_index": 63,
+      "candidate_indices": [
+        318,
+        319,
+        320,
+        321
+      ],
+      "species": [
+        "Catoryctis eugramma",
+        "Catastega aceriella",
+        "Eutrichapion viciae",
+        "Acentrella turbida"
+      ]
+    },
+    {
+      "batch_index": 64,
+      "candidate_indices": [
+        322,
+        323,
+        324,
+        325
+      ],
+      "species": [
+        "Ethmia baliostola",
+        "Rheumaptera hastata",
+        "Charissa ambiguata",
+        "Carpelimus pusillus"
+      ]
+    },
+    {
+      "batch_index": 65,
+      "candidate_indices": [
+        326,
+        327,
+        328,
+        329
+      ],
+      "species": [
+        "Lasioglossum hitchensi",
+        "Trichareva fulvilaniata",
+        "Gretchena delicatana",
+        "Culex annulirostris"
+      ]
+    },
+    {
+      "batch_index": 66,
+      "candidate_indices": [
+        330,
+        331,
+        332,
+        333
+      ],
+      "species": [
+        "Colias tyche",
+        "Eupithecia pusillata",
+        "Ailia coila",
+        "Niphargus aquilex"
+      ]
+    },
+    {
+      "batch_index": 67,
+      "candidate_indices": [
+        334,
+        335,
+        336,
+        337
+      ],
+      "species": [
+        "Tetramorium semilaeve",
+        "Cosmia pyralina",
+        "Enterion herculeum",
+        "Sesamia inferens"
+      ]
+    },
+    {
+      "batch_index": 68,
+      "candidate_indices": [
+        338,
+        339,
+        340,
+        341
+      ],
+      "species": [
+        "Paraleptophlebia praepedita",
+        "Lesmone aemylia",
+        "Isoperla dicala",
+        "Themira minor"
+      ]
+    },
+    {
+      "batch_index": 69,
+      "candidate_indices": [
+        342,
+        343,
+        344,
+        345
+      ],
+      "species": [
+        "Dermacentor reticulatus",
+        "Tyta luctuosa",
+        "Pullimosina heteroneura",
+        "Synopeas pennsylvanicum"
+      ]
+    },
+    {
+      "batch_index": 70,
+      "candidate_indices": [
+        346,
+        347,
+        348,
+        349
+      ],
+      "species": [
+        "Symplecta pilipes",
+        "Agabus ajax",
+        "Aethes interruptofasciata",
+        "Hydroporus notabilis"
+      ]
+    },
+    {
+      "batch_index": 71,
+      "candidate_indices": [
+        350,
+        351,
+        352,
+        353
+      ],
+      "species": [
+        "Apistosia judas",
+        "Lampides boeticus",
+        "Lesteva longoelytrata",
+        "Noctuana stator"
+      ]
+    },
+    {
+      "batch_index": 72,
+      "candidate_indices": [
+        354,
+        355,
+        356,
+        357
+      ],
+      "species": [
+        "Orthocladius oliveri",
+        "Agaraea inconspicua",
+        "Pteromalus anthonomi",
+        "Helotropha leucostigma"
+      ]
+    },
+    {
+      "batch_index": 73,
+      "candidate_indices": [
+        358,
+        359,
+        360,
+        361
+      ],
+      "species": [
+        "Acrolophus popeanella",
+        "Drosophila melanogaster",
+        "Palpita magniferalis",
+        "Hercostomus unicolor"
+      ]
+    },
+    {
+      "batch_index": 74,
+      "candidate_indices": [
+        362,
+        363,
+        364,
+        365
+      ],
+      "species": [
+        "Nudaria mundana",
+        "Scopula incanata",
+        "Brachypalpus oarus",
+        "Clepsis melaleucanus"
+      ]
+    },
+    {
+      "batch_index": 75,
+      "candidate_indices": [
+        366,
+        367,
+        368,
+        369
+      ],
+      "species": [
+        "Aedes increpitus",
+        "Onisimus litoralis",
+        "Liohippelates bishoppi",
+        "Neodexiopsis calopyga"
+      ]
+    },
+    {
+      "batch_index": 76,
+      "candidate_indices": [
+        370,
+        371,
+        372,
+        373
+      ],
+      "species": [
+        "Eurois occulta",
+        "Epinotia mercuriana",
+        "Apis dorsata",
+        "Erebia youngi"
+      ]
+    },
+    {
+      "batch_index": 77,
+      "candidate_indices": [
+        374,
+        375,
+        376,
+        377
+      ],
+      "species": [
+        "Depressaria douglasella",
+        "Ischnura hastata",
+        "Zelotes sula",
+        "Potamophylax latipennis"
+      ]
+    },
+    {
+      "batch_index": 78,
+      "candidate_indices": [
+        378,
+        379,
+        380,
+        381
+      ],
+      "species": [
+        "Hemiceras punctata",
+        "Pyrrhalta viburni",
+        "Ericeia subsignata",
+        "Xylocopa sonorina"
+      ]
+    },
+    {
+      "batch_index": 79,
+      "candidate_indices": [
+        382,
+        383,
+        384,
+        385
+      ],
+      "species": [
+        "Ergavia carinenta",
+        "Alysson spinosus",
+        "Urocitellus undulatus",
+        "Anaplectoides prasina"
+      ]
+    },
+    {
+      "batch_index": 80,
+      "candidate_indices": [
+        386,
+        387,
+        388,
+        389
+      ],
+      "species": [
+        "Dusona vitticollis",
+        "Polyptychus grayii",
+        "Orthosia populeti",
+        "Epibulus insidiator"
+      ]
+    },
+    {
+      "batch_index": 81,
+      "candidate_indices": [
+        390,
+        391,
+        392,
+        393
+      ],
+      "species": [
+        "Aslauga vininga",
+        "Ctenoplusia albostriata",
+        "Mugil cephalus",
+        "Podalonia tydei"
+      ]
+    },
+    {
+      "batch_index": 82,
+      "candidate_indices": [
+        394,
+        395,
+        396,
+        397
+      ],
+      "species": [
+        "Chelipoda truncata",
+        "Psychoda grisescens",
+        "Pachynematus clitellatus",
+        "Xylesthia pruniramiella"
+      ]
+    },
+    {
+      "batch_index": 83,
+      "candidate_indices": [
+        398,
+        399,
+        401,
+        404
+      ],
+      "species": [
+        "Iteaphila macquarti",
+        "Lepthyphantes intricatus",
+        "Dichomeris levisella",
+        "Jodis lactearia"
+      ]
+    },
+    {
+      "batch_index": 84,
+      "candidate_indices": [
+        406,
+        420,
+        423,
+        428
+      ],
+      "species": [
+        "Camponotus pennsylvanicus",
+        "Callidium violaceum",
+        "Metzneria lappella",
+        "Amoebaleria helvola"
+      ]
+    },
+    {
+      "batch_index": 85,
+      "candidate_indices": [
+        432,
+        433,
+        435,
+        436
+      ],
+      "species": [
+        "Elachista eskoi",
+        "Hypertropha tortriciformis",
+        "Anaxyrus americanus",
+        "Caenis youngi"
+      ]
+    },
+    {
+      "batch_index": 86,
+      "candidate_indices": [
+        438,
+        440,
+        442,
+        443
+      ],
+      "species": [
+        "Crambus alienellus",
+        "Symmorphus murarius",
+        "Araneus gemmoides",
+        "Plebejus bellieri"
+      ]
+    },
+    {
+      "batch_index": 87,
+      "candidate_indices": [
+        444,
+        447,
+        449,
+        450
+      ],
+      "species": [
+        "Chlamydastis carlosviquezi",
+        "Mallotus villosus",
+        "Mycetophila gemerensis",
+        "Hyles euphorbiae"
+      ]
+    },
+    {
+      "batch_index": 88,
+      "candidate_indices": [
+        451,
+        452,
+        453,
+        454
+      ],
+      "species": [
+        "Agonopterix kaekeritziana",
+        "Abacarus hystrix",
+        "Chrysops furcatus",
+        "Eilema griseola"
+      ]
+    },
+    {
+      "batch_index": 89,
+      "candidate_indices": [
+        455,
+        456,
+        457,
+        458
+      ],
+      "species": [
+        "Polites peckius",
+        "Mischocyttarus angulatus",
+        "Lasionycta leucocycla",
+        "Trigonodes hyppasia"
+      ]
+    },
+    {
+      "batch_index": 90,
+      "candidate_indices": [
+        459,
+        460,
+        461,
+        462
+      ],
+      "species": [
+        "Macrocheles muscaedomesticae",
+        "Isoperla montana",
+        "Phiaris metallicana",
+        "Parancistrocerus pedestris"
+      ]
+    },
+    {
+      "batch_index": 91,
+      "candidate_indices": [
+        463,
+        464,
+        465,
+        466
+      ],
+      "species": [
+        "Lasaeola tristis",
+        "Opisthograptis luteolata",
+        "Arteurotia tractipennis",
+        "Sebastes alutus"
+      ]
+    },
+    {
+      "batch_index": 92,
+      "candidate_indices": [
+        467,
+        468,
+        469,
+        470
+      ],
+      "species": [
+        "Aedes intrudens",
+        "Catocala maestosa",
+        "Condylostylus patibulatus",
+        "Phyllobrotica quadrimaculata"
+      ]
+    },
+    {
+      "batch_index": 93,
+      "candidate_indices": [
+        471,
+        472,
+        473,
+        474
+      ],
+      "species": [
+        "Neoantistea gosiuta",
+        "Oedothorax retusus",
+        "Pholoe baltica",
+        "Arethusana arethusa"
+      ]
+    },
+    {
+      "batch_index": 94,
+      "candidate_indices": [
+        475,
+        476,
+        477,
+        478
+      ],
+      "species": [
+        "Mordellistena neuwaldeggiana",
+        "Hellula hydralis",
+        "Oxydromus pugettensis",
+        "Simulium pseudequinum"
+      ]
+    },
+    {
+      "batch_index": 95,
+      "candidate_indices": [
+        479,
+        480,
+        481,
+        482
+      ],
+      "species": [
+        "Xysticus benefactor",
+        "Epiphanis cornutus",
+        "Lampropteryx suffumata",
+        "Balclutha incisa"
+      ]
+    },
+    {
+      "batch_index": 96,
+      "candidate_indices": [
+        483,
+        484,
+        485,
+        486
+      ],
+      "species": [
+        "Stenoma baliandra",
+        "Pimpla aequalis",
+        "Cerastis rubricosa",
+        "Baetis bicaudatus"
+      ]
+    },
+    {
+      "batch_index": 97,
+      "candidate_indices": [
+        487,
+        488,
+        489,
+        490
+      ],
+      "species": [
+        "Nephopterix angustella",
+        "Longitarsus lewisii",
+        "Isadelphus inimicus",
+        "Crossaster papposus"
+      ]
+    },
+    {
+      "batch_index": 98,
+      "candidate_indices": [
+        491,
+        492,
+        493,
+        494
+      ],
+      "species": [
+        "Rivula sericealis",
+        "Leptopelis aubryi",
+        "Sphecodes crassus",
+        "Eudemis porphyrana"
+      ]
+    },
+    {
+      "batch_index": 99,
+      "candidate_indices": [
+        495,
+        496,
+        497,
+        498
+      ],
+      "species": [
+        "Pogonocherus hispidus",
+        "Anabasis ochrodesma",
+        "Nymphalis l-album",
+        "Brasema allynii"
+      ]
+    },
+    {
+      "batch_index": 100,
+      "candidate_indices": [
+        499,
+        500,
+        501,
+        502
+      ],
+      "species": [
+        "Pheia albisigna",
+        "Elachista occidentalis",
+        "Coryphopterus personatus",
+        "Eupithecia nimbicolor"
+      ]
+    },
+    {
+      "batch_index": 101,
+      "candidate_indices": [
+        503,
+        504,
+        505,
+        506
+      ],
+      "species": [
+        "Asota trinacria",
+        "Psylliodes affinis",
+        "Crambidia casta",
+        "Nicrophorus humator"
+      ]
+    },
+    {
+      "batch_index": 102,
+      "candidate_indices": [
+        507,
+        508,
+        509,
+        510
+      ],
+      "species": [
+        "Coleophora flavipennella",
+        "Bucculatrix bechsteinella",
+        "Pristimantis taeniatus",
+        "Gryllus pennsylvanicus"
+      ]
+    },
+    {
+      "batch_index": 103,
+      "candidate_indices": [
+        511,
+        512,
+        513,
+        514
+      ],
+      "species": [
+        "Euglyphis scaptia",
+        "Isomira quadristriata",
+        "Lesmone gentilis",
+        "Ampedus fusculus"
+      ]
+    },
+    {
+      "batch_index": 104,
+      "candidate_indices": [
+        515,
+        516,
+        517,
+        518
+      ],
+      "species": [
+        "Achlya flavicornis",
+        "Brephidium exilis",
+        "Odonus niger",
+        "Diaphorina citri"
+      ]
+    },
+    {
+      "batch_index": 105,
+      "candidate_indices": [
+        519,
+        520,
+        521,
+        522
+      ],
+      "species": [
+        "Gryllus rubens",
+        "Phyllotreta robusta",
+        "Limnias melicerta",
+        "Acleris holmiana"
+      ]
+    },
+    {
+      "batch_index": 106,
+      "candidate_indices": [
+        523,
+        524,
+        525,
+        526
+      ],
+      "species": [
+        "Lycaena mariposa",
+        "Pimpla caeruleata",
+        "Anthophagus alpinus",
+        "Anatis ocellata"
+      ]
+    },
+    {
+      "batch_index": 107,
+      "candidate_indices": [
+        527,
+        528,
+        529,
+        530
+      ],
+      "species": [
+        "Neocochylis dubitana",
+        "Aethalura punctulata",
+        "Lichenaula onychotypa",
+        "Eustala rosae"
+      ]
+    },
+    {
+      "batch_index": 108,
+      "candidate_indices": [
+        531,
+        532,
+        533,
+        534
+      ],
+      "species": [
+        "Nemoura lacustris",
+        "Gattyana cirrhosa",
+        "Theodoxus jordani",
+        "Anthocomus fasciatus"
+      ]
+    },
+    {
+      "batch_index": 109,
+      "candidate_indices": [
+        535,
+        536,
+        537,
+        538
+      ],
+      "species": [
+        "Papilio canadensis",
+        "Carales astur",
+        "Polygonia progne",
+        "Plectophila thrasycosma"
+      ]
+    },
+    {
+      "batch_index": 110,
+      "candidate_indices": [
+        539,
+        540,
+        541,
+        542
+      ],
+      "species": [
+        "Melittobia australica",
+        "Acleris forsskaleana",
+        "Hemerobius pinidumus",
+        "Cecrita perplexa"
+      ]
+    },
+    {
+      "batch_index": 111,
+      "candidate_indices": [
+        543,
+        544,
+        545,
+        546
+      ],
+      "species": [
+        "Acronicta superans",
+        "Petromyzon marinus",
+        "Hamadryas saurites",
+        "Idia americalis"
+      ]
+    },
+    {
+      "batch_index": 112,
+      "candidate_indices": [
+        547,
+        548,
+        549,
+        550
+      ],
+      "species": [
+        "Amorbia humerosana",
+        "Orchestes fagi",
+        "Pococera expandens",
+        "Ametastegia tenera"
+      ]
+    },
+    {
+      "batch_index": 113,
+      "candidate_indices": [
+        551,
+        552,
+        553,
+        554
+      ],
+      "species": [
+        "Disphragis carantis",
+        "Hippotion celerio",
+        "Ecclisomyia maculosa",
+        "Admontia grandicornis"
+      ]
+    },
+    {
+      "batch_index": 114,
+      "candidate_indices": [
+        555,
+        556,
+        557,
+        558
+      ],
+      "species": [
+        "Rymosia signatipes",
+        "Athripsodes cinereus",
+        "Melitaea nevadensis",
+        "Kirrostola metaxantha"
+      ]
+    },
+    {
+      "batch_index": 115,
+      "candidate_indices": [
+        559,
+        560,
+        561,
+        562
+      ],
+      "species": [
+        "Drymeia groenlandica",
+        "Scotopteryx bipunctaria",
+        "Euura dolichura_group",
+        "Salminus hilarii"
+      ]
+    },
+    {
+      "batch_index": 116,
+      "candidate_indices": [
+        563,
+        564,
+        565,
+        566
+      ],
+      "species": [
+        "Nematus oligospilus",
+        "Ophonus melletii",
+        "Ophisma tropicalis",
+        "Mitopus morio"
+      ]
+    },
+    {
+      "batch_index": 117,
+      "candidate_indices": [
+        567,
+        568,
+        569,
+        570
+      ],
+      "species": [
+        "Isanthrene cazador",
+        "Coproica hirtula",
+        "Rudenia leguminana",
+        "Prosimulium arvum"
+      ]
+    },
+    {
+      "batch_index": 118,
+      "candidate_indices": [
+        571,
+        572,
+        573,
+        574
+      ],
+      "species": [
+        "Pimelia subglobosa",
+        "Citheronioides lamata",
+        "Frankliniella occidentalis",
+        "Ephemerella subvaria"
+      ]
+    },
+    {
+      "batch_index": 119,
+      "candidate_indices": [
+        575,
+        576,
+        577,
+        578
+      ],
+      "species": [
+        "Ambulyx liturata",
+        "Speranza occiduaria",
+        "Cryptophion guillermoiB",
+        "Lucilia ampullacea"
+      ]
+    },
+    {
+      "batch_index": 120,
+      "candidate_indices": [
+        579,
+        580,
+        581,
+        582
+      ],
+      "species": [
+        "Deroceras invadens",
+        "Pseudolimnophila inornata",
+        "Barbodes binotatus",
+        "Periphyllus negundinis"
+      ]
+    },
+    {
+      "batch_index": 121,
+      "candidate_indices": [
+        583,
+        584,
+        585,
+        586
+      ],
+      "species": [
+        "Lacanobia nevadae",
+        "Hypena edictalis",
+        "Astacus pallipes",
+        "Acronicta grisea"
+      ]
+    },
+    {
+      "batch_index": 122,
+      "candidate_indices": [
+        587,
+        588,
+        589,
+        590
+      ],
+      "species": [
+        "Catocala junctura",
+        "Acleris robinsoniana",
+        "Gorgythion begga",
+        "Nyceryx eximia"
+      ]
+    },
+    {
+      "batch_index": 123,
+      "candidate_indices": [
+        591,
+        592,
+        593,
+        594
+      ],
+      "species": [
+        "Stromboceros delicatulus",
+        "Eratoneura certa",
+        "Pococera robustella",
+        "Anisandrus sayi"
+      ]
+    },
+    {
+      "batch_index": 124,
+      "candidate_indices": [
+        595,
+        596,
+        597,
+        598
+      ],
+      "species": [
+        "Eccoptogaster intricata",
+        "Rasbora kalochroma",
+        "Symphlebia janecheverriae",
+        "Tetragonurus cuvieri"
+      ]
+    },
+    {
+      "batch_index": 125,
+      "candidate_indices": [
+        599,
+        601,
+        604,
+        606
+      ],
+      "species": [
+        "Chlamydastis arenaria",
+        "Zygonyx flavicosta",
+        "Acyrthosiphon churchillense",
+        "Spilogona griseola"
+      ]
+    },
+    {
+      "batch_index": 126,
+      "candidate_indices": [
+        620,
+        623,
+        628,
+        632
+      ],
+      "species": [
+        "Virbia ferruginosa",
+        "Pelochrista agricolana",
+        "Chiasmia clathrata",
+        "Emertonella taczanowskii"
+      ]
+    },
+    {
+      "batch_index": 127,
+      "candidate_indices": [
+        633,
+        635,
+        636,
+        638
+      ],
+      "species": [
+        "Metastatia pyrrhorhoea",
+        "Antaeotricha marmorea",
+        "Pterostichus melanarius",
+        "Noctua fimbriata"
+      ]
+    },
+    {
+      "batch_index": 128,
+      "candidate_indices": [
+        640,
+        642,
+        643,
+        644
+      ],
+      "species": [
+        "Lycaena phlaeas",
+        "Gryllus veletis",
+        "Limnephilus ademus",
+        "Udea rubigalis"
+      ]
+    },
+    {
+      "batch_index": 129,
+      "candidate_indices": [
+        647,
+        649,
+        650,
+        651
+      ],
+      "species": [
+        "Panzeria sulcocarina",
+        "Parascotia fuliginaria",
+        "Antanartia dimorphica",
+        "Antherophagus pallens"
+      ]
+    },
+    {
+      "batch_index": 130,
+      "candidate_indices": [
+        652,
+        653,
+        654,
+        655
+      ],
+      "species": [
+        "Automeris zozine",
+        "Clubiona pacifica",
+        "Technomyrmex vitiensis",
+        "Drepane punctata"
+      ]
+    },
+    {
+      "batch_index": 131,
+      "candidate_indices": [
+        656,
+        657,
+        658,
+        659
+      ],
+      "species": [
+        "Syssphinx albolineata",
+        "Pero ancetaria",
+        "Lates calcarifer",
+        "Dorylomorpha borealis"
+      ]
+    },
+    {
+      "batch_index": 132,
+      "candidate_indices": [
+        660,
+        661,
+        662,
+        663
+      ],
+      "species": [
+        "Neogalea esula",
+        "Olethreutes olivaceana",
+        "Ceraclea transversa",
+        "Dioryctria pseudotsugella"
+      ]
+    },
+    {
+      "batch_index": 133,
+      "candidate_indices": [
+        664,
+        665,
+        666,
+        667
+      ],
+      "species": [
+        "Littoraria subvittata",
+        "Longitarsus exsoletus",
+        "Prepona dexamenus",
+        "Harmothoe rarispina"
+      ]
+    },
+    {
+      "batch_index": 134,
+      "candidate_indices": [
+        668,
+        669,
+        670,
+        671
+      ],
+      "species": [
+        "Platynota flavedana",
+        "Colobura dirce",
+        "Bostrichus saxeseni",
+        "Tinca tinca"
+      ]
+    },
+    {
+      "batch_index": 135,
+      "candidate_indices": [
+        672,
+        673,
+        674,
+        675
+      ],
+      "species": [
+        "Antepione thisoaria",
+        "Hyles livornicoides",
+        "Gonioctena quinquepunctata",
+        "Amegilla calens"
+      ]
+    },
+    {
+      "batch_index": 136,
+      "candidate_indices": [
+        676,
+        677,
+        678,
+        679
+      ],
+      "species": [
+        "Idaea ochrata",
+        "Rugilus rufipes",
+        "Agriotes ustulatus",
+        "Ancylis comptana"
+      ]
+    },
+    {
+      "batch_index": 137,
+      "candidate_indices": [
+        680,
+        681,
+        682,
+        683
+      ],
+      "species": [
+        "Amphipholis squamata",
+        "Ptochostola microphaeellus",
+        "Ameletus inopinatus",
+        "Cantharis livida"
+      ]
+    },
+    {
+      "batch_index": 138,
+      "candidate_indices": [
+        684,
+        685,
+        686,
+        687
+      ],
+      "species": [
+        "Aedes communis",
+        "Xylophanes chiron",
+        "Ectropis aganopa",
+        "Erigone atra"
+      ]
+    },
+    {
+      "batch_index": 139,
+      "candidate_indices": [
+        688,
+        689,
+        690,
+        691
+      ],
+      "species": [
+        "Chaetodon capistratus",
+        "Euxoa tessellata",
+        "Notemigonus crysoleucas",
+        "Tomosvaryella sylvatica"
+      ]
+    },
+    {
+      "batch_index": 140,
+      "candidate_indices": [
+        692,
+        693,
+        694,
+        695
+      ],
+      "species": [
+        "Leptosciarella grimmi",
+        "Stomias boa",
+        "Ceraclea dissimilis",
+        "Boloria bellona"
+      ]
+    },
+    {
+      "batch_index": 141,
+      "candidate_indices": [
+        696,
+        697,
+        698,
+        699
+      ],
+      "species": [
+        "Ampelophaga rubiginosa",
+        "Sigara decoratella",
+        "Epinephelus amblycephalus",
+        "Spelobia ochripes"
+      ]
+    },
+    {
+      "batch_index": 142,
+      "candidate_indices": [
+        700,
+        701,
+        702,
+        703
+      ],
+      "species": [
+        "Melanolophia imitata",
+        "Phyllocnistis extrematrix",
+        "Caloptilia alchimiella",
+        "Didelphis marsupialis"
+      ]
+    },
+    {
+      "batch_index": 143,
+      "candidate_indices": [
+        704,
+        705,
+        706,
+        707
+      ],
+      "species": [
+        "Phalaenophana pyramusalis",
+        "Pardosa bucklei",
+        "Eacles penelope",
+        "Baetisca laurentina"
+      ]
+    },
+    {
+      "batch_index": 144,
+      "candidate_indices": [
+        708,
+        709,
+        710,
+        711
+      ],
+      "species": [
+        "Myripristis berndti",
+        "Memphis moruus",
+        "Scopula confinaria",
+        "Quedius mesomelinus"
+      ]
+    },
+    {
+      "batch_index": 145,
+      "candidate_indices": [
+        712,
+        713,
+        714,
+        715
+      ],
+      "species": [
+        "Chorizagrotis auxiliaris",
+        "Ebenavia inunguis",
+        "Olibrus semistriatus",
+        "Machimus sadyates"
+      ]
+    },
+    {
+      "batch_index": 146,
+      "candidate_indices": [
+        716,
+        717,
+        718,
+        719
+      ],
+      "species": [
+        "Aneugmenus padi",
+        "Gramma loreto",
+        "Callionima denticulata",
+        "Campiglossa sororcula"
+      ]
+    },
+    {
+      "batch_index": 147,
+      "candidate_indices": [
+        720,
+        721,
+        722,
+        723
+      ],
+      "species": [
+        "Araneus iviei",
+        "Paracorymbia maculicornis",
+        "Systomus sarana",
+        "Bradysia trivittata"
+      ]
+    },
+    {
+      "batch_index": 148,
+      "candidate_indices": [
+        724,
+        725,
+        726,
+        727
+      ],
+      "species": [
+        "Mamerthes nigrilinea",
+        "Scopula sentinaria",
+        "Philonthus flavibasis",
+        "Upeneus sulphureus"
+      ]
+    },
+    {
+      "batch_index": 149,
+      "candidate_indices": [
+        728,
+        729,
+        730,
+        731
+      ],
+      "species": [
+        "Tachysphex unicolor",
+        "Parides mylotes",
+        "Delia platura",
+        "Clusiodes orbitalis"
+      ]
+    },
+    {
+      "batch_index": 150,
+      "candidate_indices": [
+        732,
+        733,
+        734,
+        735
+      ],
+      "species": [
+        "Quedius fuliginosus",
+        "Tachyporus abdominalis",
+        "Carcharodus floccifera",
+        "Smittia aterrima"
+      ]
+    },
+    {
+      "batch_index": 151,
+      "candidate_indices": [
+        736,
+        737,
+        738,
+        739
+      ],
+      "species": [
+        "Xanthorhoe montanata",
+        "Merodon equestris",
+        "Sparganothis sulfureana",
+        "Erebia pandrose"
+      ]
+    },
+    {
+      "batch_index": 152,
+      "candidate_indices": [
+        740,
+        741,
+        742,
+        743
+      ],
+      "species": [
+        "Bactrocera nigrotibialis",
+        "Mumetopia occipitalis",
+        "Myzodium modestum",
+        "Entomognathus brevis"
+      ]
+    },
+    {
+      "batch_index": 153,
+      "candidate_indices": [
+        744,
+        745,
+        746,
+        747
+      ],
+      "species": [
+        "Gymnophora fastigiorum",
+        "Hipparchia fidia",
+        "Isophrictis striatella",
+        "Spodoptera litura"
+      ]
+    },
+    {
+      "batch_index": 154,
+      "candidate_indices": [
+        748,
+        749,
+        750,
+        751
+      ],
+      "species": [
+        "Trichophya pilicornis",
+        "Crossocerus annulipes",
+        "Gaurotes cyanipennis",
+        "Anabolia brevipennis"
+      ]
+    },
+    {
+      "batch_index": 155,
+      "candidate_indices": [
+        752,
+        753,
+        754,
+        755
+      ],
+      "species": [
+        "Corticea lysias",
+        "Mecynargus paetulus",
+        "Monochroa suffusella",
+        "Schizura ipomoeae"
+      ]
+    },
+    {
+      "batch_index": 156,
+      "candidate_indices": [
+        756,
+        757,
+        758,
+        759
+      ],
+      "species": [
+        "Gasteruption assectator",
+        "Ocypus brunnipes",
+        "Megaselia plebeia",
+        "Athripsodes aterrimus"
+      ]
+    },
+    {
+      "batch_index": 157,
+      "candidate_indices": [
+        760,
+        761,
+        762,
+        763
+      ],
+      "species": [
+        "Lamprostola aglaope",
+        "Bombus rufocinctus",
+        "Cryptocephalus pusillus",
+        "Spodoptera androgea"
+      ]
+    },
+    {
+      "batch_index": 158,
+      "candidate_indices": [
+        764,
+        765,
+        766,
+        767
+      ],
+      "species": [
+        "Microcephalothrips abdominalis",
+        "Perimede erransella",
+        "Lepidostoma lydia",
+        "Hemiceras indistans"
+      ]
+    },
+    {
+      "batch_index": 159,
+      "candidate_indices": [
+        768,
+        769,
+        770,
+        771
+      ],
+      "species": [
+        "Polix coloradella",
+        "Hexagenia limbata",
+        "Aegla longirostri",
+        "Xanthorhoe iduata"
+      ]
+    },
+    {
+      "batch_index": 160,
+      "candidate_indices": [
+        772,
+        773,
+        774,
+        775
+      ],
+      "species": [
+        "Myurella affinis",
+        "Epiperola vaferella",
+        "Monostegia abdominalis",
+        "Orthocladius oblidens"
+      ]
+    },
+    {
+      "batch_index": 161,
+      "candidate_indices": [
+        776,
+        777,
+        778,
+        779
+      ],
+      "species": [
+        "Agrochola lychnidis",
+        "Diaphania plumbidorsalis",
+        "Thanatophilus sinuatus",
+        "Delias hyparete"
+      ]
+    },
+    {
+      "batch_index": 162,
+      "candidate_indices": [
+        780,
+        781,
+        782,
+        783
+      ],
+      "species": [
+        "Antispila treitschkiella",
+        "Isodontia mexicana",
+        "Cataclysta lemnata",
+        "Davara caricae"
+      ]
+    },
+    {
+      "batch_index": 163,
+      "candidate_indices": [
+        784,
+        785,
+        786,
+        787
+      ],
+      "species": [
+        "Helobdella stagnalis",
+        "Metzneria aestivella",
+        "Metriocnemus intergerivus",
+        "Diaphora mendica"
+      ]
+    },
+    {
+      "batch_index": 164,
+      "candidate_indices": [
+        788,
+        789,
+        790,
+        791
+      ],
+      "species": [
+        "Idaea halmaea",
+        "Carcharodus lavatherae",
+        "Spargania luctuata",
+        "Calanus glacialis"
+      ]
+    },
+    {
+      "batch_index": 165,
+      "candidate_indices": [
+        792,
+        793,
+        794,
+        795
+      ],
+      "species": [
+        "Olethreutes astrologana",
+        "Durrantia pugnax",
+        "Macaria adonis",
+        "Metaphycus lounsburyi"
+      ]
+    },
+    {
+      "batch_index": 166,
+      "candidate_indices": [
+        796,
+        797,
+        798,
+        799
+      ],
+      "species": [
+        "Chionodes obscurusella",
+        "Platypalpus pulicarius",
+        "Mystus bleekeri",
+        "Euplocia membliaria"
+      ]
+    },
+    {
+      "batch_index": 167,
+      "candidate_indices": [
+        801,
+        804,
+        806,
+        820
+      ],
+      "species": [
+        "Pyrrhosoma nymphula",
+        "Lithobates clamitans",
+        "Grammotaulius interrogationis",
+        "Phyllonorycter geniculella"
+      ]
+    },
+    {
+      "batch_index": 168,
+      "candidate_indices": [
+        823,
+        828,
+        832,
+        833
+      ],
+      "species": [
+        "Forcipomyia titillans",
+        "Amara plebeja",
+        "Yponomeuta cagnagella",
+        "Clarias gariepinus"
+      ]
+    },
+    {
+      "batch_index": 169,
+      "candidate_indices": [
+        835,
+        836,
+        838,
+        840
+      ],
+      "species": [
+        "Acronicta hasta",
+        "Bathygobius lacertus",
+        "Didymoctenia exsuperata",
+        "Chaoborus flavicans"
+      ]
+    },
+    {
+      "batch_index": 170,
+      "candidate_indices": [
+        842,
+        843,
+        844,
+        847
+      ],
+      "species": [
+        "Mytilus californianus",
+        "Diarsia rubi",
+        "Mythimna impura",
+        "Orthopodomyia signifera"
+      ]
+    },
+    {
+      "batch_index": 171,
+      "candidate_indices": [
+        849,
+        850,
+        851,
+        852
+      ],
+      "species": [
+        "Athalia lugens",
+        "Anthrenus fuscus",
+        "Xysticus durus",
+        "Ourapteryx sambucaria"
+      ]
+    },
+    {
+      "batch_index": 172,
+      "candidate_indices": [
+        853,
+        854,
+        855,
+        856
+      ],
+      "species": [
+        "Scieropepla rimata",
+        "Saurita tipulina",
+        "Caryocolum alsinella",
+        "Ipanica cornigera"
+      ]
+    },
+    {
+      "batch_index": 173,
+      "candidate_indices": [
+        857,
+        858,
+        859,
+        860
+      ],
+      "species": [
+        "Polites themistocles",
+        "Bathyphantes nigrinus",
+        "Cionus hortulanus",
+        "Hexagrammos decagrammus"
+      ]
+    },
+    {
+      "batch_index": 174,
+      "candidate_indices": [
+        861,
+        862,
+        863,
+        864
+      ],
+      "species": [
+        "Apamea ophiogramma",
+        "Valenzuela piceus",
+        "Magelona alleni",
+        "Vespula pensylvanica"
+      ]
+    },
+    {
+      "batch_index": 175,
+      "candidate_indices": [
+        865,
+        866,
+        867,
+        868
+      ],
+      "species": [
+        "Saliana fusta",
+        "Melanterius acaciae",
+        "Symplecta hybrida",
+        "Pycnopsyche scabripennis"
+      ]
+    },
+    {
+      "batch_index": 176,
+      "candidate_indices": [
+        869,
+        870,
+        871,
+        872
+      ],
+      "species": [
+        "Melieria cana",
+        "Megaselia eccoptomera",
+        "Syngamilyta samarialis",
+        "Baileya doubledayi"
+      ]
+    },
+    {
+      "batch_index": 177,
+      "candidate_indices": [
+        873,
+        874,
+        875,
+        876
+      ],
+      "species": [
+        "Cosmosoma teuthras",
+        "Pethia conchonius",
+        "Selatosomus pulcher",
+        "Asturodes bioalfae"
+      ]
+    },
+    {
+      "batch_index": 178,
+      "candidate_indices": [
+        877,
+        878,
+        879,
+        880
+      ],
+      "species": [
+        "Cantharis pellucida",
+        "Branchiura sowerbyi",
+        "Pyrausta volupialis",
+        "Nicrophorus vespilloides"
+      ]
+    },
+    {
+      "batch_index": 179,
+      "candidate_indices": [
+        881,
+        882,
+        883,
+        884
+      ],
+      "species": [
+        "Phaonia soccata",
+        "Orthocentrus winnertzii",
+        "Limotettix dasidus",
+        "Pristiphora melanocarpa"
+      ]
+    },
+    {
+      "batch_index": 180,
+      "candidate_indices": [
+        885,
+        886,
+        887,
+        888
+      ],
+      "species": [
+        "Callibaetis ferrugineus",
+        "Hylaeus brevicornis",
+        "Conioscinella triorbiculata",
+        "Sciara hebes"
+      ]
+    },
+    {
+      "batch_index": 181,
+      "candidate_indices": [
+        889,
+        890,
+        891,
+        892
+      ],
+      "species": [
+        "Zenophleps alpinata",
+        "Nystalea jeremyhancei",
+        "Catocala blandula",
+        "Hylesia continua"
+      ]
+    },
+    {
+      "batch_index": 182,
+      "candidate_indices": [
+        893,
+        894,
+        895,
+        896
+      ],
+      "species": [
+        "Hednota grammellus",
+        "Calomicrus circumfusus",
+        "Mythimna separata",
+        "Hedya separatana"
+      ]
+    },
+    {
+      "batch_index": 183,
+      "candidate_indices": [
+        897,
+        898,
+        899,
+        900
+      ],
+      "species": [
+        "Lepomis macrochirus",
+        "Micrempis bomboxynon",
+        "Mydaea urbana",
+        "Apanteles cinthiabarrantesae"
+      ]
+    },
+    {
+      "batch_index": 184,
+      "candidate_indices": [
+        901,
+        902,
+        903,
+        904
+      ],
+      "species": [
+        "Eiphosoma dolopon",
+        "Farigia foliata",
+        "Ophiura robusta",
+        "Anopheles punctipennis"
+      ]
+    },
+    {
+      "batch_index": 185,
+      "candidate_indices": [
+        905,
+        906,
+        907,
+        908
+      ],
+      "species": [
+        "Rattus rattus",
+        "Crassa tinctella",
+        "Rhysodromus mysticus",
+        "Neoscona subfusca"
+      ]
+    },
+    {
+      "batch_index": 186,
+      "candidate_indices": [
+        909,
+        910,
+        911,
+        912
+      ],
+      "species": [
+        "Elachista irrorata",
+        "Diamesa hyperborea",
+        "Scythropia crataegella",
+        "Allantus cinctus"
+      ]
+    },
+    {
+      "batch_index": 187,
+      "candidate_indices": [
+        913,
+        914,
+        915,
+        916
+      ],
+      "species": [
+        "Balclutha abdominalis",
+        "Tetrix brunnerii",
+        "Suillia vaginata",
+        "Cupido argiades"
+      ]
+    },
+    {
+      "batch_index": 188,
+      "candidate_indices": [
+        917,
+        918,
+        919,
+        920
+      ],
+      "species": [
+        "Eulithis explanata",
+        "Hydrelia albifera",
+        "Cocytius duponchel",
+        "Hypotachina chrysophora"
+      ]
+    },
+    {
+      "batch_index": 189,
+      "candidate_indices": [
+        921,
+        922,
+        923,
+        924
+      ],
+      "species": [
+        "Dolerus yukonensis",
+        "Euclea chiriquensis",
+        "Eudonia truncicolella",
+        "Rhigognostis senilella"
+      ]
+    },
+    {
+      "batch_index": 190,
+      "candidate_indices": [
+        925,
+        926,
+        927,
+        928
+      ],
+      "species": [
+        "Pheidole boruca",
+        "Colostygia aqueata",
+        "Xylophanes hannemanni",
+        "Bendis griseipennis"
+      ]
+    },
+    {
+      "batch_index": 191,
+      "candidate_indices": [
+        929,
+        930,
+        931,
+        932
+      ],
+      "species": [
+        "Chloroclystis insigillata",
+        "Nassarius mendicus",
+        "Agrochola nitida",
+        "Megaselia nigriceps"
+      ]
+    },
+    {
+      "batch_index": 192,
+      "candidate_indices": [
+        933,
+        934,
+        935,
+        936
+      ],
+      "species": [
+        "Oxyethira serrata",
+        "Walckenaeria communis",
+        "Tetramorium attenboroughi",
+        "Sideridis rivularis"
+      ]
+    },
+    {
+      "batch_index": 193,
+      "candidate_indices": [
+        937,
+        938,
+        939,
+        940
+      ],
+      "species": [
+        "Eurrhyparodes bracteolalis",
+        "Mythimna ferrago",
+        "Lestica confluenta",
+        "Bombus kirbiellus"
+      ]
+    },
+    {
+      "batch_index": 194,
+      "candidate_indices": [
+        941,
+        942,
+        943,
+        944
+      ],
+      "species": [
+        "Callinola bifiliferata",
+        "Glaucopsyche lygdamus",
+        "Canalidion montanum",
+        "Meteorus rubens"
+      ]
+    },
+    {
+      "batch_index": 195,
+      "candidate_indices": [
+        945,
+        946,
+        947,
+        948
+      ],
+      "species": [
+        "Rhionaeschna marchali",
+        "Brachycaudus cardui",
+        "Hydroporus lapponum",
+        "Erynnis martialis"
+      ]
+    },
+    {
+      "batch_index": 196,
+      "candidate_indices": [
+        949,
+        950,
+        951,
+        952
+      ],
+      "species": [
+        "Boletina nitiduloides",
+        "Sebastes mystinus",
+        "Lethe anthedon",
+        "Gammarus duebeni"
+      ]
+    },
+    {
+      "batch_index": 197,
+      "candidate_indices": [
+        953,
+        954,
+        955,
+        956
+      ],
+      "species": [
+        "Blastobasis phaedra",
+        "Junonia evarete",
+        "Epinotia immundana",
+        "Pteronymia picta"
+      ]
+    },
+    {
+      "batch_index": 198,
+      "candidate_indices": [
+        957,
+        958,
+        959,
+        960
+      ],
+      "species": [
+        "Harmonia axyridis",
+        "Sorama bicolor",
+        "Loligo vulgaris",
+        "Lypotigris reginalis"
+      ]
+    },
+    {
+      "batch_index": 199,
+      "candidate_indices": [
+        961,
+        962,
+        963,
+        964
+      ],
+      "species": [
+        "Ochsenheimeria vacculella",
+        "Arctia parthenos",
+        "Isonychia bicolor",
+        "Neodactria luteolellus"
+      ]
+    },
+    {
+      "batch_index": 200,
+      "candidate_indices": [
+        965,
+        966,
+        967,
+        968
+      ],
+      "species": [
+        "Gnaphosa microps",
+        "Lutjanus griseus",
+        "Lepyrus labradorensis",
+        "Pterygoplichthys pardalis"
+      ]
+    },
+    {
+      "batch_index": 201,
+      "candidate_indices": [
+        969,
+        970,
+        971,
+        972
+      ],
+      "species": [
+        "Euglyphis obliterata",
+        "Polia nugatis",
+        "Condica illecta",
+        "Tamasia variegata"
+      ]
+    },
+    {
+      "batch_index": 202,
+      "candidate_indices": [
+        973,
+        974,
+        975,
+        976
+      ],
+      "species": [
+        "Bombus lucorum",
+        "Mastigodiaptomus albuquerquensis",
+        "Netechma pyrrhodelta",
+        "Microbisium parvulum"
+      ]
+    },
+    {
+      "batch_index": 203,
+      "candidate_indices": [
+        977,
+        978,
+        979,
+        980
+      ],
+      "species": [
+        "Triphleba lugubris",
+        "Pheidole megacephala",
+        "Consul fabius",
+        "Lasioglossum creberrimum"
+      ]
+    },
+    {
+      "batch_index": 204,
+      "candidate_indices": [
+        981,
+        982,
+        983,
+        984
+      ],
+      "species": [
+        "Boloria dia",
+        "Pachygnatha dorothea",
+        "Pisaster ochraceus",
+        "Deporaus betulae"
+      ]
+    },
+    {
+      "batch_index": 205,
+      "candidate_indices": [
+        985,
+        986,
+        987,
+        988
+      ],
+      "species": [
+        "Bassaniana utahensis",
+        "Sitona lineellus",
+        "Cymus luridus",
+        "Scheloribates pallidulus"
+      ]
+    },
+    {
+      "batch_index": 206,
+      "candidate_indices": [
+        989,
+        990,
+        991,
+        992
+      ],
+      "species": [
+        "Nycteola degenerana",
+        "Steatoda bipunctata",
+        "Paraleptophlebia submarginata",
+        "Stigmella myrtillella"
+      ]
+    },
+    {
+      "batch_index": 207,
+      "candidate_indices": [
+        993,
+        994,
+        995,
+        996
+      ],
+      "species": [
+        "Pasiphila debiliata",
+        "Dryocampa rubicunda",
+        "Aphidius cingulatus",
+        "Rhopalosiphum enigmae"
+      ]
+    },
+    {
+      "batch_index": 208,
+      "candidate_indices": [
+        997,
+        998,
+        999
+      ],
+      "species": [
+        "Trixagus sericeus",
+        "Bucculatrix ulmella",
+        "Tachinus rufipes"
+      ]
+    }
+  ],
+  "corrected_transport_source_sha": "9314723a0b779d9220b7fc5386cec35140bbf460",
+  "query_or_scientific_contract_change": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "supersedes_timeout_repair_round_1_for_final_assembly": true,
+  "rule": "Final Study-B transport uses only the frozen 33 already-successful base shards plus every species listed in this cutover manifest. All later base-run and timeout-repair artifacts are ignored for final assembly.",
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
