@@ -9,6 +9,7 @@ from pathlib import Path
 
 SCHEMA = "ttf_relational_environment_relation_artifact_binding_v0.3"
 ARTIFACT = "relational-environment-relation-v0.3"
+TRANSPORT_EXECUTION_DEFAULT = Path("benchmarks/frozen/relational_environment_transport_execution_v0.2.json")
 
 
 def sha256_path(path: Path) -> str:
@@ -29,6 +30,7 @@ def main() -> int:
     ap.add_argument("--occurrence-ledger", type=Path, required=True)
     ap.add_argument("--relation-rule", type=Path, required=True)
     ap.add_argument("--freshness-rule", type=Path, required=True)
+    ap.add_argument("--transport-execution", type=Path, default=TRANSPORT_EXECUTION_DEFAULT)
     ap.add_argument("--output", type=Path, required=True)
     args = ap.parse_args()
 
@@ -36,6 +38,32 @@ def main() -> int:
         raise ValueError("workflow-run-id and artifact-id must be positive")
     if len(args.head_sha) != 40 or any(c not in "0123456789abcdef" for c in args.head_sha.lower()):
         raise ValueError("head-sha must be a 40-character hexadecimal commit SHA")
+
+    transport = json.loads(args.transport_execution.read_text())
+    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.2":
+        raise RuntimeError("unexpected Study-B transport execution schema")
+    if transport.get("status") != "FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT":
+        raise RuntimeError("Study-B transport execution is not authoritative")
+    execution = transport["authoritative_execution"]
+    if int(execution["workflow_run_id"]) != int(args.workflow_run_id):
+        raise RuntimeError("relation artifact does not come from frozen authoritative transport run")
+    if str(execution["workflow_head_sha"]).lower() != args.head_sha.lower():
+        raise RuntimeError("relation artifact head SHA drift from frozen authoritative transport run")
+    if execution["relation_artifact_name"] != ARTIFACT:
+        raise RuntimeError("authoritative transport artifact-name drift")
+
+    occurrence = json.loads(args.occurrence_ledger.read_text())
+    if occurrence.get("schema") != "ttf_relational_environment_occurrence_acquisition_v0.2":
+        raise RuntimeError("unexpected Study-B occurrence acquisition schema")
+    if int(occurrence.get("species", -1)) != int(transport["acceptance_gate"]["exact_species_ledgers"]):
+        raise RuntimeError("Study-B occurrence ledger does not cover exact frozen species universe")
+    request_errors = int((occurrence.get("status_counts") or {}).get("REQUEST_ERROR", 0))
+    if request_errors != int(transport["acceptance_gate"]["request_error_count_must_equal"]):
+        raise RuntimeError(
+            f"Study-B transport is technically incomplete: REQUEST_ERROR={request_errors}"
+        )
+    if any(bool(v) for v in occurrence.get("response_firewall", {}).values()):
+        raise RuntimeError("Study-B occurrence acquisition response firewall is open")
 
     summary = json.loads(args.summary.read_text())
     if summary.get("schema") != "ttf_relational_environment_relation_design_v0.3":
@@ -75,6 +103,13 @@ def main() -> int:
         "rules_sha256": {
             "relational_environment_relation_rule_v0.3.json": rule_sha,
             "relational_future_family_freshness_amendment_v0.1.json": freshness_sha,
+            "relational_environment_transport_execution_v0.2.json": sha256_path(args.transport_execution),
+        },
+        "transport_integrity": {
+            "exact_species_ledgers": int(occurrence["species"]),
+            "request_error_count": request_errors,
+            "status_counts": occurrence.get("status_counts", {}),
+            "authoritative_workflow_run_id": int(execution["workflow_run_id"]),
         },
         "response_firewall": {
             "Study_B_sequence_identity_opened": False,
