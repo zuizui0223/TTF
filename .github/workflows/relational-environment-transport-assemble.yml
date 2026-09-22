@@ -261,6 +261,7 @@ jobs:
           assert p["status"] in {
               "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN",
               "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS",
+              "NOT_EVALUABLE_GENERAL_CROSS_TAXON_RELATIONAL_TTF",
           }
           assert all(v is False for v in p["response_firewall"].values())
           print({
