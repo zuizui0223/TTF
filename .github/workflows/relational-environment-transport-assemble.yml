@@ -8,7 +8,7 @@ on:
       - "benchmarks/frozen/relational_environment_transport_assembly_trigger_v0.1.json"
 
 permissions:
-  contents: read
+  contents: write
   actions: read
 
 jobs:
@@ -40,6 +40,39 @@ jobs:
               f.write(f"cutover_run_id={int(trigger['cutover_run_id'])}\n")
               f.write(f"repair_run_id={int(trigger['repair_run_id'])}\n")
           PY
+
+      - name: Freeze relation producer before relation result
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          payload={
+              "schema":"ttf_relational_environment_relation_producer_v0.1",
+              "status":"FROZEN_RELATION_PRODUCER_BEFORE_RESULT",
+              "frozen_on":"2026-09-22",
+              "transport_execution":"benchmarks/frozen/relational_environment_transport_execution_v0.6.json",
+              "workflow_run_id":int("${{ github.run_id }}"),
+              "workflow_head_sha":"${{ github.sha }}",
+              "workflow_name":"relational-environment-transport-assemble",
+              "relation_artifact_name":"relational-environment-relation-v0.3",
+              "relation_result_seen":False,
+              "genetic_response_used":False,
+              "response_firewall":{
+                  "Study_B_sequence_identity_opened":False,
+                  "Study_B_pairwise_genetic_distances_opened":False,
+                  "Study_B_T_st_computed":False,
+                  "Study_B_beta_R_computed":False,
+              },
+          }
+          out=Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json")
+          out.write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
+          print(json.dumps(payload,sort_keys=True))
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/relational_environment_relation_producer_v0.1.json
+          git commit -m "Freeze Study B relation producer"
+          git push origin HEAD:relational-ttf-v01
 
       - name: Verify frozen corrected transport core
         run: |
