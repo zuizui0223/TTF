@@ -296,12 +296,20 @@ jobs:
 
       - name: Run frozen Study-C synthetic qualification
         if: steps.opportunity.outputs.passed == 'true'
+        id: qualification
         run: |
           python scripts/run_relational_historical_climate_qualification.py \
             --opportunity-design results/history/relational_historical_opportunity_v0.1.npz \
             --opportunity-summary results/history/relational_historical_opportunity_v0.1.json \
             --rule docs/supporting/relational_historical_climate_qualification_rule_v0.1.json \
             --output results/history/relational_historical_qualification_v0.1.json
+          python - <<'PY'
+          import json,os
+          p=json.load(open("results/history/relational_historical_qualification_v0.1.json"))
+          passed=p["status"]=="PASS_TO_HISTORICAL_CONFIRMATORY_CHARACTER_MASK_PREPARATION" and p["gates"]["overall_pass"] is True
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if passed else 'false'}\n")
+          PY
 
       - name: Freeze Study-C pre-genetic state
         if: always()
