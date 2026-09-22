@@ -347,7 +347,8 @@
     35690519587,
     35711038523,
     35711675657,
-    35740715490
+    35740715490,
+    35750009047
   ],
   "forbidden": [
     "use later-successful base shards outside frozen_base_component.accepted_success_shards_200way",
@@ -364,5 +365,8 @@
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
   },
-  "relation_producer_receipt": "benchmarks/frozen/relational_environment_relation_producer_v0.1.json"
+  "relation_producer_receipt": "benchmarks/frozen/relational_environment_relation_producer_v0.1.json",
+  "supersession_notes": [
+    "Assembly run 35750009047 used the pre-update producer snapshot and is excluded before any relation result; final v0.7 assembly must use the branch-refreshed producer verification workflow."
+  ]
 }
