@@ -62,7 +62,7 @@ def test_binding_rejects_any_transport_request_error(tmp_path):
     freshness.write_text("{}")
     transport = tmp_path / "transport.json"
     transport.write_text(json.dumps({
-        "schema": "ttf_relational_environment_transport_execution_v0.2",
+        "schema": "ttf_relational_environment_transport_execution_v0.3",
         "status": "FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT",
         "authoritative_execution": {
             "workflow_run_id": 123,
