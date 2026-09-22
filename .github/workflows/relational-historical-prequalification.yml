@@ -1,0 +1,350 @@
+name: relational-historical-prequalification
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    outputs:
+      passed: ${{ steps.gate.outputs.passed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Require frozen B-to-C transition
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          transition_rule=json.loads(Path("docs/supporting/relational_program_transition_rule_v0.1.json").read_text())
+          receipt_path=Path(transition_rule["study_B_transition_receipt"])
+          if not receipt_path.is_file():
+              raise SystemExit("Study-C opening forbidden: frozen Study-B transition receipt is absent")
+          receipt=json.loads(receipt_path.read_text())
+          if receipt.get("schema") != transition_rule["receipt_schema"]:
+              raise SystemExit("Study-B transition receipt schema drift")
+          state=receipt.get("B_state")
+          contract=transition_rule["allowed_B_states"].get(state)
+          if not contract:
+              raise SystemExit(f"unrecognized Study-B transition state: {state}")
+          if contract.get("C_open_authorized") is not True:
+              raise SystemExit(f"Study-C opening forbidden by frozen transition: {state}")
+          expected=contract["C_entry_state"]
+          if receipt.get("C_entry_state") != expected or receipt.get("C_open_authorized") is not True:
+              raise SystemExit("Study-B transition receipt does not authorize the expected C entry")
+          print({"B_state":state,"C_entry_state":expected})
+          PY
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+
+      - name: Restore exact frozen phylogatR archive
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/phylogatr.zip
+          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5
+
+      - name: Require and extract exact archive
+        id: source
+        run: |
+          set -euo pipefail
+          test -f /tmp/phylogatr.zip
+          test "$(stat -c%s /tmp/phylogatr.zip)" = "274988692"
+          echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5  /tmp/phylogatr.zip" | sha256sum -c -
+          rm -rf /tmp/phylogatr-root
+          mkdir -p /tmp/phylogatr-root
+          unzip -q /tmp/phylogatr.zip -d /tmp/phylogatr-root
+          ROOT="$(dirname "$(find /tmp/phylogatr-root -type f -name genes.txt -print -quit)")"
+          test -f "$ROOT/genes.txt"
+          test -f "$ROOT/cite.txt"
+          echo "root=$ROOT" >> "$GITHUB_OUTPUT"
+
+      - name: Freeze response-blind Study-C candidate universe
+        run: |
+          mkdir -p results/history-candidate
+          python scripts/freeze_relational_historical_candidate_census.py \
+            --root "${{ steps.source.outputs.root }}" \
+            --source-sha256 5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5 \
+            --protocol docs/supporting/relational_genetic_protocol_v0.1.json \
+            --history-rule docs/supporting/relational_historical_climate_exposure_rule_v0.1.json \
+            --s1-exclusion-manifest benchmarks/frozen/relational_prior_S1_species_exclusion_v0.1.json \
+            --s2-exclusion-manifest benchmarks/frozen/relational_prior_S2_species_exclusion_v0.1.json \
+            --b-candidates benchmarks/frozen/relational_fresh_candidate_species_v0.1.csv \
+            --output-csv results/history-candidate/relational_historical_candidates_v0.1.csv \
+            --output-receipt results/history-candidate/relational_historical_candidate_census_v0.1.json
+
+      - name: Record candidate gate
+        id: gate
+        run: |
+          python - <<'PY'
+          import json,os
+          p=json.load(open("results/history-candidate/relational_historical_candidate_census_v0.1.json"))
+          assert all(v is False for v in p["response_firewall"].values()), p["response_firewall"]
+          passed=p["status"]=="FRESH_HISTORICAL_GEOMETRY_ELIGIBLE_RESPONSE_BLIND"
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if passed else 'false'}\n")
+          print({"status":p["status"],"selected_species_count":p["selected_species_count"]})
+          PY
+
+      - name: Reconstruct Study-C response-blind genetic geometry
+        if: steps.gate.outputs.passed == 'true'
+        run: |
+          python scripts/reconstruct_relational_historical_geometry.py \
+            --root "${{ steps.source.outputs.root }}" \
+            --candidates results/history-candidate/relational_historical_candidates_v0.1.csv \
+            --history-rule docs/supporting/relational_historical_climate_exposure_rule_v0.1.json \
+            --neighbor-fraction 0.15 \
+            --output-localities results/history-candidate/relational_historical_localities_v0.1.csv \
+            --output-edges results/history-candidate/relational_historical_edges_v0.1.csv \
+            --output-receipt results/history-candidate/relational_historical_geometry_v0.1.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: relational-historical-candidate-v0.1
+          path: results/history-candidate/
+          retention-days: 30
+          if-no-files-found: error
+
+  occurrence:
+    needs: candidate
+    if: needs.candidate.outputs.passed == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        shard: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: relational-historical-candidate-v0.1
+          path: input/candidate
+
+      - name: Acquire frozen Study-C GBIF occurrences
+        run: |
+          mkdir -p results/history-occ
+          python scripts/acquire_relational_historical_occurrences.py \
+            --candidates input/candidate/relational_historical_candidates_v0.1.csv \
+            --output-csv results/history-occ/occurrences-${{ matrix.shard }}.csv \
+            --output-ledger results/history-occ/ledger-${{ matrix.shard }}.json \
+            --shard-index ${{ matrix.shard }} \
+            --shards 20
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-historical-occ-${{ matrix.shard }}
+          path: results/history-occ/
+          retention-days: 30
+          if-no-files-found: error
+
+  relation:
+    needs: [candidate, occurrence]
+    if: needs.candidate.outputs.passed == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          python -m pip install -e .
+          python -m pip install "rasterio>=1.4,<2"
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: relational-historical-candidate-v0.1
+          path: input/candidate
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: relational-historical-occ-*
+          path: input/occ
+          merge-multiple: true
+
+      - name: Aggregate exact Study-C occurrence acquisition
+        id: occ
+        run: |
+          mkdir -p results/history rasters/history rasters/current
+          python scripts/aggregate_relational_historical_occurrences.py \
+            --input-dir input/occ \
+            --output-csv results/history/occurrences_v0.1.csv \
+            --output-ledger results/history/occurrence_ledger_v0.1.json
+          python - <<'PY'
+          import json,os
+          p=json.load(open("results/history/occurrence_ledger_v0.1.json"))
+          passed=p["status"]=="PASS_TO_HISTORICAL_ASSET_EXTRACTION"
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if passed else 'false'}\n")
+          PY
+
+      - name: Resolve and freeze exact CHELSA-TraCE21k assets
+        if: steps.occ.outputs.passed == 'true'
+        run: |
+          set -euo pipefail
+          : > results/history/resolved_urls.txt
+          for var in bio01 bio07 bio12 bio15; do
+            for idx in -190 20; do
+              logical="CHELSA_TraCE21K_${var}_${idx}_V1.0.tif"
+              alt="CHELSA_TraCE21k_${var}_${idx}_V1.0.tif"
+              found=""
+              for base in \
+                "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio" \
+                "https://os.zhdk.cloud.switch.ch/envicloud/chelsa/chelsa_V1/chelsa_trace/bio"; do
+                for remote in "$logical" "$alt"; do
+                  url="$base/$remote"
+                  if curl -L --fail --retry 5 --retry-delay 5 --connect-timeout 30 \
+                    "$url" -o "rasters/history/$logical"; then
+                    found="$url"
+                    break 2
+                  fi
+                done
+              done
+              test -n "$found" || { echo "Unresolvable frozen historical asset: $logical"; exit 3; }
+              echo "$found" >> results/history/resolved_urls.txt
+            done
+          done
+          mapfile -t URLS < results/history/resolved_urls.txt
+          python scripts/freeze_relational_historical_asset_receipt.py \
+            --rule docs/supporting/relational_historical_climate_exposure_rule_v0.1.json \
+            --asset rasters/history/CHELSA_TraCE21K_bio01_-190_V1.0.tif \
+            --asset rasters/history/CHELSA_TraCE21K_bio07_-190_V1.0.tif \
+            --asset rasters/history/CHELSA_TraCE21K_bio12_-190_V1.0.tif \
+            --asset rasters/history/CHELSA_TraCE21K_bio15_-190_V1.0.tif \
+            --asset rasters/history/CHELSA_TraCE21K_bio01_20_V1.0.tif \
+            --asset rasters/history/CHELSA_TraCE21K_bio07_20_V1.0.tif \
+            --asset rasters/history/CHELSA_TraCE21K_bio12_20_V1.0.tif \
+            --asset rasters/history/CHELSA_TraCE21K_bio15_20_V1.0.tif \
+            --resolved-url "${URLS[0]}" --resolved-url "${URLS[2]}" \
+            --resolved-url "${URLS[4]}" --resolved-url "${URLS[6]}" \
+            --resolved-url "${URLS[1]}" --resolved-url "${URLS[3]}" \
+            --resolved-url "${URLS[5]}" --resolved-url "${URLS[7]}" \
+            --output results/history/historical_asset_receipt_v0.1.json
+
+      - name: Download frozen current CHELSA V2.1 nuisance layers
+        if: steps.occ.outputs.passed == 'true'
+        run: |
+          set -euo pipefail
+          base="https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio"
+          for v in 1 7 12 15; do
+            curl -L --fail --retry 5 --retry-delay 5 \
+              "$base/CHELSA_bio${v}_1981-2010_V.2.1.tif" \
+              -o "rasters/current/CHELSA_bio${v}_1981-2010_V.2.1.tif"
+          done
+
+      - name: Build frozen historical/current relation
+        id: relation
+        if: steps.occ.outputs.passed == 'true'
+        run: |
+          python scripts/build_relational_historical_relation.py \
+            --occurrences results/history/occurrences_v0.1.csv \
+            --candidates input/candidate/relational_historical_candidates_v0.1.csv \
+            --rule docs/supporting/relational_historical_climate_exposure_rule_v0.1.json \
+            --asset-receipt results/history/historical_asset_receipt_v0.1.json \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio01_-190_V1.0.tif \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio07_-190_V1.0.tif \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio12_-190_V1.0.tif \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio15_-190_V1.0.tif \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio01_20_V1.0.tif \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio07_20_V1.0.tif \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio12_20_V1.0.tif \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio15_20_V1.0.tif \
+            --current-bio1 rasters/current/CHELSA_bio1_1981-2010_V.2.1.tif \
+            --current-bio7 rasters/current/CHELSA_bio7_1981-2010_V.2.1.tif \
+            --current-bio12 rasters/current/CHELSA_bio12_1981-2010_V.2.1.tif \
+            --current-bio15 rasters/current/CHELSA_bio15_1981-2010_V.2.1.tif \
+            --output-npz results/history/relational_historical_design_v0.1.npz \
+            --output-summary results/history/relational_historical_design_v0.1.json
+          python - <<'PY'
+          import json,os
+          p=json.load(open("results/history/relational_historical_design_v0.1.json"))
+          passed=p["status"]=="PASS_RESPONSE_BLIND_HISTORICAL_RELATION_DESIGN"
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if passed else 'false'}\n")
+          PY
+
+      - name: Attach frozen historical opportunity geometry
+        id: opportunity
+        if: steps.relation.outputs.passed == 'true'
+        run: |
+          python scripts/attach_relational_historical_opportunity.py \
+            --historical-design results/history/relational_historical_design_v0.1.npz \
+            --edges input/candidate/relational_historical_edges_v0.1.csv \
+            --candidates input/candidate/relational_historical_candidates_v0.1.csv \
+            --opportunity-rule docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json \
+            --output-npz results/history/relational_historical_opportunity_v0.1.npz \
+            --output-summary results/history/relational_historical_opportunity_v0.1.json
+          python - <<'PY'
+          import json,os
+          p=json.load(open("results/history/relational_historical_opportunity_v0.1.json"))
+          passed=p["status"]=="PASS_TO_HISTORICAL_DEVELOPMENT_SYNTHETIC_QUALIFICATION"
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if passed else 'false'}\n")
+          PY
+
+      - name: Run frozen Study-C synthetic qualification
+        if: steps.opportunity.outputs.passed == 'true'
+        run: |
+          python scripts/run_relational_historical_climate_qualification.py \
+            --opportunity-design results/history/relational_historical_opportunity_v0.1.npz \
+            --opportunity-summary results/history/relational_historical_opportunity_v0.1.json \
+            --rule docs/supporting/relational_historical_climate_qualification_rule_v0.1.json \
+            --output results/history/relational_historical_qualification_v0.1.json
+
+      - name: Freeze Study-C pre-genetic state
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          out=Path("results/history")
+          payload={
+              "schema":"ttf_relational_historical_pregenetic_state_v0.1",
+              "Study_C_genetic_response_opened":False,
+          }
+          for key,file in [
+              ("occurrence_status","occurrence_ledger_v0.1.json"),
+              ("relation_status","relational_historical_design_v0.1.json"),
+              ("opportunity_status","relational_historical_opportunity_v0.1.json"),
+              ("qualification_status","relational_historical_qualification_v0.1.json"),
+          ]:
+              p=out/file
+              if p.exists():
+                  payload[key]=json.loads(p.read_text())["status"]
+          if payload.get("qualification_status")=="PASS_TO_HISTORICAL_CONFIRMATORY_CHARACTER_MASK_PREPARATION":
+              payload["program_state"]="PASS_TO_C_CONFIRMATORY_CHARACTER_MASK"
+          elif payload.get("opportunity_status")=="NOT_EVALUABLE_HISTORICAL_OPPORTUNITY_GEOMETRY":
+              payload["program_state"]="NOT_EVALUABLE_C"
+          elif payload.get("relation_status")=="NOT_EVALUABLE_HISTORICAL_EXTERNAL_DATA":
+              payload["program_state"]="NOT_EVALUABLE_C"
+          elif payload.get("occurrence_status")=="NOT_EVALUABLE_HISTORICAL_OCCURRENCE_GEOMETRY":
+              payload["program_state"]="NOT_EVALUABLE_C"
+          elif "qualification_status" in payload:
+              payload["program_state"]="NOT_EVALUABLE_C"
+          else:
+              payload["program_state"]="INCOMPLETE_TECHNICAL_EXECUTION"
+          (out/"relational_historical_pregenetic_state_v0.1.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps(payload,sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: relational-historical-prequalification-v0.1
+          path: results/history/
+          retention-days: 30
+          if-no-files-found: warn
