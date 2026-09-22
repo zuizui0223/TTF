@@ -9,7 +9,7 @@ from pathlib import Path
 
 SCHEMA = "ttf_relational_environment_relation_artifact_binding_v0.3"
 ARTIFACT = "relational-environment-relation-v0.3"
-TRANSPORT_EXECUTION_DEFAULT = Path("benchmarks/frozen/relational_environment_transport_execution_v0.5.json")
+TRANSPORT_EXECUTION_DEFAULT = Path("benchmarks/frozen/relational_environment_transport_execution_v0.6.json")
 
 
 def sha256_path(path: Path) -> str:
@@ -40,7 +40,7 @@ def main() -> int:
         raise ValueError("head-sha must be a 40-character hexadecimal commit SHA")
 
     transport = json.loads(args.transport_execution.read_text())
-    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.5":
+    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.6":
         raise RuntimeError("unexpected Study-B transport execution schema")
     if transport.get("status") != "FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT":
         raise RuntimeError("Study-B transport execution is not authoritative")
@@ -109,7 +109,7 @@ def main() -> int:
         "rules_sha256": {
             "relational_environment_relation_rule_v0.3.json": rule_sha,
             "relational_future_family_freshness_amendment_v0.1.json": freshness_sha,
-            "relational_environment_transport_execution_v0.5.json": sha256_path(args.transport_execution),
+            "relational_environment_transport_execution_v0.6.json": sha256_path(args.transport_execution),
         },
         "transport_integrity": {
             "exact_species_ledgers": int(occurrence["species"]),
@@ -122,8 +122,10 @@ def main() -> int:
             ),
             "base_run_id": int(transport["frozen_base_component"]["workflow_run_id"]),
             "cutover_run_id": int(transport["cutover_component"]["workflow_run_id"]),
+            "timeout_repair_run_id": int(transport["timeout_repair_component"]["workflow_run_id"]),
             "base_species": int(transport["final_partition"]["base_species"]),
-            "cutover_species": int(transport["final_partition"]["cutover_species"]),
+            "cutover_success_species": int(transport["final_partition"]["cutover_success_species"]),
+            "timeout_repair_species": int(transport["final_partition"]["timeout_repair_species"]),
         },
         "response_firewall": {
             "Study_B_sequence_identity_opened": False,
