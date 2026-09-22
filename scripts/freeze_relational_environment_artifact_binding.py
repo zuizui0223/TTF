@@ -26,7 +26,7 @@ def main() -> int:
     ap.add_argument("--artifact-id", type=int, required=True)
     ap.add_argument("--head-sha", required=True)
     ap.add_argument("--summary", type=Path, required=True)
-    ap.add_argument("--design-npz", type=Path, required=True)
+    ap.add_argument("--design-npz", type=Path)
     ap.add_argument("--occurrence-ledger", type=Path, required=True)
     ap.add_argument("--relation-rule", type=Path, required=True)
     ap.add_argument("--freshness-rule", type=Path, required=True)
@@ -84,6 +84,8 @@ def main() -> int:
             raise RuntimeError("relation-rule hash drift in relation summary")
         if inputs.get("freshness_rule_sha256") != freshness_sha:
             raise RuntimeError("freshness-rule hash drift in relation summary")
+        if args.design_npz is None or not args.design_npz.is_file():
+            raise RuntimeError("passing relation design requires the bound design NPZ")
         if summary.get("design_npz_sha256") != sha256_path(args.design_npz):
             raise RuntimeError("design NPZ hash drift relative to relation summary")
 
@@ -97,8 +99,10 @@ def main() -> int:
         "relation_status": summary["status"],
         "files_sha256": {
             "relational_environment_design_v0.3.json": sha256_path(args.summary),
-            "relational_environment_design_v0.3.npz": sha256_path(args.design_npz),
             "occurrence_ledger_v0.2.json": sha256_path(args.occurrence_ledger),
+            **({
+                "relational_environment_design_v0.3.npz": sha256_path(args.design_npz)
+            } if args.design_npz is not None and args.design_npz.is_file() else {}),
         },
         "rules_sha256": {
             "relational_environment_relation_rule_v0.3.json": rule_sha,
