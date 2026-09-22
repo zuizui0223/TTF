@@ -114,6 +114,13 @@ def main() -> int:
             "request_error_count": request_errors,
             "status_counts": occurrence.get("status_counts", {}),
             "authoritative_workflow_run_id": int(execution["workflow_run_id"]),
+            "workflow_head_sha": str(execution["workflow_head_sha"]),
+            "corrected_transport_source_sha": str(
+                transport["scientific_contract"]["corrected_transport_source_sha"]
+            ),
+            "partition": str(execution["partition"]),
+            "species_per_shard": int(execution["species_per_shard"]),
+            "max_parallel": int(execution["max_parallel"]),
         },
         "response_firewall": {
             "Study_B_sequence_identity_opened": False,
