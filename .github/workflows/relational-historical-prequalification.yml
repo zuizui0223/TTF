@@ -434,6 +434,98 @@ jobs:
           print(json.dumps(payload,sort_keys=True))
           PY
 
+      - name: Freeze final finite-program state
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          b=json.loads(Path("benchmarks/frozen/relational_environment_program_transition_v0.3.json").read_text())
+          b_state=b["B_state"]
+          if b_state not in {
+              "STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER",
+              "NOT_EVALUABLE_B",
+          }:
+              raise SystemExit(f"Study-C workflow cannot finalize from B state {b_state}")
+
+          out=Path("results/history")
+          empirical_path=out/"relational_historical_empirical_result_v0.1.json"
+          survivor_q_path=out/"relational_historical_survivor_qualification_v0.1.json"
+          dev_q_path=out/"relational_historical_qualification_v0.1.json"
+          relation_path=out/"relational_historical_design_v0.1.json"
+          opportunity_path=out/"relational_historical_opportunity_v0.1.json"
+          occurrence_path=out/"occurrence_ledger_v0.1.json"
+
+          c_state=None
+          c_decision=None
+          c_p=None
+          if empirical_path.is_file():
+              r=json.loads(empirical_path.read_text())
+              c_decision=r["decision"]
+              c_p=r["primary"]["p_value_one_sided"]
+              if c_decision=="STUDY_C_HISTORICAL_RELATIONAL_POSITIVE":
+                  c_state="POSITIVE"
+              elif c_decision=="STUDY_C_HISTORICAL_RELATIONAL_NULL_WITH_QUALIFIED_POWER":
+                  c_state="QUALIFIED_NULL"
+              else:
+                  raise SystemExit(f"unexpected Study-C empirical decision: {c_decision}")
+          else:
+              statuses={}
+              for key,path in (
+                  ("occurrence",occurrence_path),
+                  ("relation",relation_path),
+                  ("opportunity",opportunity_path),
+                  ("development_qualification",dev_q_path),
+                  ("survivor_qualification",survivor_q_path),
+              ):
+                  if path.is_file():
+                      statuses[key]=json.loads(path.read_text()).get("status")
+              not_evaluable=any(
+                  isinstance(v,str) and (
+                      v.startswith("NOT_EVALUABLE_")
+                      or v=="NOT_EVALUABLE_C_CHARACTER_MASK_OR_SURVIVOR_GEOMETRY"
+                  )
+                  for v in statuses.values()
+              )
+              c_state="NOT_EVALUABLE" if not_evaluable else "INCOMPLETE_TECHNICAL_EXECUTION"
+
+          if c_state=="POSITIVE":
+              final=(
+                  "DETECTED_C_AFTER_B_NULL"
+                  if b_state=="STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER"
+                  else "DETECTED_C_AFTER_B_NOT_EVALUABLE"
+              )
+          elif c_state=="QUALIFIED_NULL":
+              final=(
+                  "CLOSED_TWO_NULLS"
+                  if b_state=="STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER"
+                  else "CLOSED_PARTIAL_NOT_EVALUABLE"
+              )
+          elif c_state=="NOT_EVALUABLE":
+              final=(
+                  "CLOSED_PARTIAL_NOT_EVALUABLE"
+                  if b_state=="STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER"
+                  else "CLOSED_NO_EVALUABLE_TEST"
+              )
+          else:
+              final="INCOMPLETE_TECHNICAL_EXECUTION"
+
+          payload={
+              "schema":"ttf_relational_program_final_state_v0.3",
+              "B_state":b_state,
+              "C_state":c_state,
+              "C_decision":c_decision,
+              "C_p_one_sided":c_p,
+              "final_state":final,
+              "no_additional_predictor_authorized":True,
+          }
+          (out/"relational_program_final_state_v0.3.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps(payload,sort_keys=True))
+          PY
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
