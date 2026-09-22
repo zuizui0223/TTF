@@ -311,7 +311,6 @@
     "unresolved_request_error_action": "technical retry under docs/supporting/relational_environment_transport_retry_rule_v0.1.json only"
   },
   "retry_rule": "docs/supporting/relational_environment_transport_retry_rule_v0.1.json",
-  "relation_producer": null,
   "selection_timing": "The exact base/cutover/repair partition and all component run IDs were frozen before any Study-B relation result and before any Study-B genetic response.",
   "obsolete_or_ignored_runs": [
     35613625571,
@@ -335,5 +334,6 @@
     "Study_B_pairwise_genetic_distances_opened": false,
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
-  }
+  },
+  "relation_producer_receipt": "benchmarks/frozen/relational_environment_relation_producer_v0.1.json"
 }
