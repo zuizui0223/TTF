@@ -53,27 +53,34 @@ def main() -> int:
     ap.add_argument("--rule", type=Path, required=True)
     ap.add_argument("--output", type=Path, required=True)
     ap.add_argument("--block-size", type=int, default=100)
+    ap.add_argument("--qualification-stage", choices=("development", "confirmatory_survivor"), default="development")
     args = ap.parse_args()
 
     rule = json.loads(args.rule.read_text())
     summary = json.loads(args.opportunity_summary.read_text())
     if rule.get("schema") != "ttf_relational_historical_climate_qualification_rule_v0.1":
         raise RuntimeError("bad historical qualification rule")
-    if summary.get("status") != "PASS_TO_HISTORICAL_DEVELOPMENT_SYNTHETIC_QUALIFICATION":
-        raise RuntimeError("historical opportunity gate not passed")
+    required_summary_status = (
+        "PASS_TO_HISTORICAL_DEVELOPMENT_SYNTHETIC_QUALIFICATION"
+        if args.qualification_stage == "development"
+        else "PASS_TO_HISTORICAL_CONFIRMATORY_SURVIVOR_SYNTHETIC_REQUALIFICATION"
+    )
+    if summary.get("status") != required_summary_status:
+        raise RuntimeError(f"Study-C qualification input status drift for {args.qualification_stage}")
     if any(bool(v) for v in summary["response_firewall"].values()):
         raise RuntimeError("Study C response firewall open")
 
     data = np.load(args.opportunity_design, allow_pickle=False)
-    s = np.asarray(data["development_source_index"], np.int64)
-    t = np.asarray(data["development_target_index"], np.int64)
-    r_hist = np.asarray(data["development_R_hist"], float)
-    r_current = np.asarray(data["development_R_current"], float)
-    coverage = np.asarray(data["development_coverage"], float)
-    sc = np.asarray(data["development_same_class"], float)
-    so = np.asarray(data["development_same_order"], float)
-    sf = np.asarray(data["development_same_family"], float)
-    lr = np.asarray(data["development_locality_count_ratio"], float)
+    prefix = "development" if args.qualification_stage == "development" else "survivor"
+    s = np.asarray(data[f"{prefix}_source_index"], np.int64)
+    t = np.asarray(data[f"{prefix}_target_index"], np.int64)
+    r_hist = np.asarray(data[f"{prefix}_R_hist"], float)
+    r_current = np.asarray(data[f"{prefix}_R_current"], float)
+    coverage = np.asarray(data[f"{prefix}_coverage"], float)
+    sc = np.asarray(data[f"{prefix}_same_class"], float)
+    so = np.asarray(data[f"{prefix}_same_order"], float)
+    sf = np.asarray(data[f"{prefix}_same_family"], float)
+    lr = np.asarray(data[f"{prefix}_locality_count_ratio"], float)
 
     x = np.column_stack((
         zscore(r_hist),
@@ -220,14 +227,22 @@ def main() -> int:
     )
     pos = synth["historical_positive_cell"]["name"]
     power = out[pos]["wilson95_lower"] >= power_lower
-    status = (
-        "PASS_TO_HISTORICAL_CONFIRMATORY_CHARACTER_MASK_PREPARATION"
-        if type1 and power
-        else "NOT_EVALUABLE_HISTORICAL_SYNTHETIC_QUALIFICATION"
-    )
+    if type1 and power:
+        status = (
+            "PASS_TO_HISTORICAL_CONFIRMATORY_CHARACTER_MASK_PREPARATION"
+            if args.qualification_stage == "development"
+            else "PASS_TO_HISTORICAL_EMPIRICAL_IDENTITY_OPENING_PREPARATION"
+        )
+    else:
+        status = (
+            "NOT_EVALUABLE_HISTORICAL_SYNTHETIC_QUALIFICATION"
+            if args.qualification_stage == "development"
+            else "NOT_EVALUABLE_C_CHARACTER_MASK_OR_SURVIVOR_GEOMETRY"
+        )
     payload = {
         "schema": "ttf_relational_historical_climate_qualification_result_v0.1",
         "status": status,
+        "qualification_stage": args.qualification_stage,
         "rule_sha256": sha256_path(args.rule),
         "opportunity_design_sha256": design_sha,
         "alpha": alpha,
