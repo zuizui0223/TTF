@@ -352,7 +352,8 @@
     35737785915,
     35738880777,
     35739330877,
-    35750209539
+    35750209539,
+    35794607610
   ],
   "forbidden": [
     "use later-successful base shards outside frozen_base_component.accepted_success_shards_200way",
@@ -372,7 +373,8 @@
   "relation_producer_receipt": "benchmarks/frozen/relational_environment_relation_producer_v0.1.json",
   "supersession_notes": [
     "Assembly run 35750009047 used the pre-update producer snapshot and is excluded before any relation result; final v0.7 assembly must use the branch-refreshed producer verification workflow.",
-    "Assembly run 35750209539 is obsolete pre-relation because artifact ZIP download failed at a GitHub redirect-authentication boundary before transport assembly or R_env relation construction."
+    "Assembly run 35750209539 is obsolete pre-relation because artifact ZIP download failed at a GitHub redirect-authentication boundary before transport assembly or R_env relation construction.",
+    "Assembly run 35794607610 is obsolete pre-relation because actions/download-artifact enumerated only the first 100 base artifacts; it failed before exact-1000 transport assembly or R_env relation construction."
   ],
   "obsolete_run_note": "All pre-v0.7 assembly/legacy relation runs listed here are forbidden for binding even if they later upload an artifact with the canonical relation artifact name; only the separately frozen relation-producer receipt can authorize a Study-B relation artifact."
 }
