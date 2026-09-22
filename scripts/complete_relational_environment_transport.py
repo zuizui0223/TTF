@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import csv
 import json
 from collections import Counter
@@ -14,6 +15,7 @@ except ModuleNotFoundError:
 
 
 FIELDS = ["species", "source_key", "latitude", "longitude", "priority_rank", "priority_sha256"]
+RETRY_WORKERS = 20
 
 
 def load_base(input_dir: Path):
@@ -57,7 +59,7 @@ def main() -> int:
         if not pending:
             history[-1]["request_errors_after"] = 0
             break
-        for i, name in enumerate(pending, start=1):
+        def retry_one(name: str):
             try:
                 retained, ledger = fetch_species(name)
             except Exception as exc:
@@ -66,10 +68,26 @@ def main() -> int:
                     "status": "REQUEST_ERROR",
                     "error": f"{type(exc).__name__}: {exc}",
                 }
-            species[name] = dict(ledger)
+            return name, retained, dict(ledger)
+
+        completed: dict[str, tuple[list[dict[str, object]], dict[str, object]]] = {}
+        with concurrent.futures.ThreadPoolExecutor(max_workers=RETRY_WORKERS) as pool:
+            future_by_name = {pool.submit(retry_one, name): name for name in pending}
+            for i, future in enumerate(concurrent.futures.as_completed(future_by_name), start=1):
+                name, retained, ledger = future.result()
+                completed[name] = (retained, ledger)
+                if i % 20 == 0 or i == len(pending):
+                    print(json.dumps({
+                        "retry_round": round_id,
+                        "completed": i,
+                        "total": len(pending),
+                        "workers": RETRY_WORKERS,
+                    }))
+
+        for name in pending:
+            retained, ledger = completed[name]
+            species[name] = ledger
             rows_by_species[name] = retained
-            if i % 5 == 0:
-                print(json.dumps({"retry_round": round_id, "completed": i, "total": len(pending)}))
         after = sum(row["status"] == "REQUEST_ERROR" for row in species.values())
         history[-1]["request_errors_after"] = after
         if after == 0:
@@ -119,6 +137,7 @@ def main() -> int:
             "INCOMPLETE_TECHNICAL_EXECUTION_AFTER_FROZEN_RETRIES"
         ),
         "maximum_retry_rounds": 3,
+        "retry_workers": RETRY_WORKERS,
         "retry_history": history,
         "final_request_error_count": len(unresolved),
         "final_status_counts": dict(sorted(counts.items())),
