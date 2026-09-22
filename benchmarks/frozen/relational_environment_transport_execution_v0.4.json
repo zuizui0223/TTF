@@ -1,6 +1,6 @@
 {
   "schema": "ttf_relational_environment_transport_execution_v0.4",
-  "status": "FROZEN_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT",
+  "status": "SUPERSEDED_TECHNICAL_PRE_RELATION_BY_V0.5",
   "frozen_on": "2026-09-22",
   "supersedes": "benchmarks/frozen/relational_environment_transport_execution_v0.3.json",
   "scientific_contract": {
@@ -103,5 +103,8 @@
     "Study_B_pairwise_genetic_distances_opened": false,
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
-  }
+  },
+  "superseded_by": "benchmarks/frozen/relational_environment_transport_execution_v0.5.json",
+  "superseded_before_relation_result": true,
+  "supersession_reason": "First cutover run failed before acquisition because the workflow checked out the frozen core commit where the later cutover wrapper did not exist."
 }
