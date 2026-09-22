@@ -134,5 +134,15 @@
     "replacement_candidates": false,
     "minimum_post_exclusion_environment_admissible_species": 500,
     "failure": "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS"
+  },
+  "taxonomic_breadth_guardrail": {
+    "source": "docs/supporting/relational_environment_feasibility_rule_v0.1.json",
+    "evaluation_time": "after exact environment admissibility and the frozen 70-species freshness exclusion, before pooled PCA, density construction, or panel hashing",
+    "largest_single_order_fraction_max": 0.5,
+    "order_fraction_threshold": 0.05,
+    "minimum_orders_at_or_above_fraction_threshold": 4,
+    "if_failed": "NOT_EVALUABLE_GENERAL_CROSS_TAXON_RELATIONAL_TTF",
+    "rescue_forbidden": true,
+    "leave_largest_order_out_role": "secondary breadth sensitivity only; cannot rescue or overturn the primary decision"
   }
 }
