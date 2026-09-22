@@ -1,0 +1,129 @@
+name: relational-environment-transport-fixed-parallel
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - ".github/workflows/relational-environment-transport-fixed-parallel.yml"
+
+permissions:
+  contents: read
+
+env:
+  FROZEN_TRANSPORT_SHA: 9314723a0b779d9220b7fc5386cec35140bbf460
+
+jobs:
+  occurrence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        shard: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.FROZEN_TRANSPORT_SHA }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Acquire frozen corrected GBIF occurrences
+        run: |
+          mkdir -p results/env-occ
+          python scripts/acquire_relational_environment_occurrences.py \
+            --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv \
+            --output-csv results/env-occ/occurrences-${{ matrix.shard }}of100.csv \
+            --output-ledger results/env-occ/ledger-${{ matrix.shard }}of100.json \
+            --shard-index ${{ matrix.shard }} \
+            --shards 100
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-env-fixed-${{ matrix.shard }}
+          path: results/env-occ/
+          retention-days: 30
+          if-no-files-found: error
+
+  relation:
+    needs: occurrence
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.FROZEN_TRANSPORT_SHA }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          python -m pip install -e .
+          python -m pip install "rasterio>=1.4,<2"
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: relational-env-fixed-*
+          path: results/env-shards
+          merge-multiple: true
+
+      - name: Aggregate exact corrected occurrence acquisition
+        run: |
+          mkdir -p results/environment rasters
+          python scripts/aggregate_relational_environment_occurrences.py \
+            --input-dir results/env-shards \
+            --output-csv results/environment/occurrences_v0.2.csv \
+            --output-ledger results/environment/occurrence_ledger_v0.2.json
+
+      - name: Download frozen CHELSA V2.1 bioclim layers
+        run: |
+          set -euo pipefail
+          base="https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio"
+          for v in 1 7 12 15; do
+            curl -L --fail --retry 4 --retry-delay 5 \
+              "$base/CHELSA_bio${v}_1981-2010_V.2.1.tif" \
+              -o "rasters/CHELSA_bio${v}_1981-2010_V.2.1.tif"
+          done
+
+      - name: Build unchanged Study-B response-blind relation
+        run: |
+          python scripts/build_relational_environment_relation.py \
+            --occurrences results/environment/occurrences_v0.2.csv \
+            --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv \
+            --rule docs/supporting/relational_environment_relation_rule_v0.3.json \
+            --freshness-rule docs/supporting/relational_future_family_freshness_amendment_v0.1.json \
+            --raster rasters/CHELSA_bio1_1981-2010_V.2.1.tif \
+            --raster rasters/CHELSA_bio7_1981-2010_V.2.1.tif \
+            --raster rasters/CHELSA_bio12_1981-2010_V.2.1.tif \
+            --raster rasters/CHELSA_bio15_1981-2010_V.2.1.tif \
+            --output-npz results/environment/relational_environment_design_v0.3.npz \
+            --output-summary results/environment/relational_environment_design_v0.3.json
+
+      - name: Assert response-blind frozen result class
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open("results/environment/relational_environment_design_v0.3.json"))
+          assert p["status"] in {
+              "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN",
+              "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS",
+          }
+          assert all(v is False for v in p["response_firewall"].values())
+          print({k:p.get(k) for k in (
+              "status",
+              "environment_admissible_before_freshness",
+              "freshness_excluded_environment_admissible",
+              "environment_admissible_species",
+          )})
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: relational-environment-relation-v0.3
+          path: |
+            results/environment/occurrence_ledger_v0.2.json
+            results/environment/relational_environment_design_v0.3.npz
+            results/environment/relational_environment_design_v0.3.json
+          retention-days: 30
+          if-no-files-found: warn
