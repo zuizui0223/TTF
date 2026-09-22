@@ -42,7 +42,7 @@ def main() -> int:
     transport = json.loads(args.transport_execution.read_text())
     if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.6":
         raise RuntimeError("unexpected Study-B transport execution schema")
-    if transport.get("status") != "FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT":
+    if transport.get("status") != "FROZEN_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT":
         raise RuntimeError("Study-B transport execution is not authoritative")
     execution = transport.get("relation_producer")
     if not isinstance(execution, dict):
@@ -117,8 +117,8 @@ def main() -> int:
             "status_counts": occurrence.get("status_counts", {}),
             "relation_producer_workflow_run_id": int(execution["workflow_run_id"]),
             "relation_producer_head_sha": str(execution["workflow_head_sha"]),
-            "corrected_transport_source_sha": str(
-                transport["scientific_contract"]["corrected_transport_source_sha"]
+            "corrected_transport_core_git_blobs": dict(
+                transport["scientific_contract"]["corrected_transport_core_git_blobs"]
             ),
             "base_run_id": int(transport["frozen_base_component"]["workflow_run_id"]),
             "cutover_run_id": int(transport["cutover_component"]["workflow_run_id"]),
