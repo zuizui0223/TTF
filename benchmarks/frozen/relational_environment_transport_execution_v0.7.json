@@ -348,7 +348,10 @@
     35711038523,
     35711675657,
     35740715490,
-    35750009047
+    35750009047,
+    35737785915,
+    35738880777,
+    35739330877
   ],
   "forbidden": [
     "use later-successful base shards outside frozen_base_component.accepted_success_shards_200way",
@@ -368,5 +371,6 @@
   "relation_producer_receipt": "benchmarks/frozen/relational_environment_relation_producer_v0.1.json",
   "supersession_notes": [
     "Assembly run 35750009047 used the pre-update producer snapshot and is excluded before any relation result; final v0.7 assembly must use the branch-refreshed producer verification workflow."
-  ]
+  ],
+  "obsolete_run_note": "All pre-v0.7 assembly/legacy relation runs listed here are forbidden for binding even if they later upload an artifact with the canonical relation artifact name; only the separately frozen relation-producer receipt can authorize a Study-B relation artifact."
 }
