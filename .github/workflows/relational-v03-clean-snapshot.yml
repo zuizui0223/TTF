@@ -1,0 +1,23 @@
+name: relational v03 clean snapshot
+on:
+  push:
+    branches:
+      - "ops/relational-v03-clean-snapshot-20260923"
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: "18feefc2d463de931362e81ef50bf0f902f1b70b"
+          fetch-depth: 1
+      - run: |
+          tar --exclude=.git -czf /tmp/TTF-relational-v03-clean.tar.gz .
+          sha256sum /tmp/TTF-relational-v03-clean.tar.gz > /tmp/TTF-relational-v03-clean.tar.gz.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TTF-relational-v03-clean
+          path: |
+            /tmp/TTF-relational-v03-clean.tar.gz
+            /tmp/TTF-relational-v03-clean.tar.gz.sha256
+          if-no-files-found: error
