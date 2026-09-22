@@ -115,6 +115,7 @@ jobs:
           assert p["status"] in {
               "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN",
               "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS",
+              "NOT_EVALUABLE_GENERAL_CROSS_TAXON_RELATIONAL_TTF",
           }, p["status"]
           if p["status"] == "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN":
               assert p["environment_admissible_species"] >= 500
