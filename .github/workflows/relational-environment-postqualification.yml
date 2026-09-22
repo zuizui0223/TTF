@@ -244,6 +244,29 @@ jobs:
           print({"B_state":state,"C_open_authorized":p["C_open_authorized"]})
           PY
 
+      - name: Freeze direct terminal state for DETECTED_B
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("results/final/relational_environment_program_transition_v0.3.json").read_text())
+          if p["B_state"]!="DETECTED_B":
+              raise SystemExit(0)
+          payload={
+              "schema":"ttf_relational_program_final_state_v0.3",
+              "B_state":"DETECTED_B",
+              "C_state":"UNOPENED_BY_STOPPING_RULE",
+              "C_decision":None,
+              "C_p_one_sided":None,
+              "final_state":"DETECTED_B",
+              "no_additional_predictor_authorized":True,
+          }
+          Path("benchmarks/frozen/relational_program_final_state_v0.3.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          print(payload)
+          PY
+
       - name: Commit frozen B-to-C transition receipt
         run: |
           cp results/final/relational_environment_program_transition_v0.3.json \
@@ -251,6 +274,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add benchmarks/frozen/relational_environment_program_transition_v0.3.json
+          if [ -f benchmarks/frozen/relational_program_final_state_v0.3.json ]; then
+            git add benchmarks/frozen/relational_program_final_state_v0.3.json
+          fi
           git commit -m "Freeze Study B program transition"
           git fetch origin relational-ttf-v01
           git rebase origin/relational-ttf-v01
