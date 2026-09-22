@@ -10,6 +10,7 @@ from pathlib import Path
 SCHEMA = "ttf_relational_environment_relation_artifact_binding_v0.3"
 ARTIFACT = "relational-environment-relation-v0.3"
 TRANSPORT_EXECUTION_DEFAULT = Path("benchmarks/frozen/relational_environment_transport_execution_v0.6.json")
+RELATION_PRODUCER_DEFAULT = Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json")
 
 
 def sha256_path(path: Path) -> str:
@@ -31,6 +32,7 @@ def main() -> int:
     ap.add_argument("--relation-rule", type=Path, required=True)
     ap.add_argument("--freshness-rule", type=Path, required=True)
     ap.add_argument("--transport-execution", type=Path, default=TRANSPORT_EXECUTION_DEFAULT)
+    ap.add_argument("--relation-producer", type=Path, default=RELATION_PRODUCER_DEFAULT)
     ap.add_argument("--output", type=Path, required=True)
     args = ap.parse_args()
 
@@ -44,9 +46,15 @@ def main() -> int:
         raise RuntimeError("unexpected Study-B transport execution schema")
     if transport.get("status") != "FROZEN_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT":
         raise RuntimeError("Study-B transport execution is not authoritative")
-    execution = transport.get("relation_producer")
-    if not isinstance(execution, dict):
-        raise RuntimeError("Study-B relation producer has not been frozen yet")
+    if transport.get("relation_producer_receipt") != str(args.relation_producer):
+        raise RuntimeError("Study-B relation-producer receipt pointer drift")
+    execution = json.loads(args.relation_producer.read_text())
+    if execution.get("schema") != "ttf_relational_environment_relation_producer_v0.1":
+        raise RuntimeError("unexpected Study-B relation producer schema")
+    if execution.get("status") != "FROZEN_RELATION_PRODUCER_BEFORE_RESULT":
+        raise RuntimeError("Study-B relation producer was not frozen pre-result")
+    if execution.get("transport_execution") != str(args.transport_execution):
+        raise RuntimeError("Study-B relation producer transport pointer drift")
     if int(execution["workflow_run_id"]) != int(args.workflow_run_id):
         raise RuntimeError("relation artifact does not come from frozen relation-producer run")
     if str(execution["workflow_head_sha"]).lower() != args.head_sha.lower():
@@ -110,6 +118,7 @@ def main() -> int:
             "relational_environment_relation_rule_v0.3.json": rule_sha,
             "relational_future_family_freshness_amendment_v0.1.json": freshness_sha,
             "relational_environment_transport_execution_v0.6.json": sha256_path(args.transport_execution),
+            "relational_environment_relation_producer_v0.1.json": sha256_path(args.relation_producer),
         },
         "transport_integrity": {
             "exact_species_ledgers": int(occurrence["species"]),
