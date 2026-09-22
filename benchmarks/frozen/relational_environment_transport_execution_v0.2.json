@@ -51,5 +51,15 @@
     "Study_B_pairwise_genetic_distances_opened": false,
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
-  }
+  },
+  "acceptance_gate": {
+    "exact_species_ledgers": 1000,
+    "request_error_count_must_equal": 0,
+    "accepted_nonpass_states": [
+      "REJECTED_GBIF_TAXON_MATCH",
+      "FAIL_OCCURRENCE_GEOMETRY"
+    ],
+    "rule": "REQUEST_ERROR is infrastructure incompletion, never ecological inadmissibility. A relation artifact from a run with any REQUEST_ERROR must not be bound or qualified."
+  },
+  "relation_binding_authorization": "Only after the acceptance gate passes may relational-environment-relation-v0.3 be frozen into relational_environment_relation_artifact_binding_v0.3.json."
 }
