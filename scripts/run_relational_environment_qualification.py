@@ -59,20 +59,27 @@ def main() -> int:
     summary = json.loads(args.opportunity_summary.read_text())
     if rule.get("schema") != "ttf_relational_environment_qualification_rule_v0.2":
         raise RuntimeError("bad rule")
-    if summary.get("status") != "PASS_TO_DEVELOPMENT_SYNTHETIC_QUALIFICATION":
-        raise RuntimeError("development opportunity gate not passed")
+    input_status = summary.get("status")
+    if input_status == "PASS_TO_DEVELOPMENT_SYNTHETIC_QUALIFICATION":
+        prefix = "development"
+        qualification_stage = "development"
+    elif input_status == "PASS_TO_CONFIRMATORY_SURVIVOR_SYNTHETIC_REQUALIFICATION":
+        prefix = "survivor"
+        qualification_stage = "confirmatory_survivor"
+    else:
+        raise RuntimeError(f"Study B qualification input status not authorized: {input_status!r}")
     if any(bool(v) for v in summary["response_firewall"].values()):
         raise RuntimeError("Study B response firewall open")
 
     data = np.load(args.opportunity_design, allow_pickle=False)
-    s = np.asarray(data["development_source_index"], np.int64)
-    t = np.asarray(data["development_target_index"], np.int64)
-    r = np.asarray(data["development_R_env"], float)
-    g = np.asarray(data["development_coverage"], float)
-    sc = np.asarray(data["development_same_class"], float)
-    so = np.asarray(data["development_same_order"], float)
-    sf = np.asarray(data["development_same_family"], float)
-    lr = np.asarray(data["development_locality_count_ratio"], float)
+    s = np.asarray(data[f"{prefix}_source_index"], np.int64)
+    t = np.asarray(data[f"{prefix}_target_index"], np.int64)
+    r = np.asarray(data[f"{prefix}_R_env"], float)
+    g = np.asarray(data[f"{prefix}_coverage"], float)
+    sc = np.asarray(data[f"{prefix}_same_class"], float)
+    so = np.asarray(data[f"{prefix}_same_order"], float)
+    sf = np.asarray(data[f"{prefix}_same_family"], float)
+    lr = np.asarray(data[f"{prefix}_locality_count_ratio"], float)
 
     x = np.column_stack((
         zscore(r),
@@ -214,14 +221,23 @@ def main() -> int:
     )
     pos = synth["relational_positive_cell"]["name"]
     power = out[pos]["wilson95_lower"] >= power_lower
-    status = (
-        "PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION"
-        if type1 and power
-        else "NOT_EVALUABLE_ENVIRONMENT_SYNTHETIC_QUALIFICATION"
-    )
+    if type1 and power:
+        status = (
+            "PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION"
+            if qualification_stage == "development"
+            else "PASS_TO_EMPIRICAL_IDENTITY_OPENING_PREPARATION"
+        )
+    else:
+        status = (
+            "NOT_EVALUABLE_ENVIRONMENT_SYNTHETIC_QUALIFICATION"
+            if qualification_stage == "development"
+            else "NOT_EVALUABLE_ENVIRONMENT_CONFIRMATORY_SURVIVOR_REQUALIFICATION"
+        )
     payload = {
         "schema": "ttf_relational_environment_qualification_result_v0.2",
         "status": status,
+        "qualification_stage": qualification_stage,
+        "input_summary_status": input_status,
         "rule_sha256": sha256_path(args.rule),
         "opportunity_design_sha256": design_sha,
         "alpha": alpha,
