@@ -24,9 +24,9 @@ jobs:
           python - <<'PY'
           import json,os
           from pathlib import Path
-          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.5.json").read_text())
+          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.6.json").read_text())
           trigger=json.loads(Path("benchmarks/frozen/relational_environment_transport_assembly_trigger_v0.1.json").read_text())
-          assert transport["schema"]=="ttf_relational_environment_transport_execution_v0.5"
+          assert transport["schema"]=="ttf_relational_environment_transport_execution_v0.6"
           assert transport["status"]=="FROZEN_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT"
           assert trigger["schema"]=="ttf_relational_environment_transport_assembly_trigger_v0.1"
           assert trigger["status"]=="AUTHORIZE_ASSEMBLY_AFTER_FROZEN_V05_COMPONENTS"
@@ -34,9 +34,11 @@ jobs:
           assert trigger["genetic_response_used"] is False
           assert int(trigger["base_run_id"])==int(transport["frozen_base_component"]["workflow_run_id"])
           assert int(trigger["cutover_run_id"])==int(transport["cutover_component"]["workflow_run_id"])
+          assert int(trigger["repair_run_id"])==int(transport["timeout_repair_component"]["workflow_run_id"])
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write(f"base_run_id={int(trigger['base_run_id'])}\n")
               f.write(f"cutover_run_id={int(trigger['cutover_run_id'])}\n")
+              f.write(f"repair_run_id={int(trigger['repair_run_id'])}\n")
           PY
 
       - name: Verify frozen corrected transport core
@@ -64,7 +66,7 @@ jobs:
           import io,json,os,urllib.request,zipfile
           from pathlib import Path
 
-          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.5.json").read_text())
+          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.6.json").read_text())
           expected=[
               f"relational-env-fixed-v2-{int(x)}"
               for x in transport["frozen_base_component"]["accepted_success_shards_200way"]
@@ -111,6 +113,15 @@ jobs:
           run-id: ${{ steps.frozen.outputs.cutover_run_id }}
           github-token: ${{ github.token }}
 
+      - name: Download exact frozen cutover timeout-repair artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: relational-env-cutover-repair-*
+          path: input/repair
+          merge-multiple: true
+          run-id: ${{ steps.frozen.outputs.repair_run_id }}
+          github-token: ${{ github.token }}
+
       - name: Assemble exact frozen 1000 species and complete HTTP retries
         run: |
           mkdir -p input/all results/environment rasters
@@ -118,6 +129,10 @@ jobs:
           cp input/base/ledger-*.json input/all/
           cp input/cutover/occurrences-cutover-*.csv input/all/
           cp input/cutover/ledger-cutover-*.json input/all/
+          rm -f input/all/occurrences-cutover-167.csv input/all/ledger-cutover-167.json
+          rm -f input/all/occurrences-cutover-170.csv input/all/ledger-cutover-170.json
+          cp input/repair/occurrences-cutover-repair-*.csv input/all/
+          cp input/repair/ledger-cutover-repair-*.json input/all/
           python scripts/complete_relational_environment_transport.py \
             --input-dir input/all \
             --max-rounds 3 \
