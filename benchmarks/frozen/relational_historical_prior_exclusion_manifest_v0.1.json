@@ -349,7 +349,9 @@
       "Polyommatus eros",
       "Charaxes etesipe",
       "Colotis amata"
-    ]
+    ],
+    "source_full_design_sha256_verified": "f2f2088c294ecfac3c49659439fd7858330452bd8fbea090513a6b3d590c98f8",
+    "full_design_sha_match": true
   },
   "S2_host_resource_geography": {
     "species_count": 500,
@@ -857,7 +859,11 @@
       "Chilo phragmitella",
       "Choristoneura conflictana",
       "Lacanobia w-latinum"
-    ]
+    ],
+    "source_full_census_sha256_verified": "6bd4915a7337ba9f3916c04fdc5673338cde81815a097daca9084bff7822bdf7",
+    "full_census_sha_match": true,
+    "selected_species_sha256_verified": "035059fe6fae6d8c39ab191bcd911d184e4f1b27d6ca78dbe69de06d07c46c42",
+    "selected_species_digest_match": true
   },
   "B_environment_candidate_universe": {
     "species_count": 1000,
@@ -1880,5 +1886,6 @@
     "Study_B_genetic_response_used": false,
     "Study_C_sequence_identity_opened": false,
     "Study_C_T_st_opened": false
-  }
+  },
+  "verification_note": "S1 Library full-design bytes matched the frozen design SHA256 exactly. S2 Library full-census bytes matched the frozen full-census SHA256 exactly, and its ordered selected-species digest matched the frozen selected-species SHA256 exactly."
 }
