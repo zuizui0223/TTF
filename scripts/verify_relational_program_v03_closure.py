@@ -123,41 +123,43 @@ def main() -> int:
         if states[state]["C_open_authorized"] is not True or states[state]["C_entry_state"] != entry:
             raise RuntimeError(f"Study-C transition drift for {state}")
     assert_closed_firewall(transition)
-    for key in ("b_relation", "b_transport", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
+    for key in ("b_relation", "b_transport", "b_transport_audit", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
         assert_closed_firewall(p[key])
 
     transport = p["b_transport"]
     if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.7":
         raise RuntimeError("Study B transport execution schema drift")
     if transport.get("status") != "FROZEN_FINAL_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT":
-        raise RuntimeError("Study B transport execution is not frozen authoritative composite v0.6")
+        raise RuntimeError("Study B transport execution is not frozen final authoritative v0.7")
     base = transport["frozen_base_component"]
     cutover = transport["cutover_component"]
+    short_repair = transport["short_timeout_repair_component"]
+    long_repair = transport["long_timeout_repair_component"]
     final_partition = transport["final_partition"]
-    if int(base["workflow_run_id"]) != 35691973637:
-        raise RuntimeError("Study B frozen base transport run drift")
-    if int(base["accepted_species_count"]) != 165:
-        raise RuntimeError("Study B frozen base species count drift")
+    if int(base["workflow_run_id"]) != 35691973637 or int(base["accepted_species_count"]) != 165:
+        raise RuntimeError("Study B frozen base transport drift")
     if int(cutover["workflow_run_id"]) != 35712027961:
         raise RuntimeError("Study B cutover transport run drift")
     if cutover["workflow_name"] != "relational-environment-transport-cutover":
         raise RuntimeError("Study B cutover workflow drift")
     if int(cutover["accepted_success_batch_count"]) != 207 or int(cutover["accepted_species_count"]) != 827:
         raise RuntimeError("Study B cutover-success partition drift")
-    short_repair = transport["short_timeout_repair_component"]
     if int(short_repair["workflow_run_id"]) != 35735717833:
-        raise RuntimeError("Study B short timeout-repair run drift")
-    if short_repair["accepted_repair_indices"] != [2, 3, 4, 5, 7]:
-        raise RuntimeError("Study B accepted short-repair indices drift")
+        raise RuntimeError("Study B short repair run drift")
+    if list(short_repair["accepted_repair_indices"]) != [2, 3, 4, 5, 7]:
+        raise RuntimeError("Study B short repair accepted-index drift")
     if int(short_repair["accepted_species_count"]) != 5:
-        raise RuntimeError("Study B short-repair species count drift")
-    long_repair = transport["long_timeout_repair_component"]
+        raise RuntimeError("Study B short repair species count drift")
+    if list(short_repair["ignored_repair_indices"]) != [0, 1, 6]:
+        raise RuntimeError("Study B short repair ignored-index drift")
     if int(long_repair["workflow_run_id"]) != 35749326437:
-        raise RuntimeError("Study B long timeout-repair run drift")
-    if int(long_repair["species_count"]) != 3:
-        raise RuntimeError("Study B long-repair species count drift")
-    if long_repair["replaces_short_repair_indices"] != [0, 1, 6]:
-        raise RuntimeError("Study B long-repair replacement set drift")
+        raise RuntimeError("Study B long repair run drift")
+    if list(long_repair["repair_indices"]) != [0, 1, 2]:
+        raise RuntimeError("Study B long repair index drift")
+    if list(long_repair["replaces_short_repair_indices"]) != [0, 1, 6]:
+        raise RuntimeError("Study B long/short replacement mapping drift")
+    if int(long_repair["species_count"]) != 3 or int(long_repair["timeout_minutes"]) != 240:
+        raise RuntimeError("Study B long repair contract drift")
     if int(final_partition["exact_species"]) != 1000:
         raise RuntimeError("Study B final transport species count drift")
     if (
@@ -167,10 +169,40 @@ def main() -> int:
         or int(final_partition["long_repair_species"]) != 3
     ):
         raise RuntimeError("Study B final transport split drift")
+    if final_partition["overlap_allowed"] is not False or final_partition["backfill_allowed"] is not False:
+        raise RuntimeError("Study B final transport overlap/backfill firewall drift")
     if int(transport["acceptance_gate"]["exact_species_ledgers"]) != 1000:
         raise RuntimeError("Study B transport exact-species gate drift")
     if int(transport["acceptance_gate"]["request_error_count_must_equal"]) != 0:
         raise RuntimeError("Study B transport zero-error gate drift")
+    if 35740715490 not in set(map(int, transport["obsolete_or_ignored_runs"])):
+        raise RuntimeError("obsolete v0.6 relation producer run is not explicitly ignored")
+
+    audit = p["b_transport_audit"]
+    if audit.get("schema") != "ttf_relational_environment_transport_partition_audit_v0.7":
+        raise RuntimeError("Study B v0.7 partition-audit schema drift")
+    if audit.get("status") != "PASS_EXACT_1000_SPECIES_DISJOINT_COMPOSITE_PARTITION":
+        raise RuntimeError("Study B v0.7 partition audit did not pass")
+    if audit.get("transport_execution") != str(paths["b_transport"]):
+        raise RuntimeError("Study B v0.7 partition audit transport pointer drift")
+    if int(audit["union_species_count"]) != 1000:
+        raise RuntimeError("Study B v0.7 partition-audit union drift")
+    if audit["overlap_candidate_indices"] or audit["missing_candidate_indices"] or audit["species_name_mismatches"]:
+        raise RuntimeError("Study B v0.7 partition audit found overlap/missing/name drift")
+    checks = audit["checks"]
+    for key in (
+        "candidate_count",
+        "base_species_165",
+        "cutover_success_species_827",
+        "short_repair_species_5",
+        "long_repair_species_3",
+        "overlap_zero",
+        "missing_zero",
+        "union_1000",
+        "species_names_match",
+    ):
+        if checks.get(key) is not True:
+            raise RuntimeError(f"Study B v0.7 partition audit failed: {key}")
 
     b = program["slot_B"]
     expected_b_chain = [
