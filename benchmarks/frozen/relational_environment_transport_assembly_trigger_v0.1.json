@@ -15,5 +15,7 @@
     "Study_B_pairwise_genetic_distances_opened": false,
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
-  }
+  },
+  "technical_retrigger_note_v2": "Retrigger after making the relation-producer commit branch-safe via fetch/rebase/push. The frozen v0.6 transport components and all scientific contracts are unchanged.",
+  "obsolete_prior_assembly_run_id": 35737785915
 }
