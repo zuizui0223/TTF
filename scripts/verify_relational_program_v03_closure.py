@@ -34,6 +34,7 @@ def main() -> int:
 
     paths = {
         "program": Path("docs/supporting/relational_program_v0.3.json"),
+        "transition": Path("docs/supporting/relational_program_transition_rule_v0.1.json"),
         "freshness": Path("docs/supporting/relational_future_family_freshness_amendment_v0.1.json"),
         "s3_receipt": Path("benchmarks/frozen/relational_host_resource_empirical_repaired_receipt_v0.2.json"),
         "s3_reproduction": Path("benchmarks/frozen/relational_host_resource_empirical_reproduction_v0.2.json"),
@@ -104,6 +105,23 @@ def main() -> int:
         raise RuntimeError("repaired S3 dyad count drift")
 
     assert_closed_firewall(program)
+    transition = p["transition"]
+    if program.get("transition_rule") != str(paths["transition"]):
+        raise RuntimeError("B-to-C transition-rule pointer drift")
+    if transition.get("schema") != "ttf_relational_program_transition_rule_v0.1":
+        raise RuntimeError("unexpected B-to-C transition schema")
+    if transition.get("status") != "FROZEN_BEFORE_STUDY_B_EMPIRICAL_RESULT_AND_BEFORE_ANY_STUDY_C_EXTERNAL_OR_GENETIC_OPENING":
+        raise RuntimeError("B-to-C transition rule was not frozen pre-result")
+    states = transition["allowed_B_states"]
+    if states["DETECTED_B"]["C_open_authorized"] is not False:
+        raise RuntimeError("DETECTED_B must forbid Study C")
+    for state, entry in (
+        ("STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER", "PROCEED_TO_C_AFTER_B_NULL"),
+        ("NOT_EVALUABLE_B", "PROCEED_TO_C_AFTER_B_NOT_EVALUABLE"),
+    ):
+        if states[state]["C_open_authorized"] is not True or states[state]["C_entry_state"] != entry:
+            raise RuntimeError(f"Study-C transition drift for {state}")
+    assert_closed_firewall(transition)
     for key in ("b_relation", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
         assert_closed_firewall(p[key])
 
