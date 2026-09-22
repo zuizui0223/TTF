@@ -16,5 +16,11 @@
     "Study_B_pairwise_genetic_distances_opened": false,
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
-  }
+  },
+  "obsolete_workflow_run_ids": [
+    35684589339,
+    35689552027
+  ],
+  "obsolete_fine_workflow_run_id": 35689552027,
+  "obsolete_fine_reason": "The fine-grained fallback also checked out c1b4b6e1084573412bc87c5fb3922e382fafb6dd and therefore inherits the same invalid pre-transport-fix GBIF occurrence-search parameter names. Its artifacts are infrastructure-only and must not enter Study B."
 }
