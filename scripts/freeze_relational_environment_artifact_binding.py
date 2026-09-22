@@ -89,12 +89,15 @@ def main() -> int:
 
     rule_sha = sha256_path(args.relation_rule)
     freshness_sha = sha256_path(args.freshness_rule)
+    inputs = summary.get("inputs", {})
+    if inputs.get("rule_sha256") != rule_sha:
+        raise RuntimeError("relation-rule hash drift in relation summary")
+    if inputs.get("freshness_rule_sha256") != freshness_sha:
+        raise RuntimeError("freshness-rule hash drift in relation summary")
+    candidate_sha = sha256_path(Path("benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv"))
+    if inputs.get("candidate_csv_sha256") != candidate_sha:
+        raise RuntimeError("candidate CSV hash drift in relation summary")
     if summary.get("status") == "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN":
-        inputs = summary.get("inputs", {})
-        if inputs.get("rule_sha256") != rule_sha:
-            raise RuntimeError("relation-rule hash drift in relation summary")
-        if inputs.get("freshness_rule_sha256") != freshness_sha:
-            raise RuntimeError("freshness-rule hash drift in relation summary")
         if args.design_npz is None or not args.design_npz.is_file():
             raise RuntimeError("passing relation design requires the bound design NPZ")
         if summary.get("design_npz_sha256") != sha256_path(args.design_npz):
