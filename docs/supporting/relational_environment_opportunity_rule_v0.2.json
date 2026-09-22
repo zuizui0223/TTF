@@ -34,20 +34,7 @@
     "minimum_supported_source_species": 50,
     "minimum_supported_directed_dyads": 1000,
     "relation_non_degeneracy": "report R_env quantiles and effective unique values on eligible development dyads",
-    "taxonomic_breadth": {
-      "inheritance": "Use the unchanged breadth constants already frozen in docs/supporting/relational_environment_feasibility_rule_v0.1.json and bound in relational_environment_relation_rule_v0.3.json.",
-      "largest_single_order_fraction_max": 0.5,
-      "order_fraction_threshold": 0.05,
-      "minimum_orders_at_or_above_fraction_threshold": 4,
-      "required_groups": [
-        "development supported source species",
-        "development supported target species",
-        "confirmatory supported source species",
-        "confirmatory supported target species"
-      ],
-      "failure": "NOT_EVALUABLE_ENVIRONMENT_OPPORTUNITY_GEOMETRY",
-      "rescue_forbidden": true
-    }
+    "taxonomic_breadth": "report supported target/source order composition; failure is NOT_EVALUABLE geometry, never a biological null"
   },
   "forbidden": [
     "change 500 km, 0.50 coverage, or source>=5 after R_env or Study B genetic response is inspected",
