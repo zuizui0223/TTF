@@ -114,10 +114,10 @@
     "opportunity_binding_note": "Clerical machine-readable binding of the already inherited Study-B 500-km/0.50/source>=5 and 50/50/1000 support constants; frozen before B formal qualification and before any B/C genetic response."
   },
   "execution_order": [
-    "Freeze B, C, alpha allocation, freshness rules and stopping states.",
+    "Freeze B, C, alpha allocation, freshness rules, B-to-C transition rule and stopping states.",
     "Run Study B external-data/geometry and formal synthetic qualification at alpha=0.025.",
-    "If B rejects on its one-shot empirical test, close v0.3 as DETECTED_B and do not open C.",
-    "If B is a qualified null or NOT_EVALUABLE, proceed to the already frozen C route.",
+    "If B rejects on its one-shot empirical test, freeze DETECTED_B transition and close v0.3; do not open C.",
+    "If B is a qualified null or NOT_EVALUABLE, freeze the corresponding transition receipt and only then allow the already frozen C route.",
     "Run C gates and, only if they pass, its one-shot empirical test at alpha=0.025.",
     "Close permanently after C; no fourth ecological predictor is authorized."
   ],
@@ -144,5 +144,6 @@
     "Study_C_pairwise_genetic_distances_opened": false,
     "Study_C_T_st_computed": false,
     "Study_C_beta_hist_computed": false
-  }
+  },
+  "transition_rule": "docs/supporting/relational_program_transition_rule_v0.1.json"
 }
