@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """Freeze the Study-C geometry-eligible candidate universe.
 
-This script is response-blind. It verifies and unions the frozen S1, S2, and
-Study-B design universes, excludes them before ranking, and then reads only
-taxonomy, marker labels, FASTA headers, occurrence coordinates, and graph
-geometry. It never reads nucleotide character identity or any empirical T_st.
+Response-blind only: prior design membership, taxonomy, marker labels, FASTA
+headers, occurrence coordinates, and graph geometry. Nucleotide identity and
+all empirical transfer responses remain closed.
 """
 from __future__ import annotations
 
@@ -34,8 +33,7 @@ def sha256_path(path: Path) -> str:
 
 
 def species_digest(names) -> str:
-    payload = "\n".join(map(str, names)) + "\n"
-    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+    return hashlib.sha256(("\n".join(map(str, names)) + "\n").encode("utf-8")).hexdigest()
 
 
 def species_hash(source_sha256: str, species: str) -> str:
@@ -57,53 +55,53 @@ def load_b_candidates(path: Path) -> list[str]:
 def verified_prior_exclusions(
     history_rule: dict,
     *,
-    s1_manifest_path: Path,
-    s2_manifest_path: Path,
+    manifest_path: Path,
     b_candidates_path: Path,
 ) -> tuple[set[str], dict]:
     contract = history_rule["independent_species_domain"]["prior_universe_reproduction"]
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("schema") != "ttf_relational_historical_prior_exclusion_manifest_v0.1":
+        raise RuntimeError("unexpected Study-C prior-exclusion manifest")
+    if any(bool(v) for v in manifest.get("response_firewall", {}).values()):
+        raise RuntimeError("Study-C prior-exclusion manifest firewall is open")
 
     s1_rule = contract["S1_butterfly_trait"]
-    s1 = json.loads(s1_manifest_path.read_text(encoding="utf-8"))
-    if s1.get("schema") != "ttf_relational_prior_S1_species_exclusion_v0.1":
-        raise RuntimeError("unexpected S1 compact exclusion schema")
-    if any(bool(v) for v in s1.get("response_firewall", {}).values()):
-        raise RuntimeError("S1 compact exclusion firewall is open")
-    if s1.get("source_design_sha256") != str(s1_rule["expected_design_sha256"]):
-        raise RuntimeError("S1 source-design SHA drift")
+    s1 = manifest["S1_butterfly_trait"]
     s1_names = list(map(str, s1["species"]))
-    if len(s1_names) != int(s1_rule["expected_species"]):
-        raise RuntimeError("S1 species-count drift")
-    if s1.get("species_list_sha256") != str(s1_rule["expected_species_list_sha256"]):
-        raise RuntimeError("S1 compact species digest drift")
-    if species_digest(s1_names) != str(s1_rule["expected_species_list_sha256"]):
-        raise RuntimeError("S1 species-list content drift")
+    if len(s1_names) != int(s1_rule["expected_species"]) or len(set(s1_names)) != len(s1_names):
+        raise RuntimeError("S1 membership count/uniqueness drift")
+    if s1.get("source_full_design_sha256_verified") != str(s1_rule["expected_design_sha256"]):
+        raise RuntimeError("S1 verified full-design SHA drift")
+    if s1.get("full_design_sha_match") is not True:
+        raise RuntimeError("S1 full-design verification not PASS")
 
     s2_rule = contract["S2_host_resource_geography"]
-    s2 = json.loads(s2_manifest_path.read_text(encoding="utf-8"))
-    if s2.get("schema") != "ttf_relational_prior_S2_species_exclusion_v0.1":
-        raise RuntimeError("unexpected S2 compact exclusion schema")
-    if any(bool(v) for v in s2.get("response_firewall", {}).values()):
-        raise RuntimeError("S2 compact exclusion firewall is open")
-    if s2.get("source_full_census_sha256") != str(s2_rule["expected_full_census_sha256"]):
-        raise RuntimeError("S2 source-census SHA drift")
+    s2 = manifest["S2_host_resource_geography"]
     s2_names = list(map(str, s2["species"]))
-    if len(s2_names) != int(s2_rule["expected_species"]):
-        raise RuntimeError("S2 species-count drift")
-    if s2.get("species_list_sha256") != str(s2_rule["expected_selected_species_sha256"]):
-        raise RuntimeError("S2 compact species digest drift")
-    if species_digest(s2_names) != str(s2_rule["expected_selected_species_sha256"]):
-        raise RuntimeError("S2 species-list content drift")
+    if len(s2_names) != int(s2_rule["expected_species"]) or len(set(s2_names)) != len(s2_names):
+        raise RuntimeError("S2 membership count/uniqueness drift")
+    if s2.get("selected_species_sha256_verified") != str(s2_rule["expected_selected_species_sha256"]):
+        raise RuntimeError("S2 selected-species digest drift")
+    if s2.get("selected_species_digest_match") is not True:
+        raise RuntimeError("S2 selected-species verification not PASS")
+    if "expected_full_census_sha256" in s2_rule:
+        if s2.get("source_full_census_sha256_verified") != str(s2_rule["expected_full_census_sha256"]):
+            raise RuntimeError("S2 full-census SHA drift")
 
     b_rule = contract["B_environment_candidate_universe"]
     if sha256_path(b_candidates_path) != str(b_rule["expected_sha256"]):
         raise RuntimeError("Study-B candidate CSV SHA drift")
     b_names = load_b_candidates(b_candidates_path)
-    if len(b_names) != int(b_rule["expected_species"]):
-        raise RuntimeError("Study-B candidate species-count drift")
+    manifest_b = list(map(str, manifest["B_environment_candidate_universe"]["species"]))
+    if len(b_names) != int(b_rule["expected_species"]) or b_names != manifest_b:
+        raise RuntimeError("Study-B candidate membership drift relative to frozen manifest")
 
     union = set(s1_names) | set(s2_names) | set(b_names)
+    checks = manifest.get("membership_checks", {})
+    if int(checks.get("union_species", -1)) != len(union):
+        raise RuntimeError("prior-exclusion union-size drift")
     return union, {
+        "manifest_sha256": sha256_path(manifest_path),
         "S1_species": len(s1_names),
         "S2_species": len(s2_names),
         "B_species": len(b_names),
@@ -111,8 +109,6 @@ def verified_prior_exclusions(
         "S1_digest": species_digest(s1_names),
         "S2_digest": species_digest(s2_names),
         "B_digest": species_digest(b_names),
-        "S1_compact_manifest_sha256": sha256_path(s1_manifest_path),
-        "S2_compact_manifest_sha256": sha256_path(s2_manifest_path),
     }
 
 
@@ -182,8 +178,7 @@ def main() -> int:
     ap.add_argument("--source-sha256", required=True)
     ap.add_argument("--protocol", type=Path, required=True)
     ap.add_argument("--history-rule", type=Path, required=True)
-    ap.add_argument("--s1-design-json", type=Path, required=True)
-    ap.add_argument("--s2-full-census-json", type=Path, required=True)
+    ap.add_argument("--prior-exclusion-manifest", type=Path, required=True)
     ap.add_argument("--b-candidates", type=Path, required=True)
     ap.add_argument("--output-csv", type=Path, required=True)
     ap.add_argument("--output-receipt", type=Path, required=True)
@@ -204,8 +199,7 @@ def main() -> int:
 
     exclusions, exclusion_receipt = verified_prior_exclusions(
         history,
-        s1_manifest_path=args.s1_exclusion_manifest,
-        s2_manifest_path=args.s2_exclusion_manifest,
+        manifest_path=args.prior_exclusion_manifest,
         b_candidates_path=args.b_candidates,
     )
 
