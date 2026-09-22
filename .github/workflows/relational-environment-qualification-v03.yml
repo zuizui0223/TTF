@@ -339,6 +339,7 @@ jobs:
           PY
 
       - name: Upload response-blind qualification bundle
+        id: qualification_upload
         if: steps.relation.outputs.relation_pass == 'true' && always()
         uses: actions/upload-artifact@v4
         with:
@@ -351,3 +352,30 @@ jobs:
             results/qualification/relational_environment_pregenetic_state_v0.3.json
           retention-days: 30
           if-no-files-found: warn
+
+      - name: Freeze qualification binding from current run
+        if: steps.relation.outputs.relation_pass == 'true' && always()
+        run: |
+          set -euo pipefail
+          test -n "${{ steps.qualification_upload.outputs.artifact-id }}"
+          QUAL_ARG=()
+          if [ -f results/qualification/relational_environment_qualification_result_v0.2.json ]; then
+            QUAL_ARG=(--qualification-result results/qualification/relational_environment_qualification_result_v0.2.json)
+          fi
+          python scripts/freeze_relational_environment_qualification_binding.py \
+            --workflow-run-id "${{ github.run_id }}" \
+            --artifact-id "${{ steps.qualification_upload.outputs.artifact-id }}" \
+            --head-sha "${{ github.sha }}" \
+            --pregenetic-state results/qualification/relational_environment_pregenetic_state_v0.3.json \
+            --geometry-reconstruction results/qualification/relational_environment_geometry_reconstruction_v0.2.json \
+            --opportunity-summary results/qualification/relational_environment_opportunity_design_v0.2.json \
+            --opportunity-design results/qualification/relational_environment_opportunity_design_v0.2.npz \
+            "${QUAL_ARG[@]}" \
+            --output benchmarks/frozen/relational_environment_qualification_artifact_binding_v0.1.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/relational_environment_qualification_artifact_binding_v0.1.json
+          git commit -m "Freeze Study B qualification artifact"
+          git fetch origin relational-ttf-v01
+          git rebase origin/relational-ttf-v01
+          git push origin HEAD:relational-ttf-v01
