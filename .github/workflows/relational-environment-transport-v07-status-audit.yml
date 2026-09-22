@@ -1,0 +1,165 @@
+name: relational-environment-transport-v07-status-audit
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - ".github/workflows/relational-environment-transport-v07-status-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Count frozen pre-retry transport statuses
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          mkdir -p results/audit
+          python - <<'PY'
+          import concurrent.futures
+          import io
+          import json
+          import os
+          import urllib.parse
+          import urllib.request
+          import zipfile
+          from collections import Counter
+          from pathlib import Path
+
+          e=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text())
+          repo=os.environ["REPO"]
+          token=os.environ["GH_TOKEN"]
+          headers={
+              "Authorization":f"Bearer {token}",
+              "Accept":"application/vnd.github+json",
+              "X-GitHub-Api-Version":"2022-11-28",
+          }
+
+          def list_artifacts(run_id):
+              found={}
+              page=1
+              while True:
+                  req=urllib.request.Request(
+                      f"https://api.github.com/repos/{repo}/actions/runs/{int(run_id)}/artifacts?per_page=100&page={page}",
+                      headers=headers,
+                  )
+                  with urllib.request.urlopen(req,timeout=60) as response:
+                      p=json.load(response)
+                  chunk=p.get("artifacts",[])
+                  for a in chunk:
+                      if not a.get("expired"):
+                          found[a["name"]]=a
+                  if len(chunk)<100:
+                      break
+                  page+=1
+              return found
+
+          component_names={
+              int(e["frozen_base_component"]["workflow_run_id"]):[
+                  f"relational-env-fixed-v2-{int(i)}"
+                  for i in e["frozen_base_component"]["accepted_success_shards_200way"]
+              ],
+              int(e["cutover_component"]["workflow_run_id"]):[
+                  f"relational-env-cutover-{int(i)}"
+                  for i in e["cutover_component"]["accepted_success_batch_indices"]
+              ],
+              int(e["short_timeout_repair_component"]["workflow_run_id"]):[
+                  f"relational-env-cutover-repair-{int(i)}"
+                  for i in e["short_timeout_repair_component"]["accepted_repair_indices"]
+              ],
+              int(e["long_timeout_repair_component"]["workflow_run_id"]):[
+                  f"relational-env-cutover-repair-long-{int(i)}"
+                  for i in e["long_timeout_repair_component"]["repair_indices"]
+              ],
+          }
+
+          selected=[]
+          for run_id,names in component_names.items():
+              by=list_artifacts(run_id)
+              missing=[n for n in names if n not in by]
+              assert not missing,(run_id,missing)
+              selected.extend((run_id,name,by[name]) for name in names)
+          assert len(selected)==248
+
+          class SafeRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self,req,fp,code,msg,hdrs,newurl):
+                  redirected=super().redirect_request(req,fp,code,msg,hdrs,newurl)
+                  if redirected is None:
+                      return None
+                  if urllib.parse.urlparse(req.full_url).netloc != urllib.parse.urlparse(newurl).netloc:
+                      redirected.remove_header("Authorization")
+                  return redirected
+
+          opener=urllib.request.build_opener(SafeRedirect())
+
+          def one(item):
+              run_id,name,a=item
+              req=urllib.request.Request(a["archive_download_url"],headers=headers)
+              with opener.open(req,timeout=120) as response:
+                  data=response.read()
+              ledgers=[]
+              with zipfile.ZipFile(io.BytesIO(data)) as zf:
+                  for member in zf.namelist():
+                      base=Path(member).name
+                      if base.startswith("ledger-") and base.endswith(".json"):
+                          ledgers.append(json.loads(zf.read(member)))
+              if len(ledgers)!=1:
+                  raise RuntimeError(f"{name}: expected one ledger, found {len(ledgers)}")
+              return run_id,name,ledgers[0]
+
+          records=[]
+          with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+              for item in pool.map(one,selected):
+                  records.append(item)
+
+          species={}
+          duplicate=[]
+          for run_id,name,ledger in records:
+              assert ledger["schema"]=="ttf_relational_environment_occurrence_shard_v0.2"
+              assert all(v is False for v in ledger["response_firewall"].values())
+              for row in ledger["species"]:
+                  sp=str(row["species"])
+                  if sp in species:
+                      duplicate.append(sp)
+                  species[sp]=dict(row)
+
+          assert len(species)==1000,(len(species),duplicate[:20])
+          assert not duplicate,duplicate[:20]
+          counts=Counter(row["status"] for row in species.values())
+          pending=sorted(sp for sp,row in species.items() if row["status"]=="REQUEST_ERROR")
+          payload={
+              "schema":"ttf_relational_environment_transport_preretry_audit_v0.7",
+              "status":"RESPONSE_BLIND_PRE_RETRY_STATUS_AUDIT",
+              "species":1000,
+              "selected_artifacts":248,
+              "status_counts":dict(sorted(counts.items())),
+              "request_error_count":len(pending),
+              "request_error_species":pending,
+              "response_firewall":{
+                  "Study_B_sequence_identity_opened":False,
+                  "Study_B_pairwise_genetic_distances_opened":False,
+                  "Study_B_T_st_computed":False,
+                  "Study_B_beta_R_computed":False,
+              },
+          }
+          Path("results/audit/relational_environment_transport_preretry_audit_v0.7.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps(payload,sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-environment-transport-preretry-audit-v0.7
+          path: results/audit/
+          retention-days: 30
+          if-no-files-found: error
