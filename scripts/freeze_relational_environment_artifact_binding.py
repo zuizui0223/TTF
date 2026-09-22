@@ -9,7 +9,7 @@ from pathlib import Path
 
 SCHEMA = "ttf_relational_environment_relation_artifact_binding_v0.3"
 ARTIFACT = "relational-environment-relation-v0.3"
-TRANSPORT_EXECUTION_DEFAULT = Path("benchmarks/frozen/relational_environment_transport_execution_v0.3.json")
+TRANSPORT_EXECUTION_DEFAULT = Path("benchmarks/frozen/relational_environment_transport_execution_v0.4.json")
 
 
 def sha256_path(path: Path) -> str:
@@ -40,17 +40,19 @@ def main() -> int:
         raise ValueError("head-sha must be a 40-character hexadecimal commit SHA")
 
     transport = json.loads(args.transport_execution.read_text())
-    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.3":
+    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.4":
         raise RuntimeError("unexpected Study-B transport execution schema")
     if transport.get("status") != "FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT":
         raise RuntimeError("Study-B transport execution is not authoritative")
-    execution = transport["authoritative_execution"]
+    execution = transport.get("relation_producer")
+    if not isinstance(execution, dict):
+        raise RuntimeError("Study-B relation producer has not been frozen yet")
     if int(execution["workflow_run_id"]) != int(args.workflow_run_id):
-        raise RuntimeError("relation artifact does not come from frozen authoritative transport run")
+        raise RuntimeError("relation artifact does not come from frozen relation-producer run")
     if str(execution["workflow_head_sha"]).lower() != args.head_sha.lower():
-        raise RuntimeError("relation artifact head SHA drift from frozen authoritative transport run")
+        raise RuntimeError("relation artifact head SHA drift from frozen relation-producer run")
     if execution["relation_artifact_name"] != ARTIFACT:
-        raise RuntimeError("authoritative transport artifact-name drift")
+        raise RuntimeError("relation-producer artifact-name drift")
 
     occurrence = json.loads(args.occurrence_ledger.read_text())
     if occurrence.get("schema") != "ttf_relational_environment_occurrence_acquisition_v0.2":
@@ -107,20 +109,21 @@ def main() -> int:
         "rules_sha256": {
             "relational_environment_relation_rule_v0.3.json": rule_sha,
             "relational_future_family_freshness_amendment_v0.1.json": freshness_sha,
-            "relational_environment_transport_execution_v0.3.json": sha256_path(args.transport_execution),
+            "relational_environment_transport_execution_v0.4.json": sha256_path(args.transport_execution),
         },
         "transport_integrity": {
             "exact_species_ledgers": int(occurrence["species"]),
             "request_error_count": request_errors,
             "status_counts": occurrence.get("status_counts", {}),
-            "authoritative_workflow_run_id": int(execution["workflow_run_id"]),
-            "workflow_head_sha": str(execution["workflow_head_sha"]),
+            "relation_producer_workflow_run_id": int(execution["workflow_run_id"]),
+            "relation_producer_head_sha": str(execution["workflow_head_sha"]),
             "corrected_transport_source_sha": str(
                 transport["scientific_contract"]["corrected_transport_source_sha"]
             ),
-            "partition": str(execution["partition"]),
-            "species_per_shard": int(execution["species_per_shard"]),
-            "max_parallel": int(execution["max_parallel"]),
+            "base_run_id": int(transport["frozen_base_component"]["workflow_run_id"]),
+            "cutover_run_id": int(transport["cutover_component"]["workflow_run_id"]),
+            "base_species": int(transport["final_partition"]["base_species"]),
+            "cutover_species": int(transport["final_partition"]["cutover_species"]),
         },
         "response_firewall": {
             "Study_B_sequence_identity_opened": False,
