@@ -57,15 +57,8 @@
         "expected_species": 1000,
         "expected_sha256": "84a271fa65193a9ec87db95ad49e880aab08f77207a794b79483d4db7a9b1725"
       },
-      "union_rule": "C candidate scanning may begin only after the compact S1/S2 exclusion manifests verify against their frozen source-artifact hashes/species digests and the Study-B candidate CSV verifies its frozen SHA. Exclude the exact set union before hash ranking; no manually curated additions or removals are allowed.",
-      "compact_manifest": {
-        "file": "benchmarks/frozen/relational_historical_prior_exclusion_manifest_v0.1.json",
-        "role": "Verified membership-only projection of S1/S2/B frozen design universes; used by the executable C candidate scanner so GitHub Actions need not access private Library full artifacts.",
-        "verification": "S1 full design SHA matched f2f2088...; S2 full census SHA matched 6bd4915... and S2 selected-species digest matched 035059f... before this manifest was frozen.",
-        "backfill": false
-      }
-    },
-    "prior_exclusion_manifest": "benchmarks/frozen/relational_historical_prior_exclusion_manifest_v0.1.json"
+      "union_rule": "C candidate scanning may begin only after the compact S1/S2 exclusion manifests verify against their frozen source-artifact hashes/species digests and the Study-B candidate CSV verifies its frozen SHA. Exclude the exact set union before hash ranking; no manually curated additions or removals are allowed."
+    }
   },
   "external_occurrences": {
     "provider": "GBIF occurrence/search",
