@@ -21,5 +21,6 @@
     "Study_B_pairwise_genetic_distances_opened": false,
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
-  }
+  },
+  "technical_retrigger_note": "Retrigger after changing only producer-receipt lookup to fetch the latest frozen branch receipt; scientific transport partition, GBIF/CHELSA rules, and response firewalls are unchanged."
 }
