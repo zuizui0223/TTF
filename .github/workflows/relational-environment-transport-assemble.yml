@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Resolve frozen v0.5 transport components
+      - name: Resolve frozen v0.6 transport components
         id: frozen
         run: |
           python - <<'PY'
@@ -29,7 +29,7 @@ jobs:
           assert transport["schema"]=="ttf_relational_environment_transport_execution_v0.6"
           assert transport["status"]=="FROZEN_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT"
           assert trigger["schema"]=="ttf_relational_environment_transport_assembly_trigger_v0.1"
-          assert trigger["status"]=="AUTHORIZE_ASSEMBLY_AFTER_FROZEN_V05_COMPONENTS"
+          assert trigger["status"]=="AUTHORIZE_ASSEMBLY_AFTER_FROZEN_V06_COMPONENTS"
           assert trigger["relation_result_seen"] is False
           assert trigger["genetic_response_used"] is False
           assert int(trigger["base_run_id"])==int(transport["frozen_base_component"]["workflow_run_id"])
