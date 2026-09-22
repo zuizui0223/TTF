@@ -2,7 +2,7 @@
   "schema": "ttf_relational_environment_transport_retry_rule_v0.1",
   "status": "FROZEN_BEFORE_AUTHORITATIVE_TRANSPORT_COMPLETION_AND_BEFORE_RELATION_RESULT",
   "frozen_on": "2026-09-22",
-  "parent_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.3.json",
+  "parent_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.4.json",
   "scope": "Technical HTTP transport completion only.",
   "retry_eligible_status": "REQUEST_ERROR",
   "retry_forbidden_statuses": [
