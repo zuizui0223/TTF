@@ -3,6 +3,14 @@ from pathlib import Path
 
 
 SCRIPT = Path("scripts/acquire_relational_environment_occurrences.py")
+COMPLETE_SCRIPT = Path("scripts/complete_relational_environment_transport.py")
+
+
+def load_complete():
+    spec = importlib.util.spec_from_file_location("envcomplete", COMPLETE_SCRIPT)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def load():
@@ -52,3 +60,11 @@ def test_environment_acquisition_uses_current_gbif_search_parameter_names(monkey
         assert "has_coordinate" not in params
         assert "has_geospatial_issue" not in params
         assert "occurrence_status" not in params
+
+
+def test_frozen_transport_retry_uses_cutover_parallelism():
+    m = load_complete()
+    assert m.RETRY_WORKERS == 20
+    source = COMPLETE_SCRIPT.read_text()
+    assert "ThreadPoolExecutor(max_workers=RETRY_WORKERS)" in source
+    assert "for name in pending:" in source
