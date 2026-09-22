@@ -1,0 +1,35 @@
+{
+  "schema": "ttf_relational_environment_transport_repair_contract_v0.1",
+  "status": "FROZEN_BEFORE_REPAIRED_RELATION_RESULT",
+  "frozen_on": "2026-09-22",
+  "scientific_contract": {
+    "relation_rule": "docs/supporting/relational_environment_relation_rule_v0.3.json",
+    "freshness_rule": "docs/supporting/relational_future_family_freshness_amendment_v0.1.json",
+    "candidate_file": "benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv",
+    "frozen_code_checkout_sha": "c1b4b6e1084573412bc87c5fb3922e382fafb6dd",
+    "scientific_rule_change": false
+  },
+  "transport_history": {
+    "original_run_id": 35613625571,
+    "original_successful_shards": 19,
+    "original_missing_shard": 18,
+    "coarse_repair_run_id": 35684589339,
+    "coarse_authoritative_subsets": [18, 78],
+    "fine_repair_run_id": 35689552027,
+    "fine_authoritative_subsets_200way": [38, 138, 58, 158, 98, 198],
+    "ignored_if_later_available": ["coarse_38", "coarse_58", "coarse_98"]
+  },
+  "assembly_rule": "Use the 19 original successful 20-way shards excluding original shard 18; add coarse 18of100 and 78of100; add fine 38of200, 138of200, 58of200, 158of200, 98of200 and 198of200. These sets form an exact disjoint partition of the original 1000 frozen candidates.",
+  "selection_timing": "The authoritative subset rule was frozen while the fine-repair relation result was unopened and before any Study-B genetic response.",
+  "forbidden": [
+    "choose between coarse and fine acquisition results after comparing ecological relation outputs",
+    "alter GBIF query, matching, page selection, coordinate filters, thinning, cap, minimum occurrence count, CHELSA variables, PCA/KDE, freshness exclusions, or panel hashing",
+    "use any Study-B genetic response to repair transport"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
