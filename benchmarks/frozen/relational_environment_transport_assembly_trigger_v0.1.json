@@ -1,0 +1,19 @@
+{
+  "schema": "ttf_relational_environment_transport_assembly_trigger_v0.1",
+  "status": "AUTHORIZE_ASSEMBLY_AFTER_FROZEN_V06_COMPONENTS",
+  "frozen_on": "2026-09-22",
+  "transport_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.6.json",
+  "partition_audit": "benchmarks/frozen/relational_environment_transport_partition_audit_v0.6.json",
+  "base_run_id": 35691973637,
+  "cutover_run_id": 35712027961,
+  "repair_run_id": 35735717833,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "instruction": "After the frozen repair run completes successfully, assemble only the exact v0.6 components, require exact 1000-species coverage and REQUEST_ERROR=0 after frozen technical retries, then build the frozen response-blind environmental relation.",
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
