@@ -2,20 +2,10 @@ name: relational-environment-relation
 # Technical retrigger after GBIF transport repair; scientific filters, page rule, thinning, cap, and panel contract are unchanged.
 
 on:
+  # Legacy all-in-one path retained only for manual forensic reproduction.
+  # Authoritative Study-B execution is the frozen v0.6 composite transport
+  # followed by relational-environment-transport-assemble.
   workflow_dispatch:
-  push:
-    branches:
-      - relational-ttf-v01
-    paths:
-      - ".github/workflows/relational-environment-relation.yml"
-      - "docs/supporting/relational_environment_relation_rule_v0.3.json"
-      - "docs/supporting/relational_future_family_freshness_amendment_v0.1.json"
-      - "benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv"
-      - "src/ttf/relational_environment.py"
-      - "src/ttf/relational_external.py"
-      - "scripts/acquire_relational_environment_occurrences.py"
-      - "scripts/aggregate_relational_environment_occurrences.py"
-      - "scripts/build_relational_environment_relation.py"
 
 concurrency:
   group: relational-environment-relation-${{ github.ref }}
@@ -115,6 +105,7 @@ jobs:
           assert p["status"] in {
               "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN",
               "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS",
+              "NOT_EVALUABLE_GENERAL_CROSS_TAXON_RELATIONAL_TTF",
           }, p["status"]
           if p["status"] == "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN":
               assert p["environment_admissible_species"] >= 500

@@ -198,5 +198,14 @@
     "Study_C_beta_hist_computed": false
   },
   "qualification_rule": "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json",
-  "opportunity_rule": "docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json"
+  "opportunity_rule": "docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json",
+  "taxonomic_breadth_guardrail": {
+    "inheritance": "Use the unchanged cross-taxon breadth constants frozen prospectively for Study B; no Study-B or Study-C result is used.",
+    "largest_single_order_fraction_max": 0.5,
+    "order_fraction_threshold": 0.05,
+    "minimum_orders_at_or_above_fraction_threshold": 4,
+    "evaluation_time": "after exact historical/current-climate admissibility and before pooled PCA, density construction, or panel hashing",
+    "if_failed": "NOT_EVALUABLE_HISTORICAL_TAXONOMIC_BREADTH",
+    "rescue_forbidden": true
+  }
 }

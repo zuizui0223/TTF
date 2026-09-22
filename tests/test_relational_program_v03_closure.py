@@ -13,9 +13,14 @@ def test_relational_v03_closure_verifier_passes(tmp_path: Path):
             "--output",
             str(output),
         ],
-        check=True,
+        check=False,
         capture_output=True,
         text=True,
+    )
+    assert completed.returncode == 0, (
+        "closure verifier failed\n"
+        f"stdout:\n{completed.stdout}\n"
+        f"stderr:\n{completed.stderr}"
     )
     payload = json.loads(output.read_text())
     assert payload["schema"] == "ttf_relational_program_v03_closure_audit_v0.1"

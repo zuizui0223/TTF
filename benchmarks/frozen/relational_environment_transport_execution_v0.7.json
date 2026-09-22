@@ -1,8 +1,8 @@
 {
-  "schema": "ttf_relational_environment_transport_execution_v0.6",
-  "status": "SUPERSEDED_PRE_RELATION_RESULT_BY_V0.7",
-  "frozen_on": "2026-09-22",
-  "supersedes": "benchmarks/frozen/relational_environment_transport_execution_v0.5.json",
+  "schema": "ttf_relational_environment_transport_execution_v0.7",
+  "status": "FROZEN_FINAL_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT",
+  "frozen_on": "2026-09-23",
+  "supersedes": "benchmarks/frozen/relational_environment_transport_execution_v0.6.json",
   "scientific_contract": {
     "relation_rule": "docs/supporting/relational_environment_relation_rule_v0.3.json",
     "freshness_rule": "docs/supporting/relational_future_family_freshness_amendment_v0.1.json",
@@ -283,21 +283,48 @@
     ],
     "ignore_all_other_cutover_artifacts": true
   },
-  "timeout_repair_component": {
+  "short_timeout_repair_component": {
     "workflow_run_id": 35735717833,
     "workflow_name": "relational-environment-cutover-timeout-repair",
     "trigger": "benchmarks/frozen/relational_environment_cutover_timeout_repair_v0.1.json",
-    "repair_species_count": 8,
-    "replaces_cutover_batches": [
-      167,
-      170
+    "accepted_repair_indices": [
+      2,
+      3,
+      4,
+      5,
+      7
+    ],
+    "accepted_species_count": 5,
+    "ignored_repair_indices": [
+      0,
+      1,
+      6
     ]
+  },
+  "long_timeout_repair_component": {
+    "workflow_run_id": 35749326437,
+    "workflow_head_sha": "dce851231dcb251af125a2a65c5cbb7962f47666",
+    "workflow_name": "relational-environment-cutover-timeout-repair-long",
+    "trigger": "benchmarks/frozen/relational_environment_cutover_timeout_repair_long_v0.1.json",
+    "repair_indices": [
+      0,
+      1,
+      2
+    ],
+    "replaces_short_repair_indices": [
+      0,
+      1,
+      6
+    ],
+    "species_count": 3,
+    "timeout_minutes": 240
   },
   "final_partition": {
     "exact_species": 1000,
     "base_species": 165,
     "cutover_success_species": 827,
-    "timeout_repair_species": 8,
+    "short_repair_species": 5,
+    "long_repair_species": 3,
     "overlap_allowed": false,
     "backfill_allowed": false
   },
@@ -311,7 +338,7 @@
     "unresolved_request_error_action": "technical retry under docs/supporting/relational_environment_transport_retry_rule_v0.1.json only"
   },
   "retry_rule": "docs/supporting/relational_environment_transport_retry_rule_v0.1.json",
-  "selection_timing": "The exact base/cutover/repair partition and all component run IDs were frozen before any Study-B relation result and before any Study-B genetic response.",
+  "selection_timing": "The exact base/cutover/short-repair/long-repair partition and all component run IDs were frozen before any Study-B relation result and before any Study-B genetic response.",
   "obsolete_or_ignored_runs": [
     35613625571,
     35684589339,
@@ -319,13 +346,15 @@
     35672667347,
     35690519587,
     35711038523,
-    35711675657
+    35711675657,
+    35740715490
   ],
   "forbidden": [
     "use later-successful base shards outside frozen_base_component.accepted_success_shards_200way",
     "use cutover batches 167 or 170 directly",
     "use cutover artifacts outside accepted_success_batch_indices",
-    "replace successful cutover batches with singleton repairs",
+    "use short repair indices 0,1,6 in final assembly",
+    "replace any successful component by a later rerun",
     "change the species partition after relation output",
     "choose transport components by PASS rate, R_env distribution, taxonomy, or genetic response"
   ],
@@ -335,8 +364,5 @@
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
   },
-  "relation_producer_receipt": "benchmarks/frozen/relational_environment_relation_producer_v0.1.json",
-  "superseded_by": "benchmarks/frozen/relational_environment_transport_execution_v0.7.json",
-  "superseded_before_relation_result": true,
-  "supersession_reason": "Three singleton timeout-repair species required the predeclared longer technical timeout. Five completed singleton repairs remain frozen; only indices 0,1,6 are replaced by the long-retry component."
+  "relation_producer_receipt": "benchmarks/frozen/relational_environment_relation_producer_v0.1.json"
 }

@@ -62,6 +62,35 @@ def panel_roles(names: list[str], source_sha: str, tag: str) -> tuple[list[str],
     return sorted(ordered[:n_source]), sorted(ordered[n_source:])
 
 
+def taxonomic_breadth_summary(
+    names: list[str],
+    metadata: dict[str, dict[str, str]],
+    guardrail: dict[str, object],
+) -> dict[str, object]:
+    if not names:
+        raise ValueError("taxonomic breadth requires non-empty species")
+    counts = Counter((metadata[name].get("order") or "UNKNOWN").strip() or "UNKNOWN" for name in names)
+    total = len(names)
+    fractions = {name: count / total for name, count in counts.items()}
+    largest = max(fractions.values())
+    threshold = float(guardrail["order_fraction_threshold"])
+    qualifying = sorted(name for name, value in fractions.items() if value >= threshold)
+    largest_max = float(guardrail["largest_single_order_fraction_max"])
+    minimum_orders = int(guardrail["minimum_orders_at_or_above_fraction_threshold"])
+    passed = largest <= largest_max and len(qualifying) >= minimum_orders
+    return {
+        "orders": len(counts),
+        "top_orders": dict(counts.most_common(12)),
+        "largest_order_fraction": largest,
+        "largest_single_order_fraction_max": largest_max,
+        "order_fraction_threshold": threshold,
+        "orders_at_or_above_fraction_threshold": qualifying,
+        "orders_at_or_above_fraction_threshold_count": len(qualifying),
+        "minimum_orders_at_or_above_fraction_threshold": minimum_orders,
+        "pass": bool(passed),
+    }
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--occurrences", type=Path, required=True)
@@ -123,6 +152,13 @@ def main() -> int:
             "freshness_excluded_environment_admissible": len(excluded_admissible),
             "environment_admissible_species": len(admissible),
             "minimum_required_after_freshness": minimum_after,
+            "inputs": {
+                "occurrence_csv_sha256": sha256_path(args.occurrences),
+                "candidate_csv_sha256": sha256_path(args.candidates),
+                "rule_sha256": sha256_path(args.rule),
+                "freshness_rule_sha256": sha256_path(args.freshness_rule),
+                "rasters_sha256": {path.name: sha256_path(path) for path in args.raster},
+            },
             "response_firewall": {
                 "study_B_sequence_identity_opened": False,
                 "study_B_pairwise_genetic_distances_opened": False,
@@ -136,6 +172,42 @@ def main() -> int:
         # A frozen feasibility failure is a valid NOT_EVALUABLE program state,
         # not an infrastructure error. Return success so the workflow can
         # persist the gate receipt and stop downstream response-blind stages.
+        return 0
+
+    taxonomy_guard = taxonomic_breadth_summary(
+        admissible,
+        metadata,
+        rule["taxonomic_breadth_guardrail"],
+    )
+    if not taxonomy_guard["pass"]:
+        payload = {
+            "schema": "ttf_relational_environment_relation_design_v0.3",
+            "status": str(rule["taxonomic_breadth_guardrail"]["if_failed"]),
+            "fresh_candidate_species": 1000,
+            "environment_admissible_before_freshness": len(raw_admissible),
+            "freshness_excluded_total": len(excluded),
+            "freshness_excluded_environment_admissible": len(excluded_admissible),
+            "freshness_excluded_species_environment_admissible": excluded_admissible,
+            "environment_admissible_species": len(admissible),
+            "minimum_required_after_freshness": minimum_after,
+            "taxonomy": taxonomy_guard,
+            "inputs": {
+                "occurrence_csv_sha256": sha256_path(args.occurrences),
+                "candidate_csv_sha256": sha256_path(args.candidates),
+                "rule_sha256": sha256_path(args.rule),
+                "freshness_rule_sha256": sha256_path(args.freshness_rule),
+                "rasters_sha256": {path.name: sha256_path(path) for path in args.raster},
+            },
+            "response_firewall": {
+                "study_B_sequence_identity_opened": False,
+                "study_B_pairwise_genetic_distances_opened": False,
+                "study_B_T_st_computed": False,
+                "study_B_beta_R_computed": False,
+            },
+        }
+        args.output_summary.parent.mkdir(parents=True, exist_ok=True)
+        args.output_summary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+        print(json.dumps(payload, sort_keys=True))
         return 0
 
     pca_sample_rows = []
@@ -204,7 +276,6 @@ def main() -> int:
     variance_fraction = eigval / eigval.sum()
     relation_all = np.concatenate((dr, cr))
     q = np.quantile(relation_all, [0, .1, .25, .5, .75, .9, 1])
-    order_counts = Counter(metadata[name]["order"] for name in admissible)
     summary = {
         "schema": "ttf_relational_environment_relation_design_v0.3",
         "status": "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN",
@@ -235,11 +306,7 @@ def main() -> int:
             "min": float(q[0]), "q10": float(q[1]), "q25": float(q[2]),
             "median": float(q[3]), "q75": float(q[4]), "q90": float(q[5]), "max": float(q[6]),
         },
-        "taxonomy": {
-            "orders": len(order_counts),
-            "top_orders": dict(order_counts.most_common(12)),
-            "largest_order_fraction": max(order_counts.values()) / len(admissible),
-        },
+        "taxonomy": taxonomy_guard,
         "inputs": {
             "occurrence_csv_sha256": sha256_path(args.occurrences),
             "candidate_csv_sha256": sha256_path(args.candidates),

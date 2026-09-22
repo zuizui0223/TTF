@@ -44,6 +44,7 @@ jobs:
           allowed={
               "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN",
               "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS",
+              "NOT_EVALUABLE_GENERAL_CROSS_TAXON_RELATIONAL_TTF",
           }
           assert relation_status in allowed, relation_status
           relation_pass=relation_status=="PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN"
@@ -69,14 +70,19 @@ jobs:
           from pathlib import Path
           binding_path=Path("benchmarks/frozen/relational_environment_relation_artifact_binding_v0.3.json")
           binding=json.loads(binding_path.read_text())
-          assert binding["relation_status"]=="NOT_EVALUABLE_ENVIRONMENT_FRESHNESS"
+          relation_status=str(binding["relation_status"])
+          allowed_not_evaluable={
+              "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS":"environment_freshness_relation_gate",
+              "NOT_EVALUABLE_GENERAL_CROSS_TAXON_RELATIONAL_TTF":"taxonomic_breadth_relation_gate",
+          }
+          assert relation_status in allowed_not_evaluable, relation_status
           h=hashlib.sha256(binding_path.read_bytes()).hexdigest()
           payload={
               "schema":"ttf_relational_environment_program_transition_v0.3",
               "B_state":"NOT_EVALUABLE_B",
               "C_open_authorized":True,
               "C_entry_state":"PROCEED_TO_C_AFTER_B_NOT_EVALUABLE",
-              "source_stage":"environment_freshness_relation_gate",
+              "source_stage":allowed_not_evaluable[relation_status],
               "Study_B_empirical_response_opened":False,
               "relation_binding_sha256":h,
               "relation_status":binding["relation_status"],
@@ -134,20 +140,28 @@ jobs:
           assert p["inputs"]["candidate_csv_sha256"] == sha("benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv")
           assert binding["rules_sha256"]["relational_environment_relation_rule_v0.3.json"] == p["inputs"]["rule_sha256"]
           assert binding["rules_sha256"]["relational_future_family_freshness_amendment_v0.1.json"] == p["inputs"]["freshness_rule_sha256"]
-          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.6.json").read_text())
-          assert transport["schema"]=="ttf_relational_environment_transport_execution_v0.6"
-          assert transport["status"]=="FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT"
-          assert int(binding["transport_integrity"]["relation_producer_workflow_run_id"]) == int(transport["relation_producer"]["workflow_run_id"])
+          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text())
+          assert transport["schema"]=="ttf_relational_environment_transport_execution_v0.7"
+          assert transport["status"]=="FROZEN_FINAL_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT"
+          producer=json.loads(Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json").read_text())
+          assert producer["schema"]=="ttf_relational_environment_relation_producer_v0.1"
+          assert producer["status"]=="FROZEN_RELATION_PRODUCER_BEFORE_RESULT"
+          assert producer["transport_execution"]=="benchmarks/frozen/relational_environment_transport_execution_v0.7.json"
+          assert int(binding["transport_integrity"]["relation_producer_workflow_run_id"]) == int(producer["workflow_run_id"])
+          assert binding["transport_integrity"]["relation_producer_head_sha"] == producer["workflow_head_sha"]
           assert int(binding["transport_integrity"]["base_run_id"]) == int(transport["frozen_base_component"]["workflow_run_id"])
           assert int(binding["transport_integrity"]["cutover_run_id"]) == int(transport["cutover_component"]["workflow_run_id"])
-          assert int(binding["transport_integrity"]["timeout_repair_run_id"]) == int(transport["timeout_repair_component"]["workflow_run_id"])
+          assert int(binding["transport_integrity"]["short_repair_run_id"]) == int(transport["short_timeout_repair_component"]["workflow_run_id"])
+          assert int(binding["transport_integrity"]["long_repair_run_id"]) == int(transport["long_timeout_repair_component"]["workflow_run_id"])
           assert int(binding["transport_integrity"]["base_species"]) == int(transport["final_partition"]["base_species"])
           assert int(binding["transport_integrity"]["cutover_success_species"]) == int(transport["final_partition"]["cutover_success_species"])
-          assert int(binding["transport_integrity"]["timeout_repair_species"]) == int(transport["final_partition"]["timeout_repair_species"])
+          assert int(binding["transport_integrity"]["short_repair_species"]) == int(transport["final_partition"]["short_repair_species"])
+          assert int(binding["transport_integrity"]["long_repair_species"]) == int(transport["final_partition"]["long_repair_species"])
           assert int(binding["transport_integrity"]["exact_species_ledgers"]) == 1000
           assert int(binding["transport_integrity"]["request_error_count"]) == 0
           assert int(binding["transport_integrity"]["status_counts"].get("REQUEST_ERROR",0)) == 0
-          assert binding["rules_sha256"]["relational_environment_transport_execution_v0.6.json"] == sha("benchmarks/frozen/relational_environment_transport_execution_v0.6.json")
+          assert binding["rules_sha256"]["relational_environment_transport_execution_v0.7.json"] == sha("benchmarks/frozen/relational_environment_transport_execution_v0.7.json")
+          assert binding["rules_sha256"]["relational_environment_relation_producer_v0.1.json"] == sha("benchmarks/frozen/relational_environment_relation_producer_v0.1.json")
           for filename in (
               "relational_environment_design_v0.3.json",
               "relational_environment_design_v0.3.npz",

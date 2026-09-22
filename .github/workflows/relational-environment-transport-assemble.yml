@@ -18,27 +18,62 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Resolve frozen v0.6 transport components
+      - name: Resolve frozen v0.7 transport components
         id: frozen
         run: |
           python - <<'PY'
           import json,os
           from pathlib import Path
-          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.6.json").read_text())
+          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text())
           trigger=json.loads(Path("benchmarks/frozen/relational_environment_transport_assembly_trigger_v0.1.json").read_text())
-          assert transport["schema"]=="ttf_relational_environment_transport_execution_v0.6"
-          assert transport["status"]=="FROZEN_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT"
+          assert transport["schema"]=="ttf_relational_environment_transport_execution_v0.7"
+          assert transport["status"]=="FROZEN_FINAL_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT"
           assert trigger["schema"]=="ttf_relational_environment_transport_assembly_trigger_v0.1"
-          assert trigger["status"]=="AUTHORIZE_ASSEMBLY_AFTER_FROZEN_V06_COMPONENTS"
+          assert trigger["status"]=="AUTHORIZE_ASSEMBLY_AFTER_FROZEN_V07_COMPONENTS"
           assert trigger["relation_result_seen"] is False
           assert trigger["genetic_response_used"] is False
           assert int(trigger["base_run_id"])==int(transport["frozen_base_component"]["workflow_run_id"])
           assert int(trigger["cutover_run_id"])==int(transport["cutover_component"]["workflow_run_id"])
-          assert int(trigger["repair_run_id"])==int(transport["timeout_repair_component"]["workflow_run_id"])
+          assert int(trigger["short_repair_run_id"])==int(transport["short_timeout_repair_component"]["workflow_run_id"])
+          assert int(trigger["long_repair_run_id"])==int(transport["long_timeout_repair_component"]["workflow_run_id"])
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write(f"base_run_id={int(trigger['base_run_id'])}\n")
               f.write(f"cutover_run_id={int(trigger['cutover_run_id'])}\n")
-              f.write(f"repair_run_id={int(trigger['repair_run_id'])}\n")
+              f.write(f"short_repair_run_id={int(trigger['short_repair_run_id'])}\n")
+              f.write(f"long_repair_run_id={int(trigger['long_repair_run_id'])}\n")
+          PY
+
+      - name: Wait for frozen long-timeout repair component
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          REPAIR_RUN_ID: ${{ steps.frozen.outputs.long_repair_run_id }}
+        run: |
+          python - <<'PY'
+          import json,os,time,urllib.request
+          repo=os.environ["REPO"]; token=os.environ["GH_TOKEN"]; run_id=int(os.environ["REPAIR_RUN_ID"])
+          headers={
+              "Authorization":f"Bearer {token}",
+              "Accept":"application/vnd.github+json",
+              "X-GitHub-Api-Version":"2022-11-28",
+          }
+          deadline=time.time()+150*60
+          while True:
+              req=urllib.request.Request(
+                  f"https://api.github.com/repos/{repo}/actions/runs/{run_id}",
+                  headers=headers,
+              )
+              with urllib.request.urlopen(req,timeout=60) as response:
+                  payload=json.load(response)
+              status=payload["status"]; conclusion=payload.get("conclusion")
+              print(json.dumps({"repair_run_id":run_id,"status":status,"conclusion":conclusion},sort_keys=True))
+              if status=="completed":
+                  if conclusion!="success":
+                      raise SystemExit(f"frozen long-timeout repair run did not complete successfully: {conclusion}")
+                  break
+              if time.time()>=deadline:
+                  raise SystemExit("timed out waiting for frozen long-timeout repair run")
+              time.sleep(30)
           PY
 
       - name: Freeze relation producer before relation result
@@ -50,7 +85,7 @@ jobs:
               "schema":"ttf_relational_environment_relation_producer_v0.1",
               "status":"FROZEN_RELATION_PRODUCER_BEFORE_RESULT",
               "frozen_on":"2026-09-22",
-              "transport_execution":"benchmarks/frozen/relational_environment_transport_execution_v0.6.json",
+              "transport_execution":"benchmarks/frozen/relational_environment_transport_execution_v0.7.json",
               "workflow_run_id":int("${{ github.run_id }}"),
               "workflow_head_sha":"${{ github.sha }}",
               "workflow_name":"relational-environment-transport-assemble",
@@ -72,6 +107,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add benchmarks/frozen/relational_environment_relation_producer_v0.1.json
           git commit -m "Freeze Study B relation producer"
+          git fetch origin relational-ttf-v01
+          git rebase origin/relational-ttf-v01
           git push origin HEAD:relational-ttf-v01
 
       - name: Verify frozen corrected transport core
@@ -99,7 +136,7 @@ jobs:
           import io,json,os,urllib.request,zipfile
           from pathlib import Path
 
-          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.6.json").read_text())
+          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text())
           expected=[
               f"relational-env-fixed-v2-{int(x)}"
               for x in transport["frozen_base_component"]["accepted_success_shards_200way"]
@@ -146,13 +183,61 @@ jobs:
           run-id: ${{ steps.frozen.outputs.cutover_run_id }}
           github-token: ${{ github.token }}
 
-      - name: Download exact frozen cutover timeout-repair artifacts
+      - name: Download exact accepted short-repair artifacts only
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHORT_REPAIR_RUN_ID: ${{ steps.frozen.outputs.short_repair_run_id }}
+        run: |
+          mkdir -p input/repair-short
+          python - <<'PY'
+          import io,json,os,urllib.request,zipfile
+          from pathlib import Path
+
+          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text())
+          expected=[
+              f"relational-env-cutover-repair-{int(x)}"
+              for x in transport["short_timeout_repair_component"]["accepted_repair_indices"]
+          ]
+          token=os.environ["GH_TOKEN"]; repo=os.environ["REPO"]; run_id=int(os.environ["SHORT_REPAIR_RUN_ID"])
+          artifacts=[]
+          for page in (1,2):
+              url=f"https://api.github.com/repos/{repo}/actions/runs/{run_id}/artifacts?per_page=100&page={page}"
+              req=urllib.request.Request(url,headers={
+                  "Authorization":f"Bearer {token}",
+                  "Accept":"application/vnd.github+json",
+                  "X-GitHub-Api-Version":"2022-11-28",
+              })
+              with urllib.request.urlopen(req,timeout=60) as response:
+                  payload=json.load(response)
+              artifacts.extend(payload.get("artifacts",[]))
+              if len(payload.get("artifacts",[]))<100:
+                  break
+          by_name={a["name"]:a for a in artifacts if not a.get("expired")}
+          missing=[name for name in expected if name not in by_name]
+          assert not missing, missing
+          out=Path("input/repair-short")
+          for name in expected:
+              a=by_name[name]
+              req=urllib.request.Request(a["archive_download_url"],headers={
+                  "Authorization":f"Bearer {token}",
+                  "Accept":"application/vnd.github+json",
+                  "X-GitHub-Api-Version":"2022-11-28",
+              })
+              with urllib.request.urlopen(req,timeout=120) as response:
+                  data=response.read()
+              with zipfile.ZipFile(io.BytesIO(data)) as zf:
+                  zf.extractall(out)
+          print({"downloaded_short_repair_artifacts":len(expected)})
+          PY
+
+      - name: Download exact frozen long-repair artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: relational-env-cutover-repair-*
-          path: input/repair
+          pattern: relational-env-cutover-repair-long-*
+          path: input/repair-long
           merge-multiple: true
-          run-id: ${{ steps.frozen.outputs.repair_run_id }}
+          run-id: ${{ steps.frozen.outputs.long_repair_run_id }}
           github-token: ${{ github.token }}
 
       - name: Assemble exact frozen 1000 species and complete HTTP retries
@@ -164,8 +249,10 @@ jobs:
           cp input/cutover/ledger-cutover-*.json input/all/
           rm -f input/all/occurrences-cutover-167.csv input/all/ledger-cutover-167.json
           rm -f input/all/occurrences-cutover-170.csv input/all/ledger-cutover-170.json
-          cp input/repair/occurrences-cutover-repair-*.csv input/all/
-          cp input/repair/ledger-cutover-repair-*.json input/all/
+          cp input/repair-short/occurrences-cutover-repair-*.csv input/all/
+          cp input/repair-short/ledger-cutover-repair-*.json input/all/
+          cp input/repair-long/occurrences-cutover-repair-long-*.csv input/all/
+          cp input/repair-long/ledger-cutover-repair-long-*.json input/all/
           python scripts/complete_relational_environment_transport.py \
             --input-dir input/all \
             --max-rounds 3 \
@@ -228,6 +315,7 @@ jobs:
           assert p["status"] in {
               "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN",
               "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS",
+              "NOT_EVALUABLE_GENERAL_CROSS_TAXON_RELATIONAL_TTF",
           }
           assert all(v is False for v in p["response_firewall"].values())
           print({

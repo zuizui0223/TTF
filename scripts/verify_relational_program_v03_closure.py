@@ -42,7 +42,7 @@ def main() -> int:
         "c_s1_exclusion": Path("benchmarks/frozen/relational_prior_S1_species_exclusion_v0.1.json"),
         "c_s2_exclusion": Path("benchmarks/frozen/relational_prior_S2_species_exclusion_v0.1.json"),
         "b_relation": Path("docs/supporting/relational_environment_relation_rule_v0.3.json"),
-        "b_transport": Path("benchmarks/frozen/relational_environment_transport_execution_v0.6.json"),
+        "b_transport": Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json"),
         "b_opportunity": Path("docs/supporting/relational_environment_opportunity_rule_v0.2.json"),
         "b_qualification": Path("docs/supporting/relational_environment_qualification_rule_v0.2.json"),
         "b_mask": Path("docs/supporting/relational_environment_character_mask_rule_v0.1.json"),
@@ -123,40 +123,86 @@ def main() -> int:
         if states[state]["C_open_authorized"] is not True or states[state]["C_entry_state"] != entry:
             raise RuntimeError(f"Study-C transition drift for {state}")
     assert_closed_firewall(transition)
-    for key in ("b_relation", "b_transport", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
+    for key in ("b_relation", "b_transport", "b_transport_audit", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
         assert_closed_firewall(p[key])
 
     transport = p["b_transport"]
-    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.6":
+    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.7":
         raise RuntimeError("Study B transport execution schema drift")
-    if transport.get("status") != "FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT":
-        raise RuntimeError("Study B transport execution is not frozen authoritative")
+    if transport.get("status") != "FROZEN_FINAL_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT":
+        raise RuntimeError("Study B transport execution is not frozen final authoritative v0.7")
     base = transport["frozen_base_component"]
     cutover = transport["cutover_component"]
+    short_repair = transport["short_timeout_repair_component"]
+    long_repair = transport["long_timeout_repair_component"]
     final_partition = transport["final_partition"]
-    if int(base["workflow_run_id"]) != 35691973637:
-        raise RuntimeError("Study B frozen base transport run drift")
-    if int(base["accepted_species_count"]) != 165:
-        raise RuntimeError("Study B frozen base species count drift")
+    if int(base["workflow_run_id"]) != 35691973637 or int(base["accepted_species_count"]) != 165:
+        raise RuntimeError("Study B frozen base transport drift")
     if int(cutover["workflow_run_id"]) != 35712027961:
         raise RuntimeError("Study B cutover transport run drift")
     if cutover["workflow_name"] != "relational-environment-transport-cutover":
         raise RuntimeError("Study B cutover workflow drift")
     if int(cutover["accepted_success_batch_count"]) != 207 or int(cutover["accepted_species_count"]) != 827:
         raise RuntimeError("Study B cutover-success partition drift")
-    repair = transport["timeout_repair_component"]
-    if int(repair["workflow_run_id"]) != 35735717833:
-        raise RuntimeError("Study B cutover timeout-repair run drift")
-    if int(repair["repair_species_count"]) != 8:
-        raise RuntimeError("Study B timeout-repair species count drift")
+    if int(short_repair["workflow_run_id"]) != 35735717833:
+        raise RuntimeError("Study B short repair run drift")
+    if list(short_repair["accepted_repair_indices"]) != [2, 3, 4, 5, 7]:
+        raise RuntimeError("Study B short repair accepted-index drift")
+    if int(short_repair["accepted_species_count"]) != 5:
+        raise RuntimeError("Study B short repair species count drift")
+    if list(short_repair["ignored_repair_indices"]) != [0, 1, 6]:
+        raise RuntimeError("Study B short repair ignored-index drift")
+    if int(long_repair["workflow_run_id"]) != 35749326437:
+        raise RuntimeError("Study B long repair run drift")
+    if list(long_repair["repair_indices"]) != [0, 1, 2]:
+        raise RuntimeError("Study B long repair index drift")
+    if list(long_repair["replaces_short_repair_indices"]) != [0, 1, 6]:
+        raise RuntimeError("Study B long/short replacement mapping drift")
+    if int(long_repair["species_count"]) != 3 or int(long_repair["timeout_minutes"]) != 240:
+        raise RuntimeError("Study B long repair contract drift")
     if int(final_partition["exact_species"]) != 1000:
         raise RuntimeError("Study B final transport species count drift")
-    if int(final_partition["base_species"]) != 165 or int(final_partition["cutover_success_species"]) != 827 or int(final_partition["timeout_repair_species"]) != 8:
+    if (
+        int(final_partition["base_species"]) != 165
+        or int(final_partition["cutover_success_species"]) != 827
+        or int(final_partition["short_repair_species"]) != 5
+        or int(final_partition["long_repair_species"]) != 3
+    ):
         raise RuntimeError("Study B final transport split drift")
+    if final_partition["overlap_allowed"] is not False or final_partition["backfill_allowed"] is not False:
+        raise RuntimeError("Study B final transport overlap/backfill firewall drift")
     if int(transport["acceptance_gate"]["exact_species_ledgers"]) != 1000:
         raise RuntimeError("Study B transport exact-species gate drift")
     if int(transport["acceptance_gate"]["request_error_count_must_equal"]) != 0:
         raise RuntimeError("Study B transport zero-error gate drift")
+    if 35740715490 not in set(map(int, transport["obsolete_or_ignored_runs"])):
+        raise RuntimeError("obsolete v0.6 relation producer run is not explicitly ignored")
+
+    audit = p["b_transport_audit"]
+    if audit.get("schema") != "ttf_relational_environment_transport_partition_audit_v0.7":
+        raise RuntimeError("Study B v0.7 partition-audit schema drift")
+    if audit.get("status") != "PASS_EXACT_1000_SPECIES_DISJOINT_COMPOSITE_PARTITION":
+        raise RuntimeError("Study B v0.7 partition audit did not pass")
+    if audit.get("transport_execution") != str(paths["b_transport"]):
+        raise RuntimeError("Study B v0.7 partition audit transport pointer drift")
+    if int(audit["union_species_count"]) != 1000:
+        raise RuntimeError("Study B v0.7 partition-audit union drift")
+    if audit["overlap_candidate_indices"] or audit["missing_candidate_indices"] or audit["species_name_mismatches"]:
+        raise RuntimeError("Study B v0.7 partition audit found overlap/missing/name drift")
+    checks = audit["checks"]
+    for key in (
+        "candidate_count",
+        "base_species_165",
+        "cutover_success_species_827",
+        "short_repair_species_5",
+        "long_repair_species_3",
+        "overlap_zero",
+        "missing_zero",
+        "union_1000",
+        "species_names_match",
+    ):
+        if checks.get(key) is not True:
+            raise RuntimeError(f"Study B v0.7 partition audit failed: {key}")
 
     b = program["slot_B"]
     expected_b_chain = [
@@ -212,6 +258,42 @@ def main() -> int:
     for key in ("minimum_supported_target_species", "minimum_supported_source_species", "minimum_supported_directed_dyads"):
         if c_struct[key] != b_struct[key]:
             raise RuntimeError(f"Study C inherited structural gate drift: {key}")
+    breadth_keys = (
+        "largest_single_order_fraction_max",
+        "order_fraction_threshold",
+        "minimum_orders_at_or_above_fraction_threshold",
+    )
+    b_relation_breadth = p["b_relation"]["taxonomic_breadth_guardrail"]
+    c_relation_breadth = p["c_relation"]["taxonomic_breadth_guardrail"]
+    b_opportunity_breadth = b_struct["taxonomic_breadth"]
+    c_opportunity_breadth = c_struct["taxonomic_breadth"]
+    expected_breadth = {
+        "largest_single_order_fraction_max": 0.50,
+        "order_fraction_threshold": 0.05,
+        "minimum_orders_at_or_above_fraction_threshold": 4,
+    }
+    for key in breadth_keys:
+        expected = expected_breadth[key]
+        for label, contract in (
+            ("Study B relation", b_relation_breadth),
+            ("Study B opportunity", b_opportunity_breadth),
+            ("Study C relation", c_relation_breadth),
+            ("Study C opportunity", c_opportunity_breadth),
+        ):
+            if contract[key] != expected:
+                raise RuntimeError(f"{label} taxonomic breadth drift: {key}")
+    required_groups = {
+        "development supported source species",
+        "development supported target species",
+        "confirmatory supported source species",
+        "confirmatory supported target species",
+    }
+    for label, contract in (
+        ("Study B opportunity", b_opportunity_breadth),
+        ("Study C opportunity", c_opportunity_breadth),
+    ):
+        if set(contract["required_groups"]) != required_groups:
+            raise RuntimeError(f"{label} supported taxonomic groups drift")
     if float(p["c_qualification"]["inference"]["alpha"]) != 0.025:
         raise RuntimeError("Study C qualification alpha drift")
     if float(p["c_qualification"]["gate_numeric"]["private_type1_wilson95_upper_max"]) != 0.05:

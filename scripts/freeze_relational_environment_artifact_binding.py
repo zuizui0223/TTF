@@ -9,7 +9,7 @@ from pathlib import Path
 
 SCHEMA = "ttf_relational_environment_relation_artifact_binding_v0.3"
 ARTIFACT = "relational-environment-relation-v0.3"
-TRANSPORT_EXECUTION_DEFAULT = Path("benchmarks/frozen/relational_environment_transport_execution_v0.6.json")
+TRANSPORT_EXECUTION_DEFAULT = Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json")
 RELATION_PRODUCER_DEFAULT = Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json")
 
 
@@ -42,9 +42,9 @@ def main() -> int:
         raise ValueError("head-sha must be a 40-character hexadecimal commit SHA")
 
     transport = json.loads(args.transport_execution.read_text())
-    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.6":
+    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.7":
         raise RuntimeError("unexpected Study-B transport execution schema")
-    if transport.get("status") != "FROZEN_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT":
+    if transport.get("status") != "FROZEN_FINAL_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT":
         raise RuntimeError("Study-B transport execution is not authoritative")
     if transport.get("relation_producer_receipt") != str(args.relation_producer):
         raise RuntimeError("Study-B relation-producer receipt pointer drift")
@@ -81,6 +81,7 @@ def main() -> int:
     if summary.get("status") not in {
         "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN",
         "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS",
+        "NOT_EVALUABLE_GENERAL_CROSS_TAXON_RELATIONAL_TTF",
     }:
         raise RuntimeError("unexpected relation summary status")
     if any(bool(v) for v in summary.get("response_firewall", {}).values()):
@@ -88,12 +89,15 @@ def main() -> int:
 
     rule_sha = sha256_path(args.relation_rule)
     freshness_sha = sha256_path(args.freshness_rule)
+    inputs = summary.get("inputs", {})
+    if inputs.get("rule_sha256") != rule_sha:
+        raise RuntimeError("relation-rule hash drift in relation summary")
+    if inputs.get("freshness_rule_sha256") != freshness_sha:
+        raise RuntimeError("freshness-rule hash drift in relation summary")
+    candidate_sha = sha256_path(Path("benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv"))
+    if inputs.get("candidate_csv_sha256") != candidate_sha:
+        raise RuntimeError("candidate CSV hash drift in relation summary")
     if summary.get("status") == "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN":
-        inputs = summary.get("inputs", {})
-        if inputs.get("rule_sha256") != rule_sha:
-            raise RuntimeError("relation-rule hash drift in relation summary")
-        if inputs.get("freshness_rule_sha256") != freshness_sha:
-            raise RuntimeError("freshness-rule hash drift in relation summary")
         if args.design_npz is None or not args.design_npz.is_file():
             raise RuntimeError("passing relation design requires the bound design NPZ")
         if summary.get("design_npz_sha256") != sha256_path(args.design_npz):
@@ -117,7 +121,7 @@ def main() -> int:
         "rules_sha256": {
             "relational_environment_relation_rule_v0.3.json": rule_sha,
             "relational_future_family_freshness_amendment_v0.1.json": freshness_sha,
-            "relational_environment_transport_execution_v0.6.json": sha256_path(args.transport_execution),
+            "relational_environment_transport_execution_v0.7.json": sha256_path(args.transport_execution),
             "relational_environment_relation_producer_v0.1.json": sha256_path(args.relation_producer),
         },
         "transport_integrity": {
@@ -131,10 +135,12 @@ def main() -> int:
             ),
             "base_run_id": int(transport["frozen_base_component"]["workflow_run_id"]),
             "cutover_run_id": int(transport["cutover_component"]["workflow_run_id"]),
-            "timeout_repair_run_id": int(transport["timeout_repair_component"]["workflow_run_id"]),
+            "short_repair_run_id": int(transport["short_timeout_repair_component"]["workflow_run_id"]),
+            "long_repair_run_id": int(transport["long_timeout_repair_component"]["workflow_run_id"]),
             "base_species": int(transport["final_partition"]["base_species"]),
             "cutover_success_species": int(transport["final_partition"]["cutover_success_species"]),
-            "timeout_repair_species": int(transport["final_partition"]["timeout_repair_species"]),
+            "short_repair_species": int(transport["final_partition"]["short_repair_species"]),
+            "long_repair_species": int(transport["final_partition"]["long_repair_species"]),
         },
         "response_firewall": {
             "Study_B_sequence_identity_opened": False,

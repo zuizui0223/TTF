@@ -35,7 +35,21 @@
     "minimum_supported_source_species": 50,
     "minimum_supported_directed_dyads": 1000,
     "inheritance": "Exact Study-B response-blind structural gates; not chosen from Study-C external or genetic outcomes.",
-    "failure": "NOT_EVALUABLE_HISTORICAL_OPPORTUNITY_GEOMETRY"
+    "failure": "NOT_EVALUABLE_HISTORICAL_OPPORTUNITY_GEOMETRY",
+    "taxonomic_breadth": {
+      "inheritance": "Exact Study-B supported source/target breadth gate, inherited without changing 0.50 / 0.05 / four-order constants.",
+      "largest_single_order_fraction_max": 0.5,
+      "order_fraction_threshold": 0.05,
+      "minimum_orders_at_or_above_fraction_threshold": 4,
+      "required_groups": [
+        "development supported source species",
+        "development supported target species",
+        "confirmatory supported source species",
+        "confirmatory supported target species"
+      ],
+      "failure": "NOT_EVALUABLE_HISTORICAL_OPPORTUNITY_GEOMETRY",
+      "rescue_forbidden": true
+    }
   },
   "clarification_boundary": {
     "new_scientific_choice": false,

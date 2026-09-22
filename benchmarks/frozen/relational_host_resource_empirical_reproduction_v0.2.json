@@ -1,1 +1,77 @@
-The requested file reference is not currently visible. Use files.search or files.list to rediscover the file, then retry with a returned ref_id or file_id.
+{
+  "schema": "ttf_relational_host_resource_empirical_reproduction_v0.2",
+  "status": "PASS_EXACT_REPAIRED_S3_PROVENANCE_AND_RESULT_BINDING",
+  "audited_on": "2026-09-23",
+  "purpose": "Repair a malformed audit artifact only. No empirical or synthetic analysis is rerun here; the audit binds the already frozen repaired S3 empirical receipt to the already frozen independent numeric provenance audit and repaired survivor qualification.",
+  "malformed_predecessor": {
+    "introduced_by_commit": "0d3373a6db96822452480ec5245d9900e3a4b2ff",
+    "issue": "The file body was accidentally committed as a connector visibility error string rather than JSON.",
+    "scientific_result_affected": false,
+    "genetic_response_reopened": false
+  },
+  "repaired_empirical_receipt": {
+    "path": "benchmarks/frozen/relational_host_resource_empirical_repaired_receipt_v0.2.json",
+    "schema": "ttf_relational_host_resource_empirical_repaired_receipt_v0.2",
+    "decision": "RELATIONAL_HOST_RESOURCE_NULL_WITH_QUALIFIED_POWER",
+    "p_value_one_sided": 0.6376882940222616,
+    "coefficient": -0.0014740873089605477,
+    "standard_error_two_way_cluster": 0.0041843423225665305,
+    "z_score": -0.3522864993647063,
+    "alpha": 0.05,
+    "species_union": 399,
+    "source_species": 203,
+    "target_species": 196,
+    "directed_source_target_dyads": 11696,
+    "mask_survivors": 420,
+    "predictor_condition_number": 7.76754597755416,
+    "full_result_sha256": "23b541c97a7f54884e4ce027fe989bba7637a90c77d8454dc1a1e9aa4ffbb62a"
+  },
+  "repaired_geometry_and_power": {
+    "requalification": "benchmarks/frozen/relational_host_resource_repaired_survivor_requalification_v0.1.json",
+    "requalification_status": "PASS_TO_REPAIRED_EMPIRICAL_AUTHORIZATION",
+    "survivor_species_digest_sha256": "9005dda6dcc96fcc67158ae05adba393ac36dd7cdb5d41b52212b5e9f57cf403",
+    "source_digest_sha256": "dd5259c1a26293a6f39e09430d60fd67dc3e26747fae96af596a0260a2fc068b",
+    "target_digest_sha256": "e38283abaeb0fd190d185eed3435ddc77e6b9369232721bed5e62c23b6ef49d2",
+    "empirical_union_digest_sha256": "a3ba1b675546ade34d04f6bee8128b737ab0317380cd585d1f5de13fd58bc7dc",
+    "positive_control_beta_R_latent": 0.03,
+    "positive_control_rejections": 921,
+    "positive_control_rejection_rate": 0.921,
+    "positive_control_wilson95_lower": 0.9026250851159918,
+    "overall_pass": true
+  },
+  "independent_numeric_provenance": {
+    "path": "benchmarks/frozen/relational_host_resource_provenance_audit_v0.2.json",
+    "schema": "ttf_relational_host_resource_provenance_audit_v0.2",
+    "estimator_git_blob_sha_used": "2b418399c2d9a51f23b37b26f58f910ed92e6db1",
+    "seed_namespace": "relational-host-resource-formal-v0.1",
+    "matches_frozen_requalification_cell_summaries_exactly": true,
+    "note": "The provenance audit independently reproduced the repaired synthetic qualification cell summaries exactly with the estimator bound by the v0.2 empirical authorization."
+  },
+  "repair_basis": {
+    "path": "benchmarks/frozen/relational_host_resource_mask_parser_repair_v0.1.json",
+    "excluded_species": [
+      "Cladara limitaria",
+      "Lobophora nivigerata",
+      "Protoboarmia porcelaria"
+    ],
+    "response_independent": true,
+    "T_st_opened_at_repair_freeze": false,
+    "beta_R_opened_at_repair_freeze": false
+  },
+  "consistency_checks": {
+    "empirical_geometry_matches_requalification": true,
+    "empirical_geometry_matches_v0_2_authorization": true,
+    "empirical_decision_matches_program_v0_3": true,
+    "empirical_p_value_matches_program_v0_3": true,
+    "no_post_result_retuning": true,
+    "no_result_selection_rerun": true
+  },
+  "interpretation": "The current S3 result is the repaired one-shot host-resource null with qualified power. This audit repairs repository provenance only and does not alter that inference.",
+  "response_firewall": {
+    "new_sequence_identity_opened": false,
+    "new_pairwise_genetic_distances_opened": false,
+    "new_T_st_computed": false,
+    "new_beta_R_computed": false,
+    "new_relational_decision_opened": false
+  }
+}

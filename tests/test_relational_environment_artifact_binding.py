@@ -61,32 +61,44 @@ def test_binding_rejects_any_transport_request_error(tmp_path):
     freshness = tmp_path / "freshness.json"
     freshness.write_text("{}")
     transport = tmp_path / "transport.json"
+    producer = tmp_path / "producer.json"
     transport.write_text(json.dumps({
-        "schema": "ttf_relational_environment_transport_execution_v0.6",
-        "status": "FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT",
+        "schema": "ttf_relational_environment_transport_execution_v0.7",
+        "status": "FROZEN_FINAL_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT",
+        "relation_producer_receipt": str(producer),
         "frozen_base_component": {
             "workflow_run_id": 1,
         },
         "cutover_component": {
             "workflow_run_id": 2,
         },
-        "timeout_repair_component": {
+        "short_timeout_repair_component": {
             "workflow_run_id": 3,
+        },
+        "long_timeout_repair_component": {
+            "workflow_run_id": 4,
         },
         "final_partition": {
             "base_species": 165,
             "cutover_success_species": 827,
-            "timeout_repair_species": 8,
+            "short_repair_species": 5,
+            "long_repair_species": 3,
         },
-        "relation_producer": {
-            "workflow_run_id": 123,
-            "workflow_head_sha": "a" * 40,
-            "relation_artifact_name": "relational-environment-relation-v0.3",
+        "scientific_contract": {
+            "corrected_transport_core_git_blobs": {},
         },
         "acceptance_gate": {
             "exact_species_ledgers": 1000,
             "request_error_count_must_equal": 0,
         },
+    }))
+    producer.write_text(json.dumps({
+        "schema": "ttf_relational_environment_relation_producer_v0.1",
+        "status": "FROZEN_RELATION_PRODUCER_BEFORE_RESULT",
+        "transport_execution": str(transport),
+        "workflow_run_id": 123,
+        "workflow_head_sha": "a" * 40,
+        "relation_artifact_name": "relational-environment-relation-v0.3",
     }))
     completed = subprocess.run([
         sys.executable,
@@ -100,6 +112,7 @@ def test_binding_rejects_any_transport_request_error(tmp_path):
         "--relation-rule", str(rule),
         "--freshness-rule", str(freshness),
         "--transport-execution", str(transport),
+        "--relation-producer", str(producer),
         "--output", str(tmp_path / "binding.json"),
     ], capture_output=True, text=True)
     assert completed.returncode != 0
