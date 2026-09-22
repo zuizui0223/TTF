@@ -311,8 +311,93 @@ jobs:
               f.write(f"passed={'true' if passed else 'false'}\n")
           PY
 
+      - name: Restore exact frozen phylogatR archive for confirmatory opening
+        if: steps.qualification.outputs.passed == 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/phylogatr.zip
+          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5
+
+      - name: Extract exact source archive for confirmatory opening
+        if: steps.qualification.outputs.passed == 'true'
+        id: confirmatory_source
+        run: |
+          set -euo pipefail
+          test -f /tmp/phylogatr.zip
+          test "$(stat -c%s /tmp/phylogatr.zip)" = "274988692"
+          echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5  /tmp/phylogatr.zip" | sha256sum -c -
+          rm -rf /tmp/phylogatr-confirmatory
+          mkdir -p /tmp/phylogatr-confirmatory
+          unzip -q /tmp/phylogatr.zip -d /tmp/phylogatr-confirmatory
+          ROOT="$(dirname "$(find /tmp/phylogatr-confirmatory -type f -name genes.txt -print -quit)")"
+          test -f "$ROOT/genes.txt"
+          test -f "$ROOT/cite.txt"
+          echo "root=$ROOT" >> "$GITHUB_OUTPUT"
+
+      - name: Open Study-C confirmatory canonical-valid masks only
+        if: steps.qualification.outputs.passed == 'true'
+        run: |
+          python scripts/freeze_relational_historical_character_mask.py \
+            --root "${{ steps.confirmatory_source.outputs.root }}" \
+            --opportunity-design results/history/relational_historical_opportunity_v0.1.npz \
+            --opportunity-summary results/history/relational_historical_opportunity_v0.1.json \
+            --development-qualification results/history/relational_historical_qualification_v0.1.json \
+            --candidates input/candidate/relational_historical_candidates_v0.1.csv \
+            --mask-rule docs/supporting/relational_historical_climate_character_mask_rule_v0.1.json \
+            --output-mask-result results/history/relational_historical_character_mask_result_v0.1.json \
+            --output-survivor-design results/history/relational_historical_survivor_design_v0.1.npz \
+            --output-survivor-summary results/history/relational_historical_survivor_summary_v0.1.json
+
+      - name: Requalify exact Study-C survivor geometry
+        if: steps.qualification.outputs.passed == 'true'
+        id: survivor
+        run: |
+          python scripts/run_relational_historical_climate_qualification.py \
+            --opportunity-design results/history/relational_historical_survivor_design_v0.1.npz \
+            --opportunity-summary results/history/relational_historical_survivor_summary_v0.1.json \
+            --rule docs/supporting/relational_historical_climate_qualification_rule_v0.1.json \
+            --qualification-stage confirmatory_survivor \
+            --output results/history/relational_historical_survivor_qualification_v0.1.json
+          python - <<'PY'
+          import json,os
+          p=json.load(open("results/history/relational_historical_survivor_qualification_v0.1.json"))
+          passed=p["status"]=="PASS_TO_HISTORICAL_EMPIRICAL_IDENTITY_OPENING_PREPARATION" and p["gates"]["overall_pass"] is True
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if passed else 'false'}\n")
+          PY
+
+      - name: Freeze one-shot Study-C identity-opening authorization
+        if: steps.survivor.outputs.passed == 'true'
+        run: |
+          python scripts/freeze_relational_historical_empirical_authorization.py \
+            --root "${{ steps.confirmatory_source.outputs.root }}" \
+            --source-archive-sha256 5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5 \
+            --survivor-design results/history/relational_historical_survivor_design_v0.1.npz \
+            --survivor-summary results/history/relational_historical_survivor_summary_v0.1.json \
+            --mask-result results/history/relational_historical_character_mask_result_v0.1.json \
+            --survivor-qualification results/history/relational_historical_survivor_qualification_v0.1.json \
+            --candidates input/candidate/relational_historical_candidates_v0.1.csv \
+            --opening-rule docs/supporting/relational_historical_climate_empirical_opening_rule_v0.1.json \
+            --output results/history/relational_historical_identity_opening_authorization_v0.1.json
+
+      - name: Execute authorized one-shot Study-C empirical test
+        if: steps.survivor.outputs.passed == 'true'
+        id: empirical
+        run: |
+          python scripts/run_relational_historical_empirical.py \
+            --root "${{ steps.confirmatory_source.outputs.root }}" \
+            --source-archive-sha256 5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5 \
+            --survivor-design results/history/relational_historical_survivor_design_v0.1.npz \
+            --survivor-summary results/history/relational_historical_survivor_summary_v0.1.json \
+            --mask-result results/history/relational_historical_character_mask_result_v0.1.json \
+            --survivor-qualification results/history/relational_historical_survivor_qualification_v0.1.json \
+            --candidates input/candidate/relational_historical_candidates_v0.1.csv \
+            --opening-rule docs/supporting/relational_historical_climate_empirical_opening_rule_v0.1.json \
+            --authorization results/history/relational_historical_identity_opening_authorization_v0.1.json \
+            --output results/history/relational_historical_empirical_result_v0.1.json
+
       - name: Freeze Study-C pre-genetic state
-        if: always()
+        if: always() && steps.empirical.outcome != 'success'
         run: |
           python - <<'PY'
           import json
