@@ -4,14 +4,18 @@ from pathlib import Path
 WORKFLOW = Path(".github/workflows/relational-historical-prequalification.yml")
 
 
-def test_historical_workflow_is_manual_and_transition_guarded():
+def test_historical_workflow_is_transition_triggered_and_guarded():
     text = WORKFLOW.read_text()
     assert "workflow_dispatch:" in text
-    assert "push:" not in text
+    assert "push:" in text
+    assert 'benchmarks/frozen/relational_environment_program_transition_v0.3.json' in text
     assert 'transition_rule["study_B_transition_receipt"]' in text
+    assert "Resolve frozen B-to-C transition" in text
     assert "C_open_authorized" in text
     assert "Study-C opening forbidden" in text
-    assert "DETECTED_B" not in text  # read through frozen transition contract, not re-decided ad hoc
+    assert "needs.authorize.outputs.authorized == 'true'" in text
+    assert 'assert state=="DETECTED_B"' in text
+    assert 'assert receipt.get("C_open_authorized") is False' in text
 
 
 def test_historical_workflow_contains_frozen_full_pipeline_after_guard():
