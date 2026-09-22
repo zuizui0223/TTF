@@ -81,6 +81,7 @@ def main() -> int:
     if summary.get("status") not in {
         "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN",
         "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS",
+        "NOT_EVALUABLE_GENERAL_CROSS_TAXON_RELATIONAL_TTF",
     }:
         raise RuntimeError("unexpected relation summary status")
     if any(bool(v) for v in summary.get("response_firewall", {}).values()):
