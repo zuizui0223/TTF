@@ -27,15 +27,17 @@ jobs:
           import json, os, urllib.request
           from pathlib import Path
 
-          execution=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.3.json").read_text())
+          execution=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.6.json").read_text())
           trigger=json.loads(Path("benchmarks/frozen/relational_environment_relation_binding_trigger_v0.1.json").read_text())
-          assert execution["schema"]=="ttf_relational_environment_transport_execution_v0.3"
-          assert execution["status"]=="FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT"
+          assert execution["schema"]=="ttf_relational_environment_transport_execution_v0.6"
+          assert execution["status"]=="FROZEN_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT"
           assert trigger["schema"]=="ttf_relational_environment_relation_binding_trigger_v0.1"
           assert trigger["status"]=="AUTHORIZE_BIND_AFTER_AUTHORITATIVE_RELATION_COMPLETION"
-          run_id=int(execution["authoritative_execution"]["workflow_run_id"])
+          producer=execution.get("relation_producer")
+          assert isinstance(producer,dict), "relation_producer is not frozen"
+          run_id=int(producer["workflow_run_id"])
           assert int(trigger["workflow_run_id"])==run_id
-          artifact_name=execution["authoritative_execution"]["relation_artifact_name"]
+          artifact_name=producer["relation_artifact_name"]
 
           url=f"https://api.github.com/repos/${{ github.repository }}/actions/runs/{run_id}/artifacts?per_page=100"
           request=urllib.request.Request(url,headers={
@@ -52,7 +54,7 @@ jobs:
               f.write(f"run_id={run_id}\n")
               f.write(f"artifact_id={int(artifact['id'])}\n")
               f.write(f"artifact_name={artifact_name}\n")
-              f.write(f"head_sha={execution['authoritative_execution']['workflow_head_sha']}\n")
+              f.write(f"head_sha={producer['workflow_head_sha']}\n")
           print(json.dumps({
               "run_id":run_id,
               "artifact_id":artifact["id"],
@@ -90,7 +92,7 @@ jobs:
             --occurrence-ledger input/relation/occurrence_ledger_v0.2.json \
             --relation-rule docs/supporting/relational_environment_relation_rule_v0.3.json \
             --freshness-rule docs/supporting/relational_future_family_freshness_amendment_v0.1.json \
-            --transport-execution benchmarks/frozen/relational_environment_transport_execution_v0.3.json \
+            --transport-execution benchmarks/frozen/relational_environment_transport_execution_v0.6.json \
             --output benchmarks/frozen/relational_environment_relation_artifact_binding_v0.3.json
 
       - name: Commit frozen binding
