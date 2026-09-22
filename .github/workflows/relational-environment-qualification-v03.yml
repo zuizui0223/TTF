@@ -128,7 +128,13 @@ jobs:
                   for b in iter(lambda:f.read(1<<20),b""): h.update(b)
               return h.hexdigest()
           p=json.loads(Path("input/relation/relational_environment_design_v0.3.json").read_text())
+          retry=json.loads(Path("input/relation/transport_retry_receipt_v0.1.json").read_text())
           binding=json.loads(Path("benchmarks/frozen/relational_environment_relation_artifact_binding_v0.3.json").read_text())
+          assert retry["schema"]=="ttf_relational_environment_transport_retry_receipt_v0.1"
+          assert retry["status"]=="PASS_ZERO_REQUEST_ERROR_TRANSPORT", retry
+          assert int(retry["maximum_retry_rounds"])==3
+          assert int(retry["final_request_error_count"])==0
+          assert all(v is False for v in retry["response_firewall"].values()), retry["response_firewall"]
           assert binding["schema"] == "ttf_relational_environment_relation_artifact_binding_v0.3"
           assert binding["status"] == "FROZEN_RESPONSE_BLIND_RELATION_ARTIFACT"
           assert binding["artifact_name"] == "relational-environment-relation-v0.3"
