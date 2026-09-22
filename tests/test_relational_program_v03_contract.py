@@ -35,6 +35,8 @@ def test_study_b_chain_is_bound_to_alpha_0p025_and_v03_freshness():
         "docs/supporting/relational_environment_relation_rule_v0.3.json",
         "docs/supporting/relational_environment_opportunity_rule_v0.2.json",
         "docs/supporting/relational_environment_qualification_rule_v0.2.json",
+        "docs/supporting/relational_environment_character_mask_rule_v0.1.json",
+        "docs/supporting/relational_environment_empirical_opening_rule_v0.1.json",
     ]
     assert relation["parent_program"] == "docs/supporting/relational_program_v0.3.json"
     assert opportunity["parent_relation_rule"] == "docs/supporting/relational_environment_relation_rule_v0.3.json"
@@ -59,14 +61,26 @@ def test_study_b_chain_is_bound_to_alpha_0p025_and_v03_freshness():
 def test_study_c_is_frozen_before_b_and_disjoint_from_entire_b_candidate_universe():
     program = load("docs/supporting/relational_program_v0.3.json")
     history = load("docs/supporting/relational_historical_climate_exposure_rule_v0.1.json")
+    opportunity = load("docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json")
     qualification = load("docs/supporting/relational_historical_climate_qualification_rule_v0.1.json")
     freshness = load("docs/supporting/relational_future_family_freshness_amendment_v0.1.json")
 
     assert program["slot_C"]["alpha_one_sided"] == 0.025
     assert program["slot_C"]["status_at_freeze"] == (
-        "FULL_RELATION_PANEL_AND_QUALIFICATION_CONTRACT_FROZEN_BEFORE_B_QUALIFICATION"
+        "FULL_RELATION_PANEL_QUALIFICATION_MASK_AND_EMPIRICAL_CONTRACT_FROZEN_BEFORE_B_QUALIFICATION"
     )
     assert history["alpha_one_sided"] == 0.025
+    assert program["slot_C"]["opportunity_rule"] == "docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json"
+    assert program["slot_C"]["execution_chain"] == [
+        "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json",
+        "docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json",
+        "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json",
+        "docs/supporting/relational_historical_climate_character_mask_rule_v0.1.json",
+        "docs/supporting/relational_historical_climate_empirical_opening_rule_v0.1.json",
+    ]
+    assert opportunity["directed_geographic_opportunity"]["support_radius_km"] == 500
+    assert opportunity["directed_geographic_opportunity"]["minimum_target_coverage"] == 0.5
+    assert opportunity["directed_geographic_opportunity"]["minimum_source_species_per_target"] == 5
     assert program["slot_C"]["qualification_rule"] == "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json"
     assert history["qualification_rule"] == program["slot_C"]["qualification_rule"]
     assert history["synthetic_qualification"]["alpha"] == 0.025
