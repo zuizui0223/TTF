@@ -64,22 +64,40 @@ jobs:
 
       - name: Verify pre-result relation producer
         run: |
-          git fetch origin relational-ttf-v01
-          git show origin/relational-ttf-v01:benchmarks/frozen/relational_environment_relation_producer_v0.1.json > /tmp/relation-producer.json
-          python - <<'PY'
+          set -euo pipefail
+          deadline=$((SECONDS+1200))
+          while true; do
+            git fetch origin relational-ttf-v01
+            git show origin/relational-ttf-v01:benchmarks/frozen/relational_environment_relation_producer_v0.1.json > /tmp/relation-producer.json
+            if python - <<'PY'
           import json
           from pathlib import Path
           p=json.loads(Path("/tmp/relation-producer.json").read_text())
-          assert p["schema"]=="ttf_relational_environment_relation_producer_v0.1"
-          assert p["status"]=="FROZEN_RELATION_PRODUCER_BEFORE_RESULT"
-          assert p["transport_execution"]=="benchmarks/frozen/relational_environment_transport_execution_v0.7.json"
-          assert int(p["workflow_run_id"])==int("${{ github.run_id }}")
-          assert p["workflow_head_sha"]=="${{ github.sha }}"
-          assert p["workflow_name"]=="relational-environment-transport-assemble-v07"
-          assert p["relation_artifact_name"]=="relational-environment-relation-v0.3"
-          assert p["relation_result_seen"] is False and p["genetic_response_used"] is False
-          assert all(v is False for v in p["response_firewall"].values())
+          ok=(
+              p.get("schema")=="ttf_relational_environment_relation_producer_v0.1"
+              and p.get("status")=="FROZEN_RELATION_PRODUCER_BEFORE_RESULT"
+              and p.get("transport_execution")=="benchmarks/frozen/relational_environment_transport_execution_v0.7.json"
+              and int(p.get("workflow_run_id",-1))==int("${{ github.run_id }}")
+              and p.get("workflow_head_sha")=="${{ github.sha }}"
+              and p.get("workflow_name")=="relational-environment-transport-assemble-v07"
+              and p.get("relation_artifact_name")=="relational-environment-relation-v0.3"
+              and p.get("relation_result_seen") is False
+              and p.get("genetic_response_used") is False
+              and all(v is False for v in p.get("response_firewall",{}).values())
+          )
+          raise SystemExit(0 if ok else 2)
           PY
+            then
+              break
+            fi
+            if [ "$SECONDS" -ge "$deadline" ]; then
+              echo "timed out waiting for matching frozen relation-producer receipt" >&2
+              cat /tmp/relation-producer.json >&2
+              exit 1
+            fi
+            sleep 10
+          done
+          cat /tmp/relation-producer.json
 
       - name: Verify frozen transport core
         run: |
@@ -96,51 +114,71 @@ jobs:
           python -m pip install -e .
           python -m pip install "rasterio>=1.4,<2"
 
-      - name: Download exact final transport artifacts
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REPO: ${{ github.repository }}
+      - name: Download frozen base transport artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: relational-env-fixed-v2-*
+          path: input/base-all
+          merge-multiple: true
+          run-id: 35691973637
+          github-token: ${{ github.token }}
+
+      - name: Download frozen cutover transport artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: relational-env-cutover-*
+          path: input/cutover-all
+          merge-multiple: true
+          run-id: 35712027961
+          github-token: ${{ github.token }}
+
+      - name: Download frozen accepted short-repair artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: relational-env-cutover-repair-*
+          path: input/short-all
+          merge-multiple: true
+          run-id: 35735717833
+          github-token: ${{ github.token }}
+
+      - name: Download frozen long-repair artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: relational-env-cutover-repair-long-*
+          path: input/long-all
+          merge-multiple: true
+          run-id: 35749326437
+          github-token: ${{ github.token }}
+
+      - name: Select only v0.7-authorized transport files
         run: |
-          mkdir -p input/all
           python - <<'PY'
-          import io, json, os, urllib.request, zipfile
+          import json, shutil
           from pathlib import Path
           e=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text())
-          repo=os.environ["REPO"]; token=os.environ["GH_TOKEN"]
-          headers={"Authorization":f"Bearer {token}","Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"}
-          def artifacts(run_id):
-              out=[]
-              for page in range(1,6):
-                  req=urllib.request.Request(f"https://api.github.com/repos/{repo}/actions/runs/{run_id}/artifacts?per_page=100&page={page}",headers=headers)
-                  with urllib.request.urlopen(req,timeout=60) as response: p=json.load(response)
-                  chunk=p.get("artifacts",[]); out.extend(chunk)
-                  if len(chunk)<100: break
-              return {a["name"]:a for a in out if not a.get("expired")}
-          def extract_exact(run_id,names):
-              by=artifacts(int(run_id))
-              missing=[n for n in names if n not in by]
-              assert not missing, (run_id,missing)
-              for name in names:
-                  req=urllib.request.Request(by[name]["archive_download_url"],headers=headers)
-                  with urllib.request.urlopen(req,timeout=120) as response: data=response.read()
-                  with zipfile.ZipFile(io.BytesIO(data)) as zf: zf.extractall("input/all")
-              print({"run_id":int(run_id),"artifacts":len(names)})
-          extract_exact(
-              e["frozen_base_component"]["workflow_run_id"],
-              [f"relational-env-fixed-v2-{int(i)}" for i in e["frozen_base_component"]["accepted_success_shards_200way"]],
-          )
-          extract_exact(
-              e["cutover_component"]["workflow_run_id"],
-              [f"relational-env-cutover-{int(i)}" for i in e["cutover_component"]["accepted_success_batch_indices"]],
-          )
-          extract_exact(
-              e["short_timeout_repair_component"]["workflow_run_id"],
-              [f"relational-env-cutover-repair-{int(i)}" for i in e["short_timeout_repair_component"]["accepted_repair_indices"]],
-          )
-          extract_exact(
-              e["long_timeout_repair_component"]["workflow_run_id"],
-              [f"relational-env-cutover-repair-long-{int(i)}" for i in e["long_timeout_repair_component"]["repair_indices"]],
-          )
+          out=Path("input/all"); out.mkdir(parents=True,exist_ok=True)
+          def copy_pair(root,csv_name,json_name):
+              csv=Path(root)/csv_name
+              js=Path(root)/json_name
+              if not csv.is_file() or not js.is_file():
+                  raise SystemExit(f"missing authorized transport pair: {csv} / {js}")
+              shutil.copy2(csv,out/csv.name)
+              shutil.copy2(js,out/js.name)
+          for i in e["frozen_base_component"]["accepted_success_shards_200way"]:
+              copy_pair("input/base-all",f"occurrences-{int(i)}of200.csv",f"ledger-{int(i)}of200.json")
+          for i in e["cutover_component"]["accepted_success_batch_indices"]:
+              copy_pair("input/cutover-all",f"occurrences-cutover-{int(i)}.csv",f"ledger-cutover-{int(i)}.json")
+          for i in e["short_timeout_repair_component"]["accepted_repair_indices"]:
+              copy_pair("input/short-all",f"occurrences-cutover-repair-{int(i)}.csv",f"ledger-cutover-repair-{int(i)}.json")
+          for i in e["long_timeout_repair_component"]["repair_indices"]:
+              copy_pair("input/long-all",f"occurrences-cutover-repair-long-{int(i)}.csv",f"ledger-cutover-repair-long-{int(i)}.json")
+          expected=2*(len(e["frozen_base_component"]["accepted_success_shards_200way"])
+                      +len(e["cutover_component"]["accepted_success_batch_indices"])
+                      +len(e["short_timeout_repair_component"]["accepted_repair_indices"])
+                      +len(e["long_timeout_repair_component"]["repair_indices"]))
+          files=list(out.iterdir())
+          assert len(files)==expected,(len(files),expected)
+          print({"authorized_files":len(files),"authorized_species":1000})
           PY
 
       - name: Assemble exact 1000 and complete frozen technical retries
