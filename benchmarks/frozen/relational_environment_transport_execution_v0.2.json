@@ -1,6 +1,6 @@
 {
   "schema": "ttf_relational_environment_transport_execution_v0.2",
-  "status": "FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT",
+  "status": "SUPERSEDED_PRE_RELATION_RESULT_BY_V0.3",
   "frozen_on": "2026-09-22",
   "scientific_contract": {
     "relation_rule": "docs/supporting/relational_environment_relation_rule_v0.3.json",
@@ -61,5 +61,7 @@
     ],
     "rule": "REQUEST_ERROR is infrastructure incompletion, never ecological inadmissibility. A relation artifact from a run with any REQUEST_ERROR must not be bound or qualified."
   },
-  "relation_binding_authorization": "Only after the acceptance gate passes may relational-environment-relation-v0.3 be frozen into relational_environment_relation_artifact_binding_v0.3.json."
+  "relation_binding_authorization": "Only after the acceptance gate passes may relational-environment-relation-v0.3 be frozen into relational_environment_relation_artifact_binding_v0.3.json.",
+  "superseded_by": "benchmarks/frozen/relational_environment_transport_execution_v0.3.json",
+  "superseded_before_relation_result": true
 }
