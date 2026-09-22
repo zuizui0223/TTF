@@ -10,9 +10,9 @@ from pathlib import Path
 import numpy as np
 
 try:
-    from scripts.reconstruct_relational_environment_geometry import reconstruct_candidate
+    from scripts.reconstruct_relational_environment_geometry import reconstruct_candidate, verify_candidate
 except ModuleNotFoundError:
-    from reconstruct_relational_environment_geometry import reconstruct_candidate
+    from reconstruct_relational_environment_geometry import reconstruct_candidate, verify_candidate
 
 from ttf.core import SpeciesEdges
 from ttf.phylogatr_confirmatory import read_occurrence_rows
@@ -160,6 +160,7 @@ def main()->int:
         geometry,latlon=reconstruct_candidate(
             root,metadata[name],neighbor_fraction=0.15
         )
+        verify_candidate(metadata[name], geometry)
         nodes=np.asarray(geometry.edge_nodes,np.int64)
         coords=np.asarray(geometry.coordinates,float)
         start=coords[nodes[:,0]]
