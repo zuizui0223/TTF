@@ -62,9 +62,19 @@ def test_binding_rejects_any_transport_request_error(tmp_path):
     freshness.write_text("{}")
     transport = tmp_path / "transport.json"
     transport.write_text(json.dumps({
-        "schema": "ttf_relational_environment_transport_execution_v0.3",
+        "schema": "ttf_relational_environment_transport_execution_v0.4",
         "status": "FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT",
-        "authoritative_execution": {
+        "frozen_base_component": {
+            "workflow_run_id": 1,
+        },
+        "cutover_component": {
+            "workflow_run_id": 2,
+        },
+        "final_partition": {
+            "base_species": 165,
+            "cutover_species": 835,
+        },
+        "relation_producer": {
             "workflow_run_id": 123,
             "workflow_head_sha": "a" * 40,
             "relation_artifact_name": "relational-environment-relation-v0.3",
