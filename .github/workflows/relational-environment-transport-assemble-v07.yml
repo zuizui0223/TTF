@@ -114,71 +114,125 @@ jobs:
           python -m pip install -e .
           python -m pip install "rasterio>=1.4,<2"
 
-      - name: Download frozen base transport artifacts
-        uses: actions/download-artifact@v4
-        with:
-          pattern: relational-env-fixed-v2-*
-          path: input/base-all
-          merge-multiple: true
-          run-id: 35691973637
-          github-token: ${{ github.token }}
-
-      - name: Download frozen cutover transport artifacts
-        uses: actions/download-artifact@v4
-        with:
-          pattern: relational-env-cutover-*
-          path: input/cutover-all
-          merge-multiple: true
-          run-id: 35712027961
-          github-token: ${{ github.token }}
-
-      - name: Download frozen accepted short-repair artifacts
-        uses: actions/download-artifact@v4
-        with:
-          pattern: relational-env-cutover-repair-*
-          path: input/short-all
-          merge-multiple: true
-          run-id: 35735717833
-          github-token: ${{ github.token }}
-
-      - name: Download frozen long-repair artifacts
-        uses: actions/download-artifact@v4
-        with:
-          pattern: relational-env-cutover-repair-long-*
-          path: input/long-all
-          merge-multiple: true
-          run-id: 35749326437
-          github-token: ${{ github.token }}
-
-      - name: Select only v0.7-authorized transport files
+      - name: Download exactly the v0.7-authorized transport artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
         run: |
           python - <<'PY'
-          import json, shutil
+          import concurrent.futures
+          import io
+          import json
+          import os
+          import urllib.parse
+          import urllib.request
+          import zipfile
           from pathlib import Path
-          e=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text())
-          out=Path("input/all"); out.mkdir(parents=True,exist_ok=True)
-          def copy_pair(root,csv_name,json_name):
-              csv=Path(root)/csv_name
-              js=Path(root)/json_name
-              if not csv.is_file() or not js.is_file():
-                  raise SystemExit(f"missing authorized transport pair: {csv} / {js}")
-              shutil.copy2(csv,out/csv.name)
-              shutil.copy2(js,out/js.name)
-          for i in e["frozen_base_component"]["accepted_success_shards_200way"]:
-              copy_pair("input/base-all",f"occurrences-{int(i)}of200.csv",f"ledger-{int(i)}of200.json")
-          for i in e["cutover_component"]["accepted_success_batch_indices"]:
-              copy_pair("input/cutover-all",f"occurrences-cutover-{int(i)}.csv",f"ledger-cutover-{int(i)}.json")
-          for i in e["short_timeout_repair_component"]["accepted_repair_indices"]:
-              copy_pair("input/short-all",f"occurrences-cutover-repair-{int(i)}.csv",f"ledger-cutover-repair-{int(i)}.json")
-          for i in e["long_timeout_repair_component"]["repair_indices"]:
-              copy_pair("input/long-all",f"occurrences-cutover-repair-long-{int(i)}.csv",f"ledger-cutover-repair-long-{int(i)}.json")
-          expected=2*(len(e["frozen_base_component"]["accepted_success_shards_200way"])
-                      +len(e["cutover_component"]["accepted_success_batch_indices"])
-                      +len(e["short_timeout_repair_component"]["accepted_repair_indices"])
-                      +len(e["long_timeout_repair_component"]["repair_indices"]))
-          files=list(out.iterdir())
-          assert len(files)==expected,(len(files),expected)
-          print({"authorized_files":len(files),"authorized_species":1000})
+
+          execution=json.loads(
+              Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text()
+          )
+          repo=os.environ["REPO"]
+          token=os.environ["GH_TOKEN"]
+          api_headers={
+              "Authorization":f"Bearer {token}",
+              "Accept":"application/vnd.github+json",
+              "X-GitHub-Api-Version":"2022-11-28",
+          }
+
+          def list_artifacts(run_id):
+              found={}
+              page=1
+              while True:
+                  request=urllib.request.Request(
+                      f"https://api.github.com/repos/{repo}/actions/runs/{int(run_id)}/artifacts?per_page=100&page={page}",
+                      headers=api_headers,
+                  )
+                  with urllib.request.urlopen(request,timeout=60) as response:
+                      payload=json.load(response)
+                  chunk=payload.get("artifacts",[])
+                  for artifact in chunk:
+                      if not artifact.get("expired"):
+                          found[artifact["name"]]=artifact
+                  if len(chunk)<100:
+                      break
+                  page+=1
+              return found
+
+          component_names={
+              int(execution["frozen_base_component"]["workflow_run_id"]):[
+                  f"relational-env-fixed-v2-{int(i)}"
+                  for i in execution["frozen_base_component"]["accepted_success_shards_200way"]
+              ],
+              int(execution["cutover_component"]["workflow_run_id"]):[
+                  f"relational-env-cutover-{int(i)}"
+                  for i in execution["cutover_component"]["accepted_success_batch_indices"]
+              ],
+              int(execution["short_timeout_repair_component"]["workflow_run_id"]):[
+                  f"relational-env-cutover-repair-{int(i)}"
+                  for i in execution["short_timeout_repair_component"]["accepted_repair_indices"]
+              ],
+              int(execution["long_timeout_repair_component"]["workflow_run_id"]):[
+                  f"relational-env-cutover-repair-long-{int(i)}"
+                  for i in execution["long_timeout_repair_component"]["repair_indices"]
+              ],
+          }
+
+          selected=[]
+          for run_id,names in component_names.items():
+              artifacts=list_artifacts(run_id)
+              missing=[name for name in names if name not in artifacts]
+              if missing:
+                  raise SystemExit(f"missing frozen artifacts in run {run_id}: {missing}")
+              selected.extend((run_id,name,artifacts[name]) for name in names)
+              print({"run_id":run_id,"available":len(artifacts),"selected":len(names)})
+
+          assert len(selected)==248, len(selected)
+
+          class StripCrossHostAuthorization(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self, req, fp, code, msg, headers, newurl):
+                  redirected=super().redirect_request(req,fp,code,msg,headers,newurl)
+                  if redirected is None:
+                      return None
+                  old_host=urllib.parse.urlparse(req.full_url).netloc
+                  new_host=urllib.parse.urlparse(newurl).netloc
+                  if old_host != new_host:
+                      redirected.remove_header("Authorization")
+                  return redirected
+
+          opener=urllib.request.build_opener(StripCrossHostAuthorization())
+
+          def download(item):
+              run_id,name,artifact=item
+              request=urllib.request.Request(
+                  artifact["archive_download_url"],
+                  headers=api_headers,
+              )
+              with opener.open(request,timeout=120) as response:
+                  data=response.read()
+              return run_id,name,data
+
+          downloaded=[]
+          with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+              for result in pool.map(download,selected):
+                  downloaded.append(result)
+
+          out=Path("input/all")
+          out.mkdir(parents=True,exist_ok=True)
+          for run_id,name,data in downloaded:
+              with zipfile.ZipFile(io.BytesIO(data)) as archive:
+                  archive.extractall(out)
+
+          expected_pairs=(
+              len(execution["frozen_base_component"]["accepted_success_shards_200way"])
+              + len(execution["cutover_component"]["accepted_success_batch_indices"])
+              + len(execution["short_timeout_repair_component"]["accepted_repair_indices"])
+              + len(execution["long_timeout_repair_component"]["repair_indices"])
+          )
+          files=[p for p in out.iterdir() if p.is_file()]
+          if len(files) != 2*expected_pairs:
+              raise SystemExit(f"unexpected extracted file count: {len(files)} != {2*expected_pairs}")
+          print({"selected_artifacts":len(selected),"extracted_files":len(files),"frozen_species":1000})
           PY
 
       - name: Assemble exact 1000 and complete frozen technical retries
