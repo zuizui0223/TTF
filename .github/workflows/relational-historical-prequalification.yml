@@ -460,7 +460,10 @@ jobs:
               payload["program_state"]="PASS_TO_C_CONFIRMATORY_CHARACTER_MASK"
           elif payload.get("opportunity_status")=="NOT_EVALUABLE_HISTORICAL_OPPORTUNITY_GEOMETRY":
               payload["program_state"]="NOT_EVALUABLE_C"
-          elif payload.get("relation_status")=="NOT_EVALUABLE_HISTORICAL_EXTERNAL_DATA":
+          elif payload.get("relation_status") in {
+              "NOT_EVALUABLE_HISTORICAL_EXTERNAL_DATA",
+              "NOT_EVALUABLE_HISTORICAL_TAXONOMIC_BREADTH",
+          }:
               payload["program_state"]="NOT_EVALUABLE_C"
           elif payload.get("occurrence_status")=="NOT_EVALUABLE_HISTORICAL_OCCURRENCE_GEOMETRY":
               payload["program_state"]="NOT_EVALUABLE_C"
