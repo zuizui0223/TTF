@@ -1,0 +1,70 @@
+{
+  "schema": "ttf_relational_environment_transport_execution_v0.3",
+  "status": "FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT",
+  "frozen_on": "2026-09-22",
+  "supersedes": "benchmarks/frozen/relational_environment_transport_execution_v0.2.json",
+  "scientific_contract": {
+    "relation_rule": "docs/supporting/relational_environment_relation_rule_v0.3.json",
+    "freshness_rule": "docs/supporting/relational_future_family_freshness_amendment_v0.1.json",
+    "candidate_file": "benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv",
+    "corrected_transport_source_sha": "9314723a0b779d9220b7fc5386cec35140bbf460",
+    "scientific_filters_changed": false,
+    "page_selection_changed": false,
+    "thinning_changed": false,
+    "occurrence_cap_changed": false,
+    "minimum_occurrence_gate_changed": false
+  },
+  "authoritative_execution": {
+    "workflow_name": "relational-environment-transport-fixed-parallel-v2",
+    "workflow_run_id": 35691973637,
+    "workflow_head_sha": "51589869705c35495b923c1e3d0146b82b036488",
+    "partition": "200 deterministic shards over the exact frozen 1000-species candidate order",
+    "species_per_shard": 5,
+    "max_parallel": 10,
+    "relation_artifact_name": "relational-environment-relation-v0.3"
+  },
+  "acceptance_gate": {
+    "exact_species_ledgers": 1000,
+    "request_error_count_must_equal": 0,
+    "accepted_nonpass_states": [
+      "REJECTED_GBIF_TAXON_MATCH",
+      "FAIL_OCCURRENCE_GEOMETRY"
+    ],
+    "rule": "REQUEST_ERROR is infrastructure incompletion, never ecological inadmissibility. A relation artifact from a run with any REQUEST_ERROR must not be bound or qualified."
+  },
+  "retry_rule": "docs/supporting/relational_environment_transport_retry_rule_v0.1.json",
+  "selection_timing": "This authoritative execution was frozen while its relation result was unopened and before any Study-B genetic response.",
+  "superseded_transport_attempts": [
+    {
+      "workflow_run_id": 35613625571,
+      "reason": "pre-transport-fix invalid GBIF parameter names"
+    },
+    {
+      "workflow_run_id": 35684589339,
+      "reason": "repair pinned to pre-transport-fix code"
+    },
+    {
+      "workflow_run_id": 35689552027,
+      "reason": "fine repair pinned to pre-transport-fix code"
+    },
+    {
+      "workflow_run_id": 35672667347,
+      "reason": "corrected 20-way execution superseded pre-result due cancelled shards/long-tail scheduling"
+    },
+    {
+      "workflow_run_id": 35690519587,
+      "reason": "corrected 100-way execution superseded pre-result solely to reduce long-tail shard latency"
+    }
+  ],
+  "forbidden": [
+    "switch back to a superseded transport run after comparing ecological outputs",
+    "choose among transport executions by PASS rate, R_env distribution, taxonomy, or future genetic outcome",
+    "change the frozen GBIF or CHELSA scientific contract"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
