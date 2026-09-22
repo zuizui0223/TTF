@@ -27,14 +27,14 @@ jobs:
           import json, os, urllib.request
           from pathlib import Path
 
-          execution=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.6.json").read_text())
+          execution=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text())
           producer=json.loads(Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json").read_text())
           trigger=json.loads(Path("benchmarks/frozen/relational_environment_relation_binding_trigger_v0.1.json").read_text())
-          assert execution["schema"]=="ttf_relational_environment_transport_execution_v0.6"
-          assert execution["status"]=="FROZEN_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT"
+          assert execution["schema"]=="ttf_relational_environment_transport_execution_v0.7"
+          assert execution["status"]=="FROZEN_FINAL_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT"
           assert producer["schema"]=="ttf_relational_environment_relation_producer_v0.1"
           assert producer["status"]=="FROZEN_RELATION_PRODUCER_BEFORE_RESULT"
-          assert producer["transport_execution"]=="benchmarks/frozen/relational_environment_transport_execution_v0.6.json"
+          assert producer["transport_execution"]=="benchmarks/frozen/relational_environment_transport_execution_v0.7.json"
           assert trigger["schema"]=="ttf_relational_environment_relation_binding_trigger_v0.1"
           assert trigger["status"]=="AUTHORIZE_BIND_AFTER_AUTHORITATIVE_RELATION_COMPLETION"
           run_id=int(producer["workflow_run_id"])
@@ -94,7 +94,7 @@ jobs:
             --occurrence-ledger input/relation/occurrence_ledger_v0.2.json \
             --relation-rule docs/supporting/relational_environment_relation_rule_v0.3.json \
             --freshness-rule docs/supporting/relational_future_family_freshness_amendment_v0.1.json \
-            --transport-execution benchmarks/frozen/relational_environment_transport_execution_v0.6.json \
+            --transport-execution benchmarks/frozen/relational_environment_transport_execution_v0.7.json \
             --relation-producer benchmarks/frozen/relational_environment_relation_producer_v0.1.json \
             --output benchmarks/frozen/relational_environment_relation_artifact_binding_v0.3.json
 
