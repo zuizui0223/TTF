@@ -1,0 +1,67 @@
+name: relational-environment-transport-cutover
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_transport_cutover_v0.1.json"
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: plan
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_transport_cutover_v0.1.json").read_text())
+          assert p["schema"]=="ttf_relational_environment_transport_cutover_v0.1"
+          assert p["status"]=="FROZEN_FINAL_TRANSPORT_CUTOVER_BEFORE_RELATION_RESULT"
+          assert p["relation_result_seen"] is False
+          assert p["query_or_scientific_contract_change"] is False
+          n=int(p["cutover_batch_count"])
+          assert n==209
+          assert len(p["batches"])==n
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write("matrix="+json.dumps(list(range(n)),separators=(",",":"))+"\n")
+          PY
+
+  acquire:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        batch: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 9314723a0b779d9220b7fc5386cec35140bbf460
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Acquire frozen cutover batch
+        run: |
+          mkdir -p results/cutover
+          python scripts/acquire_relational_environment_cutover_batch.py \
+            --manifest benchmarks/frozen/relational_environment_transport_cutover_v0.1.json \
+            --batch-index ${{ matrix.batch }} \
+            --output-csv results/cutover/occurrences-cutover-${{ matrix.batch }}.csv \
+            --output-ledger results/cutover/ledger-cutover-${{ matrix.batch }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-env-cutover-${{ matrix.batch }}
+          path: results/cutover/
+          retention-days: 30
+          if-no-files-found: error
