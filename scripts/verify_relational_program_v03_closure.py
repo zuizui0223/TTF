@@ -212,6 +212,42 @@ def main() -> int:
     for key in ("minimum_supported_target_species", "minimum_supported_source_species", "minimum_supported_directed_dyads"):
         if c_struct[key] != b_struct[key]:
             raise RuntimeError(f"Study C inherited structural gate drift: {key}")
+    breadth_keys = (
+        "largest_single_order_fraction_max",
+        "order_fraction_threshold",
+        "minimum_orders_at_or_above_fraction_threshold",
+    )
+    b_relation_breadth = p["b_relation"]["taxonomic_breadth_guardrail"]
+    c_relation_breadth = p["c_relation"]["taxonomic_breadth_guardrail"]
+    b_opportunity_breadth = b_struct["taxonomic_breadth"]
+    c_opportunity_breadth = c_struct["taxonomic_breadth"]
+    expected_breadth = {
+        "largest_single_order_fraction_max": 0.50,
+        "order_fraction_threshold": 0.05,
+        "minimum_orders_at_or_above_fraction_threshold": 4,
+    }
+    for key in breadth_keys:
+        expected = expected_breadth[key]
+        for label, contract in (
+            ("Study B relation", b_relation_breadth),
+            ("Study B opportunity", b_opportunity_breadth),
+            ("Study C relation", c_relation_breadth),
+            ("Study C opportunity", c_opportunity_breadth),
+        ):
+            if contract[key] != expected:
+                raise RuntimeError(f"{label} taxonomic breadth drift: {key}")
+    required_groups = {
+        "development supported source species",
+        "development supported target species",
+        "confirmatory supported source species",
+        "confirmatory supported target species",
+    }
+    for label, contract in (
+        ("Study B opportunity", b_opportunity_breadth),
+        ("Study C opportunity", c_opportunity_breadth),
+    ):
+        if set(contract["required_groups"]) != required_groups:
+            raise RuntimeError(f"{label} supported taxonomic groups drift")
     if float(p["c_qualification"]["inference"]["alpha"]) != 0.025:
         raise RuntimeError("Study C qualification alpha drift")
     if float(p["c_qualification"]["gate_numeric"]["private_type1_wilson95_upper_max"]) != 0.05:
