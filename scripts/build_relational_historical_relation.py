@@ -109,6 +109,49 @@ def spearman(x: np.ndarray, y: np.ndarray) -> float:
     return 0.0 if den <= np.finfo(float).eps else float(np.dot(a, b) / den)
 
 
+def taxonomic_breadth_summary(
+    names: list[str],
+    metadata: dict[str, dict[str, str]],
+    guardrail: dict[str, object],
+) -> dict[str, object]:
+    counts = Counter(
+        (metadata[name].get("order") or "UNKNOWN").strip() or "UNKNOWN"
+        for name in names
+    )
+    total = len(names)
+    threshold = float(guardrail["order_fraction_threshold"])
+    largest_max = float(guardrail["largest_single_order_fraction_max"])
+    minimum_orders = int(guardrail["minimum_orders_at_or_above_fraction_threshold"])
+    if total == 0:
+        return {
+            "species": 0,
+            "orders": 0,
+            "top_orders": {},
+            "largest_order_fraction": None,
+            "largest_single_order_fraction_max": largest_max,
+            "order_fraction_threshold": threshold,
+            "orders_at_or_above_fraction_threshold": [],
+            "orders_at_or_above_fraction_threshold_count": 0,
+            "minimum_orders_at_or_above_fraction_threshold": minimum_orders,
+            "pass": False,
+        }
+    fractions = {name: count / total for name, count in counts.items()}
+    qualifying = sorted(name for name, value in fractions.items() if value >= threshold)
+    largest = max(fractions.values())
+    return {
+        "species": total,
+        "orders": len(counts),
+        "top_orders": dict(counts.most_common(12)),
+        "largest_order_fraction": largest,
+        "largest_single_order_fraction_max": largest_max,
+        "order_fraction_threshold": threshold,
+        "orders_at_or_above_fraction_threshold": qualifying,
+        "orders_at_or_above_fraction_threshold_count": len(qualifying),
+        "minimum_orders_at_or_above_fraction_threshold": minimum_orders,
+        "pass": bool(largest <= largest_max and len(qualifying) >= minimum_orders),
+    }
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--occurrences", type=Path, required=True)
@@ -205,6 +248,39 @@ def main() -> int:
         print(json.dumps(payload, sort_keys=True))
         return 0
 
+    taxonomy_guard = taxonomic_breadth_summary(
+        admissible,
+        metadata,
+        rule["taxonomic_breadth_guardrail"],
+    )
+    if not taxonomy_guard["pass"]:
+        payload = {
+            "schema": "ttf_relational_historical_climate_relation_design_v0.1",
+            "status": str(rule["taxonomic_breadth_guardrail"]["if_failed"]),
+            "candidate_species": len(metadata),
+            "historical_environment_admissible_species": len(admissible),
+            "minimum_required": minimum,
+            "taxonomy": taxonomy_guard,
+            "inputs": {
+                "occurrence_csv_sha256": sha256_path(args.occurrences),
+                "candidate_csv_sha256": sha256_path(args.candidates),
+                "rule_sha256": sha256_path(args.rule),
+                "asset_receipt_sha256": sha256_path(args.asset_receipt),
+                "historical_assets_sha256": {p.name: sha256_path(p) for p in ordered_hist},
+                "current_rasters_sha256": {p.name: sha256_path(p) for p in current_paths},
+            },
+            "response_firewall": {
+                "Study_C_sequence_identity_opened": False,
+                "Study_C_pairwise_genetic_distances_opened": False,
+                "Study_C_T_st_computed": False,
+                "Study_C_beta_hist_computed": False,
+            },
+        }
+        args.output_summary.parent.mkdir(parents=True, exist_ok=True)
+        args.output_summary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+        print(json.dumps(payload, sort_keys=True))
+        return 0
+
     hist_density, hist_repr = density_representation(by_species, admissible, "delta")
     current_density, current_repr = density_representation(by_species, admissible, "current")
     species_to_index = {name: i for i, name in enumerate(admissible)}
@@ -263,7 +339,6 @@ def main() -> int:
 
     all_hist = np.concatenate((drh, crh))
     all_current = np.concatenate((drc, crc))
-    order_counts = Counter(metadata[name]["order"] for name in admissible)
     payload = {
         "schema": "ttf_relational_historical_climate_relation_design_v0.1",
         "status": "PASS_RESPONSE_BLIND_HISTORICAL_RELATION_DESIGN",
@@ -280,11 +355,7 @@ def main() -> int:
         "R_hist_quantiles_all_panel_dyads": qdict(all_hist),
         "R_current_quantiles_all_panel_dyads": qdict(all_current),
         "spearman_R_hist_vs_R_current": spearman(all_hist, all_current),
-        "taxonomy": {
-            "orders": len(order_counts),
-            "top_orders": dict(order_counts.most_common(12)),
-            "largest_order_fraction": max(order_counts.values()) / len(admissible),
-        },
+        "taxonomy": taxonomy_guard,
         "inputs": {
             "occurrence_csv_sha256": sha256_path(args.occurrences),
             "candidate_csv_sha256": sha256_path(args.candidates),
