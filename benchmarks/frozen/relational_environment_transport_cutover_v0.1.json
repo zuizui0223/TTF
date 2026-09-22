@@ -3192,5 +3192,6 @@
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
   },
-  "technical_retrigger_note": "Workflow file was added after the initial cutover manifest commit; this edit only triggers the already frozen 209-batch acquisition and changes no partition or scientific rule."
+  "technical_retrigger_note": "Workflow file was added after the initial cutover manifest commit; this edit only triggers the already frozen 209-batch acquisition and changes no partition or scientific rule.",
+  "technical_retrigger_note_v2": "Previous cutover execution failed before acquisition because the workflow checked out the frozen core commit where the later wrapper did not exist. This retrigger uses the trigger commit while asserting the frozen corrected transport core Git blobs byte-for-byte."
 }
