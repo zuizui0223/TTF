@@ -24,9 +24,16 @@ def main() -> int:
     args = ap.parse_args()
 
     trigger = json.loads(args.trigger.read_text())
-    if trigger.get("schema") != "ttf_relational_environment_cutover_timeout_repair_v0.1":
+    allowed = {
+        "ttf_relational_environment_cutover_timeout_repair_v0.1":
+            "FROZEN_CUTOVER_TIMEOUT_REPAIR_BEFORE_RELATION_RESULT",
+        "ttf_relational_environment_cutover_timeout_repair_long_v0.1":
+            "FROZEN_LONG_TIMEOUT_RETRY_AFTER_SINGLETON_TIMEOUT",
+    }
+    schema = trigger.get("schema")
+    if schema not in allowed:
         raise RuntimeError("unexpected Study-B cutover repair trigger schema")
-    if trigger.get("status") != "FROZEN_CUTOVER_TIMEOUT_REPAIR_BEFORE_RELATION_RESULT":
+    if trigger.get("status") != allowed[schema]:
         raise RuntimeError("Study-B cutover repair trigger is not frozen")
     if trigger.get("query_or_scientific_contract_change") is not False:
         raise RuntimeError("cutover repair changed scientific query contract")
