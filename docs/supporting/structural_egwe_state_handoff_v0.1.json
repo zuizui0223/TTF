@@ -1,0 +1,58 @@
+{
+  "schema": "ttf.structural_egwe_handoff.v0_1",
+  "status": "external_predictor_handoff_not_empirical_evidence",
+  "upstream_roles": {
+    "Structural": "reference-conditioned within-system structural adequacy",
+    "EGWE": "future-state sufficiency and residual origin/history"
+  },
+  "ttf_role": "species-disjoint transferability of prospectively frozen transition/predictor spaces",
+  "predictor_spaces": {
+    "R": "declared current-state/reference edge feature space",
+    "RC": "same R plus typed-connectivity edge feature space C",
+    "primary_increment": {
+      "name": "C|R",
+      "larger_space": "RC",
+      "baseline_space": "R",
+      "estimand": "T_RC - T_R"
+    }
+  },
+  "transition_lane": {
+    "target": "prospectively defined within-species transition/turnover edge response",
+    "train_eval_rule": "TTF species-disjoint split frozen before evaluation-species outcomes fit any shared field",
+    "self_diagnostic": "required if a qualified non-transfer result is interpreted as system/lineage-conditioned"
+  },
+  "eligibility": {
+    "allowed": [
+      "response-independent source/provenance support",
+      "response-independent geometry/admissibility support",
+      "prospectively frozen endpoint-transition estimability qualification"
+    ],
+    "forbidden": [
+      "select species because within-species C-minus-R was favorable",
+      "select species because a Structural model reached significance",
+      "drop evaluation species because TTF score is inconvenient",
+      "tune C on held-out evaluation-species outcomes"
+    ]
+  },
+  "feature_validity": [
+    "C fixed from external biology",
+    "or C fit on TTF training species only",
+    "or C cross-fitted with each evaluation species excluded"
+  ],
+  "burned_pilot_rule": {
+    "enters_transfer_denominator": false,
+    "purpose": "endpoint estimability only"
+  },
+  "interpretation": {
+    "self_detectable_and_transfer_supported": "candidate reusable state-transition field within tested domain",
+    "self_detectable_and_transfer_not_detected": "system/lineage-conditioned transition structure within tested domain",
+    "support_or_estimability_failure": "NOT_EVALUABLE / abstain",
+    "ttf_transfer_without_structural_adequacy": "valid only at TTF predictive level; cannot rescue failed within-system adequacy"
+  },
+  "current_boundaries": {
+    "genetic_TTF_result": "empirical example of within-species detectability without detectable cross-species transfer",
+    "counts_as_Structural_replication": false,
+    "Structural_A_Islands_Tanzania_are_TTF_species_panel": false,
+    "PNW_RMNP_enter_transfer_denominator": false
+  }
+}
