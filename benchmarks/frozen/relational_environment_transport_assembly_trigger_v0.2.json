@@ -22,5 +22,5 @@
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
   },
-  "technical_retrigger_note": "Retrigger after fixing only artifact enumeration/downloading: page all workflow artifacts and download exactly the 248 v0.7-authorized artifacts with cross-host Authorization stripping. Scientific partition and all ecological/genetic contracts are unchanged."
+  "technical_retrigger_note": "Retrigger with the same exact v0.7 artifacts and frozen GBIF query contract, changing only REQUEST_ERROR execution from serial to RETRY_WORKERS=20, matching the previously frozen cutover max-parallel=20. Relation result and genetic response remain unopened."
 }
