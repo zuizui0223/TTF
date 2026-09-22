@@ -1,0 +1,189 @@
+name: relational-environment-transport-assemble-v07
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_transport_assembly_trigger_v0.2.json"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify frozen v0.7 partition
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          e=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text())
+          a=json.loads(Path("benchmarks/frozen/relational_environment_transport_partition_audit_v0.7.json").read_text())
+          t=json.loads(Path("benchmarks/frozen/relational_environment_transport_assembly_trigger_v0.2.json").read_text())
+          assert e["schema"]=="ttf_relational_environment_transport_execution_v0.7"
+          assert e["status"]=="FROZEN_FINAL_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT"
+          assert a["status"]=="PASS_EXACT_1000_SPECIES_DISJOINT_COMPOSITE_PARTITION"
+          assert a["union_species_count"]==1000 and not a["overlap_candidate_indices"] and not a["missing_candidate_indices"]
+          assert t["schema"]=="ttf_relational_environment_transport_assembly_trigger_v0.2"
+          assert t["status"]=="AUTHORIZE_FINAL_V07_ASSEMBLY_BEFORE_RELATION_RESULT"
+          assert t["relation_result_seen"] is False and t["genetic_response_used"] is False
+          assert int(t["base_run_id"])==int(e["frozen_base_component"]["workflow_run_id"])
+          assert int(t["cutover_run_id"])==int(e["cutover_component"]["workflow_run_id"])
+          assert int(t["short_repair_run_id"])==int(e["short_timeout_repair_component"]["workflow_run_id"])
+          assert int(t["long_repair_run_id"])==int(e["long_timeout_repair_component"]["workflow_run_id"])
+          PY
+
+      - name: Wait for exact frozen long-repair run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          python - <<'PY'
+          import json, os, time, urllib.request
+          from pathlib import Path
+          e=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text())
+          run_id=int(e["long_timeout_repair_component"]["workflow_run_id"])
+          headers={"Authorization":f"Bearer {os.environ['GH_TOKEN']}","Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"}
+          deadline=time.time()+270*60
+          while True:
+              req=urllib.request.Request(f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{run_id}",headers=headers)
+              with urllib.request.urlopen(req,timeout=60) as response: p=json.load(response)
+              print({"run_id":run_id,"status":p["status"],"conclusion":p.get("conclusion")})
+              if p["status"]=="completed":
+                  if p.get("conclusion")!="success": raise SystemExit(f"long repair failed: {p.get('conclusion')}")
+                  break
+              if time.time()>=deadline: raise SystemExit("long repair wait timeout")
+              time.sleep(30)
+          PY
+
+      - name: Verify pre-result relation producer
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json").read_text())
+          assert p["schema"]=="ttf_relational_environment_relation_producer_v0.1"
+          assert p["status"]=="FROZEN_RELATION_PRODUCER_BEFORE_RESULT"
+          assert p["transport_execution"]=="benchmarks/frozen/relational_environment_transport_execution_v0.7.json"
+          assert int(p["workflow_run_id"])==int("${{ github.run_id }}")
+          assert p["workflow_head_sha"]=="${{ github.sha }}"
+          assert p["workflow_name"]=="relational-environment-transport-assemble-v07"
+          assert p["relation_artifact_name"]=="relational-environment-relation-v0.3"
+          assert p["relation_result_seen"] is False and p["genetic_response_used"] is False
+          assert all(v is False for v in p["response_firewall"].values())
+          PY
+
+      - name: Verify frozen transport core
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD:scripts/acquire_relational_environment_occurrences.py)" = "34eb5d5b459e105943cc5642cf355011d86c4f07"
+          test "$(git rev-parse HEAD:src/ttf/relational_environment.py)" = "d05e35866de57daa8eccacdbf7a3c0eaff055890"
+          test "$(git rev-parse HEAD:src/ttf/relational_external.py)" = "4a43bf5fedcc40c9a0fecf44dc3412e726b2ad4f"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: |
+          python -m pip install -e .
+          python -m pip install "rasterio>=1.4,<2"
+
+      - name: Download exact final transport artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          mkdir -p input/all
+          python - <<'PY'
+          import io, json, os, urllib.request, zipfile
+          from pathlib import Path
+          e=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text())
+          repo=os.environ["REPO"]; token=os.environ["GH_TOKEN"]
+          headers={"Authorization":f"Bearer {token}","Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"}
+          def artifacts(run_id):
+              out=[]
+              for page in range(1,6):
+                  req=urllib.request.Request(f"https://api.github.com/repos/{repo}/actions/runs/{run_id}/artifacts?per_page=100&page={page}",headers=headers)
+                  with urllib.request.urlopen(req,timeout=60) as response: p=json.load(response)
+                  chunk=p.get("artifacts",[]); out.extend(chunk)
+                  if len(chunk)<100: break
+              return {a["name"]:a for a in out if not a.get("expired")}
+          def extract_exact(run_id,names):
+              by=artifacts(int(run_id))
+              missing=[n for n in names if n not in by]
+              assert not missing, (run_id,missing)
+              for name in names:
+                  req=urllib.request.Request(by[name]["archive_download_url"],headers=headers)
+                  with urllib.request.urlopen(req,timeout=120) as response: data=response.read()
+                  with zipfile.ZipFile(io.BytesIO(data)) as zf: zf.extractall("input/all")
+              print({"run_id":int(run_id),"artifacts":len(names)})
+          extract_exact(
+              e["frozen_base_component"]["workflow_run_id"],
+              [f"relational-env-fixed-v2-{int(i)}" for i in e["frozen_base_component"]["accepted_success_shards_200way"]],
+          )
+          extract_exact(
+              e["cutover_component"]["workflow_run_id"],
+              [f"relational-env-cutover-{int(i)}" for i in e["cutover_component"]["accepted_success_batch_indices"]],
+          )
+          extract_exact(
+              e["short_timeout_repair_component"]["workflow_run_id"],
+              [f"relational-env-cutover-repair-{int(i)}" for i in e["short_timeout_repair_component"]["accepted_repair_indices"]],
+          )
+          extract_exact(
+              e["long_timeout_repair_component"]["workflow_run_id"],
+              [f"relational-env-cutover-repair-long-{int(i)}" for i in e["long_timeout_repair_component"]["repair_indices"]],
+          )
+          PY
+
+      - name: Assemble exact 1000 and complete frozen technical retries
+        run: |
+          mkdir -p results/environment rasters
+          python scripts/complete_relational_environment_transport.py             --input-dir input/all             --max-rounds 3             --output-csv results/environment/occurrences_v0.2.csv             --output-ledger results/environment/occurrence_ledger_v0.2.json             --output-retry-receipt results/environment/transport_retry_receipt_v0.1.json
+          python - <<'PY'
+          import json
+          p=json.load(open("results/environment/occurrence_ledger_v0.2.json"))
+          assert p["species"]==1000
+          assert int(p["status_counts"].get("REQUEST_ERROR",0))==0, p["status_counts"]
+          print({"status":p["status"],"species_passing_ge_30":p["species_passing_ge_30"],"status_counts":p["status_counts"]})
+          PY
+
+      - name: Download frozen CHELSA V2.1
+        run: |
+          set -euo pipefail
+          base="https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio"
+          for v in 1 7 12 15; do
+            curl -L --fail --retry 4 --retry-delay 5 "$base/CHELSA_bio$v_1981-2010_V.2.1.tif" -o "rasters/CHELSA_bio$v_1981-2010_V.2.1.tif"
+          done
+
+      - name: Build frozen response-blind Study-B relation
+        run: |
+          python scripts/build_relational_environment_relation.py             --occurrences results/environment/occurrences_v0.2.csv             --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv             --rule docs/supporting/relational_environment_relation_rule_v0.3.json             --freshness-rule docs/supporting/relational_future_family_freshness_amendment_v0.1.json             --raster rasters/CHELSA_bio1_1981-2010_V.2.1.tif             --raster rasters/CHELSA_bio7_1981-2010_V.2.1.tif             --raster rasters/CHELSA_bio12_1981-2010_V.2.1.tif             --raster rasters/CHELSA_bio15_1981-2010_V.2.1.tif             --output-npz results/environment/relational_environment_design_v0.3.npz             --output-summary results/environment/relational_environment_design_v0.3.json
+          python - <<'PY'
+          import json
+          p=json.load(open("results/environment/relational_environment_design_v0.3.json"))
+          assert p["status"] in {
+              "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN",
+              "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS",
+              "NOT_EVALUABLE_GENERAL_CROSS_TAXON_RELATIONAL_TTF",
+          }
+          assert all(v is False for v in p["response_firewall"].values())
+          print({k:p.get(k) for k in ("status","environment_admissible_before_freshness","freshness_excluded_environment_admissible","environment_admissible_species")})
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: relational-environment-relation-v0.3
+          path: |
+            results/environment/occurrence_ledger_v0.2.json
+            results/environment/transport_retry_receipt_v0.1.json
+            results/environment/relational_environment_design_v0.3.npz
+            results/environment/relational_environment_design_v0.3.json
+          retention-days: 30
+          if-no-files-found: warn
