@@ -140,25 +140,27 @@ jobs:
           assert p["inputs"]["candidate_csv_sha256"] == sha("benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv")
           assert binding["rules_sha256"]["relational_environment_relation_rule_v0.3.json"] == p["inputs"]["rule_sha256"]
           assert binding["rules_sha256"]["relational_future_family_freshness_amendment_v0.1.json"] == p["inputs"]["freshness_rule_sha256"]
-          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.6.json").read_text())
-          assert transport["schema"]=="ttf_relational_environment_transport_execution_v0.6"
-          assert transport["status"]=="FROZEN_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT"
+          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text())
+          assert transport["schema"]=="ttf_relational_environment_transport_execution_v0.7"
+          assert transport["status"]=="FROZEN_FINAL_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT"
           producer=json.loads(Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json").read_text())
           assert producer["schema"]=="ttf_relational_environment_relation_producer_v0.1"
           assert producer["status"]=="FROZEN_RELATION_PRODUCER_BEFORE_RESULT"
-          assert producer["transport_execution"]=="benchmarks/frozen/relational_environment_transport_execution_v0.6.json"
+          assert producer["transport_execution"]=="benchmarks/frozen/relational_environment_transport_execution_v0.7.json"
           assert int(binding["transport_integrity"]["relation_producer_workflow_run_id"]) == int(producer["workflow_run_id"])
           assert binding["transport_integrity"]["relation_producer_head_sha"] == producer["workflow_head_sha"]
           assert int(binding["transport_integrity"]["base_run_id"]) == int(transport["frozen_base_component"]["workflow_run_id"])
           assert int(binding["transport_integrity"]["cutover_run_id"]) == int(transport["cutover_component"]["workflow_run_id"])
-          assert int(binding["transport_integrity"]["timeout_repair_run_id"]) == int(transport["timeout_repair_component"]["workflow_run_id"])
+          assert int(binding["transport_integrity"]["short_repair_run_id"]) == int(transport["short_timeout_repair_component"]["workflow_run_id"])
+          assert int(binding["transport_integrity"]["long_repair_run_id"]) == int(transport["long_timeout_repair_component"]["workflow_run_id"])
           assert int(binding["transport_integrity"]["base_species"]) == int(transport["final_partition"]["base_species"])
           assert int(binding["transport_integrity"]["cutover_success_species"]) == int(transport["final_partition"]["cutover_success_species"])
-          assert int(binding["transport_integrity"]["timeout_repair_species"]) == int(transport["final_partition"]["timeout_repair_species"])
+          assert int(binding["transport_integrity"]["short_repair_species"]) == int(transport["final_partition"]["short_repair_species"])
+          assert int(binding["transport_integrity"]["long_repair_species"]) == int(transport["final_partition"]["long_repair_species"])
           assert int(binding["transport_integrity"]["exact_species_ledgers"]) == 1000
           assert int(binding["transport_integrity"]["request_error_count"]) == 0
           assert int(binding["transport_integrity"]["status_counts"].get("REQUEST_ERROR",0)) == 0
-          assert binding["rules_sha256"]["relational_environment_transport_execution_v0.6.json"] == sha("benchmarks/frozen/relational_environment_transport_execution_v0.6.json")
+          assert binding["rules_sha256"]["relational_environment_transport_execution_v0.7.json"] == sha("benchmarks/frozen/relational_environment_transport_execution_v0.7.json")
           assert binding["rules_sha256"]["relational_environment_relation_producer_v0.1.json"] == sha("benchmarks/frozen/relational_environment_relation_producer_v0.1.json")
           for filename in (
               "relational_environment_design_v0.3.json",
