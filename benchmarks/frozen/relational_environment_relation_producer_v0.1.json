@@ -3,8 +3,8 @@
   "status": "FROZEN_RELATION_PRODUCER_BEFORE_RESULT",
   "frozen_on": "2026-09-23",
   "transport_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.7.json",
-  "workflow_run_id": 35794841648,
-  "workflow_head_sha": "9c9ab3f40486bac53cd02b076a42ba207942b2cc",
+  "workflow_run_id": 35795821824,
+  "workflow_head_sha": "36320dfe97a80b27c229882fb19310f2d503fdbd",
   "workflow_name": "relational-environment-transport-assemble-v07",
   "relation_artifact_name": "relational-environment-relation-v0.3",
   "relation_result_seen": false,
@@ -13,7 +13,8 @@
     35740715490,
     35750009047,
     35750209539,
-    35794607610
+    35794607610,
+    35794841648
   ],
   "response_firewall": {
     "Study_B_sequence_identity_opened": false,
