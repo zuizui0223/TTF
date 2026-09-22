@@ -28,6 +28,9 @@ def test_qualification_workflow_verifies_bound_relation_hashes():
     assert "relational_environment_design_v0.3.json" in workflow
     assert "relational_environment_design_v0.3.npz" in workflow
     assert "occurrence_ledger_v0.2.json" in workflow
+    assert "transport_retry_receipt_v0.1.json" in workflow
+    assert "PASS_ZERO_REQUEST_ERROR_TRANSPORT" in workflow
+    assert 'retry["final_request_error_count"]' in workflow
 
 
 def test_binding_rejects_any_transport_request_error(tmp_path):
