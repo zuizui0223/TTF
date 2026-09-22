@@ -152,6 +152,13 @@ def main() -> int:
             "freshness_excluded_environment_admissible": len(excluded_admissible),
             "environment_admissible_species": len(admissible),
             "minimum_required_after_freshness": minimum_after,
+            "inputs": {
+                "occurrence_csv_sha256": sha256_path(args.occurrences),
+                "candidate_csv_sha256": sha256_path(args.candidates),
+                "rule_sha256": sha256_path(args.rule),
+                "freshness_rule_sha256": sha256_path(args.freshness_rule),
+                "rasters_sha256": {path.name: sha256_path(path) for path in args.raster},
+            },
             "response_firewall": {
                 "study_B_sequence_identity_opened": False,
                 "study_B_pairwise_genetic_distances_opened": False,
