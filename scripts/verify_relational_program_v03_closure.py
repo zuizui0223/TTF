@@ -42,7 +42,7 @@ def main() -> int:
         "c_s1_exclusion": Path("benchmarks/frozen/relational_prior_S1_species_exclusion_v0.1.json"),
         "c_s2_exclusion": Path("benchmarks/frozen/relational_prior_S2_species_exclusion_v0.1.json"),
         "b_relation": Path("docs/supporting/relational_environment_relation_rule_v0.3.json"),
-        "b_transport": Path("benchmarks/frozen/relational_environment_transport_execution_v0.5.json"),
+        "b_transport": Path("benchmarks/frozen/relational_environment_transport_execution_v0.6.json"),
         "b_opportunity": Path("docs/supporting/relational_environment_opportunity_rule_v0.2.json"),
         "b_qualification": Path("docs/supporting/relational_environment_qualification_rule_v0.2.json"),
         "b_mask": Path("docs/supporting/relational_environment_character_mask_rule_v0.1.json"),
@@ -127,7 +127,7 @@ def main() -> int:
         assert_closed_firewall(p[key])
 
     transport = p["b_transport"]
-    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.5":
+    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.6":
         raise RuntimeError("Study B transport execution schema drift")
     if transport.get("status") != "FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT":
         raise RuntimeError("Study B transport execution is not frozen authoritative")
@@ -142,11 +142,16 @@ def main() -> int:
         raise RuntimeError("Study B cutover transport run drift")
     if cutover["workflow_name"] != "relational-environment-transport-cutover":
         raise RuntimeError("Study B cutover workflow drift")
-    if int(cutover["batch_count"]) != 209 or int(cutover["species_count"]) != 835:
-        raise RuntimeError("Study B cutover partition drift")
+    if int(cutover["accepted_success_batch_count"]) != 207 or int(cutover["accepted_species_count"]) != 827:
+        raise RuntimeError("Study B cutover-success partition drift")
+    repair = transport["timeout_repair_component"]
+    if int(repair["workflow_run_id"]) != 35735717833:
+        raise RuntimeError("Study B cutover timeout-repair run drift")
+    if int(repair["repair_species_count"]) != 8:
+        raise RuntimeError("Study B timeout-repair species count drift")
     if int(final_partition["exact_species"]) != 1000:
         raise RuntimeError("Study B final transport species count drift")
-    if int(final_partition["base_species"]) != 165 or int(final_partition["cutover_species"]) != 835:
+    if int(final_partition["base_species"]) != 165 or int(final_partition["cutover_success_species"]) != 827 or int(final_partition["timeout_repair_species"]) != 8:
         raise RuntimeError("Study B final transport split drift")
     if int(transport["acceptance_gate"]["exact_species_ledgers"]) != 1000:
         raise RuntimeError("Study B transport exact-species gate drift")
