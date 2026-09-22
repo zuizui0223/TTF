@@ -24,9 +24,9 @@ jobs:
           python - <<'PY'
           import json,os
           from pathlib import Path
-          t=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.2.json").read_text())
+          t=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.3.json").read_text())
           trig=json.loads(Path("benchmarks/frozen/relational_environment_transport_completion_trigger_v0.1.json").read_text())
-          assert t["schema"]=="ttf_relational_environment_transport_execution_v0.2"
+          assert t["schema"]=="ttf_relational_environment_transport_execution_v0.3"
           assert t["status"]=="FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT"
           assert trig["schema"]=="ttf_relational_environment_transport_completion_trigger_v0.1"
           assert trig["status"]=="AUTHORIZE_TRANSPORT_COMPLETION_AFTER_AUTHORITATIVE_RUN_FINISHED"
