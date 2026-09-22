@@ -1,0 +1,68 @@
+name: relational-environment-transport-timeout-repair
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_transport_timeout_repair_v0.1.json"
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: plan
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_transport_timeout_repair_v0.1.json").read_text())
+          assert p["schema"]=="ttf_relational_environment_transport_timeout_repair_v0.1"
+          assert p["status"]=="FROZEN_TIMEOUT_REPAIR_ROUND_1_BEFORE_RELATION_RESULT"
+          assert p["parent_workflow_run_id"]==35691973637
+          assert p["relation_result_seen"] is False
+          assert p["query_or_scientific_contract_change"] is False
+          shards=list(map(int,p["singleton_1000way_shards"]))
+          assert len(shards)==40 and len(set(shards))==40
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write("matrix="+json.dumps(shards,separators=(",",":"))+"\n")
+          PY
+
+  repair:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        shard: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 9314723a0b779d9220b7fc5386cec35140bbf460
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Acquire exact singleton under corrected frozen query
+        run: |
+          mkdir -p results/repair
+          python scripts/acquire_relational_environment_occurrences.py \
+            --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv \
+            --output-csv results/repair/occurrences-${{ matrix.shard }}of1000.csv \
+            --output-ledger results/repair/ledger-${{ matrix.shard }}of1000.json \
+            --shard-index ${{ matrix.shard }} \
+            --shards 1000
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-env-timeout-repair-r1-${{ matrix.shard }}
+          path: results/repair/
+          retention-days: 30
+          if-no-files-found: error
