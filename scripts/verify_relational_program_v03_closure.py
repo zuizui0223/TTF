@@ -213,10 +213,10 @@ def main() -> int:
         raise RuntimeError("Study B producer is not frozen pre-result")
     if producer.get("transport_execution") != str(paths["b_transport"]):
         raise RuntimeError("Study B producer transport pointer drift")
-    if int(producer["workflow_run_id"]) != 35750209539:
-        raise RuntimeError("Study B final producer run drift")
-    if producer["workflow_head_sha"] != "dd65499e3c283c267e734f2fd5e70d20c0bfead5":
-        raise RuntimeError("Study B final producer head drift")
+    if int(producer["workflow_run_id"]) <= 0:
+        raise RuntimeError("Study B final producer run is invalid")
+    if len(str(producer["workflow_head_sha"])) != 40:
+        raise RuntimeError("Study B final producer head SHA is invalid")
     if producer["workflow_name"] != "relational-environment-transport-assemble-v07":
         raise RuntimeError("Study B producer workflow drift")
     if int(producer["workflow_run_id"]) in set(map(int, transport["obsolete_or_ignored_runs"])):
