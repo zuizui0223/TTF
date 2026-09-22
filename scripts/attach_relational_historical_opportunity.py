@@ -70,6 +70,49 @@ def spearman(x: np.ndarray, y: np.ndarray) -> float:
     return 0.0 if den <= np.finfo(float).eps else float(np.dot(a, b) / den)
 
 
+def taxonomic_breadth_summary(
+    names: set[str],
+    metadata: dict[str, dict[str, str]],
+    gate: dict[str, object],
+) -> dict[str, object]:
+    counts = Counter(
+        (metadata[name].get("order") or "UNKNOWN").strip() or "UNKNOWN"
+        for name in names
+    )
+    total = len(names)
+    threshold = float(gate["order_fraction_threshold"])
+    largest_max = float(gate["largest_single_order_fraction_max"])
+    minimum_orders = int(gate["minimum_orders_at_or_above_fraction_threshold"])
+    if total == 0:
+        return {
+            "species": 0,
+            "orders": 0,
+            "top_orders": {},
+            "largest_order_fraction": None,
+            "largest_single_order_fraction_max": largest_max,
+            "order_fraction_threshold": threshold,
+            "orders_at_or_above_fraction_threshold": [],
+            "orders_at_or_above_fraction_threshold_count": 0,
+            "minimum_orders_at_or_above_fraction_threshold": minimum_orders,
+            "pass": False,
+        }
+    fractions = {name: count / total for name, count in counts.items()}
+    qualifying = sorted(name for name, value in fractions.items() if value >= threshold)
+    largest = max(fractions.values())
+    return {
+        "species": total,
+        "orders": len(counts),
+        "top_orders": dict(counts.most_common()),
+        "largest_order_fraction": largest,
+        "largest_single_order_fraction_max": largest_max,
+        "order_fraction_threshold": threshold,
+        "orders_at_or_above_fraction_threshold": qualifying,
+        "orders_at_or_above_fraction_threshold_count": len(qualifying),
+        "minimum_orders_at_or_above_fraction_threshold": minimum_orders,
+        "pass": bool(largest <= largest_max and len(qualifying) >= minimum_orders),
+    }
+
+
 def process_panel(
     label: str,
     species: np.ndarray,
@@ -83,6 +126,7 @@ def process_panel(
     radius: float,
     minimum_coverage: float,
     minimum_sources: int,
+    breadth_gate: dict[str, object],
 ) -> tuple[dict[str, np.ndarray], dict]:
     coverage = np.empty(len(r_hist), float)
     same_class = np.empty(len(r_hist), bool)
@@ -115,21 +159,43 @@ def process_panel(
     so = same_order[eligible].astype(float)
     sf = same_family[eligible].astype(float)
     lr = locality_ratio[eligible]
-    if not len(rh):
-        raise RuntimeError(f"{label}: no eligible Study-C dyads")
-
-    predictors = np.column_stack((
-        zscore(rh),
-        zscore(rc),
-        zscore(g),
-        sc - sc.mean(),
-        so - so.mean(),
-        sf - sf.mean(),
-        zscore(np.abs(np.log(lr))),
-    ))
-    prepared = prepare_dyadic_regression(remap(s), remap(t), predictors, primary_index=0)
     source_names = {str(species[int(x)]) for x in s}
     target_names = {str(species[int(x)]) for x in t}
+    source_breadth = taxonomic_breadth_summary(source_names, metadata, breadth_gate)
+    target_breadth = taxonomic_breadth_summary(target_names, metadata, breadth_gate)
+
+    predictor_preparation_pass = False
+    predictor_condition = None
+    predictor_error = None
+    if len(rh):
+        try:
+            predictors = np.column_stack((
+                zscore(rh),
+                zscore(rc),
+                zscore(g),
+                sc - sc.mean(),
+                so - so.mean(),
+                sf - sf.mean(),
+                zscore(np.abs(np.log(lr))),
+            ))
+            prepared = prepare_dyadic_regression(remap(s), remap(t), predictors, primary_index=0)
+            predictor_condition = float(prepared.condition_number)
+            predictor_preparation_pass = bool(np.isfinite(predictor_condition))
+        except (ValueError, RuntimeError, np.linalg.LinAlgError) as exc:
+            predictor_error = f"{type(exc).__name__}: {exc}"
+
+    if len(rh):
+        rho_current = spearman(rh, rc)
+        rho_coverage = spearman(rh, g)
+        same_class_fraction = float(sc.mean())
+        same_order_fraction = float(so.mean())
+        same_family_fraction = float(sf.mean())
+    else:
+        rho_current = None
+        rho_coverage = None
+        same_class_fraction = None
+        same_order_fraction = None
+        same_family_fraction = None
 
     summary = {
         "panel": label,
@@ -137,14 +203,18 @@ def process_panel(
         "eligible_dyads": int(len(rh)),
         "supported_sources": len(source_names),
         "supported_targets": len(target_names),
-        "predictor_condition_number_after_two_way_FE": float(prepared.condition_number),
-        "spearman_R_hist_vs_R_current": spearman(rh, rc),
-        "spearman_R_hist_vs_coverage": spearman(rh, g),
-        "same_class_fraction": float(sc.mean()),
-        "same_order_fraction": float(so.mean()),
-        "same_family_fraction": float(sf.mean()),
-        "source_order_counts": dict(Counter(metadata[x]["order"] for x in source_names).most_common()),
-        "target_order_counts": dict(Counter(metadata[x]["order"] for x in target_names).most_common()),
+        "predictor_preparation_pass": predictor_preparation_pass,
+        "predictor_preparation_error": predictor_error,
+        "predictor_condition_number_after_two_way_FE": predictor_condition,
+        "spearman_R_hist_vs_R_current": rho_current,
+        "spearman_R_hist_vs_coverage": rho_coverage,
+        "same_class_fraction": same_class_fraction,
+        "same_order_fraction": same_order_fraction,
+        "same_family_fraction": same_family_fraction,
+        "source_order_counts": dict(Counter((metadata[x].get("order") or "UNKNOWN") for x in source_names).most_common()),
+        "target_order_counts": dict(Counter((metadata[x].get("order") or "UNKNOWN") for x in target_names).most_common()),
+        "source_taxonomic_breadth": source_breadth,
+        "target_taxonomic_breadth": target_breadth,
     }
     arrays = {
         f"{label}_source_index": s,
@@ -204,17 +274,29 @@ def main() -> int:
             radius=radius,
             minimum_coverage=minimum_coverage,
             minimum_sources=minimum_sources,
+            breadth_gate=rule["structural_gates_before_synthetic_qualification"]["taxonomic_breadth"],
         )
         arrays.update(a)
         summaries[label] = s
 
     gates = rule["structural_gates_before_synthetic_qualification"]
     dev = summaries["development"]
-    structural = (
+    con = summaries["confirmatory"]
+    numeric_support = (
         dev["supported_targets"] >= int(gates["minimum_supported_target_species"])
         and dev["supported_sources"] >= int(gates["minimum_supported_source_species"])
         and dev["eligible_dyads"] >= int(gates["minimum_supported_directed_dyads"])
     )
+    taxonomic_support = all([
+        dev["source_taxonomic_breadth"]["pass"],
+        dev["target_taxonomic_breadth"]["pass"],
+        con["source_taxonomic_breadth"]["pass"],
+        con["target_taxonomic_breadth"]["pass"],
+    ])
+    predictor_preparation = bool(
+        dev["predictor_preparation_pass"] and con["predictor_preparation_pass"]
+    )
+    structural = bool(numeric_support and taxonomic_support and predictor_preparation)
     status = (
         "PASS_TO_HISTORICAL_DEVELOPMENT_SYNTHETIC_QUALIFICATION"
         if structural
@@ -231,6 +313,12 @@ def main() -> int:
         "candidate_csv_sha256": sha256_path(args.candidates),
         "opportunity_rule_sha256": sha256_path(args.opportunity_rule),
         "panels": summaries,
+        "structural_gates": {
+            "numeric_support_pass": bool(numeric_support),
+            "taxonomic_breadth_pass": bool(taxonomic_support),
+            "predictor_preparation_pass": bool(predictor_preparation),
+            "overall_pass": bool(structural),
+        },
         "structural_gate_pass": bool(structural),
         "design_npz_sha256": sha256_path(args.output_npz),
         "response_firewall": {
