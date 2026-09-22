@@ -112,6 +112,46 @@ jobs:
           retention-days: 30
           if-no-files-found: error
 
+  candidate_failure:
+    needs: candidate
+    if: needs.candidate.outputs.passed != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Close v0.3 after Study-C candidate NOT_EVALUABLE
+        run: |
+          mkdir -p results/final
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          b=json.loads(Path("benchmarks/frozen/relational_environment_program_transition_v0.3.json").read_text())
+          b_state=b["B_state"]
+          if b_state=="STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER":
+              final="CLOSED_PARTIAL_NOT_EVALUABLE"
+          elif b_state=="NOT_EVALUABLE_B":
+              final="CLOSED_NO_EVALUABLE_TEST"
+          else:
+              raise SystemExit(f"Study-C candidate failure cannot follow B state {b_state}")
+          payload={
+              "schema":"ttf_relational_program_final_state_v0.3",
+              "B_state":b_state,
+              "C_state":"NOT_EVALUABLE",
+              "C_failure_stage":"candidate_geometry",
+              "final_state":final,
+              "no_additional_predictor_authorized":True,
+          }
+          Path("results/final/relational_program_final_state_v0.3.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps(payload,sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-historical-candidate-failure-v0.1
+          path: results/final/
+          retention-days: 30
+          if-no-files-found: error
+
   occurrence:
     needs: candidate
     if: needs.candidate.outputs.passed == 'true'
