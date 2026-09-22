@@ -44,6 +44,7 @@ def main() -> int:
         "b_relation": Path("docs/supporting/relational_environment_relation_rule_v0.3.json"),
         "b_transport": Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json"),
         "b_transport_audit": Path("benchmarks/frozen/relational_environment_transport_partition_audit_v0.7.json"),
+        "b_producer": Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json"),
         "b_opportunity": Path("docs/supporting/relational_environment_opportunity_rule_v0.2.json"),
         "b_qualification": Path("docs/supporting/relational_environment_qualification_rule_v0.2.json"),
         "b_mask": Path("docs/supporting/relational_environment_character_mask_rule_v0.1.json"),
@@ -124,7 +125,7 @@ def main() -> int:
         if states[state]["C_open_authorized"] is not True or states[state]["C_entry_state"] != entry:
             raise RuntimeError(f"Study-C transition drift for {state}")
     assert_closed_firewall(transition)
-    for key in ("b_relation", "b_transport", "b_transport_audit", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
+    for key in ("b_relation", "b_transport", "b_transport_audit", "b_producer", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
         assert_closed_firewall(p[key])
 
     transport = p["b_transport"]
@@ -204,6 +205,24 @@ def main() -> int:
     ):
         if checks.get(key) is not True:
             raise RuntimeError(f"Study B v0.7 partition audit failed: {key}")
+
+    producer = p["b_producer"]
+    if producer.get("schema") != "ttf_relational_environment_relation_producer_v0.1":
+        raise RuntimeError("Study B producer schema drift")
+    if producer.get("status") != "FROZEN_RELATION_PRODUCER_BEFORE_RESULT":
+        raise RuntimeError("Study B producer is not frozen pre-result")
+    if producer.get("transport_execution") != str(paths["b_transport"]):
+        raise RuntimeError("Study B producer transport pointer drift")
+    if int(producer["workflow_run_id"]) != 35750209539:
+        raise RuntimeError("Study B final producer run drift")
+    if producer["workflow_head_sha"] != "dd65499e3c283c267e734f2fd5e70d20c0bfead5":
+        raise RuntimeError("Study B final producer head drift")
+    if producer["workflow_name"] != "relational-environment-transport-assemble-v07":
+        raise RuntimeError("Study B producer workflow drift")
+    if int(producer["workflow_run_id"]) in set(map(int, transport["obsolete_or_ignored_runs"])):
+        raise RuntimeError("Study B final producer is listed obsolete")
+    if producer["relation_result_seen"] is not False or producer["genetic_response_used"] is not False:
+        raise RuntimeError("Study B producer was not frozen before relation/genetic response")
 
     b = program["slot_B"]
     expected_b_chain = [
