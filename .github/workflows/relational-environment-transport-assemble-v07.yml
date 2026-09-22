@@ -64,10 +64,12 @@ jobs:
 
       - name: Verify pre-result relation producer
         run: |
+          git fetch origin relational-ttf-v01
+          git show origin/relational-ttf-v01:benchmarks/frozen/relational_environment_relation_producer_v0.1.json > /tmp/relation-producer.json
           python - <<'PY'
           import json
           from pathlib import Path
-          p=json.loads(Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json").read_text())
+          p=json.loads(Path("/tmp/relation-producer.json").read_text())
           assert p["schema"]=="ttf_relational_environment_relation_producer_v0.1"
           assert p["status"]=="FROZEN_RELATION_PRODUCER_BEFORE_RESULT"
           assert p["transport_execution"]=="benchmarks/frozen/relational_environment_transport_execution_v0.7.json"
