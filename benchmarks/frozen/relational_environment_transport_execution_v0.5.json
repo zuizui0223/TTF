@@ -1,6 +1,6 @@
 {
   "schema": "ttf_relational_environment_transport_execution_v0.5",
-  "status": "FROZEN_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT",
+  "status": "SUPERSEDED_PRE_RELATION_RESULT_BY_V0.6",
   "frozen_on": "2026-09-22",
   "supersedes": "benchmarks/frozen/relational_environment_transport_execution_v0.4.json",
   "scientific_contract": {
@@ -112,5 +112,8 @@
     "Study_B_pairwise_genetic_distances_opened": false,
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
-  }
+  },
+  "superseded_by": "benchmarks/frozen/relational_environment_transport_execution_v0.6.json",
+  "superseded_before_relation_result": true,
+  "supersession_reason": "Two frozen cutover batches (167,170; eight species) timed out at the 120-minute job limit. Exact singleton repair was frozen before any relation result."
 }
