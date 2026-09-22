@@ -8,7 +8,7 @@ on:
       - "benchmarks/frozen/relational_environment_qualification_artifact_binding_v0.1.json"
 
 permissions:
-  contents: read
+  contents: write
   actions: read
 
 jobs:
@@ -243,6 +243,16 @@ jobs:
               assert "C_entry_state" not in p
           print({"B_state":state,"C_open_authorized":p["C_open_authorized"]})
           PY
+
+      - name: Commit frozen B-to-C transition receipt
+        run: |
+          cp results/final/relational_environment_program_transition_v0.3.json \
+            benchmarks/frozen/relational_environment_program_transition_v0.3.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/relational_environment_program_transition_v0.3.json
+          git commit -m "Freeze Study B program transition"
+          git push origin HEAD:relational-ttf-v01
 
       - uses: actions/upload-artifact@v4
         if: always()
