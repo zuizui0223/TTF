@@ -11,9 +11,9 @@ from pathlib import Path
 import numpy as np
 
 try:
-    from scripts.reconstruct_relational_environment_geometry import reconstruct_candidate
+    from scripts.reconstruct_relational_environment_geometry import reconstruct_candidate, verify_candidate
 except ModuleNotFoundError:
-    from reconstruct_relational_environment_geometry import reconstruct_candidate
+    from reconstruct_relational_environment_geometry import reconstruct_candidate, verify_candidate
 
 from ttf.phylogatr_character_mask import (
     CharacterMaskError,
@@ -111,6 +111,7 @@ def main()->int:
         geometry,canonical_latlon=reconstruct_candidate(
             root,row,neighbor_fraction=0.15
         )
+        verify_candidate(row, geometry)
         fasta=root/str(row["raw_dir"])/f"{row['raw_gene']}.afa"
         occurrence=root/str(row["raw_dir"])/"occurrences.txt"
         if not fasta.is_file() or not occurrence.is_file():
