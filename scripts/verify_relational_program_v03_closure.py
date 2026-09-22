@@ -129,8 +129,8 @@ def main() -> int:
     transport = p["b_transport"]
     if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.6":
         raise RuntimeError("Study B transport execution schema drift")
-    if transport.get("status") != "FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT":
-        raise RuntimeError("Study B transport execution is not frozen authoritative")
+    if transport.get("status") != "FROZEN_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT":
+        raise RuntimeError("Study B transport execution is not frozen authoritative composite v0.6")
     base = transport["frozen_base_component"]
     cutover = transport["cutover_component"]
     final_partition = transport["final_partition"]
