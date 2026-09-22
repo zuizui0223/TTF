@@ -1,0 +1,102 @@
+name: relational-environment-bind-authoritative
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_relation_binding_trigger_v0.1.json"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  bind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve frozen authoritative relation artifact
+        id: relation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, urllib.request
+          from pathlib import Path
+
+          execution=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.3.json").read_text())
+          trigger=json.loads(Path("benchmarks/frozen/relational_environment_relation_binding_trigger_v0.1.json").read_text())
+          assert execution["schema"]=="ttf_relational_environment_transport_execution_v0.3"
+          assert execution["status"]=="FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT"
+          assert trigger["schema"]=="ttf_relational_environment_relation_binding_trigger_v0.1"
+          assert trigger["status"]=="AUTHORIZE_BIND_AFTER_AUTHORITATIVE_RELATION_COMPLETION"
+          run_id=int(execution["authoritative_execution"]["workflow_run_id"])
+          assert int(trigger["workflow_run_id"])==run_id
+          artifact_name=execution["authoritative_execution"]["relation_artifact_name"]
+
+          url=f"https://api.github.com/repos/${{ github.repository }}/actions/runs/{run_id}/artifacts?per_page=100"
+          request=urllib.request.Request(url,headers={
+              "Authorization":f"Bearer {os.environ['GH_TOKEN']}",
+              "Accept":"application/vnd.github+json",
+              "X-GitHub-Api-Version":"2022-11-28",
+          })
+          with urllib.request.urlopen(request,timeout=60) as response:
+              payload=json.load(response)
+          matches=[a for a in payload.get("artifacts",[]) if a.get("name")==artifact_name and not a.get("expired")]
+          assert len(matches)==1, [(a.get("id"),a.get("name"),a.get("expired")) for a in matches]
+          artifact=matches[0]
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"run_id={run_id}\n")
+              f.write(f"artifact_id={int(artifact['id'])}\n")
+              f.write(f"artifact_name={artifact_name}\n")
+              f.write(f"head_sha={execution['authoritative_execution']['workflow_head_sha']}\n")
+          print(json.dumps({
+              "run_id":run_id,
+              "artifact_id":artifact["id"],
+              "artifact_name":artifact_name,
+              "size_in_bytes":artifact["size_in_bytes"],
+          },sort_keys=True))
+          PY
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+
+      - name: Download exact authoritative relation artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ steps.relation.outputs.artifact_name }}
+          path: input/relation
+          run-id: ${{ steps.relation.outputs.run_id }}
+          github-token: ${{ github.token }}
+
+      - name: Freeze response-blind relation artifact binding
+        run: |
+          set -euo pipefail
+          NPZ_ARG=()
+          if [ -f input/relation/relational_environment_design_v0.3.npz ]; then
+            NPZ_ARG=(--design-npz input/relation/relational_environment_design_v0.3.npz)
+          fi
+          python scripts/freeze_relational_environment_artifact_binding.py \
+            --workflow-run-id "${{ steps.relation.outputs.run_id }}" \
+            --artifact-id "${{ steps.relation.outputs.artifact_id }}" \
+            --head-sha "${{ steps.relation.outputs.head_sha }}" \
+            --summary input/relation/relational_environment_design_v0.3.json \
+            "${NPZ_ARG[@]}" \
+            --occurrence-ledger input/relation/occurrence_ledger_v0.2.json \
+            --relation-rule docs/supporting/relational_environment_relation_rule_v0.3.json \
+            --freshness-rule docs/supporting/relational_future_family_freshness_amendment_v0.1.json \
+            --transport-execution benchmarks/frozen/relational_environment_transport_execution_v0.3.json \
+            --output benchmarks/frozen/relational_environment_relation_artifact_binding_v0.3.json
+
+      - name: Commit frozen binding
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/relational_environment_relation_artifact_binding_v0.3.json
+          git commit -m "Freeze authoritative Study B relation artifact"
+          git push origin HEAD:relational-ttf-v01
