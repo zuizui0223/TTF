@@ -1,0 +1,105 @@
+name: relational-environment-bind-qualification
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_qualification_binding_trigger_v0.1.json"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  bind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve frozen qualification artifact
+        id: qualification
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request
+          from pathlib import Path
+
+          trigger=json.loads(Path("benchmarks/frozen/relational_environment_qualification_binding_trigger_v0.1.json").read_text())
+          assert trigger["schema"]=="ttf_relational_environment_qualification_binding_trigger_v0.1"
+          assert trigger["status"]=="AUTHORIZE_BIND_AFTER_QUALIFICATION_COMPLETION"
+          run_id=int(trigger["workflow_run_id"])
+          assert run_id > 0
+          artifact_name="relational-environment-qualification-v0.2"
+
+          url=f"https://api.github.com/repos/${{ github.repository }}/actions/runs/{run_id}/artifacts?per_page=100"
+          request=urllib.request.Request(url,headers={
+              "Authorization":f"Bearer {os.environ['GH_TOKEN']}",
+              "Accept":"application/vnd.github+json",
+              "X-GitHub-Api-Version":"2022-11-28",
+          })
+          with urllib.request.urlopen(request,timeout=60) as response:
+              payload=json.load(response)
+          matches=[a for a in payload.get("artifacts",[]) if a.get("name")==artifact_name and not a.get("expired")]
+          assert len(matches)==1, [(a.get("id"),a.get("name"),a.get("expired")) for a in matches]
+          artifact=matches[0]
+          run_url=f"https://api.github.com/repos/${{ github.repository }}/actions/runs/{run_id}"
+          request=urllib.request.Request(run_url,headers={
+              "Authorization":f"Bearer {os.environ['GH_TOKEN']}",
+              "Accept":"application/vnd.github+json",
+              "X-GitHub-Api-Version":"2022-11-28",
+          })
+          with urllib.request.urlopen(request,timeout=60) as response:
+              run=json.load(response)
+          assert run["status"]=="completed"
+          assert run["conclusion"]=="success"
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"run_id={run_id}\n")
+              f.write(f"artifact_id={int(artifact['id'])}\n")
+              f.write(f"head_sha={run['head_sha']}\n")
+          print(json.dumps({
+              "run_id":run_id,
+              "artifact_id":artifact["id"],
+              "head_sha":run["head_sha"],
+          },sort_keys=True))
+          PY
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+
+      - name: Download exact qualification artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: relational-environment-qualification-v0.2
+          path: input/qualification
+          run-id: ${{ steps.qualification.outputs.run_id }}
+          github-token: ${{ github.token }}
+
+      - name: Freeze qualification artifact binding
+        run: |
+          set -euo pipefail
+          QUAL_ARG=()
+          if [ -f input/qualification/relational_environment_qualification_result_v0.2.json ]; then
+            QUAL_ARG=(--qualification-result input/qualification/relational_environment_qualification_result_v0.2.json)
+          fi
+          python scripts/freeze_relational_environment_qualification_binding.py \
+            --workflow-run-id "${{ steps.qualification.outputs.run_id }}" \
+            --artifact-id "${{ steps.qualification.outputs.artifact_id }}" \
+            --head-sha "${{ steps.qualification.outputs.head_sha }}" \
+            --pregenetic-state input/qualification/relational_environment_pregenetic_state_v0.3.json \
+            --geometry-reconstruction input/qualification/relational_environment_geometry_reconstruction_v0.2.json \
+            --opportunity-summary input/qualification/relational_environment_opportunity_design_v0.2.json \
+            --opportunity-design input/qualification/relational_environment_opportunity_design_v0.2.npz \
+            "${QUAL_ARG[@]}" \
+            --output benchmarks/frozen/relational_environment_qualification_artifact_binding_v0.1.json
+
+      - name: Commit frozen qualification binding
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/relational_environment_qualification_artifact_binding_v0.1.json
+          git commit -m "Freeze Study B qualification artifact"
+          git push origin HEAD:relational-ttf-v01
