@@ -1,0 +1,74 @@
+{
+  "schema": "ttf_relational_environment_transport_failure_receipt_v0.1",
+  "status": "TECHNICAL_TRANSPORT_FAILURE_NO_ENVIRONMENT_FEASIBILITY_CONCLUSION",
+  "recorded_on": "2026-09-22",
+  "workflow_run_id": 35613625571,
+  "workflow_run_attempt_with_failure": 1,
+  "workflow_head_sha": "c1b4b6e1084573412bc87c5fb3922e382fafb6dd",
+  "acquisition_contract": "docs/supporting/relational_environment_relation_rule_v0.3.json",
+  "observed_completed_artifacts": {
+    "expected_shards": 20,
+    "successful_artifact_shards": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      19
+    ],
+    "missing_or_cancelled_shards": [
+      18
+    ],
+    "species_ledgers_observed": 950,
+    "status_counts": {
+      "REQUEST_ERROR": 921,
+      "REJECTED_GBIF_TAXON_MATCH": 15,
+      "FAIL_OCCURRENCE_GEOMETRY": 8,
+      "PASS_OCCURRENCE_GEOMETRY": 6
+    }
+  },
+  "failure_classification": {
+    "ecological_gate_evaluable": false,
+    "relation_build_executed": false,
+    "relation_job_conclusion": "skipped",
+    "reason": "The overwhelming majority of species failed at the HTTP occurrence-search transport layer before ecological occurrence geometry could be evaluated. One matrix shard was cancelled. Therefore these counts cannot be interpreted as external-data inadmissibility.",
+    "request_example": "occurrence/search call failed before a valid count/page response was obtained"
+  },
+  "transport_repair": {
+    "scientific_filters_changed": false,
+    "page_selection_changed": false,
+    "thinning_changed": false,
+    "occurrence_cap_changed": false,
+    "minimum_occurrence_gate_changed": false,
+    "changes": [
+      "use canonical current GBIF search parameter names taxonKey/hasCoordinate/hasGeospatialIssue/occurrenceStatus",
+      "use occurrenceStatus=PRESENT",
+      "retain year=2010,2026",
+      "add HTTP 429/5xx Retry-After aware backoff and clearer HTTP diagnostics",
+      "reduce workflow max-parallel from 10 to 2"
+    ],
+    "repaired_acquisition_script_commit": "cb7991be780dbf0781c17d1e3cb6caba6e134768",
+    "throttled_workflow_commit": "9314723a0b779d9220b7fc5386cec35140bbf460",
+    "replacement_run_id": 35672667347
+  },
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  },
+  "interpretation": "This receipt is infrastructure provenance only. It consumes no Study-B confirmatory opening and is not NOT_EVALUABLE_B."
+}
