@@ -2,12 +2,57 @@ name: relational-historical-prequalification
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_program_transition_v0.3.json"
 
 permissions:
   contents: read
 
 jobs:
+  authorize:
+    runs-on: ubuntu-latest
+    outputs:
+      authorized: ${{ steps.gate.outputs.authorized }}
+      b_state: ${{ steps.gate.outputs.b_state }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: gate
+        name: Resolve frozen B-to-C transition
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          rule=json.loads(Path("docs/supporting/relational_program_transition_rule_v0.1.json").read_text())
+          receipt_path=Path(rule["study_B_transition_receipt"])
+          if not receipt_path.is_file():
+              raise SystemExit("Study-C opening forbidden: frozen Study-B transition receipt is absent")
+          receipt=json.loads(receipt_path.read_text())
+          assert receipt.get("schema")==rule["receipt_schema"]
+          state=receipt.get("B_state")
+          contract=rule["allowed_B_states"].get(state)
+          if not contract:
+              raise SystemExit(f"unrecognized Study-B transition state: {state}")
+          authorized=contract.get("C_open_authorized") is True
+          if authorized:
+              expected=contract["C_entry_state"]
+              assert receipt.get("C_open_authorized") is True
+              assert receipt.get("C_entry_state")==expected
+          else:
+              assert state=="DETECTED_B"
+              assert receipt.get("C_open_authorized") is False
+              assert "C_entry_state" not in receipt
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"authorized={'true' if authorized else 'false'}\n")
+              f.write(f"b_state={state}\n")
+          print({"B_state":state,"C_open_authorized":authorized})
+          PY
+
   candidate:
+    needs: authorize
+    if: needs.authorize.outputs.authorized == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 180
     outputs:
@@ -113,8 +158,8 @@ jobs:
           if-no-files-found: error
 
   candidate_failure:
-    needs: candidate
-    if: needs.candidate.outputs.passed != 'true'
+    needs: [authorize, candidate]
+    if: needs.authorize.outputs.authorized == 'true' && needs.candidate.outputs.passed != 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
