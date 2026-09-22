@@ -21,6 +21,8 @@ on:
       - "docs/supporting/relational_historical_climate_character_mask_rule_v0.1.json"
       - "docs/supporting/relational_historical_climate_empirical_opening_rule_v0.1.json"
       - "benchmarks/frozen/relational_environment_transport_execution_v0.6.json"
+      - "benchmarks/frozen/relational_environment_transport_execution_v0.7.json"
+      - "benchmarks/frozen/relational_environment_transport_partition_audit_v0.7.json"
       - "benchmarks/frozen/relational_host_resource_empirical_repaired_receipt_v0.2.json"
       - "benchmarks/frozen/relational_host_resource_empirical_reproduction_v0.2.json"
       - "benchmarks/frozen/relational_prior_host_test_overlap_audit_v0.1.json"
