@@ -1,0 +1,66 @@
+name: relational-environment-canonicalize-repair
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_repair_canonicalize_trigger_v0.1.json"
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  REPAIR_RUN_ID: "35684589339"
+
+jobs:
+  canonicalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Require frozen repair trigger
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_repair_canonicalize_trigger_v0.1.json").read_text())
+          assert p["schema"]=="ttf_relational_environment_repair_canonicalize_trigger_v0.1"
+          assert p["status"]=="AUTHORIZE_COPY_ONLY_CANONICALIZATION"
+          assert int(p["repair_workflow_run_id"])==35684589339
+          assert p["scientific_rule_change"] is False
+          PY
+
+      - name: Download completed repaired relation artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: relational-environment-relation-v0.3-repaired
+          path: input/relation
+          run-id: ${{ env.REPAIR_RUN_ID }}
+          github-token: ${{ github.token }}
+
+      - name: Verify response-blind relation payload
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("input/relation/relational_environment_design_v0.3.json").read_text())
+          assert p["schema"]=="ttf_relational_environment_relation_design_v0.3"
+          assert p["status"] in {
+              "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN",
+              "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS",
+          }
+          assert all(v is False for v in p["response_firewall"].values())
+          print({"status":p["status"]})
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-environment-relation-v0.3
+          path: |
+            input/relation/occurrence_ledger_v0.2.json
+            input/relation/relational_environment_design_v0.3.npz
+            input/relation/relational_environment_design_v0.3.json
+          retention-days: 30
+          if-no-files-found: error
