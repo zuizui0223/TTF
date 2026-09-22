@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: "18feefc2d463de931362e81ef50bf0f902f1b70b"
+          ref: "1520871abb621a86c0bfbefd7160838dda977667"
           fetch-depth: 1
       - run: |
           tar --exclude=.git -czf /tmp/TTF-relational-v03-clean.tar.gz .
