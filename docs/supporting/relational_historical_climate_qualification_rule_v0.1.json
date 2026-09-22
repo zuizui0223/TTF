@@ -1,0 +1,102 @@
+{
+  "schema": "ttf_relational_historical_climate_qualification_rule_v0.1",
+  "status": "FROZEN_BEFORE_STUDY_B_FORMAL_QUALIFICATION_AND_BEFORE_ANY_STUDY_C_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-21",
+  "parent_relation_rule": "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json",
+  "inference": {
+    "inheritance": "Use the same source-fixed-effect + target-fixed-effect two-way source/target cluster-robust framework as Study B, requalified on Study C development geometry.",
+    "predictors_in_order": [
+      "z_R_hist",
+      "z_R_current",
+      "z_geographic_coverage",
+      "centered_same_class",
+      "centered_same_order",
+      "centered_same_family",
+      "z_abs_log_locality_count_ratio"
+    ],
+    "primary_index": 0,
+    "alternative": "beta_hist > 0",
+    "alpha": 0.025,
+    "ordinary_iid_dyad_inference_forbidden": true,
+    "fallback_after_failure": "none; failed qualification is NOT_EVALUABLE_C and cannot authorize a replacement estimator or historical predictor"
+  },
+  "synthetic_worlds": {
+    "worlds_per_cell": 1000,
+    "seed_namespace": "relational-history-formal-v0.1",
+    "seed_rule": "uint64 from first 16 hex characters of SHA256('<namespace>|<opportunity_design_sha256>|<cell_name>')",
+    "response_link": "T_st_synthetic = tanh(latent_st)",
+    "source_intercept_sd": 0.18,
+    "target_intercept_sd": 0.18,
+    "dyad_noise_sd": 0.32,
+    "fixed_control_effects": {
+      "z_R_current": 0.1,
+      "z_geographic_coverage": 0.1,
+      "centered_same_class": 0.03,
+      "centered_same_order": 0.04,
+      "centered_same_family": 0.04,
+      "z_abs_log_locality_count_ratio": 0.05
+    },
+    "private_structure": "source-specific slope on z_geographic_coverage plus target-specific slope on centered_same_order; each slope SD = 0.12*A",
+    "private_null_cells": [
+      {
+        "name": "private_A0p5",
+        "A": 0.5,
+        "beta_hist_latent": 0
+      },
+      {
+        "name": "private_A1",
+        "A": 1,
+        "beta_hist_latent": 0
+      },
+      {
+        "name": "private_A2",
+        "A": 2,
+        "beta_hist_latent": 0
+      },
+      {
+        "name": "private_A3",
+        "A": 3,
+        "beta_hist_latent": 0
+      }
+    ],
+    "historical_positive_cell": {
+      "name": "historical_relation_A3_beta0p03",
+      "A": 3,
+      "beta_hist_latent": 0.03,
+      "rationale": "The same standardized minimally meaningful relational-effect floor as Study B, frozen before Study B qualification."
+    },
+    "private_structure_numeric": {
+      "slope_sd_per_A": 0.12,
+      "source_predictor": "z_geographic_coverage",
+      "target_predictor": "centered_same_order"
+    }
+  },
+  "gate_numeric": {
+    "predictor_condition_number_max_exclusive": 10000,
+    "p_value_cutoff": 0.025,
+    "private_type1_wilson95_upper_max": 0.05,
+    "historical_power_wilson95_lower_min": 0.8,
+    "required_finite_worlds_per_cell": 1000
+  },
+  "gates": {
+    "predictor_condition_number": "< 1e4 after exact two-way FE absorption on development eligible dyads",
+    "private_type1": "Wilson 95% upper bound of p<=0.025 rejection rate <=0.05 for every frozen private-null cell",
+    "historical_power": "Wilson 95% lower bound of p<=0.025 rejection rate >=0.80 for historical_relation_A3_beta0p03",
+    "numerical": "1000/1000 worlds in every cell finite"
+  },
+  "exact_survivor_requalification": "After the confirmatory character mask, rerun this identical estimator, synthetic world family, seed namespace rule, alpha, effect floor and gates on the exact survivor dyad geometry before nucleotide identity, T_st or beta_hist may be opened.",
+  "forbidden": [
+    "change beta_hist effect floor after seeing Study B qualification or any Study C external-data result",
+    "change R_hist, R_current, controls, estimator, alpha, world generator or Wilson gates after formal results",
+    "drop R_current because it is correlated with R_hist",
+    "replace failed historical qualification with ice-sheet, refugial, barrier or another historical relation",
+    "interpret qualification failure as evidence that historical climate displacement lacks a biological effect"
+  ],
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  },
+  "parent_opportunity_rule": "docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json"
+}

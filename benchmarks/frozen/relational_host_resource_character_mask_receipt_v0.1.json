@@ -1,0 +1,29 @@
+{
+  "executed_on": "2026-09-21",
+  "failed_species": 64,
+  "full_result_library_path": "/TTF/relational/relational_host_resource_character_mask_result_v0.1.json",
+  "full_result_sha256": "d9e4b39c51181a4268e391a95ac5d0da61c9e9528b1de4cd1b0c55aca6299eca",
+  "response_firewall": {
+    "T_st_computed": false,
+    "beta_R_computed": false,
+    "nucleotide_identity_persisted": false,
+    "pairwise_genetic_distances_opened": false
+  },
+  "schema": "ttf_relational_host_resource_character_mask_receipt_v0.1",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "species_before_mask": 487,
+  "status": "PASS_TO_SURVIVOR_REQUALIFICATION",
+  "surviving_species": 423,
+  "survivor_species_digest_sha256": "321ca497bd612fd1468d93ab301ced7693cc305f6296be2e379acbb545c88b3b",
+  "survivor_species_file": "benchmarks/frozen/relational_host_resource_survivor_species_v0.1.csv",
+  "survivor_species_file_sha256": "4d33ff2afb09b8ce0cc22666f9e6b32ababa5ae57eddea3c3fa8138031158463",
+  "structural_support": {
+    "pass": true,
+    "supported_directed_pairs": 11902,
+    "supported_source_clusters": 204,
+    "supported_target_clusters": 198,
+    "surviving_inherited_sources": 211,
+    "surviving_inherited_targets": 212,
+    "surviving_species": 423
+  }
+}

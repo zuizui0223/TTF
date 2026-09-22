@@ -1,0 +1,93 @@
+{
+  "schema": "ttf_relational_host_resource_repaired_survivor_requalification_v0.1",
+  "status": "PASS_TO_REPAIRED_EMPIRICAL_AUTHORIZATION",
+  "executed_on": "2026-09-21",
+  "repair_contract_git_blob_sha": "db0a61198e3a1948e32522fe7967b7a35952f498",
+  "qualification_rule_git_blob_sha": "a673a9628c2bb2779a6d5639745fe20b553d89ff",
+  "execution_script_git_blob_sha": "feb8ebc88739ff97a480d6b8d3ac5adbd5ccdb6c",
+  "dyadic_estimator_git_blob_sha": "2b4183fa4ac93b4c06a6c438e26b09fa91f3ccff",
+  "design_npz_sha256": "597b1499dbdf8d4fb5a30f10a32686a60185305d12a8772019279bda08b82897",
+  "geometry": {
+    "mask_survivors": 420,
+    "dyads": 11696,
+    "source_clusters": 203,
+    "target_clusters": 196,
+    "empirical_union_species": 399,
+    "predictor_condition_number": 7.76754597755416,
+    "survivor_species_digest_sha256": "9005dda6dcc96fcc67158ae05adba393ac36dd7cdb5d41b52212b5e9f57cf403",
+    "source_digest_sha256": "dd5259c1a26293a6f39e09430d60fd67dc3e26747fae96af596a0260a2fc068b",
+    "target_digest_sha256": "e38283abaeb0fd190d185eed3435ddc77e6b9369232721bed5e62c23b6ef49d2",
+    "empirical_union_digest_sha256": "a3ba1b675546ade34d04f6bee8128b737ab0317380cd585d1f5de13fd58bc7dc"
+  },
+  "cells": {
+    "private_A0p5": {
+      "A": 0.5,
+      "beta_R_latent": 0.0,
+      "worlds": 1000,
+      "rejections_p_le_0p05": 53,
+      "rejection_rate": 0.053,
+      "wilson95_lower": 0.04074650524859452,
+      "wilson95_upper": 0.06867461683749176,
+      "coefficient_mean": -0.00009749192764809775,
+      "standard_error_median": 0.004144754478556523
+    },
+    "private_A1": {
+      "A": 1.0,
+      "beta_R_latent": 0.0,
+      "worlds": 1000,
+      "rejections_p_le_0p05": 43,
+      "rejection_rate": 0.043,
+      "wilson95_lower": 0.03207865341171336,
+      "wilson95_upper": 0.057419003844084014,
+      "coefficient_mean": -0.0002590024524443841,
+      "standard_error_median": 0.0046885033749590735
+    },
+    "private_A2": {
+      "A": 2.0,
+      "beta_R_latent": 0.0,
+      "worlds": 1000,
+      "rejections_p_le_0p05": 55,
+      "rejection_rate": 0.055,
+      "wilson95_lower": 0.04249742737476844,
+      "wilson95_upper": 0.07090838767737563,
+      "coefficient_mean": 0.00020990071425581802,
+      "standard_error_median": 0.006095009845704789
+    },
+    "private_A3": {
+      "A": 3.0,
+      "beta_R_latent": 0.0,
+      "worlds": 1000,
+      "rejections_p_le_0p05": 55,
+      "rejection_rate": 0.055,
+      "wilson95_lower": 0.04249742737476844,
+      "wilson95_upper": 0.07090838767737563,
+      "coefficient_mean": -0.0000032284982073996217,
+      "standard_error_median": 0.007559531150632168
+    },
+    "host_relation_A3_beta0p03": {
+      "A": 3.0,
+      "beta_R_latent": 0.03,
+      "worlds": 1000,
+      "rejections_p_le_0p05": 921,
+      "rejection_rate": 0.921,
+      "wilson95_lower": 0.9026250851159918,
+      "wilson95_upper": 0.9361527842391708,
+      "coefficient_mean": 0.022745301030933026,
+      "standard_error_median": 0.00754177175932305
+    }
+  },
+  "gates": {
+    "private_type1_pass": true,
+    "relational_power_pass": true,
+    "numerical_pass": true,
+    "overall_pass": true
+  },
+  "execution_boundary": {
+    "genetic_response_used": false,
+    "T_st_computed": false,
+    "beta_R_computed": false,
+    "relational_decision_opened": false,
+    "note": "The requalification uses only the frozen host-resource dyad design, repaired response-blind survivor geometry and synthetic worlds. It does not inspect transient values from the stopped empirical attempt."
+  },
+  "next_step": "Issue a one-continuation empirical authorization bound to the repaired 420-species / 11696-dyad geometry. No further estimator or panel changes are authorized."
+}

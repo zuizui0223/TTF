@@ -1,0 +1,85 @@
+{
+  "schema": "ttf_relational_environment_feasibility_rule_v0.1",
+  "status": "FROZEN_BEFORE_ENVIRONMENTAL_FEASIBILITY_RESULTS_AND_BEFORE_FRESH_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-21",
+  "parent_protocol": "docs/supporting/relational_genetic_protocol_v0.1.json",
+  "purpose": "Response-blind census deciding whether a globally consistent environmental-niche relation can support a fresh dyadic TTF test.",
+  "freshness": {
+    "species_universe": "phylogatR metadata-eligible species after all prior empirical and hypothesis-generating species exclusions",
+    "must_not_reuse_conditional_v01_500_species": true,
+    "must_not_reuse_original_fresh_250_species": true,
+    "must_not_reuse_decker_species": true,
+    "must_not_reuse_any_species_with_pair_specific_genetic_transfer_inspected_for_hypothesis_generation": true,
+    "ranking_rule": "SHA256('relational-ttf-v0.1|<source_sha256>|<species>'), species tie-break",
+    "candidate_scan_target": 1000,
+    "no_genetic_identity_or_distance_access": true
+  },
+  "external_occurrence_contract": {
+    "source": "GBIF occurrence records via a separately versioned acquisition receipt",
+    "basis": "species-level occurrence geometry only",
+    "minimum_usable_occurrences_candidate": 30,
+    "duplicate_rule": "remove literal duplicate coordinate pairs",
+    "coordinate_requirements": "finite valid latitude/longitude; reject zero coordinates and records with declared coordinate issues under the acquisition contract",
+    "temporal_window_candidate": "2010-present",
+    "spatial_thinning_candidate_km": 10,
+    "note": "candidate occurrence thresholds are feasibility parameters, not yet the final primary relation definition; feasibility results cannot be joined to genetic outcomes",
+    "gbif_taxon_match": "accept EXACT/CONFIDENCE; also accept FUZZY only when GBIF canonicalName exactly equals the requested species name and matched rank is SPECIES",
+    "match_rule_frozen_before_precensus": true
+  },
+  "environment_contract": {
+    "representation": "one common environmental feature space across all retained species",
+    "candidate_variables": [
+      "temperature summary",
+      "precipitation summary",
+      "seasonality",
+      "aridity/moisture",
+      "elevation"
+    ],
+    "pca": "global PCA fit without genetic outcomes; exact rasters, versions, scaling and retained axes must be frozen after feasibility and before response opening",
+    "primary_overlap_candidate": "Schoener's D",
+    "primary_overlap_candidate_authorized": false
+  },
+  "feasibility_outputs_allowed": [
+    "species occurrence counts before/after filtering",
+    "taxonomic composition",
+    "geographic coverage summaries",
+    "environmental missingness",
+    "candidate niche-overlap distribution",
+    "within-order and between-order overlap distributions",
+    "correlation of candidate niche overlap with geographic co-support and lineage proximity",
+    "source and target degree/support summaries"
+  ],
+  "feasibility_outputs_forbidden": [
+    "nucleotide identity",
+    "pairwise genetic distance",
+    "post-IBD genetic turnover",
+    "T_st",
+    "association of any ecological relation with genetic response",
+    "selection of variables or thresholds using genetic response"
+  ],
+  "provisional_pass_criteria": {
+    "species_with_usable_external_niche": ">= 500 fresh species before final panel split",
+    "nondegenerate_relation": "candidate R_st must not be effectively binary or constant; report quantiles and effective unique values",
+    "geography_separability": "candidate R_st must retain substantial within-geographic-support variation; no pass/fail numeric threshold may be invented after seeing genetic response",
+    "taxonomic_breadth": "largest order fraction <=0.50 and at least four orders each contributing >=0.05 of the ecology-admissible fresh pool",
+    "dyad_support": "report eligible dyads per source and target before choosing final development/confirmatory sizes"
+  },
+  "decision_states": [
+    "PASS_TO_RELATION_FREEZE",
+    "REVISE_EXTERNAL_DATA_CONTRACT_RESPONSE_BLIND",
+    "NOT_EVALUABLE_EXTERNAL_ECOLOGY"
+  ],
+  "firewall": {
+    "genetic_response_opened": false,
+    "T_st_computed": false,
+    "empirical_relation_response_association_computed": false
+  },
+  "taxonomic_breadth_guardrail": {
+    "rationale": "The primary claim is cross-taxon relational transfer, so a response-blind ecological filter must not turn the final test into a de facto single-order study.",
+    "largest_single_order_fraction_max": 0.5,
+    "minimum_orders_with_fraction_ge_0_05": 4,
+    "evaluation_time": "after external-ecology admissibility and before development/confirmatory panel freeze",
+    "if_failed": "NOT_EVALUABLE_GENERAL_CROSS_TAXON_RELATIONAL_TTF; a taxon-specific successor requires a new name and new prospective protocol",
+    "leave_largest_order_out": "secondary breadth sensitivity only; cannot rescue or overturn the frozen primary decision"
+  }
+}

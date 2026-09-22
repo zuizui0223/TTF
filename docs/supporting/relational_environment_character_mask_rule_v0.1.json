@@ -1,0 +1,62 @@
+{
+  "schema": "ttf_relational_environment_character_mask_rule_v0.1",
+  "status": "FROZEN_BEFORE_STUDY_B_RELATION_BUILD_RESULT_FORMAL_QUALIFICATION_AND_ANY_STUDY_B_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-21",
+  "parent_program": "docs/supporting/relational_program_v0.3.json",
+  "parent_relation_rule": "docs/supporting/relational_environment_relation_rule_v0.3.json",
+  "parent_qualification_rule": "docs/supporting/relational_environment_qualification_rule_v0.2.json",
+  "entry_condition": "Study B response-blind relation design PASS, geographic-opportunity geometry PASS, and development synthetic qualification PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION at alpha=0.025.",
+  "panel": {
+    "role": "confirmatory panel only; development genetic response remains permanently closed",
+    "inherit_species_and_source_target_roles": true,
+    "backfill": false,
+    "replacement_species": false,
+    "resplitting": false,
+    "graph_and_localities": "unchanged within every surviving species"
+  },
+  "allowed_view": "For every aligned FASTA character reveal and persist only canonical-valid versus noncanonical/missing: A/C/G/T -> 1; every other symbol -> 0. Nucleotide identity must not persist.",
+  "inherited_parser_contract": {
+    "source": "docs/supporting/genetic_phylogatr_phase2_mask_rule_v0.1.json",
+    "duplicate_aligned_header": "species inadmissible",
+    "unequal_or_zero_aligned_sequence_length": "species inadmissible",
+    "minimum_comparable_fraction": 0.50
+  },
+  "edge_admissibility": {
+    "valid_sequence_pair": "jointly canonical columns >= ceil(0.50 * frozen alignment length)",
+    "valid_frozen_edge": "at least one valid cross-locality sequence pair exists between the two unchanged frozen graph endpoint localities",
+    "species_admissible": "every frozen edge is valid",
+    "failed_species": "drop species from the Study B confirmatory estimand; do not rewire, switch marker, delete sequences, or relax threshold"
+  },
+  "post_mask_dyad_support": {
+    "geographic_support_rule": "unchanged relation/opportunity v0.3/v0.2 contract",
+    "minimum_surviving_sources_per_target": 5,
+    "unsupported_target": "drop from the confirmatory dyad estimand without replacement",
+    "no_absolute_cluster_minimum": "Exact survivor-geometry Type-I/power requalification is the binding adequacy gate; no cluster-count threshold may be invented after mask opening."
+  },
+  "required_survivor_requalification": {
+    "rule": "docs/supporting/relational_environment_qualification_rule_v0.2.json",
+    "same_predictors": true,
+    "same_estimator": true,
+    "same_seed_namespace": true,
+    "same_private_null_cells": true,
+    "same_positive_control_effect": 0.03,
+    "same_alpha": 0.025,
+    "same_wilson_gates": true,
+    "pass_required_before_nucleotide_identity": true,
+    "failure": "NOT_EVALUABLE_B_CHARACTER_MASK_OR_SURVIVOR_GEOMETRY; proceed to already-frozen Study C without changing B or C"
+  },
+  "forbidden": [
+    "inspect Study B nucleotide identity before exact survivor requalification passes",
+    "change the 0.50 comparable-site threshold after mask opening",
+    "retain duplicate-header species by changing the reader",
+    "backfill failed species or targets",
+    "change R_env, PCA axes, KDE, geography threshold, lineage controls, alpha, or synthetic positive-control floor after mask opening",
+    "convert mask or requalification failure into a biological null"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}

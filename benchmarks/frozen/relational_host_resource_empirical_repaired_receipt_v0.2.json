@@ -1,0 +1,66 @@
+{
+  "T_st_distribution": {
+    "max": 0.8630348093068483,
+    "mean": 0.006060309216015625,
+    "median": 0.0028210751163228413,
+    "min": -0.9145812569616942,
+    "q10": -0.3576159908559456,
+    "q25": -0.17214426970524532,
+    "q75": 0.18430694221890087,
+    "q90": 0.36558441558441557,
+    "sd": 0.2758180062210636
+  },
+  "authorization": {
+    "git_blob_sha": "54f3dda5f09dd948ad3842e482ee2579a0db9239",
+    "path": "benchmarks/frozen/relational_host_resource_identity_opening_authorization_v0.2.json"
+  },
+  "decision": "RELATIONAL_HOST_RESOURCE_NULL_WITH_QUALIFIED_POWER",
+  "empirical_design": {
+    "directed_source_target_dyads": 11696,
+    "mask_survivors": 420,
+    "predictor_condition_number": 7.76754597755416,
+    "source_species": 203,
+    "species_union": 399,
+    "target_species": 196
+  },
+  "full_result": {
+    "library_path": "/TTF/relational/relational_host_resource_empirical_result_v0.2.json",
+    "serialized_dyad_T_st": true,
+    "serialized_edge_genetic_distance_vectors": false,
+    "serialized_sequence_identity": false,
+    "sha256": "23b541c97a7f54884e4ce027fe989bba7637a90c77d8454dc1a1e9aa4ffbb62a"
+  },
+  "licensed_interpretation": "Under repaired-geometry qualified power, larval host-resource footprint similarity did not explain source-target heterogeneity in transfer of post-IBD spatial genetic structure among the tested fresh Lepidoptera dyads.",
+  "one_shot": {
+    "continuation_after_response_independent_structural_repair": true,
+    "post_result_retuning_allowed": false,
+    "result_selection_rerun_allowed": false
+  },
+  "opened_on": "2026-09-21",
+  "primary": {
+    "alpha": 0.05,
+    "coefficient": -0.0014740873089605477,
+    "estimand": "beta_R for z(host-resource Jaccard)",
+    "p_value_one_sided": 0.6376882940222616,
+    "positive": false,
+    "standard_error_two_way_cluster": 0.0041843423225665305,
+    "z_score": -0.3522864993647063
+  },
+  "repair": {
+    "excluded_species": [
+      "Cladara limitaria",
+      "Lobophora nivigerata",
+      "Protoboarmia porcelaria"
+    ],
+    "git_blob_sha": "db0a61198e3a1948e32522fe7967b7a35952f498",
+    "path": "benchmarks/frozen/relational_host_resource_mask_parser_repair_v0.1.json"
+  },
+  "requalification": {
+    "git_blob_sha": "283251124d614b81423a795a7fe7045e41dfc40c",
+    "overall_pass": true,
+    "path": "benchmarks/frozen/relational_host_resource_repaired_survivor_requalification_v0.1.json"
+  },
+  "schema": "ttf_relational_host_resource_empirical_repaired_receipt_v0.2",
+  "status": "EMPIRICAL_RELATIONAL_HOST_REPAIRED_RESULT_COMPLETE",
+  "supersedes_for_current_S3_inference": "benchmarks/frozen/relational_host_resource_empirical_receipt_v0.1.json"
+}

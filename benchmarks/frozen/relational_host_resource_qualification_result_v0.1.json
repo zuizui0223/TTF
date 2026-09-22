@@ -1,0 +1,94 @@
+{
+  "schema": "ttf_relational_host_resource_qualification_result_v0.1",
+  "status": "PASS_TO_CHARACTER_MASK_GATE",
+  "executed_on": "2026-09-21",
+  "rule_git_blob_sha": "a673a9628c2bb2779a6d5639745fe20b553d89ff",
+  "audit_git_blob_sha": "4c020e372d7756dfc6a33c55ab83790498e25fb1",
+  "design_npz_sha256": "597b1499dbdf8d4fb5a30f10a32686a60185305d12a8772019279bda08b82897",
+  "geometry": {
+    "dyads": 15094,
+    "source_clusters": 238,
+    "target_clusters": 226,
+    "predictor_condition_number": 7.608682882391019
+  },
+  "cells": {
+    "private_A0p5": {
+      "A": 0.5,
+      "beta_R_latent": 0.0,
+      "worlds": 1000,
+      "rejections_p_le_0p05": 64,
+      "rejection_rate": 0.064,
+      "wilson95_lower": 0.050436200898229526,
+      "wilson95_upper": 0.08090073250117454,
+      "coefficient_mean": -0.000003589493741012799,
+      "coefficient_sd": 0.0039022615406360804,
+      "standard_error_median": 0.0037369982195285196,
+      "master_seed_uint64": 17440775521785087836
+    },
+    "private_A1": {
+      "A": 1.0,
+      "beta_R_latent": 0.0,
+      "worlds": 1000,
+      "rejections_p_le_0p05": 55,
+      "rejection_rate": 0.055,
+      "wilson95_lower": 0.04249742737476844,
+      "wilson95_upper": 0.07090838767737563,
+      "coefficient_mean": -0.0000052748942797888056,
+      "coefficient_sd": 0.004391455661384247,
+      "standard_error_median": 0.0043172919576261876,
+      "master_seed_uint64": 1114811368612027
+    },
+    "private_A2": {
+      "A": 2.0,
+      "beta_R_latent": 0.0,
+      "worlds": 1000,
+      "rejections_p_le_0p05": 38,
+      "rejection_rate": 0.038,
+      "wilson95_lower": 0.02780900450930263,
+      "wilson95_upper": 0.05172692033135032,
+      "coefficient_mean": -0.0001311186020245318,
+      "coefficient_sd": 0.00565264041999467,
+      "standard_error_median": 0.005826788578651315,
+      "master_seed_uint64": 8307638207407235397
+    },
+    "private_A3": {
+      "A": 3.0,
+      "beta_R_latent": 0.0,
+      "worlds": 1000,
+      "rejections_p_le_0p05": 55,
+      "rejection_rate": 0.055,
+      "wilson95_lower": 0.04249742737476844,
+      "wilson95_upper": 0.07090838767737563,
+      "coefficient_mean": -0.000012629045280351719,
+      "coefficient_sd": 0.00744878344476639,
+      "standard_error_median": 0.007321096008019556,
+      "master_seed_uint64": 13225373558512890164
+    },
+    "host_relation_A3_beta0p03": {
+      "A": 3.0,
+      "beta_R_latent": 0.03,
+      "worlds": 1000,
+      "rejections_p_le_0p05": 905,
+      "rejection_rate": 0.905,
+      "wilson95_lower": 0.8852455602057479,
+      "wilson95_upper": 0.9216547654209526,
+      "coefficient_mean": 0.02268960823526169,
+      "coefficient_sd": 0.007630271157481759,
+      "standard_error_median": 0.007303066839624324,
+      "master_seed_uint64": 6785319787311483558
+    }
+  },
+  "gates": {
+    "private_type1_pass": true,
+    "relational_power_pass": true,
+    "overall_pass": true
+  },
+  "next_step": "Open only canonical-valid/noncanonical character masks for the frozen fresh host-resource panel; then rerun the exact qualification on survivor geometry before nucleotide identity, pairwise genetic distance, T_st, or beta_R may be opened.",
+  "claim_boundary": "This is synthetic qualification only. It contains no empirical genetic response and makes no biological host-transfer claim.",
+  "response_firewall": {
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "T_st_computed": false,
+    "beta_R_computed": false
+  }
+}

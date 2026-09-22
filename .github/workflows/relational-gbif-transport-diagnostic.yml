@@ -1,0 +1,55 @@
+name: relational-gbif-transport-diagnostic
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - ".github/workflows/relational-gbif-transport-diagnostic.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Probe canonical GBIF occurrence search
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          from scripts.acquire_relational_environment_occurrences import get_json
+          names=[r["species"] for r in list(csv.DictReader(Path("benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv").open()))[:3]]
+          out=[]
+          for species in names:
+              match=get_json("species/match",{"name":species,"strict":"true"})
+              key=int(match.get("usageKey") or 0)
+              if key<=0:
+                  out.append({"species":species,"status":"NO_USAGE_KEY","match":match})
+                  continue
+              count=get_json("occurrence/search",{
+                  "taxonKey":key,
+                  "hasCoordinate":"true",
+                  "hasGeospatialIssue":"false",
+                  "occurrenceStatus":"PRESENT",
+                  "year":"2010,2026",
+                  "limit":1,
+              })
+              out.append({"species":species,"usageKey":key,"status":"HTTP_OK","count":int(count.get("count") or 0)})
+          Path("gbif-transport-diagnostic.json").write_text(json.dumps(out,indent=2,sort_keys=True)+"\n")
+          assert any(row["status"]=="HTTP_OK" for row in out), out
+          print(json.dumps(out,sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-gbif-transport-diagnostic
+          path: gbif-transport-diagnostic.json
+          retention-days: 7

@@ -1,0 +1,110 @@
+{
+  "schema": "ttf_relational_environment_transport_execution_v0.4",
+  "status": "SUPERSEDED_TECHNICAL_PRE_RELATION_BY_V0.5",
+  "frozen_on": "2026-09-22",
+  "supersedes": "benchmarks/frozen/relational_environment_transport_execution_v0.3.json",
+  "scientific_contract": {
+    "relation_rule": "docs/supporting/relational_environment_relation_rule_v0.3.json",
+    "freshness_rule": "docs/supporting/relational_future_family_freshness_amendment_v0.1.json",
+    "candidate_file": "benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv",
+    "corrected_transport_source_sha": "9314723a0b779d9220b7fc5386cec35140bbf460",
+    "scientific_filters_changed": false,
+    "page_selection_changed": false,
+    "thinning_changed": false,
+    "occurrence_cap_changed": false,
+    "minimum_occurrence_gate_changed": false
+  },
+  "frozen_base_component": {
+    "workflow_run_id": 35691973637,
+    "workflow_name": "relational-environment-transport-fixed-parallel-v2",
+    "partition": "200-way, 5 species per shard",
+    "accepted_success_shards_200way": [
+      0,
+      2,
+      3,
+      5,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      21,
+      22,
+      24,
+      25,
+      26,
+      27,
+      29,
+      30,
+      31,
+      34,
+      37,
+      39,
+      41,
+      45,
+      46,
+      48
+    ],
+    "accepted_species_count": 165,
+    "ignore_all_other_base_artifacts": true
+  },
+  "cutover_component": {
+    "workflow_run_id": 35711675657,
+    "workflow_head_sha": "c3ecf3d9627e4c66298de463fbccd4b3f543dd9d",
+    "workflow_name": "relational-environment-transport-cutover",
+    "cutover_manifest": "benchmarks/frozen/relational_environment_transport_cutover_v0.1.json",
+    "batch_count": 209,
+    "batch_size_max": 4,
+    "species_count": 835
+  },
+  "final_partition": {
+    "exact_species": 1000,
+    "base_species": 165,
+    "cutover_species": 835,
+    "overlap_allowed": false,
+    "backfill_allowed": false
+  },
+  "acceptance_gate": {
+    "exact_species_ledgers": 1000,
+    "request_error_count_must_equal": 0,
+    "accepted_nonpass_states": [
+      "REJECTED_GBIF_TAXON_MATCH",
+      "FAIL_OCCURRENCE_GEOMETRY"
+    ],
+    "unresolved_request_error_action": "technical retry under docs/supporting/relational_environment_transport_retry_rule_v0.1.json only"
+  },
+  "retry_rule": "docs/supporting/relational_environment_transport_retry_rule_v0.1.json",
+  "relation_producer": null,
+  "selection_timing": "The 165/835 composite partition and both component run IDs were frozen while no Study-B relation result existed and before any Study-B genetic response.",
+  "obsolete_or_ignored_runs": [
+    35613625571,
+    35684589339,
+    35689552027,
+    35672667347,
+    35690519587,
+    35711038523
+  ],
+  "forbidden": [
+    "use later-successful base shards outside frozen_base_component.accepted_success_shards_200way",
+    "use timeout-repair-round-1 artifacts in final assembly",
+    "change the cutover species list after external relation output",
+    "choose transport components by PASS rate, R_env distribution, taxonomy, or genetic response"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  },
+  "superseded_by": "benchmarks/frozen/relational_environment_transport_execution_v0.5.json",
+  "superseded_before_relation_result": true,
+  "supersession_reason": "First cutover run failed before acquisition because the workflow checked out the frozen core commit where the later cutover wrapper did not exist."
+}

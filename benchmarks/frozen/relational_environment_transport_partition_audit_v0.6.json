@@ -1,0 +1,82 @@
+{
+  "schema": "ttf_relational_environment_transport_partition_audit_v0.6",
+  "status": "PASS_EXACT_1000_SPECIES_DISJOINT_COMPOSITE_PARTITION",
+  "audited_on": "2026-09-22",
+  "transport_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.6.json",
+  "candidate_file": "benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv",
+  "components": {
+    "base": {
+      "species": 165,
+      "accepted_shards_200way": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        21,
+        22,
+        24,
+        25,
+        26,
+        27,
+        29,
+        30,
+        31,
+        34,
+        37,
+        39,
+        41,
+        45,
+        46,
+        48
+      ]
+    },
+    "cutover_success": {
+      "species": 827,
+      "accepted_batch_count": 207,
+      "ignored_batches": [
+        167,
+        170
+      ]
+    },
+    "timeout_repair": {
+      "species": 8,
+      "replaces_batches": [
+        167,
+        170
+      ]
+    }
+  },
+  "union_species_count": 1000,
+  "overlap_candidate_indices": [],
+  "missing_candidate_indices": [],
+  "species_name_mismatches": [],
+  "checks": {
+    "candidate_count": true,
+    "base_species_165": true,
+    "cutover_success_species_827": true,
+    "repair_species_8": true,
+    "overlap_zero": true,
+    "missing_zero": true,
+    "union_1000": true,
+    "species_names_match": true
+  },
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}

@@ -1,0 +1,337 @@
+name: relational-environment-qualification-v03
+
+on:
+  workflow_dispatch:
+    inputs:
+      relation_run_id:
+        description: "Completed relational-environment-relation workflow run ID containing relational-environment-relation-v0.3"
+        required: true
+        type: string
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_relation_artifact_binding_v0.3.json"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve exact frozen relation workflow run
+        id: relation
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_relation_artifact_binding_v0.3.json").read_text())
+          assert p["schema"] == "ttf_relational_environment_relation_artifact_binding_v0.3"
+          assert p["status"] == "FROZEN_RESPONSE_BLIND_RELATION_ARTIFACT"
+          assert p["artifact_name"] == "relational-environment-relation-v0.3"
+          run_id=int(p["workflow_run_id"])
+          assert run_id > 0
+          manual=os.environ.get("MANUAL_RUN_ID","").strip()
+          if manual:
+              assert int(manual)==run_id, (manual,run_id)
+          relation_status=str(p["relation_status"])
+          allowed={
+              "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN",
+              "NOT_EVALUABLE_ENVIRONMENT_FRESHNESS",
+          }
+          assert relation_status in allowed, relation_status
+          relation_pass=relation_status=="PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN"
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"run_id={run_id}\n")
+              f.write(f"relation_status={relation_status}\n")
+              f.write(f"relation_pass={'true' if relation_pass else 'false'}\n")
+          print(json.dumps({
+              "workflow_run_id":run_id,
+              "head_sha":p["head_sha"],
+              "relation_status":relation_status,
+              "relation_pass":relation_pass,
+          },sort_keys=True))
+          PY
+        env:
+          MANUAL_RUN_ID: ${{ github.event_name == 'workflow_dispatch' && inputs.relation_run_id || '' }}
+
+      - name: Freeze relation-stage NOT_EVALUABLE_B transition
+        if: steps.relation.outputs.relation_pass != 'true'
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          binding_path=Path("benchmarks/frozen/relational_environment_relation_artifact_binding_v0.3.json")
+          binding=json.loads(binding_path.read_text())
+          assert binding["relation_status"]=="NOT_EVALUABLE_ENVIRONMENT_FRESHNESS"
+          h=hashlib.sha256(binding_path.read_bytes()).hexdigest()
+          payload={
+              "schema":"ttf_relational_environment_program_transition_v0.3",
+              "B_state":"NOT_EVALUABLE_B",
+              "C_open_authorized":True,
+              "C_entry_state":"PROCEED_TO_C_AFTER_B_NOT_EVALUABLE",
+              "source_stage":"environment_freshness_relation_gate",
+              "Study_B_empirical_response_opened":False,
+              "relation_binding_sha256":h,
+              "relation_status":binding["relation_status"],
+          }
+          out=Path("benchmarks/frozen/relational_environment_program_transition_v0.3.json")
+          out.write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
+          print(json.dumps(payload,sort_keys=True))
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/relational_environment_program_transition_v0.3.json
+          git commit -m "Freeze Study B relation-stage NOT_EVALUABLE transition"
+          git push origin HEAD:relational-ttf-v01
+
+      - uses: actions/setup-python@v5
+        if: steps.relation.outputs.relation_pass == 'true'
+        with:
+          python-version: "3.12"
+
+      - run: python -m pip install -e .
+        if: steps.relation.outputs.relation_pass == 'true'
+
+      - name: Download exact frozen Study-B environment relation artifact
+        if: steps.relation.outputs.relation_pass == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: relational-environment-relation-v0.3
+          path: input/relation
+          run-id: ${{ steps.relation.outputs.run_id }}
+          github-token: ${{ github.token }}
+
+      - name: Verify relation artifact is response-blind v0.3
+        if: steps.relation.outputs.relation_pass == 'true'
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          def sha(path):
+              h=hashlib.sha256()
+              with Path(path).open("rb") as f:
+                  for b in iter(lambda:f.read(1<<20),b""): h.update(b)
+              return h.hexdigest()
+          p=json.loads(Path("input/relation/relational_environment_design_v0.3.json").read_text())
+          binding=json.loads(Path("benchmarks/frozen/relational_environment_relation_artifact_binding_v0.3.json").read_text())
+          assert binding["schema"] == "ttf_relational_environment_relation_artifact_binding_v0.3"
+          assert binding["status"] == "FROZEN_RESPONSE_BLIND_RELATION_ARTIFACT"
+          assert binding["artifact_name"] == "relational-environment-relation-v0.3"
+          assert int(binding["workflow_run_id"]) == int("${{ steps.relation.outputs.run_id }}")
+          assert p["schema"] == "ttf_relational_environment_relation_design_v0.3", p["schema"]
+          assert p["status"] == "PASS_RESPONSE_BLIND_ENVIRONMENT_RELATION_DESIGN", p["status"]
+          assert binding["relation_status"] == p["status"]
+          assert p["freshness_excluded_total"] == 70
+          assert p["inputs"]["rule_sha256"] == sha("docs/supporting/relational_environment_relation_rule_v0.3.json")
+          assert p["inputs"]["freshness_rule_sha256"] == sha("docs/supporting/relational_future_family_freshness_amendment_v0.1.json")
+          assert p["inputs"]["candidate_csv_sha256"] == sha("benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv")
+          assert binding["rules_sha256"]["relational_environment_relation_rule_v0.3.json"] == p["inputs"]["rule_sha256"]
+          assert binding["rules_sha256"]["relational_future_family_freshness_amendment_v0.1.json"] == p["inputs"]["freshness_rule_sha256"]
+          transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.6.json").read_text())
+          assert transport["schema"]=="ttf_relational_environment_transport_execution_v0.6"
+          assert transport["status"]=="FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT"
+          assert int(binding["transport_integrity"]["relation_producer_workflow_run_id"]) == int(transport["relation_producer"]["workflow_run_id"])
+          assert int(binding["transport_integrity"]["base_run_id"]) == int(transport["frozen_base_component"]["workflow_run_id"])
+          assert int(binding["transport_integrity"]["cutover_run_id"]) == int(transport["cutover_component"]["workflow_run_id"])
+          assert int(binding["transport_integrity"]["timeout_repair_run_id"]) == int(transport["timeout_repair_component"]["workflow_run_id"])
+          assert int(binding["transport_integrity"]["base_species"]) == int(transport["final_partition"]["base_species"])
+          assert int(binding["transport_integrity"]["cutover_success_species"]) == int(transport["final_partition"]["cutover_success_species"])
+          assert int(binding["transport_integrity"]["timeout_repair_species"]) == int(transport["final_partition"]["timeout_repair_species"])
+          assert int(binding["transport_integrity"]["exact_species_ledgers"]) == 1000
+          assert int(binding["transport_integrity"]["request_error_count"]) == 0
+          assert int(binding["transport_integrity"]["status_counts"].get("REQUEST_ERROR",0)) == 0
+          assert binding["rules_sha256"]["relational_environment_transport_execution_v0.6.json"] == sha("benchmarks/frozen/relational_environment_transport_execution_v0.6.json")
+          for filename in (
+              "relational_environment_design_v0.3.json",
+              "relational_environment_design_v0.3.npz",
+              "occurrence_ledger_v0.2.json",
+          ):
+              assert binding["files_sha256"][filename] == sha(Path("input/relation") / filename), filename
+          assert all(v is False for v in binding["response_firewall"].values()), binding["response_firewall"]
+          assert all(v is False for v in p["response_firewall"].values()), p["response_firewall"]
+          print({k:p[k] for k in (
+              "environment_admissible_before_freshness",
+              "freshness_excluded_environment_admissible",
+              "environment_admissible_species",
+              "development_species",
+              "confirmatory_species",
+          )})
+          PY
+
+      - name: Restore exact frozen phylogatR archive cache
+        if: steps.relation.outputs.relation_pass == 'true'
+        id: archive
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/phylogatr.zip
+          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5
+
+      - name: Require exact frozen archive
+        if: steps.relation.outputs.relation_pass == 'true'
+        run: |
+          test -f /tmp/phylogatr.zip || {
+            echo "Exact frozen archive cache is absent. Seed it with seed-phylogatr-archive-cache.yml before running this qualification workflow.";
+            exit 2;
+          }
+          test "$(stat -c%s /tmp/phylogatr.zip)" = "274988692"
+          echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5  /tmp/phylogatr.zip" | sha256sum -c -
+
+      - name: Extract archive and locate source root
+        if: steps.relation.outputs.relation_pass == 'true'
+        id: source
+        run: |
+          rm -rf /tmp/phylogatr-root
+          mkdir -p /tmp/phylogatr-root
+          unzip -q /tmp/phylogatr.zip -d /tmp/phylogatr-root
+          ROOT="$(dirname "$(find /tmp/phylogatr-root -type f -name genes.txt -print -quit)")"
+          test -n "$ROOT"
+          test -f "$ROOT/genes.txt"
+          test -f "$ROOT/cite.txt"
+          echo "root=$ROOT" >> "$GITHUB_OUTPUT"
+
+      - name: Reconstruct response-blind fresh-1000 geometry
+        if: steps.relation.outputs.relation_pass == 'true'
+        run: |
+          mkdir -p results/qualification
+          python scripts/reconstruct_relational_environment_geometry.py \
+            --root "${{ steps.source.outputs.root }}" \
+            --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv \
+            --source-archive-sha256 5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5 \
+            --contract docs/supporting/relational_environment_geometry_reconstruction_contract_v0.1.json \
+            --neighbor-fraction 0.15 \
+            --output-localities results/qualification/relational_environment_localities_v0.2.csv \
+            --output-edges results/qualification/relational_environment_edges_v0.2.csv \
+            --output-receipt results/qualification/relational_environment_geometry_reconstruction_v0.2.json
+
+      - name: Require frozen semantic geometry reproduction
+        if: steps.relation.outputs.relation_pass == 'true'
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          legacy=json.loads(Path("benchmarks/frozen/relational_environment_genetic_geometry_receipt_v0.1.json").read_text())
+          contract=json.loads(Path("docs/supporting/relational_environment_geometry_reconstruction_contract_v0.1.json").read_text())
+          got=json.loads(Path("results/qualification/relational_environment_geometry_reconstruction_v0.2.json").read_text())
+          for key in ("source_archive_sha256","candidate_csv_sha256","species","locality_rows","edge_rows"):
+              assert got[key] == legacy[key], (key,got[key],legacy[key])
+          assert got["verification_failures"] == 0
+          assert contract["legacy_byte_hash_policy"]["exact_byte_match_required"] is False
+          assert all(v is False for v in got["response_firewall"].values()), got["response_firewall"]
+          print(json.dumps({
+              "status":got["status"],
+              "species":got["species"],
+              "locality_rows":got["locality_rows"],
+              "edge_rows":got["edge_rows"],
+              "new_locality_sha256":got["locality_csv_sha256"],
+              "new_edge_sha256":got["edge_csv_sha256"],
+          },sort_keys=True))
+          PY
+
+      - name: Attach frozen geographic opportunity
+        if: steps.relation.outputs.relation_pass == 'true'
+        run: |
+          python scripts/attach_relational_environment_opportunity.py \
+            --environment-design input/relation/relational_environment_design_v0.3.npz \
+            --edges results/qualification/relational_environment_edges_v0.2.csv \
+            --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv \
+            --opportunity-rule docs/supporting/relational_environment_opportunity_rule_v0.2.json \
+            --output-npz results/qualification/relational_environment_opportunity_design_v0.2.npz \
+            --output-summary results/qualification/relational_environment_opportunity_design_v0.2.json
+
+      - name: Record opportunity gate
+        if: steps.relation.outputs.relation_pass == 'true'
+        id: opportunity
+        run: |
+          python - <<'PY'
+          import json, os
+          p=json.load(open("results/qualification/relational_environment_opportunity_design_v0.2.json"))
+          assert all(v is False for v in p["response_firewall"].values()), p["response_firewall"]
+          assert p["status"] in {
+              "PASS_TO_DEVELOPMENT_SYNTHETIC_QUALIFICATION",
+              "NOT_EVALUABLE_ENVIRONMENT_OPPORTUNITY_GEOMETRY",
+          }, p["status"]
+          passed=p["status"]=="PASS_TO_DEVELOPMENT_SYNTHETIC_QUALIFICATION"
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if passed else 'false'}\n")
+          print(json.dumps({"status":p["status"],"development":p["panels"]["development"]},sort_keys=True))
+          PY
+
+      - name: Run frozen alpha-0.025 synthetic qualification
+        if: steps.opportunity.outputs.passed == 'true'
+        run: |
+          python scripts/run_relational_environment_qualification.py \
+            --opportunity-design results/qualification/relational_environment_opportunity_design_v0.2.npz \
+            --opportunity-summary results/qualification/relational_environment_opportunity_design_v0.2.json \
+            --rule docs/supporting/relational_environment_qualification_rule_v0.2.json \
+            --output results/qualification/relational_environment_qualification_result_v0.2.json
+
+      - name: Assert qualification response firewall
+        if: steps.opportunity.outputs.passed == 'true'
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open("results/qualification/relational_environment_qualification_result_v0.2.json"))
+          assert p["alpha"] == 0.025
+          assert all(v is False for v in p["response_firewall"].values()), p["response_firewall"]
+          print(json.dumps({"status":p["status"],"gates":p["gates"],"geometry":p["geometry"]},sort_keys=True))
+          PY
+
+      - name: Freeze response-blind Study-B pre-genetic state
+        if: steps.relation.outputs.relation_pass == 'true' && always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          out=Path("results/qualification")
+          relation=json.loads(Path("input/relation/relational_environment_design_v0.3.json").read_text())
+          payload={
+              "schema":"ttf_relational_environment_pregenetic_state_v0.3",
+              "relation_status":relation["status"],
+              "response_opened":False,
+          }
+          opp=out/"relational_environment_opportunity_design_v0.2.json"
+          qual=out/"relational_environment_qualification_result_v0.2.json"
+          if opp.exists():
+              payload["opportunity_status"]=json.loads(opp.read_text())["status"]
+          if qual.exists():
+              q=json.loads(qual.read_text())
+              payload["qualification_status"]=q["status"]
+              payload["qualification_alpha"]=q["alpha"]
+          if payload.get("opportunity_status") == "NOT_EVALUABLE_ENVIRONMENT_OPPORTUNITY_GEOMETRY":
+              payload["program_state"]="NOT_EVALUABLE_B"
+              payload["terminal_stage"]="geographic_opportunity"
+          elif payload.get("qualification_status") == "PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION":
+              payload["program_state"]="PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION"
+              payload["terminal_stage"]=None
+          elif "qualification_status" in payload:
+              payload["program_state"]="NOT_EVALUABLE_B"
+              payload["terminal_stage"]="synthetic_qualification"
+          else:
+              payload["program_state"]="INCOMPLETE_TECHNICAL_EXECUTION"
+              payload["terminal_stage"]="infrastructure_or_missing_input"
+          (out/"relational_environment_pregenetic_state_v0.3.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps(payload,sort_keys=True))
+          PY
+
+      - name: Upload response-blind qualification bundle
+        if: steps.relation.outputs.relation_pass == 'true' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relational-environment-qualification-v0.2
+          path: |
+            results/qualification/relational_environment_geometry_reconstruction_v0.2.json
+            results/qualification/relational_environment_opportunity_design_v0.2.json
+            results/qualification/relational_environment_opportunity_design_v0.2.npz
+            results/qualification/relational_environment_qualification_result_v0.2.json
+            results/qualification/relational_environment_pregenetic_state_v0.3.json
+          retention-days: 30
+          if-no-files-found: warn

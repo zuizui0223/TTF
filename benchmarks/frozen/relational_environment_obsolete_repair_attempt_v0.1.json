@@ -1,0 +1,26 @@
+{
+  "schema": "ttf_relational_environment_obsolete_repair_attempt_v0.1",
+  "status": "OBSOLETE_TECHNICAL_ATTEMPT_DO_NOT_USE",
+  "recorded_on": "2026-09-22",
+  "obsolete_workflow_run_id": 35684589339,
+  "obsolete_checkout_sha": "c1b4b6e1084573412bc87c5fb3922e382fafb6dd",
+  "reason": "The shard-18 split repair was pinned to the pre-transport-fix acquisition implementation. The earlier transport audit showed that this implementation used invalid GBIF occurrence-search parameter names and produced REQUEST_ERROR for the overwhelming majority of species. Any artifacts from this repair attempt are infrastructure artifacts only and cannot enter the Study-B relation, qualification, or empirical chain.",
+  "authoritative_replacement": {
+    "workflow_run_id": 35672667347,
+    "head_sha": "9314723a0b779d9220b7fc5386cec35140bbf460",
+    "transport_failure_receipt": "benchmarks/frozen/relational_environment_transport_failure_receipt_v0.1.json",
+    "scientific_filters_changed": false
+  },
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  },
+  "obsolete_workflow_run_ids": [
+    35684589339,
+    35689552027
+  ],
+  "obsolete_fine_workflow_run_id": 35689552027,
+  "obsolete_fine_reason": "The fine-grained fallback also checked out c1b4b6e1084573412bc87c5fb3922e382fafb6dd and therefore inherits the same invalid pre-transport-fix GBIF occurrence-search parameter names. Its artifacts are infrastructure-only and must not enter Study B."
+}

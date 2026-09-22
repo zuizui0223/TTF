@@ -1,0 +1,30 @@
+{
+  "schema": "ttf_relational_environment_transport_retry_rule_v0.1",
+  "status": "FROZEN_BEFORE_AUTHORITATIVE_TRANSPORT_COMPLETION_AND_BEFORE_RELATION_RESULT",
+  "frozen_on": "2026-09-22",
+  "parent_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.6.json",
+  "scope": "Technical HTTP transport completion only.",
+  "retry_eligible_status": "REQUEST_ERROR",
+  "retry_forbidden_statuses": [
+    "PASS_OCCURRENCE_GEOMETRY",
+    "FAIL_OCCURRENCE_GEOMETRY",
+    "REJECTED_GBIF_TAXON_MATCH"
+  ],
+  "maximum_retry_rounds": 3,
+  "query_contract": "Use the exact current corrected scripts/acquire_relational_environment_occurrences.py fetch_species implementation and unchanged Study-B relation rule. No occurrence-selection rule may change.",
+  "replacement_rule": "For a species with REQUEST_ERROR, a later successful technical retry replaces only that species' REQUEST_ERROR ledger and occurrence rows. All non-REQUEST_ERROR species remain byte/semantically unchanged from the authoritative acquisition.",
+  "stopping_rule": "If any REQUEST_ERROR remains after round 3, Study-B relation binding is forbidden and the state is INCOMPLETE_TECHNICAL_EXECUTION, not NOT_EVALUABLE_B.",
+  "forbidden": [
+    "retry FAIL_OCCURRENCE_GEOMETRY species",
+    "retry REJECTED_GBIF_TAXON_MATCH species",
+    "change year window, GBIF filters, page offsets, spatial thinning, cap, or minimum n",
+    "select a retry result based on R_env, taxonomy, or any genetic response",
+    "convert unresolved HTTP transport errors into ecological inadmissibility"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}

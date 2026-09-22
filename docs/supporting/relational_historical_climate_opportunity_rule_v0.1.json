@@ -1,0 +1,61 @@
+{
+  "schema": "ttf_relational_historical_climate_opportunity_rule_v0.1",
+  "status": "FROZEN_CLERICAL_BINDING_BEFORE_STUDY_B_FORMAL_QUALIFICATION_AND_BEFORE_ANY_STUDY_B_OR_STUDY_C_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-21",
+  "parent_program": "docs/supporting/relational_program_v0.3.json",
+  "parent_relation_rule": "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json",
+  "inherited_from": "docs/supporting/relational_environment_opportunity_rule_v0.2.json",
+  "purpose": "Bind Study C to the exact geographic-opportunity and structural-support constants already frozen for Study B. No new threshold is selected for Study C.",
+  "directed_geographic_opportunity": {
+    "edge_location": "midpoint of each unchanged within-species density-scaled genetic graph edge in ECEF kilometres",
+    "source_target_coverage": "fraction of target graph-edge midpoints whose nearest source graph-edge midpoint is <=500 km",
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.5,
+    "eligible_dyad": "coverage >= 0.50",
+    "eligible_target": "at least five eligible source species in its frozen panel role",
+    "minimum_source_species_per_target": 5
+  },
+  "primary_model_after_support_filter": {
+    "response": "future directed T_st",
+    "predictors_in_order": [
+      "z_R_hist",
+      "z_R_current",
+      "z_geographic_coverage",
+      "centered_same_class",
+      "centered_same_order",
+      "centered_same_family",
+      "z_abs_log_locality_count_ratio"
+    ],
+    "source_fixed_effect": true,
+    "target_fixed_effect": true,
+    "ordinary_iid_dyad_inference_forbidden": true
+  },
+  "structural_gates_before_synthetic_qualification": {
+    "minimum_supported_target_species": 50,
+    "minimum_supported_source_species": 50,
+    "minimum_supported_directed_dyads": 1000,
+    "inheritance": "Exact Study-B response-blind structural gates; not chosen from Study-C external or genetic outcomes.",
+    "failure": "NOT_EVALUABLE_HISTORICAL_OPPORTUNITY_GEOMETRY"
+  },
+  "clarification_boundary": {
+    "new_scientific_choice": false,
+    "reason": "The Study-C exposure and mask contracts already required unchanged frozen geographic support but did not name a dedicated machine-readable opportunity file. This file binds that inherited contract before B formal qualification and before any B/C genetic response.",
+    "no_backfill": true,
+    "no_threshold_change_after_external_data": true
+  },
+  "forbidden": [
+    "change 500 km, 0.50 coverage, source>=5, or 50/50/1000 structural gates after Study-C external relation is observed",
+    "use Study-B qualification or empirical outcome to alter Study-C opportunity geometry",
+    "replace a failed Study-C opportunity gate with a different radius, coverage threshold, subgroup, or panel"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false,
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
