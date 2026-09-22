@@ -17,5 +17,6 @@
     "Study_B_beta_R_computed": false
   },
   "technical_retrigger_note_v2": "Retrigger after making the relation-producer commit branch-safe via fetch/rebase/push. The frozen v0.6 transport components and all scientific contracts are unchanged.",
-  "obsolete_prior_assembly_run_id": 35737785915
+  "obsolete_prior_assembly_run_id": 35737785915,
+  "technical_retrigger_note_v3": "Retrigger from the completed v0.3 scientific-contract code state after restoring the predeclared cross-taxon breadth gates and fixing only stale closure-verifier bookkeeping. The frozen v0.6 base/cutover/repair partition, GBIF query contract, Study-B ecological relation, alpha allocation, and all genetic-response firewalls are unchanged. The assembly workflow must wait for repair run 35735717833 to complete successfully before reading its artifacts."
 }
