@@ -42,6 +42,7 @@ def main() -> int:
         "c_s1_exclusion": Path("benchmarks/frozen/relational_prior_S1_species_exclusion_v0.1.json"),
         "c_s2_exclusion": Path("benchmarks/frozen/relational_prior_S2_species_exclusion_v0.1.json"),
         "b_relation": Path("docs/supporting/relational_environment_relation_rule_v0.3.json"),
+        "b_transport": Path("benchmarks/frozen/relational_environment_transport_execution_v0.3.json"),
         "b_opportunity": Path("docs/supporting/relational_environment_opportunity_rule_v0.2.json"),
         "b_qualification": Path("docs/supporting/relational_environment_qualification_rule_v0.2.json"),
         "b_mask": Path("docs/supporting/relational_environment_character_mask_rule_v0.1.json"),
@@ -122,8 +123,25 @@ def main() -> int:
         if states[state]["C_open_authorized"] is not True or states[state]["C_entry_state"] != entry:
             raise RuntimeError(f"Study-C transition drift for {state}")
     assert_closed_firewall(transition)
-    for key in ("b_relation", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
+    for key in ("b_relation", "b_transport", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
         assert_closed_firewall(p[key])
+
+    transport = p["b_transport"]
+    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.3":
+        raise RuntimeError("Study B transport execution schema drift")
+    if transport.get("status") != "FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT":
+        raise RuntimeError("Study B transport execution is not frozen authoritative")
+    execution = transport["authoritative_execution"]
+    if int(execution["workflow_run_id"]) != 35691973637:
+        raise RuntimeError("Study B authoritative transport run drift")
+    if execution["workflow_name"] != "relational-environment-transport-fixed-parallel-v2":
+        raise RuntimeError("Study B authoritative transport workflow drift")
+    if int(execution["species_per_shard"]) != 5 or int(execution["max_parallel"]) != 10:
+        raise RuntimeError("Study B transport partition drift")
+    if int(transport["acceptance_gate"]["exact_species_ledgers"]) != 1000:
+        raise RuntimeError("Study B transport exact-species gate drift")
+    if int(transport["acceptance_gate"]["request_error_count_must_equal"]) != 0:
+        raise RuntimeError("Study B transport zero-error gate drift")
 
     b = program["slot_B"]
     expected_b_chain = [
