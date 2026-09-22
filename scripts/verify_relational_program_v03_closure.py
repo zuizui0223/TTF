@@ -42,7 +42,7 @@ def main() -> int:
         "c_s1_exclusion": Path("benchmarks/frozen/relational_prior_S1_species_exclusion_v0.1.json"),
         "c_s2_exclusion": Path("benchmarks/frozen/relational_prior_S2_species_exclusion_v0.1.json"),
         "b_relation": Path("docs/supporting/relational_environment_relation_rule_v0.3.json"),
-        "b_transport": Path("benchmarks/frozen/relational_environment_transport_execution_v0.4.json"),
+        "b_transport": Path("benchmarks/frozen/relational_environment_transport_execution_v0.5.json"),
         "b_opportunity": Path("docs/supporting/relational_environment_opportunity_rule_v0.2.json"),
         "b_qualification": Path("docs/supporting/relational_environment_qualification_rule_v0.2.json"),
         "b_mask": Path("docs/supporting/relational_environment_character_mask_rule_v0.1.json"),
@@ -127,7 +127,7 @@ def main() -> int:
         assert_closed_firewall(p[key])
 
     transport = p["b_transport"]
-    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.4":
+    if transport.get("schema") != "ttf_relational_environment_transport_execution_v0.5":
         raise RuntimeError("Study B transport execution schema drift")
     if transport.get("status") != "FROZEN_AUTHORITATIVE_CORRECTED_TRANSPORT_BEFORE_RELATION_RESULT":
         raise RuntimeError("Study B transport execution is not frozen authoritative")
@@ -138,7 +138,7 @@ def main() -> int:
         raise RuntimeError("Study B frozen base transport run drift")
     if int(base["accepted_species_count"]) != 165:
         raise RuntimeError("Study B frozen base species count drift")
-    if int(cutover["workflow_run_id"]) != 35711675657:
+    if int(cutover["workflow_run_id"]) != 35712027961:
         raise RuntimeError("Study B cutover transport run drift")
     if cutover["workflow_name"] != "relational-environment-transport-cutover":
         raise RuntimeError("Study B cutover workflow drift")
