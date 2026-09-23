@@ -45,5 +45,6 @@
       35828444286
     ],
     "scientific_contract_change": false
-  }
+  },
+  "technical_retrigger_note": "Retrigger after updating only the cancellation workflow assertion to include superseded polling audit run 35828444286; protected recovery run 35827478403 is unchanged."
 }
