@@ -44,6 +44,7 @@ def main() -> int:
         "b_relation": Path("docs/supporting/relational_environment_relation_rule_v0.3.json"),
         "b_transport": Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json"),
         "b_transport_audit": Path("benchmarks/frozen/relational_environment_transport_partition_audit_v0.7.json"),
+        "b_preretry": Path("benchmarks/frozen/relational_environment_transport_preretry_receipt_v0.7.json"),
         "b_producer": Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json"),
         "b_opportunity": Path("docs/supporting/relational_environment_opportunity_rule_v0.2.json"),
         "b_qualification": Path("docs/supporting/relational_environment_qualification_rule_v0.2.json"),
@@ -125,7 +126,7 @@ def main() -> int:
         if states[state]["C_open_authorized"] is not True or states[state]["C_entry_state"] != entry:
             raise RuntimeError(f"Study-C transition drift for {state}")
     assert_closed_firewall(transition)
-    for key in ("b_relation", "b_transport", "b_transport_audit", "b_producer", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
+    for key in ("b_relation", "b_transport", "b_transport_audit", "b_preretry", "b_producer", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
         assert_closed_firewall(p[key])
 
     transport = p["b_transport"]
@@ -205,6 +206,28 @@ def main() -> int:
     ):
         if checks.get(key) is not True:
             raise RuntimeError(f"Study B v0.7 partition audit failed: {key}")
+
+    preretry = p["b_preretry"]
+    if preretry.get("schema") != "ttf_relational_environment_transport_preretry_receipt_v0.7":
+        raise RuntimeError("Study B pre-retry transport receipt schema drift")
+    if preretry.get("status") != "FROZEN_RESPONSE_BLIND_PRE_RETRY_TRANSPORT_STATE":
+        raise RuntimeError("Study B pre-retry transport receipt status drift")
+    if preretry.get("transport_execution") != str(paths["b_transport"]):
+        raise RuntimeError("Study B pre-retry transport pointer drift")
+    if int(preretry["species"]) != 1000 or int(preretry["selected_artifacts"]) != 248:
+        raise RuntimeError("Study B pre-retry exact-universe drift")
+    expected_counts = {
+        "PASS_OCCURRENCE_GEOMETRY": 209,
+        "FAIL_OCCURRENCE_GEOMETRY": 72,
+        "REJECTED_GBIF_TAXON_MATCH": 15,
+        "REQUEST_ERROR": 704,
+    }
+    if preretry["status_counts"] != expected_counts:
+        raise RuntimeError("Study B pre-retry status-count drift")
+    if int(preretry["request_error_count"]) != 704:
+        raise RuntimeError("Study B pre-retry REQUEST_ERROR count drift")
+    if preretry["request_error_species_sorted_sha256"] != "9902e6d65c951cb752c06a2ce18fc7ae96fede0ab3e40089624402c185cdd034":
+        raise RuntimeError("Study B pre-retry species digest drift")
 
     producer = p["b_producer"]
     if producer.get("schema") != "ttf_relational_environment_relation_producer_v0.1":
