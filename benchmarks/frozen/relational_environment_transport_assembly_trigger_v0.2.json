@@ -1,0 +1,26 @@
+{
+  "schema": "ttf_relational_environment_transport_assembly_trigger_v0.2",
+  "status": "AUTHORIZE_FINAL_V07_ASSEMBLY_BEFORE_RELATION_RESULT",
+  "frozen_on": "2026-09-23",
+  "transport_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.7.json",
+  "partition_audit": "benchmarks/frozen/relational_environment_transport_partition_audit_v0.7.json",
+  "base_run_id": 35691973637,
+  "cutover_run_id": 35712027961,
+  "short_repair_run_id": 35735717833,
+  "long_repair_run_id": 35749326437,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "instruction": "Wait for the exact long-repair run, download only the v0.7-authorized base/cutover/short/long artifacts, require exact 1000 ledgers and REQUEST_ERROR=0 after frozen technical retries, then build the frozen response-blind R_env relation.",
+  "forbidden": [
+    "use short repair indices 0,1,6",
+    "use any obsolete v0.6 assembly relation result",
+    "change GBIF query, page selection, thinning, cap, minimum n, CHELSA variables, freshness exclusion, breadth gate, or panel hash"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  },
+  "technical_retrigger_note": "Retrigger with the same exact v0.7 artifacts and frozen GBIF query contract, changing only REQUEST_ERROR execution from serial to RETRY_WORKERS=20, matching the previously frozen cutover max-parallel=20. Relation result and genetic response remain unopened."
+}

@@ -1,0 +1,90 @@
+{
+  "schema": "ttf_relational_host_resource_response_blind_audit_v0.1",
+  "status": "PASS_TO_HOST_RELATION_SYNTHETIC_QUALIFICATION",
+  "frozen_on": "2026-09-21",
+  "source": {
+    "host_resource_census_library_file": "lepidoptera_host_resource_distribution_census_v0.2.json",
+    "host_resource_census_sha256": "6bd4915a7337ba9f3916c04fdc5673338cde81815a097daca9084bff7822bdf7",
+    "host_resource_design_library_file": "lepidoptera_host_resource_design_v0.2.npz",
+    "host_resource_design_sha256": "597b1499dbdf8d4fb5a30f10a32686a60185305d12a8772019279bda08b82897",
+    "phylogatr_source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "source_design_outcome_firewall": {
+      "sequence_identity_opened": false,
+      "pairwise_genetic_distances_opened": false,
+      "transfer_statistic_computed": false
+    }
+  },
+  "freshness": {
+    "base_host_panel_species": 500,
+    "overlap_with_completed_original_fresh_250": 0,
+    "overlap_with_prior_conditional_response_blind_500": 13,
+    "rule": "For maximal panel separation, drop the 13 conditional-panel species even though conditional nucleotide identity and pairwise genetic response were never opened.",
+    "dropped_species": [
+      {"species": "Euchlaena johnsonaria", "inherited_role": "train"},
+      {"species": "Erebia palarica", "inherited_role": "train"},
+      {"species": "Proteoteras aesculana", "inherited_role": "train"},
+      {"species": "Spilosoma urticae", "inherited_role": "train"},
+      {"species": "Antheraea polyphemus", "inherited_role": "eval"},
+      {"species": "Stigmella vimineticola", "inherited_role": "eval"},
+      {"species": "Leistarcha scitissimella", "inherited_role": "eval"},
+      {"species": "Olindia schumacherana", "inherited_role": "eval"},
+      {"species": "Rhuda tuisa", "inherited_role": "eval"},
+      {"species": "Archips grisea", "inherited_role": "eval"},
+      {"species": "Tortricidia pallida", "inherited_role": "eval"},
+      {"species": "Phragmatobia fuliginosa", "inherited_role": "eval"},
+      {"species": "Chilo phragmitella", "inherited_role": "eval"}
+    ],
+    "fresh_species_after_drop": 487,
+    "inherited_train_after_drop": 246,
+    "inherited_eval_after_drop": 241,
+    "eligible_eval_targets_after_drop": 226,
+    "fresh_species_role_order_digest_sha256": "5879e28f97e8ed0df9b9bbe87e2690004b5fe86183657e84fd47ff93642b5a3c"
+  },
+  "relational_geometry": {
+    "supported_directed_source_target_pairs_after_drop": 15094,
+    "minimum_sources_per_eligible_target": 5,
+    "median_sources_per_eligible_target": 73.0,
+    "families_in_fresh_panel": 47,
+    "top_families": {
+      "Noctuidae": 90,
+      "Geometridae": 71,
+      "Tortricidae": 52,
+      "Crambidae": 30,
+      "Erebidae": 27,
+      "Sphingidae": 22,
+      "Gelechiidae": 19,
+      "Pyralidae": 18,
+      "Gracillariidae": 16,
+      "Notodontidae": 15
+    }
+  },
+  "primary_predictor": {
+    "name": "host_resource_jaccard",
+    "definition": "Jaccard overlap of the frozen primary-native larval host-resource WGSrpd3 footprint vectors for source and target species.",
+    "supported_pair_quantiles": {
+      "min": 0.0,
+      "q10": 0.019005424954792054,
+      "q25": 0.17647058823529413,
+      "median": 0.34989711934156376,
+      "q75": 0.515625,
+      "q90": 0.6542746913580249,
+      "max": 1.0
+    },
+    "same_family_pairs": 1496,
+    "same_family_pair_fraction": 0.09911223002517557
+  },
+  "response_blind_separability": {
+    "spearman_R_vs_geographic_coverage": 0.0425,
+    "spearman_R_vs_centroid_distance_km": -0.0868,
+    "spearman_R_vs_edge_count_ratio": 0.0021,
+    "spearman_R_vs_locality_count_ratio": -0.0038,
+    "interpretation": "Host-resource similarity is non-degenerate and is not a near-duplicate of the available geographic or sampling-geometry controls in the frozen supported-pair design."
+  },
+  "next_gate": "freeze the exact dyadic estimand and synthetic null/positive-control worlds; do not open nucleotide identity or T_st",
+  "response_firewall": {
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "T_st_computed": false,
+    "host_relation_genetic_association_computed": false
+  }
+}

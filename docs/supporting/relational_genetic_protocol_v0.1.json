@@ -1,0 +1,80 @@
+{
+  "schema": "ttf_relational_genetic_protocol_v0.1",
+  "status": "FROZEN_HOST_RESOURCE_PRIMARY_BEFORE_FRESH_PANEL_RESPONSE_OPENING",
+  "frozen_on": "2026-09-21",
+  "scientific_question": "Is source-to-target transferability of post-IBD spatial genetic structure predictable from a pre-outcome ecological relationship between the source and target species?",
+  "separation": {
+    "unconditional_result": "immutable; no rescue, retune, rerun, or reinterpretation",
+    "conditional_order_v02": "immutable NOT_EVALUABLE survivor-geometry deployment; no tuning against that failure",
+    "exploratory_pair_structure": "motivation only; any species whose pair-specific response was inspected for hypothesis generation must be excluded from the fresh confirmatory universe"
+  },
+  "hypothesis": {
+    "unit": "directed source-target dyad",
+    "response": "T_st: source-only to target post-IBD transfer skill under a fixed transfer operator",
+    "primary_predictor": "R_host_st: continuous primary-native larval host-resource footprint similarity frozen before genetic response",
+    "direction": "beta_R > 0",
+    "controls": [
+      "G_st directed geographic opportunity/co-support",
+      "same-family indicator",
+      "source fixed effect",
+      "target fixed effect",
+      "sampling-geometry mismatch"
+    ]
+  },
+  "primary_relation": {
+    "domain": "Lepidoptera larval host-resource landscape",
+    "protocol": "docs/supporting/relational_host_resource_protocol_v0.1.json",
+    "predictor": "continuous Jaccard overlap of frozen primary-native host-resource WGSrpd3 footprint vectors",
+    "thresholding_from_response_forbidden": true,
+    "response_blind_feasibility": "PASS: 487 fully panel-disjoint species after conservative removal of 13 prior conditional-panel species; 226 eligible targets and 15094 supported directed pairs",
+    "rationale": "This relation is directly tied to a biological constraint on population connectivity and was already constructed under a zero-genetic-response firewall. A single global terrestrial climate PCA would be biologically incoherent for the mixed terrestrial, freshwater, and marine Animalia candidate universe."
+  },
+  "secondary_relations": {
+    "habitat_environment": "response-blind cross-taxon external-generalization study only; GBIF feasibility may continue without genetic response and cannot replace or rescue the host-resource primary test",
+    "host_breadth": "secondary mechanistic descriptor under the host-resource protocol",
+    "taxonomy_phylogeny": "control/proxy, not the primary mechanism"
+  },
+  "inference": {
+    "ordinary_dyad_independence_forbidden": true,
+    "crossed_dependence_required": true,
+    "candidate_families": [
+      "crossed source-target random effects",
+      "two-way source/target cluster bootstrap",
+      "source/target-label permutation preserving frozen dyadic geometry"
+    ],
+    "selection_basis": "synthetic Type-I/power and response-blind geometry only"
+  },
+  "fresh_panel_firewall": {
+    "exclude_prior_empirical_species": true,
+    "exclude_hypothesis_generating_pair_response_species": true,
+    "development_panel": "host-resource predictor + geography + synthetic worlds only; genetic response closed",
+    "confirmatory_panel": "the frozen 487-species host-resource panel may proceed only after relational synthetic qualification and survivor requalification; no empirical T_st before those gates",
+    "prefer_independent_source_replication": true
+  },
+  "gates": {
+    "ecological_feasibility": "PASS required",
+    "relation_non_degeneracy": "PASS required",
+    "geometry_integrity": "PASS required",
+    "private_null_type1": "Wilson95 upper <= 0.10 in every frozen null cell",
+    "relational_power": "Wilson95 lower >= 0.80 at frozen minimally meaningful relational effect",
+    "survivor_requalification": "PASS required before response opening"
+  },
+  "prohibited": [
+    "select host/resource/habitat relation after inspecting fresh genetic response",
+    "choose similarity threshold from fresh genetic response",
+    "change panel composition because of T_st",
+    "replace the continuous dyad hypothesis with a favorable taxonomic subgroup after opening",
+    "use this study to rescue the completed unconditional result or conditional-order deployment"
+  ],
+  "next_step": "qualify the frozen host-resource dyadic estimand under crossed source-target dependence on synthetic worlds; keep GBIF habitat work response-blind as external generalization",
+  "response_blind_primary_selection": {
+    "selected_on": "2026-09-21",
+    "genetic_response_used": false,
+    "evidence": [
+      "host-resource source artifact has sequence identity, pairwise genetic distance, and transfer statistic all unopened",
+      "after conservative prior-panel removal: 487 species, 226 eligible targets, 15094 supported dyads",
+      "host-resource Jaccard spans 0 to 1 and is nearly orthogonal to geographic coverage and sampling-geometry ratios",
+      "mixed-realm fresh Animalia universe makes one terrestrial environmental PCA a weaker primary biological relation"
+    ]
+  }
+}

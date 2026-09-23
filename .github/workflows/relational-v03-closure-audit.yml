@@ -1,0 +1,50 @@
+name: relational-v03-closure-audit
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - ".github/workflows/relational-v03-closure-audit.yml"
+      - "scripts/verify_relational_program_v03_closure.py"
+      - "docs/supporting/relational_program_v0.3.json"
+      - "docs/supporting/relational_program_transition_rule_v0.1.json"
+      - "docs/supporting/relational_future_family_freshness_amendment_v0.1.json"
+      - "docs/supporting/relational_environment_relation_rule_v0.3.json"
+      - "docs/supporting/relational_environment_opportunity_rule_v0.2.json"
+      - "docs/supporting/relational_environment_qualification_rule_v0.2.json"
+      - "docs/supporting/relational_environment_character_mask_rule_v0.1.json"
+      - "docs/supporting/relational_environment_empirical_opening_rule_v0.1.json"
+      - "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json"
+      - "docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json"
+      - "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json"
+      - "docs/supporting/relational_historical_climate_character_mask_rule_v0.1.json"
+      - "docs/supporting/relational_historical_climate_empirical_opening_rule_v0.1.json"
+      - "benchmarks/frozen/relational_environment_transport_execution_v0.6.json"
+      - "benchmarks/frozen/relational_environment_transport_execution_v0.7.json"
+      - "benchmarks/frozen/relational_environment_transport_partition_audit_v0.7.json"
+      - "benchmarks/frozen/relational_environment_transport_preretry_receipt_v0.7.json"
+      - "benchmarks/frozen/relational_environment_cutover_long_repair_v0.1.json"
+      - "benchmarks/frozen/relational_environment_relation_producer_v0.1.json"
+      - "benchmarks/frozen/relational_host_resource_empirical_repaired_receipt_v0.2.json"
+      - "benchmarks/frozen/relational_host_resource_empirical_reproduction_v0.2.json"
+      - "benchmarks/frozen/relational_prior_host_test_overlap_audit_v0.1.json"
+      - "benchmarks/frozen/relational_prior_S1_species_exclusion_v0.1.json"
+      - "benchmarks/frozen/relational_prior_S2_species_exclusion_v0.1.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  closure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify complete finite v0.3 contract
+        run: |
+          python scripts/verify_relational_program_v03_closure.py             --output /tmp/relational_program_v03_closure.json
+          cat /tmp/relational_program_v03_closure.json

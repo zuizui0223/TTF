@@ -1,0 +1,183 @@
+{
+  "schema": "ttf_relational_host_resource_identity_opening_authorization_v0.2",
+  "status": "AUTHORIZE_ONE_CONTINUATION_AFTER_RESPONSE_INDEPENDENT_MASK_REPAIR",
+  "authorized_on": "2026-09-21",
+  "purpose": "Authorize exactly one continuation of the relational host-resource empirical analysis after the first v0.1 attempt stopped before T_st/beta_R because three species violated the preexisting duplicate-aligned-header mask admissibility rule.",
+  "parent_authorization_v0.1": {
+    "path": "benchmarks/frozen/relational_host_resource_identity_opening_authorization_v0.1.json",
+    "git_blob_sha": "e37c1d75edb10af2d27bb54ba83030ecc0a63f09",
+    "attempt_state": "partial nucleotide identity and species-level distance/IBD computation may have occurred transiently before the structural reader error; no T_st, beta_R, relational decision, result JSON, serialized sequence identity, or serialized edge-distance vector was produced"
+  },
+  "repair": {
+    "path": "benchmarks/frozen/relational_host_resource_mask_parser_repair_v0.1.json",
+    "git_blob_sha": "db0a61198e3a1948e32522fe7967b7a35952f498",
+    "basis": "response-blind FASTA header structure plus the preexisting generic Phase-2 rule duplicate_aligned_header = species inadmissible",
+    "affected_species": [
+      "Cladara limitaria",
+      "Lobophora nivigerata",
+      "Protoboarmia porcelaria"
+    ]
+  },
+  "repaired_survivor_requalification": {
+    "path": "benchmarks/frozen/relational_host_resource_repaired_survivor_requalification_v0.1.json",
+    "git_blob_sha": "283251124d614b81423a795a7fe7045e41dfc40c",
+    "status": "PASS_TO_REPAIRED_EMPIRICAL_AUTHORIZATION",
+    "private_type1_pass": true,
+    "relational_power_pass": true,
+    "numerical_pass": true
+  },
+  "source": {
+    "archive_name": "phylogatr_results_exact_20260918.zip",
+    "archive_size_bytes": 274988692,
+    "archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "genes_txt_sha256": "e8470b6a9500ab5f79f47dc0dda3ad034f3107882ca150148d6d91ab98483ba6",
+    "cite_txt_sha256": "e257b2c12ce5e6fe33d40f7064ae4a64b0c9462ddd85f58b0ce0a672759e9eb6"
+  },
+  "input_sha256": {
+    "design_npz": "597b1499dbdf8d4fb5a30f10a32686a60185305d12a8772019279bda08b82897",
+    "mask_result": "d9e4b39c51181a4268e391a95ac5d0da61c9e9528b1de4cd1b0c55aca6299eca",
+    "survivor_species_csv": "4d33ff2afb09b8ce0cc22666f9e6b32ababa5ae57eddea3c3fa8138031158463",
+    "genes_txt": "e8470b6a9500ab5f79f47dc0dda3ad034f3107882ca150148d6d91ab98483ba6",
+    "cite_txt": "e257b2c12ce5e6fe33d40f7064ae4a64b0c9462ddd85f58b0ce0a672759e9eb6"
+  },
+  "repair_geometry_contract": {
+    "original_mask_survivors": 423,
+    "repaired_mask_survivors": 420,
+    "repaired_survivor_species_digest_sha256": "9005dda6dcc96fcc67158ae05adba393ac36dd7cdb5d41b52212b5e9f57cf403",
+    "minimum_sources_per_target": 5,
+    "repaired_supported_source_clusters": 203,
+    "repaired_supported_target_clusters": 196,
+    "repaired_supported_directed_pairs": 11696,
+    "repaired_empirical_union_species": 399,
+    "source_digest_sha256": "dd5259c1a26293a6f39e09430d60fd67dc3e26747fae96af596a0260a2fc068b",
+    "target_digest_sha256": "e38283abaeb0fd190d185eed3435ddc77e6b9369232721bed5e62c23b6ef49d2",
+    "empirical_union_digest_sha256": "a3ba1b675546ade34d04f6bee8128b737ab0317380cd585d1f5de13fd58bc7dc"
+  },
+  "repaired_geometry": {
+    "mask_survivors": 420,
+    "dyads": 11696,
+    "source_clusters": 203,
+    "target_clusters": 196,
+    "empirical_union_species": 399,
+    "predictor_condition_number": 7.76754597755416,
+    "survivor_species_digest_sha256": "9005dda6dcc96fcc67158ae05adba393ac36dd7cdb5d41b52212b5e9f57cf403",
+    "source_digest_sha256": "dd5259c1a26293a6f39e09430d60fd67dc3e26747fae96af596a0260a2fc068b",
+    "target_digest_sha256": "e38283abaeb0fd190d185eed3435ddc77e6b9369232721bed5e62c23b6ef49d2",
+    "empirical_union_digest_sha256": "a3ba1b675546ade34d04f6bee8128b737ab0317380cd585d1f5de13fd58bc7dc"
+  },
+  "species": {
+    "mask_survivors": 420,
+    "survivor_digest_sha256": "9005dda6dcc96fcc67158ae05adba393ac36dd7cdb5d41b52212b5e9f57cf403",
+    "empirical_source_count": 203,
+    "empirical_target_count": 196,
+    "empirical_union_count": 399,
+    "directed_pairs": 11696,
+    "source_digest_sha256": "dd5259c1a26293a6f39e09430d60fd67dc3e26747fae96af596a0260a2fc068b",
+    "target_digest_sha256": "e38283abaeb0fd190d185eed3435ddc77e6b9369232721bed5e62c23b6ef49d2",
+    "empirical_digest_sha256": "a3ba1b675546ade34d04f6bee8128b737ab0317380cd585d1f5de13fd58bc7dc",
+    "roles": "inherit the original response-blind host-resource design; subtract only the three duplicate-header inadmissible species; no resplitting; reapply the frozen >=5 surviving-source support rule"
+  },
+  "response_contract": {
+    "marker": "mitochondrial COI/COX1 family",
+    "marker_aliases": [
+      "COI",
+      "CO1",
+      "COX1",
+      "COXI",
+      "MT-CO1",
+      "CYTOCHROME C OXIDASE SUBUNIT I",
+      "CYTOCHROME OXIDASE I"
+    ],
+    "panel_selection": "largest exact unique locality count, then larger aligned header count, then lexicographic raw locus identifier; fixed before identity",
+    "sequence_pair_distance": "uncorrected p-distance = canonical A/C/G/T mismatches / jointly canonical columns",
+    "valid_sequence_pair": "jointly canonical columns >= ceil(0.50 * frozen alignment length)",
+    "locality_pair_distance": "arithmetic mean over all valid cross-locality sequence-pair p-distances",
+    "edge_response": "locality-pair distance on the unchanged frozen density-scaled kNN edge",
+    "ibd_adjustment": "endpoint-safe leave-two-localities-out rank IBD",
+    "source_training_response": "post-IBD turnover rank orthogonalized against within-source edge-length rank",
+    "target_evaluation_response": "raw post-IBD turnover rank",
+    "source_to_target_score": "Spearman correlation of the source-only TTF field prediction with target post-IBD turnover",
+    "kernel": {
+      "bandwidth_km": 500,
+      "prior_strength": 0.25,
+      "prior_mean": 0,
+      "segment_points": 5,
+      "training_species_per_field": 1
+    },
+    "serialization": {
+      "nucleotide_identity": false,
+      "edge_level_genetic_distance_vectors": false,
+      "dyad_level_T_st": true
+    }
+  },
+  "relational_model": {
+    "estimand": "beta_R on z(host_resource_jaccard)",
+    "alternative": "beta_R > 0",
+    "predictors": [
+      "z_host_resource_jaccard",
+      "z_geographic_coverage",
+      "z_log1p_centroid_distance_km",
+      "z_abs_log_locality_count_ratio",
+      "centered_same_family_indicator"
+    ],
+    "source_fixed_effect": true,
+    "target_fixed_effect": true,
+    "covariance": "two-way source/target cluster-robust sandwich with dyad intersection subtraction and finite-cluster corrections",
+    "alpha": 0.05,
+    "predictor_condition_number": 7.76754597755416,
+    "positive_decision": "p_one_sided <= 0.05 AND beta_R > 0",
+    "null_decision": "otherwise RELATIONAL_HOST_RESOURCE_NULL_WITH_QUALIFIED_POWER; the repaired survivor synthetic power gate has passed"
+  },
+  "exact_code": {
+    "relational_empirical_module": {
+      "path": "src/ttf/relational_genetic_empirical.py",
+      "git_blob_sha": "df5dacb281a8edfdbb6b7ca7dbe90a735ec005ca"
+    },
+    "dyadic_inference": {
+      "path": "src/ttf/relational_dyadic.py",
+      "git_blob_sha": "2b418399c2d9a51f23b37b26f58f910ed92e6db1"
+    },
+    "empirical_cli": {
+      "path": "scripts/run_relational_host_resource_empirical_v02.py",
+      "git_blob_sha": "e571a3e0202d6b5eab56528f60412aac95ff22dd"
+    },
+    "p_distance": {
+      "path": "src/ttf/phylogatr_empirical.py",
+      "git_blob_sha": "bd7024bc29e958405167e52e4c6afb712ce4bd22"
+    },
+    "compact_ibd": {
+      "path": "src/ttf/phylogatr_compact_ibd.py",
+      "git_blob_sha": "cee7d6c7c48512b5bf17641de3d45fd4ddebf608"
+    },
+    "length_control": {
+      "path": "src/ttf/geometry_control.py",
+      "git_blob_sha": "d982b76a56392a3c9b0ef029f4c7058b30fc222d"
+    },
+    "kernel_transfer": {
+      "path": "src/ttf/transfer.py",
+      "git_blob_sha": "99aef6d2e97187aa0d0477e3b6d14c2ba4adab29"
+    }
+  },
+  "interpretation": {
+    "positive": "Among the repaired frozen fresh Lepidoptera dyads, species facing more similar larval host-resource landscapes show greater transfer of post-IBD spatial genetic structure after geographic opportunity, broad family membership, source quality, target predictability, and sampling-geometry mismatch are controlled.",
+    "null": "Under repaired-geometry qualified power, the frozen host-resource relation does not explain source-target transfer heterogeneity in the tested Lepidoptera design.",
+    "limits": "Neither branch rewrites the completed unconditional TTF result; this is a separate prospective relational hypothesis."
+  },
+  "continuation_rules": [
+    "Open/continue identity only for the repaired 399-species empirical union.",
+    "The three duplicate-header species are excluded solely by the preexisting response-blind mask admissibility rule.",
+    "Do not add or drop any other species, dyads, host covariates, controls, or taxonomic groups.",
+    "Do not change p-distance, IBD residualization, bandwidth, prior, segment points, source-only field definition, covariance, alpha, or decision rule.",
+    "Do not inspect or use transient values from the stopped v0.1 attempt.",
+    "This is the only authorized continuation. If another structural failure occurs, stop; no additional repair/rerun is authorized.",
+    "No post-result retuning or result-selection rerun is authorized."
+  ],
+  "opening_state_before_continuation": {
+    "partial_nucleotide_identity_opened_in_stopped_v0.1_attempt": true,
+    "partial_species_level_distance_and_post_ibd_response_may_have_been_computed_transiently": true,
+    "transient_values_inspected": false,
+    "T_st_opened": false,
+    "beta_R_opened": false,
+    "relational_decision_opened": false
+  }
+}

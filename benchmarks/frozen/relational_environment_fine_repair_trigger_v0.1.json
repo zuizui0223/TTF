@@ -1,0 +1,21 @@
+{
+  "schema": "ttf_relational_environment_fine_repair_trigger_v0.1",
+  "status": "AUTHORIZE_FINE_TRANSPORT_FALLBACK_BEFORE_RELATION_RESULT",
+  "frozen_on": "2026-09-22",
+  "original_relation_run_id": 35613625571,
+  "coarse_repair_run_id": 35684589339,
+  "frozen_B_code_sha": "c1b4b6e1084573412bc87c5fb3922e382fafb6dd",
+  "completed_coarse_repair_subsets_retained": [18, 78],
+  "unfinished_coarse_repair_subsets_replaced": [38, 58, 98],
+  "fine_200way_subsets_authorized": [38, 138, 58, 158, 98, 198],
+  "selection_rule": "From this trigger onward, Study-B relation assembly must use coarse 18/78 plus fine 38/138/58/158/98/198 for the original missing shard-18 species. Any later completion of coarse 38/58/98 is ignored.",
+  "scientific_rule_change": false,
+  "genetic_response_used": false,
+  "relation_result_seen": false,
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}

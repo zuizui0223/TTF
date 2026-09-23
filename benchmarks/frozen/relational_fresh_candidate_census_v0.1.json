@@ -1,0 +1,67 @@
+{
+  "schema": "ttf_relational_fresh_candidate_census_v0.1",
+  "status": "FRESH_1000_GEOMETRY_ELIGIBLE_RESPONSE_BLIND",
+  "executed_on": "2026-09-21",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "ranking_rule": "SHA256('relational-ttf-v0.1|<source_sha256>|<species>'), species tie-break; scan in rank order and retain only frozen Phase-1 geometry-eligible species",
+  "freshness": {
+    "original_fresh_250_excluded": 250,
+    "conditional_development_250_excluded": 250,
+    "conditional_confirmatory_250_excluded": 250,
+    "unique_prior_species_excluded": 750,
+    "selected_overlap_with_prior": 0
+  },
+  "metadata_ranked_candidates_after_prior_exclusions": 25848,
+  "ranked_candidates_checked_to_obtain_1000": 1876,
+  "geometry_status_counts": {
+    "below_min_localities": 875,
+    "eligible": 1000,
+    "no_header_occurrence_matches": 1
+  },
+  "selected_species_count": 1000,
+  "selected_species_digest_sha256": "99a10c42b46fdf356920080388729ff4d6444ab98711b9988b893386c0fd3a74",
+  "candidate_csv": {
+    "library_path": "/TTF/relational/relational_fresh_candidate_1000_v0.1.csv",
+    "sha256": "08dca43252ea93d43f3095f17b0267ec7ff049f0ec8b3e9c412dd784319ab575"
+  },
+  "taxonomic_summary": {
+    "classes": 21,
+    "orders": 67,
+    "families": 288,
+    "insecta": 832,
+    "top_orders": {
+      "Lepidoptera": 450,
+      "Diptera": 109,
+      "Hymenoptera": 97,
+      "Coleoptera": 91,
+      "Araneae": 43,
+      "Hemiptera": 28,
+      "Perciformes": 24,
+      "Trichoptera": 21,
+      "Ephemeroptera": 12,
+      "Odonata": 9,
+      "Rodentia": 7,
+      "Cypriniformes": 7
+    },
+    "largest_order_fraction": 0.45
+  },
+  "geometry_summary": {
+    "localities_median": 20,
+    "localities_q10": 13,
+    "localities_q90": 49,
+    "edges_median": 40,
+    "min_endpoint_disjoint_median": 29
+  },
+  "response_firewall": {
+    "sequence_identity_opened_for_fresh_1000": false,
+    "pairwise_genetic_distances_opened_for_fresh_1000": false,
+    "T_st_computed_for_fresh_1000": false,
+    "ecology_genetics_association_computed": false
+  },
+  "next_gate": "GBIF taxon-match + 2010-present coordinate-count pre-census; no environmental metric or genetic response yet",
+  "candidate_species_file": {
+    "path": "benchmarks/frozen/relational_fresh_candidate_species_v0.1.csv",
+    "sha256": "84a271fa65193a9ec87db95ad49e880aab08f77207a794b79483d4db7a9b1725",
+    "species_count": 1000
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "schema": "ttf_relational_host_resource_protocol_v0.1",
+  "status": "FROZEN_BEFORE_ANY_FRESH_HOST_PANEL_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-21",
+  "parent_umbrella": "docs/supporting/relational_genetic_protocol_v0.1.json",
+  "response_blind_audit": "benchmarks/frozen/relational_host_resource_response_blind_audit_v0.1.json",
+  "scientific_question": "Among geographically supported Lepidoptera source-target pairs, does similarity in the spatial footprint of larval host resources predict how well post-IBD spatial genetic structure transfers from the source species to the target species?",
+  "why_this_is_primary": "Larval host resources are an external biological constraint on where Lepidoptera populations can be connected. The predictor was built without sequence identity, pairwise genetic distance, T_st, or an ecology-genetics association, and the frozen design shows broad non-degenerate pairwise variation largely orthogonal to geographic support.",
+  "panel": {
+    "domain": "Lepidoptera",
+    "base_response_blind_species": 500,
+    "drop_prior_conditional_panel_overlap": 13,
+    "fresh_species": 487,
+    "source_species_inherited_train": 246,
+    "target_species_inherited_eval": 241,
+    "eligible_targets_min_5_supported_sources": 226,
+    "supported_directed_pairs": 15094,
+    "no_resplitting_after_response": true
+  },
+  "primary_predictor": {
+    "name": "R_host_st",
+    "source_field": "host_resource_jaccard",
+    "definition": "continuous Jaccard overlap of frozen primary-native larval host-resource WGSrpd3 footprint vectors",
+    "direction": "larger overlap predicts larger source-to-target transfer skill",
+    "thresholding_forbidden": true,
+    "standardization": "z-score over the frozen eligible directed-pair set before response opening"
+  },
+  "response": {
+    "name": "T_st",
+    "definition": "source-only to target post-IBD transfer skill under the unchanged TTF transfer operator, scored by Spearman association between source-field prediction and target post-IBD edge turnover",
+    "directed": true,
+    "sequence_identity_required_only_after_all_qualification_gates": true
+  },
+  "predeclared_controls": {
+    "target_fixed_effect": true,
+    "source_fixed_effect": true,
+    "geographic_coverage": "continuous frozen directed coverage",
+    "centroid_distance": "log1p(centroid_distance_km)",
+    "sampling_geometry_mismatch": "absolute log locality_count_ratio",
+    "same_family_indicator": true,
+    "edge_count_ratio_excluded_from_primary_model": "prospectively excluded because its response-blind Spearman correlation with locality_count_ratio is approximately 0.994; locality-count mismatch is retained as the single sampling-size control"
+  },
+  "primary_estimand": {
+    "conceptual_model": "T_st = alpha_t + gamma_s + beta_R*z(R_host_st) + beta_G*coverage_st + beta_D*log1p(centroid_distance_km_st) + beta_M*abs(log(locality_count_ratio_st)) + beta_F*same_family_st + epsilon_st",
+    "estimand": "beta_R",
+    "alternative": "beta_R > 0",
+    "alpha": 0.05,
+    "ordinary_iid_dyad_inference_forbidden": true,
+    "final_inference_family": "must preserve both shared-source and shared-target dependence and must pass frozen synthetic Type-I/power qualification before empirical opening"
+  },
+  "synthetic_qualification": {
+    "private_null_requirement": "Wilson 95% upper rejection bound <= 0.10 in every frozen null cell",
+    "relational_power_requirement": "Wilson 95% lower rejection bound >= 0.80 at the prospectively frozen minimally meaningful beta_R effect",
+    "must_include_source_general_quality": true,
+    "must_include_target_general_predictability": true,
+    "must_include_private_lineage_spatial_structure": true,
+    "must_preserve_observed_dyadic_missingness_and_support_geometry": true,
+    "candidate_inference_families": [
+      "two-way source/target cluster bootstrap or cluster-robust score test",
+      "crossed source-target random-effects model with calibrated one-sided test",
+      "restricted source/target-label permutation preserving the frozen pair-support graph"
+    ],
+    "selection_rule": "choose only from synthetic Type-I/power and numerical stability; never from empirical genetic response"
+  },
+  "secondary_only": {
+    "host_breadth": "number of resolved primary-native host species",
+    "same_host_identity": "descriptive or separately qualified; cannot replace footprint Jaccard",
+    "habitat_environment_similarity": "cross-taxon external-generalization successor; GBIF feasibility may continue response-blind but does not gate this host-resource primary study"
+  },
+  "interpretation": {
+    "positive": "Lepidoptera spatial genetic information is more transferable between species that face similar host-resource landscapes, beyond geographic opportunity, broad family membership, source quality, target predictability, and sampling-geometry mismatch.",
+    "null_with_power": "the frozen host-resource footprint relation does not explain source-target transfer heterogeneity in the tested Lepidoptera panel.",
+    "gate_failure": "NOT_EVALUABLE; no biological null claim."
+  },
+  "prohibited": [
+    "retune the completed unconditional TTF result",
+    "reuse same-order source-pool selection as the primary test",
+    "choose a host-overlap threshold from genetic outcomes",
+    "replace host-resource Jaccard with habitat similarity after seeing beta_R",
+    "drop families or targets because their empirical T_st is unfavorable",
+    "treat the response-blind GBIF habitat feasibility study as a rescue analysis"
+  ],
+  "response_firewall": {
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "T_st_computed": false,
+    "beta_R_computed": false
+  }
+}

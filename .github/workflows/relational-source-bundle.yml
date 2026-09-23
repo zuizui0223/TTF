@@ -1,0 +1,37 @@
+name: relational-source-bundle
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - ".github/workflows/relational-source-bundle.yml"
+      - "benchmarks/frozen/relational_host_resource_mask_parser_repair_v0.1.json"
+      - "docs/supporting/relational_host_resource_qualification_rule_v0.1.json"
+      - "scripts/run_relational_host_resource_repair_requalification.py"
+      - "src/ttf/relational_dyadic.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Record commit
+        run: git rev-parse HEAD > RELATIONAL_SOURCE_COMMIT.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-source-bundle
+          path: |
+            src/
+            scripts/run_relational_host_resource_empirical.py
+            benchmarks/frozen/relational_host_resource_identity_opening_authorization_v0.1.json
+            benchmarks/frozen/relational_host_resource_survivor_species_v0.1.csv
+            benchmarks/frozen/relational_host_resource_mask_parser_repair_v0.1.json
+            docs/supporting/relational_host_resource_qualification_rule_v0.1.json
+            scripts/run_relational_host_resource_repair_requalification.py
+            RELATIONAL_SOURCE_COMMIT.txt
+          retention-days: 3

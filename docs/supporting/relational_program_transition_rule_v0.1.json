@@ -1,0 +1,37 @@
+{
+  "schema": "ttf_relational_program_transition_rule_v0.1",
+  "status": "FROZEN_BEFORE_STUDY_B_EMPIRICAL_RESULT_AND_BEFORE_ANY_STUDY_C_EXTERNAL_OR_GENETIC_OPENING",
+  "frozen_on": "2026-09-22",
+  "parent_program": "docs/supporting/relational_program_v0.3.json",
+  "study_B_transition_receipt": "benchmarks/frozen/relational_environment_program_transition_v0.3.json",
+  "receipt_schema": "ttf_relational_environment_program_transition_v0.3",
+  "allowed_B_states": {
+    "DETECTED_B": {
+      "C_open_authorized": false,
+      "program_action": "close v0.3; Study C remains unopened"
+    },
+    "STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER": {
+      "C_open_authorized": true,
+      "C_entry_state": "PROCEED_TO_C_AFTER_B_NULL"
+    },
+    "NOT_EVALUABLE_B": {
+      "C_open_authorized": true,
+      "C_entry_state": "PROCEED_TO_C_AFTER_B_NOT_EVALUABLE"
+    }
+  },
+  "forbidden": [
+    "open Study C before a frozen Study-B transition receipt exists",
+    "open Study C after DETECTED_B",
+    "alter Study-C candidate, climate, opportunity, qualification, mask, or empirical contracts using the Study-B result",
+    "invent a new B state to authorize C",
+    "recycle unused B alpha into C"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened_at_rule_freeze": false,
+    "Study_B_T_st_opened_at_rule_freeze": false,
+    "Study_B_beta_R_opened_at_rule_freeze": false,
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_T_st_opened": false,
+    "Study_C_beta_hist_opened": false
+  }
+}
