@@ -10,7 +10,7 @@
   "final_recovery_run_id": 35827478403,
   "final_recovery_audit_artifact_name": "relational-environment-request-error-recovery-audit-v0.3",
   "promotion_conditions": [
-    "audit-only workflow run 35828444286 completes successfully after verifying all 186 frozen recovery jobs and artifacts from recovery run 35827478403",
+    "a successful post-completion audit run from the frozen audit workflow verifies all 186 frozen recovery jobs and artifacts from exact recovery run 35827478403",
     "its exact audit artifact has status PASS_FINAL_ROUND_ZERO_REQUEST_ERROR",
     "its exact audit artifact has request_error_count_after_final_round = 0 and unresolved_request_error_species = []",
     "the audit confirms retry_round = 4, network_retrieval_performed = false, and no_fifth_round_authorized = true",
@@ -48,5 +48,13 @@
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
   },
-  "final_recovery_audit_workflow_run_id": 35828444286
+  "final_recovery_audit_authority": {
+    "recovery_run_id": 35827478403,
+    "audit_contract": "benchmarks/frozen/relational_environment_final_recovery_audit_contract_v0.3.json",
+    "workflow": ".github/workflows/relational-environment-final-recovery-audit-v03.yml",
+    "rule": "Authorize only a successful audit run produced by the frozen audit workflow after exact recovery run 35827478403 completes successfully; the audit artifact must self-bind both recovery_workflow_run_id=35827478403 and its own audit_workflow_run_id. The earlier polling audit run 35828444286 is obsolete and cannot promote."
+  },
+  "obsolete_audit_runs": [
+    35828444286
+  ]
 }
