@@ -33,6 +33,7 @@ def test_relational_v03_closure_verifier_passes(tmp_path: Path):
     assert payload["study_B_full_downstream_contract_frozen"] is True
     assert payload["study_B_final_transport_retry_round"] == 4
     assert payload["study_B_no_fifth_transport_retry"] is True
+    assert payload["study_B_final_relation_producer_prefrozen"] is True
     assert payload["study_C_full_downstream_contract_frozen"] is True
     assert payload["all_future_genetic_response_firewalls_closed"] is True
     assert "PASS_FROZEN_V03_CONTRACT_CLOSURE" in completed.stdout
