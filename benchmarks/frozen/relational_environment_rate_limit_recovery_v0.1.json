@@ -1,0 +1,50 @@
+{
+  "schema": "ttf_relational_environment_rate_limit_recovery_v0.1",
+  "status": "FROZEN_HTTP_ONLY_RECOVERY_BEFORE_RELATION_RESULT",
+  "frozen_on": "2026-09-23",
+  "parent_transport_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.5.json",
+  "source_repair_run_id": 35804233612,
+  "source_request_error_species": [
+    "Pyrrhosoma nymphula",
+    "Lithobates clamitans",
+    "Diarsia rubi",
+    "Mythimna impura"
+  ],
+  "source_failure_class": "GBIF HTTP 429 REQUEST_ERROR only",
+  "unchanged_scientific_contract": {
+    "exact_taxon_match": true,
+    "year": "2010,2026",
+    "hasCoordinate": true,
+    "hasGeospatialIssue": false,
+    "occurrenceStatus": "PRESENT",
+    "deterministic_page_offsets": true,
+    "page_size": 300,
+    "maximum_pages": 20,
+    "exact_coordinate_dedup": true,
+    "thinning_km": 10,
+    "maximum_retained": 200,
+    "minimum_occurrences": 30
+  },
+  "transport_only_changes": {
+    "concurrency": 1,
+    "initial_cooldown_seconds": 120,
+    "per_successful_request_sleep_seconds": 2,
+    "maximum_http_retries": 12,
+    "retry_backoff": "Retry-After if provided; otherwise max(30s, 2^attempt), capped at 300s"
+  },
+  "forbidden": [
+    "change any GBIF query parameter",
+    "change deterministic page offsets",
+    "retry ecological FAIL_OCCURRENCE_GEOMETRY as if it were transport failure",
+    "change thinning, cap, minimum n, freshness, or panel rules",
+    "use any R_env or genetic response in recovery selection"
+  ],
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
