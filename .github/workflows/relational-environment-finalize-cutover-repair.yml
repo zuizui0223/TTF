@@ -30,7 +30,7 @@ jobs:
           assert p["genetic_response_used"] is False
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write(f"repair_run_id={int(p['repair_run_id'])}\n")
-              f.write(f"recovery_run_id={int(p['rate_limit_recovery_run_id'])}\n")
+              f.write(f"singleton_recovery_run_id={int(p['singleton_recovery_run_id'])}\n")
           PY
 
       - uses: actions/setup-python@v5
@@ -47,12 +47,13 @@ jobs:
           run-id: ${{ steps.frozen.outputs.repair_run_id }}
           github-token: ${{ github.token }}
 
-      - name: Download four-species HTTP recovery
+      - name: Download four singleton HTTP-recovery artifacts
         uses: actions/download-artifact@v4
         with:
-          name: relational-environment-rate-limit-recovery-v0.1
+          pattern: relational-env-rate-single-*
           path: input/recovery
-          run-id: ${{ steps.frozen.outputs.recovery_run_id }}
+          merge-multiple: true
+          run-id: ${{ steps.frozen.outputs.singleton_recovery_run_id }}
           github-token: ${{ github.token }}
 
       - name: Merge exact final eight-species repair
@@ -61,8 +62,7 @@ jobs:
           python scripts/merge_relational_environment_cutover_repair.py \
             --trigger benchmarks/frozen/relational_environment_cutover_timeout_repair_v0.1.json \
             --repair-dir input/repair \
-            --recovery-csv input/recovery/occurrences-rate-limit-recovery.csv \
-            --recovery-ledger input/recovery/rate-limit-recovery-ledger.json \
+            --singleton-recovery-dir input/recovery \
             --output-csv results/final-repair/occurrences-cutover-repair-final.csv \
             --output-ledger results/final-repair/ledger-cutover-repair-final.json
 
