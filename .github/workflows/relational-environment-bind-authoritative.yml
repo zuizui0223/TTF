@@ -118,13 +118,22 @@ jobs:
           if [ -f input/relation/relational_environment_design_v0.3.npz ]; then
             NPZ_ARG=(--design-npz input/relation/relational_environment_design_v0.3.npz)
           fi
+          LEDGER=""
+          if [ -f input/relation/occurrence_ledger_v0.3.json ]; then
+            LEDGER="input/relation/occurrence_ledger_v0.3.json"
+          elif [ -f input/relation/occurrence_ledger_v0.2.json ]; then
+            LEDGER="input/relation/occurrence_ledger_v0.2.json"
+          else
+            echo "Missing bound Study-B occurrence ledger" >&2
+            exit 2
+          fi
           python scripts/freeze_relational_environment_artifact_binding.py \
             --workflow-run-id "${{ steps.relation.outputs.run_id }}" \
             --artifact-id "${{ steps.relation.outputs.artifact_id }}" \
             --head-sha "${{ steps.relation.outputs.head_sha }}" \
             --summary input/relation/relational_environment_design_v0.3.json \
             "${NPZ_ARG[@]}" \
-            --occurrence-ledger input/relation/occurrence_ledger_v0.2.json \
+            --occurrence-ledger "$LEDGER" \
             --relation-rule docs/supporting/relational_environment_relation_rule_v0.3.json \
             --freshness-rule docs/supporting/relational_future_family_freshness_amendment_v0.1.json \
             --transport-execution benchmarks/frozen/relational_environment_transport_execution_v0.7.json \
