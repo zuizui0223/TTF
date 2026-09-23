@@ -37,5 +37,6 @@
     "Study_B_pairwise_genetic_distances_opened": false,
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
-  }
+  },
+  "technical_retrigger_note": "Workflow file was added after the trigger manifest. This edit only starts the already frozen two-species long-timeout repair."
 }
