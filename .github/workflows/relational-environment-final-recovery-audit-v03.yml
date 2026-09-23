@@ -1,11 +1,12 @@
 name: relational-environment-final-recovery-audit-v03
 
 on:
-  push:
-    branches:
-      - relational-ttf-v01
-    paths:
-      - "benchmarks/frozen/relational_environment_final_recovery_audit_contract_v0.3.json"
+  workflow_run:
+    workflows:
+      - relational-environment-request-error-recovery-v02
+    types:
+      - completed
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -31,6 +32,10 @@ jobs:
           assert int(p["expected_species"])==556
           assert p["network_retrieval_allowed"] is False
           assert p["no_fifth_round_authorized"] is True
+          event_name="${{ github.event_name }}"
+          if event_name=="workflow_run":
+              assert int("${{ github.event.workflow_run.id }}")==int(p["recovery_run_id"])
+              assert "${{ github.event.workflow_run.conclusion }}"=="success"
           wf=subprocess.check_output(
               ["git","rev-parse","HEAD:.github/workflows/relational-environment-final-recovery-audit-v03.yml"],
               text=True,
@@ -39,13 +44,13 @@ jobs:
           assert not any(bool(v) for v in p["response_firewall"].values())
           PY
 
-      - name: Wait for exact 186 recovery artifacts without issuing GBIF requests
+      - name: Verify exact frozen recovery run is complete
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
         run: |
           python - <<'PY'
-          import json, os, time, urllib.request
+          import json, os, urllib.request
           from pathlib import Path
           p=json.loads(Path("benchmarks/frozen/relational_environment_final_recovery_audit_contract_v0.3.json").read_text())
           run_id=int(p["recovery_run_id"])
@@ -54,71 +59,40 @@ jobs:
               "Accept":"application/vnd.github+json",
               "X-GitHub-Api-Version":"2022-11-28",
           }
-          def get_json(url):
+          def get(url):
               req=urllib.request.Request(url,headers=headers)
-              with urllib.request.urlopen(req,timeout=60) as response:
-                  return json.load(response)
-
-          def artifacts():
-              out=[]; page=1
-              while True:
-                  x=get_json(f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{run_id}/artifacts?per_page=100&page={page}")
-                  chunk=x.get("artifacts",[])
-                  out.extend(chunk)
-                  if len(chunk)<100: break
-                  page+=1
-              return out
-
-          def jobs():
-              out=[]; page=1
-              while True:
-                  x=get_json(f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{run_id}/jobs?per_page=100&page={page}")
-                  chunk=x.get("jobs",[])
-                  out.extend(chunk)
-                  if len(chunk)<100: break
-                  page+=1
-              return out
-
-          deadline=time.time()+5*60*60
+              with urllib.request.urlopen(req,timeout=60) as response: return json.load(response)
+          run=get(f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{run_id}")
+          assert run["status"]=="completed" and run.get("conclusion")=="success", (run["status"],run.get("conclusion"))
+          jobs=[]; page=1
           while True:
-              aa=[
-                  a for a in artifacts()
-                  if str(a.get("name","")).startswith("relational-env-request-recovery-v02-")
-                  and not a.get("expired")
-              ]
-              jj=[j for j in jobs() if str(j.get("name","")).startswith("recover (")]
-              done=[j for j in jj if j.get("status")=="completed"]
-              failed=[j for j in done if j.get("conclusion")!="success"]
-              print({"recovery_artifacts":len(aa),"recover_jobs":len(jj),"recover_completed":len(done),"recover_failed":len(failed)})
-              if failed:
-                  raise RuntimeError(f"recovery job failure: {[(j['name'],j.get('conclusion')) for j in failed[:10]]}")
-              if len(aa)==186 and len(jj)==186 and len(done)==186:
-                  break
-              if time.time()>=deadline:
-                  raise RuntimeError("timed out waiting for exact 186 completed recovery jobs/artifacts")
-              time.sleep(60)
+              x=get(f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{run_id}/jobs?per_page=100&page={page}")
+              chunk=x.get("jobs",[]); jobs.extend(chunk)
+              if len(chunk)<100: break
+              page+=1
+          recover=[j for j in jobs if str(j.get("name","")).startswith("recover (")]
+          assert len(recover)==186
+          assert all(j.get("status")=="completed" and j.get("conclusion")=="success" for j in recover)
+          print({"recovery_run_id":run_id,"recover_jobs":len(recover),"all_success":True})
           PY
 
-      - name: Download exact 186 recovery artifacts through paginated API
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REPO: ${{ github.repository }}
+      - name: Download exact 186 recovery artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: relational-env-request-recovery-v02-*
+          path: input/recovery
+          merge-multiple: true
+          run-id: 35827478403
+          github-token: ${{ github.token }}
+
+      - name: Require exact 186 recovered ledgers
         run: |
-          set -euo pipefail
-          mkdir -p input/recovery
-          gh api --paginate "/repos/$GITHUB_REPOSITORY/actions/runs/35827478403/artifacts?per_page=100" \
-            --jq '.artifacts[] | select(.name | startswith("relational-env-request-recovery-v02-")) | [.id,.name] | @tsv' \
-            > /tmp/recovery_artifacts.tsv
-          test "$(wc -l < /tmp/recovery_artifacts.tsv)" -eq 186
-          while IFS=$'\t' read -r artifact_id artifact_name; do
-            zip="/tmp/${artifact_name}.zip"
-            curl -fsSL \
-              -H "Authorization: Bearer $GH_TOKEN" \
-              -H "Accept: application/vnd.github+json" \
-              "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/artifacts/${artifact_id}/zip" \
-              -o "$zip"
-            unzip -oq "$zip" -d input/recovery
-          done < /tmp/recovery_artifacts.tsv
+          python - <<'PY'
+          from pathlib import Path
+          ledgers=list(Path("input/recovery").glob("ledger-recovery-v02-*.json"))
+          assert len(ledgers)==186,len(ledgers)
+          print({"recovery_ledgers":len(ledgers)})
+          PY
 
       - name: Download frozen round-3 audit
         uses: actions/download-artifact@v4
