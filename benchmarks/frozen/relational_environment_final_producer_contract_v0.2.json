@@ -47,7 +47,8 @@
     ".github/workflows/relational-environment-qualification-v03.yml": "266c7dd27f43d9d0ab8b54ec5dd702d74df98020",
     "tests/test_relational_environment_artifact_binding.py": "c97a89a49b4985d821bb82d59f7946329477f97a",
     "scripts/attach_relational_environment_opportunity.py": "fba60af80f73e5cb9a47e791dfb2b87389af7538",
-    "tests/test_relational_environment_opportunity.py": "97781e4e48aa545ace72b4986162990b0f47b156"
+    "tests/test_relational_environment_opportunity.py": "97781e4e48aa545ace72b4986162990b0f47b156",
+    ".github/workflows/relational-environment-final-producer-trigger.yml": "d09534c6f9a4741c0c9398089ef5b5f7d206db95"
   },
   "forbidden": [
     "create final producer trigger before audit-only PASS_FINAL_ROUND_ZERO_REQUEST_ERROR",
