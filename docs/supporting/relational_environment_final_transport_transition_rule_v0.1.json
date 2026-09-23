@@ -1,0 +1,40 @@
+{
+  "schema": "ttf_relational_environment_final_transport_transition_rule_v0.1",
+  "status": "FROZEN_BEFORE_FINAL_ROUND_COMPLETION_AND_BEFORE_STUDY_B_RELATION_RESULT",
+  "frozen_on": "2026-09-23",
+  "parent_program": "docs/supporting/relational_program_v0.3.json",
+  "parent_transition_rule": "docs/supporting/relational_program_transition_rule_v0.1.json",
+  "recovery_run_id": 35827478403,
+  "audit_schema": "ttf_relational_environment_request_error_recovery_audit_v0.3",
+  "audit_workflow": ".github/workflows/relational-environment-final-recovery-audit-v03.yml",
+  "decision": {
+    "PASS_FINAL_ROUND_ZERO_REQUEST_ERROR": {
+      "action": "NO_TRANSITION_HERE_CONTINUE_STUDY_B_PRODUCER_PATH"
+    },
+    "INCOMPLETE_TECHNICAL_EXECUTION_AFTER_FINAL_ROUND": {
+      "required_request_error_count": ">0",
+      "B_state": "NOT_EVALUABLE_B",
+      "C_open_authorized": true,
+      "C_entry_state": "PROCEED_TO_C_AFTER_B_NOT_EVALUABLE",
+      "source_stage": "final_transport_round4_request_error",
+      "Study_B_empirical_response_opened": false
+    }
+  },
+  "guardrails": [
+    "the audit must bind exact recovery run 35827478403 and retry_round 4",
+    "no fifth transport round is authorized",
+    "technical REQUEST_ERROR may not be relabeled as ecological inadmissibility or a biological null",
+    "no Study-B R_env relation or genetic response may be opened on the NOT_EVALUABLE path",
+    "zero-error PASS is handled only by the separately frozen final producer path",
+    "the transition receipt must use the already frozen NOT_EVALUABLE_B state rather than inventing a new B state"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false,
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
