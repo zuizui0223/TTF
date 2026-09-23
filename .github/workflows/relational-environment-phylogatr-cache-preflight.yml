@@ -1,0 +1,93 @@
+name: relational-environment-phylogatr-cache-preflight
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_phylogatr_cache_preflight_v0.1.json"
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify response-blind cache preflight contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_phylogatr_cache_preflight_v0.1.json").read_text())
+          assert p["schema"]=="ttf_relational_environment_phylogatr_cache_preflight_v0.1"
+          assert p["status"]=="FROZEN_CACHE_EXISTENCE_PREFLIGHT_BEFORE_RELATION_RESULT"
+          assert p["relation_result_seen"] is False
+          assert p["genetic_response_used"] is False
+          assert not any(bool(v) for v in p["response_firewall"].values())
+          PY
+
+      - name: Restore exact frozen phylogatR archive cache
+        id: archive
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/phylogatr.zip
+          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5
+          lookup-only: false
+
+      - name: Record exact cache preflight
+        run: |
+          mkdir -p results/preflight
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          path=Path("/tmp/phylogatr.zip")
+          expected_sha="5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+          expected_size=274988692
+          exists=path.is_file()
+          size=path.stat().st_size if exists else None
+          digest=None
+          if exists:
+              h=hashlib.sha256()
+              with path.open("rb") as f:
+                  for b in iter(lambda:f.read(1<<20),b""):
+                      h.update(b)
+              digest=h.hexdigest()
+          exact=bool(exists and size==expected_size and digest==expected_sha)
+          payload={
+              "schema":"ttf_relational_environment_phylogatr_cache_preflight_result_v0.1",
+              "status":"PASS_EXACT_FROZEN_PHYLOGATR_CACHE_AVAILABLE" if exact else "CACHE_UNAVAILABLE_OR_MISMATCH",
+              "cache_hit":os.environ.get("CACHE_HIT","").lower()=="true",
+              "file_exists":exists,
+              "size_bytes":size,
+              "expected_size_bytes":expected_size,
+              "sha256":digest,
+              "expected_sha256":expected_sha,
+              "relation_result_seen":False,
+              "genetic_response_used":False,
+              "response_firewall":{
+                  "Study_B_sequence_identity_opened":False,
+                  "Study_B_pairwise_genetic_distances_opened":False,
+                  "Study_B_T_st_computed":False,
+                  "Study_B_beta_R_computed":False,
+              },
+          }
+          Path("results/preflight/relational_environment_phylogatr_cache_preflight_result_v0.1.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps(payload,sort_keys=True))
+          if not exact:
+              raise SystemExit(2)
+          PY
+        env:
+          CACHE_HIT: ${{ steps.archive.outputs.cache-hit }}
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: relational-environment-phylogatr-cache-preflight-v0.1
+          path: results/preflight/
+          retention-days: 30
+          if-no-files-found: warn
