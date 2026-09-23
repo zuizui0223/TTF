@@ -7,11 +7,20 @@ import csv
 import json
 from collections import Counter
 from pathlib import Path
+import importlib.util
 
-try:
-    from scripts.acquire_relational_environment_occurrences import fetch_species
-except ModuleNotFoundError:
-    from acquire_relational_environment_occurrences import fetch_species
+
+def _load_fetch_species():
+    sibling = Path(__file__).resolve().with_name("acquire_relational_environment_occurrences.py")
+    spec = importlib.util.spec_from_file_location("ttf_env_occurrence_acquisition", sibling)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"cannot load occurrence acquisition module: {sibling}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.fetch_species
+
+
+fetch_species = _load_fetch_species()
 
 
 FIELDS = ["species", "source_key", "latitude", "longitude", "priority_rank", "priority_sha256"]
