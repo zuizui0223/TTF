@@ -22,8 +22,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--trigger", type=Path, required=True)
     ap.add_argument("--repair-dir", type=Path, required=True)
-    ap.add_argument("--recovery-csv", type=Path, required=True)
-    ap.add_argument("--recovery-ledger", type=Path, required=True)
+    ap.add_argument("--singleton-recovery-dir", type=Path, required=True)
     ap.add_argument("--output-csv", type=Path, required=True)
     ap.add_argument("--output-ledger", type=Path, required=True)
     args = ap.parse_args()
@@ -59,23 +58,36 @@ def main() -> int:
             f"original repair species drift: expected={expected_species}, got={sorted(original_ledger)}"
         )
 
-    recovery = json.loads(args.recovery_ledger.read_text())
-    if recovery.get("schema") != "ttf_relational_environment_rate_limit_recovery_result_v0.1":
-        raise RuntimeError("unexpected rate-limit recovery result schema")
-    if any(bool(v) for v in recovery["response_firewall"].values()):
-        raise RuntimeError("rate-limit recovery response firewall is open")
-    if int(recovery["request_error_count"]) != 0:
-        raise RuntimeError("rate-limit recovery still contains REQUEST_ERROR")
-    recovery_ledger = {str(row["species"]): dict(row) for row in recovery["species"]}
     frozen_recovery = {
         "Pyrrhosoma nymphula",
         "Lithobates clamitans",
         "Diarsia rubi",
         "Mythimna impura",
     }
+    recovery_ledger = {}
+    recovery_rows = {}
+    for path in sorted(args.singleton_recovery_dir.glob("ledger-rate-single-*.json")):
+        payload = json.loads(path.read_text())
+        if payload.get("schema") != "ttf_relational_environment_rate_limit_singleton_result_v0.1":
+            raise RuntimeError(f"unexpected singleton recovery schema: {path}")
+        if any(bool(v) for v in payload["response_firewall"].values()):
+            raise RuntimeError("singleton recovery response firewall is open")
+        if int(payload["request_error_count"]) != 0:
+            raise RuntimeError(f"singleton recovery still contains REQUEST_ERROR: {path}")
+        if len(payload["species"]) != 1:
+            raise RuntimeError("singleton recovery ledger must contain exactly one species")
+        row = dict(payload["species"][0])
+        name = str(row["species"])
+        if name in recovery_ledger:
+            raise RuntimeError(f"duplicate singleton recovery species: {name}")
+        recovery_ledger[name] = row
+    for path in sorted(args.singleton_recovery_dir.glob("occurrences-rate-single-*.csv")):
+        for name, rows in load_occurrence_rows(path).items():
+            recovery_rows.setdefault(name, []).extend(rows)
     if set(recovery_ledger) != frozen_recovery:
-        raise RuntimeError("rate-limit recovery species drift")
-    recovery_rows = load_occurrence_rows(args.recovery_csv)
+        raise RuntimeError(
+            f"singleton recovery species drift: expected={sorted(frozen_recovery)}, got={sorted(recovery_ledger)}"
+        )
 
     final_ledger = {}
     final_rows = {}
