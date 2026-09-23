@@ -40,6 +40,40 @@ def load_edges(path: Path) -> dict[str,np.ndarray]:
     return {name:np.asarray(values,float) for name,values in grouped.items()}
 
 
+def load_compact_edges(path: Path) -> tuple[dict[str,np.ndarray], dict[str,int]]:
+    data=np.load(path,allow_pickle=False)
+    required={
+        "species_order","edge_offsets","edge_midpoints_ecef_km",
+        "n_localities","graph_k","n_edges","min_endpoint_disjoint_training_edges",
+    }
+    missing=required-set(data.files)
+    if missing:
+        raise RuntimeError(f"compact geometry missing arrays: {sorted(missing)}")
+    species=np.asarray(data["species_order"]).astype(str)
+    offsets=np.asarray(data["edge_offsets"],dtype=np.int64)
+    midpoints=np.asarray(data["edge_midpoints_ecef_km"],dtype=float)
+    n_localities=np.asarray(data["n_localities"],dtype=np.int64)
+    n_edges=np.asarray(data["n_edges"],dtype=np.int64)
+    if len(species)!=1000 or len(set(map(str,species)))!=1000:
+        raise RuntimeError("compact geometry must contain exact 1000 unique species")
+    if offsets.shape!=(1001,) or offsets[0]!=0 or np.any(np.diff(offsets)<0):
+        raise RuntimeError("compact geometry edge offsets are invalid")
+    if midpoints.ndim!=2 or midpoints.shape[1]!=3 or int(offsets[-1])!=len(midpoints):
+        raise RuntimeError("compact geometry midpoint/offset shape drift")
+    if n_localities.shape!=(1000,) or n_edges.shape!=(1000,):
+        raise RuntimeError("compact geometry per-species vector shape drift")
+    if not np.array_equal(np.diff(offsets),n_edges):
+        raise RuntimeError("compact geometry edge-count/offset drift")
+    if not np.isfinite(midpoints).all():
+        raise RuntimeError("compact geometry contains non-finite edge midpoints")
+    edge_map={
+        str(name):np.asarray(midpoints[int(offsets[i]):int(offsets[i+1])],dtype=float)
+        for i,name in enumerate(species)
+    }
+    locality_n={str(name):int(n_localities[i]) for i,name in enumerate(species)}
+    return edge_map,locality_n
+
+
 def load_metadata(path: Path) -> dict[str,dict[str,str]]:
     rows=list(csv.DictReader(path.open(encoding="utf-8")))
     return {str(r["species"]):r for r in rows}
@@ -204,7 +238,9 @@ def process_panel(
 def main()->int:
     ap=argparse.ArgumentParser()
     ap.add_argument("--environment-design",type=Path,required=True)
-    ap.add_argument("--edges",type=Path,required=True)
+    geometry=ap.add_mutually_exclusive_group(required=True)
+    geometry.add_argument("--edges",type=Path)
+    geometry.add_argument("--compact-geometry",type=Path)
     ap.add_argument("--candidates",type=Path,required=True)
     ap.add_argument("--opportunity-rule",type=Path,required=True)
     ap.add_argument("--output-npz",type=Path,required=True)
@@ -217,7 +253,21 @@ def main()->int:
     data=np.load(args.environment_design,allow_pickle=False)
     species=np.asarray(data["species_order"]).astype(str)
     metadata=load_metadata(args.candidates)
-    edge_map=load_edges(args.edges)
+    if args.compact_geometry is not None:
+        edge_map,compact_locality_n=load_compact_edges(args.compact_geometry)
+        candidate_species=set(metadata)
+        if set(edge_map)!=candidate_species:
+            raise RuntimeError("compact geometry species set does not match frozen candidate 1000")
+        for name in candidate_species:
+            if int(metadata[name]["n_localities"])!=int(compact_locality_n[name]):
+                raise RuntimeError(f"compact geometry locality-count drift: {name}")
+        geometry_path=args.compact_geometry
+        geometry_source="compact_npz"
+    else:
+        edge_map=load_edges(args.edges)
+        compact_locality_n=None
+        geometry_path=args.edges
+        geometry_source="canonical_edge_csv"
     missing=set(map(str,species))-set(edge_map)
     if missing: raise RuntimeError(f"missing frozen genetic geometry: {len(missing)} species")
     locality_n={name:int(metadata[name]["n_localities"]) for name in metadata}
@@ -253,7 +303,9 @@ def main()->int:
     np.savez_compressed(args.output_npz,species_order=species,**arrays)
     payload={
       "schema":"ttf_relational_environment_opportunity_design_v0.2","status":status,
-      "environment_design_sha256":sha256_path(args.environment_design),"edge_geometry_sha256":sha256_path(args.edges),
+      "environment_design_sha256":sha256_path(args.environment_design),
+      "edge_geometry_sha256":sha256_path(geometry_path),
+      "edge_geometry_source":geometry_source,
       "candidate_csv_sha256":sha256_path(args.candidates),"opportunity_rule_sha256":sha256_path(args.opportunity_rule),
       "panels":summaries,
       "structural_gates":{
