@@ -1,0 +1,176 @@
+name: relational-environment-request-error-fallback-audit-push
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_request_error_fallback_audit_trigger_v0.1.json"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve and verify frozen fallback run
+        id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          python - <<'PY'
+          import json,os,urllib.request
+          from pathlib import Path
+          t=json.loads(Path("benchmarks/frozen/relational_environment_request_error_fallback_audit_trigger_v0.1.json").read_text())
+          f=json.loads(Path("benchmarks/frozen/relational_environment_request_error_fallback_v0.1.json").read_text())
+          assert t["schema"]=="ttf_relational_environment_request_error_fallback_audit_trigger_v0.1"
+          assert t["status"]=="AUTHORIZE_AUDIT_AFTER_DISTRIBUTED_FALLBACK_COMPLETION"
+          assert int(t["fallback_workflow_run_id"])==35809546248
+          assert int(t["fallback_workflow_run_id"])==int(f["fallback_workflow_run_id"])
+          assert t["relation_result_seen"] is False
+          assert t["genetic_response_used"] is False
+          run_id=int(t["fallback_workflow_run_id"])
+          req=urllib.request.Request(
+              f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{run_id}",
+              headers={
+                  "Authorization":f"Bearer {os.environ['GH_TOKEN']}",
+                  "Accept":"application/vnd.github+json",
+                  "X-GitHub-Api-Version":"2022-11-28",
+              },
+          )
+          with urllib.request.urlopen(req,timeout=60) as response:
+              p=json.load(response)
+          assert p["status"]=="completed" and p.get("conclusion")=="success",p
+          with open(os.environ["GITHUB_OUTPUT"],"a") as h:
+              h.write(f"run_id={run_id}\n")
+          print({"run_id":run_id,"status":p["status"],"conclusion":p.get("conclusion")})
+          PY
+
+      - name: Download exact distributed fallback artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: relational-env-request-retry-*
+          path: input/retries
+          merge-multiple: true
+          run-id: ${{ steps.source.outputs.run_id }}
+          github-token: ${{ github.token }}
+
+      - name: Audit exact 704 retry species
+        run: |
+          mkdir -p results
+          python - <<'PY'
+          import collections,hashlib,json
+          from pathlib import Path
+
+          trigger=json.loads(Path("benchmarks/frozen/relational_environment_request_error_fallback_v0.1.json").read_text())
+          receipt=json.loads(Path("benchmarks/frozen/relational_environment_transport_preretry_receipt_v0.7.json").read_text())
+          assert trigger["request_error_count"]==704
+          assert trigger["request_error_species_sorted_sha256"]==receipt["request_error_species_sorted_sha256"]
+
+          ledgers=sorted(Path("input/retries").glob("ledger-retry-*.json"))
+          assert len(ledgers)==235,len(ledgers)
+          species=[]
+          statuses=collections.Counter()
+          unresolved=[]
+          attempt_lengths=collections.Counter()
+          for path in ledgers:
+              p=json.loads(path.read_text())
+              assert p["schema"]=="ttf_relational_environment_distributed_retry_batch_v0.1"
+              assert all(v is False for v in p["response_firewall"].values())
+              for row in p["species"]:
+                  name=str(row["species"])
+                  species.append(name)
+                  statuses[str(row["status"])]+=1
+                  if row["status"]=="REQUEST_ERROR":
+                      unresolved.append(name)
+              for name,hist in p["attempt_history"].items():
+                  attempt_lengths[len(hist)]+=1
+
+          assert len(species)==704,len(species)
+          assert len(set(species))==704
+          digest=hashlib.sha256(("\n".join(sorted(species))+"\n").encode()).hexdigest()
+          assert digest==trigger["request_error_species_sorted_sha256"],(digest,trigger["request_error_species_sorted_sha256"])
+          payload={
+              "schema":"ttf_relational_environment_request_error_fallback_audit_v0.1",
+              "status":(
+                  "PASS_DISTRIBUTED_RETRY_ZERO_REQUEST_ERROR"
+                  if not unresolved else
+                  "INCOMPLETE_DISTRIBUTED_RETRY"
+              ),
+              "fallback_workflow_run_id":int("${{ steps.source.outputs.run_id }}"),
+              "species":704,
+              "species_sorted_sha256":digest,
+              "status_counts":dict(sorted(statuses.items())),
+              "unresolved_request_error_species":sorted(unresolved),
+              "attempt_length_counts":{str(k):v for k,v in sorted(attempt_lengths.items())},
+              "relation_result_seen":False,
+              "genetic_response_used":False,
+              "response_firewall":{
+                  "Study_B_sequence_identity_opened":False,
+                  "Study_B_pairwise_genetic_distances_opened":False,
+                  "Study_B_T_st_computed":False,
+                  "Study_B_beta_R_computed":False,
+              },
+          }
+          Path("results/relational_environment_request_error_fallback_audit_v0.1.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps(payload,sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-environment-request-error-fallback-audit-v0.1
+          path: results/relational_environment_request_error_fallback_audit_v0.1.json
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Freeze fallback producer trigger only after zero-error audit
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          audit=json.loads(Path("results/relational_environment_request_error_fallback_audit_v0.1.json").read_text())
+          promotion=json.loads(Path("docs/supporting/relational_environment_fallback_promotion_rule_v0.1.json").read_text())
+          if audit["status"]!="PASS_DISTRIBUTED_RETRY_ZERO_REQUEST_ERROR":
+              print({"producer_trigger":"not_created","audit_status":audit["status"],"unresolved":len(audit["unresolved_request_error_species"])})
+              raise SystemExit(0)
+          assert audit["unresolved_request_error_species"]==[]
+          payload={
+              "schema":"ttf_relational_environment_fallback_producer_trigger_v0.1",
+              "status":"AUTHORIZE_FALLBACK_PRODUCER_PRE_RESULT",
+              "frozen_on":"2026-09-23",
+              "promotion_rule":"docs/supporting/relational_environment_fallback_promotion_rule_v0.1.json",
+              "canonical_producer_run_id":int(promotion["canonical_relation_producer_run_id"]),
+              "fallback_retry_run_id":int("${{ steps.source.outputs.run_id }}"),
+              "fallback_audit_run_id":int("${{ github.run_id }}"),
+              "fallback_audit_status":audit["status"],
+              "request_error_count_after_retry":0,
+              "relation_result_seen":False,
+              "genetic_response_used":False,
+              "response_firewall":{
+                  "Study_B_sequence_identity_opened":False,
+                  "Study_B_pairwise_genetic_distances_opened":False,
+                  "Study_B_T_st_computed":False,
+                  "Study_B_beta_R_computed":False,
+              },
+          }
+          Path("benchmarks/frozen/relational_environment_fallback_producer_trigger_v0.1.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps(payload,sort_keys=True))
+          PY
+          if test -f benchmarks/frozen/relational_environment_fallback_producer_trigger_v0.1.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add benchmarks/frozen/relational_environment_fallback_producer_trigger_v0.1.json
+            git commit -m "Freeze fallback Study B relation producer trigger"
+            git fetch origin relational-ttf-v01
+            git rebase origin/relational-ttf-v01
+            git push origin HEAD:relational-ttf-v01
+          fi
