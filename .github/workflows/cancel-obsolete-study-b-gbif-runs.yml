@@ -1,0 +1,60 @@
+name: cancel-obsolete-study-b-gbif-runs
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_obsolete_run_cancellation_v0.1.json"
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  cancel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify exact response-blind cancellation contract
+        id: contract
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_obsolete_run_cancellation_v0.1.json").read_text())
+          assert p["schema"]=="ttf_relational_environment_obsolete_run_cancellation_v0.1"
+          assert p["status"]=="AUTHORIZE_EXACT_OBSOLETE_GBIF_RUN_CANCELLATION"
+          assert p["obsolete_run_ids"]==[35812255490,35823190096]
+          assert p["protected_current_run_ids"]==[35827478403,35828444286]
+          assert p["relation_result_seen"] is False
+          assert p["genetic_response_used"] is False
+          assert not any(bool(v) for v in p["response_firewall"].values())
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write("run_ids=35812255490,35823190096\n")
+          PY
+
+      - name: Cancel exact obsolete runs only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          IFS=',' read -ra IDS <<< "${{ steps.contract.outputs.run_ids }}"
+          for id in "${IDS[@]}"; do
+            state="$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$id" --jq '.status')"
+            conclusion="$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$id" --jq '.conclusion // ""')"
+            echo "run=$id status=$state conclusion=$conclusion"
+            if [ "$state" = "queued" ] || [ "$state" = "in_progress" ] || [ "$state" = "waiting" ] || [ "$state" = "requested" ] || [ "$state" = "pending" ]; then
+              gh api -X POST "/repos/$GITHUB_REPOSITORY/actions/runs/$id/cancel"
+            fi
+          done
+
+      - name: Verify protected runs were not targeted
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for id in 35827478403 35828444286; do
+            gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$id" --jq '{id:.id,status:.status,conclusion:.conclusion}'
+          done
