@@ -1,0 +1,65 @@
+{
+  "schema": "ttf_relational_environment_request_error_recovery_v0.2",
+  "status": "FROZEN_FINAL_TRANSPORT_ROUND_BEFORE_RELATION_RESULT",
+  "frozen_on": "2026-09-23",
+  "retry_round": 4,
+  "retry_rule": "docs/supporting/relational_environment_transport_retry_rule_v0.2.json",
+  "parent_transport_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.7.json",
+  "source_fallback_contract": "benchmarks/frozen/relational_environment_request_error_fallback_v0.1.json",
+  "source_fallback_run_id": 35809546248,
+  "source_audit_run_id": 35824707898,
+  "source_audit_artifact_id": 10734318651,
+  "source_audit_artifact_name": "relational-environment-request-error-fallback-audit-v0.1",
+  "source_audit_artifact_digest": "sha256:3a91136cbebd1518acce1a56112c300730397db8a82ecb74a07bd2d441abd800",
+  "source_audit_status": "INCOMPLETE_DISTRIBUTED_RETRY",
+  "source_original_request_error_count": 704,
+  "source_original_request_error_species_sorted_sha256": "9902e6d65c951cb752c06a2ce18fc7ae96fede0ab3e40089624402c185cdd034",
+  "source_unresolved_request_error_count": 556,
+  "selection_rule": "Retry exactly the 556 names in unresolved_request_error_species from source audit artifact 10734318651. Preserve source order for matrix assignment. Do not add, replace, backfill, or retry any species whose round-3 result is non-REQUEST_ERROR.",
+  "batch_size": 3,
+  "batch_count": 186,
+  "max_parallel": 4,
+  "transport_only_changes": {
+    "initial_cooldown_seconds": 30,
+    "batch_stagger_seconds": 15,
+    "per_successful_request_sleep_seconds": 3,
+    "request_timeout_seconds": 120,
+    "maximum_http_retries_per_request": 14,
+    "minimum_backoff_seconds": 60,
+    "maximum_backoff_seconds": 600
+  },
+  "corrected_transport_core_git_blobs": {
+    "scripts/acquire_relational_environment_occurrences.py": "34eb5d5b459e105943cc5642cf355011d86c4f07",
+    "src/ttf/relational_environment.py": "d05e35866de57daa8eccacdbf7a3c0eaff055890",
+    "src/ttf/relational_external.py": "4a43bf5fedcc40c9a0fecf44dc3412e726b2ad4f"
+  },
+  "transport_implementation": {
+    "workflow": ".github/workflows/relational-environment-request-error-recovery-v02.yml",
+    "workflow_git_blob": "1acba53eba459af53c36ee14a63179d4ea786e31",
+    "scientific_query_change": false
+  },
+  "final_round_audit": {
+    "expected_species": 556,
+    "required_request_error_count_for_relation_binding": 0,
+    "zero_error_status": "PASS_FINAL_ROUND_ZERO_REQUEST_ERROR",
+    "unresolved_status": "INCOMPLETE_TECHNICAL_EXECUTION_AFTER_FINAL_ROUND",
+    "no_fifth_round_authorized": true
+  },
+  "forbidden": [
+    "retry species outside the exact frozen 556-name unresolved set",
+    "retry any round-3 PASS_OCCURRENCE_GEOMETRY, FAIL_OCCURRENCE_GEOMETRY, or REJECTED_GBIF_TAXON_MATCH result",
+    "change taxon matching, GBIF query parameters, year window, deterministic page offsets, thinning, cap, or minimum occurrence threshold",
+    "change Study-B freshness, taxonomic breadth, relation, opportunity, qualification, or empirical opening rules",
+    "construct or inspect R_env in the recovery jobs",
+    "open nucleotide identity, pairwise genetic distances, T_st, or beta_R",
+    "authorize a fifth transport retry round"
+  ],
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
