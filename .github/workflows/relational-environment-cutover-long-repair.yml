@@ -1,11 +1,9 @@
 name: relational-environment-cutover-long-repair
 
 on:
-  push:
-    branches:
-      - relational-ttf-v01
-    paths:
-      - "benchmarks/frozen/relational_environment_cutover_long_repair_v0.1.json"
+  # Unbound technical experiment retained only for forensic/manual reproduction.
+  # Authoritative v0.7 uses relational-environment-cutover-timeout-repair-long run 35749326437.
+  workflow_dispatch:
 
 permissions:
   contents: read
