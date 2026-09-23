@@ -8,7 +8,7 @@
   "expected_recovery_batches": 186,
   "expected_species": 556,
   "workflow": ".github/workflows/relational-environment-final-recovery-audit-v03.yml",
-  "workflow_git_blob": "df98bfa865e2879d2cf0d807d717cc4271c5be10",
+  "workflow_git_blob": "3152547218e3e3ceefcd88e138d926441426c2fc",
   "purpose": "Audit the already-running frozen round-4 artifacts in numeric batch order. This workflow performs no GBIF acquisition and exists only to repair the lexicographic-order defect in the embedded audit step.",
   "embedded_audit_defect": {
     "defect": "ledger filenames were sorted lexicographically before an exact source-order assertion, so batch order 0,1,10,... could fail even when all recovery artifacts were scientifically and technically valid",
@@ -35,5 +35,7 @@
     "Study_B_pairwise_genetic_distances_opened": false,
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
-  }
+  },
+  "execution_trigger": "workflow_run completion of the exact frozen recovery workflow; no polling runner is required for future audit execution",
+  "artifact_download_method": "actions/download-artifact@v4 exact run-id/pattern; avoids cross-host redirect Authorization leakage"
 }
