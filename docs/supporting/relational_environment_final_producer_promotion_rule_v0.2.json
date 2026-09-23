@@ -8,16 +8,16 @@
   "round3_audit_run_id": 35824707898,
   "final_recovery_contract": "benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json",
   "final_recovery_run_id": 35827478403,
-  "final_recovery_audit_artifact_name": "relational-environment-request-error-recovery-audit-v0.2",
+  "final_recovery_audit_artifact_name": "relational-environment-request-error-recovery-audit-v0.3",
   "promotion_conditions": [
-    "final recovery workflow run 35827478403 completed successfully",
-    "its exact final audit has status PASS_FINAL_ROUND_ZERO_REQUEST_ERROR",
-    "its exact final audit has request_error_count_after_final_round = 0 and unresolved_request_error_species = []",
-    "the audit confirms retry_round = 4 and no_fifth_round_authorized = true",
+    "audit-only workflow run 35828444286 completes successfully after verifying all 186 frozen recovery jobs and artifacts from recovery run 35827478403",
+    "its exact audit artifact has status PASS_FINAL_ROUND_ZERO_REQUEST_ERROR",
+    "its exact audit artifact has request_error_count_after_final_round = 0 and unresolved_request_error_species = []",
+    "the audit confirms retry_round = 4, network_retrieval_performed = false, and no_fifth_round_authorized = true",
     "the canonical producer run has no non-expired relational-environment-relation-v0.3 artifact at promotion time",
     "Study-B relation result and all genetic response remain unopened"
   ],
-  "action": "Only after all promotion conditions pass, a separately frozen final-producer trigger may authorize one relation producer that merges the authoritative v0.7 base transport, exact round-3 outcomes, and exact round-4 outcomes. Promotion is binary on technical completion only; no R_env content, ecological PASS rate, taxonomy, or genetic response may be used to choose a producer.",
+  "action": "Only after all promotion conditions pass, a separately frozen final-producer trigger may authorize one relation producer that merges the authoritative v0.7 base transport, exact round-3 outcomes, and exact round-4 outcomes. The audit-only workflow repairs bookkeeping order only and performs no GBIF acquisition. Promotion is binary on technical completion only; no R_env content, ecological PASS rate, taxonomy, or genetic response may be used to choose a producer.",
   "final_merge_rule": {
     "pre_retry_request_error_species": 704,
     "round3_resolved_species": 148,
@@ -31,7 +31,9 @@
   "relation_content_used_for_promotion": false,
   "genetic_response_used_for_promotion": false,
   "forbidden": [
-    "create the final-producer trigger if the final round audit is not zero-error",
+    "create the final-producer trigger if the audit-only final-round audit is not zero-error",
+    "treat the embedded lexicographic-order audit failure as a new transport round",
+    "issue new GBIF requests from the audit-only workflow",
     "inspect R_env or CHELSA relation output before producer promotion",
     "choose a transport layer by ecological PASS rate or taxonomic composition",
     "replace any of the 148 round-3 resolved outcomes with round-4 data",
@@ -45,5 +47,6 @@
     "Study_B_pairwise_genetic_distances_opened": false,
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
-  }
+  },
+  "final_recovery_audit_workflow_run_id": 35828444286
 }
