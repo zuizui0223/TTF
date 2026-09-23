@@ -10,7 +10,7 @@
   "candidate_csv_sha256": "ad6375b4c2ec3f00193da90b3c68752f126d07cf18071b4f5dfddd422bdff7a1",
   "candidate_species_digest_sha256": "adfdca215f7c428aee17cec43fc52ec00792a08081badf78d29bc2e792e3235c",
   "candidate_species": 1000,
-  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
   "shards": 20,
   "max_parallel": 2,
   "acquisition_contract": "Exact Study-B GBIF fetch_species logic inherited unchanged by scripts/acquire_relational_historical_occurrences.py",
