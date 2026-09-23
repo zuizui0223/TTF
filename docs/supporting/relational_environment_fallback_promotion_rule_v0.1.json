@@ -1,0 +1,27 @@
+{
+  "schema": "ttf_relational_environment_fallback_promotion_rule_v0.1",
+  "status": "FROZEN_BEFORE_FALLBACK_RETRY_RESULT_AND_BEFORE_RELATION_RESULT",
+  "frozen_on": "2026-09-23",
+  "canonical_relation_producer_run_id": 35795821824,
+  "fallback_retry_trigger": "benchmarks/frozen/relational_environment_request_error_fallback_v0.1.json",
+  "promotion_conditions": [
+    "distributed fallback retry workflow completed successfully",
+    "distributed fallback audit status is PASS_DISTRIBUTED_RETRY_ZERO_REQUEST_ERROR",
+    "canonical producer run has no non-expired relational-environment-relation-v0.3 artifact at promotion time"
+  ],
+  "action": "A newly frozen fallback relation producer may supersede the still-running or non-success canonical producer before any relation result is observed. Any later artifact from the superseded canonical producer is forbidden for binding.",
+  "relation_content_used_for_promotion": false,
+  "genetic_response_used_for_promotion": false,
+  "forbidden": [
+    "inspect R_env summary before choosing producer",
+    "choose producer by ecological PASS rate or taxonomy",
+    "bind both producer artifacts",
+    "promote fallback after canonical relation artifact already exists"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
