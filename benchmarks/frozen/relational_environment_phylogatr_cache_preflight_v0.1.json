@@ -17,5 +17,12 @@
     "Study_B_pairwise_genetic_distances_opened": false,
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
-  }
+  },
+  "preflight_run_id": 35829738618,
+  "preflight_observed_status": "CACHE_UNAVAILABLE_OR_MISMATCH",
+  "preflight_observed_cache_hit": false,
+  "preflight_observed_file_exists": false,
+  "interpretation": "Technical prerequisite unavailable in GitHub Actions cache; this is not a biological or qualification result and cannot be converted to NOT_EVALUABLE_B. Restore only the exact 274,988,692-byte archive with the frozen SHA-256 before any archive-dependent qualification or character opening.",
+  "seed_workflow": ".github/workflows/seed-phylogatr-archive-cache.yml",
+  "seed_requirement": "Requires a temporary authenticated URL for the exact frozen archive; the downloaded bytes must pass the frozen SHA-256 before cache save."
 }
