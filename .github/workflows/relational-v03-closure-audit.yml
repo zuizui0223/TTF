@@ -19,6 +19,8 @@ on:
       - "benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json"
       - "docs/supporting/relational_environment_final_producer_promotion_rule_v0.2.json"
       - "benchmarks/frozen/relational_environment_final_producer_contract_v0.2.json"
+      - "benchmarks/frozen/relational_environment_final_recovery_audit_contract_v0.3.json"
+      - ".github/workflows/relational-environment-final-recovery-audit-v03.yml"
       - ".github/workflows/relational-environment-final-recovery-producer.yml"
       - "scripts/merge_relational_environment_final_recovery.py"
       - ".github/workflows/relational-environment-request-error-recovery-v02.yml"
