@@ -3,13 +3,11 @@
   "status": "FROZEN_CUTOVER_TIMEOUT_REPAIR_BEFORE_RELATION_RESULT",
   "frozen_on": "2026-09-23",
   "parent_transport_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.5.json",
-  "parent_cutover_manifest": "benchmarks/frozen/relational_environment_transport_cutover_v0.1.json",
-  "parent_cutover_workflow_run_id": 35712027961,
-  "observed_timeout_batches": [
+  "cutover_run_id": 35712027961,
+  "timed_out_cutover_batches": [
     167,
     170
   ],
-  "timeout_pattern": "Both cutover jobs reached the 120-minute job limit and ended cancelled before artifact upload.",
   "entries": [
     {
       "repair_index": 0,
@@ -22,42 +20,6 @@
       "cutover_batch_index": 167,
       "candidate_index": 804,
       "species": "Lithobates clamitans"
-    },
-    {
-      "repair_index": 2,
-      "cutover_batch_index": 167,
-      "candidate_index": 806,
-      "species": "Grammotaulius interrogationis"
-    },
-    {
-      "repair_index": 3,
-      "cutover_batch_index": 167,
-      "candidate_index": 820,
-      "species": "Phyllonorycter geniculella"
-    },
-    {
-      "repair_index": 4,
-      "cutover_batch_index": 170,
-      "candidate_index": 842,
-      "species": "Mytilus californianus"
-    },
-    {
-      "repair_index": 5,
-      "cutover_batch_index": 170,
-      "candidate_index": 843,
-      "species": "Diarsia rubi"
-    },
-    {
-      "repair_index": 6,
-      "cutover_batch_index": 170,
-      "candidate_index": 844,
-      "species": "Mythimna impura"
-    },
-    {
-      "repair_index": 7,
-      "cutover_batch_index": 170,
-      "candidate_index": 847,
-      "species": "Orthopodomyia signifera"
     }
   ],
   "corrected_transport_core_git_blobs": {
@@ -68,11 +30,53 @@
   "query_or_scientific_contract_change": false,
   "relation_result_seen": false,
   "genetic_response_used": false,
-  "rule": "Repair exactly the species in the two timed-out cutover batches as singleton transport jobs. Successful cutover batches remain authoritative and are never replaced.",
+  "selection_rule": "Final retry round contains only the two species still carrying REQUEST_ERROR after prior technical attempts. All six non-REQUEST_ERROR repair outcomes are frozen and not rerun.",
   "response_firewall": {
     "Study_B_sequence_identity_opened": false,
     "Study_B_pairwise_genetic_distances_opened": false,
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
+  },
+  "retry_round": 3,
+  "previous_retry_runs": [
+    35735717833,
+    35804233612,
+    35811005415
+  ],
+  "resolved_non_request_error": {
+    "2": {
+      "species": "Grammotaulius interrogationis",
+      "status": "FAIL_OCCURRENCE_GEOMETRY",
+      "source_run_id": 35804233612
+    },
+    "3": {
+      "species": "Phyllonorycter geniculella",
+      "status": "PASS_OCCURRENCE_GEOMETRY",
+      "source_run_id": 35804233612
+    },
+    "4": {
+      "species": "Mytilus californianus",
+      "status": "PASS_OCCURRENCE_GEOMETRY",
+      "source_run_id": 35735717833
+    },
+    "5": {
+      "species": "Diarsia rubi",
+      "status": "PASS_OCCURRENCE_GEOMETRY",
+      "source_run_id": 35735717833
+    },
+    "6": {
+      "species": "Mythimna impura",
+      "status": "PASS_OCCURRENCE_GEOMETRY",
+      "source_run_id": 35735717833
+    },
+    "7": {
+      "species": "Orthopodomyia signifera",
+      "status": "PASS_OCCURRENCE_GEOMETRY",
+      "source_run_id": 35735717833
+    }
+  },
+  "transport_pacing": {
+    "max_parallel": 1,
+    "scientific_query_change": false
   }
 }
