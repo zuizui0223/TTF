@@ -43,6 +43,7 @@ jobs:
           assert promotion["schema"]=="ttf_relational_environment_final_producer_promotion_rule_v0.2"
           assert promotion["status"]=="FROZEN_BEFORE_FINAL_ROUND_RESULT_AND_BEFORE_RELATION_RESULT"
           assert int(promotion["final_recovery_run_id"])==35827478403
+          assert int(promotion["final_recovery_audit_workflow_run_id"])==35828444286
           assert promotion["no_fifth_round_authorized"] is True
 
           assert recovery["schema"]=="ttf_relational_environment_request_error_recovery_v0.2"
@@ -54,6 +55,8 @@ jobs:
 
           assert int(trigger["recovery_run_id"])==int(promotion["final_recovery_run_id"])
           assert int(trigger["recovery_run_id"])==35827478403
+          assert int(trigger["recovery_audit_run_id"])==int(promotion["final_recovery_audit_workflow_run_id"])
+          assert int(trigger["recovery_audit_run_id"])==35828444286
           assert trigger["recovery_audit_artifact_name"]==promotion["final_recovery_audit_artifact_name"]
 
           assert producer["schema"]=="ttf_relational_environment_relation_producer_v0.1"
@@ -73,14 +76,17 @@ jobs:
                   return json.load(response)
 
           recovery_run=int(trigger["recovery_run_id"])
-          state=get_json(f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{recovery_run}")
-          assert state["status"]=="completed" and state.get("conclusion")=="success",state
+          audit_run=int(trigger["recovery_audit_run_id"])
+          recovery_state=get_json(f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{recovery_run}")
+          assert recovery_state["status"]=="completed",recovery_state
+          audit_state=get_json(f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{audit_run}")
+          assert audit_state["status"]=="completed" and audit_state.get("conclusion")=="success",audit_state
 
           artifacts=[]
           page=1
           while True:
               payload=get_json(
-                  f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{recovery_run}/artifacts?per_page=100&page={page}"
+                  f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{audit_run}/artifacts?per_page=100&page={page}"
               )
               chunk=payload.get("artifacts",[])
               artifacts.extend(chunk)
@@ -117,9 +123,11 @@ jobs:
 
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write(f"recovery_run_id={recovery_run}\n")
+              f.write(f"recovery_audit_run_id={audit_run}\n")
               f.write(f"recovery_audit_name={trigger['recovery_audit_artifact_name']}\n")
           print({
-              "recovery_run":(state["status"],state.get("conclusion")),
+              "recovery_run":(recovery_state["status"],recovery_state.get("conclusion")),
+              "audit_run":(audit_state["status"],audit_state.get("conclusion")),
               "recovery_audit_artifact_id":a["id"],
               "canonical_relation_artifacts":len(existing),
           })
@@ -130,7 +138,7 @@ jobs:
         with:
           name: ${{ steps.frozen.outputs.recovery_audit_name }}
           path: input/round4-audit
-          run-id: ${{ steps.frozen.outputs.recovery_run_id }}
+          run-id: ${{ steps.frozen.outputs.recovery_audit_run_id }}
           github-token: ${{ github.token }}
 
       - name: Require exact zero-error final technical audit
@@ -138,11 +146,13 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          p=json.loads(Path("input/round4-audit/relational_environment_request_error_recovery_audit_v0.2.json").read_text())
-          assert p["schema"]=="ttf_relational_environment_request_error_recovery_audit_v0.2"
+          p=json.loads(Path("input/round4-audit/relational_environment_request_error_recovery_audit_v0.3.json").read_text())
+          assert p["schema"]=="ttf_relational_environment_request_error_recovery_audit_v0.3"
           assert p["status"]=="PASS_FINAL_ROUND_ZERO_REQUEST_ERROR",p
           assert int(p["retry_round"])==4
           assert int(p["recovery_workflow_run_id"])==35827478403
+          assert int(p["audit_workflow_run_id"])==35828444286
+          assert p["network_retrieval_performed"] is False
           assert int(p["species"])==556
           assert int(p["request_error_count_after_final_round"])==0
           assert p["unresolved_request_error_species"]==[]
@@ -354,7 +364,7 @@ jobs:
             --round4-dir input/round4 \
             --preretry-audit input/preretry-audit/relational_environment_transport_preretry_audit_v0.7.json \
             --round3-audit input/round3-audit/relational_environment_request_error_fallback_audit_v0.1.json \
-            --round4-audit input/round4-audit/relational_environment_request_error_recovery_audit_v0.2.json \
+            --round4-audit input/round4-audit/relational_environment_request_error_recovery_audit_v0.3.json \
             --round4-contract benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json \
             --output-csv results/environment/occurrences_v0.3.csv \
             --output-ledger results/environment/occurrence_ledger_v0.3.json \
