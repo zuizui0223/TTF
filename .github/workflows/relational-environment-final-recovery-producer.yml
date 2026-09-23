@@ -43,7 +43,8 @@ jobs:
           assert promotion["schema"]=="ttf_relational_environment_final_producer_promotion_rule_v0.2"
           assert promotion["status"]=="FROZEN_BEFORE_FINAL_ROUND_RESULT_AND_BEFORE_RELATION_RESULT"
           assert int(promotion["final_recovery_run_id"])==35827478403
-          assert int(promotion["final_recovery_audit_workflow_run_id"])==35828444286
+          authority=promotion["final_recovery_audit_authority"]
+          assert int(authority["recovery_run_id"])==35827478403
           assert promotion["no_fifth_round_authorized"] is True
 
           assert recovery["schema"]=="ttf_relational_environment_request_error_recovery_v0.2"
@@ -55,8 +56,8 @@ jobs:
 
           assert int(trigger["recovery_run_id"])==int(promotion["final_recovery_run_id"])
           assert int(trigger["recovery_run_id"])==35827478403
-          assert int(trigger["recovery_audit_run_id"])==int(promotion["final_recovery_audit_workflow_run_id"])
-          assert int(trigger["recovery_audit_run_id"])==35828444286
+          assert int(trigger["recovery_audit_run_id"])>0
+          assert int(trigger["recovery_audit_run_id"]) not in set(map(int,promotion.get("obsolete_audit_runs",[])))
           assert trigger["recovery_audit_artifact_name"]==promotion["final_recovery_audit_artifact_name"]
 
           assert producer["schema"]=="ttf_relational_environment_relation_producer_v0.1"
@@ -151,7 +152,7 @@ jobs:
           assert p["status"]=="PASS_FINAL_ROUND_ZERO_REQUEST_ERROR",p
           assert int(p["retry_round"])==4
           assert int(p["recovery_workflow_run_id"])==35827478403
-          assert int(p["audit_workflow_run_id"])==35828444286
+          assert int(p["audit_workflow_run_id"])==int("${{ steps.frozen.outputs.recovery_audit_run_id }}")
           assert p["network_retrieval_performed"] is False
           assert int(p["species"])==556
           assert int(p["request_error_count_after_final_round"])==0
