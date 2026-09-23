@@ -50,6 +50,7 @@ def main() -> int:
         "b_relation": Path("docs/supporting/relational_environment_relation_rule_v0.3.json"),
         "b_transport": Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json"),
         "b_transport_audit": Path("benchmarks/frozen/relational_environment_transport_partition_audit_v0.7.json"),
+        "b_local_geometry": Path("benchmarks/frozen/relational_environment_geometry_reconstruction_local_v0.2.json"),
         "b_preretry": Path("benchmarks/frozen/relational_environment_transport_preretry_receipt_v0.7.json"),
         "b_retry_rule_v02": Path("docs/supporting/relational_environment_transport_retry_rule_v0.2.json"),
         "b_recovery_v02": Path("benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json"),
@@ -466,6 +467,27 @@ def main() -> int:
         raise RuntimeError("Study B final producer is listed obsolete")
     if producer["relation_result_seen"] is not False or producer["genetic_response_used"] is not False:
         raise RuntimeError("Study B producer was not frozen before relation/genetic response")
+
+    local_geometry = p["b_local_geometry"]
+    if local_geometry.get("schema") != "ttf_relational_environment_geometry_reconstruction_local_v0.2":
+        raise RuntimeError("Study B local geometry receipt schema drift")
+    if local_geometry.get("status") != "PASS_RESPONSE_BLIND_FRESH_1000_GEOMETRY_RECONSTRUCTION":
+        raise RuntimeError("Study B local geometry reconstruction did not pass")
+    if local_geometry["source_archive"]["sha256"] != "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5":
+        raise RuntimeError("Study B recovered source archive SHA drift")
+    if int(local_geometry["source_archive"]["size_bytes"]) != 274988692:
+        raise RuntimeError("Study B recovered source archive size drift")
+    if (
+        int(local_geometry["species"]) != 1000
+        or int(local_geometry["locality_rows"]) != 28355
+        or int(local_geometry["edge_rows"]) != 167828
+        or int(local_geometry["verification_failures"]) != 0
+    ):
+        raise RuntimeError("Study B local geometry aggregate invariant drift")
+    if local_geometry["relation_result_seen"] is not False or local_geometry["genetic_response_used"] is not False:
+        raise RuntimeError("Study B local geometry was not frozen pre-result")
+    if not all(v is False for v in local_geometry["response_firewall"].values()):
+        raise RuntimeError("Study B local geometry response firewall opened")
 
     b = program["slot_B"]
     expected_b_chain = [
