@@ -14,5 +14,6 @@
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
   },
-  "technical_retrigger_note": "Previous audit bridge expected the run ID inside the pre-result fallback contract. This retrigger uses the separate frozen technical execution binding; no retry species, status, relation, or genetic rule changes."
+  "technical_retrigger_note": "Previous audit bridge expected the run ID inside the pre-result fallback contract. This retrigger uses the separate frozen technical execution binding; no retry species, status, relation, or genetic rule changes.",
+  "technical_retrigger_note_v2": "Previous audit bridge downloaded only the first 200 of 235 retry artifacts through actions/download-artifact. This retrigger pages the GitHub artifacts API and downloads the exact frozen 235 artifacts; retry species and outcomes are unchanged."
 }
