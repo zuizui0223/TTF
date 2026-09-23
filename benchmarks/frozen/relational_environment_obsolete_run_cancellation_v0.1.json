@@ -1,0 +1,36 @@
+{
+  "schema": "ttf_relational_environment_obsolete_run_cancellation_v0.1",
+  "status": "AUTHORIZE_EXACT_OBSOLETE_GBIF_RUN_CANCELLATION",
+  "frozen_on": "2026-09-23",
+  "reason": "Two obsolete pre-result recovery runs were still actively issuing GBIF requests while the authoritative final round-4 transport was running, increasing client-side API contention. Cancel only those obsolete runs; do not alter or cancel the authoritative round-4 recovery or its audit-only verifier.",
+  "obsolete_run_ids": [
+    35812255490,
+    35823190096
+  ],
+  "obsolete_run_roles": {
+    "35812255490": "superseded singleton HTTP recovery",
+    "35823190096": "obsolete final two-species timeout repair"
+  },
+  "protected_current_run_ids": [
+    35827478403,
+    35828444286
+  ],
+  "workflow": ".github/workflows/cancel-obsolete-study-b-gbif-runs.yml",
+  "workflow_git_blob": "06188b0920395661096b669ae4fed342bd615660",
+  "scientific_contract_change": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "forbidden": [
+    "cancel authoritative recovery run 35827478403",
+    "cancel audit-only verifier run 35828444286",
+    "cancel any run not explicitly listed in obsolete_run_ids",
+    "change GBIF query parameters, page selection, thinning, cap, or minimum n",
+    "use any ecological or genetic outcome to choose cancellation targets"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
