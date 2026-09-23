@@ -128,13 +128,31 @@ jobs:
                   for b in iter(lambda:f.read(1<<20),b""): h.update(b)
               return h.hexdigest()
           p=json.loads(Path("input/relation/relational_environment_design_v0.3.json").read_text())
-          retry=json.loads(Path("input/relation/transport_retry_receipt_v0.1.json").read_text())
           binding=json.loads(Path("benchmarks/frozen/relational_environment_relation_artifact_binding_v0.3.json").read_text())
-          assert retry["schema"]=="ttf_relational_environment_transport_retry_receipt_v0.1"
-          assert retry["status"]=="PASS_ZERO_REQUEST_ERROR_TRANSPORT", retry
-          assert int(retry["maximum_retry_rounds"])==3
-          assert int(retry["final_request_error_count"])==0
-          assert all(v is False for v in retry["response_firewall"].values()), retry["response_firewall"]
+          producer=json.loads(Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json").read_text())
+          final_receipt_path=Path("input/relation/final_transport_merge_receipt_v0.2.json")
+          legacy_receipt_path=Path("input/relation/transport_retry_receipt_v0.1.json")
+          if producer["workflow_name"]=="relational-environment-final-recovery-producer":
+              assert final_receipt_path.is_file()
+              retry=json.loads(final_receipt_path.read_text())
+              assert retry["schema"]=="ttf_relational_environment_final_transport_merge_v0.2"
+              assert retry["status"]=="PASS_ZERO_REQUEST_ERROR_FINAL_MERGE", retry
+              assert int(retry["pre_retry_request_error_species"])==704
+              assert int(retry["round3_resolved_species"])==148
+              assert int(retry["round3_unresolved_species"])==556
+              assert int(retry["round4_species"])==556
+              assert int(retry["final_request_error_count"])==0
+              assert retry["no_fifth_round_authorized"] is True
+              assert all(v is False for v in retry["response_firewall"].values()), retry["response_firewall"]
+          else:
+              assert producer["workflow_name"]=="relational-environment-transport-assemble-v07"
+              assert legacy_receipt_path.is_file()
+              retry=json.loads(legacy_receipt_path.read_text())
+              assert retry["schema"]=="ttf_relational_environment_transport_retry_receipt_v0.1"
+              assert retry["status"]=="PASS_ZERO_REQUEST_ERROR_TRANSPORT", retry
+              assert int(retry["maximum_retry_rounds"])==3
+              assert int(retry["final_request_error_count"])==0
+              assert all(v is False for v in retry["response_firewall"].values()), retry["response_firewall"]
           assert binding["schema"] == "ttf_relational_environment_relation_artifact_binding_v0.3"
           assert binding["status"] == "FROZEN_RESPONSE_BLIND_RELATION_ARTIFACT"
           assert binding["artifact_name"] == "relational-environment-relation-v0.3"
@@ -151,7 +169,6 @@ jobs:
           transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text())
           assert transport["schema"]=="ttf_relational_environment_transport_execution_v0.7"
           assert transport["status"]=="FROZEN_FINAL_AUTHORITATIVE_COMPOSITE_TRANSPORT_BEFORE_RELATION_RESULT"
-          producer=json.loads(Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json").read_text())
           assert producer["schema"]=="ttf_relational_environment_relation_producer_v0.1"
           assert producer["status"]=="FROZEN_RELATION_PRODUCER_BEFORE_RESULT"
           assert producer["transport_execution"]=="benchmarks/frozen/relational_environment_transport_execution_v0.7.json"
@@ -170,12 +187,23 @@ jobs:
           assert int(binding["transport_integrity"]["status_counts"].get("REQUEST_ERROR",0)) == 0
           assert binding["rules_sha256"]["relational_environment_transport_execution_v0.7.json"] == sha("benchmarks/frozen/relational_environment_transport_execution_v0.7.json")
           assert binding["rules_sha256"]["relational_environment_relation_producer_v0.1.json"] == sha("benchmarks/frozen/relational_environment_relation_producer_v0.1.json")
+          occurrence_filename=binding["transport_integrity"]["occurrence_filename"]
+          assert occurrence_filename in {"occurrence_ledger_v0.2.json","occurrence_ledger_v0.3.json"}
           for filename in (
               "relational_environment_design_v0.3.json",
               "relational_environment_design_v0.3.npz",
-              "occurrence_ledger_v0.2.json",
+              occurrence_filename,
           ):
               assert binding["files_sha256"][filename] == sha(Path("input/relation") / filename), filename
+          occurrence=json.loads((Path("input/relation")/occurrence_filename).read_text())
+          if occurrence_filename=="occurrence_ledger_v0.3.json":
+              assert occurrence["schema"]=="ttf_relational_environment_occurrence_acquisition_v0.3"
+              assert occurrence["retry_rounds_completed"]==4
+              assert occurrence["no_fifth_round_authorized"] is True
+              assert binding["transport_integrity"]["retry_rounds_completed"]==4
+              assert binding["transport_integrity"]["no_fifth_round_authorized"] is True
+          else:
+              assert occurrence["schema"]=="ttf_relational_environment_occurrence_acquisition_v0.2"
           assert all(v is False for v in binding["response_firewall"].values()), binding["response_firewall"]
           assert all(v is False for v in p["response_firewall"].values()), p["response_firewall"]
           print({k:p[k] for k in (
