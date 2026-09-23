@@ -28,10 +28,15 @@ jobs:
           from pathlib import Path
           t=json.loads(Path("benchmarks/frozen/relational_environment_request_error_fallback_audit_trigger_v0.1.json").read_text())
           f=json.loads(Path("benchmarks/frozen/relational_environment_request_error_fallback_v0.1.json").read_text())
+          e=json.loads(Path("benchmarks/frozen/relational_environment_request_error_fallback_execution_v0.1.json").read_text())
           assert t["schema"]=="ttf_relational_environment_request_error_fallback_audit_trigger_v0.1"
           assert t["status"]=="AUTHORIZE_AUDIT_AFTER_DISTRIBUTED_FALLBACK_COMPLETION"
           assert int(t["fallback_workflow_run_id"])==35809546248
-          assert int(t["fallback_workflow_run_id"])==int(f["fallback_workflow_run_id"])
+          assert e["schema"]=="ttf_relational_environment_request_error_fallback_execution_v0.1"
+          assert e["status"]=="FROZEN_TECHNICAL_EXECUTION_BINDING_BEFORE_RELATION_RESULT"
+          assert e["fallback_contract"]=="benchmarks/frozen/relational_environment_request_error_fallback_v0.1.json"
+          assert int(t["fallback_workflow_run_id"])==int(e["workflow_run_id"])
+          assert int(e["workflow_run_id"])==35809546248
           assert t["relation_result_seen"] is False
           assert t["genetic_response_used"] is False
           run_id=int(t["fallback_workflow_run_id"])
