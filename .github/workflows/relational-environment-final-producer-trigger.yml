@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   freeze-trigger:
-    if: github.event.workflow_run.id == 35828444286 && github.event.workflow_run.conclusion == 'success'
+    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,7 +31,7 @@ jobs:
         with:
           name: relational-environment-request-error-recovery-audit-v0.3
           path: input/audit
-          run-id: 35828444286
+          run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ github.token }}
 
       - name: Verify exact audit and resolve artifact identity
@@ -48,10 +48,15 @@ jobs:
               Path("input/audit/relational_environment_request_error_recovery_audit_v0.3.json").read_text()
           )
           assert audit["schema"]=="ttf_relational_environment_request_error_recovery_audit_v0.3"
+          promotion=json.loads(Path("docs/supporting/relational_environment_final_producer_promotion_rule_v0.2.json").read_text())
+          audit_run=int("${{ github.event.workflow_run.id }}")
+          assert audit_run not in set(map(int,promotion.get("obsolete_audit_runs",[])))
+          authority=promotion["final_recovery_audit_authority"]
+          assert int(authority["recovery_run_id"])==35827478403
           assert audit["status"]=="PASS_FINAL_ROUND_ZERO_REQUEST_ERROR",audit
           assert int(audit["retry_round"])==4
           assert int(audit["recovery_workflow_run_id"])==35827478403
-          assert int(audit["audit_workflow_run_id"])==35828444286
+          assert int(audit["audit_workflow_run_id"])==int("${{ github.event.workflow_run.id }}")
           assert int(audit["species"])==556
           assert int(audit["request_error_count_after_final_round"])==0
           assert audit["unresolved_request_error_species"]==[]
@@ -61,7 +66,7 @@ jobs:
           assert audit["genetic_response_used"] is False
           assert not any(bool(v) for v in audit["response_firewall"].values())
 
-          url=f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/35828444286/artifacts?per_page=100"
+          url=f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/${{ github.event.workflow_run.id }}/artifacts?per_page=100"
           req=urllib.request.Request(url,headers={
               "Authorization":f"Bearer {os.environ['GH_TOKEN']}",
               "Accept":"application/vnd.github+json",
