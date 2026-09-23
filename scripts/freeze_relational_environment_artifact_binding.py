@@ -63,8 +63,18 @@ def main() -> int:
         raise RuntimeError("relation-producer artifact-name drift")
 
     occurrence = json.loads(args.occurrence_ledger.read_text())
-    if occurrence.get("schema") != "ttf_relational_environment_occurrence_acquisition_v0.2":
+    occurrence_schema = occurrence.get("schema")
+    allowed_occurrence_schemas = {
+        "ttf_relational_environment_occurrence_acquisition_v0.2",
+        "ttf_relational_environment_occurrence_acquisition_v0.3",
+    }
+    if occurrence_schema not in allowed_occurrence_schemas:
         raise RuntimeError("unexpected Study-B occurrence acquisition schema")
+    if occurrence_schema == "ttf_relational_environment_occurrence_acquisition_v0.3":
+        if int(occurrence.get("retry_rounds_completed", -1)) != 4:
+            raise RuntimeError("Study-B final occurrence ledger retry-round drift")
+        if occurrence.get("no_fifth_round_authorized") is not True:
+            raise RuntimeError("Study-B final occurrence ledger does not forbid a fifth retry")
     if int(occurrence.get("species", -1)) != int(transport["acceptance_gate"]["exact_species_ledgers"]):
         raise RuntimeError("Study-B occurrence ledger does not cover exact frozen species universe")
     request_errors = int((occurrence.get("status_counts") or {}).get("REQUEST_ERROR", 0))
@@ -103,6 +113,12 @@ def main() -> int:
         if summary.get("design_npz_sha256") != sha256_path(args.design_npz):
             raise RuntimeError("design NPZ hash drift relative to relation summary")
 
+    occurrence_filename = (
+        "occurrence_ledger_v0.3.json"
+        if occurrence_schema == "ttf_relational_environment_occurrence_acquisition_v0.3"
+        else "occurrence_ledger_v0.2.json"
+    )
+
     payload = {
         "schema": SCHEMA,
         "status": "FROZEN_RESPONSE_BLIND_RELATION_ARTIFACT",
@@ -113,7 +129,7 @@ def main() -> int:
         "relation_status": summary["status"],
         "files_sha256": {
             "relational_environment_design_v0.3.json": sha256_path(args.summary),
-            "occurrence_ledger_v0.2.json": sha256_path(args.occurrence_ledger),
+            occurrence_filename: sha256_path(args.occurrence_ledger),
             **({
                 "relational_environment_design_v0.3.npz": sha256_path(args.design_npz)
             } if args.design_npz is not None and args.design_npz.is_file() else {}),
@@ -128,6 +144,10 @@ def main() -> int:
             "exact_species_ledgers": int(occurrence["species"]),
             "request_error_count": request_errors,
             "status_counts": occurrence.get("status_counts", {}),
+            "occurrence_schema": occurrence_schema,
+            "occurrence_filename": occurrence_filename,
+            "retry_rounds_completed": occurrence.get("retry_rounds_completed"),
+            "no_fifth_round_authorized": occurrence.get("no_fifth_round_authorized"),
             "relation_producer_workflow_run_id": int(execution["workflow_run_id"]),
             "relation_producer_head_sha": str(execution["workflow_head_sha"]),
             "corrected_transport_core_git_blobs": dict(
