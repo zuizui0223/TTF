@@ -1,0 +1,72 @@
+name: cancel-obsolete-study-b-final-recovery
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_obsolete_run_cancellation_v0.2.json"
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  cancel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify exact post-NOT_EVALUABLE cancellation contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          c=json.loads(Path("benchmarks/frozen/relational_environment_obsolete_run_cancellation_v0.2.json").read_text())
+          t=json.loads(Path("benchmarks/frozen/relational_environment_program_transition_v0.3.json").read_text())
+          f=json.loads(Path("benchmarks/frozen/relational_environment_final_transport_failure_v0.1.json").read_text())
+
+          assert c["schema"]=="ttf_relational_environment_obsolete_run_cancellation_v0.2"
+          assert c["status"]=="AUTHORIZE_CANCEL_EXACT_STUDY_B_RECOVERY_AFTER_NOT_EVALUABLE"
+          assert c["obsolete_run_ids"]==[35827478403]
+          assert c["relation_result_seen"] is False
+          assert c["genetic_response_used"] is False
+          assert not any(bool(v) for v in c["response_firewall"].values())
+
+          assert t["schema"]=="ttf_relational_environment_program_transition_v0.3"
+          assert t["B_state"]=="NOT_EVALUABLE_B"
+          assert t["C_open_authorized"] is True
+          assert t["C_entry_state"]=="PROCEED_TO_C_AFTER_B_NOT_EVALUABLE"
+          assert t["Study_B_empirical_response_opened"] is False
+          assert int(t["recovery_run_id"])==35827478403
+
+          assert f["schema"]=="ttf_relational_environment_final_transport_failure_v0.1"
+          assert f["decision"]["B_state"]=="NOT_EVALUABLE_B"
+          assert f["decision"]["Study_B_empirical_response_opened"] is False
+          assert int(f["recovery_run_id"])==35827478403
+          assert len(f["observed_execution_failure"]["failed_exact_batches"])>=1
+          PY
+
+      - name: Cancel exact obsolete Study-B recovery run only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          id=35827478403
+          state="$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$id" --jq '.status')"
+          conclusion="$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$id" --jq '.conclusion // ""')"
+          echo "run=$id status=$state conclusion=$conclusion"
+          if [ "$state" = "queued" ] || [ "$state" = "in_progress" ] || [ "$state" = "waiting" ] || [ "$state" = "requested" ] || [ "$state" = "pending" ]; then
+            gh api -X POST "/repos/$GITHUB_REPOSITORY/actions/runs/$id/cancel"
+          fi
+
+      - name: Verify no Study-B response path can reopen
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          t=json.loads(Path("benchmarks/frozen/relational_environment_program_transition_v0.3.json").read_text())
+          assert t["B_state"]=="NOT_EVALUABLE_B"
+          assert t["Study_B_empirical_response_opened"] is False
+          PY
