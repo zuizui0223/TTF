@@ -53,6 +53,8 @@ def main() -> int:
         "b_preretry": Path("benchmarks/frozen/relational_environment_transport_preretry_receipt_v0.7.json"),
         "b_retry_rule_v02": Path("docs/supporting/relational_environment_transport_retry_rule_v0.2.json"),
         "b_recovery_v02": Path("benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json"),
+        "b_final_producer_promotion": Path("docs/supporting/relational_environment_final_producer_promotion_rule_v0.2.json"),
+        "b_final_producer_contract": Path("benchmarks/frozen/relational_environment_final_producer_contract_v0.2.json"),
         "b_unbound_long_repair": Path("benchmarks/frozen/relational_environment_cutover_long_repair_v0.1.json"),
         "b_producer": Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json"),
         "b_opportunity": Path("docs/supporting/relational_environment_opportunity_rule_v0.2.json"),
@@ -135,7 +137,7 @@ def main() -> int:
         if states[state]["C_open_authorized"] is not True or states[state]["C_entry_state"] != entry:
             raise RuntimeError(f"Study-C transition drift for {state}")
     assert_closed_firewall(transition)
-    for key in ("b_relation", "b_transport", "b_transport_audit", "b_preretry", "b_retry_rule_v02", "b_recovery_v02", "b_unbound_long_repair", "b_producer", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
+    for key in ("b_relation", "b_transport", "b_transport_audit", "b_preretry", "b_retry_rule_v02", "b_recovery_v02", "b_final_producer_promotion", "b_final_producer_contract", "b_unbound_long_repair", "b_producer", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
         assert_closed_firewall(p[key])
 
     transport = p["b_transport"]
@@ -295,6 +297,78 @@ def main() -> int:
     if final_audit.get("no_fifth_round_authorized") is not True:
         raise RuntimeError("Study B final-round fifth-retry firewall drift")
 
+    final_promotion = p["b_final_producer_promotion"]
+    if final_promotion.get("schema") != "ttf_relational_environment_final_producer_promotion_rule_v0.2":
+        raise RuntimeError("Study B final producer promotion schema drift")
+    if final_promotion.get("status") != "FROZEN_BEFORE_FINAL_ROUND_RESULT_AND_BEFORE_RELATION_RESULT":
+        raise RuntimeError("Study B final producer promotion was not frozen pre-result")
+    if int(final_promotion["canonical_relation_producer_run_id"]) != 35795821824:
+        raise RuntimeError("Study B canonical producer binding drift")
+    if int(final_promotion["round3_fallback_run_id"]) != 35809546248:
+        raise RuntimeError("Study B round-3 producer-promotion binding drift")
+    if int(final_promotion["round3_audit_run_id"]) != 35824707898:
+        raise RuntimeError("Study B round-3 audit promotion binding drift")
+    if int(final_promotion["final_recovery_run_id"]) != 35827478403:
+        raise RuntimeError("Study B final recovery producer-promotion binding drift")
+    if final_promotion.get("no_fifth_round_authorized") is not True:
+        raise RuntimeError("Study B producer promotion permits a fifth retry")
+    merge_rule = final_promotion["final_merge_rule"]
+    if (
+        int(merge_rule["pre_retry_request_error_species"]) != 704
+        or int(merge_rule["round3_resolved_species"]) != 148
+        or int(merge_rule["round3_unresolved_species"]) != 556
+        or int(merge_rule["round4_species_exactly"]) != 556
+    ):
+        raise RuntimeError("Study B final producer merge universe drift")
+    if merge_rule["round4_may_replace_only_round3_request_error"] is not True:
+        raise RuntimeError("Study B final producer round-4 replacement scope drift")
+    if merge_rule["overwrite_round3_non_request_error_forbidden"] is not True:
+        raise RuntimeError("Study B final producer may overwrite resolved round-3 outcomes")
+    if int(merge_rule["final_request_error_required_for_relation_binding"]) != 0:
+        raise RuntimeError("Study B final producer zero-error relation-binding gate drift")
+
+    final_producer_contract = p["b_final_producer_contract"]
+    if final_producer_contract.get("schema") != "ttf_relational_environment_final_producer_contract_v0.2":
+        raise RuntimeError("Study B final producer implementation schema drift")
+    if final_producer_contract.get("status") != "FROZEN_BEFORE_FINAL_ROUND_RESULT_AND_BEFORE_RELATION_RESULT":
+        raise RuntimeError("Study B final producer implementation was not frozen pre-result")
+    if final_producer_contract.get("promotion_rule") != str(paths["b_final_producer_promotion"]):
+        raise RuntimeError("Study B final producer promotion-rule pointer drift")
+    if final_producer_contract.get("final_recovery_contract") != str(paths["b_recovery_v02"]):
+        raise RuntimeError("Study B final producer recovery-contract pointer drift")
+    if int(final_producer_contract["final_recovery_run_id"]) != 35827478403:
+        raise RuntimeError("Study B final producer recovery-run drift")
+    if final_producer_contract.get("trigger_must_not_exist_before_zero_error_audit") is not True:
+        raise RuntimeError("Study B final producer trigger timing firewall drift")
+    final_merge = final_producer_contract["merge_contract"]
+    if (
+        int(final_merge["authoritative_base_species"]) != 1000
+        or int(final_merge["pre_retry_request_error_species"]) != 704
+        or int(final_merge["round3_artifacts"]) != 235
+        or int(final_merge["round3_resolved_species"]) != 148
+        or int(final_merge["round3_unresolved_species"]) != 556
+        or int(final_merge["round4_artifacts"]) != 186
+        or int(final_merge["round4_species"]) != 556
+        or int(final_merge["final_request_error_required"]) != 0
+    ):
+        raise RuntimeError("Study B final producer merge contract drift")
+    if final_merge["overwrite_round3_resolved_forbidden"] is not True:
+        raise RuntimeError("Study B final producer round-3 resolution firewall drift")
+    if final_merge["no_fifth_round_authorized"] is not True:
+        raise RuntimeError("Study B final producer merge permits a fifth retry")
+    relation_contract = final_producer_contract["relation_contract"]
+    if relation_contract["relation_rule"] != str(paths["b_relation"]):
+        raise RuntimeError("Study B final producer relation-rule pointer drift")
+    if relation_contract["freshness_rule"] != str(paths["freshness"]):
+        raise RuntimeError("Study B final producer freshness-rule pointer drift")
+    if relation_contract["relation_artifact_name"] != "relational-environment-relation-v0.3":
+        raise RuntimeError("Study B final producer relation artifact drift")
+    if relation_contract["relation_result_may_be_constructed_only_after_final_request_error_zero"] is not True:
+        raise RuntimeError("Study B final producer may construct relation before zero-error gate")
+    for path, expected in final_producer_contract["git_blobs"].items():
+        if git_blob_sha1(path) != expected:
+            raise RuntimeError(f"Study B final producer Git blob drift: {path}")
+
     unbound = p["b_unbound_long_repair"]
     if unbound.get("schema") != "ttf_relational_environment_cutover_long_repair_v0.1":
         raise RuntimeError("unbound Study B technical experiment schema drift")
@@ -320,8 +394,24 @@ def main() -> int:
         raise RuntimeError("Study B final producer run is invalid")
     if len(str(producer["workflow_head_sha"])) != 40:
         raise RuntimeError("Study B final producer head SHA is invalid")
-    if producer["workflow_name"] != "relational-environment-transport-assemble-v07":
+    allowed_producer_workflows = {
+        "relational-environment-transport-assemble-v07",
+        "relational-environment-final-recovery-producer",
+    }
+    if producer["workflow_name"] not in allowed_producer_workflows:
         raise RuntimeError("Study B producer workflow drift")
+    if producer["workflow_name"] == "relational-environment-transport-assemble-v07":
+        if int(producer["workflow_run_id"]) != int(final_promotion["canonical_relation_producer_run_id"]):
+            raise RuntimeError("Study B pre-promotion canonical producer run drift")
+    else:
+        if producer.get("producer_rule") != str(paths["b_final_producer_promotion"]):
+            raise RuntimeError("Study B final-recovery producer-rule pointer drift")
+        if int(producer.get("final_transport_recovery_run_id", -1)) != 35827478403:
+            raise RuntimeError("Study B final-recovery producer transport binding drift")
+        if int(final_promotion["canonical_relation_producer_run_id"]) not in set(
+            map(int, producer.get("supersedes_obsolete_producer_runs", []))
+        ):
+            raise RuntimeError("Study B final-recovery producer did not supersede canonical producer")
     if int(producer["workflow_run_id"]) in set(map(int, transport["obsolete_or_ignored_runs"])):
         raise RuntimeError("Study B final producer is listed obsolete")
     if producer["relation_result_seen"] is not False or producer["genetic_response_used"] is not False:
@@ -490,6 +580,7 @@ def main() -> int:
         "study_B_full_downstream_contract_frozen": True,
         "study_B_final_transport_retry_round": 4,
         "study_B_no_fifth_transport_retry": True,
+        "study_B_final_relation_producer_prefrozen": True,
         "study_C_full_downstream_contract_frozen": True,
         "all_future_genetic_response_firewalls_closed": True,
         "inputs_sha256": {name: sha256_path(path) for name, path in paths.items()},
