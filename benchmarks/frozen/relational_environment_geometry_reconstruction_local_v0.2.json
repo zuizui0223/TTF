@@ -1,0 +1,35 @@
+{
+  "schema": "ttf_relational_environment_geometry_reconstruction_local_v0.2",
+  "status": "PASS_RESPONSE_BLIND_FRESH_1000_GEOMETRY_RECONSTRUCTION",
+  "frozen_on": "2026-09-23",
+  "execution_context": "Local reconstruction from the user's exact retained phylogatR archive, performed before any Study-B R_env relation result or genetic response was opened.",
+  "source_archive": {
+    "name": "phylogatr_results_exact_20260918.zip",
+    "size_bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+  },
+  "contract": "docs/supporting/relational_environment_geometry_reconstruction_contract_v0.1.json",
+  "candidate_file": "benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv",
+  "candidate_csv_sha256": "08dca43252ea93d43f3095f17b0267ec7ff049f0ec8b3e9c412dd784319ab575",
+  "neighbor_fraction": 0.15,
+  "species": 1000,
+  "locality_rows": 28355,
+  "edge_rows": 167828,
+  "verification_failures": 0,
+  "canonical_outputs": {
+    "locality_csv_sha256": "45387ff3a7ca4b19c292fa3ed9c3763601cc47c6d7b255cee2be3b809bf47630",
+    "edge_csv_sha256": "b9256dc6e3e96324a068066a91c74518e23d2357630c1f9d344b764b193739ed"
+  },
+  "frozen_aggregate_invariants_match": true,
+  "per_species_frozen_graph_invariants_match_all_1000": true,
+  "allowed_information": "Aligned FASTA headers, occurrence coordinates, frozen candidate taxonomy/graph rule only; sequence lines were not decoded or interpreted.",
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  },
+  "role": "Pre-result execution evidence and a fallback geometry source for the already-frozen qualification. It does not authorize genetic response opening by itself."
+}
