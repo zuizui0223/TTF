@@ -23,6 +23,10 @@ on:
       - ".github/workflows/relational-environment-final-recovery-audit-v03.yml"
       - ".github/workflows/relational-environment-final-recovery-producer.yml"
       - "scripts/merge_relational_environment_final_recovery.py"
+      - ".github/workflows/relational-environment-bind-authoritative.yml"
+      - ".github/workflows/relational-environment-qualification-v03.yml"
+      - "scripts/freeze_relational_environment_artifact_binding.py"
+      - "tests/test_relational_environment_artifact_binding.py"
       - ".github/workflows/relational-environment-request-error-recovery-v02.yml"
       - "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json"
       - "docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json"
@@ -53,7 +57,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install focused test dependencies
+        run: python -m pip install -e ".[test]"
       - name: Verify complete finite v0.3 contract
         run: |
-          python scripts/verify_relational_program_v03_closure.py             --output /tmp/relational_program_v03_closure.json
+          python scripts/verify_relational_program_v03_closure.py --output /tmp/relational_program_v03_closure.json
           cat /tmp/relational_program_v03_closure.json
+      - name: Run focused Study-B closure tests
+        run: |
+          pytest -q tests/test_relational_program_v03_closure.py tests/test_relational_environment_artifact_binding.py
