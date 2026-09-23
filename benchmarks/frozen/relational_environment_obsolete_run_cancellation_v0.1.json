@@ -32,5 +32,18 @@
     "Study_B_pairwise_genetic_distances_opened": false,
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
+  },
+  "execution_activation": {
+    "status": "AUTHORIZE_EXECUTION_OF_ALREADY_FROZEN_EXACT_CANCELLATION_SET",
+    "activated_on": "2026-09-23",
+    "obsolete_run_ids": [
+      35812255490,
+      35823190096
+    ],
+    "protected_current_run_ids": [
+      35827478403,
+      35828444286
+    ],
+    "scientific_contract_change": false
   }
 }
