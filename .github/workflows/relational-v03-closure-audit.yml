@@ -68,4 +68,4 @@ jobs:
           cat /tmp/relational_program_v03_closure.json
       - name: Run focused Study-B closure tests
         run: |
-          pytest -q tests/test_relational_program_v03_closure.py tests/test_relational_environment_artifact_binding.py tests/test_relational_environment_final_producer_trigger.py
+          pytest -q tests/test_relational_program_v03_closure.py tests/test_relational_environment_artifact_binding.py tests/test_relational_environment_final_producer_trigger.py tests/test_relational_environment_compact_geometry.py
