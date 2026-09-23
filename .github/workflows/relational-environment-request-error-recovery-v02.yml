@@ -1,0 +1,354 @@
+name: relational-environment-request-error-recovery-v02
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      batch_count: ${{ steps.plan.outputs.batch_count }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify frozen final-round contract
+        id: contract
+        run: |
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json").read_text())
+          assert p["schema"]=="ttf_relational_environment_request_error_recovery_v0.2"
+          assert p["status"]=="FROZEN_FINAL_TRANSPORT_ROUND_BEFORE_RELATION_RESULT"
+          assert p["retry_round"]==4
+          assert p["source_unresolved_request_error_count"]==556
+          assert p["relation_result_seen"] is False
+          assert p["genetic_response_used"] is False
+          assert not any(bool(v) for v in p["response_firewall"].values())
+          wf=subprocess.check_output(["git","rev-parse","HEAD:.github/workflows/relational-environment-request-error-recovery-v02.yml"],text=True).strip()
+          assert wf==p["transport_implementation"]["workflow_git_blob"],(wf,p["transport_implementation"]["workflow_git_blob"])
+          for path,expected in p["corrected_transport_core_git_blobs"].items():
+              actual=subprocess.check_output(["git","rev-parse",f"HEAD:{path}"],text=True).strip()
+              assert actual==expected,(path,actual,expected)
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"audit_run_id={int(p['source_audit_run_id'])}\n")
+              f.write(f"audit_artifact_name={p['source_audit_artifact_name']}\n")
+          PY
+
+      - name: Download exact frozen round-3 audit artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ steps.contract.outputs.audit_artifact_name }}
+          path: input/audit
+          run-id: ${{ steps.contract.outputs.audit_run_id }}
+          github-token: ${{ github.token }}
+
+      - id: plan
+        name: Freeze exact unresolved-species matrix
+        run: |
+          python - <<'PY'
+          import json, math, os
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json").read_text())
+          a=json.loads(Path("input/audit/relational_environment_request_error_fallback_audit_v0.1.json").read_text())
+          assert a["schema"]=="ttf_relational_environment_request_error_fallback_audit_v0.1"
+          assert a["status"]=="INCOMPLETE_DISTRIBUTED_RETRY"
+          assert int(a["fallback_workflow_run_id"])==int(p["source_fallback_run_id"])
+          assert int(a["species"])==704
+          assert int(a["status_counts"]["REQUEST_ERROR"])==556
+          assert a["species_sorted_sha256"]==p["source_original_request_error_species_sorted_sha256"]
+          assert a["relation_result_seen"] is False
+          assert a["genetic_response_used"] is False
+          assert not any(bool(v) for v in a["response_firewall"].values())
+          species=list(map(str,a["unresolved_request_error_species"]))
+          assert len(species)==556
+          assert len(set(species))==556
+          batch_size=int(p["batch_size"])
+          assert batch_size==3
+          batch_count=math.ceil(len(species)/batch_size)
+          assert batch_count==186
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write("matrix="+json.dumps(list(range(batch_count)),separators=(",",":"))+"\n")
+              f.write(f"batch_count={batch_count}\n")
+          PY
+
+  recover:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        batch: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify frozen core and final-round rule
+        id: contract
+        run: |
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json").read_text())
+          r=json.loads(Path("docs/supporting/relational_environment_transport_retry_rule_v0.2.json").read_text())
+          assert p["retry_rule"]=="docs/supporting/relational_environment_transport_retry_rule_v0.2.json"
+          assert r["schema"]=="ttf_relational_environment_transport_retry_rule_v0.2"
+          assert r["status"]=="FROZEN_FINAL_TECHNICAL_RETRY_AMENDMENT_BEFORE_RELATION_RESULT"
+          assert r["maximum_retry_rounds_total"]==4
+          assert r["final_round"]==4
+          assert r["no_fifth_round_authorized"] is True
+          for path,expected in p["corrected_transport_core_git_blobs"].items():
+              actual=subprocess.check_output(["git","rev-parse",f"HEAD:{path}"],text=True).strip()
+              assert actual==expected,(path,actual,expected)
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"audit_run_id={int(p['source_audit_run_id'])}\n")
+              f.write(f"audit_artifact_name={p['source_audit_artifact_name']}\n")
+          PY
+
+      - name: Download exact frozen round-3 audit artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ steps.contract.outputs.audit_artifact_name }}
+          path: input/audit
+          run-id: ${{ steps.contract.outputs.audit_run_id }}
+          github-token: ${{ github.token }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+
+      - name: Recover exact frozen REQUEST_ERROR batch with low-rate transport
+        run: |
+          mkdir -p results/recovery
+          python - <<'PY'
+          import csv, json, math, time
+          from pathlib import Path
+          from urllib.error import HTTPError
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+          from scripts import acquire_relational_environment_occurrences as acquisition
+
+          p=json.loads(Path("benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json").read_text())
+          a=json.loads(Path("input/audit/relational_environment_request_error_fallback_audit_v0.1.json").read_text())
+          species=list(map(str,a["unresolved_request_error_species"]))
+          assert len(species)==556 and len(set(species))==556
+          batch_size=int(p["batch_size"])
+          batch_index=int("${{ matrix.batch }}")
+          names=species[batch_index*batch_size:(batch_index+1)*batch_size]
+          assert 1 <= len(names) <= batch_size
+          cfg=p["transport_only_changes"]
+
+          def slow_get_json(path: str, params: dict[str, object], retries: int | None = None) -> dict:
+              url=f"{acquisition.GBIF}/{path}?{urlencode(params)}"
+              last=None
+              detail=""
+              for attempt in range(int(cfg["maximum_http_retries_per_request"])):
+                  try:
+                      req=Request(url,headers={
+                          "User-Agent":"ttf-relational-environment-final-recovery/0.2 (https://github.com/zuizui0223/TTF)",
+                          "Accept":"application/json",
+                      })
+                      with urlopen(req,timeout=float(cfg["request_timeout_seconds"])) as response:
+                          payload=json.loads(response.read().decode("utf-8"))
+                      time.sleep(float(cfg["per_successful_request_sleep_seconds"]))
+                      return payload
+                  except HTTPError as exc:
+                      last=exc
+                      try:
+                          body=exc.read(512).decode("utf-8",errors="replace").replace("\n"," ")
+                      except Exception:
+                          body=""
+                      detail=f"HTTP {exc.code}: {body[:300]}"
+                      if exc.code not in {429,500,502,503,504}:
+                          break
+                      retry_after=exc.headers.get("Retry-After")
+                      try:
+                          requested=float(retry_after) if retry_after else 0.0
+                      except (TypeError,ValueError):
+                          requested=0.0
+                      wait=max(float(cfg["minimum_backoff_seconds"]),requested,float(2**attempt))
+                      time.sleep(min(float(cfg["maximum_backoff_seconds"]),wait))
+                  except Exception as exc:
+                      last=exc
+                      detail=f"{type(exc).__name__}: {exc}"
+                      wait=max(float(cfg["minimum_backoff_seconds"]),float(2**attempt))
+                      time.sleep(min(float(cfg["maximum_backoff_seconds"]),wait))
+              suffix=f" ({detail})" if detail else ""
+              raise RuntimeError(f"GBIF request failed: {url}{suffix}") from last
+
+          acquisition.get_json=slow_get_json
+          time.sleep(
+              float(cfg["initial_cooldown_seconds"])
+              + float(cfg["batch_stagger_seconds"])*(batch_index % int(p["max_parallel"]))
+          )
+
+          rows=[]
+          ledgers=[]
+          for name in names:
+              try:
+                  retained,ledger=acquisition.fetch_species(name)
+              except Exception as exc:
+                  retained=[]
+                  ledger={
+                      "species":name,
+                      "status":"REQUEST_ERROR",
+                      "error":f"{type(exc).__name__}: {exc}",
+                  }
+              rows.extend(retained)
+              ledgers.append(dict(ledger))
+
+          out=Path("results/recovery")
+          fields=["species","source_key","latitude","longitude","priority_rank","priority_sha256"]
+          with (out/f"occurrences-recovery-v02-{batch_index}.csv").open("w",newline="",encoding="utf-8") as h:
+              w=csv.DictWriter(h,fieldnames=fields); w.writeheader(); w.writerows(rows)
+          payload={
+              "schema":"ttf_relational_environment_request_error_recovery_batch_v0.2",
+              "retry_round":4,
+              "batch_index":batch_index,
+              "batch_count":math.ceil(len(species)/batch_size),
+              "species_requested":names,
+              "species":ledgers,
+              "request_error_count":sum(x["status"]=="REQUEST_ERROR" for x in ledgers),
+              "scientific_query_change":False,
+              "relation_result_seen":False,
+              "genetic_response_used":False,
+              "response_firewall":{
+                  "Study_B_sequence_identity_opened":False,
+                  "Study_B_pairwise_genetic_distances_opened":False,
+                  "Study_B_T_st_computed":False,
+                  "Study_B_beta_R_computed":False,
+              },
+          }
+          (out/f"ledger-recovery-v02-{batch_index}.json").write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
+          print(json.dumps({
+              "batch_index":batch_index,
+              "species":names,
+              "statuses":[x["status"] for x in ledgers],
+          },sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-env-request-recovery-v02-${{ matrix.batch }}
+          path: results/recovery/
+          retention-days: 30
+          if-no-files-found: error
+
+  audit:
+    needs: [plan, recover]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve source audit binding
+        id: contract
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json").read_text())
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"audit_run_id={int(p['source_audit_run_id'])}\n")
+              f.write(f"audit_artifact_name={p['source_audit_artifact_name']}\n")
+          PY
+
+      - name: Download exact frozen round-3 audit artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ steps.contract.outputs.audit_artifact_name }}
+          path: input/audit
+          run-id: ${{ steps.contract.outputs.audit_run_id }}
+          github-token: ${{ github.token }}
+
+      - name: Download all round-4 artifacts with paginated API
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/recovery
+          gh api --paginate "/repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?per_page=100"             --jq '.artifacts[] | select(.name | startswith("relational-env-request-recovery-v02-")) | [.id,.name] | @tsv'             > /tmp/recovery_artifacts.tsv
+          test "$(wc -l < /tmp/recovery_artifacts.tsv)" -eq 186
+          while IFS=$'\t' read -r artifact_id artifact_name; do
+            zip="/tmp/${artifact_name}.zip"
+            curl -fsSL               -H "Authorization: Bearer $GH_TOKEN"               -H "Accept: application/vnd.github+json"               "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/artifacts/${artifact_id}/zip"               -o "$zip"
+            unzip -oq "$zip" -d input/recovery
+          done < /tmp/recovery_artifacts.tsv
+
+      - name: Audit exact final technical round
+        run: |
+          mkdir -p results/audit
+          python - <<'PY'
+          import collections, json
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json").read_text())
+          source=json.loads(Path("input/audit/relational_environment_request_error_fallback_audit_v0.1.json").read_text())
+          expected=list(map(str,source["unresolved_request_error_species"]))
+          ledgers=sorted(Path("input/recovery").glob("ledger-recovery-v02-*.json"))
+          assert len(ledgers)==186,len(ledgers)
+          seen=[]
+          statuses=collections.Counter()
+          unresolved=[]
+          for path in ledgers:
+              x=json.loads(path.read_text())
+              assert x["schema"]=="ttf_relational_environment_request_error_recovery_batch_v0.2"
+              assert x["retry_round"]==4
+              assert x["scientific_query_change"] is False
+              assert x["relation_result_seen"] is False
+              assert x["genetic_response_used"] is False
+              assert not any(bool(v) for v in x["response_firewall"].values())
+              for row in x["species"]:
+                  name=str(row["species"])
+                  seen.append(name)
+                  status=str(row["status"])
+                  statuses[status]+=1
+                  if status=="REQUEST_ERROR":
+                      unresolved.append(name)
+          assert seen==expected
+          assert len(seen)==556 and len(set(seen))==556
+          result={
+              "schema":"ttf_relational_environment_request_error_recovery_audit_v0.2",
+              "status":(
+                  "PASS_FINAL_ROUND_ZERO_REQUEST_ERROR"
+                  if not unresolved
+                  else "INCOMPLETE_TECHNICAL_EXECUTION_AFTER_FINAL_ROUND"
+              ),
+              "retry_round":4,
+              "source_audit_run_id":int(p["source_audit_run_id"]),
+              "recovery_workflow_run_id":int("${{ github.run_id }}"),
+              "species":556,
+              "status_counts":dict(sorted(statuses.items())),
+              "unresolved_request_error_species":sorted(unresolved),
+              "request_error_count_after_final_round":len(unresolved),
+              "no_fifth_round_authorized":True,
+              "relation_result_seen":False,
+              "genetic_response_used":False,
+              "response_firewall":{
+                  "Study_B_sequence_identity_opened":False,
+                  "Study_B_pairwise_genetic_distances_opened":False,
+                  "Study_B_T_st_computed":False,
+                  "Study_B_beta_R_computed":False,
+              },
+          }
+          Path("results/audit/relational_environment_request_error_recovery_audit_v0.2.json").write_text(
+              json.dumps(result,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps(result,sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-environment-request-error-recovery-audit-v0.2
+          path: results/audit/relational_environment_request_error_recovery_audit_v0.2.json
+          retention-days: 30
+          if-no-files-found: error
