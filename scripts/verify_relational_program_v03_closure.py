@@ -332,8 +332,13 @@ def main() -> int:
         raise RuntimeError("Study B round-3 audit promotion binding drift")
     if int(final_promotion["final_recovery_run_id"]) != 35827478403:
         raise RuntimeError("Study B final recovery producer-promotion binding drift")
-    if int(final_promotion["final_recovery_audit_workflow_run_id"]) != 35828444286:
-        raise RuntimeError("Study B audit-only producer-promotion binding drift")
+    audit_authority = final_promotion.get("final_recovery_audit_authority", {})
+    if int(audit_authority.get("recovery_run_id", -1)) != 35827478403:
+        raise RuntimeError("Study B audit-only producer-promotion recovery authority drift")
+    if audit_authority.get("audit_contract") != str(paths["b_final_recovery_audit"]):
+        raise RuntimeError("Study B audit-only producer-promotion contract authority drift")
+    if 35828444286 not in set(map(int, final_promotion.get("obsolete_audit_runs", []))):
+        raise RuntimeError("Study B obsolete polling audit run is not excluded")
     if final_promotion["final_recovery_audit_artifact_name"] != "relational-environment-request-error-recovery-audit-v0.3":
         raise RuntimeError("Study B authoritative final audit artifact drift")
     if final_promotion.get("no_fifth_round_authorized") is not True:
@@ -366,8 +371,13 @@ def main() -> int:
         raise RuntimeError("Study B final producer recovery-run drift")
     if final_producer_contract.get("final_recovery_audit_contract") != str(paths["b_final_recovery_audit"]):
         raise RuntimeError("Study B final producer audit-contract pointer drift")
-    if int(final_producer_contract["final_recovery_audit_workflow_run_id"]) != 35828444286:
-        raise RuntimeError("Study B final producer audit-run drift")
+    contract_audit_authority = final_producer_contract.get("final_recovery_audit_authority", {})
+    if int(contract_audit_authority.get("recovery_run_id", -1)) != 35827478403:
+        raise RuntimeError("Study B final producer audit recovery authority drift")
+    if contract_audit_authority.get("audit_contract") != str(paths["b_final_recovery_audit"]):
+        raise RuntimeError("Study B final producer audit-contract authority drift")
+    if 35828444286 not in set(map(int, contract_audit_authority.get("obsolete_audit_runs", []))):
+        raise RuntimeError("Study B final producer does not exclude obsolete polling audit")
     if final_producer_contract["final_recovery_audit_artifact_name"] != "relational-environment-request-error-recovery-audit-v0.3":
         raise RuntimeError("Study B final producer audit-artifact drift")
     if final_producer_contract.get("trigger_must_not_exist_before_zero_error_audit") is not True:
