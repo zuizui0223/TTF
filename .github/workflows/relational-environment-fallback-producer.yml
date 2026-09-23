@@ -31,6 +31,7 @@ jobs:
           trigger=json.loads(Path("benchmarks/frozen/relational_environment_fallback_producer_trigger_v0.1.json").read_text())
           transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text())
           fallback=json.loads(Path("benchmarks/frozen/relational_environment_request_error_fallback_v0.1.json").read_text())
+          fallback_execution=json.loads(Path("benchmarks/frozen/relational_environment_request_error_fallback_execution_v0.1.json").read_text())
           promotion=json.loads(Path("docs/supporting/relational_environment_fallback_promotion_rule_v0.1.json").read_text())
           assert trigger["schema"]=="ttf_relational_environment_fallback_producer_trigger_v0.1"
           assert trigger["status"]=="AUTHORIZE_FALLBACK_PRODUCER_PRE_RESULT"
@@ -39,7 +40,10 @@ jobs:
           assert promotion["schema"]=="ttf_relational_environment_fallback_promotion_rule_v0.1"
           assert promotion["status"]=="FROZEN_BEFORE_FALLBACK_RETRY_RESULT_AND_BEFORE_RELATION_RESULT"
           assert int(trigger["canonical_producer_run_id"])==int(promotion["canonical_relation_producer_run_id"])
-          assert int(trigger["fallback_retry_run_id"])==int(fallback["fallback_workflow_run_id"])
+          assert fallback_execution["schema"]=="ttf_relational_environment_request_error_fallback_execution_v0.1"
+          assert fallback_execution["status"]=="FROZEN_TECHNICAL_EXECUTION_BINDING_BEFORE_RELATION_RESULT"
+          assert fallback_execution["fallback_contract"]=="benchmarks/frozen/relational_environment_request_error_fallback_v0.1.json"
+          assert int(trigger["fallback_retry_run_id"])==int(fallback_execution["workflow_run_id"])
           assert transport["schema"]=="ttf_relational_environment_transport_execution_v0.7"
 
           headers={
