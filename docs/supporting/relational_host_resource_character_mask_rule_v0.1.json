@@ -1,0 +1,33 @@
+{
+  "schema": "ttf_relational_host_resource_character_mask_rule_v0.1",
+  "status": "FROZEN_BEFORE_HOST_PANEL_CHARACTER_MASK_OPENING",
+  "frozen_on": "2026-09-21",
+  "parent_protocol": "docs/supporting/relational_host_resource_protocol_v0.1.json",
+  "parent_qualification": "benchmarks/frozen/relational_host_resource_qualification_result_v0.1.json",
+  "panel": {
+    "fresh_species_before_mask": 487,
+    "inherited_source_species": 246,
+    "inherited_target_species": 241,
+    "supported_pair_rows_before_mask": 15094,
+    "prior_conditional_overlap_already_dropped": 13
+  },
+  "allowed_view": "For every aligned FASTA character, reveal and persist only canonical-valid versus noncanonical/missing: A/C/G/T -> 1; gap, N and IUPAC ambiguity -> 0. Nucleotide identity must not persist.",
+  "valid_sequence_pair": "comparable canonical columns >= ceil(0.50 * frozen alignment length)",
+  "valid_edge": "at least one valid cross-locality sequence pair exists between the two frozen graph endpoint localities",
+  "species_admissible": "every edge in that species' unchanged frozen density-scaled graph is valid",
+  "failed_species_policy": "drop the species from the relational genetic estimand; never rewire its graph, change marker, delete individual sequences, or relax the comparable-site threshold",
+  "post_mask_relational_support": {
+    "target_supported": "target has at least 5 surviving geographically supported source species under the already frozen host-resource pair-support graph",
+    "minimum_surviving_source_clusters": 150,
+    "minimum_supported_target_clusters": 150,
+    "minimum_supported_directed_pairs": 5000,
+    "failure": "NOT_EVALUABLE_CHARACTER_MASK_GEOMETRY; do not open nucleotide identity or T_st"
+  },
+  "required_requalification": "If structural minima pass, rerun the exact relational_host_resource_qualification_rule_v0.1 estimator, world generator, seed namespace, cell definitions, alpha and Wilson gates on the exact survivor dyad design. No retuning is authorized.",
+  "response_firewall": {
+    "nucleotide_identity_persisted": false,
+    "pairwise_genetic_distances_opened": false,
+    "T_st_computed": false,
+    "beta_R_computed": false
+  }
+}

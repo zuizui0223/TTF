@@ -1,0 +1,69 @@
+{
+  "schema": "ttf_relational_host_resource_empirical_receipt_v0.1",
+  "status": "EMPIRICAL_RELATIONAL_HOST_RESULT_COMPLETE",
+  "opened_on": "2026-09-21",
+  "authorization": {
+    "path": "benchmarks/frozen/relational_host_resource_identity_opening_authorization_v0.1.json",
+    "git_blob_sha": "e37c1d75edb10af2d27bb54ba83030ecc0a63f09"
+  },
+  "full_result": {
+    "filename": "relational_host_resource_empirical_result_v0.1.json",
+    "sha256": "5eec1889d92142ab607bf1d876d9d2026fb0696a4b2ddbc88e69c6a8565df06d",
+    "serialized_sequence_identity": false,
+    "serialized_edge_genetic_distance_vectors": false,
+    "serialized_dyad_T_st": true
+  },
+  "inputs": {
+    "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "design_npz_sha256": "597b1499dbdf8d4fb5a30f10a32686a60185305d12a8772019279bda08b82897",
+    "mask_result_sha256": "d9e4b39c51181a4268e391a95ac5d0da61c9e9528b1de4cd1b0c55aca6299eca",
+    "survivor_species_csv_sha256": "4d33ff2afb09b8ce0cc22666f9e6b32ababa5ae57eddea3c3fa8138031158463"
+  },
+  "empirical_design": {
+    "source_species": 204,
+    "target_species": 198,
+    "species_union": 402,
+    "directed_source_target_dyads": 11902,
+    "predictor_condition_number": 7.639880336112981
+  },
+  "primary": {
+    "estimand": "beta_R for z(host-resource Jaccard)",
+    "coefficient": -0.0017138109902397785,
+    "standard_error_two_way_cluster": 0.004084343630572625,
+    "z_score": -0.4196049953807393,
+    "p_value_one_sided": 0.6626129807437091,
+    "alpha": 0.05,
+    "positive": false
+  },
+  "T_st_distribution": {
+    "mean": 0.005430708096658415,
+    "sd": 0.27532688474059386,
+    "min": -0.9145812569616942,
+    "q10": -0.35761526407273575,
+    "q25": -0.1722657355721872,
+    "median": 0.0022966766817502328,
+    "q75": 0.18315230045932568,
+    "q90": 0.3644036724083252,
+    "max": 0.8739185096361798
+  },
+  "qualified_power": {
+    "survivor_private_type1_pass": true,
+    "survivor_relational_power_pass": true,
+    "positive_control_beta_R_latent": 0.03,
+    "positive_control_rejection_rate": 0.905,
+    "positive_control_wilson95_lower": 0.8852455602057479
+  },
+  "decision": "RELATIONAL_HOST_RESOURCE_NULL_WITH_QUALIFIED_POWER",
+  "licensed_interpretation": "Under the frozen qualified-power design, larval host-resource footprint similarity did not explain source-target heterogeneity in transfer of post-IBD spatial genetic structure among the tested fresh Lepidoptera dyads.",
+  "not_licensed": [
+    "host resources never affect gene flow",
+    "all ecological relations fail",
+    "the completed unconditional TTF negative is rescued or altered",
+    "a different host metric may be selected from this result",
+    "habitat Study B may be retuned using this host result"
+  ],
+  "one_shot": {
+    "post_result_retuning_allowed": false,
+    "result_selection_rerun_allowed": false
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "ttf_relational_environment_genetic_geometry_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_FRESH_1000_GEOMETRY_VERIFIED",
+  "executed_on": "2026-09-21",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "candidate_csv_sha256": "08dca43252ea93d43f3095f17b0267ec7ff049f0ec8b3e9c412dd784319ab575",
+  "species": 1000,
+  "locality_rows": 28355,
+  "edge_rows": 167828,
+  "verification_failures": 0,
+  "locality_csv_sha256": "f0aac3380095c2805deef6131fbdcd9d56ff190cb2124148c3bb949809028cf7",
+  "edge_csv_sha256": "da8df8b6ce6793383f6f348ce13568bda0bd7144c37a0f5f114cc2816ef5323c",
+  "allowed_information": "FASTA headers + occurrence coordinates + frozen candidate taxonomy/graph rule only",
+  "verification": "For every one of the 1000 frozen candidates, reconstructed unique-locality count, graph_k, edge count, and minimum endpoint-disjoint training-edge count exactly matched the pre-response candidate census.",
+  "storage_note": "The full locality and edge tables are response-blind working artifacts identified by the frozen SHA256 values; this compact receipt is the repository audit anchor.",
+  "response_firewall": {
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "T_st_computed": false,
+    "beta_R_computed": false
+  }
+}

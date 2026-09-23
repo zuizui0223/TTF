@@ -1,0 +1,29 @@
+{
+  "schema": "ttf_relational_prior_host_test_overlap_audit_v0.1",
+  "status": "DESCRIPTIVE_AUDIT_NO_INFERENTIAL_ROLE",
+  "frozen_on": "2026-09-21",
+  "S2_host_resource_geography": {
+    "pre_mask_species": 500,
+    "survivor_species": 431,
+    "survivor_species_sha256": "64a109d450d07453352ca7a0999db20df0f3c1b86d793dd18240054a67b2c502"
+  },
+  "S3_relational_host_resource": {
+    "pre_mask_species_after_13_drop": 487,
+    "initial_mask_survivors": 423,
+    "initial_survivor_file_sha256": "4d33ff2afb09b8ce0cc22666f9e6b32ababa5ae57eddea3c3fa8138031158463",
+    "duplicate_header_repair_removed": 3,
+    "repaired_mask_survivors": 420,
+    "repaired_survivor_digest_sha256": "9005dda6dcc96fcc67158ae05adba393ac36dd7cdb5d41b52212b5e9f57cf403"
+  },
+  "overlap": {
+    "initial_S3_vs_S2_survivor_overlap_species": 420,
+    "initial_union_species": 434,
+    "initial_jaccard": 0.967741935483871,
+    "repaired_S3_vs_S2_survivor_overlap_species": 420,
+    "repaired_S3_fraction_shared_with_S2": 1,
+    "repaired_union_species": 431,
+    "repaired_jaccard": 0.974477958236659
+  },
+  "interpretation": "S2 and S3 are not independent species replications. After the inherited duplicate-header admissibility rule is enforced, every S3 survivor is contained in the S2 survivor set. They may be described as distinct frozen estimands/inference procedures on overwhelmingly shared biological material, not as two independent confirmations.",
+  "inferential_role": false
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "ttf_relational_host_resource_mask_parser_repair_v0.1",
+  "status": "FROZEN_RESPONSE_INDEPENDENT_MASK_ADMISSIBILITY_REPAIR_BEFORE_ANY_T_ST_OR_BETA_R",
+  "frozen_on": "2026-09-21",
+  "parent_authorization": {
+    "path": "benchmarks/frozen/relational_host_resource_identity_opening_authorization_v0.1.json",
+    "git_blob_sha": "e37c1d75edb10af2d27bb54ba83030ecc0a63f09"
+  },
+  "trigger": {
+    "first_authorized_empirical_attempt": "stopped before source-target transfer scoring when the identity reader encountered a duplicate aligned FASTA header",
+    "first_error": "EmpiricalSequenceError: duplicate aligned FASTA header: 00000000_NAGEO246-09",
+    "first_error_species": "Cladara limitaria",
+    "result_json_created": false,
+    "T_st_computed": false,
+    "beta_R_computed": false,
+    "serialized_sequence_identity": false,
+    "serialized_edge_genetic_distance_vectors": false,
+    "transient_identity_opening_before_failure": true,
+    "transient_species_level_distance_and_post_ibd_response_may_have_been_computed_before_failure": true,
+    "transient_values_inspected_for_repair": false
+  },
+  "preexisting_authority": {
+    "path": "docs/supporting/genetic_phylogatr_phase2_mask_rule_v0.1.json",
+    "git_blob_sha": "0dc88c280d11b8f9549c19398ba9f21de64b1e74",
+    "duplicate_aligned_header_rule": "species inadmissible",
+    "reason": "This rule was frozen before the original fresh phylogatR character-mask opening and is the inherited parser/admissibility contract. The host-specific wrapper omitted an explicit duplicate-header clause and its local mask implementation incorrectly admitted three species."
+  },
+  "response_blind_header_audit": {
+    "affected_species": [
+      {
+        "species": "Cladara limitaria",
+        "duplicate_header": "00000000_NAGEO246-09",
+        "inherited_role": "target"
+      },
+      {
+        "species": "Lobophora nivigerata",
+        "duplicate_header": "00000000_NAGEO265-09",
+        "inherited_role": "source"
+      },
+      {
+        "species": "Protoboarmia porcelaria",
+        "duplicate_header": "00000000_NAGEO272-09",
+        "inherited_role": "target"
+      }
+    ],
+    "affected_species_count": 3,
+    "audit_information_used": "FASTA header labels, frozen mask metadata and the preexisting duplicate-header rule only; no nucleotide differences, p-distance values, T_st or beta_R",
+    "repair_action": "mark all three affected species inadmissible at the character-mask gate"
+  },
+  "repaired_survivor_geometry_contract": {
+    "original_mask_survivors": 423,
+    "repaired_mask_survivors": 420,
+    "repaired_survivor_species_digest_sha256": "9005dda6dcc96fcc67158ae05adba393ac36dd7cdb5d41b52212b5e9f57cf403",
+    "minimum_sources_per_target": 5,
+    "repaired_supported_source_clusters": 203,
+    "repaired_supported_target_clusters": 196,
+    "repaired_supported_directed_pairs": 11696,
+    "repaired_empirical_union_species": 399,
+    "source_digest_sha256": "dd5259c1a26293a6f39e09430d60fd67dc3e26747fae96af596a0260a2fc068b",
+    "target_digest_sha256": "e38283abaeb0fd190d185eed3435ddc77e6b9369232721bed5e62c23b6ef49d2",
+    "empirical_union_digest_sha256": "a3ba1b675546ade34d04f6bee8128b737ab0317380cd585d1f5de13fd58bc7dc"
+  },
+  "required_requalification": {
+    "rule": "docs/supporting/relational_host_resource_qualification_rule_v0.1.json",
+    "unchanged_estimator": true,
+    "unchanged_predictors": true,
+    "unchanged_synthetic_cells": true,
+    "unchanged_seed_namespace": true,
+    "unchanged_alpha_and_wilson_gates": true,
+    "only_geometry_change": "remove the three header-inadmissible species and any targets falling below the already frozen minimum-five-source support rule",
+    "pass_required_before_continuation": true
+  },
+  "forbidden": [
+    "retain duplicate-header species by changing the identity reader",
+    "inspect transient p-distance or post-IBD values to choose the repair",
+    "change the host-resource predictor, controls, dyadic model, alpha, power effect floor or synthetic world family",
+    "change any species for reasons other than the frozen duplicate-header admissibility rule",
+    "compute or inspect T_st or beta_R before repaired survivor requalification passes"
+  ],
+  "response_state_at_repair_freeze": {
+    "T_st_opened": false,
+    "beta_R_opened": false,
+    "relational_decision_opened": false
+  }
+}

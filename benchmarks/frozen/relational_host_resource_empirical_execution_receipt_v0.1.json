@@ -1,0 +1,38 @@
+{
+  "T_st_distribution": {
+    "max": 0.8739185096361798,
+    "mean": 0.005438614456437334,
+    "median": 0.0022966766817502328,
+    "min": -0.9145812569616942,
+    "q10": -0.35761526407273575,
+    "q25": -0.17221828147869503,
+    "q75": 0.18315230045932568,
+    "q90": 0.3644036724083252,
+    "sd": 0.27532235530106813
+  },
+  "authorization_git_blob_sha": "e37c1d75edb10af2d27bb54ba83030ecc0a63f09",
+  "authorized_compact_ibd_git_blob_sha": "cee7d6c7c48512b5bf17641de3d45fd4ddebf608",
+  "decision": "RELATIONAL_HOST_RESOURCE_NULL_WITH_QUALIFIED_POWER",
+  "empirical_result_library_path": "/TTF/relational/relational_host_resource_empirical_result_v0.1.json",
+  "empirical_result_sha256": "40d341b64c8afae0e9cab06f1cf3dd351326af362bd2e04e44abb8437082b4be",
+  "invalid_local_draft_committed": false,
+  "note": "The repository result is the compact-IBD-authorized execution. An earlier uncommitted local direct-IBD draft was discarded after reproduction audit exposed implementation divergence.",
+  "predictor_condition_number": 7.639880336112981,
+  "primary": {
+    "alpha": 0.05,
+    "coefficient": -0.0016820815271055194,
+    "estimand": "beta_R for z(host-resource Jaccard)",
+    "p_value_one_sided": 0.6597340876064541,
+    "positive": false,
+    "standard_error_two_way_cluster": 0.00408532491164978,
+    "z_score": -0.41173751500373146
+  },
+  "schema": "ttf_relational_host_resource_empirical_execution_receipt_v0.1",
+  "species": {
+    "directed_pairs": 11902,
+    "empirical_union": 402,
+    "sources": 204,
+    "targets": 198
+  },
+  "status": "AUTHORIZED_COMPACT_IBD_EXECUTION_COMPLETE"
+}

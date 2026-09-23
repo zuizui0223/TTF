@@ -1,0 +1,77 @@
+{
+  "schema": "ttf_relational_historical_climate_empirical_opening_rule_v0.1",
+  "status": "FROZEN_BEFORE_STUDY_B_FORMAL_QUALIFICATION_AND_BEFORE_ANY_STUDY_C_EXTERNAL_RELATION_RESULT_CHARACTER_MASK_OR_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-21",
+  "parent_program": "docs/supporting/relational_program_v0.3.json",
+  "parent_relation_rule": "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json",
+  "parent_qualification_rule": "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json",
+  "parent_character_mask_rule": "docs/supporting/relational_historical_climate_character_mask_rule_v0.1.json",
+  "opening_condition": "One Study C identity-opening authorization may be issued only after slot C is programmatically authorized, all required historical/current environmental assets are frozen and admissible, confirmatory masks pass, and exact survivor geometry reruns the frozen C qualification at alpha=0.025 with every gate passing.",
+  "genetic_response": {
+    "marker": "mitochondrial COI/COX1 family under the inherited exact alias parser",
+    "panel_selection": "response-blind one-panel-per-species: most exact unique localities, then more aligned headers, then lexicographic locus identifier",
+    "sequence_pair_distance": "uncorrected p-distance over jointly canonical columns",
+    "minimum_comparable_fraction": 0.5,
+    "locality_pair_distance": "arithmetic mean over every valid cross-locality sequence-pair p-distance",
+    "edge_response": "locality-pair p-distance on the unchanged density-scaled kNN edge",
+    "ibd_adjustment": "endpoint-safe leave-two-localities-out cross-fit rank IBD",
+    "source_training_response": "post-IBD turnover rank orthogonalized against within-source edge-length rank",
+    "target_evaluation_response": "raw post-IBD turnover rank",
+    "source_to_target_score": "T_st = Spearman correlation between source-only TTF field prediction and target post-IBD turnover",
+    "kernel": {
+      "bandwidth_km": 500,
+      "prior_strength": 0.25,
+      "prior_mean": 0,
+      "segment_points": 5,
+      "training_species_per_field": 1
+    }
+  },
+  "relational_model": {
+    "response": "directed T_st",
+    "predictors_in_order": [
+      "z_R_hist",
+      "z_R_current",
+      "z_geographic_coverage",
+      "centered_same_class",
+      "centered_same_order",
+      "centered_same_family",
+      "z_abs_log_locality_count_ratio"
+    ],
+    "source_fixed_effect": true,
+    "target_fixed_effect": true,
+    "primary_index": 0,
+    "estimand": "beta_hist on z_R_hist",
+    "alternative": "beta_hist > 0",
+    "covariance": "two-way source/target cluster-robust sandwich with dyad intersection subtraction and finite-cluster corrections",
+    "alpha_one_sided": 0.025,
+    "positive_decision": "beta_hist > 0 AND one-sided p <= 0.025",
+    "qualified_null_decision": "otherwise STUDY_C_HISTORICAL_RELATIONAL_NULL_WITH_QUALIFIED_POWER"
+  },
+  "serialization": {
+    "sequence_identity": false,
+    "edge_level_genetic_distance_vectors": false,
+    "dyad_level_T_st": true,
+    "historical_current_relations_and_controls": true
+  },
+  "program_transition": {
+    "positive_after_B_null": "close as DETECTED_C_AFTER_B_NULL",
+    "positive_after_B_not_evaluable": "close as DETECTED_C_AFTER_B_NOT_EVALUABLE",
+    "qualified_null_after_B_null": "close as CLOSED_TWO_NULLS",
+    "qualified_null_after_B_not_evaluable": "close as CLOSED_PARTIAL_NOT_EVALUABLE",
+    "preopening_gate_failure": "close under the appropriate partial/no-evaluable state; no replacement slot",
+    "postopening_execution_failure": "freeze technical failure receipt; no result-selection rerun or alternate historical predictor"
+  },
+  "one_shot_rules": [
+    "Do not alter species, dyads, historical/current relation definitions, controls, climate assets, genetic response, IBD, kernel, covariance, alpha or decision rule after identity opening.",
+    "Do not test an alternate time slice, paleoclimate product, refugium, ice-sheet, barrier, threshold, subgroup or interaction as replacement primary analysis.",
+    "No result-selection rerun is authorized.",
+    "After Study C the v0.3 ecological-predictor program closes permanently."
+  ],
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  },
+  "parent_opportunity_rule": "docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json"
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "ttf_relational_environment_cutover_timeout_repair_long_v0.1",
+  "status": "FROZEN_LONG_TIMEOUT_RETRY_AFTER_SINGLETON_TIMEOUT",
+  "frozen_on": "2026-09-23",
+  "parent_transport_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.6.json",
+  "parent_short_repair_run_id": 35735717833,
+  "timed_out_or_still_running_short_repair_indices": [
+    0,
+    1,
+    6
+  ],
+  "entries": [
+    {
+      "repair_index": 0,
+      "cutover_batch_index": 167,
+      "candidate_index": 801,
+      "species": "Pyrrhosoma nymphula",
+      "supersedes_short_repair_index": 0
+    },
+    {
+      "repair_index": 1,
+      "cutover_batch_index": 167,
+      "candidate_index": 804,
+      "species": "Lithobates clamitans",
+      "supersedes_short_repair_index": 1
+    },
+    {
+      "repair_index": 2,
+      "cutover_batch_index": 170,
+      "candidate_index": 844,
+      "species": "Mythimna impura",
+      "supersedes_short_repair_index": 6
+    }
+  ],
+  "timeout_minutes": 240,
+  "corrected_transport_core_git_blobs": {
+    "scripts/acquire_relational_environment_occurrences.py": "34eb5d5b459e105943cc5642cf355011d86c4f07",
+    "src/ttf/relational_environment.py": "d05e35866de57daa8eccacdbf7a3c0eaff055890",
+    "src/ttf/relational_external.py": "4a43bf5fedcc40c9a0fecf44dc3412e726b2ad4f"
+  },
+  "query_or_scientific_contract_change": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "rule": "Only the three long-running singleton transport species are retried with a longer technical job timeout. GBIF query, filters, thinning, cap, minimum n, candidate identity, and all ecological/genetic rules are unchanged.",
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
