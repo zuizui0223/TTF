@@ -1,0 +1,183 @@
+name: relational-environment-request-error-fallback
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_request_error_fallback_v0.1.json"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      batch_count: ${{ steps.plan.outputs.batch_count }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve frozen pre-retry audit
+        id: receipt
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          t=json.loads(Path("benchmarks/frozen/relational_environment_request_error_fallback_v0.1.json").read_text())
+          r=json.loads(Path("benchmarks/frozen/relational_environment_transport_preretry_receipt_v0.7.json").read_text())
+          assert t["schema"]=="ttf_relational_environment_request_error_fallback_v0.1"
+          assert t["status"]=="FROZEN_DISTRIBUTED_TECHNICAL_RETRY_BEFORE_RELATION_RESULT"
+          assert t["relation_result_seen"] is False
+          assert t["genetic_response_used"] is False
+          assert r["schema"]=="ttf_relational_environment_transport_preretry_receipt_v0.7"
+          assert r["status"]=="FROZEN_RESPONSE_BLIND_PRE_RETRY_TRANSPORT_STATE"
+          assert int(r["request_error_count"])==704
+          assert int(t["audit_workflow_run_id"])==int(r["audit_workflow_run_id"])
+          assert int(t["audit_artifact_id"])==int(r["audit_artifact_id"])
+          assert t["request_error_species_sorted_sha256"]==r["request_error_species_sorted_sha256"]
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"audit_run_id={int(r['audit_workflow_run_id'])}\n")
+              f.write(f"audit_artifact_name={r['audit_artifact_name']}\n")
+          PY
+
+      - name: Download frozen pre-retry audit artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ steps.receipt.outputs.audit_artifact_name }}
+          path: input/audit
+          run-id: ${{ steps.receipt.outputs.audit_run_id }}
+          github-token: ${{ github.token }}
+
+      - id: plan
+        name: Freeze retry batch matrix from audit artifact
+        run: |
+          python - <<'PY'
+          import hashlib,json,math,os
+          from pathlib import Path
+          t=json.loads(Path("benchmarks/frozen/relational_environment_request_error_fallback_v0.1.json").read_text())
+          p=json.loads(Path("input/audit/relational_environment_transport_preretry_audit_v0.7.json").read_text())
+          species=list(map(str,p["request_error_species"]))
+          digest=hashlib.sha256(("\n".join(species)+"\n").encode()).hexdigest()
+          assert len(species)==704
+          assert digest==t["request_error_species_sorted_sha256"]
+          assert digest==p["request_error_species_sorted_sha256"] if "request_error_species_sorted_sha256" in p else True
+          batch_size=int(t["batch_size"])
+          assert batch_size==3
+          batch_count=math.ceil(len(species)/batch_size)
+          assert batch_count==235
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write("matrix="+json.dumps(list(range(batch_count)),separators=(",",":"))+"\n")
+              f.write(f"batch_count={batch_count}\n")
+          PY
+
+  retry:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        batch: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify frozen transport core
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD:scripts/acquire_relational_environment_occurrences.py)" = "34eb5d5b459e105943cc5642cf355011d86c4f07"
+          test "$(git rev-parse HEAD:src/ttf/relational_environment.py)" = "d05e35866de57daa8eccacdbf7a3c0eaff055890"
+          test "$(git rev-parse HEAD:src/ttf/relational_external.py)" = "4a43bf5fedcc40c9a0fecf44dc3412e726b2ad4f"
+
+      - name: Download frozen pre-retry audit artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: relational-environment-transport-preretry-audit-v0.7
+          path: input/audit
+          run-id: 35795571922
+          github-token: ${{ github.token }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+
+      - name: Retry exact frozen REQUEST_ERROR batch
+        run: |
+          mkdir -p results/retry
+          python - <<'PY'
+          import csv,hashlib,json,math
+          from pathlib import Path
+          from scripts.acquire_relational_environment_occurrences import fetch_species
+
+          trigger=json.loads(Path("benchmarks/frozen/relational_environment_request_error_fallback_v0.1.json").read_text())
+          audit=json.loads(Path("input/audit/relational_environment_transport_preretry_audit_v0.7.json").read_text())
+          species=list(map(str,audit["request_error_species"]))
+          digest=hashlib.sha256(("\n".join(species)+"\n").encode()).hexdigest()
+          assert digest==trigger["request_error_species_sorted_sha256"]
+          batch_size=int(trigger["batch_size"])
+          batch_index=int("${{ matrix.batch }}")
+          start=batch_index*batch_size
+          names=species[start:start+batch_size]
+          assert 1 <= len(names) <= batch_size
+
+          ledgers=[]
+          rows=[]
+          attempt_history={}
+          for name in names:
+              attempts=[]
+              retained=[]
+              ledger={"species":name,"status":"REQUEST_ERROR","error":"not attempted"}
+              for attempt in range(1,int(trigger["maximum_retry_rounds"])+1):
+                  try:
+                      retained,ledger=fetch_species(name)
+                  except Exception as exc:
+                      retained=[]
+                      ledger={
+                          "species":name,
+                          "status":"REQUEST_ERROR",
+                          "error":f"{type(exc).__name__}: {exc}",
+                      }
+                  attempts.append(str(ledger["status"]))
+                  if ledger["status"]!="REQUEST_ERROR":
+                      break
+              rows.extend(retained)
+              ledgers.append(dict(ledger))
+              attempt_history[name]=attempts
+
+          fields=["species","source_key","latitude","longitude","priority_rank","priority_sha256"]
+          out=Path("results/retry")
+          with (out/f"occurrences-retry-{batch_index}.csv").open("w",newline="",encoding="utf-8") as h:
+              w=csv.DictWriter(h,fieldnames=fields); w.writeheader(); w.writerows(rows)
+          payload={
+              "schema":"ttf_relational_environment_distributed_retry_batch_v0.1",
+              "batch_index":batch_index,
+              "batch_count":math.ceil(len(species)/batch_size),
+              "species_requested":names,
+              "species":ledgers,
+              "attempt_history":attempt_history,
+              "maximum_retry_rounds":int(trigger["maximum_retry_rounds"]),
+              "response_firewall":{
+                  "Study_B_sequence_identity_opened":False,
+                  "Study_B_pairwise_genetic_distances_opened":False,
+                  "Study_B_T_st_computed":False,
+                  "Study_B_beta_R_computed":False,
+              },
+          }
+          (out/f"ledger-retry-{batch_index}.json").write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
+          print(json.dumps({
+              "batch_index":batch_index,
+              "species":names,
+              "final_statuses":[x["status"] for x in ledgers],
+          },sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-env-request-retry-${{ matrix.batch }}
+          path: results/retry/
+          retention-days: 30
+          if-no-files-found: error
