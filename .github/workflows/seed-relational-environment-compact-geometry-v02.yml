@@ -1,0 +1,51 @@
+name: seed-relational-environment-compact-geometry-v02
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - ".github/workflows/seed-relational-environment-compact-geometry-v02.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download exact response-blind compact geometry through one-time signed transport
+        env:
+          SOURCE_URL: "https://sdmntprnorthcentralus.oaiusercontent.com/files/00000000-4490-822f-85e7-1498d84fbcae/raw?se=2026-09-23T08%3A47%3A37Z&sp=r&sv=2026-02-06&sr=b&scid=a3413268-317f-5161-b3ed-601cb576ac32&skoid=1e4bb9ed-6bb5-424a-a3aa-79f21566e722&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-23T03%3A59%3A55Z&ske=2026-09-24T03%3A59%3A55Z&sks=b&skv=2026-02-06&sig=7wCBU2TAYvJhXUyw290SqHkDWOnJkqRbFrAItlvLEZw%3D"
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 2 --retry-delay 2 "$SOURCE_URL" -o /tmp/relational_environment_geometry_compact_v0.2.npz
+          test "$(stat -c%s /tmp/relational_environment_geometry_compact_v0.2.npz)" = "3610846"
+          echo "d0776b4b5646e999f0c09ad937e4050fafe6fec018f17f0d37cd2c5b5f12a79b  /tmp/relational_environment_geometry_compact_v0.2.npz" | sha256sum -c -
+      - name: Verify compact geometry shape and frozen invariants
+        run: |
+          python - <<'PY'
+          import numpy as np
+          p=np.load("/tmp/relational_environment_geometry_compact_v0.2.npz",allow_pickle=False)
+          assert len(p["species_order"])==1000
+          assert len(p["edge_offsets"])==1001
+          assert int(p["edge_offsets"][-1])==167828
+          assert p["edge_midpoints_ecef_km"].shape==(167828,3)
+          assert p["edge_midpoints_ecef_km"].dtype==np.float64
+          assert int(np.sum(p["n_localities"]))==28355
+          assert int(np.sum(p["n_edges"]))==167828
+          assert np.array_equal(np.diff(p["edge_offsets"]),p["n_edges"])
+          print({"species":1000,"locality_rows":int(np.sum(p["n_localities"])),"edge_rows":int(p["edge_offsets"][-1])})
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-environment-geometry-compact-v0.2
+          path: /tmp/relational_environment_geometry_compact_v0.2.npz
+          retention-days: 90
+          if-no-files-found: error
+      - uses: actions/cache/save@v4
+        with:
+          path: /tmp/relational_environment_geometry_compact_v0.2.npz
+          key: relational-env-compact-geometry-d0776b4b5646e999f0c09ad937e4050fafe6fec018f17f0d37cd2c5b5f12a79b
