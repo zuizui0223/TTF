@@ -39,6 +39,7 @@ jobs:
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write(f"base_run_id={int(trigger['base_run_id'])}\n")
               f.write(f"cutover_run_id={int(trigger['cutover_run_id'])}\n")
+              f.write(f"final_repair_run_id={int(trigger['final_repair_run_id'])}\n")
               f.write(f"short_repair_run_id={int(trigger['short_repair_run_id'])}\n")
               f.write(f"long_repair_run_id={int(trigger['long_repair_run_id'])}\n")
           PY
@@ -240,6 +241,14 @@ jobs:
           run-id: ${{ steps.frozen.outputs.long_repair_run_id }}
           github-token: ${{ github.token }}
 
+      - name: Download exact final eight-species cutover repair
+        uses: actions/download-artifact@v4
+        with:
+          name: relational-env-cutover-repair-final-v0.1
+          path: input/final-repair
+          run-id: ${{ steps.frozen.outputs.final_repair_run_id }}
+          github-token: ${{ github.token }}
+
       - name: Assemble exact frozen 1000 species and complete HTTP retries
         run: |
           mkdir -p input/all results/environment rasters
@@ -247,6 +256,8 @@ jobs:
           cp input/base/ledger-*.json input/all/
           cp input/cutover/occurrences-cutover-*.csv input/all/
           cp input/cutover/ledger-cutover-*.json input/all/
+          cp input/final-repair/occurrences-cutover-repair-final.csv input/all/
+          cp input/final-repair/ledger-cutover-repair-final.json input/all/
           rm -f input/all/occurrences-cutover-167.csv input/all/ledger-cutover-167.json
           rm -f input/all/occurrences-cutover-170.csv input/all/ledger-cutover-170.json
           cp input/repair-short/occurrences-cutover-repair-*.csv input/all/
