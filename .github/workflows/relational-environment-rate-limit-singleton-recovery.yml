@@ -1,0 +1,69 @@
+name: relational-environment-rate-limit-singleton-recovery
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_rate_limit_singleton_trigger_v0.1.json"
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: plan
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_rate_limit_singleton_trigger_v0.1.json").read_text())
+          assert p["schema"]=="ttf_relational_environment_rate_limit_singleton_trigger_v0.1"
+          assert p["status"]=="FROZEN_SINGLETON_HTTP_RECOVERY_BEFORE_RELATION_RESULT"
+          n=len(p["species"])
+          assert 1 <= n <= 4
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write("matrix="+json.dumps(list(range(n)),separators=(",",":"))+"\n")
+          PY
+
+  recover:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        species_index: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify frozen corrected acquisition core
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD:scripts/acquire_relational_environment_occurrences.py)" = "34eb5d5b459e105943cc5642cf355011d86c4f07"
+          test "$(git rev-parse HEAD:src/ttf/relational_environment.py)" = "d05e35866de57daa8eccacdbf7a3c0eaff055890"
+          test "$(git rev-parse HEAD:src/ttf/relational_external.py)" = "4a43bf5fedcc40c9a0fecf44dc3412e726b2ad4f"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Recover one frozen HTTP-429 species
+        run: |
+          mkdir -p results/recovery
+          python scripts/recover_relational_environment_rate_limit_single.py \
+            --trigger benchmarks/frozen/relational_environment_rate_limit_singleton_trigger_v0.1.json \
+            --species-index ${{ matrix.species_index }} \
+            --output-csv results/recovery/occurrences-rate-single-${{ matrix.species_index }}.csv \
+            --output-ledger results/recovery/ledger-rate-single-${{ matrix.species_index }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: relational-env-rate-single-${{ matrix.species_index }}
+          path: results/recovery/
+          retention-days: 30
+          if-no-files-found: warn
