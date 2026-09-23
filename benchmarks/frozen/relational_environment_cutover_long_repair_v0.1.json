@@ -1,6 +1,6 @@
 {
   "schema": "ttf_relational_environment_cutover_long_repair_v0.1",
-  "status": "FROZEN_LONG_TIMEOUT_REPAIR_BEFORE_RELATION_RESULT",
+  "status": "OBSOLETE_UNBOUND_TECHNICAL_EXPERIMENT",
   "frozen_on": "2026-09-23",
   "parent_transport_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.5.json",
   "parent_cutover_run_id": 35712027961,
@@ -38,5 +38,11 @@
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
   },
-  "technical_retrigger_note": "Workflow file was added after the trigger manifest. This edit only starts the already frozen two-species long-timeout repair."
+  "technical_retrigger_note": "Workflow file was added after the trigger manifest. This edit only starts the already frozen two-species long-timeout repair.",
+  "obsolete_on": "2026-09-23",
+  "obsolete_reason": "Not referenced by authoritative transport v0.7, partition audit, assembly trigger, or relation-producer receipt. The same candidate indices 801 and 804 were already resolved by authoritative long-repair run 35749326437 and are not in the v0.7 pre-retry REQUEST_ERROR set.",
+  "authoritative_replacement": {
+    "transport_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.7.json",
+    "long_repair_run_id": 35749326437
+  }
 }
