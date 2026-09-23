@@ -53,6 +53,7 @@ def main() -> int:
         "b_preretry": Path("benchmarks/frozen/relational_environment_transport_preretry_receipt_v0.7.json"),
         "b_retry_rule_v02": Path("docs/supporting/relational_environment_transport_retry_rule_v0.2.json"),
         "b_recovery_v02": Path("benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json"),
+        "b_final_recovery_audit": Path("benchmarks/frozen/relational_environment_final_recovery_audit_contract_v0.3.json"),
         "b_final_producer_promotion": Path("docs/supporting/relational_environment_final_producer_promotion_rule_v0.2.json"),
         "b_final_producer_contract": Path("benchmarks/frozen/relational_environment_final_producer_contract_v0.2.json"),
         "b_unbound_long_repair": Path("benchmarks/frozen/relational_environment_cutover_long_repair_v0.1.json"),
@@ -137,7 +138,7 @@ def main() -> int:
         if states[state]["C_open_authorized"] is not True or states[state]["C_entry_state"] != entry:
             raise RuntimeError(f"Study-C transition drift for {state}")
     assert_closed_firewall(transition)
-    for key in ("b_relation", "b_transport", "b_transport_audit", "b_preretry", "b_retry_rule_v02", "b_recovery_v02", "b_final_producer_promotion", "b_final_producer_contract", "b_unbound_long_repair", "b_producer", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
+    for key in ("b_relation", "b_transport", "b_transport_audit", "b_preretry", "b_retry_rule_v02", "b_recovery_v02", "b_final_recovery_audit", "b_final_producer_promotion", "b_final_producer_contract", "b_unbound_long_repair", "b_producer", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
         assert_closed_firewall(p[key])
 
     transport = p["b_transport"]
@@ -297,6 +298,26 @@ def main() -> int:
     if final_audit.get("no_fifth_round_authorized") is not True:
         raise RuntimeError("Study B final-round fifth-retry firewall drift")
 
+    audit_only = p["b_final_recovery_audit"]
+    if audit_only.get("schema") != "ttf_relational_environment_final_recovery_audit_contract_v0.3":
+        raise RuntimeError("Study B audit-only final recovery schema drift")
+    if audit_only.get("status") != "FROZEN_AUDIT_ONLY_BEFORE_FINAL_RECOVERY_RESULT":
+        raise RuntimeError("Study B audit-only recovery verifier was not frozen pre-result")
+    if int(audit_only["recovery_run_id"]) != 35827478403:
+        raise RuntimeError("Study B audit-only recovery-run binding drift")
+    if int(audit_only["source_round3_audit_run_id"]) != 35824707898:
+        raise RuntimeError("Study B audit-only round-3 binding drift")
+    if int(audit_only["expected_recovery_batches"]) != 186 or int(audit_only["expected_species"]) != 556:
+        raise RuntimeError("Study B audit-only universe drift")
+    if audit_only.get("network_retrieval_allowed") is not False:
+        raise RuntimeError("Study B audit-only verifier permits network acquisition")
+    if audit_only.get("no_fifth_round_authorized") is not True:
+        raise RuntimeError("Study B audit-only verifier permits a fifth retry")
+    if audit_only["workflow"] != ".github/workflows/relational-environment-final-recovery-audit-v03.yml":
+        raise RuntimeError("Study B audit-only workflow pointer drift")
+    if git_blob_sha1(audit_only["workflow"]) != audit_only["workflow_git_blob"]:
+        raise RuntimeError("Study B audit-only workflow Git blob drift")
+
     final_promotion = p["b_final_producer_promotion"]
     if final_promotion.get("schema") != "ttf_relational_environment_final_producer_promotion_rule_v0.2":
         raise RuntimeError("Study B final producer promotion schema drift")
@@ -310,6 +331,10 @@ def main() -> int:
         raise RuntimeError("Study B round-3 audit promotion binding drift")
     if int(final_promotion["final_recovery_run_id"]) != 35827478403:
         raise RuntimeError("Study B final recovery producer-promotion binding drift")
+    if int(final_promotion["final_recovery_audit_workflow_run_id"]) != 35828444286:
+        raise RuntimeError("Study B audit-only producer-promotion binding drift")
+    if final_promotion["final_recovery_audit_artifact_name"] != "relational-environment-request-error-recovery-audit-v0.3":
+        raise RuntimeError("Study B authoritative final audit artifact drift")
     if final_promotion.get("no_fifth_round_authorized") is not True:
         raise RuntimeError("Study B producer promotion permits a fifth retry")
     merge_rule = final_promotion["final_merge_rule"]
@@ -338,6 +363,12 @@ def main() -> int:
         raise RuntimeError("Study B final producer recovery-contract pointer drift")
     if int(final_producer_contract["final_recovery_run_id"]) != 35827478403:
         raise RuntimeError("Study B final producer recovery-run drift")
+    if final_producer_contract.get("final_recovery_audit_contract") != str(paths["b_final_recovery_audit"]):
+        raise RuntimeError("Study B final producer audit-contract pointer drift")
+    if int(final_producer_contract["final_recovery_audit_workflow_run_id"]) != 35828444286:
+        raise RuntimeError("Study B final producer audit-run drift")
+    if final_producer_contract["final_recovery_audit_artifact_name"] != "relational-environment-request-error-recovery-audit-v0.3":
+        raise RuntimeError("Study B final producer audit-artifact drift")
     if final_producer_contract.get("trigger_must_not_exist_before_zero_error_audit") is not True:
         raise RuntimeError("Study B final producer trigger timing firewall drift")
     final_merge = final_producer_contract["merge_contract"]
@@ -581,6 +612,7 @@ def main() -> int:
         "study_B_final_transport_retry_round": 4,
         "study_B_no_fifth_transport_retry": True,
         "study_B_final_relation_producer_prefrozen": True,
+        "study_B_final_transport_audit_only_prefrozen": True,
         "study_C_full_downstream_contract_frozen": True,
         "all_future_genetic_response_firewalls_closed": True,
         "inputs_sha256": {name: sha256_path(path) for name, path in paths.items()},
