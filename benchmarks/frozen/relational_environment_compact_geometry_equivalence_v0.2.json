@@ -1,0 +1,39 @@
+{
+  "schema": "ttf_relational_environment_compact_geometry_equivalence_v0.2",
+  "status": "PASS_EXACT_RESPONSE_BLIND_EDGE_MIDPOINT_EQUIVALENCE",
+  "frozen_on": "2026-09-23",
+  "source_archive": {
+    "name": "phylogatr_results_exact_20260918.zip",
+    "size_bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+  },
+  "reconstruction_receipt": "benchmarks/frozen/relational_environment_geometry_reconstruction_local_v0.2.json",
+  "compact_summary": "benchmarks/frozen/relational_environment_geometry_compact_v0.2.json",
+  "candidate_file": "benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv",
+  "candidate_csv_sha256": "08dca43252ea93d43f3095f17b0267ec7ff049f0ec8b3e9c412dd784319ab575",
+  "species": 1000,
+  "edge_rows": 167828,
+  "archive_canonical_edge_csv_sha256": "b9256dc6e3e96324a068066a91c74518e23d2357630c1f9d344b764b193739ed",
+  "compact_npz_bytes": 3610846,
+  "compact_npz_sha256": "d0776b4b5646e999f0c09ad937e4050fafe6fec018f17f0d37cd2c5b5f12a79b",
+  "compact_expanded_edge_csv_sha256": "84a57e6d5b09e3787a810302395f6865935b800c86d5d1818bbe7b539e973286",
+  "exact_shared_columns": [
+    "species",
+    "edge_index",
+    "mid_x_km",
+    "mid_y_km",
+    "mid_z_km"
+  ],
+  "shared_columns_exact_for_all_rows": true,
+  "comparison_rule": "Reconstruct canonical response-blind genetic geometry from the exact frozen archive using the frozen candidate locator and density-scaled graph rule; independently expand the exact float64 compact v0.2 midpoint representation; require identical species, edge_index, and repr(float64) midpoint xyz for all 167,828 rows.",
+  "interpretation": "The compact v0.2 geometry is an exact lossless representation of every edge midpoint used by the geographic-opportunity stage. Using it in Study-B qualification changes transport/serialization only, not the opportunity estimand or any biological/genetic response.",
+  "scientific_contract_change": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
