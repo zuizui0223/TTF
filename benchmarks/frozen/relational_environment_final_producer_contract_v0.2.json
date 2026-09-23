@@ -69,7 +69,6 @@
     "Study_B_beta_R_computed": false
   },
   "final_recovery_audit_contract": "benchmarks/frozen/relational_environment_final_recovery_audit_contract_v0.3.json",
-  "final_recovery_audit_workflow_run_id": 35828444286,
   "final_recovery_audit_artifact_name": "relational-environment-request-error-recovery-audit-v0.3",
   "downstream_preflight": {
     "relation_binding_accepts_occurrence_schemas": [
@@ -87,5 +86,14 @@
     "compact_geometry_edge_rows": 167828,
     "compact_geometry_locality_rows": 28355,
     "qualification_geometry_source_rule": "Prefer exact compact v0.2 artifact/cache; fall back to exact frozen phylogatR archive only if compact geometry is unavailable. Both routes must reproduce the frozen semantic geometry invariants before opportunity qualification."
+  },
+  "final_recovery_audit_authority": {
+    "recovery_run_id": 35827478403,
+    "audit_contract": "benchmarks/frozen/relational_environment_final_recovery_audit_contract_v0.3.json",
+    "workflow": ".github/workflows/relational-environment-final-recovery-audit-v03.yml",
+    "obsolete_audit_runs": [
+      35828444286
+    ],
+    "requirement": "successful post-completion audit artifact with PASS_FINAL_ROUND_ZERO_REQUEST_ERROR and self-bound audit_workflow_run_id"
   }
 }
