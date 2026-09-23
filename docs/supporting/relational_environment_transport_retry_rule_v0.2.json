@@ -1,0 +1,50 @@
+{
+  "schema": "ttf_relational_environment_transport_retry_rule_v0.2",
+  "status": "FROZEN_FINAL_TECHNICAL_RETRY_AMENDMENT_BEFORE_RELATION_RESULT",
+  "frozen_on": "2026-09-23",
+  "supersedes": "docs/supporting/relational_environment_transport_retry_rule_v0.1.json",
+  "parent_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.7.json",
+  "scope": "Technical HTTP transport completion only. Scientific query, page selection, thinning, cap, minimum n, freshness, taxonomic breadth, relation construction, qualification, and genetic-response rules are unchanged.",
+  "amendment_reason": "The frozen round-3 distributed retry completed response-blind with 556 species still in REQUEST_ERROR. The round used max-parallel 20 and the unchanged fast acquisition transport; no Study-B relation or genetic response had been opened. This amendment authorizes one final, lower-rate technical round for exactly those 556 unresolved species.",
+  "retry_eligible_status": "REQUEST_ERROR",
+  "retry_forbidden_statuses": [
+    "PASS_OCCURRENCE_GEOMETRY",
+    "FAIL_OCCURRENCE_GEOMETRY",
+    "REJECTED_GBIF_TAXON_MATCH"
+  ],
+  "prior_maximum_retry_rounds": 3,
+  "maximum_retry_rounds_total": 4,
+  "final_round": 4,
+  "final_round_selection": "Exactly unresolved_request_error_species in workflow artifact 10734318651 from audit run 35824707898; no additions, replacements, backfill, or retries of any species that left REQUEST_ERROR in round 3.",
+  "final_round_transport_only_changes": {
+    "batch_size": 3,
+    "max_parallel": 4,
+    "initial_cooldown_seconds": 30,
+    "batch_stagger_seconds": 15,
+    "per_successful_request_sleep_seconds": 3,
+    "request_timeout_seconds": 120,
+    "maximum_http_retries_per_request": 14,
+    "retry_backoff": "Retry-After if present, otherwise max(60s, 2^attempt), capped at 600s"
+  },
+  "query_contract": "Use the exact corrected scripts/acquire_relational_environment_occurrences.py fetch_species logic and unchanged Study-B relation rule. The final round may wrap only HTTP transport pacing/retry behavior; no occurrence-selection rule may change.",
+  "replacement_rule": "For a species still in REQUEST_ERROR after round 3, a non-REQUEST_ERROR round-4 result replaces only that species' REQUEST_ERROR ledger and occurrence rows. All other species remain unchanged from the authoritative v0.7 transport plus accepted earlier retry outcomes.",
+  "stopping_rule": "If any REQUEST_ERROR remains after round 4, Study-B relation binding is forbidden and the state is INCOMPLETE_TECHNICAL_EXECUTION_AFTER_FINAL_ROUND. No fifth retry round is authorized under v0.3.",
+  "no_fifth_round_authorized": true,
+  "forbidden": [
+    "retry any species not in the exact 556-species round-3 unresolved set",
+    "retry FAIL_OCCURRENCE_GEOMETRY species",
+    "retry REJECTED_GBIF_TAXON_MATCH species",
+    "retry PASS_OCCURRENCE_GEOMETRY species",
+    "change year window, GBIF filters, taxon match rule, deterministic page offsets, spatial thinning, occurrence cap, or minimum n",
+    "change freshness, taxonomic breadth, relation, opportunity, qualification, or empirical opening rules",
+    "select transport outcomes based on R_env, taxonomy, nucleotide identity, T_st, beta_R, or any genetic response",
+    "convert unresolved HTTP transport errors into ecological inadmissibility",
+    "authorize a fifth technical retry round"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
