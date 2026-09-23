@@ -1,0 +1,63 @@
+{
+  "schema": "ttf_relational_environment_final_producer_contract_v0.2",
+  "status": "FROZEN_BEFORE_FINAL_ROUND_RESULT_AND_BEFORE_RELATION_RESULT",
+  "frozen_on": "2026-09-23",
+  "promotion_rule": "docs/supporting/relational_environment_final_producer_promotion_rule_v0.2.json",
+  "final_recovery_contract": "benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json",
+  "final_recovery_run_id": 35827478403,
+  "trigger_path": "benchmarks/frozen/relational_environment_final_producer_trigger_v0.2.json",
+  "trigger_must_not_exist_before_zero_error_audit": true,
+  "workflow": ".github/workflows/relational-environment-final-recovery-producer.yml",
+  "merge_contract": {
+    "authoritative_base_species": 1000,
+    "pre_retry_request_error_species": 704,
+    "round3_artifacts": 235,
+    "round3_resolved_species": 148,
+    "round3_unresolved_species": 556,
+    "round4_artifacts": 186,
+    "round4_species": 556,
+    "round4_replacement_scope": "only species still REQUEST_ERROR after frozen round-3 audit",
+    "overwrite_round3_resolved_forbidden": true,
+    "final_request_error_required": 0,
+    "no_fifth_round_authorized": true
+  },
+  "relation_contract": {
+    "chelsa_variables": [
+      "bio1",
+      "bio7",
+      "bio12",
+      "bio15"
+    ],
+    "relation_rule": "docs/supporting/relational_environment_relation_rule_v0.3.json",
+    "freshness_rule": "docs/supporting/relational_future_family_freshness_amendment_v0.1.json",
+    "relation_artifact_name": "relational-environment-relation-v0.3",
+    "relation_result_may_be_constructed_only_after_final_request_error_zero": true
+  },
+  "git_blobs": {
+    ".github/workflows/relational-environment-final-recovery-producer.yml": "4584ed603bd858c7879785508d6bc62c5f925bd3",
+    "scripts/merge_relational_environment_final_recovery.py": "dc57f22e99c12e5a7b3ea3878748805893bb8efa",
+    "scripts/build_relational_environment_relation.py": "ebfa0e94acb1069749460aa3eaefb6c1fcb4444c",
+    "scripts/acquire_relational_environment_occurrences.py": "34eb5d5b459e105943cc5642cf355011d86c4f07",
+    "src/ttf/relational_environment.py": "d05e35866de57daa8eccacdbf7a3c0eaff055890",
+    "src/ttf/relational_external.py": "4a43bf5fedcc40c9a0fecf44dc3412e726b2ad4f",
+    "docs/supporting/relational_environment_relation_rule_v0.3.json": "be891f19087ca85ed8d579f1e1c5c4e39a1bd49b",
+    "docs/supporting/relational_future_family_freshness_amendment_v0.1.json": "25e29bc7bcb26490caddbcdf8d144873c32ac1d7"
+  },
+  "forbidden": [
+    "create final producer trigger before PASS_FINAL_ROUND_ZERO_REQUEST_ERROR",
+    "construct or inspect R_env before final REQUEST_ERROR count is zero",
+    "replace any round-3 non-REQUEST_ERROR outcome",
+    "use any round-4 species outside the exact frozen 556-name set",
+    "alter GBIF query, deterministic page selection, thinning, occurrence cap, minimum occurrence gate, freshness, breadth, relation, qualification, or empirical opening rules",
+    "choose producer based on R_env content, ecological PASS rate, taxonomy, or genetic response",
+    "authorize a fifth retry round"
+  ],
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
