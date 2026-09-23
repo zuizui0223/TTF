@@ -28,9 +28,16 @@ def test_qualification_workflow_verifies_bound_relation_hashes():
     assert "relational_environment_design_v0.3.json" in workflow
     assert "relational_environment_design_v0.3.npz" in workflow
     assert "occurrence_ledger_v0.2.json" in workflow
+    assert "occurrence_ledger_v0.3.json" in workflow
     assert "transport_retry_receipt_v0.1.json" in workflow
+    assert "final_transport_merge_receipt_v0.2.json" in workflow
     assert "PASS_ZERO_REQUEST_ERROR_TRANSPORT" in workflow
+    assert "PASS_ZERO_REQUEST_ERROR_FINAL_MERGE" in workflow
     assert 'retry["final_request_error_count"]' in workflow
+    assert 'retry["round3_resolved_species"]' in workflow
+    assert 'retry["round3_unresolved_species"]' in workflow
+    assert 'retry["round4_species"]' in workflow
+    assert 'retry["no_fifth_round_authorized"] is True' in workflow
 
 
 def test_binding_rejects_any_transport_request_error(tmp_path):
@@ -120,3 +127,19 @@ def test_binding_rejects_any_transport_request_error(tmp_path):
     ], capture_output=True, text=True)
     assert completed.returncode != 0
     assert "REQUEST_ERROR=1" in completed.stderr
+
+
+def test_binding_accepts_final_round4_zero_error_occurrence_schema(tmp_path, monkeypatch):
+    module = load_module()
+    assert "ttf_relational_environment_occurrence_acquisition_v0.3" in SCRIPT.read_text()
+    workflow = Path(".github/workflows/relational-environment-bind-authoritative.yml").read_text()
+    assert "occurrence_ledger_v0.3.json" in workflow
+    assert 'LEDGER="input/relation/occurrence_ledger_v0.3.json"' in workflow
+
+
+def test_final_transport_binding_requires_round4_and_no_fifth_retry():
+    script = SCRIPT.read_text()
+    assert 'retry_rounds_completed' in script
+    assert '!= 4' in script
+    assert 'no_fifth_round_authorized' in script
+    assert 'does not forbid a fifth retry' in script
