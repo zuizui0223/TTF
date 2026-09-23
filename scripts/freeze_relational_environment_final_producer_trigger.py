@@ -70,15 +70,23 @@ def build_trigger(
         raise RuntimeError("producer contract does not forbid a fifth round")
 
     recovery_run = int(promotion["final_recovery_run_id"])
-    audit_run = int(promotion["final_recovery_audit_workflow_run_id"])
     if int(contract["final_recovery_run_id"]) != recovery_run:
         raise RuntimeError("promotion/contract recovery-run mismatch")
-    if int(contract["final_recovery_audit_workflow_run_id"]) != audit_run:
-        raise RuntimeError("promotion/contract audit-run mismatch")
     if int(audit["recovery_workflow_run_id"]) != recovery_run:
         raise RuntimeError("audit recovery-run mismatch")
-    if int(audit["audit_workflow_run_id"]) != audit_run:
-        raise RuntimeError("audit workflow-run mismatch")
+    audit_run = int(audit["audit_workflow_run_id"])
+    if audit_run <= 0:
+        raise RuntimeError("audit workflow-run id is invalid")
+    promotion_authority = promotion.get("final_recovery_audit_authority", {})
+    contract_authority = contract.get("final_recovery_audit_authority", {})
+    if int(promotion_authority.get("recovery_run_id", -1)) != recovery_run:
+        raise RuntimeError("promotion audit-authority recovery-run mismatch")
+    if int(contract_authority.get("recovery_run_id", -1)) != recovery_run:
+        raise RuntimeError("contract audit-authority recovery-run mismatch")
+    obsolete = set(map(int, promotion.get("obsolete_audit_runs", [])))
+    obsolete.update(map(int, contract_authority.get("obsolete_audit_runs", [])))
+    if audit_run in obsolete:
+        raise RuntimeError("audit workflow run is explicitly obsolete")
     if int(audit.get("species", -1)) != 556:
         raise RuntimeError("audit species count drift")
     if int(audit.get("batch_count", -1)) != 186:
