@@ -47,5 +47,6 @@
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
   },
-  "technical_retrigger_note": "Workflow file was added after the initial rule commit; this edit only triggers the already frozen four-species HTTP-only recovery and changes no query, page offsets, or scientific rule."
+  "technical_retrigger_note": "Workflow file was added after the initial rule commit; this edit only triggers the already frozen four-species HTTP-only recovery and changes no query, page offsets, or scientific rule.",
+  "technical_retrigger_note_v2": "Previous recovery run failed before network access because of a Python module import path. This edit only retriggers the frozen four-species HTTP-only recovery after correcting that import."
 }
