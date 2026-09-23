@@ -56,14 +56,82 @@ jobs:
           print({"run_id":run_id,"status":p["status"],"conclusion":p.get("conclusion")})
           PY
 
-      - name: Download exact distributed fallback artifacts
-        uses: actions/download-artifact@v4
-        with:
-          pattern: relational-env-request-retry-*
-          path: input/retries
-          merge-multiple: true
-          run-id: ${{ steps.source.outputs.run_id }}
-          github-token: ${{ github.token }}
+      - name: Download exact 235 distributed fallback artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ steps.source.outputs.run_id }}
+        run: |
+          python - <<'PY'
+          import concurrent.futures
+          import io
+          import json
+          import os
+          import urllib.parse
+          import urllib.request
+          import zipfile
+          from pathlib import Path
+
+          repo=os.environ["REPO"]
+          token=os.environ["GH_TOKEN"]
+          run_id=int(os.environ["RUN_ID"])
+          headers={
+              "Authorization":f"Bearer {token}",
+              "Accept":"application/vnd.github+json",
+              "X-GitHub-Api-Version":"2022-11-28",
+          }
+
+          artifacts={}
+          page=1
+          while True:
+              req=urllib.request.Request(
+                  f"https://api.github.com/repos/{repo}/actions/runs/{run_id}/artifacts?per_page=100&page={page}",
+                  headers=headers,
+              )
+              with urllib.request.urlopen(req,timeout=60) as response:
+                  payload=json.load(response)
+              chunk=payload.get("artifacts",[])
+              for a in chunk:
+                  if not a.get("expired") and str(a.get("name","")).startswith("relational-env-request-retry-"):
+                      artifacts[str(a["name"])]=a
+              if len(chunk)<100:
+                  break
+              page+=1
+
+          expected=[f"relational-env-request-retry-{i}" for i in range(235)]
+          missing=[name for name in expected if name not in artifacts]
+          assert not missing, missing
+          assert len(artifacts)==235, len(artifacts)
+
+          class StripCrossHostAuthorization(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self, req, fp, code, msg, headers_, newurl):
+                  redirected=super().redirect_request(req,fp,code,msg,headers_,newurl)
+                  if redirected is None:
+                      return None
+                  if urllib.parse.urlparse(req.full_url).netloc != urllib.parse.urlparse(newurl).netloc:
+                      redirected.remove_header("Authorization")
+                  return redirected
+
+          opener=urllib.request.build_opener(StripCrossHostAuthorization())
+
+          def download(name):
+              a=artifacts[name]
+              req=urllib.request.Request(a["archive_download_url"],headers=headers)
+              with opener.open(req,timeout=120) as response:
+                  data=response.read()
+              return name,data
+
+          out=Path("input/retries")
+          out.mkdir(parents=True,exist_ok=True)
+          with concurrent.futures.ThreadPoolExecutor(max_workers=12) as pool:
+              for name,data in pool.map(download,expected):
+                  with zipfile.ZipFile(io.BytesIO(data)) as zf:
+                      zf.extractall(out)
+
+          ledgers=list(out.glob("ledger-retry-*.json"))
+          assert len(ledgers)==235, len(ledgers)
+          print({"downloaded_artifacts":len(expected),"ledger_files":len(ledgers)})
+          PY
 
       - name: Audit exact 704 retry species
         run: |
