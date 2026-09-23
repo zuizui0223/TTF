@@ -1,0 +1,49 @@
+{
+  "schema": "ttf_relational_environment_final_producer_promotion_rule_v0.2",
+  "status": "FROZEN_BEFORE_FINAL_ROUND_RESULT_AND_BEFORE_RELATION_RESULT",
+  "frozen_on": "2026-09-23",
+  "supersedes": "docs/supporting/relational_environment_fallback_promotion_rule_v0.1.json",
+  "canonical_relation_producer_run_id": 35795821824,
+  "round3_fallback_run_id": 35809546248,
+  "round3_audit_run_id": 35824707898,
+  "final_recovery_contract": "benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json",
+  "final_recovery_run_id": 35827478403,
+  "final_recovery_audit_artifact_name": "relational-environment-request-error-recovery-audit-v0.2",
+  "promotion_conditions": [
+    "final recovery workflow run 35827478403 completed successfully",
+    "its exact final audit has status PASS_FINAL_ROUND_ZERO_REQUEST_ERROR",
+    "its exact final audit has request_error_count_after_final_round = 0 and unresolved_request_error_species = []",
+    "the audit confirms retry_round = 4 and no_fifth_round_authorized = true",
+    "the canonical producer run has no non-expired relational-environment-relation-v0.3 artifact at promotion time",
+    "Study-B relation result and all genetic response remain unopened"
+  ],
+  "action": "Only after all promotion conditions pass, a separately frozen final-producer trigger may authorize one relation producer that merges the authoritative v0.7 base transport, exact round-3 outcomes, and exact round-4 outcomes. Promotion is binary on technical completion only; no R_env content, ecological PASS rate, taxonomy, or genetic response may be used to choose a producer.",
+  "final_merge_rule": {
+    "pre_retry_request_error_species": 704,
+    "round3_resolved_species": 148,
+    "round3_unresolved_species": 556,
+    "round4_species_exactly": 556,
+    "round4_may_replace_only_round3_request_error": true,
+    "overwrite_round3_non_request_error_forbidden": true,
+    "final_request_error_required_for_relation_binding": 0
+  },
+  "no_fifth_round_authorized": true,
+  "relation_content_used_for_promotion": false,
+  "genetic_response_used_for_promotion": false,
+  "forbidden": [
+    "create the final-producer trigger if the final round audit is not zero-error",
+    "inspect R_env or CHELSA relation output before producer promotion",
+    "choose a transport layer by ecological PASS rate or taxonomic composition",
+    "replace any of the 148 round-3 resolved outcomes with round-4 data",
+    "use round-4 artifacts for species outside the exact frozen 556-name unresolved set",
+    "bind both canonical and final producer artifacts",
+    "promote after an authoritative relation artifact already exists",
+    "authorize a fifth transport retry round"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
