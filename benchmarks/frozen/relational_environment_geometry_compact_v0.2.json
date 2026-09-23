@@ -1,0 +1,21 @@
+{
+  "candidate_csv_sha256": "08dca43252ea93d43f3095f17b0267ec7ff049f0ec8b3e9c412dd784319ab575",
+  "compact_npz_bytes": 3610846,
+  "compact_npz_sha256": "d0776b4b5646e999f0c09ad937e4050fafe6fec018f17f0d37cd2c5b5f12a79b",
+  "edge_rows": 167828,
+  "locality_rows": 28355,
+  "representation": "species_order + edge_offsets + float64 ECEF-km edge midpoints; no sequence lines or genetic response serialized",
+  "response_firewall": {
+    "T_st_computed": false,
+    "beta_R_computed": false,
+    "pairwise_genetic_distances_opened": false,
+    "sequence_identity_opened": false,
+    "sequence_lines_decoded": false
+  },
+  "schema": "ttf_relational_environment_compact_geometry_v0.2",
+  "source_archive_bytes": 274988692,
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "species": 1000,
+  "status": "PASS_RESPONSE_BLIND_FRESH_1000_COMPACT_GEOMETRY",
+  "verification_failures": 0
+}
