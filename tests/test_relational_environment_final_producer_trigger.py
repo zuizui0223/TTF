@@ -143,3 +143,19 @@ def test_final_trigger_rejects_bad_artifact_digest():
             audit_artifact_digest="not-a-digest",
             frozen_on="2026-09-23",
         )
+
+
+def test_final_trigger_rejects_obsolete_polling_audit_run():
+    m = load_module()
+    audit, promotion, contract, producer = fixtures()
+    audit["audit_workflow_run_id"] = 35828444286
+    with pytest.raises(RuntimeError, match="obsolete"):
+        m.build_trigger(
+            audit=audit,
+            promotion=promotion,
+            contract=contract,
+            producer=producer,
+            audit_artifact_id=123456,
+            audit_artifact_digest="sha256:" + "a" * 64,
+            frozen_on="2026-09-23",
+        )
