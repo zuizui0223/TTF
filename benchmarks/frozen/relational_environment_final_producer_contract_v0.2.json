@@ -34,7 +34,7 @@
     "relation_result_may_be_constructed_only_after_final_request_error_zero": true
   },
   "git_blobs": {
-    ".github/workflows/relational-environment-final-recovery-producer.yml": "95f300f015d83a1194e6b5c9b5baff9bf29e19ef",
+    ".github/workflows/relational-environment-final-recovery-producer.yml": "3b13181574b824d0a8732e1faf1658f15afd74e8",
     "scripts/merge_relational_environment_final_recovery.py": "4fc538533637c525ac3f92e313a1b17bf8bca3a8",
     "scripts/build_relational_environment_relation.py": "ebfa0e94acb1069749460aa3eaefb6c1fcb4444c",
     "scripts/acquire_relational_environment_occurrences.py": "34eb5d5b459e105943cc5642cf355011d86c4f07",
@@ -95,5 +95,10 @@
       35828444286
     ],
     "requirement": "successful post-completion audit artifact with PASS_FINAL_ROUND_ZERO_REQUEST_ERROR and self-bound audit_workflow_run_id"
+  },
+  "final_recovery_audit_trigger_workflow": {
+    "path": ".github/workflows/relational-environment-final-producer-trigger.yml",
+    "git_blob": "d09534c6f9a4741c0c9398089ef5b5f7d206db95",
+    "authority": "successful non-obsolete post-completion audit run self-bound to recovery run 35827478403"
   }
 }
