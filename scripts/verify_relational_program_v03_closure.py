@@ -45,6 +45,7 @@ def main() -> int:
         "b_transport": Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json"),
         "b_transport_audit": Path("benchmarks/frozen/relational_environment_transport_partition_audit_v0.7.json"),
         "b_preretry": Path("benchmarks/frozen/relational_environment_transport_preretry_receipt_v0.7.json"),
+        "b_unbound_long_repair": Path("benchmarks/frozen/relational_environment_cutover_long_repair_v0.1.json"),
         "b_producer": Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json"),
         "b_opportunity": Path("docs/supporting/relational_environment_opportunity_rule_v0.2.json"),
         "b_qualification": Path("docs/supporting/relational_environment_qualification_rule_v0.2.json"),
@@ -126,7 +127,7 @@ def main() -> int:
         if states[state]["C_open_authorized"] is not True or states[state]["C_entry_state"] != entry:
             raise RuntimeError(f"Study-C transition drift for {state}")
     assert_closed_firewall(transition)
-    for key in ("b_relation", "b_transport", "b_transport_audit", "b_preretry", "b_producer", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
+    for key in ("b_relation", "b_transport", "b_transport_audit", "b_preretry", "b_unbound_long_repair", "b_producer", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
         assert_closed_firewall(p[key])
 
     transport = p["b_transport"]
@@ -228,6 +229,20 @@ def main() -> int:
         raise RuntimeError("Study B pre-retry REQUEST_ERROR count drift")
     if preretry["request_error_species_sorted_sha256"] != "9902e6d65c951cb752c06a2ce18fc7ae96fede0ab3e40089624402c185cdd034":
         raise RuntimeError("Study B pre-retry species digest drift")
+
+    unbound = p["b_unbound_long_repair"]
+    if unbound.get("schema") != "ttf_relational_environment_cutover_long_repair_v0.1":
+        raise RuntimeError("unbound Study B technical experiment schema drift")
+    if unbound.get("status") != "OBSOLETE_UNBOUND_TECHNICAL_EXPERIMENT":
+        raise RuntimeError("unbound two-species repair experiment reactivated")
+    serialized_transport = json.dumps(transport, sort_keys=True)
+    serialized_audit = json.dumps(audit, sort_keys=True)
+    if "relational_environment_cutover_long_repair_v0.1.json" in serialized_transport:
+        raise RuntimeError("authoritative v0.7 references obsolete two-species experiment")
+    if "relational_environment_cutover_long_repair_v0.1.json" in serialized_audit:
+        raise RuntimeError("v0.7 partition audit references obsolete two-species experiment")
+    if any(bool(v) for v in unbound["response_firewall"].values()):
+        raise RuntimeError("obsolete two-species experiment response firewall is open")
 
     producer = p["b_producer"]
     if producer.get("schema") != "ttf_relational_environment_relation_producer_v0.1":
