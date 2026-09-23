@@ -1,0 +1,17 @@
+{
+  "schema": "ttf_relational_environment_request_error_fallback_audit_trigger_v0.1",
+  "status": "AUTHORIZE_AUDIT_AFTER_DISTRIBUTED_FALLBACK_COMPLETION",
+  "frozen_on": "2026-09-23",
+  "fallback_contract": "benchmarks/frozen/relational_environment_request_error_fallback_v0.1.json",
+  "fallback_workflow_run_id": 35809546248,
+  "expected_species": 704,
+  "expected_batches": 235,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
