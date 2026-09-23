@@ -40,3 +40,9 @@ def test_historical_workflow_closes_finite_program():
     assert '"CLOSED_PARTIAL_NOT_EVALUABLE"' in text
     assert '"CLOSED_NO_EVALUABLE_TEST"' in text
     assert '"no_additional_predictor_authorized":True' in text
+
+
+def test_historical_workflow_uses_canonical_phylogatr_marker_contract():
+    text = WORKFLOW.read_text()
+    assert "--protocol docs/supporting/genetic_phylogatr_confirmatory_protocol_v0.1.json" in text
+    assert "--protocol docs/supporting/relational_genetic_protocol_v0.1.json" not in text
