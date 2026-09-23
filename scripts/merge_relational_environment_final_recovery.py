@@ -176,8 +176,8 @@ def main() -> int:
         raise RuntimeError("round-4 contract unresolved count drift")
     closed_firewall(contract)
 
-    if round4_audit.get("schema") != "ttf_relational_environment_request_error_recovery_audit_v0.2":
-        raise RuntimeError("unexpected round-4 audit schema")
+    if round4_audit.get("schema") != "ttf_relational_environment_request_error_recovery_audit_v0.3":
+        raise RuntimeError("unexpected authoritative round-4 audit schema")
     if round4_audit.get("status") not in {
         "PASS_FINAL_ROUND_ZERO_REQUEST_ERROR",
         "INCOMPLETE_TECHNICAL_EXECUTION_AFTER_FINAL_ROUND",
