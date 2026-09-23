@@ -10,7 +10,7 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-import scripts.acquire_relational_environment_occurrences as acquisition
+import acquire_relational_environment_occurrences as acquisition
 
 GBIF = acquisition.GBIF
 USER_AGENT = "ttf-relational-environment-rate-limit-recovery/0.1 (https://github.com/zuizui0223/TTF)"
