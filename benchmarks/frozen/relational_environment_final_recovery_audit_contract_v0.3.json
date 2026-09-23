@@ -1,0 +1,41 @@
+{
+  "schema": "ttf_relational_environment_final_recovery_audit_contract_v0.3",
+  "status": "FROZEN_AUDIT_ONLY_BEFORE_FINAL_RECOVERY_RESULT",
+  "frozen_on": "2026-09-23",
+  "recovery_contract": "benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json",
+  "recovery_run_id": 35827478403,
+  "source_round3_audit_run_id": 35824707898,
+  "expected_recovery_batches": 186,
+  "expected_species": 556,
+  "workflow": ".github/workflows/relational-environment-final-recovery-audit-v03.yml",
+  "workflow_git_blob": "3152547218e3e3ceefcd88e138d926441426c2fc",
+  "purpose": "Audit the already-running frozen round-4 artifacts in numeric batch order. This workflow performs no GBIF acquisition and exists only to repair the lexicographic-order defect in the embedded audit step.",
+  "embedded_audit_defect": {
+    "defect": "ledger filenames were sorted lexicographically before an exact source-order assertion, so batch order 0,1,10,... could fail even when all recovery artifacts were scientifically and technically valid",
+    "scientific_result_affected": false,
+    "transport_artifacts_affected": false,
+    "new_network_acquisition_required": false
+  },
+  "network_retrieval_allowed": false,
+  "no_fifth_round_authorized": true,
+  "promotion_eligible_status_only": "PASS_FINAL_ROUND_ZERO_REQUEST_ERROR",
+  "forbidden": [
+    "issue any GBIF request",
+    "alter or rerun any round-4 species acquisition",
+    "change any round-4 ledger or occurrence rows",
+    "reorder species except by their frozen numeric batch index for audit reconstruction",
+    "convert REQUEST_ERROR to ecological failure",
+    "authorize a fifth retry round",
+    "open R_env or genetic response"
+  ],
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  },
+  "execution_trigger": "workflow_run completion of the exact frozen recovery workflow; no polling runner is required for future audit execution",
+  "artifact_download_method": "actions/download-artifact@v4 exact run-id/pattern; avoids cross-host redirect Authorization leakage"
+}
