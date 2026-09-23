@@ -31,11 +31,14 @@ jobs:
           trigger=json.loads(Path("benchmarks/frozen/relational_environment_fallback_producer_trigger_v0.1.json").read_text())
           transport=json.loads(Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json").read_text())
           fallback=json.loads(Path("benchmarks/frozen/relational_environment_request_error_fallback_v0.1.json").read_text())
+          promotion=json.loads(Path("docs/supporting/relational_environment_fallback_promotion_rule_v0.1.json").read_text())
           assert trigger["schema"]=="ttf_relational_environment_fallback_producer_trigger_v0.1"
-          assert trigger["status"]=="AUTHORIZE_FALLBACK_PRODUCER_AFTER_CANONICAL_NON_SUCCESS"
+          assert trigger["status"]=="AUTHORIZE_FALLBACK_PRODUCER_PRE_RESULT"
           assert trigger["relation_result_seen"] is False
           assert trigger["genetic_response_used"] is False
-          assert int(trigger["canonical_producer_run_id"])==int(fallback["canonical_relation_producer_run_id"])
+          assert promotion["schema"]=="ttf_relational_environment_fallback_promotion_rule_v0.1"
+          assert promotion["status"]=="FROZEN_BEFORE_FALLBACK_RETRY_RESULT_AND_BEFORE_RELATION_RESULT"
+          assert int(trigger["canonical_producer_run_id"])==int(promotion["canonical_relation_producer_run_id"])
           assert int(trigger["fallback_retry_run_id"])==int(fallback["fallback_workflow_run_id"])
           assert transport["schema"]=="ttf_relational_environment_transport_execution_v0.7"
 
@@ -44,27 +47,66 @@ jobs:
               "Accept":"application/vnd.github+json",
               "X-GitHub-Api-Version":"2022-11-28",
           }
-          def run_state(run_id):
-              req=urllib.request.Request(
-                  f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{int(run_id)}",
-                  headers=headers,
-              )
+          def get_json(url):
+              req=urllib.request.Request(url,headers=headers)
               with urllib.request.urlopen(req,timeout=60) as response:
                   return json.load(response)
 
-          canonical=run_state(trigger["canonical_producer_run_id"])
-          assert canonical["status"]=="completed", canonical
-          assert canonical.get("conclusion")!="success", canonical
+          canonical_run=int(trigger["canonical_producer_run_id"])
+          retry_run=int(trigger["fallback_retry_run_id"])
+          audit_run=int(trigger["fallback_audit_run_id"])
 
-          retry=run_state(trigger["fallback_retry_run_id"])
+          retry=get_json(f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{retry_run}")
           assert retry["status"]=="completed" and retry.get("conclusion")=="success", retry
+          audit=get_json(f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{audit_run}")
+          assert audit["status"]=="completed" and audit.get("conclusion")=="success", audit
+
+          artifacts=[]
+          page=1
+          while True:
+              payload=get_json(
+                  f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{canonical_run}/artifacts?per_page=100&page={page}"
+              )
+              chunk=payload.get("artifacts",[])
+              artifacts.extend(chunk)
+              if len(chunk)<100: break
+              page+=1
+          canonical_relation=[
+              a for a in artifacts
+              if a.get("name")=="relational-environment-relation-v0.3" and not a.get("expired")
+          ]
+          assert not canonical_relation, canonical_relation
 
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
-              f.write(f"fallback_run_id={int(trigger['fallback_retry_run_id'])}\n")
+              f.write(f"fallback_run_id={retry_run}\n")
+              f.write(f"fallback_audit_run_id={audit_run}\n")
           print({
-              "canonical":(canonical["status"],canonical.get("conclusion")),
-              "fallback":(retry["status"],retry.get("conclusion")),
+              "canonical_relation_artifact_count":len(canonical_relation),
+              "fallback_retry_run":(retry["status"],retry.get("conclusion")),
+              "fallback_audit_run":(audit["status"],audit.get("conclusion")),
           })
+          PY
+
+      - name: Download and verify distributed fallback audit
+        uses: actions/download-artifact@v4
+        with:
+          name: relational-environment-request-error-fallback-audit-v0.1
+          path: input/fallback-audit
+          run-id: ${{ steps.frozen.outputs.fallback_audit_run_id }}
+          github-token: ${{ github.token }}
+
+      - name: Require zero unresolved REQUEST_ERROR before producer supersession
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("input/fallback-audit/relational_environment_request_error_fallback_audit_v0.1.json").read_text())
+          assert p["schema"]=="ttf_relational_environment_request_error_fallback_audit_v0.1"
+          assert p["status"]=="PASS_DISTRIBUTED_RETRY_ZERO_REQUEST_ERROR", p
+          assert p["species"]==704
+          assert p["unresolved_request_error_species"]==[]
+          assert all(v is False for v in p["response_firewall"].values())
+          print({"status":p["status"],"status_counts":p["status_counts"],"attempt_length_counts":p["attempt_length_counts"]})
           PY
 
       - name: Freeze fallback relation producer before relation result
@@ -74,7 +116,8 @@ jobs:
           from pathlib import Path
           old=json.loads(Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json").read_text())
           assert old["schema"]=="ttf_relational_environment_relation_producer_v0.1"
-          assert old["workflow_run_id"]==35795821824
+          promotion=json.loads(Path("docs/supporting/relational_environment_fallback_promotion_rule_v0.1.json").read_text())
+          assert int(old["workflow_run_id"])==int(promotion["canonical_relation_producer_run_id"])
           assert old["relation_result_seen"] is False
           payload={
               "schema":"ttf_relational_environment_relation_producer_v0.1",
