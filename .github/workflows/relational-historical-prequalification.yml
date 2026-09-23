@@ -116,7 +116,7 @@ jobs:
           python scripts/freeze_relational_historical_candidate_census.py \
             --root "${{ steps.source.outputs.root }}" \
             --source-sha256 5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5 \
-            --protocol docs/supporting/relational_genetic_protocol_v0.1.json \
+            --protocol docs/supporting/genetic_phylogatr_confirmatory_protocol_v0.1.json \
             --history-rule docs/supporting/relational_historical_climate_exposure_rule_v0.1.json \
             --s1-exclusion-manifest benchmarks/frozen/relational_prior_S1_species_exclusion_v0.1.json \
             --s2-exclusion-manifest benchmarks/frozen/relational_prior_S2_species_exclusion_v0.1.json \
