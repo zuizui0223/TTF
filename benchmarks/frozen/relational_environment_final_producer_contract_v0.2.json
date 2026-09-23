@@ -34,8 +34,8 @@
     "relation_result_may_be_constructed_only_after_final_request_error_zero": true
   },
   "git_blobs": {
-    ".github/workflows/relational-environment-final-recovery-producer.yml": "4584ed603bd858c7879785508d6bc62c5f925bd3",
-    "scripts/merge_relational_environment_final_recovery.py": "dc57f22e99c12e5a7b3ea3878748805893bb8efa",
+    ".github/workflows/relational-environment-final-recovery-producer.yml": "95f300f015d83a1194e6b5c9b5baff9bf29e19ef",
+    "scripts/merge_relational_environment_final_recovery.py": "4fc538533637c525ac3f92e313a1b17bf8bca3a8",
     "scripts/build_relational_environment_relation.py": "ebfa0e94acb1069749460aa3eaefb6c1fcb4444c",
     "scripts/acquire_relational_environment_occurrences.py": "34eb5d5b459e105943cc5642cf355011d86c4f07",
     "src/ttf/relational_environment.py": "d05e35866de57daa8eccacdbf7a3c0eaff055890",
@@ -44,8 +44,10 @@
     "docs/supporting/relational_future_family_freshness_amendment_v0.1.json": "25e29bc7bcb26490caddbcdf8d144873c32ac1d7"
   },
   "forbidden": [
-    "create final producer trigger before PASS_FINAL_ROUND_ZERO_REQUEST_ERROR",
+    "create final producer trigger before audit-only PASS_FINAL_ROUND_ZERO_REQUEST_ERROR",
     "construct or inspect R_env before final REQUEST_ERROR count is zero",
+    "use the defective embedded lexicographic-order audit as authoritative",
+    "rerun GBIF acquisition to repair an audit-order defect",
     "replace any round-3 non-REQUEST_ERROR outcome",
     "use any round-4 species outside the exact frozen 556-name set",
     "alter GBIF query, deterministic page selection, thinning, occurrence cap, minimum occurrence gate, freshness, breadth, relation, qualification, or empirical opening rules",
@@ -59,5 +61,8 @@
     "Study_B_pairwise_genetic_distances_opened": false,
     "Study_B_T_st_computed": false,
     "Study_B_beta_R_computed": false
-  }
+  },
+  "final_recovery_audit_contract": "benchmarks/frozen/relational_environment_final_recovery_audit_contract_v0.3.json",
+  "final_recovery_audit_workflow_run_id": 35828444286,
+  "final_recovery_audit_artifact_name": "relational-environment-request-error-recovery-audit-v0.3"
 }
