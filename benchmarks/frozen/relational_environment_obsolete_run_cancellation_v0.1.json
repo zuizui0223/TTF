@@ -2,18 +2,18 @@
   "schema": "ttf_relational_environment_obsolete_run_cancellation_v0.1",
   "status": "AUTHORIZE_EXACT_OBSOLETE_GBIF_RUN_CANCELLATION",
   "frozen_on": "2026-09-23",
-  "reason": "Two obsolete pre-result recovery runs were still actively issuing GBIF requests while the authoritative final round-4 transport was running, increasing client-side API contention. Cancel only those obsolete runs; do not alter or cancel the authoritative round-4 recovery or its audit-only verifier.",
+  "reason": "Cancel only obsolete pre-relation GBIF runs plus the superseded polling final-audit run. The exact round-4 recovery run remains protected. Final audit now runs only after recovery completion via workflow_run.",
   "obsolete_run_ids": [
     35812255490,
-    35823190096
+    35823190096,
+    35828444286
   ],
   "obsolete_run_roles": {
     "35812255490": "superseded singleton HTTP recovery",
     "35823190096": "obsolete final two-species timeout repair"
   },
   "protected_current_run_ids": [
-    35827478403,
-    35828444286
+    35827478403
   ],
   "workflow": ".github/workflows/cancel-obsolete-study-b-gbif-runs.yml",
   "workflow_git_blob": "06188b0920395661096b669ae4fed342bd615660",
