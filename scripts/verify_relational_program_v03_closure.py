@@ -43,6 +43,7 @@ def main() -> int:
         "c_s2_exclusion": Path("benchmarks/frozen/relational_prior_S2_species_exclusion_v0.1.json"),
         "b_relation": Path("docs/supporting/relational_environment_relation_rule_v0.3.json"),
         "b_transport": Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json"),
+        "b_transport_audit": Path("benchmarks/frozen/relational_environment_transport_partition_audit_v0.7.json"),
         "b_opportunity": Path("docs/supporting/relational_environment_opportunity_rule_v0.2.json"),
         "b_qualification": Path("docs/supporting/relational_environment_qualification_rule_v0.2.json"),
         "b_mask": Path("docs/supporting/relational_environment_character_mask_rule_v0.1.json"),
