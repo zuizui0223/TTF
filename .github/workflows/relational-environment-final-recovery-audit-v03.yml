@@ -1,0 +1,217 @@
+name: relational-environment-final-recovery-audit-v03
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_final_recovery_audit_contract_v0.3.json"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify frozen audit-only contract
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_final_recovery_audit_contract_v0.3.json").read_text())
+          assert p["schema"]=="ttf_relational_environment_final_recovery_audit_contract_v0.3"
+          assert p["status"]=="FROZEN_AUDIT_ONLY_BEFORE_FINAL_RECOVERY_RESULT"
+          assert int(p["recovery_run_id"])==35827478403
+          assert int(p["expected_recovery_batches"])==186
+          assert int(p["expected_species"])==556
+          assert p["network_retrieval_allowed"] is False
+          assert p["no_fifth_round_authorized"] is True
+          wf=subprocess.check_output(
+              ["git","rev-parse","HEAD:.github/workflows/relational-environment-final-recovery-audit-v03.yml"],
+              text=True,
+          ).strip()
+          assert wf==p["workflow_git_blob"],(wf,p["workflow_git_blob"])
+          assert not any(bool(v) for v in p["response_firewall"].values())
+          PY
+
+      - name: Wait for exact 186 recovery artifacts without issuing GBIF requests
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          python - <<'PY'
+          import json, os, time, urllib.request
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_final_recovery_audit_contract_v0.3.json").read_text())
+          run_id=int(p["recovery_run_id"])
+          headers={
+              "Authorization":f"Bearer {os.environ['GH_TOKEN']}",
+              "Accept":"application/vnd.github+json",
+              "X-GitHub-Api-Version":"2022-11-28",
+          }
+          def get_json(url):
+              req=urllib.request.Request(url,headers=headers)
+              with urllib.request.urlopen(req,timeout=60) as response:
+                  return json.load(response)
+
+          def artifacts():
+              out=[]; page=1
+              while True:
+                  x=get_json(f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{run_id}/artifacts?per_page=100&page={page}")
+                  chunk=x.get("artifacts",[])
+                  out.extend(chunk)
+                  if len(chunk)<100: break
+                  page+=1
+              return out
+
+          def jobs():
+              out=[]; page=1
+              while True:
+                  x=get_json(f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{run_id}/jobs?per_page=100&page={page}")
+                  chunk=x.get("jobs",[])
+                  out.extend(chunk)
+                  if len(chunk)<100: break
+                  page+=1
+              return out
+
+          deadline=time.time()+5*60*60
+          while True:
+              aa=[
+                  a for a in artifacts()
+                  if str(a.get("name","")).startswith("relational-env-request-recovery-v02-")
+                  and not a.get("expired")
+              ]
+              jj=[j for j in jobs() if str(j.get("name","")).startswith("recover (")]
+              done=[j for j in jj if j.get("status")=="completed"]
+              failed=[j for j in done if j.get("conclusion")!="success"]
+              print({"recovery_artifacts":len(aa),"recover_jobs":len(jj),"recover_completed":len(done),"recover_failed":len(failed)})
+              if failed:
+                  raise RuntimeError(f"recovery job failure: {[(j['name'],j.get('conclusion')) for j in failed[:10]]}")
+              if len(aa)==186 and len(jj)==186 and len(done)==186:
+                  break
+              if time.time()>=deadline:
+                  raise RuntimeError("timed out waiting for exact 186 completed recovery jobs/artifacts")
+              time.sleep(60)
+          PY
+
+      - name: Download exact 186 recovery artifacts through paginated API
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/recovery
+          gh api --paginate "/repos/$GITHUB_REPOSITORY/actions/runs/35827478403/artifacts?per_page=100" \
+            --jq '.artifacts[] | select(.name | startswith("relational-env-request-recovery-v02-")) | [.id,.name] | @tsv' \
+            > /tmp/recovery_artifacts.tsv
+          test "$(wc -l < /tmp/recovery_artifacts.tsv)" -eq 186
+          while IFS=$'\t' read -r artifact_id artifact_name; do
+            zip="/tmp/${artifact_name}.zip"
+            curl -fsSL \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/artifacts/${artifact_id}/zip" \
+              -o "$zip"
+            unzip -oq "$zip" -d input/recovery
+          done < /tmp/recovery_artifacts.tsv
+
+      - name: Download frozen round-3 audit
+        uses: actions/download-artifact@v4
+        with:
+          name: relational-environment-request-error-fallback-audit-v0.1
+          path: input/round3-audit
+          run-id: 35824707898
+          github-token: ${{ github.token }}
+
+      - name: Audit final recovery in numeric batch order
+        run: |
+          mkdir -p results/audit
+          python - <<'PY'
+          import collections, json
+          from pathlib import Path
+
+          contract=json.loads(Path("benchmarks/frozen/relational_environment_final_recovery_audit_contract_v0.3.json").read_text())
+          source=json.loads(Path("input/round3-audit/relational_environment_request_error_fallback_audit_v0.1.json").read_text())
+          expected=list(map(str,source["unresolved_request_error_species"]))
+          assert len(expected)==556 and len(set(expected))==556
+          assert int(source["status_counts"]["REQUEST_ERROR"])==556
+          assert source["status"]=="INCOMPLETE_DISTRIBUTED_RETRY"
+          assert not any(bool(v) for v in source["response_firewall"].values())
+
+          by_batch={}
+          for path in Path("input/recovery").glob("ledger-recovery-v02-*.json"):
+              x=json.loads(path.read_text())
+              assert x["schema"]=="ttf_relational_environment_request_error_recovery_batch_v0.2"
+              assert int(x["retry_round"])==4
+              assert x["scientific_query_change"] is False
+              assert x["relation_result_seen"] is False
+              assert x["genetic_response_used"] is False
+              assert not any(bool(v) for v in x["response_firewall"].values())
+              batch=int(x["batch_index"])
+              if batch in by_batch:
+                  raise RuntimeError(f"duplicate final-recovery batch {batch}")
+              by_batch[batch]=x
+          assert set(by_batch)==set(range(186)),(len(by_batch),sorted(set(range(186))-set(by_batch))[:20])
+
+          seen=[]
+          statuses=collections.Counter()
+          unresolved=[]
+          for batch in range(186):
+              x=by_batch[batch]
+              requested=list(map(str,x["species_requested"]))
+              rows=[str(row["species"]) for row in x["species"]]
+              assert rows==requested,(batch,rows,requested)
+              for row in x["species"]:
+                  name=str(row["species"])
+                  seen.append(name)
+                  status=str(row["status"])
+                  statuses[status]+=1
+                  if status=="REQUEST_ERROR":
+                      unresolved.append(name)
+
+          assert seen==expected
+          assert len(seen)==556 and len(set(seen))==556
+          result={
+              "schema":"ttf_relational_environment_request_error_recovery_audit_v0.3",
+              "status":(
+                  "PASS_FINAL_ROUND_ZERO_REQUEST_ERROR"
+                  if not unresolved
+                  else "INCOMPLETE_TECHNICAL_EXECUTION_AFTER_FINAL_ROUND"
+              ),
+              "retry_round":4,
+              "source_round3_audit_run_id":35824707898,
+              "recovery_workflow_run_id":35827478403,
+              "audit_workflow_run_id":int("${{ github.run_id }}"),
+              "species":556,
+              "batch_count":186,
+              "status_counts":dict(sorted(statuses.items())),
+              "unresolved_request_error_species":sorted(unresolved),
+              "request_error_count_after_final_round":len(unresolved),
+              "no_fifth_round_authorized":True,
+              "network_retrieval_performed":False,
+              "relation_result_seen":False,
+              "genetic_response_used":False,
+              "response_firewall":{
+                  "Study_B_sequence_identity_opened":False,
+                  "Study_B_pairwise_genetic_distances_opened":False,
+                  "Study_B_T_st_computed":False,
+                  "Study_B_beta_R_computed":False,
+              },
+          }
+          Path("results/audit/relational_environment_request_error_recovery_audit_v0.3.json").write_text(
+              json.dumps(result,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps(result,sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-environment-request-error-recovery-audit-v0.3
+          path: results/audit/relational_environment_request_error_recovery_audit_v0.3.json
+          retention-days: 30
+          if-no-files-found: error
