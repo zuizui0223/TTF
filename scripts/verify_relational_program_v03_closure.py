@@ -19,6 +19,12 @@ def sha256_path(path: str | Path) -> str:
     return h.hexdigest()
 
 
+def git_blob_sha1(path: str | Path) -> str:
+    data = Path(path).read_bytes()
+    header = f"blob {len(data)}\0".encode("utf-8")
+    return hashlib.sha1(header + data).hexdigest()
+
+
 def assert_closed_firewall(payload: dict, key: str = "response_firewall") -> None:
     fw = payload.get(key)
     if not isinstance(fw, dict) or not fw:
@@ -45,6 +51,8 @@ def main() -> int:
         "b_transport": Path("benchmarks/frozen/relational_environment_transport_execution_v0.7.json"),
         "b_transport_audit": Path("benchmarks/frozen/relational_environment_transport_partition_audit_v0.7.json"),
         "b_preretry": Path("benchmarks/frozen/relational_environment_transport_preretry_receipt_v0.7.json"),
+        "b_retry_rule_v02": Path("docs/supporting/relational_environment_transport_retry_rule_v0.2.json"),
+        "b_recovery_v02": Path("benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json"),
         "b_unbound_long_repair": Path("benchmarks/frozen/relational_environment_cutover_long_repair_v0.1.json"),
         "b_producer": Path("benchmarks/frozen/relational_environment_relation_producer_v0.1.json"),
         "b_opportunity": Path("docs/supporting/relational_environment_opportunity_rule_v0.2.json"),
@@ -127,7 +135,7 @@ def main() -> int:
         if states[state]["C_open_authorized"] is not True or states[state]["C_entry_state"] != entry:
             raise RuntimeError(f"Study-C transition drift for {state}")
     assert_closed_firewall(transition)
-    for key in ("b_relation", "b_transport", "b_transport_audit", "b_preretry", "b_unbound_long_repair", "b_producer", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
+    for key in ("b_relation", "b_transport", "b_transport_audit", "b_preretry", "b_retry_rule_v02", "b_recovery_v02", "b_unbound_long_repair", "b_producer", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
         assert_closed_firewall(p[key])
 
     transport = p["b_transport"]
@@ -229,6 +237,63 @@ def main() -> int:
         raise RuntimeError("Study B pre-retry REQUEST_ERROR count drift")
     if preretry["request_error_species_sorted_sha256"] != "9902e6d65c951cb752c06a2ce18fc7ae96fede0ab3e40089624402c185cdd034":
         raise RuntimeError("Study B pre-retry species digest drift")
+
+    retry_v02 = p["b_retry_rule_v02"]
+    if retry_v02.get("schema") != "ttf_relational_environment_transport_retry_rule_v0.2":
+        raise RuntimeError("Study B final retry-rule schema drift")
+    if retry_v02.get("status") != "FROZEN_FINAL_TECHNICAL_RETRY_AMENDMENT_BEFORE_RELATION_RESULT":
+        raise RuntimeError("Study B final retry rule is not frozen pre-result")
+    if retry_v02.get("supersedes") != transport.get("retry_rule"):
+        raise RuntimeError("Study B final retry rule does not supersede the v0.7 retry rule")
+    if int(retry_v02["prior_maximum_retry_rounds"]) != 3:
+        raise RuntimeError("Study B prior retry-round count drift")
+    if int(retry_v02["maximum_retry_rounds_total"]) != 4 or int(retry_v02["final_round"]) != 4:
+        raise RuntimeError("Study B final retry-round ceiling drift")
+    if retry_v02.get("no_fifth_round_authorized") is not True:
+        raise RuntimeError("Study B fifth retry round is not explicitly forbidden")
+
+    recovery_v02 = p["b_recovery_v02"]
+    if recovery_v02.get("schema") != "ttf_relational_environment_request_error_recovery_v0.2":
+        raise RuntimeError("Study B final recovery schema drift")
+    if recovery_v02.get("status") != "FROZEN_FINAL_TRANSPORT_ROUND_BEFORE_RELATION_RESULT":
+        raise RuntimeError("Study B final recovery is not frozen pre-result")
+    if recovery_v02.get("retry_rule") != str(paths["b_retry_rule_v02"]):
+        raise RuntimeError("Study B final recovery retry-rule pointer drift")
+    if int(recovery_v02["retry_round"]) != 4:
+        raise RuntimeError("Study B final recovery round drift")
+    if int(recovery_v02["source_fallback_run_id"]) != 35809546248:
+        raise RuntimeError("Study B round-3 fallback run binding drift")
+    if int(recovery_v02["source_audit_run_id"]) != 35824707898:
+        raise RuntimeError("Study B round-3 audit run binding drift")
+    if int(recovery_v02["source_audit_artifact_id"]) != 10734318651:
+        raise RuntimeError("Study B round-3 audit artifact binding drift")
+    if recovery_v02["source_audit_artifact_digest"] != "sha256:3a91136cbebd1518acce1a56112c300730397db8a82ecb74a07bd2d441abd800":
+        raise RuntimeError("Study B round-3 audit artifact digest drift")
+    if int(recovery_v02["source_original_request_error_count"]) != 704:
+        raise RuntimeError("Study B round-3 source universe drift")
+    if int(recovery_v02["source_unresolved_request_error_count"]) != 556:
+        raise RuntimeError("Study B final recovery unresolved-species count drift")
+    if int(recovery_v02["batch_size"]) != 3 or int(recovery_v02["batch_count"]) != 186:
+        raise RuntimeError("Study B final recovery batching drift")
+    if int(recovery_v02["max_parallel"]) != 4:
+        raise RuntimeError("Study B final recovery max-parallel drift")
+    if recovery_v02["transport_implementation"]["scientific_query_change"] is not False:
+        raise RuntimeError("Study B final recovery changed scientific query")
+    workflow_path = recovery_v02["transport_implementation"]["workflow"]
+    if workflow_path != ".github/workflows/relational-environment-request-error-recovery-v02.yml":
+        raise RuntimeError("Study B final recovery workflow pointer drift")
+    if git_blob_sha1(workflow_path) != recovery_v02["transport_implementation"]["workflow_git_blob"]:
+        raise RuntimeError("Study B final recovery workflow blob drift")
+    for path, expected in recovery_v02["corrected_transport_core_git_blobs"].items():
+        if git_blob_sha1(path) != expected:
+            raise RuntimeError(f"Study B corrected transport-core blob drift: {path}")
+    final_audit = recovery_v02["final_round_audit"]
+    if int(final_audit["expected_species"]) != 556:
+        raise RuntimeError("Study B final-round audit universe drift")
+    if int(final_audit["required_request_error_count_for_relation_binding"]) != 0:
+        raise RuntimeError("Study B final-round zero-error binding gate drift")
+    if final_audit.get("no_fifth_round_authorized") is not True:
+        raise RuntimeError("Study B final-round fifth-retry firewall drift")
 
     unbound = p["b_unbound_long_repair"]
     if unbound.get("schema") != "ttf_relational_environment_cutover_long_repair_v0.1":
@@ -423,6 +488,8 @@ def main() -> int:
             "dyads": receipt["empirical_design"]["directed_source_target_dyads"],
         },
         "study_B_full_downstream_contract_frozen": True,
+        "study_B_final_transport_retry_round": 4,
+        "study_B_no_fifth_transport_retry": True,
         "study_C_full_downstream_contract_frozen": True,
         "all_future_genetic_response_firewalls_closed": True,
         "inputs_sha256": {name: sha256_path(path) for name, path in paths.items()},
