@@ -1,0 +1,102 @@
+name: relational-environment-request-error-fallback-audit
+
+on:
+  workflow_run:
+    workflows:
+      - "relational-environment-request-error-fallback"
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit:
+    if: github.event.workflow_run.head_branch == 'relational-ttf-v01'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Require successful frozen fallback run
+        run: |
+          test "${{ github.event.workflow_run.conclusion }}" = "success"
+
+      - name: Download exact fallback retry artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: relational-env-request-retry-*
+          path: input/retries
+          merge-multiple: true
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+
+      - name: Audit exact 704 retry species
+        run: |
+          mkdir -p results
+          python - <<'PY'
+          import collections,hashlib,json
+          from pathlib import Path
+
+          trigger=json.loads(Path("benchmarks/frozen/relational_environment_request_error_fallback_v0.1.json").read_text())
+          receipt=json.loads(Path("benchmarks/frozen/relational_environment_transport_preretry_receipt_v0.7.json").read_text())
+          assert trigger["request_error_count"]==704
+          assert trigger["request_error_species_sorted_sha256"]==receipt["request_error_species_sorted_sha256"]
+
+          ledgers=sorted(Path("input/retries").glob("ledger-retry-*.json"))
+          assert len(ledgers)==235, len(ledgers)
+          species=[]
+          statuses=collections.Counter()
+          unresolved=[]
+          attempt_lengths=collections.Counter()
+          for path in ledgers:
+              p=json.loads(path.read_text())
+              assert p["schema"]=="ttf_relational_environment_distributed_retry_batch_v0.1"
+              assert all(v is False for v in p["response_firewall"].values())
+              for row in p["species"]:
+                  name=str(row["species"])
+                  species.append(name)
+                  statuses[str(row["status"])]+=1
+                  if row["status"]=="REQUEST_ERROR":
+                      unresolved.append(name)
+              for name,hist in p["attempt_history"].items():
+                  attempt_lengths[len(hist)]+=1
+
+          assert len(species)==704, len(species)
+          assert len(set(species))==704
+          digest=hashlib.sha256(("\n".join(sorted(species))+"\n").encode()).hexdigest()
+          assert digest==trigger["request_error_species_sorted_sha256"], (digest,trigger["request_error_species_sorted_sha256"])
+          payload={
+              "schema":"ttf_relational_environment_request_error_fallback_audit_v0.1",
+              "status":(
+                  "PASS_DISTRIBUTED_RETRY_ZERO_REQUEST_ERROR"
+                  if not unresolved else
+                  "INCOMPLETE_DISTRIBUTED_RETRY"
+              ),
+              "fallback_workflow_run_id":int("${{ github.event.workflow_run.id }}"),
+              "species":704,
+              "species_sorted_sha256":digest,
+              "status_counts":dict(sorted(statuses.items())),
+              "unresolved_request_error_species":sorted(unresolved),
+              "attempt_length_counts":{str(k):v for k,v in sorted(attempt_lengths.items())},
+              "relation_result_seen":False,
+              "genetic_response_used":False,
+              "response_firewall":{
+                  "Study_B_sequence_identity_opened":False,
+                  "Study_B_pairwise_genetic_distances_opened":False,
+                  "Study_B_T_st_computed":False,
+                  "Study_B_beta_R_computed":False,
+              },
+          }
+          Path("results/relational_environment_request_error_fallback_audit_v0.1.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps(payload,sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-environment-request-error-fallback-audit-v0.1
+          path: results/relational_environment_request_error_fallback_audit_v0.1.json
+          retention-days: 30
+          if-no-files-found: error
