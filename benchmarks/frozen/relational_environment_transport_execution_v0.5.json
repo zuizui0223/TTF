@@ -115,5 +115,5 @@
   },
   "superseded_by": "benchmarks/frozen/relational_environment_transport_execution_v0.6.json",
   "superseded_before_relation_result": true,
-  "supersession_reason": "Two frozen cutover batches (167,170; eight species) timed out at the 120-minute job limit. Exact singleton repair was frozen before any relation result."
+  "supersession_reason": "Two frozen cutover batches (167,170; 8 species total) hit the 120-minute transport timeout. They are replaced only by a pre-response singleton repair run."
 }
