@@ -387,6 +387,25 @@ def main() -> int:
         raise RuntimeError("Study B final producer round-3 resolution firewall drift")
     if final_merge["no_fifth_round_authorized"] is not True:
         raise RuntimeError("Study B final producer merge permits a fifth retry")
+    downstream = final_producer_contract["downstream_preflight"]
+    if set(downstream["relation_binding_accepts_occurrence_schemas"]) != {
+        "ttf_relational_environment_occurrence_acquisition_v0.2",
+        "ttf_relational_environment_occurrence_acquisition_v0.3",
+    }:
+        raise RuntimeError("Study B relation-binding occurrence schema compatibility drift")
+    if downstream["final_occurrence_filename"] != "occurrence_ledger_v0.3.json":
+        raise RuntimeError("Study B final occurrence filename drift")
+    if downstream["final_transport_receipt_filename"] != "final_transport_merge_receipt_v0.2.json":
+        raise RuntimeError("Study B final transport receipt filename drift")
+    if downstream["final_transport_receipt_schema"] != "ttf_relational_environment_final_transport_merge_v0.2":
+        raise RuntimeError("Study B final transport receipt schema drift")
+    if downstream["qualification_final_receipt_status"] != "PASS_ZERO_REQUEST_ERROR_FINAL_MERGE":
+        raise RuntimeError("Study B final qualification transport status drift")
+    if int(downstream["final_retry_rounds_completed"]) != 4:
+        raise RuntimeError("Study B final downstream retry-round drift")
+    if downstream["no_fifth_round_authorized"] is not True:
+        raise RuntimeError("Study B downstream preflight permits fifth retry")
+
     relation_contract = final_producer_contract["relation_contract"]
     if relation_contract["relation_rule"] != str(paths["b_relation"]):
         raise RuntimeError("Study B final producer relation-rule pointer drift")
