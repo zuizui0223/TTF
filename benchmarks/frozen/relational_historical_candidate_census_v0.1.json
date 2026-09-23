@@ -1,0 +1,41 @@
+{
+  "schema": "ttf_relational_historical_candidate_census_v0.1",
+  "status": "FRESH_HISTORICAL_GEOMETRY_ELIGIBLE_RESPONSE_BLIND",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "ranking_rule": "SHA256('relational-history-candidate-v0.1|<source_sha256>|<species>'), species tie-break; exclusions applied before ranking",
+  "verified_prior_exclusions": {
+    "S1_species": 339,
+    "S2_species": 500,
+    "B_species": 1000,
+    "union_species": 1769,
+    "S1_digest": "56d3e785134656b0393d448df12f9d3745bc5944812395e2c7db7c0e50688f4b",
+    "S2_digest": "035059fe6fae6d8c39ab191bcd911d184e4f1b27d6ca78dbe69de06d07c46c42",
+    "B_digest": "99a10c42b46fdf356920080388729ff4d6444ab98711b9988b893386c0fd3a74",
+    "S1_compact_manifest_sha256": "212694d9a92c1472774b97781d24b42a0433e343d251db49cc6f144cad927ae8",
+    "S2_compact_manifest_sha256": "b9bb886aabef59dac1ed9ce3dcfafaa6ef4f59c15fa4856803fe0d69fbd67802"
+  },
+  "unique_excluded_species": 1769,
+  "metadata_ranked_candidates_after_exclusions": 24829,
+  "ranked_candidates_checked": 1882,
+  "geometry_status_counts": {
+    "below_min_localities": 881,
+    "eligible": 1000,
+    "no_header_occurrence_matches": 1
+  },
+  "selected_species_count": 1000,
+  "selected_species_digest_sha256": "adfdca215f7c428aee17cec43fc52ec00792a08081badf78d29bc2e792e3235c",
+  "selected_overlap_with_exclusions": 0,
+  "candidate_csv_sha256": "ad6375b4c2ec3f00193da90b3c68752f126d07cf18071b4f5dfddd422bdff7a1",
+  "local_reproduction": {
+    "executed_from_exact_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "sequence_characters_decoded": false,
+    "method": "exact frozen candidate script logic reproduced locally after GitHub Actions archive-cache miss",
+    "workflow_failure_run_id": 35878473595
+  },
+  "response_firewall": {
+    "sequence_characters_used": false,
+    "pairwise_genetic_distances_opened": false,
+    "T_st_computed": false,
+    "beta_hist_computed": false
+  }
+}
