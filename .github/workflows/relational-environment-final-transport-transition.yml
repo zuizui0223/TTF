@@ -1,0 +1,102 @@
+name: relational-environment-final-transport-transition
+
+on:
+  workflow_run:
+    workflows:
+      - "relational-environment-final-recovery-audit-v03"
+    types:
+      - completed
+    branches:
+      - relational-ttf-v01
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  transition:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: relational-ttf-v01
+
+      - name: Download exact final-round audit
+        uses: actions/download-artifact@v4
+        with:
+          name: relational-environment-request-error-recovery-audit-v0.3
+          path: input/audit
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+
+      - name: Resolve frozen transport transition
+        id: transition
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          rule=json.loads(Path("docs/supporting/relational_environment_final_transport_transition_rule_v0.1.json").read_text())
+          program=json.loads(Path("docs/supporting/relational_program_transition_rule_v0.1.json").read_text())
+          audit=json.loads(Path("input/audit/relational_environment_request_error_recovery_audit_v0.3.json").read_text())
+
+          assert rule["schema"]=="ttf_relational_environment_final_transport_transition_rule_v0.1"
+          assert rule["status"]=="FROZEN_BEFORE_FINAL_ROUND_COMPLETION_AND_BEFORE_STUDY_B_RELATION_RESULT"
+          assert program["schema"]=="ttf_relational_program_transition_rule_v0.1"
+          assert audit["schema"]==rule["audit_schema"]
+          assert int(audit["recovery_workflow_run_id"])==int(rule["recovery_run_id"])==35827478403
+          assert int(audit["retry_round"])==4
+          assert audit["no_fifth_round_authorized"] is True
+          assert audit["network_retrieval_performed"] is False
+          assert audit["relation_result_seen"] is False
+          assert audit["genetic_response_used"] is False
+          assert not any(bool(v) for v in audit["response_firewall"].values())
+          assert not any(bool(v) for v in rule["response_firewall"].values())
+
+          status=str(audit["status"])
+          if status=="PASS_FINAL_ROUND_ZERO_REQUEST_ERROR":
+              assert int(audit["request_error_count_after_final_round"])==0
+              assert audit["unresolved_request_error_species"]==[]
+              with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+                  f.write("write_transition=false\n")
+              print({"status":status,"action":"producer_path"})
+              raise SystemExit(0)
+
+          assert status=="INCOMPLETE_TECHNICAL_EXECUTION_AFTER_FINAL_ROUND",status
+          assert int(audit["request_error_count_after_final_round"])>0
+          assert len(audit["unresolved_request_error_species"])==int(audit["request_error_count_after_final_round"])
+          contract=program["allowed_B_states"]["NOT_EVALUABLE_B"]
+          assert contract["C_open_authorized"] is True
+          assert contract["C_entry_state"]=="PROCEED_TO_C_AFTER_B_NOT_EVALUABLE"
+
+          payload={
+              "schema":program["receipt_schema"],
+              "B_state":"NOT_EVALUABLE_B",
+              "C_open_authorized":True,
+              "C_entry_state":"PROCEED_TO_C_AFTER_B_NOT_EVALUABLE",
+              "source_stage":"final_transport_round4_request_error",
+              "Study_B_empirical_response_opened":False,
+              "final_transport_audit_run_id":int("${{ github.event.workflow_run.id }}"),
+              "recovery_run_id":35827478403,
+              "request_error_count_after_final_round":int(audit["request_error_count_after_final_round"]),
+              "no_fifth_round_authorized":True
+          }
+          Path("benchmarks/frozen/relational_environment_program_transition_v0.3.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write("write_transition=true\n")
+          print(json.dumps(payload,sort_keys=True))
+          PY
+
+      - name: Commit frozen B-to-C NOT_EVALUABLE transition
+        if: steps.transition.outputs.write_transition == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/relational_environment_program_transition_v0.3.json
+          git commit -m "Freeze Study B final-transport NOT_EVALUABLE transition"
+          git fetch origin relational-ttf-v01
+          git rebase origin/relational-ttf-v01
+          git push origin HEAD:relational-ttf-v01
