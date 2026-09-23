@@ -215,26 +215,70 @@ jobs:
           )})
           PY
 
-      - name: Restore exact frozen phylogatR archive cache
+      - name: Restore compact response-blind Study-B geometry cache
         if: steps.relation.outputs.relation_pass == 'true'
+        id: compact_geometry
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/relational_environment_geometry_compact_v0.2.npz
+          key: relational-env-compact-geometry-d0776b4b5646e999f0c09ad937e4050fafe6fec018f17f0d37cd2c5b5f12a79b
+
+      - name: Recover compact geometry from prior artifact if cache misses
+        if: steps.relation.outputs.relation_pass == 'true' && steps.compact_geometry.outputs.cache-hit != 'true'
+        id: compact_artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          ARTIFACT_ID="$(gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts?name=relational-environment-geometry-compact-v0.2&per_page=100" --jq '[.artifacts[] | select(.expired == false)] | sort_by(.created_at) | last | .id // empty')"
+          echo "artifact_id=$ARTIFACT_ID" >> "$GITHUB_OUTPUT"
+          if [ -n "$ARTIFACT_ID" ]; then
+            curl --fail --location \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" \
+              -o /tmp/compact-geometry-artifact.zip
+            rm -rf /tmp/compact-geometry-artifact
+            mkdir -p /tmp/compact-geometry-artifact
+            unzip -q /tmp/compact-geometry-artifact.zip -d /tmp/compact-geometry-artifact
+            FOUND="$(find /tmp/compact-geometry-artifact -type f -name relational_environment_geometry_compact_v0.2.npz -print -quit)"
+            test -n "$FOUND"
+            cp "$FOUND" /tmp/relational_environment_geometry_compact_v0.2.npz
+          fi
+
+      - name: Resolve response-blind geometry source
+        if: steps.relation.outputs.relation_pass == 'true'
+        id: geometry_source
+        run: |
+          set -euo pipefail
+          if [ -f /tmp/relational_environment_geometry_compact_v0.2.npz ]; then
+            test "$(stat -c%s /tmp/relational_environment_geometry_compact_v0.2.npz)" = "3610846"
+            echo "d0776b4b5646e999f0c09ad937e4050fafe6fec018f17f0d37cd2c5b5f12a79b  /tmp/relational_environment_geometry_compact_v0.2.npz" | sha256sum -c -
+            echo "mode=compact" >> "$GITHUB_OUTPUT"
+          else
+            echo "mode=archive" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Restore exact frozen phylogatR archive cache
+        if: steps.relation.outputs.relation_pass == 'true' && steps.geometry_source.outputs.mode == 'archive'
         id: archive
         uses: actions/cache/restore@v4
         with:
           path: /tmp/phylogatr.zip
           key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5
 
-      - name: Require exact frozen archive
-        if: steps.relation.outputs.relation_pass == 'true'
+      - name: Require exact frozen archive only when compact geometry is unavailable
+        if: steps.relation.outputs.relation_pass == 'true' && steps.geometry_source.outputs.mode == 'archive'
         run: |
           test -f /tmp/phylogatr.zip || {
-            echo "Exact frozen archive cache is absent. Seed it with seed-phylogatr-archive-cache.yml before running this qualification workflow.";
+            echo "Neither exact compact response-blind geometry nor exact frozen archive is available.";
             exit 2;
           }
           test "$(stat -c%s /tmp/phylogatr.zip)" = "274988692"
           echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5  /tmp/phylogatr.zip" | sha256sum -c -
 
       - name: Extract archive and locate source root
-        if: steps.relation.outputs.relation_pass == 'true'
+        if: steps.relation.outputs.relation_pass == 'true' && steps.geometry_source.outputs.mode == 'archive'
         id: source
         run: |
           rm -rf /tmp/phylogatr-root
@@ -246,8 +290,20 @@ jobs:
           test -f "$ROOT/cite.txt"
           echo "root=$ROOT" >> "$GITHUB_OUTPUT"
 
-      - name: Reconstruct response-blind fresh-1000 geometry
-        if: steps.relation.outputs.relation_pass == 'true'
+      - name: Expand exact compact response-blind fresh-1000 geometry
+        if: steps.relation.outputs.relation_pass == 'true' && steps.geometry_source.outputs.mode == 'compact'
+        run: |
+          mkdir -p results/qualification
+          python scripts/expand_relational_environment_compact_geometry.py \
+            --compact-npz /tmp/relational_environment_geometry_compact_v0.2.npz \
+            --compact-summary benchmarks/frozen/relational_environment_geometry_compact_v0.2.json \
+            --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv \
+            --contract docs/supporting/relational_environment_geometry_reconstruction_contract_v0.1.json \
+            --output-edges results/qualification/relational_environment_edges_v0.2.csv \
+            --output-receipt results/qualification/relational_environment_geometry_reconstruction_v0.2.json
+
+      - name: Reconstruct response-blind fresh-1000 geometry from exact archive
+        if: steps.relation.outputs.relation_pass == 'true' && steps.geometry_source.outputs.mode == 'archive'
         run: |
           mkdir -p results/qualification
           python scripts/reconstruct_relational_environment_geometry.py \
@@ -269,17 +325,23 @@ jobs:
           legacy=json.loads(Path("benchmarks/frozen/relational_environment_genetic_geometry_receipt_v0.1.json").read_text())
           contract=json.loads(Path("docs/supporting/relational_environment_geometry_reconstruction_contract_v0.1.json").read_text())
           got=json.loads(Path("results/qualification/relational_environment_geometry_reconstruction_v0.2.json").read_text())
+          assert got["schema"]=="ttf_relational_environment_genetic_geometry_reconstruction_v0.2"
+          assert got["status"]=="PASS_RESPONSE_BLIND_FRESH_1000_GEOMETRY_RECONSTRUCTION"
           for key in ("source_archive_sha256","candidate_csv_sha256","species","locality_rows","edge_rows"):
               assert got[key] == legacy[key], (key,got[key],legacy[key])
           assert got["verification_failures"] == 0
           assert contract["legacy_byte_hash_policy"]["exact_byte_match_required"] is False
           assert all(v is False for v in got["response_firewall"].values()), got["response_firewall"]
+          if got.get("representation")=="compact_edge_midpoints":
+              assert got["compact_npz_sha256"]=="d0776b4b5646e999f0c09ad937e4050fafe6fec018f17f0d37cd2c5b5f12a79b"
+              assert got["locality_csv_sha256"] is None
           print(json.dumps({
               "status":got["status"],
+              "representation":got.get("representation","archive_reconstruction"),
               "species":got["species"],
               "locality_rows":got["locality_rows"],
               "edge_rows":got["edge_rows"],
-              "new_locality_sha256":got["locality_csv_sha256"],
+              "new_locality_sha256":got.get("locality_csv_sha256"),
               "new_edge_sha256":got["edge_csv_sha256"],
           },sort_keys=True))
           PY
