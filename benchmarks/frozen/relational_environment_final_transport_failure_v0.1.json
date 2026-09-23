@@ -1,0 +1,71 @@
+{
+  "schema": "ttf_relational_environment_final_transport_failure_v0.1",
+  "status": "IRREVERSIBLE_TECHNICAL_NOT_EVALUABLE_B_AFTER_FROZEN_FINAL_ROUND_TIMEOUT",
+  "frozen_on": "2026-09-23",
+  "recovery_run_id": 35827478403,
+  "retry_round": 4,
+  "source_contract": "benchmarks/frozen/relational_environment_request_error_recovery_v0.2.json",
+  "retry_rule": "docs/supporting/relational_environment_transport_retry_rule_v0.2.json",
+  "observed_execution_failure": {
+    "failed_exact_batches": [
+      {
+        "batch_index": 4,
+        "job_id": 107072328676,
+        "job_name": "recover (4)",
+        "conclusion": "cancelled",
+        "started_at": "2026-09-23T07:46:43Z",
+        "completed_at": "2026-09-23T11:47:13Z",
+        "active_step": "Recover exact frozen REQUEST_ERROR batch with low-rate transport",
+        "timeout_minutes": 240,
+        "artifact_name": "relational-env-request-recovery-v02-4",
+        "artifact_present": false
+      },
+      {
+        "batch_index": 8,
+        "job_id": 107072328742,
+        "job_name": "recover (8)",
+        "conclusion": "cancelled",
+        "started_at": "2026-09-23T10:54:56Z",
+        "completed_at": "2026-09-23T14:55:15Z",
+        "active_step": "Recover exact frozen REQUEST_ERROR batch with low-rate transport",
+        "timeout_minutes": 240,
+        "artifact_name": "relational-env-request-recovery-v02-8",
+        "artifact_present": false
+      }
+    ],
+    "completed_successful_batches_observed_at_freeze": 11,
+    "exact_recovery_batches_required": 186,
+    "exact_species_required": 556
+  },
+  "irreversibility_reasoning": [
+    "The frozen round-4 contract requires exact execution for all 186 preassigned batches covering exactly 556 species.",
+    "Batches 4 and 8 terminated by the workflow's frozen 240-minute job timeout before artifact upload.",
+    "The frozen retry rule authorizes no fifth round and the audit contract forbids altering or rerunning any round-4 species acquisition.",
+    "Therefore the exact final technical round can no longer satisfy the zero-REQUEST_ERROR relation-binding gate without violating a pre-existing frozen contract."
+  ],
+  "decision": {
+    "B_state": "NOT_EVALUABLE_B",
+    "biological_null": false,
+    "ecological_inadmissibility": false,
+    "failure_class": "TECHNICAL_TRANSPORT_EXECUTION",
+    "C_open_authorized": true,
+    "C_entry_state": "PROCEED_TO_C_AFTER_B_NOT_EVALUABLE",
+    "Study_B_empirical_response_opened": false
+  },
+  "forbidden": [
+    "rerun cancelled round-4 species acquisition",
+    "authorize a fifth retry round",
+    "convert cancelled transport execution into ecological inadmissibility",
+    "interpret this state as evidence against environmental-niche-conditioned transfer",
+    "construct or inspect Study-B R_env or genetic response after this NOT_EVALUABLE transition"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false,
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
