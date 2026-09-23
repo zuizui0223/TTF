@@ -26,6 +26,8 @@ on:
       - ".github/workflows/relational-environment-bind-authoritative.yml"
       - ".github/workflows/relational-environment-qualification-v03.yml"
       - "scripts/freeze_relational_environment_artifact_binding.py"
+      - "scripts/attach_relational_environment_opportunity.py"
+      - "tests/test_relational_environment_opportunity.py"
       - "tests/test_relational_environment_artifact_binding.py"
       - "scripts/freeze_relational_environment_final_producer_trigger.py"
       - "tests/test_relational_environment_final_producer_trigger.py"
