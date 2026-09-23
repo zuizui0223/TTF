@@ -1,0 +1,74 @@
+name: relational-environment-finalize-cutover-repair
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_environment_finalize_cutover_repair_trigger_v0.1.json"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve frozen repair components
+        id: frozen
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_environment_finalize_cutover_repair_trigger_v0.1.json").read_text())
+          assert p["schema"]=="ttf_relational_environment_finalize_cutover_repair_trigger_v0.1"
+          assert p["status"]=="AUTHORIZE_FINAL_EIGHT_SPECIES_REPAIR_MERGE"
+          assert p["relation_result_seen"] is False
+          assert p["genetic_response_used"] is False
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"repair_run_id={int(p['repair_run_id'])}\n")
+              f.write(f"recovery_run_id={int(p['rate_limit_recovery_run_id'])}\n")
+          PY
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+
+      - name: Download original eight-species singleton repair
+        uses: actions/download-artifact@v4
+        with:
+          pattern: relational-env-cutover-repair-*
+          path: input/repair
+          merge-multiple: true
+          run-id: ${{ steps.frozen.outputs.repair_run_id }}
+          github-token: ${{ github.token }}
+
+      - name: Download four-species HTTP recovery
+        uses: actions/download-artifact@v4
+        with:
+          name: relational-environment-rate-limit-recovery-v0.1
+          path: input/recovery
+          run-id: ${{ steps.frozen.outputs.recovery_run_id }}
+          github-token: ${{ github.token }}
+
+      - name: Merge exact final eight-species repair
+        run: |
+          mkdir -p results/final-repair
+          python scripts/merge_relational_environment_cutover_repair.py \
+            --trigger benchmarks/frozen/relational_environment_cutover_timeout_repair_v0.1.json \
+            --repair-dir input/repair \
+            --recovery-csv input/recovery/occurrences-rate-limit-recovery.csv \
+            --recovery-ledger input/recovery/rate-limit-recovery-ledger.json \
+            --output-csv results/final-repair/occurrences-cutover-repair-final.csv \
+            --output-ledger results/final-repair/ledger-cutover-repair-final.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-env-cutover-repair-final-v0.1
+          path: results/final-repair/
+          retention-days: 30
+          if-no-files-found: error
