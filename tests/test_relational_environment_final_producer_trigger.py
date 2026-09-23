@@ -32,7 +32,7 @@ def fixtures():
         "status": "PASS_FINAL_ROUND_ZERO_REQUEST_ERROR",
         "retry_round": 4,
         "recovery_workflow_run_id": 35827478403,
-        "audit_workflow_run_id": 35828444286,
+        "audit_workflow_run_id": 35850000001,
         "species": 556,
         "batch_count": 186,
         "request_error_count_after_final_round": 0,
@@ -47,7 +47,8 @@ def fixtures():
         "schema": "ttf_relational_environment_final_producer_promotion_rule_v0.2",
         "status": "FROZEN_BEFORE_FINAL_ROUND_RESULT_AND_BEFORE_RELATION_RESULT",
         "final_recovery_run_id": 35827478403,
-        "final_recovery_audit_workflow_run_id": 35828444286,
+        "final_recovery_audit_authority": {"recovery_run_id": 35827478403},
+        "obsolete_audit_runs": [35828444286],
         "final_recovery_audit_artifact_name": "relational-environment-request-error-recovery-audit-v0.3",
         "canonical_relation_producer_run_id": 35795821824,
         "no_fifth_round_authorized": True,
@@ -57,7 +58,7 @@ def fixtures():
         "schema": "ttf_relational_environment_final_producer_contract_v0.2",
         "status": "FROZEN_BEFORE_FINAL_ROUND_RESULT_AND_BEFORE_RELATION_RESULT",
         "final_recovery_run_id": 35827478403,
-        "final_recovery_audit_workflow_run_id": 35828444286,
+        "final_recovery_audit_authority": {"recovery_run_id": 35827478403, "obsolete_audit_runs": [35828444286]},
         "final_recovery_audit_artifact_name": "relational-environment-request-error-recovery-audit-v0.3",
         "merge_contract": {"no_fifth_round_authorized": True},
         "response_firewall": firewall(),
@@ -90,7 +91,7 @@ def test_final_trigger_is_deterministic_and_binds_exact_runs():
     assert first == second
     assert first["status"] == "AUTHORIZE_FINAL_PRODUCER_AFTER_ZERO_ERROR_AUDIT"
     assert first["recovery_run_id"] == 35827478403
-    assert first["recovery_audit_run_id"] == 35828444286
+    assert first["recovery_audit_run_id"] == 35850000001
     assert first["recovery_audit_artifact_id"] == 123456
     assert first["recovery_audit_artifact_digest"] == "sha256:" + "a" * 64
     assert all(value is False for value in first["response_firewall"].values())
