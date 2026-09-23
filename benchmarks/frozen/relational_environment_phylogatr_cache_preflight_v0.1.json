@@ -1,0 +1,21 @@
+{
+  "schema": "ttf_relational_environment_phylogatr_cache_preflight_v0.1",
+  "status": "FROZEN_CACHE_EXISTENCE_PREFLIGHT_BEFORE_RELATION_RESULT",
+  "frozen_on": "2026-09-23",
+  "workflow": ".github/workflows/relational-environment-phylogatr-cache-preflight.yml",
+  "workflow_git_blob": "c1e6dfc30fe49b3c55c3730a41c73d75f3d44e74",
+  "cache_key": "phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "expected_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "expected_archive_size_bytes": 274988692,
+  "purpose": "Verify that the exact frozen phylogatR archive required by Study-B qualification is restorable before any Study-B relation result or genetic response is opened.",
+  "network_download_allowed": false,
+  "cache_seed_allowed": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
