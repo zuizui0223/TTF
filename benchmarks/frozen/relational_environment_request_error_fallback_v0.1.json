@@ -1,0 +1,41 @@
+{
+  "schema": "ttf_relational_environment_request_error_fallback_v0.1",
+  "status": "FROZEN_DISTRIBUTED_TECHNICAL_RETRY_BEFORE_RELATION_RESULT",
+  "frozen_on": "2026-09-23",
+  "transport_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.7.json",
+  "preretry_receipt": "benchmarks/frozen/relational_environment_transport_preretry_receipt_v0.7.json",
+  "audit_workflow_run_id": 35795571922,
+  "audit_artifact_id": 10723923379,
+  "audit_artifact_name": "relational-environment-transport-preretry-audit-v0.7",
+  "request_error_count": 704,
+  "request_error_species_sorted_sha256": "9902e6d65c951cb752c06a2ce18fc7ae96fede0ab3e40089624402c185cdd034",
+  "batch_size": 3,
+  "batch_count": 235,
+  "max_parallel": 20,
+  "maximum_retry_rounds": 3,
+  "job_timeout_minutes": 240,
+  "corrected_transport_core_git_blobs": {
+    "scripts/acquire_relational_environment_occurrences.py": "34eb5d5b459e105943cc5642cf355011d86c4f07",
+    "src/ttf/relational_environment.py": "d05e35866de57daa8eccacdbf7a3c0eaff055890",
+    "src/ttf/relational_external.py": "4a43bf5fedcc40c9a0fecf44dc3412e726b2ad4f"
+  },
+  "fallback_only": true,
+  "canonical_relation_producer_run_id": 35795821824,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "rule": "Retry only the 704 species frozen as REQUEST_ERROR in the response-blind pre-retry audit. Each species may be retried at most three times under the unchanged fetch_species contract. Non-REQUEST_ERROR species are never retried. This run does not build R_env or replace the canonical relation producer unless that producer later fails or times out and a new pre-result producer is explicitly frozen.",
+  "forbidden": [
+    "retry PASS_OCCURRENCE_GEOMETRY species",
+    "retry FAIL_OCCURRENCE_GEOMETRY species",
+    "retry REJECTED_GBIF_TAXON_MATCH species",
+    "change GBIF query, year window, filters, page selection, thinning, cap, or minimum n",
+    "build or inspect R_env in this fallback run",
+    "use genetic response to select retry results"
+  ],
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
