@@ -58,6 +58,12 @@ def main() -> int:
     with args.candidates.open(newline="", encoding="utf-8") as handle:
         candidates = list(csv.DictReader(handle))
     candidate_species = [str(row["species"]) for row in candidates]
+    candidate_n_localities = np.asarray(
+        [int(row["n_localities"]) for row in candidates], dtype=np.int64
+    )
+    candidate_n_edges = np.asarray(
+        [int(row["edges"]) for row in candidates], dtype=np.int64
+    )
     if len(candidate_species) != int(summary["species"]):
         raise RuntimeError("candidate species count drift")
     if len(set(candidate_species)) != len(candidate_species):
@@ -87,6 +93,10 @@ def main() -> int:
         raise RuntimeError("compact edge offsets shape drift")
     if not np.array_equal(np.diff(offsets), n_edges):
         raise RuntimeError("compact edge offsets disagree with n_edges")
+    if not np.array_equal(n_localities, candidate_n_localities):
+        raise RuntimeError("compact per-species locality counts drift from frozen candidate CSV")
+    if not np.array_equal(n_edges, candidate_n_edges):
+        raise RuntimeError("compact per-species edge counts drift from frozen candidate CSV")
     if midpoints.shape != (int(offsets[-1]), 3):
         raise RuntimeError("compact edge-midpoint shape drift")
     if midpoints.dtype != np.float64 or not np.isfinite(midpoints).all():
