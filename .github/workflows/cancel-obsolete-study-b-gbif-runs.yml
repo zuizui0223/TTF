@@ -26,13 +26,13 @@ jobs:
           p=json.loads(Path("benchmarks/frozen/relational_environment_obsolete_run_cancellation_v0.1.json").read_text())
           assert p["schema"]=="ttf_relational_environment_obsolete_run_cancellation_v0.1"
           assert p["status"]=="AUTHORIZE_EXACT_OBSOLETE_GBIF_RUN_CANCELLATION"
-          assert p["obsolete_run_ids"]==[35812255490,35823190096]
-          assert p["protected_current_run_ids"]==[35827478403,35828444286]
+          assert p["obsolete_run_ids"]==[35812255490,35823190096,35828444286]
+          assert p["protected_current_run_ids"]==[35827478403]
           assert p["relation_result_seen"] is False
           assert p["genetic_response_used"] is False
           assert not any(bool(v) for v in p["response_firewall"].values())
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
-              f.write("run_ids=35812255490,35823190096\n")
+              f.write("run_ids=35812255490,35823190096,35828444286\n")
           PY
 
       - name: Cancel exact obsolete runs only
@@ -55,6 +55,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          for id in 35827478403 35828444286; do
+          for id in 35827478403; do
             gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$id" --jq '{id:.id,status:.status,conclusion:.conclusion}'
           done
