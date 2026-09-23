@@ -1,0 +1,41 @@
+{
+  "schema": "ttf_relational_environment_cutover_long_repair_v0.1",
+  "status": "FROZEN_LONG_TIMEOUT_REPAIR_BEFORE_RELATION_RESULT",
+  "frozen_on": "2026-09-23",
+  "parent_transport_execution": "benchmarks/frozen/relational_environment_transport_execution_v0.5.json",
+  "parent_cutover_run_id": 35712027961,
+  "supersedes_repair_indices": [
+    0,
+    1
+  ],
+  "entries": [
+    {
+      "repair_index": 0,
+      "cutover_batch_index": 167,
+      "candidate_index": 801,
+      "species": "Pyrrhosoma nymphula"
+    },
+    {
+      "repair_index": 1,
+      "cutover_batch_index": 167,
+      "candidate_index": 804,
+      "species": "Lithobates clamitans"
+    }
+  ],
+  "timeout_minutes": 360,
+  "corrected_transport_core_git_blobs": {
+    "scripts/acquire_relational_environment_occurrences.py": "34eb5d5b459e105943cc5642cf355011d86c4f07",
+    "src/ttf/relational_environment.py": "d05e35866de57daa8eccacdbf7a3c0eaff055890",
+    "src/ttf/relational_external.py": "4a43bf5fedcc40c9a0fecf44dc3412e726b2ad4f"
+  },
+  "query_or_scientific_contract_change": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "rule": "For final assembly, repair indices 0 and 1 must come from this dedicated long-timeout execution only. Earlier repair attempts for these two species are ignored whether they later succeed or fail.",
+  "response_firewall": {
+    "Study_B_sequence_identity_opened": false,
+    "Study_B_pairwise_genetic_distances_opened": false,
+    "Study_B_T_st_computed": false,
+    "Study_B_beta_R_computed": false
+  }
+}
