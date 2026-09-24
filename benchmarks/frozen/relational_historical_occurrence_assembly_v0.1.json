@@ -41,5 +41,6 @@
     "Study_C_T_st_computed": false,
     "Study_C_beta_hist_computed": false
   },
-  "execution_trigger_note": "Technical trigger after assembly workflow commit; frozen source map unchanged."
+  "execution_trigger_note": "Technical trigger after assembly workflow commit; frozen source map unchanged.",
+  "technical_retrigger_note": "Retrigger after adding artifact-binding persistence only; frozen shard source map and occurrence acquisition results are unchanged."
 }
