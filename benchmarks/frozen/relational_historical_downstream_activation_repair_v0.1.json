@@ -1,0 +1,30 @@
+{
+  "schema": "ttf_relational_historical_downstream_activation_repair_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_ORCHESTRATION_REPAIR_BEFORE_STUDY_C_RELATION_RESULT",
+  "frozen_on": "2026-09-24",
+  "problem": "The frozen bounded-occurrence binder commits the artifact-binding receipt with GITHUB_TOKEN. GitHub suppresses new workflow runs caused by most events emitted by GITHUB_TOKEN, so a downstream branch-only on:push workflow is not a reliable activation edge.",
+  "repair": "Expose the already frozen downstream Study-C workflow through workflow_call and invoke it from the default-branch binder as a reusable workflow. The called workflow explicitly checks out relational-ttf-v01 so it reads the just-frozen binding receipt and current audit history.",
+  "downstream_workflow": ".github/workflows/relational-historical-from-bounded-binding-v02.yml",
+  "downstream_workflow_git_blob": "c265dd4dc84d6201eb8544711314d2039db81123",
+  "source_binder": ".github/workflows/relational-historical-bind-bounded-occurrence.yml",
+  "default_branch": "main",
+  "study_branch": "relational-ttf-v01",
+  "occurrence_run_id": 35941577015,
+  "occurrence_run_head_sha": "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab",
+  "binding_trigger": "benchmarks/frozen/relational_historical_occurrence_binding_trigger_v0.2.json",
+  "scientific_rule_change": false,
+  "predictor_change": false,
+  "alpha_change": false,
+  "candidate_change": false,
+  "occurrence_query_change": false,
+  "qualification_change": false,
+  "genetic_estimator_change": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}

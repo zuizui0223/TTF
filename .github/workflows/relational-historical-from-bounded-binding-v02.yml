@@ -1,6 +1,7 @@
 name: relational-historical-from-bounded-binding-v02
 
 on:
+  workflow_call:
   push:
     branches:
       - relational-ttf-v01
@@ -17,6 +18,8 @@ jobs:
     timeout-minutes: 480
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: relational-ttf-v01
 
       - id: binding
         name: Verify frozen bounded occurrence binding and C authorization

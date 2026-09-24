@@ -152,3 +152,27 @@ def test_historical_archive_hash_clerical_repair_is_explicit_and_downstream_is_c
         ROOT
         / "benchmarks/frozen/relational_historical_geometry_snapshot_v0.1/part00.txt"
     ).exists()
+
+
+def test_historical_downstream_is_reusable_and_checks_out_study_branch():
+    import json
+
+    downstream = (
+        ROOT / ".github/workflows/relational-historical-from-bounded-binding-v02.yml"
+    ).read_text()
+    receipt = json.loads(
+        (
+            ROOT
+            / "benchmarks/frozen/relational_historical_downstream_activation_repair_v0.1.json"
+        ).read_text()
+    )
+
+    assert "workflow_call:" in downstream
+    assert "ref: relational-ttf-v01" in downstream
+    assert receipt["status"] == "FROZEN_RESPONSE_BLIND_ORCHESTRATION_REPAIR_BEFORE_STUDY_C_RELATION_RESULT"
+    assert receipt["scientific_rule_change"] is False
+    assert receipt["predictor_change"] is False
+    assert receipt["alpha_change"] is False
+    assert receipt["relation_result_seen"] is False
+    assert receipt["genetic_response_used"] is False
+    assert all(v is False for v in receipt["response_firewall"].values())
