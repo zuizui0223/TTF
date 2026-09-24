@@ -27,7 +27,7 @@ def git_blob_sha_path(path: Path) -> str:
     data = path.read_bytes()
     h = hashlib.sha1()
     h.update(f"blob {len(data)}".encode())
-    h.update(b"\\x00")
+    h.update(bytes([0]))
     h.update(data)
     return h.hexdigest()
 
