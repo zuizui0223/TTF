@@ -36,5 +36,7 @@ def test_relational_v03_closure_verifier_passes(tmp_path: Path):
     assert payload["study_B_final_relation_producer_prefrozen"] is True
     assert payload["study_B_final_transport_audit_only_prefrozen"] is True
     assert payload["study_C_full_downstream_contract_frozen"] is True
+    assert payload["study_C_bounded_occurrence_transport_frozen"] is True
+    assert payload["study_C_obsolete_occurrence_paths_closed"] is True
     assert payload["all_future_genetic_response_firewalls_closed"] is True
     assert "PASS_FROZEN_V03_CONTRACT_CLOSURE" in completed.stdout
