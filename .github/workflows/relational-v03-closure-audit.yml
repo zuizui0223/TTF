@@ -77,6 +77,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: relational-v03-closure-audit
+  cancel-in-progress: true
+
 jobs:
   closure:
     runs-on: ubuntu-latest
