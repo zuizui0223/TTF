@@ -77,3 +77,18 @@ def test_historical_geometry_materialization_is_hash_bound():
     assert "snapshot_json_sha256" in reproducer
     assert "historical reconstructed locality CSV SHA drift" in reproducer
     assert "historical reconstructed edge CSV SHA drift" in reproducer
+
+
+def test_bounded_handoff_delays_archive_until_relation_passes():
+    text = (ROOT / ".github/workflows/relational-historical-from-bounded-binding-v02.yml").read_text()
+    hist_assets = text.index("Resolve and freeze exact CHELSA-TraCE21k assets")
+    current_assets = text.index("Download frozen current CHELSA V2.1 nuisance layers")
+    relation = text.index("Build frozen historical/current relation")
+    archive = text.index("Restore exact frozen phylogatR archive")
+    geometry = text.index("Reconstruct frozen Study-C response-blind geometry")
+    opportunity = text.index("Attach frozen historical opportunity geometry")
+
+    assert hist_assets < current_assets < relation < archive < geometry < opportunity
+    assert "relation_construction_before_geometry_materialization_allowed" not in text
+    # Execution ordering, rather than a changed scientific rule, ensures the
+    # response-blind relation can be evaluated before exact genetic geometry is needed.
