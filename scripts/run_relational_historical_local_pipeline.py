@@ -285,9 +285,12 @@ def main() -> int:
     if len(args.historical_asset) != 8 or len(args.historical_url) != 8:
         raise RuntimeError("Study-C local executor requires exact eight historical assets and URLs")
 
-    verify_local_execution_rule(args.local_execution_rule)
+    local_rule = verify_local_execution_rule(args.local_execution_rule)
     verify_implementation_binding(args.implementation_binding)
     verify_source_archive(args.source_archive)
+    expected_manifest_sha = str(local_rule.get("chelsa_staging_manifest_sha256", ""))
+    if sha256_path(args.chelsa_staging_manifest) != expected_manifest_sha:
+        raise RuntimeError("Study-C CHELSA staging manifest SHA-256 drift")
     binding = verify_occurrence_binding(
         args.occurrence_binding, args.occurrences, args.occurrence_ledger
     )

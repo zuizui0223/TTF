@@ -321,6 +321,9 @@ def test_local_study_c_executor_preserves_one_shot_order_and_exact_inputs():
     assert rule["editable_install_required"] is False
     assert rule["chelsa_staging_manifest_required"] is True
     assert "verify_chelsa_staging_manifest" in text
+    assert rule["chelsa_staging_manifest_sha256"] == "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450"
+    assert rule["chelsa_staging_manifest_source_commit"] == "4ea89a703bce2ed88c715cb7cfcca94d1e3b27e4"
+    assert "Study-C CHELSA staging manifest SHA-256 drift" in text
     assert rule["relation_result_seen"] is False
     assert rule["genetic_response_used"] is False
     assert all(v is False for v in rule["response_firewall"].values())
@@ -569,6 +572,7 @@ def test_local_final_occurrence_artifact_handoff_is_digest_bound_and_run_fixed()
     assert "scripts/run_relational_historical_local_pipeline.py" in wrapper
 
     assert rule["final_artifact_handoff_executor"] == "scripts/run_relational_historical_local_from_artifact.py"
+    assert rule["final_artifact_handoff_executor_git_blob"] == "487de64b3e4abe411344edeb992a6294252c191c"
     assert rule["final_artifact_alternative_run_allowed"] is False
     assert rule["final_artifact_repacking_allowed"] is False
     assert "artifact_digest" in rule["final_artifact_handoff_contract"]

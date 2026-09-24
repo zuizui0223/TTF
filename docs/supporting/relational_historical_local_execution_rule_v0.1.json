@@ -43,7 +43,7 @@
     "Study_C_T_st_computed": false,
     "Study_C_beta_hist_computed": false
   },
-  "executor_git_blob": "f21dcfef0e88e0ff45e116c93d7f90dd327853b1",
+  "executor_git_blob": "0f91a4ce29c9d0a1454673da2e2c979365eea86e",
   "binding_verification": "Compute canonical Git blob SHA-1 directly from each bound file byte sequence; no .git directory is required, so the same check works in a git archive snapshot.",
   "source_bundle_compatible": true,
   "git_blob_header_rule": "SHA1(b'blob ' + decimal_byte_length + bytes([0]) + file_bytes)",
@@ -54,5 +54,8 @@
   "final_artifact_handoff_executor": "scripts/run_relational_historical_local_from_artifact.py",
   "final_artifact_handoff_contract": "Require the exact frozen occurrence binding, verify the GitHub artifact ZIP SHA-256 against binding.artifact_digest, extract exactly one occurrences_v0.2.csv and occurrence_ledger_v0.2.json, verify both file hashes against the binding, then invoke the unchanged local Study-C executor.",
   "final_artifact_alternative_run_allowed": false,
-  "final_artifact_repacking_allowed": false
+  "final_artifact_repacking_allowed": false,
+  "final_artifact_handoff_executor_git_blob": "487de64b3e4abe411344edeb992a6294252c191c",
+  "chelsa_staging_manifest_sha256": "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450",
+  "chelsa_staging_manifest_source_commit": "4ea89a703bce2ed88c715cb7cfcca94d1e3b27e4"
 }
