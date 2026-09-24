@@ -1,0 +1,32 @@
+{
+  "schema": "ttf_relational_historical_geometry_materialization_rule_v0.1",
+  "status": "FROZEN_BEFORE_STUDY_C_RELATION_RESULT",
+  "frozen_on": "2026-09-24",
+  "reconstruction_receipt": "benchmarks/frozen/relational_historical_geometry_reproduction_v0.1.json",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "candidate_csv_sha256": "ad6375b4c2ec3f00193da90b3c68752f126d07cf18071b4f5dfddd422bdff7a1",
+  "exact_geometry": {
+    "species": 1000,
+    "locality_rows": 28735,
+    "edge_rows": 143642,
+    "locality_csv_sha256": "cbc09656be79b38ea10b38473c029a242023d1e179a2835a531fddf0deebd4a5",
+    "edge_csv_sha256": "f142467873eb5aec08230e436ff1fc92ac0cbfc8b9a1c1797e9ea1d31c5b98f2"
+  },
+  "allowed_opportunity_geometry_sources": [
+    "A repository or workflow artifact locality/edge reconstruction whose exact CSV SHA-256 matches this rule and whose receipt binds the exact source archive SHA-256.",
+    "A fresh response-blind header-only reconstruction from the exact source archive SHA-256 using the frozen reconstruction implementation."
+  ],
+  "if_exact_geometry_not_materialized": "HOLD_BEFORE_HISTORICAL_OPPORTUNITY_QUALIFICATION",
+  "relation_construction_before_geometry_materialization_allowed": true,
+  "opportunity_construction_without_exact_geometry_allowed": false,
+  "qualification_without_exact_geometry_allowed": false,
+  "genetic_opening_without_exact_geometry_allowed": false,
+  "alternate_geometry_source_allowed": false,
+  "response_firewall": {
+    "sequence_lines_decoded": false,
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
