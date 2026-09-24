@@ -1,0 +1,47 @@
+{
+  "schema": "ttf_relational_historical_genetic_geometry_reconstruction_v0.1",
+  "status": "PASS_RESPONSE_BLIND_HISTORICAL_CANDIDATE_GEOMETRY_RECONSTRUCTION",
+  "frozen_on": "2026-09-24",
+  "source_archive": {
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "size_bytes": 274988692,
+    "exact_hash_verified": true
+  },
+  "candidate_csv": "benchmarks/frozen/relational_historical_candidates_v0.1.csv",
+  "candidate_csv_sha256": "ad6375b4c2ec3f00193da90b3c68752f126d07cf18071b4f5dfddd422bdff7a1",
+  "reconstruction_script": "scripts/reconstruct_relational_historical_geometry.py",
+  "reconstruction_script_git_blob": "d43ff59e2bf7ec8b3f22423a8dd39ce95c67a47c",
+  "inherited_geometry_implementation": {
+    "script": "scripts/reconstruct_relational_environment_geometry.py",
+    "git_blob": "bc7521399fe36a1e16065dd1c0869fb9b1cd400c",
+    "genetic_geometry_git_blob": "f98b09cc59fa3f91a673192babe3c8848f974adc",
+    "phylogatr_confirmatory_git_blob": "0d0a73f786b440b34c560318e1c2ca0402a41725",
+    "core_git_blob": "90ec4b7e2b43f71676978bd2a1bda9dd620e4685",
+    "heterogeneous_inference_git_blob": "99f7881b4260a91f490f26f5ba7dec90499bcef4"
+  },
+  "neighbor_fraction": 0.15,
+  "species": 1000,
+  "locality_rows": 28735,
+  "edge_rows": 143642,
+  "locality_csv_sha256": "cbc09656be79b38ea10b38473c029a242023d1e179a2835a531fddf0deebd4a5",
+  "edge_csv_sha256": "f142467873eb5aec08230e436ff1fc92ac0cbfc8b9a1c1797e9ea1d31c5b98f2",
+  "verification_failures": 0,
+  "verification": "All 1000 species exactly reproduced frozen n_localities, n_headers, graph_k, edge count, and minimum endpoint-disjoint training-edge count.",
+  "allowed_information": "Aligned FASTA header lines plus occurrence coordinates and the frozen candidate taxonomy/graph rule only. Non-header sequence bytes were discarded without decoding or interpretation.",
+  "materialization_state": {
+    "exact_archive_available_in_persistent_source_store": true,
+    "derived_geometry_verified": true,
+    "derived_edge_csv_committed_to_repository": false,
+    "derived_locality_csv_committed_to_repository": false,
+    "downstream_action": "Relation construction may proceed response-blind. Opportunity/qualification must hold until an exact geometry file with the frozen SHA is materialized; no alternate geometry source is authorized."
+  },
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "sequence_lines_decoded": false,
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
