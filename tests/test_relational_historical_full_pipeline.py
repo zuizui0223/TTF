@@ -176,14 +176,14 @@ def test_historical_downstream_is_reusable_and_checks_out_study_branch():
     assert "needs: bind" in binder
     assert (
         "uses: zuizui0223/TTF/.github/workflows/relational-historical-from-bounded-binding-v02.yml@"
-        "d9e2c51793312b2d23504908ad0470549939ba7a"
+        "17923b1719d9a3ebce842c959e4547378ac28338"
     ) in binder
     assert receipt["status"] == "FROZEN_RESPONSE_BLIND_ORCHESTRATION_REPAIR_BEFORE_STUDY_C_RELATION_RESULT"
     assert receipt["scientific_rule_change"] is False
     assert receipt["predictor_change"] is False
     assert receipt["alpha_change"] is False
-    assert receipt["called_workflow_commit_sha"] == "d9e2c51793312b2d23504908ad0470549939ba7a"
-    assert receipt["default_branch_binder_commit_sha"] == "01dbcc466c46a7655ee8c8fda6735783f9116f34"
+    assert receipt["called_workflow_commit_sha"] == "17923b1719d9a3ebce842c959e4547378ac28338"
+    assert receipt["default_branch_binder_commit_sha"] == "46c2c9fc9a7f2933dadf629fca30eb559a57d43e"
     assert receipt["bot_push_is_not_activation_dependency"] is True
     assert receipt["relation_result_seen"] is False
     assert receipt["genetic_response_used"] is False

@@ -163,4 +163,4 @@ jobs:
     name: Execute frozen Study C after binding
     needs: bind
     if: ${{ needs.bind.result == 'success' }}
-    uses: zuizui0223/TTF/.github/workflows/relational-historical-from-bounded-binding-v02.yml@d9e2c51793312b2d23504908ad0470549939ba7a
+    uses: zuizui0223/TTF/.github/workflows/relational-historical-from-bounded-binding-v02.yml@17923b1719d9a3ebce842c959e4547378ac28338
