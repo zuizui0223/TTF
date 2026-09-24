@@ -1,0 +1,46 @@
+{
+  "schema": "ttf_relational_historical_geometry_local_reconstruction_v0.1",
+  "status": "PASS_RESPONSE_BLIND_HISTORICAL_CANDIDATE_GEOMETRY_REPRODUCTION",
+  "executed_on": "2026-09-24",
+  "source_archive": {
+    "name": "phylogatr_results_exact_20260918.zip",
+    "bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5"
+  },
+  "candidate_csv": {
+    "name": "relational_historical_candidates_v0.1.csv",
+    "bytes": 174276,
+    "sha256": "ad6375b4c2ec3f00193da90b3c68752f126d07cf18071b4f5dfddd422bdff7a1",
+    "species": 1000
+  },
+  "geometry": {
+    "neighbor_fraction": 0.15,
+    "species": 1000,
+    "locality_rows": 28735,
+    "edge_rows": 143642,
+    "per_species_frozen_invariant_failures": 0,
+    "localities_csv_sha256": "cbc09656be79b38ea10b38473c029a242023d1e179a2835a531fddf0deebd4a5",
+    "edges_csv_sha256": "f142467873eb5aec08230e436ff1fc92ac0cbfc8b9a1c1797e9ea1d31c5b98f2",
+    "zip_sha256": "bc71aebc90390f377df6b8857fcd6d05fed2b0f1b3d5a67902badb9dc5654b66",
+    "zip_bytes": 5664239
+  },
+  "verification": {
+    "per_species_fields": [
+      "n_localities",
+      "graph_k",
+      "edges",
+      "min_endpoint_disjoint_training_edges"
+    ],
+    "all_species_exact": true,
+    "sequence_lines_decoded": false,
+    "sequence_identity_opened": false,
+    "pairwise_genetic_distances_opened": false
+  },
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  },
+  "role": "response-blind backup geometry artifact; does not authorize empirical opening or alter the frozen Study-C estimator"
+}
