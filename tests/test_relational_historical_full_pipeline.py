@@ -292,7 +292,7 @@ def test_local_study_c_executor_preserves_one_shot_order_and_exact_inputs():
 
     verify_impl = text.index("verify_implementation_binding(args.implementation_binding)")
     verify_source = text.index("verify_source_archive(args.source_archive)")
-    verify_binding = text.index("verify_occurrence_binding(")
+    verify_binding = text.index("binding = verify_occurrence_binding(")
     relation = text.index('"scripts/build_relational_historical_relation.py"')
     extract = text.index("with zipfile.ZipFile(args.source_archive) as archive:")
     development_q = text.index('"scripts/run_relational_historical_climate_qualification.py"')
