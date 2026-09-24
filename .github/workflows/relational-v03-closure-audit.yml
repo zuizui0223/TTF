@@ -52,6 +52,7 @@ on:
       - "benchmarks/frozen/relational_historical_downstream_activation_repair_v0.1.json"
       - "benchmarks/frozen/relational_historical_implementation_binding_v0.1.json"
       - "benchmarks/frozen/relational_historical_source_transport_hold_rule_v0.1.json"
+      - "benchmarks/frozen/relational_historical_local_readiness_v0.1.json"
       - "docs/supporting/relational_historical_local_execution_rule_v0.1.json"
       - ".github/workflows/relational-c-chelsa-chunk-transport.yml"
       - "docs/supporting/relational_historical_chelsa_artifact_chunk_transport_v0.1.json"
