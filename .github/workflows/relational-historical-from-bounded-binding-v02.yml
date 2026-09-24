@@ -119,6 +119,30 @@ jobs:
             --output-edges results/history-candidate/relational_historical_edges_v0.1.csv \
             --output-receipt results/history-candidate/relational_historical_geometry_v0.1.json
 
+      - name: Verify exact frozen response-blind geometry reproduction
+        if: steps.occ.outputs.passed == 'true'
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          def sha(path):
+              return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+          r=json.loads(Path("benchmarks/frozen/relational_historical_geometry_local_reconstruction_v0.1.json").read_text())
+          assert r["schema"]=="ttf_relational_historical_geometry_local_reconstruction_v0.1"
+          assert r["status"]=="PASS_RESPONSE_BLIND_HISTORICAL_CANDIDATE_GEOMETRY_REPRODUCTION"
+          assert r["candidate_csv"]["sha256"]=="ad6375b4c2ec3f00193da90b3c68752f126d07cf18071b4f5dfddd422bdff7a1"
+          assert r["candidate_csv"]["species"]==1000
+          assert r["geometry"]["species"]==1000
+          assert r["geometry"]["per_species_frozen_invariant_failures"]==0
+          assert sha("results/history-candidate/relational_historical_localities_v0.1.csv")==r["geometry"]["localities_csv_sha256"]
+          assert sha("results/history-candidate/relational_historical_edges_v0.1.csv")==r["geometry"]["edges_csv_sha256"]
+          assert r["verification"]["all_species_exact"] is True
+          assert r["verification"]["sequence_identity_opened"] is False
+          assert r["verification"]["pairwise_genetic_distances_opened"] is False
+          assert not any(bool(v) for v in r["response_firewall"].values())
+          print({"geometry_status":r["status"],"edge_rows":r["geometry"]["edge_rows"]})
+          PY
+
       - id: hist_assets
         name: Resolve and freeze exact CHELSA-TraCE21k assets
         if: steps.occ.outputs.passed == 'true'
