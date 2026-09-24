@@ -24,3 +24,24 @@ def test_historical_workflow_is_gated_by_B_transition_and_closes_program():
     assert '"CLOSED_TWO_NULLS"' in text
     assert '"CLOSED_PARTIAL_NOT_EVALUABLE"' in text
     assert '"CLOSED_NO_EVALUABLE_TEST"' in text
+
+
+def test_bounded_occurrence_binding_and_full_c_handoff_are_frozen():
+    binder = (ROOT / ".github/workflows/relational-historical-bind-bounded-occurrence.yml").read_text()
+    downstream = (ROOT / ".github/workflows/relational-historical-from-bounded-binding-v02.yml").read_text()
+
+    assert "relational-historical-occurrence-bounded-v02" in binder
+    assert "relational-historical-occurrence-final-v0.2" in binder
+    assert "ttf_relational_historical_occurrence_acquisition_v0.2" in binder
+    assert "FROZEN_RESPONSE_BLIND_BOUNDED_OCCURRENCE_ARTIFACT" in binder
+
+    assert "relational_historical_occurrence_artifact_binding_v0.2.json" in downstream
+    assert "reconstruct_relational_historical_geometry.py" in downstream
+    assert "run_relational_historical_climate_qualification.py" in downstream
+    assert "--qualification-stage confirmatory_survivor" in downstream
+    assert "freeze_relational_historical_empirical_authorization.py" in downstream
+    assert "run_relational_historical_empirical.py" in downstream
+    assert '"DETECTED_C_AFTER_B_NOT_EVALUABLE"' in downstream
+    assert '"CLOSED_PARTIAL_NOT_EVALUABLE"' in downstream
+    assert '"CLOSED_NO_EVALUABLE_TEST"' in downstream
+    assert '"no_additional_predictor_authorized":True' in downstream
