@@ -185,7 +185,7 @@ def test_historical_downstream_is_reusable_and_checks_out_study_branch():
     assert receipt["predictor_change"] is False
     assert receipt["alpha_change"] is False
     assert receipt["called_workflow_commit_sha"] == "17923b1719d9a3ebce842c959e4547378ac28338"
-    assert receipt["default_branch_binder_commit_sha"] == "46c2c9fc9a7f2933dadf629fca30eb559a57d43e"
+    assert receipt["default_branch_binder_commit_sha"] == "0b5bded97d7e02db86f59fbd89d3114b19a651b2"
     assert receipt["bot_push_is_not_activation_dependency"] is True
     assert receipt["relation_result_seen"] is False
     assert receipt["genetic_response_used"] is False
@@ -716,3 +716,50 @@ def test_local_study_c_readiness_receipt_is_response_blind_and_single_run_bound(
     assert p["relation_result_seen"] is False
     assert p["genetic_response_used"] is False
     assert all(v is False for v in p["response_firewall"].values())
+
+
+def test_default_branch_binder_packages_exact_local_final_handoff():
+    import json
+
+    binder = (
+        ROOT / ".github/workflows/relational-historical-bind-bounded-occurrence.yml"
+    ).read_text()
+    rule = json.loads(
+        (
+            ROOT
+            / "docs/supporting/relational_historical_local_final_handoff_transport_v0.1.json"
+        ).read_text()
+    )
+    receipt = json.loads(
+        (
+            ROOT
+            / "benchmarks/frozen/relational_historical_downstream_activation_repair_v0.1.json"
+        ).read_text()
+    )
+
+    assert "outputs:" in binder
+    assert "artifact_id: ${{ steps.frozen.outputs.artifact_id }}" in binder
+    assert "artifact_digest: ${{ steps.frozen.outputs.artifact_digest }}" in binder
+    assert "package_local_handoff:" in binder
+    assert "needs: bind" in binder
+    assert 'gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip"' in binder
+    assert 'binding["artifact_digest"]==os.environ["EXPECTED_DIGEST"]==digest' in binder
+    assert "relational-historical-occurrence-final-v0.2.zip" in binder
+    assert "relational-c-local-final-handoff-v0.1" in binder
+    assert "compression-level: 0" in binder
+
+    assert rule["status"] == "FROZEN_TRANSPORT_ONLY_BEFORE_FINAL_OCCURRENCE_RESULT"
+    assert rule["source_run"]["workflow_run_id"] == 35941577015
+    assert rule["source_run"]["workflow_head_sha"] == "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab"
+    assert rule["result_selection_allowed"] is False
+    assert rule["alternate_run_allowed"] is False
+    assert rule["repack_inner_artifact_allowed"] is False
+    assert rule["relation_result_seen"] is False
+    assert rule["genetic_response_used"] is False
+    assert all(v is False for v in rule["response_firewall"].values())
+
+    assert receipt["default_branch_binder_commit_sha"] == "0b5bded97d7e02db86f59fbd89d3114b19a651b2"
+    assert receipt["default_branch_binder_file_git_blob"] == "9fd8a23d2d24463f5758eb0847c5d7e2e33ed153"
+    assert receipt["local_final_handoff_output_artifact"] == "relational-c-local-final-handoff-v0.1"
+    assert receipt["local_final_handoff_inner_artifact_repacked"] is False
+    assert receipt["local_final_handoff_result_selection_allowed"] is False
