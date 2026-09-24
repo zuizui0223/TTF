@@ -28,7 +28,7 @@ jobs:
           t=json.loads(Path("benchmarks/frozen/relational_environment_program_transition_v0.3.json").read_text())
           rule=json.loads(Path("docs/supporting/relational_program_transition_rule_v0.1.json").read_text())
           assert b["schema"]=="ttf_relational_historical_occurrence_artifact_binding_v0.2"
-          assert b["status"]=="FROZEN_RESPONSE_BLIND_BOUNDED_OCCURRENCE_ARTIFACT"
+          assert b["status"]=="FROZEN_FINAL_BOUNDED_RESPONSE_BLIND_OCCURRENCE_ARTIFACT"
           assert b["artifact_name"]=="relational-historical-occurrence-final-v0.2"
           assert b["genetic_response_used"] is False
           assert all(v is False for v in b["response_firewall"].values())
