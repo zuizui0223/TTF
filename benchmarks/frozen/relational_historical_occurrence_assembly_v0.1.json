@@ -1,0 +1,44 @@
+{
+  "schema": "ttf_relational_historical_occurrence_assembly_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_ASSEMBLY_BEFORE_OCCURRENCE_RESULT",
+  "frozen_on": "2026-09-24",
+  "candidate_receipt": "benchmarks/frozen/relational_historical_candidate_census_v0.1.json",
+  "original_run_id": 35881616617,
+  "recovery_run_id": 35941160248,
+  "source_map": {
+    "recovery_shards": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "original_shards": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ]
+  },
+  "shards_total": 20,
+  "rule": "For shards 0-3 use only the pre-result cancelled-shard recovery artifacts. For shards 4-19 use only the original frozen occurrence run. No result-dependent source choice is allowed.",
+  "occurrence_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
