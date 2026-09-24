@@ -1,0 +1,99 @@
+{
+  "schema": "ttf_relational_historical_occurrence_execution_v0.2",
+  "status": "FROZEN_BOUNDED_RESPONSE_BLIND_OCCURRENCE_EXECUTION",
+  "frozen_on": "2026-09-24",
+  "supersedes": "benchmarks/frozen/relational_historical_occurrence_execution_v0.1.json",
+  "parent_program": "docs/supporting/relational_program_v0.3.json",
+  "parent_history_rule": "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json",
+  "B_transition": "benchmarks/frozen/relational_environment_program_transition_v0.3.json",
+  "candidate_receipt": "benchmarks/frozen/relational_historical_candidate_census_v0.1.json",
+  "candidate_csv": "benchmarks/frozen/relational_historical_candidates_v0.1.csv",
+  "candidate_csv_sha256": "ad6375b4c2ec3f00193da90b3c68752f126d07cf18071b4f5dfddd422bdff7a1",
+  "candidate_species_digest_sha256": "adfdca215f7c428aee17cec43fc52ec00792a08081badf78d29bc2e792e3235c",
+  "candidate_species": 1000,
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "superseded_execution": {
+    "workflow_run_id": 35881616617,
+    "workflow_name": "relational-historical-occurrence-from-frozen-candidate",
+    "scientific_contract_changed": false,
+    "artifacts_observed_at_freeze": 0,
+    "response_or_relation_result_used_for_supersession": false,
+    "reason": "The 20-way execution groups 50 species per 240-minute job. Multiple exact shards timed out before artifact upload, reproducing the Study-B transport failure mode. With zero artifacts observed, the run is superseded as a transport implementation before any Study-C relation or genetic response."
+  },
+  "initial_execution": {
+    "workflow": ".github/workflows/relational-historical-occurrence-bounded-v02.yml",
+    "batches": 250,
+    "species_per_batch": 4,
+    "partition_rule": "candidate position modulo 250; exactly four frozen species per batch",
+    "max_parallel": 2,
+    "job_timeout_minutes": 210,
+    "per_species_wall_timeout_seconds": 2700,
+    "completed_species_salvaged_if_sibling_times_out": true
+  },
+  "retry_execution": {
+    "eligible_status": "REQUEST_ERROR",
+    "forbidden_statuses": [
+      "PASS_OCCURRENCE_GEOMETRY",
+      "FAIL_OCCURRENCE_GEOMETRY",
+      "REJECTED_GBIF_TAXON_MATCH"
+    ],
+    "maximum_retry_rounds": 1,
+    "batch_size": 4,
+    "max_parallel": 2,
+    "job_timeout_minutes": 210,
+    "per_species_wall_timeout_seconds": 2700,
+    "exact_retry_set_rule": "All and only REQUEST_ERROR species from the exact 250-batch initial audit, preserved in frozen candidate order.",
+    "additional_retry_after_round1_authorized": false,
+    "unresolved_after_retry_state": "NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT"
+  },
+  "scientific_contract": {
+    "provider": "GBIF occurrence/search",
+    "inherited_rule": "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json#external_occurrences",
+    "exact_taxon_match": true,
+    "year": "2010,2026",
+    "hasCoordinate": true,
+    "hasGeospatialIssue": false,
+    "occurrenceStatus": "PRESENT",
+    "deterministic_page_offsets": true,
+    "page_size": 300,
+    "maximum_pages": 20,
+    "exact_coordinate_dedup": true,
+    "thinning_km": 10,
+    "maximum_retained": 200,
+    "minimum_occurrences": 30
+  },
+  "implementation_git_blobs": {
+    ".github/workflows/relational-historical-occurrence-bounded-v02.yml": "6debe9af709a58b475c5c22ae25d710ae62fdc4e",
+    "scripts/acquire_relational_historical_occurrences_bounded.py": "613ce58231c65b282b4c5f46d883a0b446e3d79c",
+    "scripts/plan_relational_historical_occurrence_retry.py": "1dee6fbea3b2f7bb594359ee36144f55f1a843ce",
+    "scripts/retry_relational_historical_occurrences_bounded.py": "2fc77c270d073555f69dfec3e168af85596cd0b6",
+    "scripts/finalize_relational_historical_occurrence_bounded.py": "3c59b742528da33362c070f2147703e273d4b8ab",
+    "scripts/acquire_relational_environment_occurrences.py": "34eb5d5b459e105943cc5642cf355011d86c4f07"
+  },
+  "scientific_query_change": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "terminal_transport_rule": {
+    "if_request_error_zero_and_pass_species_at_least_500": "PASS_TO_HISTORICAL_ASSET_EXTRACTION",
+    "if_request_error_zero_and_pass_species_below_500": "NOT_EVALUABLE_HISTORICAL_OCCURRENCE_GEOMETRY",
+    "if_request_error_remains_after_one_retry": "NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT",
+    "biological_null": false,
+    "alternative_transport_after_terminal_state_authorized": false
+  },
+  "forbidden": [
+    "use any artifact or ecological status from superseded run 35881616617",
+    "change candidate species, candidate order, or any prior-universe exclusion",
+    "change GBIF taxon matching, query filters, year window, deterministic page offsets, coordinate deduplication, 10-km thinning, cap 200, or minimum n 30",
+    "retry PASS_OCCURRENCE_GEOMETRY, FAIL_OCCURRENCE_GEOMETRY, or REJECTED_GBIF_TAXON_MATCH species",
+    "choose retry species using historical climate, current climate, taxonomy, relation output, or genetic response",
+    "authorize a second retry round after the bounded initial execution",
+    "convert unresolved REQUEST_ERROR into a biological null",
+    "open Study-C sequence identity, pairwise genetic distance, T_st, or beta_hist before the already frozen downstream gates"
+  ],
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
