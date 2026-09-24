@@ -486,3 +486,56 @@ def test_local_study_c_chelsa_staging_manifest_detects_asset_drift(tmp_path):
     hist_paths[0].write_bytes(b"drift")
     with pytest.raises(RuntimeError, match="size drift|SHA drift"):
         module.verify_chelsa_staging_manifest(manifest, hist_paths, hist_urls, current_paths)
+
+
+def test_chelsa_staging_and_chunk_transport_are_bound_response_blind():
+    import json
+
+    staging_rule = json.loads(
+        (
+            ROOT
+            / "docs/supporting/relational_historical_chelsa_asset_staging_rule_v0.1.json"
+        ).read_text()
+    )
+    chunk_rule = json.loads(
+        (
+            ROOT
+            / "docs/supporting/relational_historical_chelsa_artifact_chunk_transport_v0.1.json"
+        ).read_text()
+    )
+    staging_workflow = (
+        ROOT / ".github/workflows/relational-c-chelsa-asset-staging.yml"
+    ).read_text()
+    chunk_workflow = (
+        ROOT / ".github/workflows/relational-c-chelsa-chunk-transport.yml"
+    ).read_text()
+
+    assert staging_rule["status"] == "FROZEN_RESPONSE_BLIND_ASSET_TRANSPORT_BEFORE_STUDY_C_RELATION_RESULT"
+    assert staging_rule["alternate_asset_selection_allowed"] is False
+    assert staging_rule["relation_result_seen"] is False
+    assert staging_rule["genetic_response_used"] is False
+    assert len(staging_rule["historical"]["exact_logical_filenames"]) == 8
+    assert len(staging_rule["current"]["exact_filenames"]) == 4
+    assert all(v is False for v in staging_rule["response_firewall"].values())
+
+    assert chunk_rule["status"] == "FROZEN_TRANSPORT_ONLY_FROM_EXACT_STAGED_ARTIFACTS"
+    assert chunk_rule["source_run"]["workflow_run_id"] == 35959224240
+    assert chunk_rule["source_run"]["workflow_head_sha"] == "4ea89a703bce2ed88c715cb7cfcca94d1e3b27e4"
+    assert chunk_rule["source_artifacts"]["historical"]["artifact_id"] == 10791389409
+    assert chunk_rule["source_artifacts"]["historical"]["digest_sha256"] == "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2"
+    assert chunk_rule["source_artifacts"]["historical"]["expected_chunks"] == 24
+    assert chunk_rule["source_artifacts"]["current"]["artifact_id"] == 10791867875
+    assert chunk_rule["source_artifacts"]["current"]["digest_sha256"] == "724743d8666d32bc8717e52200a798369665c2f1965ba33021d3e5c68c5eff4c"
+    assert chunk_rule["source_artifacts"]["current"]["expected_chunks"] == 6
+    assert chunk_rule["chunk_bytes"] == 200000000
+    assert chunk_rule["scientific_asset_change"] is False
+    assert chunk_rule["alternate_asset_selection_allowed"] is False
+    assert chunk_rule["relation_result_seen"] is False
+    assert chunk_rule["genetic_response_used"] is False
+
+    assert "PASS_EXACT_RESPONSE_BLIND_CHELSA_ASSET_STAGING" in staging_workflow
+    assert "10791389409" in chunk_workflow
+    assert "10791867875" in chunk_workflow
+    assert "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2" in chunk_workflow
+    assert "724743d8666d32bc8717e52200a798369665c2f1965ba33021d3e5c68c5eff4c" in chunk_workflow
+    assert "split -b 200000000" in chunk_workflow
