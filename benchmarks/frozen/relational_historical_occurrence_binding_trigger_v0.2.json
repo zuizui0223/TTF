@@ -1,0 +1,22 @@
+{
+  "schema": "ttf_relational_historical_occurrence_binding_trigger_v0.2",
+  "status": "FROZEN_BIND_TO_BOUNDED_RUN_BEFORE_FINAL_OCCURRENCE_RESULT",
+  "frozen_on": "2026-09-24",
+  "workflow_name": "relational-historical-occurrence-bounded-v02",
+  "workflow_run_id": 35941577015,
+  "workflow_head_sha": "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab",
+  "artifact_name": "relational-historical-occurrence-final-v0.2",
+  "execution_rule": "benchmarks/frozen/relational_historical_occurrence_execution_v0.2.json",
+  "candidate_csv": "benchmarks/frozen/relational_historical_candidates_v0.1.csv",
+  "candidate_csv_sha256": "ad6375b4c2ec3f00193da90b3c68752f126d07cf18071b4f5dfddd422bdff7a1",
+  "selection_timing": "Frozen after bounded run identity was known but before the final 1000-species occurrence acquisition result, retry plan, historical relation, or any genetic response was available.",
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "alternative_run_selection_authorized": false,
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
