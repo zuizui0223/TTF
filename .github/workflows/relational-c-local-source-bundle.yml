@@ -1,0 +1,54 @@
+name: relational-c-local-source-bundle
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - ".github/workflows/relational-c-local-source-bundle.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Verify and package exact branch snapshot
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          mkdir -p results/source-bundle
+          archive="results/source-bundle/TTF-relational-ttf-v01-${GITHUB_SHA}.tar.gz"
+          git archive --format=tar.gz --output="$archive" HEAD
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          sha=os.environ["GITHUB_SHA"]
+          archive=Path(f"results/source-bundle/TTF-relational-ttf-v01-{sha}.tar.gz")
+          h=hashlib.sha256(archive.read_bytes()).hexdigest()
+          payload={
+              "schema":"ttf_relational_c_local_source_bundle_v0.1",
+              "branch":"relational-ttf-v01",
+              "commit_sha":sha,
+              "archive_name":archive.name,
+              "archive_sha256":h,
+              "scientific_rule_change":False,
+              "relation_result_seen":False,
+              "genetic_response_used":False,
+          }
+          Path("results/source-bundle/manifest.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps(payload,sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-local-source-bundle
+          path: results/source-bundle/
+          retention-days: 30
+          if-no-files-found: error
