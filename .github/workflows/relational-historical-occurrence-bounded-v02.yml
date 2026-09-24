@@ -1,0 +1,271 @@
+name: relational-historical-occurrence-bounded-v02
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_historical_occurrence_execution_v0.2.json"
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  cancel_obsolete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify exact Study-C transport supersession
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_historical_occurrence_execution_v0.2.json").read_text())
+          assert p["schema"]=="ttf_relational_historical_occurrence_execution_v0.2"
+          assert p["status"]=="FROZEN_BOUNDED_RESPONSE_BLIND_OCCURRENCE_EXECUTION"
+          assert p["superseded_execution"]["workflow_run_id"]==35881616617
+          assert p["superseded_execution"]["artifacts_observed_at_freeze"]==0
+          assert p["relation_result_seen"] is False
+          assert p["genetic_response_used"] is False
+          assert not any(bool(v) for v in p["response_firewall"].values())
+          wf=subprocess.check_output(
+              ["git","rev-parse","HEAD:.github/workflows/relational-historical-occurrence-bounded-v02.yml"],
+              text=True,
+          ).strip()
+          assert wf==p["implementation_git_blobs"][".github/workflows/relational-historical-occurrence-bounded-v02.yml"],(wf,p["implementation_git_blobs"][".github/workflows/relational-historical-occurrence-bounded-v02.yml"])
+          PY
+      - name: Cancel exact superseded Study-C occurrence run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          id=35881616617
+          state="$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$id" --jq '.status')"
+          conclusion="$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$id" --jq '.conclusion // ""')"
+          echo "run=$id status=$state conclusion=$conclusion"
+          if [ "$state" = "queued" ] || [ "$state" = "in_progress" ] || [ "$state" = "waiting" ] || [ "$state" = "requested" ] || [ "$state" = "pending" ]; then
+            gh api -X POST "/repos/$GITHUB_REPOSITORY/actions/runs/$id/cancel"
+          fi
+
+  verify:
+    needs: cancel_obsolete
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify exact bounded Study-C contract
+        run: |
+          python - <<'PY'
+          import hashlib,json,subprocess
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_historical_occurrence_execution_v0.2.json").read_text())
+          old=json.loads(Path("benchmarks/frozen/relational_historical_occurrence_execution_v0.1.json").read_text())
+          cand=json.loads(Path("benchmarks/frozen/relational_historical_candidate_census_v0.1.json").read_text())
+          transition=json.loads(Path("benchmarks/frozen/relational_environment_program_transition_v0.3.json").read_text())
+          candidate=Path("benchmarks/frozen/relational_historical_candidates_v0.1.csv")
+          sha=hashlib.sha256(candidate.read_bytes()).hexdigest()
+          assert p["schema"]=="ttf_relational_historical_occurrence_execution_v0.2"
+          assert p["status"]=="FROZEN_BOUNDED_RESPONSE_BLIND_OCCURRENCE_EXECUTION"
+          assert p["supersedes"]=="benchmarks/frozen/relational_historical_occurrence_execution_v0.1.json"
+          assert old["schema"]=="ttf_relational_historical_occurrence_execution_v0.1"
+          assert transition["B_state"]=="NOT_EVALUABLE_B" and transition["C_open_authorized"] is True
+          assert cand["status"]=="FRESH_HISTORICAL_GEOMETRY_ELIGIBLE_RESPONSE_BLIND"
+          assert cand["selected_species_count"]==1000
+          assert cand["selected_overlap_with_exclusions"]==0
+          assert sha==p["candidate_csv_sha256"]==cand["candidate_csv_sha256"]
+          assert p["candidate_species_digest_sha256"]==cand["selected_species_digest_sha256"]
+          assert p["source_archive_sha256"]==cand["source_archive_sha256"]
+          assert p["initial_execution"]["batches"]==250
+          assert p["initial_execution"]["species_per_batch"]==4
+          assert p["initial_execution"]["max_parallel"]==2
+          assert p["initial_execution"]["per_species_wall_timeout_seconds"]==2700
+          assert p["retry_execution"]["maximum_retry_rounds"]==1
+          assert p["retry_execution"]["batch_size"]==4
+          assert p["retry_execution"]["max_parallel"]==2
+          assert p["retry_execution"]["per_species_wall_timeout_seconds"]==2700
+          assert p["retry_execution"]["additional_retry_after_round1_authorized"] is False
+          assert p["scientific_query_change"] is False
+          assert p["relation_result_seen"] is False
+          assert p["genetic_response_used"] is False
+          assert not any(bool(v) for v in p["response_firewall"].values())
+          for path,expected in p["implementation_git_blobs"].items():
+              actual=subprocess.check_output(["git","rev-parse",f"HEAD:{path}"],text=True).strip()
+              assert actual==expected,(path,actual,expected)
+          PY
+
+  acquire:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 210
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        batch: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Acquire exact four frozen Study-C species with bounded transport
+        run: |
+          mkdir -p results/history-occ
+          python scripts/acquire_relational_historical_occurrences_bounded.py \
+            --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv \
+            --output-csv results/history-occ/occurrences-bounded-${{ matrix.batch }}.csv \
+            --output-ledger results/history-occ/ledger-bounded-${{ matrix.batch }}.json \
+            --batch-index ${{ matrix.batch }} \
+            --batches 250 \
+            --per-species-timeout-seconds 2700
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-historical-bounded-${{ matrix.batch }}
+          path: results/history-occ/
+          retention-days: 30
+          if-no-files-found: error
+
+  plan_retry:
+    needs: acquire
+    runs-on: ubuntu-latest
+    outputs:
+      retry_needed: ${{ steps.plan.outputs.retry_needed }}
+      retry_matrix: ${{ steps.plan.outputs.retry_matrix }}
+      retry_batch_count: ${{ steps.plan.outputs.retry_batch_count }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download exact 250 initial bounded artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/initial
+          gh api --paginate "/repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?per_page=100" \
+            --jq '.artifacts[] | select(.name | startswith("relational-historical-bounded-")) | [.id,.name] | @tsv' \
+            > /tmp/initial.tsv
+          test "$(wc -l < /tmp/initial.tsv)" -eq 250
+          while IFS=$'\t' read -r artifact_id artifact_name; do
+            zip="/tmp/${artifact_name}.zip"
+            gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/${artifact_id}/zip" > "$zip"
+            unzip -oq "$zip" -d input/initial
+          done < /tmp/initial.tsv
+      - id: plan
+        name: Freeze exact initial REQUEST_ERROR retry set
+        run: |
+          mkdir -p results/plan
+          python scripts/plan_relational_historical_occurrence_retry.py \
+            --input-dir input/initial \
+            --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv \
+            --output results/plan/relational_historical_occurrence_retry_plan_v0.2.json
+          python - <<'PY'
+          import json,os
+          p=json.load(open("results/plan/relational_historical_occurrence_retry_plan_v0.2.json"))
+          n=int(p["retry_batch_count"])
+          needed=p["request_error_count"]>0
+          matrix=list(range(n)) if needed else [0]
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"retry_needed={'true' if needed else 'false'}\n")
+              f.write("retry_matrix="+json.dumps(matrix,separators=(",",":"))+"\n")
+              f.write(f"retry_batch_count={n}\n")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-historical-bounded-retry-plan-v0.2
+          path: results/plan/relational_historical_occurrence_retry_plan_v0.2.json
+          retention-days: 30
+          if-no-files-found: error
+
+  retry:
+    needs: plan_retry
+    if: needs.plan_retry.outputs.retry_needed == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 210
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        batch: ${{ fromJSON(needs.plan_retry.outputs.retry_matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: relational-historical-bounded-retry-plan-v0.2
+          path: input/plan
+      - name: Retry exact frozen initial REQUEST_ERROR species only
+        run: |
+          mkdir -p results/retry
+          python scripts/retry_relational_historical_occurrences_bounded.py \
+            --plan input/plan/relational_historical_occurrence_retry_plan_v0.2.json \
+            --output-csv results/retry/occurrences-retry-${{ matrix.batch }}.csv \
+            --output-ledger results/retry/ledger-retry-${{ matrix.batch }}.json \
+            --batch-index ${{ matrix.batch }} \
+            --batch-size 4 \
+            --per-species-timeout-seconds 2700
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-historical-bounded-retry-${{ matrix.batch }}
+          path: results/retry/
+          retention-days: 30
+          if-no-files-found: error
+
+  finalize:
+    needs: [acquire, plan_retry, retry]
+    if: always() && needs.acquire.result == 'success' && needs.plan_retry.result == 'success' && (needs.retry.result == 'success' || needs.retry.result == 'skipped')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download exact initial and retry artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RETRY_NEEDED: ${{ needs.plan_retry.outputs.retry_needed }}
+          RETRY_BATCH_COUNT: ${{ needs.plan_retry.outputs.retry_batch_count }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/initial input/retry input/plan
+          gh api --paginate "/repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?per_page=100" \
+            --jq '.artifacts[] | [.id,.name] | @tsv' > /tmp/all.tsv
+
+          grep $'\trelational-historical-bounded-[0-9]' /tmp/all.tsv > /tmp/initial.tsv || true
+          test "$(wc -l < /tmp/initial.tsv)" -eq 250
+          while IFS=$'\t' read -r artifact_id artifact_name; do
+            zip="/tmp/${artifact_name}.zip"
+            gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/${artifact_id}/zip" > "$zip"
+            unzip -oq "$zip" -d input/initial
+          done < /tmp/initial.tsv
+
+          plan_line="$(grep $'\trelational-historical-bounded-retry-plan-v0.2$' /tmp/all.tsv)"
+          test -n "$plan_line"
+          IFS=$'\t' read -r plan_id plan_name <<< "$plan_line"
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$plan_id/zip" > /tmp/plan.zip
+          unzip -oq /tmp/plan.zip -d input/plan
+
+          if [ "$RETRY_NEEDED" = "true" ]; then
+            grep $'\trelational-historical-bounded-retry-[0-9]' /tmp/all.tsv > /tmp/retry.tsv || true
+            test "$(wc -l < /tmp/retry.tsv)" -eq "$RETRY_BATCH_COUNT"
+            while IFS=$'\t' read -r artifact_id artifact_name; do
+              zip="/tmp/${artifact_name}.zip"
+              gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/${artifact_id}/zip" > "$zip"
+              unzip -oq "$zip" -d input/retry
+            done < /tmp/retry.tsv
+          fi
+
+      - name: Finalize exact finite Study-C occurrence transport
+        run: |
+          mkdir -p results/final
+          python scripts/finalize_relational_historical_occurrence_bounded.py \
+            --initial-dir input/initial \
+            --retry-dir input/retry \
+            --retry-plan input/plan/relational_historical_occurrence_retry_plan_v0.2.json \
+            --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv \
+            --output-csv results/final/occurrences_v0.2.csv \
+            --output-ledger results/final/occurrence_ledger_v0.2.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-historical-occurrence-final-v0.2
+          path: results/final/
+          retention-days: 30
+          if-no-files-found: error
