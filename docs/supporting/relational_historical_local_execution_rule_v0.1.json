@@ -43,7 +43,8 @@
     "Study_C_T_st_computed": false,
     "Study_C_beta_hist_computed": false
   },
-  "executor_git_blob": "f98bb35658238162f635d8d1e3cc2b9203c006f8",
+  "executor_git_blob": "6d7c29411f48d150ca6e41b897400f2af2f2dcb0",
   "binding_verification": "Compute canonical Git blob SHA-1 directly from each bound file byte sequence; no .git directory is required, so the same check works in a git archive snapshot.",
-  "source_bundle_compatible": true
+  "source_bundle_compatible": true,
+  "git_blob_header_rule": "SHA1(b'blob ' + decimal_byte_length + b'\\\\x00' + file_bytes)"
 }
