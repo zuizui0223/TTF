@@ -1,0 +1,27 @@
+{
+  "schema": "ttf_relational_historical_obsolete_binder_v0.1",
+  "status": "AUTHORIZE_CANCEL_OBSOLETE_WAITING_BINDER_PRE_RESULT",
+  "frozen_on": "2026-09-24",
+  "obsolete_binder_run_id": 35942247633,
+  "obsolete_workflow": ".github/workflows/relational-historical-bind-bounded-occurrence-v02.yml",
+  "authoritative_bounded_run_id": 35941577015,
+  "authoritative_trigger": "benchmarks/frozen/relational_historical_occurrence_binding_trigger_v0.2.json",
+  "authoritative_binder": ".github/workflows/relational-historical-bind-bounded-occurrence.yml",
+  "binding_observed_at_freeze": false,
+  "final_occurrence_artifact_observed_at_freeze": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "reason": "The obsolete binder occupies a runner while polling the frozen bounded run and contains a pre-result packaging defect: it expects the retry-plan JSON inside the final occurrence artifact although that plan is a separate artifact. The replacement workflow_run binder preserves the prospectively frozen bounded run ID/head and downloads the final occurrence and retry-plan artifacts separately.",
+  "forbidden": [
+    "cancel the authoritative bounded occurrence run",
+    "change the bounded occurrence run ID or head SHA",
+    "select a binder using occurrence, climate, relation, taxonomy, or genetic outcomes",
+    "allow more than one Study-C occurrence binding to become authoritative"
+  ],
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
