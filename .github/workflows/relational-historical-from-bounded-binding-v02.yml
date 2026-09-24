@@ -21,6 +21,23 @@ jobs:
         with:
           ref: relational-ttf-v01
 
+      - name: Verify frozen Study-C implementation binding
+        run: |
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_historical_implementation_binding_v0.1.json").read_text())
+          assert p["schema"]=="ttf_relational_historical_implementation_binding_v0.1"
+          assert p["status"]=="FROZEN_BEFORE_STUDY_C_RELATION_RESULT"
+          assert p["relation_result_seen"] is False
+          assert p["genetic_response_used"] is False
+          assert all(v is False for v in p["response_firewall"].values())
+          for path,expected in p["git_blobs"].items():
+              actual=subprocess.check_output(["git","rev-parse",f"HEAD:{path}"],text=True).strip()
+              assert actual==expected,(path,actual,expected)
+          print({"status":p["status"],"bound_files":len(p["git_blobs"])})
+          PY
+
       - id: binding
         name: Verify frozen bounded occurrence binding and C authorization
         run: |

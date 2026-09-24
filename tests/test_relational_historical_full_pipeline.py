@@ -188,3 +188,29 @@ def test_historical_downstream_is_reusable_and_checks_out_study_branch():
     assert receipt["relation_result_seen"] is False
     assert receipt["genetic_response_used"] is False
     assert all(v is False for v in receipt["response_firewall"].values())
+
+
+def test_historical_implementation_binding_is_enforced_before_binding_open():
+    import json
+
+    receipt = json.loads(
+        (
+            ROOT
+            / "benchmarks/frozen/relational_historical_implementation_binding_v0.1.json"
+        ).read_text()
+    )
+    downstream = (
+        ROOT / ".github/workflows/relational-historical-from-bounded-binding-v02.yml"
+    ).read_text()
+
+    assert receipt["status"] == "FROZEN_BEFORE_STUDY_C_RELATION_RESULT"
+    assert len(receipt["git_blobs"]) == 31
+    assert "scripts/build_relational_historical_relation.py" in receipt["git_blobs"]
+    assert "scripts/run_relational_historical_climate_qualification.py" in receipt["git_blobs"]
+    assert "scripts/run_relational_historical_empirical.py" in receipt["git_blobs"]
+    assert "src/ttf/relational_dyadic.py" in receipt["git_blobs"]
+    assert "Verify frozen Study-C implementation binding" in downstream
+    assert 'git","rev-parse",f"HEAD:{path}"' in downstream
+    assert receipt["relation_result_seen"] is False
+    assert receipt["genetic_response_used"] is False
+    assert all(v is False for v in receipt["response_firewall"].values())
