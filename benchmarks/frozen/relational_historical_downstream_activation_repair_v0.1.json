@@ -28,8 +28,8 @@
     "Study_C_beta_hist_computed": false
   },
   "called_workflow_commit_sha": "17923b1719d9a3ebce842c959e4547378ac28338",
-  "default_branch_binder_commit_sha": "46c2c9fc9a7f2933dadf629fca30eb559a57d43e",
-  "default_branch_binder_file_git_blob": "1ab3c021544f0ffde77ee6edac2e4e0d922420a6",
+  "default_branch_binder_commit_sha": "0b5bded97d7e02db86f59fbd89d3114b19a651b2",
+  "default_branch_binder_file_git_blob": "9fd8a23d2d24463f5758eb0847c5d7e2e33ed153",
   "activation_edge": "main workflow_run binder -> reusable workflow pinned at 17923b1719d9a3ebce842c959e4547378ac28338 -> pre-relation exact-source transport gate -> exact Study-C implementation binding verification -> explicit checkout of relational-ttf-v01",
   "bot_push_is_not_activation_dependency": true,
   "resume_workflow": ".github/workflows/relational-historical-resume-after-source-cache.yml",
@@ -39,5 +39,9 @@
     "successful seed frozen phylogatr archive cache workflow_run"
   ],
   "resume_gate": "Exact frozen occurrence binding run 35941577015 must exist and v0.3 must not already be terminal.",
-  "resume_result_selection_allowed": false
+  "resume_result_selection_allowed": false,
+  "local_final_handoff_transport_rule": "docs/supporting/relational_historical_local_final_handoff_transport_v0.1.json",
+  "local_final_handoff_output_artifact": "relational-c-local-final-handoff-v0.1",
+  "local_final_handoff_inner_artifact_repacked": false,
+  "local_final_handoff_result_selection_allowed": false
 }
