@@ -64,6 +64,8 @@ def main() -> int:
         "b_mask": Path("docs/supporting/relational_environment_character_mask_rule_v0.1.json"),
         "b_empirical": Path("docs/supporting/relational_environment_empirical_opening_rule_v0.1.json"),
         "c_relation": Path("docs/supporting/relational_historical_climate_exposure_rule_v0.1.json"),
+        "c_occurrence_v02": Path("benchmarks/frozen/relational_historical_occurrence_execution_v0.2.json"),
+        "c_obsolete_occurrence_paths": Path("benchmarks/frozen/relational_historical_obsolete_occurrence_paths_v0.1.json"),
         "c_opportunity": Path("docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json"),
         "c_qualification": Path("docs/supporting/relational_historical_climate_qualification_rule_v0.1.json"),
         "c_mask": Path("docs/supporting/relational_historical_climate_character_mask_rule_v0.1.json"),
@@ -139,7 +141,7 @@ def main() -> int:
         if states[state]["C_open_authorized"] is not True or states[state]["C_entry_state"] != entry:
             raise RuntimeError(f"Study-C transition drift for {state}")
     assert_closed_firewall(transition)
-    for key in ("b_relation", "b_transport", "b_transport_audit", "b_preretry", "b_retry_rule_v02", "b_recovery_v02", "b_final_recovery_audit", "b_final_producer_promotion", "b_final_producer_contract", "b_unbound_long_repair", "b_producer", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
+    for key in ("b_relation", "b_transport", "b_transport_audit", "b_preretry", "b_retry_rule_v02", "b_recovery_v02", "b_final_recovery_audit", "b_final_producer_promotion", "b_final_producer_contract", "b_unbound_long_repair", "b_producer", "b_qualification", "b_mask", "b_empirical", "c_relation", "c_occurrence_v02", "c_obsolete_occurrence_paths", "c_opportunity", "c_qualification", "c_mask", "c_empirical"):
         assert_closed_firewall(p[key])
 
     transport = p["b_transport"]
@@ -602,6 +604,126 @@ def main() -> int:
     if p["c_empirical"]["relational_model"]["predictors_in_order"][:2] != ["z_R_hist", "z_R_current"]:
         raise RuntimeError("Study C primary/current-environment relation drift")
 
+    c_external = p["c_relation"]["external_occurrences"]
+    if c_external.get("provider") != "GBIF occurrence/search":
+        raise RuntimeError("Study C occurrence provider drift")
+    if int(c_external["minimum_retained_occurrences_per_species"]) != 30:
+        raise RuntimeError("Study C minimum occurrence gate drift")
+
+    c_occ = p["c_occurrence_v02"]
+    if c_occ.get("schema") != "ttf_relational_historical_occurrence_execution_v0.2":
+        raise RuntimeError("Study C bounded occurrence execution schema drift")
+    if c_occ.get("status") != "FROZEN_BOUNDED_RESPONSE_BLIND_OCCURRENCE_EXECUTION":
+        raise RuntimeError("Study C bounded occurrence execution is not frozen")
+    if c_occ.get("supersedes") != "benchmarks/frozen/relational_historical_occurrence_execution_v0.1.json":
+        raise RuntimeError("Study C bounded occurrence supersession pointer drift")
+    if c_occ.get("parent_history_rule") != str(paths["c_relation"]):
+        raise RuntimeError("Study C bounded occurrence history-rule pointer drift")
+    if c_occ.get("candidate_receipt") != "benchmarks/frozen/relational_historical_candidate_census_v0.1.json":
+        raise RuntimeError("Study C bounded occurrence candidate receipt drift")
+    if c_occ.get("candidate_csv") != "benchmarks/frozen/relational_historical_candidates_v0.1.csv":
+        raise RuntimeError("Study C bounded occurrence candidate file drift")
+    if c_occ["candidate_csv_sha256"] != "ad6375b4c2ec3f00193da90b3c68752f126d07cf18071b4f5dfddd422bdff7a1":
+        raise RuntimeError("Study C bounded occurrence candidate SHA drift")
+    if c_occ["candidate_species_digest_sha256"] != "adfdca215f7c428aee17cec43fc52ec00792a08081badf78d29bc2e792e3235c":
+        raise RuntimeError("Study C bounded occurrence species digest drift")
+    if int(c_occ["candidate_species"]) != 1000:
+        raise RuntimeError("Study C bounded occurrence candidate count drift")
+    if c_occ["source_archive_sha256"] != "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5":
+        raise RuntimeError("Study C source archive SHA drift")
+    superseded = c_occ["superseded_execution"]
+    if int(superseded["workflow_run_id"]) != 35881616617:
+        raise RuntimeError("Study C superseded occurrence run drift")
+    if int(superseded["artifacts_observed_at_freeze"]) != 0:
+        raise RuntimeError("Study C supersession was not frozen before occurrence artifacts")
+    if superseded["response_or_relation_result_used_for_supersession"] is not False:
+        raise RuntimeError("Study C supersession used occurrence/relation results")
+    initial = c_occ["initial_execution"]
+    if (
+        int(initial["batches"]) != 250
+        or int(initial["species_per_batch"]) != 4
+        or int(initial["max_parallel"]) != 2
+        or int(initial["job_timeout_minutes"]) != 210
+        or int(initial["per_species_wall_timeout_seconds"]) != 2700
+    ):
+        raise RuntimeError("Study C bounded initial transport constants drift")
+    if initial["completed_species_salvaged_if_sibling_times_out"] is not True:
+        raise RuntimeError("Study C bounded transport no longer salvages completed species")
+    retry = c_occ["retry_execution"]
+    if retry["eligible_status"] != "REQUEST_ERROR":
+        raise RuntimeError("Study C bounded retry eligibility drift")
+    if set(retry["forbidden_statuses"]) != {
+        "PASS_OCCURRENCE_GEOMETRY",
+        "FAIL_OCCURRENCE_GEOMETRY",
+        "REJECTED_GBIF_TAXON_MATCH",
+    }:
+        raise RuntimeError("Study C bounded retry forbidden-status drift")
+    if (
+        int(retry["maximum_retry_rounds"]) != 1
+        or int(retry["batch_size"]) != 4
+        or int(retry["max_parallel"]) != 2
+        or int(retry["job_timeout_minutes"]) != 210
+        or int(retry["per_species_wall_timeout_seconds"]) != 2700
+    ):
+        raise RuntimeError("Study C bounded retry constants drift")
+    if retry["additional_retry_after_round1_authorized"] is not False:
+        raise RuntimeError("Study C bounded execution permits an extra retry round")
+    if retry["unresolved_after_retry_state"] != "NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT":
+        raise RuntimeError("Study C bounded technical terminal state drift")
+    if c_occ["scientific_query_change"] is not False:
+        raise RuntimeError("Study C bounded transport changed scientific query")
+    scientific = c_occ["scientific_contract"]
+    expected_scientific = {
+        "provider": "GBIF occurrence/search",
+        "exact_taxon_match": True,
+        "year": "2010,2026",
+        "hasCoordinate": True,
+        "hasGeospatialIssue": False,
+        "occurrenceStatus": "PRESENT",
+        "deterministic_page_offsets": True,
+        "page_size": 300,
+        "maximum_pages": 20,
+        "exact_coordinate_dedup": True,
+        "thinning_km": 10,
+        "maximum_retained": 200,
+        "minimum_occurrences": 30,
+    }
+    for key, expected in expected_scientific.items():
+        if scientific[key] != expected:
+            raise RuntimeError(f"Study C bounded scientific occurrence contract drift: {key}")
+    for path, expected in c_occ["implementation_git_blobs"].items():
+        if git_blob_sha1(path) != expected:
+            raise RuntimeError(f"Study C bounded occurrence implementation blob drift: {path}")
+    terminal = c_occ["terminal_transport_rule"]
+    if terminal["if_request_error_zero_and_pass_species_at_least_500"] != "PASS_TO_HISTORICAL_ASSET_EXTRACTION":
+        raise RuntimeError("Study C bounded pass state drift")
+    if terminal["if_request_error_zero_and_pass_species_below_500"] != "NOT_EVALUABLE_HISTORICAL_OCCURRENCE_GEOMETRY":
+        raise RuntimeError("Study C bounded occurrence-geometry terminal state drift")
+    if terminal["if_request_error_remains_after_one_retry"] != "NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT":
+        raise RuntimeError("Study C bounded transport terminal state drift")
+    if terminal["biological_null"] is not False or terminal["alternative_transport_after_terminal_state_authorized"] is not False:
+        raise RuntimeError("Study C bounded terminal firewall drift")
+
+    obsolete_c = p["c_obsolete_occurrence_paths"]
+    if obsolete_c.get("schema") != "ttf_relational_historical_obsolete_occurrence_paths_v0.1":
+        raise RuntimeError("Study C obsolete occurrence-path schema drift")
+    if obsolete_c.get("status") != "AUTHORIZE_CANCEL_EXACT_PRE_RELATION_OCCURRENCE_PATHS":
+        raise RuntimeError("Study C obsolete occurrence paths are not frozen")
+    if obsolete_c.get("authoritative_execution") != str(paths["c_occurrence_v02"]):
+        raise RuntimeError("Study C obsolete-path authoritative execution drift")
+    if list(map(int, obsolete_c["obsolete_run_ids"])) != [35881616617, 35941160248, 35941257277, 35941294719]:
+        raise RuntimeError("Study C obsolete run set drift")
+    if any(int(v) != 0 for v in obsolete_c["artifact_counts_observed_at_freeze"].values()):
+        raise RuntimeError("Study C obsolete paths were not frozen before artifacts")
+    if obsolete_c["assembled_occurrence_artifact_observed"] is not False:
+        raise RuntimeError("Study C obsolete assembled occurrence artifact was already observed")
+    if obsolete_c["scientific_result_used_for_cancellation"] is not False:
+        raise RuntimeError("Study C obsolete path cancellation used scientific results")
+    if obsolete_c["workflow"] != ".github/workflows/cancel-obsolete-study-c-occurrence-paths.yml":
+        raise RuntimeError("Study C obsolete-path cancellation workflow drift")
+    if git_blob_sha1(obsolete_c["workflow"]) != obsolete_c["workflow_git_blob"]:
+        raise RuntimeError("Study C obsolete-path cancellation workflow blob drift")
+
     c_source_contract = p["c_relation"]["independent_species_domain"]["prior_universe_reproduction"]
     c_s1 = p["c_s1_exclusion"]
     c_s2 = p["c_s2_exclusion"]
@@ -665,6 +787,8 @@ def main() -> int:
         "study_B_final_relation_producer_prefrozen": True,
         "study_B_final_transport_audit_only_prefrozen": True,
         "study_C_full_downstream_contract_frozen": True,
+        "study_C_bounded_occurrence_transport_frozen": True,
+        "study_C_obsolete_occurrence_paths_closed": True,
         "all_future_genetic_response_firewalls_closed": True,
         "inputs_sha256": {name: sha256_path(path) for name, path in paths.items()},
     }
