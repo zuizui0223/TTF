@@ -17,6 +17,10 @@ jobs:
   bind:
     if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    outputs:
+      run_id: ${{ steps.frozen.outputs.run_id }}
+      artifact_id: ${{ steps.frozen.outputs.artifact_id }}
+      artifact_digest: ${{ steps.frozen.outputs.artifact_digest }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -157,6 +161,93 @@ jobs:
           git fetch origin relational-ttf-v01
           git rebase origin/relational-ttf-v01
           git push origin HEAD:relational-ttf-v01
+
+
+  package_local_handoff:
+    name: Package exact final occurrence handoff
+    needs: bind
+    if: ${{ needs.bind.result == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: relational-ttf-v01
+
+      - name: Verify frozen local-handoff transport rule
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("docs/supporting/relational_historical_local_final_handoff_transport_v0.1.json").read_text())
+          assert p["schema"]=="ttf_relational_historical_local_final_handoff_transport_v0.1"
+          assert p["status"]=="FROZEN_TRANSPORT_ONLY_BEFORE_FINAL_OCCURRENCE_RESULT"
+          assert p["source_run"]["workflow_run_id"]==35941577015
+          assert p["source_run"]["workflow_head_sha"]=="ffacbd51d58689a4b18f7a2cb920f5a1385a74ab"
+          assert p["source_run"]["artifact_name"]=="relational-historical-occurrence-final-v0.2"
+          assert p["result_selection_allowed"] is False
+          assert p["alternate_run_allowed"] is False
+          assert p["repack_inner_artifact_allowed"] is False
+          assert p["relation_result_seen"] is False
+          assert p["genetic_response_used"] is False
+          assert all(v is False for v in p["response_firewall"].values())
+          PY
+
+      - name: Download exact original final artifact ZIP by bound artifact id
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ needs.bind.outputs.artifact_id }}
+          EXPECTED_DIGEST: ${{ needs.bind.outputs.artifact_digest }}
+        run: |
+          set -euo pipefail
+          mkdir -p results/local-handoff
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > results/local-handoff/relational-historical-occurrence-final-v0.2.zip
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          artifact=Path("results/local-handoff/relational-historical-occurrence-final-v0.2.zip")
+          binding_path=Path("benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json")
+          readiness_path=Path("benchmarks/frozen/relational_historical_local_readiness_v0.1.json")
+          binding=json.loads(binding_path.read_text())
+          digest="sha256:"+hashlib.sha256(artifact.read_bytes()).hexdigest()
+          assert int(binding["workflow_run_id"])==35941577015
+          assert binding["workflow_head_sha"]=="ffacbd51d58689a4b18f7a2cb920f5a1385a74ab"
+          assert int(binding["artifact_id"])==int(os.environ["ARTIFACT_ID"])
+          assert binding["artifact_name"]=="relational-historical-occurrence-final-v0.2"
+          assert binding["artifact_digest"]==os.environ["EXPECTED_DIGEST"]==digest
+          assert binding["genetic_response_used"] is False
+          assert all(v is False for v in binding["response_firewall"].values())
+          Path("results/local-handoff/relational_historical_occurrence_artifact_binding_v0.2.json").write_bytes(binding_path.read_bytes())
+          Path("results/local-handoff/relational_historical_local_readiness_v0.1.json").write_bytes(readiness_path.read_bytes())
+          payload={
+              "schema":"ttf_relational_historical_local_final_handoff_manifest_v0.1",
+              "status":"PASS_EXACT_FINAL_OCCURRENCE_HANDOFF_PACKAGING",
+              "workflow_run_id":binding["workflow_run_id"],
+              "workflow_head_sha":binding["workflow_head_sha"],
+              "artifact_id":binding["artifact_id"],
+              "artifact_name":binding["artifact_name"],
+              "artifact_digest":binding["artifact_digest"],
+              "inner_zip_filename":artifact.name,
+              "inner_zip_sha256":digest.removeprefix("sha256:"),
+              "binding_sha256":hashlib.sha256(binding_path.read_bytes()).hexdigest(),
+              "readiness_sha256":hashlib.sha256(readiness_path.read_bytes()).hexdigest(),
+              "relation_result_seen":False,
+              "genetic_response_used":False,
+              "response_firewall":binding["response_firewall"],
+          }
+          Path("results/local-handoff/manifest.json").write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
+          print(json.dumps(payload,sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-local-final-handoff-v0.1
+          path: results/local-handoff/
+          retention-days: 30
+          compression-level: 0
+          if-no-files-found: error
 
 
   execute_c:
