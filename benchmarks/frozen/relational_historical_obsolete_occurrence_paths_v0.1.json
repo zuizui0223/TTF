@@ -1,0 +1,43 @@
+{
+  "schema": "ttf_relational_historical_obsolete_occurrence_paths_v0.1",
+  "status": "AUTHORIZE_CANCEL_EXACT_PRE_RELATION_OCCURRENCE_PATHS",
+  "frozen_on": "2026-09-24",
+  "authoritative_execution": "benchmarks/frozen/relational_historical_occurrence_execution_v0.2.json",
+  "obsolete_run_ids": [
+    35881616617,
+    35941160248,
+    35941257277,
+    35941294719
+  ],
+  "obsolete_paths": {
+    "35881616617": "original 20-way Study-C occurrence execution",
+    "35941160248": "cancelled-shard recovery tied to the superseded 20-way execution",
+    "35941257277": "assembly waiting on superseded original/recovery source map",
+    "35941294719": "technical retrigger of the same superseded assembly source map"
+  },
+  "artifact_counts_observed_at_freeze": {
+    "35881616617": 0,
+    "35941160248": 0,
+    "35941257277": 0,
+    "35941294719": 0
+  },
+  "assembled_occurrence_artifact_observed": false,
+  "scientific_result_used_for_cancellation": false,
+  "reason": "All four runs belong to the superseded 20-way transport path. At freeze, none had uploaded an artifact, no assembled occurrence artifact existed, and no Study-C relation or genetic response had been opened. The bounded v0.2 execution is the sole authorized occurrence transport.",
+  "workflow": ".github/workflows/cancel-obsolete-study-c-occurrence-paths.yml",
+  "workflow_git_blob": "65a72969594774bd65f466089b20fa64a22c5d33",
+  "forbidden": [
+    "cancel the authoritative bounded v0.2 execution",
+    "use any later artifact from the obsolete run IDs",
+    "select an occurrence source based on ecological status, historical relation, taxonomy, or genetic response",
+    "reopen the superseded source-map assembly path"
+  ],
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
