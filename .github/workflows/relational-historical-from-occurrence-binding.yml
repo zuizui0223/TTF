@@ -5,10 +5,10 @@ on:
     branches:
       - relational-ttf-v01
     paths:
-      - "benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.1.json"
+      - "benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json"
 
 permissions:
-  contents: read
+  contents: write
   actions: read
 
 jobs:
@@ -23,10 +23,10 @@ jobs:
           python - <<'PY'
           import json,os
           from pathlib import Path
-          b=json.loads(Path("benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.1.json").read_text())
-          assert b["schema"]=="ttf_relational_historical_occurrence_artifact_binding_v0.1"
-          assert b["status"]=="FROZEN_RESPONSE_BLIND_OCCURRENCE_ARTIFACT"
-          assert b["artifact_name"]=="relational-historical-occurrence-assembled-v0.1"
+          b=json.loads(Path("benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json").read_text())
+          assert b["schema"]=="ttf_relational_historical_occurrence_artifact_binding_v0.2"
+          assert b["status"]=="FROZEN_FINAL_BOUNDED_RESPONSE_BLIND_OCCURRENCE_ARTIFACT"
+          assert b["artifact_name"]=="relational-historical-occurrence-final-v0.2"
           assert b["genetic_response_used"] is False
           assert all(v is False for v in b["response_firewall"].values())
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
@@ -40,7 +40,7 @@ jobs:
           python -m pip install "rasterio>=1.4,<2"
       - uses: actions/download-artifact@v4
         with:
-          name: relational-historical-occurrence-assembled-v0.1
+          name: relational-historical-occurrence-final-v0.2
           path: input/occ
           run-id: ${{ steps.binding.outputs.run_id }}
           github-token: ${{ github.token }}
@@ -52,17 +52,58 @@ jobs:
           import hashlib,json,os
           from pathlib import Path
           def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
-          b=json.loads(Path("benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.1.json").read_text())
-          assert sha("input/occ/occurrences_v0.1.csv")==b["occurrence_csv_sha256"]
-          assert sha("input/occ/occurrence_ledger_v0.1.json")==b["occurrence_ledger_sha256"]
-          p=json.loads(Path("input/occ/occurrence_ledger_v0.1.json").read_text())
-          assert p["candidate_species_total"]==1000
+          b=json.loads(Path("benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json").read_text())
+          assert sha("input/occ/occurrences_v0.2.csv")==b["occurrence_csv_sha256"]
+          assert sha("input/occ/occurrence_ledger_v0.2.json")==b["occurrence_ledger_sha256"]
+          p=json.loads(Path("input/occ/occurrence_ledger_v0.2.json").read_text())
+          assert p["species"]==1000
+          assert p["maximum_retry_rounds"]==1
+          assert p["additional_retry_authorized"] is False
           assert all(v is False for v in p["response_firewall"].values())
           passed=p["status"]=="PASS_TO_HISTORICAL_ASSET_EXTRACTION"
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write(f"passed={'true' if passed else 'false'}\n")
           print({"status":p["status"],"status_counts":p.get("status_counts"),"species_passing_ge_30":p.get("species_passing_ge_30")})
           PY
+
+      - name: Close finite v0.3 if Study-C occurrence transport is not evaluable
+        if: steps.occ.outputs.passed != 'true'
+        run: |
+          mkdir -p results/final
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          b=json.loads(Path("benchmarks/frozen/relational_environment_program_transition_v0.3.json").read_text())
+          occ=json.loads(Path("input/occ/occurrence_ledger_v0.2.json").read_text())
+          assert b["B_state"]=="NOT_EVALUABLE_B"
+          assert b["C_open_authorized"] is True
+          assert occ["status"] in {
+              "NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT",
+              "NOT_EVALUABLE_HISTORICAL_OCCURRENCE_GEOMETRY",
+          }
+          payload={
+              "schema":"ttf_relational_program_final_state_v0.3",
+              "B_state":"NOT_EVALUABLE_B",
+              "C_state":"NOT_EVALUABLE",
+              "C_failure_stage":"occurrence_transport" if occ["status"]=="NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT" else "occurrence_geometry",
+              "C_occurrence_status":occ["status"],
+              "final_state":"CLOSED_NO_EVALUABLE_TEST",
+              "no_additional_predictor_authorized":True,
+          }
+          Path("results/final/relational_program_final_state_v0.3.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps(payload,sort_keys=True))
+          PY
+          cp results/final/relational_program_final_state_v0.3.json \
+            benchmarks/frozen/relational_program_final_state_v0.3.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/relational_program_final_state_v0.3.json
+          git commit -m "Freeze terminal relational v0.3 after Study C occurrence gate"
+          git fetch origin relational-ttf-v01
+          git rebase origin/relational-ttf-v01
+          git push origin HEAD:relational-ttf-v01
 
       - name: Resolve exact CHELSA-TraCE21k assets
         if: steps.occ.outputs.passed == 'true'
@@ -118,7 +159,7 @@ jobs:
         if: steps.occ.outputs.passed == 'true'
         run: |
           python scripts/build_relational_historical_relation.py \
-            --occurrences input/occ/occurrences_v0.1.csv \
+            --occurrences input/occ/occurrences_v0.2.csv \
             --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv \
             --rule docs/supporting/relational_historical_climate_exposure_rule_v0.1.json \
             --asset-receipt results/history/historical_asset_receipt_v0.1.json \
