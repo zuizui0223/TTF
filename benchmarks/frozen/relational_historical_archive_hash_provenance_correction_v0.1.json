@@ -13,10 +13,9 @@
     "docs/supporting/relational_historical_geometry_materialization_rule_v0.1.json"
   ],
   "affected_immutable_receipts": [
-    "benchmarks/frozen/relational_historical_geometry_local_reconstruction_v0.1.json",
-    "benchmarks/frozen/relational_historical_geometry_reproduction_v0.1.json"
+    "benchmarks/frozen/relational_historical_geometry_local_reconstruction_v0.1.json"
   ],
-  "immutable_history_policy": "Do not rewrite the two pre-existing frozen receipts. Interpret their malformed source_archive SHA literal only through this explicit clerical correction; all downstream archive verification must use the canonical 64-hex SHA-256.",
+  "immutable_history_policy": "Do not rewrite the pre-existing frozen local-reconstruction receipt. Interpret its malformed source_archive SHA literal only through this explicit clerical correction; the independent reproduction receipt and all downstream archive verification use the canonical 64-hex SHA-256.",
   "downstream_repair": ".github/workflows/relational-historical-from-bounded-binding-v02.yml",
   "exact_geometry_unchanged": {
     "species": 1000,
@@ -37,5 +36,8 @@
     "Study_C_pairwise_genetic_distances_opened": false,
     "Study_C_T_st_computed": false,
     "Study_C_beta_hist_computed": false
-  }
+  },
+  "canonical_receipts_already_correct": [
+    "benchmarks/frozen/relational_historical_geometry_reproduction_v0.1.json"
+  ]
 }

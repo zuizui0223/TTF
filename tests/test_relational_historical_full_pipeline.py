@@ -136,11 +136,13 @@ def test_historical_archive_hash_clerical_repair_is_explicit_and_downstream_is_c
     # Preserve the original response-blind receipts as immutable audit history.
     # Their truncated literal is repaired only through this explicit provenance map.
     assert local["source_archive"]["sha256"] == legacy
-    assert reproduction["source_archive"]["sha256"] == legacy
+    assert reproduction["source_archive"]["sha256"] == canonical
     assert correction["legacy_malformed_literal"] == legacy
     assert correction["canonical_source_archive_sha256"] == canonical
     assert correction["affected_immutable_receipts"] == [
         "benchmarks/frozen/relational_historical_geometry_local_reconstruction_v0.1.json",
+    ]
+    assert correction["canonical_receipts_already_correct"] == [
         "benchmarks/frozen/relational_historical_geometry_reproduction_v0.1.json",
     ]
     assert correction["relation_result_seen"] is False
