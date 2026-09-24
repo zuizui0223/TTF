@@ -319,6 +319,8 @@ def test_local_study_c_executor_preserves_one_shot_order_and_exact_inputs():
     assert 'env["PYTHONPATH"]' in text
     assert "cwd=REPO_ROOT" in text
     assert rule["editable_install_required"] is False
+    assert rule["chelsa_staging_manifest_required"] is True
+    assert "verify_chelsa_staging_manifest" in text
     assert rule["relation_result_seen"] is False
     assert rule["genetic_response_used"] is False
     assert all(v is False for v in rule["response_firewall"].values())
@@ -412,3 +414,75 @@ def test_local_study_c_subprocess_imports_from_source_bundle_without_install():
     )
     assert completed.returncode == 0, completed.stderr
     assert "--occurrences" in completed.stdout
+
+
+def test_local_study_c_chelsa_staging_manifest_detects_asset_drift(tmp_path):
+    import hashlib
+    import importlib.util
+    import json
+    import pytest
+
+    script = ROOT / "scripts/run_relational_historical_local_pipeline.py"
+    spec = importlib.util.spec_from_file_location("hist_local_chelsa", script)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+
+    staging_rule = json.loads(
+        (ROOT / "docs/supporting/relational_historical_chelsa_asset_staging_rule_v0.1.json").read_text()
+    )
+    hist = []
+    hist_paths = []
+    hist_urls = []
+    for i, name in enumerate(staging_rule["historical"]["exact_logical_filenames"]):
+        path = tmp_path / name
+        path.write_bytes(f"historical-{i}".encode())
+        url = f"https://example.invalid/{name}"
+        hist_paths.append(path)
+        hist_urls.append(url)
+        hist.append(
+            {
+                "filename": name,
+                "resolved_url": url,
+                "size_bytes": path.stat().st_size,
+                "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+            }
+        )
+    current = []
+    current_paths = []
+    for i, name in enumerate(staging_rule["current"]["exact_filenames"]):
+        path = tmp_path / name
+        path.write_bytes(f"current-{i}".encode())
+        current_paths.append(path)
+        current.append(
+            {
+                "filename": name,
+                "resolved_url": f"https://example.invalid/{name}",
+                "size_bytes": path.stat().st_size,
+                "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+            }
+        )
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text(
+        json.dumps(
+            {
+                "schema": "ttf_relational_historical_chelsa_asset_staging_manifest_v0.1",
+                "status": "PASS_EXACT_RESPONSE_BLIND_CHELSA_ASSET_STAGING",
+                "historical": hist,
+                "current": current,
+                "relation_result_seen": False,
+                "genetic_response_used": False,
+                "response_firewall": {
+                    "Study_C_sequence_identity_opened": False,
+                    "Study_C_pairwise_genetic_distances_opened": False,
+                    "Study_C_T_st_computed": False,
+                    "Study_C_beta_hist_computed": False,
+                },
+            }
+        )
+    )
+
+    module.verify_chelsa_staging_manifest(manifest, hist_paths, hist_urls, current_paths)
+    hist_paths[0].write_bytes(b"drift")
+    with pytest.raises(RuntimeError, match="size drift|SHA drift"):
+        module.verify_chelsa_staging_manifest(manifest, hist_paths, hist_urls, current_paths)

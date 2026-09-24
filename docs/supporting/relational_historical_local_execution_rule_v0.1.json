@@ -43,10 +43,12 @@
     "Study_C_T_st_computed": false,
     "Study_C_beta_hist_computed": false
   },
-  "executor_git_blob": "c121a7617f500003fbbacf6f1cd81232c501dc70",
+  "executor_git_blob": "f21dcfef0e88e0ff45e116c93d7f90dd327853b1",
   "binding_verification": "Compute canonical Git blob SHA-1 directly from each bound file byte sequence; no .git directory is required, so the same check works in a git archive snapshot.",
   "source_bundle_compatible": true,
   "git_blob_header_rule": "SHA1(b'blob ' + decimal_byte_length + bytes([0]) + file_bytes)",
   "offline_import_contract": "Executor sets PYTHONPATH=<exact source bundle>/src and subprocess cwd=<exact source bundle root>; editable/package installation is not required.",
-  "editable_install_required": false
+  "editable_install_required": false,
+  "chelsa_staging_manifest_required": true,
+  "chelsa_staging_validation": "Before relation construction, require exact staged historical/current basename, order, byte size and SHA-256; historical resolved URLs must also match the response-blind staging manifest."
 }

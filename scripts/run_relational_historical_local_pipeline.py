@@ -88,6 +88,49 @@ def verify_local_execution_rule(path: Path) -> dict:
     return payload
 
 
+def verify_chelsa_staging_manifest(
+    path: Path,
+    historical_assets: list[Path],
+    historical_urls: list[str],
+    current_assets: list[Path],
+) -> dict:
+    payload = load(path)
+    if payload.get("schema") != "ttf_relational_historical_chelsa_asset_staging_manifest_v0.1":
+        raise RuntimeError("unexpected Study-C CHELSA staging manifest")
+    if payload.get("status") != "PASS_EXACT_RESPONSE_BLIND_CHELSA_ASSET_STAGING":
+        raise RuntimeError("Study-C CHELSA staging did not pass")
+    if payload.get("relation_result_seen") is not False or payload.get("genetic_response_used") is not False:
+        raise RuntimeError("Study-C CHELSA staging firewall is open")
+    if any(bool(v) for v in payload["response_firewall"].values()):
+        raise RuntimeError("Study-C CHELSA staging response firewall is open")
+
+    historical = list(payload.get("historical", []))
+    current = list(payload.get("current", []))
+    if len(historical_assets) != 8 or len(historical_urls) != 8 or len(historical) != 8:
+        raise RuntimeError("Study-C CHELSA historical staging cardinality drift")
+    if len(current_assets) != 4 or len(current) != 4:
+        raise RuntimeError("Study-C CHELSA current staging cardinality drift")
+
+    for asset, url, expected in zip(historical_assets, historical_urls, historical):
+        if asset.name != expected["filename"]:
+            raise RuntimeError(f"Study-C historical asset order/name drift: {asset.name}")
+        if str(url) != str(expected["resolved_url"]):
+            raise RuntimeError(f"Study-C historical resolved URL drift: {asset.name}")
+        if asset.stat().st_size != int(expected["size_bytes"]):
+            raise RuntimeError(f"Study-C historical asset size drift: {asset.name}")
+        if sha256_path(asset) != str(expected["sha256"]):
+            raise RuntimeError(f"Study-C historical asset SHA drift: {asset.name}")
+
+    for asset, expected in zip(current_assets, current):
+        if asset.name != expected["filename"]:
+            raise RuntimeError(f"Study-C current asset order/name drift: {asset.name}")
+        if asset.stat().st_size != int(expected["size_bytes"]):
+            raise RuntimeError(f"Study-C current asset size drift: {asset.name}")
+        if sha256_path(asset) != str(expected["sha256"]):
+            raise RuntimeError(f"Study-C current asset SHA drift: {asset.name}")
+    return payload
+
+
 def verify_source_archive(path: Path) -> None:
     if not path.is_file():
         raise FileNotFoundError(path)
@@ -214,6 +257,7 @@ def main() -> int:
         type=Path,
         default=REPO_ROOT / "docs/supporting/relational_historical_local_execution_rule_v0.1.json",
     )
+    ap.add_argument("--chelsa-staging-manifest", type=Path, required=True)
     ap.add_argument("--historical-asset", type=Path, action="append", required=True)
     ap.add_argument("--historical-url", action="append", required=True)
     ap.add_argument("--current-bio1", type=Path, required=True)
@@ -229,6 +273,7 @@ def main() -> int:
     args.occurrence_binding = args.occurrence_binding.resolve()
     args.implementation_binding = args.implementation_binding.resolve()
     args.local_execution_rule = args.local_execution_rule.resolve()
+    args.chelsa_staging_manifest = args.chelsa_staging_manifest.resolve()
     args.historical_asset = [path.resolve() for path in args.historical_asset]
     args.current_bio1 = args.current_bio1.resolve()
     args.current_bio7 = args.current_bio7.resolve()
@@ -245,6 +290,12 @@ def main() -> int:
     verify_source_archive(args.source_archive)
     binding = verify_occurrence_binding(
         args.occurrence_binding, args.occurrences, args.occurrence_ledger
+    )
+    verify_chelsa_staging_manifest(
+        args.chelsa_staging_manifest,
+        args.historical_asset,
+        list(args.historical_url),
+        [args.current_bio1, args.current_bio7, args.current_bio12, args.current_bio15],
     )
 
     out = args.output_dir
