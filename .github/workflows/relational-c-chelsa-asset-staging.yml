@@ -1,0 +1,120 @@
+name: relational-c-chelsa-asset-staging
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - ".github/workflows/relational-c-chelsa-asset-staging.yml"
+      - "docs/supporting/relational_historical_chelsa_asset_staging_rule_v0.1.json"
+
+permissions:
+  contents: read
+
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify response-blind staging rule
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("docs/supporting/relational_historical_chelsa_asset_staging_rule_v0.1.json").read_text())
+          assert p["schema"]=="ttf_relational_historical_chelsa_asset_staging_rule_v0.1"
+          assert p["status"]=="FROZEN_RESPONSE_BLIND_ASSET_TRANSPORT_BEFORE_STUDY_C_RELATION_RESULT"
+          assert p["alternate_asset_selection_allowed"] is False
+          assert p["relation_result_seen"] is False
+          assert p["genetic_response_used"] is False
+          assert all(v is False for v in p["response_firewall"].values())
+          PY
+      - name: Resolve exact historical CHELSA-TraCE21k assets
+        run: |
+          set -euo pipefail
+          mkdir -p results/chelsa/historical results/chelsa/current
+          : > results/chelsa/resolved_historical_urls.tsv
+          for var in bio01 bio07 bio12 bio15; do
+            for idx in -190 20; do
+              logical="CHELSA_TraCE21K_${var}_${idx}_V1.0.tif"
+              alt="CHELSA_TraCE21k_${var}_${idx}_V1.0.tif"
+              found=""
+              for base in                 "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio"                 "https://os.zhdk.cloud.switch.ch/envicloud/chelsa/chelsa_V1/chelsa_trace/bio"; do
+                for remote in "$logical" "$alt"; do
+                  url="$base/$remote"
+                  if curl -L --fail --retry 5 --retry-delay 5 --connect-timeout 30 "$url" -o "results/chelsa/historical/$logical"; then
+                    found="$url"; break 2
+                  fi
+                done
+              done
+              test -n "$found"
+              printf '%s\t%s\n' "$logical" "$found" >> results/chelsa/resolved_historical_urls.tsv
+            done
+          done
+      - name: Download exact current CHELSA V2.1 nuisance assets
+        run: |
+          set -euo pipefail
+          base="https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio"
+          : > results/chelsa/resolved_current_urls.tsv
+          for v in 1 7 12 15; do
+            file="CHELSA_bio${v}_1981-2010_V.2.1.tif"
+            url="$base/$file"
+            curl -L --fail --retry 5 --retry-delay 5 --connect-timeout 30 "$url" -o "results/chelsa/current/$file"
+            printf '%s\t%s\n' "$file" "$url" >> results/chelsa/resolved_current_urls.tsv
+          done
+      - name: Freeze transport manifest
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          rule=json.loads(Path("docs/supporting/relational_historical_chelsa_asset_staging_rule_v0.1.json").read_text())
+          def sha(path):
+              h=hashlib.sha256()
+              with path.open("rb") as f:
+                  for chunk in iter(lambda:f.read(1<<20),b""):
+                      h.update(chunk)
+              return h.hexdigest()
+          hist_urls=dict(line.rstrip("\n").split("\t",1) for line in Path("results/chelsa/resolved_historical_urls.tsv").read_text().splitlines())
+          cur_urls=dict(line.rstrip("\n").split("\t",1) for line in Path("results/chelsa/resolved_current_urls.tsv").read_text().splitlines())
+          hist=[]
+          for name in rule["historical"]["exact_logical_filenames"]:
+              p=Path("results/chelsa/historical")/name
+              assert p.is_file() and p.stat().st_size>0
+              hist.append({"filename":name,"resolved_url":hist_urls[name],"size_bytes":p.stat().st_size,"sha256":sha(p)})
+          cur=[]
+          for name in rule["current"]["exact_filenames"]:
+              p=Path("results/chelsa/current")/name
+              assert p.is_file() and p.stat().st_size>0
+              cur.append({"filename":name,"resolved_url":cur_urls[name],"size_bytes":p.stat().st_size,"sha256":sha(p)})
+          payload={
+              "schema":"ttf_relational_historical_chelsa_asset_staging_manifest_v0.1",
+              "status":"PASS_EXACT_RESPONSE_BLIND_CHELSA_ASSET_STAGING",
+              "source_commit":"${{ github.sha }}",
+              "historical":hist,
+              "current":cur,
+              "relation_result_seen":False,
+              "genetic_response_used":False,
+              "response_firewall":rule["response_firewall"],
+          }
+          Path("results/chelsa/manifest.json").write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
+          print(json.dumps({"status":payload["status"],"historical":len(hist),"current":len(cur)},sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-v0.1
+          path: |
+            results/chelsa/historical/
+            results/chelsa/resolved_historical_urls.tsv
+            results/chelsa/manifest.json
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-current-v0.1
+          path: |
+            results/chelsa/current/
+            results/chelsa/resolved_current_urls.tsv
+            results/chelsa/manifest.json
+          retention-days: 30
+          if-no-files-found: error

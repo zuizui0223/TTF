@@ -1,0 +1,62 @@
+{
+  "schema": "ttf_relational_historical_chelsa_asset_staging_rule_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_ASSET_TRANSPORT_BEFORE_STUDY_C_RELATION_RESULT",
+  "frozen_on": "2026-09-24",
+  "purpose": "Pre-stage the exact already-frozen CHELSA historical and current raster assets so the transport-independent Study-C executor can run immediately after the frozen occurrence artifact is finalized.",
+  "parent_rule": "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json",
+  "historical": {
+    "dataset": "CHELSA-TraCE21k",
+    "version": "1.0",
+    "variables": [
+      "bio01",
+      "bio07",
+      "bio12",
+      "bio15"
+    ],
+    "time_indices": [
+      -190,
+      20
+    ],
+    "exact_logical_filenames": [
+      "CHELSA_TraCE21K_bio01_-190_V1.0.tif",
+      "CHELSA_TraCE21K_bio07_-190_V1.0.tif",
+      "CHELSA_TraCE21K_bio12_-190_V1.0.tif",
+      "CHELSA_TraCE21K_bio15_-190_V1.0.tif",
+      "CHELSA_TraCE21K_bio01_20_V1.0.tif",
+      "CHELSA_TraCE21K_bio07_20_V1.0.tif",
+      "CHELSA_TraCE21K_bio12_20_V1.0.tif",
+      "CHELSA_TraCE21K_bio15_20_V1.0.tif"
+    ],
+    "provider_base_candidates": [
+      "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio",
+      "https://os.zhdk.cloud.switch.ch/envicloud/chelsa/chelsa_V1/chelsa_trace/bio"
+    ],
+    "case_only_object_key_fallback_allowed": true
+  },
+  "current": {
+    "dataset": "CHELSA V2.1 1981-2010",
+    "variables": [
+      "bio1",
+      "bio7",
+      "bio12",
+      "bio15"
+    ],
+    "base_url": "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio",
+    "exact_filenames": [
+      "CHELSA_bio1_1981-2010_V.2.1.tif",
+      "CHELSA_bio7_1981-2010_V.2.1.tif",
+      "CHELSA_bio12_1981-2010_V.2.1.tif",
+      "CHELSA_bio15_1981-2010_V.2.1.tif"
+    ]
+  },
+  "use_boundary": "Staged assets are transport only. The existing Study-C asset receipt, relation builder, opportunity gate, qualification, character-mask and empirical-opening rules remain binding.",
+  "alternate_asset_selection_allowed": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
