@@ -214,3 +214,38 @@ def test_historical_implementation_binding_is_enforced_before_binding_open():
     assert receipt["relation_result_seen"] is False
     assert receipt["genetic_response_used"] is False
     assert all(v is False for v in receipt["response_firewall"].values())
+
+
+def test_historical_source_transport_holds_before_relation_without_closing_c():
+    import json
+
+    rule = json.loads(
+        (
+            ROOT
+            / "benchmarks/frozen/relational_historical_source_transport_hold_rule_v0.1.json"
+        ).read_text()
+    )
+    downstream = (
+        ROOT / ".github/workflows/relational-historical-from-bounded-binding-v02.yml"
+    ).read_text()
+
+    cache_gate = downstream.index("Hold Study C unless exact source archive is runner-readable")
+    occurrence = downstream.index("Verify exact bounded occurrence artifact")
+    historical_assets = downstream.index("Resolve and freeze exact CHELSA-TraCE21k assets")
+    relation = downstream.index("Build frozen historical/current relation")
+    assert cache_gate < occurrence < historical_assets < relation
+
+    assert "HOLD_EXACT_SOURCE_ARCHIVE_CACHE_UNAVAILABLE" in downstream
+    assert "HOLD_EXACT_SOURCE_ARCHIVE_CACHE_MISMATCH" in downstream
+    assert 'c_state="HOLD_TECHNICAL_SOURCE_TRANSPORT"' in downstream
+    assert 'final="HOLD_C_SOURCE_TRANSPORT"' in downstream
+    terminal_block = downstream.split('terminal={',1)[1].split('}',1)[0]
+    assert '"HOLD_C_SOURCE_TRANSPORT"' not in terminal_block
+
+    assert rule["terminal"] is False
+    assert rule["biological_null"] is False
+    assert rule["consumes_C_slot"] is False
+    assert rule["alpha_consumed"] is False
+    assert rule["relation_result_seen"] is False
+    assert rule["genetic_response_used"] is False
+    assert all(v is False for v in rule["response_firewall"].values())

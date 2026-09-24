@@ -67,7 +67,73 @@ jobs:
           python -m pip install -e .
           python -m pip install "rasterio>=1.4,<2"
 
+      - id: source_cache
+        name: Restore exact frozen archive before Study-C relation opening
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/phylogatr.zip
+          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5
+
+      - id: source_cache_gate
+        name: Hold Study C unless exact source archive is runner-readable
+        run: |
+          mkdir -p results/history
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          path=Path("/tmp/phylogatr.zip")
+          expected_sha="5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+          expected_size=274988692
+          exists=path.is_file()
+          size=path.stat().st_size if exists else None
+          digest=None
+          if exists:
+              h=hashlib.sha256()
+              with path.open("rb") as f:
+                  for chunk in iter(lambda:f.read(1<<20),b""):
+                      h.update(chunk)
+              digest=h.hexdigest()
+          ready=bool(exists and size==expected_size and digest==expected_sha)
+          if ready:
+              status="PASS_EXACT_SOURCE_ARCHIVE_RUNNER_READABLE"
+              reason=None
+          elif not exists:
+              status="HOLD_EXACT_SOURCE_ARCHIVE_CACHE_UNAVAILABLE"
+              reason="canonical cache key did not materialize /tmp/phylogatr.zip"
+          else:
+              status="HOLD_EXACT_SOURCE_ARCHIVE_CACHE_MISMATCH"
+              reason="runner-visible archive failed exact size/SHA-256 verification"
+          payload={
+              "schema":"ttf_relational_historical_source_transport_status_v0.1",
+              "status":status,
+              "reason":reason,
+              "expected_size_bytes":expected_size,
+              "observed_size_bytes":size,
+              "expected_sha256":expected_sha,
+              "observed_sha256":digest,
+              "cache_hit":os.environ.get("CACHE_HIT","").lower()=="true",
+              "C_relation_opened":False,
+              "genetic_response_used":False,
+              "scientific_rule_change":False,
+              "response_firewall":{
+                  "Study_C_sequence_identity_opened":False,
+                  "Study_C_pairwise_genetic_distances_opened":False,
+                  "Study_C_T_st_computed":False,
+                  "Study_C_beta_hist_computed":False,
+              },
+          }
+          Path("results/history/relational_historical_source_transport_status_v0.1.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"ready={'true' if ready else 'false'}\n")
+          print(json.dumps(payload,sort_keys=True))
+          PY
+        env:
+          CACHE_HIT: ${{ steps.source_cache.outputs.cache-hit }}
+
       - uses: actions/download-artifact@v4
+        if: steps.source_cache_gate.outputs.ready == 'true'
         with:
           name: relational-historical-occurrence-final-v0.2
           path: input/occ
@@ -76,6 +142,7 @@ jobs:
 
       - id: occ
         name: Verify exact bounded occurrence artifact
+        if: steps.source_cache_gate.outputs.ready == 'true'
         run: |
           mkdir -p results/history results/history-candidate rasters/history rasters/current
           python - <<'PY'
@@ -213,13 +280,6 @@ jobs:
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write(f"passed={'true' if p['status']=='PASS_RESPONSE_BLIND_HISTORICAL_RELATION_DESIGN' else 'false'}\n")
           PY
-
-      - name: Restore exact frozen phylogatR archive
-        if: steps.relation.outputs.passed == 'true'
-        uses: actions/cache/restore@v4
-        with:
-          path: /tmp/phylogatr.zip
-          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5
 
       - id: source
         name: Require and extract exact archive
@@ -381,6 +441,7 @@ jobs:
           out=Path("results/history")
           empirical=out/"relational_historical_empirical_result_v0.1.json"
           status_paths={
+              "source_transport":out/"relational_historical_source_transport_status_v0.1.json",
               "occurrence":out/"occurrence_ledger_v0.2.json",
               "external":out/"relational_historical_external_data_status_v0.1.json",
               "relation":out/"relational_historical_design_v0.1.json",
@@ -399,14 +460,20 @@ jobs:
               statuses={}
               for key,path in status_paths.items():
                   if path.is_file(): statuses[key]=json.loads(path.read_text()).get("status")
+              source_status=statuses.get("source_transport")
+              hold_source=isinstance(source_status,str) and source_status.startswith("HOLD_EXACT_SOURCE_ARCHIVE_")
               not_eval=any(isinstance(v,str) and (v.startswith("NOT_EVALUABLE_") or v=="NOT_EVALUABLE_C_CHARACTER_MASK_OR_SURVIVOR_GEOMETRY") for v in statuses.values())
-              c_state="NOT_EVALUABLE" if not_eval else "INCOMPLETE_TECHNICAL_EXECUTION"
+              if hold_source: c_state="HOLD_TECHNICAL_SOURCE_TRANSPORT"
+              elif not_eval: c_state="NOT_EVALUABLE"
+              else: c_state="INCOMPLETE_TECHNICAL_EXECUTION"
           if c_state=="POSITIVE":
               final="DETECTED_C_AFTER_B_NULL" if b_state=="STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER" else "DETECTED_C_AFTER_B_NOT_EVALUABLE"
           elif c_state=="QUALIFIED_NULL":
               final="CLOSED_TWO_NULLS" if b_state=="STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER" else "CLOSED_PARTIAL_NOT_EVALUABLE"
           elif c_state=="NOT_EVALUABLE":
               final="CLOSED_PARTIAL_NOT_EVALUABLE" if b_state=="STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER" else "CLOSED_NO_EVALUABLE_TEST"
+          elif c_state=="HOLD_TECHNICAL_SOURCE_TRANSPORT":
+              final="HOLD_C_SOURCE_TRANSPORT"
           else:
               final="INCOMPLETE_TECHNICAL_EXECUTION"
           payload={

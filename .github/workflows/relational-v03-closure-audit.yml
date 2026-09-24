@@ -50,6 +50,7 @@ on:
       - "benchmarks/frozen/relational_historical_archive_hash_provenance_correction_v0.1.json"
       - "benchmarks/frozen/relational_historical_downstream_activation_repair_v0.1.json"
       - "benchmarks/frozen/relational_historical_implementation_binding_v0.1.json"
+      - "benchmarks/frozen/relational_historical_source_transport_hold_rule_v0.1.json"
       - "benchmarks/frozen/relational_historical_geometry_reproduction_v0.1.json"
       - "docs/supporting/relational_historical_geometry_materialization_rule_v0.1.json"
       - "tests/test_relational_historical_full_pipeline.py"

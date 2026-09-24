@@ -1,0 +1,29 @@
+{
+  "schema": "ttf_relational_historical_source_transport_hold_rule_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_TECHNICAL_HOLD_BEFORE_STUDY_C_RELATION_RESULT",
+  "frozen_on": "2026-09-24",
+  "exact_source": {
+    "archive_name": "phylogatr_results_exact_20260918.zip",
+    "size_bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "cache_key": "phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+  },
+  "preflight_timing": "before occurrence artifact download, CHELSA asset resolution, historical relation construction, character mask, or any genetic response",
+  "if_cache_missing": "HOLD_EXACT_SOURCE_ARCHIVE_CACHE_UNAVAILABLE",
+  "if_cache_mismatch": "HOLD_EXACT_SOURCE_ARCHIVE_CACHE_MISMATCH",
+  "hold_program_state": "HOLD_C_SOURCE_TRANSPORT",
+  "terminal": false,
+  "biological_null": false,
+  "consumes_C_slot": false,
+  "alpha_consumed": false,
+  "resume_rule": "After the exact archive is runner-readable under the same cache key and SHA/size checks, rerun the identical already-frozen Study-C workflow. No predictor, panel, occurrence result, qualification rule, estimator, alpha, or interpretation may change.",
+  "scientific_rule_change": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
