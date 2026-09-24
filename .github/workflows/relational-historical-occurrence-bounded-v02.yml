@@ -26,9 +26,6 @@ jobs:
           assert p["status"]=="FROZEN_BOUNDED_RESPONSE_BLIND_OCCURRENCE_EXECUTION"
           assert p["superseded_execution"]["workflow_run_id"]==35881616617
           assert p["superseded_execution"]["artifacts_observed_at_freeze"]==0
-          obsolete=[int(row["workflow_run_id"]) for row in p["obsolete_prebounded_runs"]]
-          assert obsolete==[35881616617,35941160248,35941257277,35941294719]
-          assert all(int(row["artifacts_observed_at_freeze"])==0 for row in p["obsolete_prebounded_runs"])
           assert p["relation_result_seen"] is False
           assert p["genetic_response_used"] is False
           assert not any(bool(v) for v in p["response_firewall"].values())
@@ -38,19 +35,18 @@ jobs:
           ).strip()
           assert wf==p["implementation_git_blobs"][".github/workflows/relational-historical-occurrence-bounded-v02.yml"],(wf,p["implementation_git_blobs"][".github/workflows/relational-historical-occurrence-bounded-v02.yml"])
           PY
-      - name: Cancel all exact obsolete pre-bounded Study-C runs
+      - name: Cancel exact superseded Study-C occurrence run
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          for id in 35881616617 35941160248 35941257277 35941294719; do
-            state="$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$id" --jq '.status')"
-            conclusion="$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$id" --jq '.conclusion // ""')"
-            echo "run=$id status=$state conclusion=$conclusion"
-            if [ "$state" = "queued" ] || [ "$state" = "in_progress" ] || [ "$state" = "waiting" ] || [ "$state" = "requested" ] || [ "$state" = "pending" ]; then
-              gh api -X POST "/repos/$GITHUB_REPOSITORY/actions/runs/$id/cancel"
-            fi
-          done
+          id=35881616617
+          state="$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$id" --jq '.status')"
+          conclusion="$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$id" --jq '.conclusion // ""')"
+          echo "run=$id status=$state conclusion=$conclusion"
+          if [ "$state" = "queued" ] || [ "$state" = "in_progress" ] || [ "$state" = "waiting" ] || [ "$state" = "requested" ] || [ "$state" = "pending" ]; then
+            gh api -X POST "/repos/$GITHUB_REPOSITORY/actions/runs/$id/cancel"
+          fi
 
   verify:
     needs: cancel_obsolete
