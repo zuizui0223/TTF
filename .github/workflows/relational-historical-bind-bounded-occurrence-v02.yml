@@ -1,0 +1,166 @@
+name: relational-historical-bind-bounded-occurrence-v02
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_historical_occurrence_binding_trigger_v0.2.json"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  bind:
+    runs-on: ubuntu-latest
+    timeout-minutes: 720
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve frozen bounded occurrence run
+        id: frozen
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          python - <<'PY'
+          import json,os,time,urllib.request
+          from pathlib import Path
+
+          trigger=json.loads(Path("benchmarks/frozen/relational_historical_occurrence_binding_trigger_v0.2.json").read_text())
+          execution=json.loads(Path("benchmarks/frozen/relational_historical_occurrence_execution_v0.2.json").read_text())
+          assert trigger["schema"]=="ttf_relational_historical_occurrence_binding_trigger_v0.2"
+          assert trigger["status"]=="FROZEN_BIND_TO_BOUNDED_RUN_BEFORE_FINAL_OCCURRENCE_RESULT"
+          assert execution["schema"]=="ttf_relational_historical_occurrence_execution_v0.2"
+          assert execution["status"]=="FROZEN_BOUNDED_RESPONSE_BLIND_OCCURRENCE_EXECUTION"
+          assert trigger["workflow_name"]=="relational-historical-occurrence-bounded-v02"
+          assert trigger["artifact_name"]=="relational-historical-occurrence-final-v0.2"
+          assert trigger["relation_result_seen"] is False
+          assert trigger["genetic_response_used"] is False
+          assert all(v is False for v in trigger["response_firewall"].values())
+          run_id=int(trigger["workflow_run_id"])
+          headers={
+              "Authorization":f"Bearer {os.environ['GH_TOKEN']}",
+              "Accept":"application/vnd.github+json",
+              "X-GitHub-Api-Version":"2022-11-28",
+          }
+          deadline=time.time()+700*60
+          while True:
+              req=urllib.request.Request(
+                  f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{run_id}",
+                  headers=headers,
+              )
+              with urllib.request.urlopen(req,timeout=60) as response:
+                  run=json.load(response)
+              print({"run_id":run_id,"status":run["status"],"conclusion":run.get("conclusion")})
+              if run["status"]=="completed":
+                  if run.get("conclusion")!="success":
+                      raise SystemExit(f"bounded occurrence run did not complete successfully: {run.get('conclusion')}")
+                  assert run["name"]=="relational-historical-occurrence-bounded-v02"
+                  break
+              if time.time()>=deadline:
+                  raise SystemExit("timed out waiting for bounded Study-C occurrence run")
+              time.sleep(60)
+
+          req=urllib.request.Request(
+              f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{run_id}/artifacts?per_page=100",
+              headers=headers,
+          )
+          with urllib.request.urlopen(req,timeout=60) as response:
+              payload=json.load(response)
+          matches=[
+              a for a in payload.get("artifacts",[])
+              if a.get("name")==trigger["artifact_name"] and not a.get("expired")
+          ]
+          assert len(matches)==1,[(a.get("id"),a.get("name"),a.get("expired")) for a in matches]
+          artifact=matches[0]
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"run_id={run_id}\n")
+              f.write(f"head_sha={run['head_sha']}\n")
+              f.write(f"artifact_id={int(artifact['id'])}\n")
+          print({
+              "run_id":run_id,
+              "head_sha":run["head_sha"],
+              "artifact_id":artifact["id"],
+              "size_in_bytes":artifact["size_in_bytes"],
+          })
+          PY
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: relational-historical-occurrence-final-v0.2
+          path: input/final
+          run-id: ${{ steps.frozen.outputs.run_id }}
+          github-token: ${{ github.token }}
+
+      - name: Verify and freeze bounded occurrence binding
+        env:
+          RUN_ID: ${{ steps.frozen.outputs.run_id }}
+          HEAD_SHA: ${{ steps.frozen.outputs.head_sha }}
+          ARTIFACT_ID: ${{ steps.frozen.outputs.artifact_id }}
+        run: |
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          def sha(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+          trigger_path=Path("benchmarks/frozen/relational_historical_occurrence_binding_trigger_v0.2.json")
+          execution_path=Path("benchmarks/frozen/relational_historical_occurrence_execution_v0.2.json")
+          candidate_path=Path("benchmarks/frozen/relational_historical_candidates_v0.1.csv")
+          csv_path=Path("input/final/occurrences_v0.2.csv")
+          ledger_path=Path("input/final/occurrence_ledger_v0.2.json")
+          plan_path=Path("input/final/relational_historical_occurrence_retry_plan_v0.2.json")
+
+          trigger=json.loads(trigger_path.read_text())
+          ledger=json.loads(ledger_path.read_text())
+          plan=json.loads(plan_path.read_text())
+          assert ledger["schema"]=="ttf_relational_historical_occurrence_acquisition_v0.2"
+          assert ledger["species"]==1000
+          assert ledger["maximum_retry_rounds"]==1
+          assert ledger["additional_retry_authorized"] is False
+          assert ledger["relation_result_seen"] is False
+          assert ledger["genetic_response_used"] is False
+          assert all(v is False for v in ledger["response_firewall"].values())
+          assert plan["schema"]=="ttf_relational_historical_occurrence_retry_plan_v0.2"
+          assert plan["candidate_species"]==1000
+          assert plan["maximum_retry_rounds"]==1
+          assert plan["scientific_query_change"] is False
+          assert all(v is False for v in plan["response_firewall"].values())
+          assert sha(candidate_path)==trigger["candidate_csv_sha256"]
+
+          payload={
+              "schema":"ttf_relational_historical_occurrence_artifact_binding_v0.2",
+              "status":"FROZEN_FINAL_BOUNDED_RESPONSE_BLIND_OCCURRENCE_ARTIFACT",
+              "workflow_run_id":int(os.environ["RUN_ID"]),
+              "workflow_head_sha":os.environ["HEAD_SHA"],
+              "artifact_id":int(os.environ["ARTIFACT_ID"]),
+              "artifact_name":"relational-historical-occurrence-final-v0.2",
+              "execution_rule_sha256":sha(execution_path),
+              "binding_trigger_sha256":sha(trigger_path),
+              "candidate_csv_sha256":sha(candidate_path),
+              "occurrence_csv_sha256":sha(csv_path),
+              "occurrence_ledger_sha256":sha(ledger_path),
+              "retry_plan_sha256":sha(plan_path),
+              "occurrence_status":ledger["status"],
+              "initial_request_error_count":ledger["initial_request_error_count"],
+              "final_request_error_count":ledger["final_request_error_count"],
+              "retry_rounds_completed":ledger["retry_rounds_completed"],
+              "genetic_response_used":False,
+              "response_firewall":ledger["response_firewall"],
+          }
+          Path("benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps({
+              "occurrence_status":payload["occurrence_status"],
+              "initial_request_error_count":payload["initial_request_error_count"],
+              "final_request_error_count":payload["final_request_error_count"],
+          },sort_keys=True))
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json
+          git commit -m "Freeze bounded Study C occurrence artifact"
+          git fetch origin relational-ttf-v01
+          git rebase origin/relational-ttf-v01
+          git push origin HEAD:relational-ttf-v01
