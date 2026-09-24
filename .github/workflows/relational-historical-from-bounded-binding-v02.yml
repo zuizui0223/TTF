@@ -84,65 +84,6 @@ jobs:
           print({"status":p["status"],"species_passing_ge_30":p["species_passing_ge_30"],"final_request_error_count":p["final_request_error_count"]})
           PY
 
-      - name: Restore exact frozen phylogatR archive
-        if: steps.occ.outputs.passed == 'true'
-        uses: actions/cache/restore@v4
-        with:
-          path: /tmp/phylogatr.zip
-          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5
-
-      - id: source
-        name: Require and extract exact archive
-        if: steps.occ.outputs.passed == 'true'
-        run: |
-          set -euo pipefail
-          test -f /tmp/phylogatr.zip
-          test "$(stat -c%s /tmp/phylogatr.zip)" = "274988692"
-          echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5  /tmp/phylogatr.zip" | sha256sum -c -
-          rm -rf /tmp/phylogatr-c
-          mkdir -p /tmp/phylogatr-c
-          unzip -q /tmp/phylogatr.zip -d /tmp/phylogatr-c
-          ROOT="$(dirname "$(find /tmp/phylogatr-c -type f -name genes.txt -print -quit)")"
-          test -f "$ROOT/genes.txt"
-          test -f "$ROOT/cite.txt"
-          echo "root=$ROOT" >> "$GITHUB_OUTPUT"
-
-      - name: Reconstruct frozen Study-C response-blind geometry
-        if: steps.occ.outputs.passed == 'true'
-        run: |
-          python scripts/reconstruct_relational_historical_geometry.py \
-            --root "${{ steps.source.outputs.root }}" \
-            --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv \
-            --history-rule docs/supporting/relational_historical_climate_exposure_rule_v0.1.json \
-            --neighbor-fraction 0.15 \
-            --output-localities results/history-candidate/relational_historical_localities_v0.1.csv \
-            --output-edges results/history-candidate/relational_historical_edges_v0.1.csv \
-            --output-receipt results/history-candidate/relational_historical_geometry_v0.1.json
-
-      - name: Verify exact frozen response-blind geometry reproduction
-        if: steps.occ.outputs.passed == 'true'
-        run: |
-          python - <<'PY'
-          import hashlib,json
-          from pathlib import Path
-          def sha(path):
-              return hashlib.sha256(Path(path).read_bytes()).hexdigest()
-          r=json.loads(Path("benchmarks/frozen/relational_historical_geometry_local_reconstruction_v0.1.json").read_text())
-          assert r["schema"]=="ttf_relational_historical_geometry_local_reconstruction_v0.1"
-          assert r["status"]=="PASS_RESPONSE_BLIND_HISTORICAL_CANDIDATE_GEOMETRY_REPRODUCTION"
-          assert r["candidate_csv"]["sha256"]=="ad6375b4c2ec3f00193da90b3c68752f126d07cf18071b4f5dfddd422bdff7a1"
-          assert r["candidate_csv"]["species"]==1000
-          assert r["geometry"]["species"]==1000
-          assert r["geometry"]["per_species_frozen_invariant_failures"]==0
-          assert sha("results/history-candidate/relational_historical_localities_v0.1.csv")==r["geometry"]["localities_csv_sha256"]
-          assert sha("results/history-candidate/relational_historical_edges_v0.1.csv")==r["geometry"]["edges_csv_sha256"]
-          assert r["verification"]["all_species_exact"] is True
-          assert r["verification"]["sequence_identity_opened"] is False
-          assert r["verification"]["pairwise_genetic_distances_opened"] is False
-          assert not any(bool(v) for v in r["response_firewall"].values())
-          print({"geometry_status":r["status"],"edge_rows":r["geometry"]["edge_rows"]})
-          PY
-
       - id: hist_assets
         name: Resolve and freeze exact CHELSA-TraCE21k assets
         if: steps.occ.outputs.passed == 'true'
@@ -251,6 +192,65 @@ jobs:
           p=json.load(open("results/history/relational_historical_design_v0.1.json"))
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write(f"passed={'true' if p['status']=='PASS_RESPONSE_BLIND_HISTORICAL_RELATION_DESIGN' else 'false'}\n")
+          PY
+
+      - name: Restore exact frozen phylogatR archive
+        if: steps.relation.outputs.passed == 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/phylogatr.zip
+          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5
+
+      - id: source
+        name: Require and extract exact archive
+        if: steps.relation.outputs.passed == 'true'
+        run: |
+          set -euo pipefail
+          test -f /tmp/phylogatr.zip
+          test "$(stat -c%s /tmp/phylogatr.zip)" = "274988692"
+          echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5  /tmp/phylogatr.zip" | sha256sum -c -
+          rm -rf /tmp/phylogatr-c
+          mkdir -p /tmp/phylogatr-c
+          unzip -q /tmp/phylogatr.zip -d /tmp/phylogatr-c
+          ROOT="$(dirname "$(find /tmp/phylogatr-c -type f -name genes.txt -print -quit)")"
+          test -f "$ROOT/genes.txt"
+          test -f "$ROOT/cite.txt"
+          echo "root=$ROOT" >> "$GITHUB_OUTPUT"
+
+      - name: Reconstruct frozen Study-C response-blind geometry
+        if: steps.relation.outputs.passed == 'true'
+        run: |
+          python scripts/reconstruct_relational_historical_geometry.py \
+            --root "${{ steps.source.outputs.root }}" \
+            --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv \
+            --history-rule docs/supporting/relational_historical_climate_exposure_rule_v0.1.json \
+            --neighbor-fraction 0.15 \
+            --output-localities results/history-candidate/relational_historical_localities_v0.1.csv \
+            --output-edges results/history-candidate/relational_historical_edges_v0.1.csv \
+            --output-receipt results/history-candidate/relational_historical_geometry_v0.1.json
+
+      - name: Verify exact frozen response-blind geometry reproduction
+        if: steps.relation.outputs.passed == 'true'
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          def sha(path):
+              return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+          r=json.loads(Path("benchmarks/frozen/relational_historical_geometry_local_reconstruction_v0.1.json").read_text())
+          assert r["schema"]=="ttf_relational_historical_geometry_local_reconstruction_v0.1"
+          assert r["status"]=="PASS_RESPONSE_BLIND_HISTORICAL_CANDIDATE_GEOMETRY_REPRODUCTION"
+          assert r["candidate_csv"]["sha256"]=="ad6375b4c2ec3f00193da90b3c68752f126d07cf18071b4f5dfddd422bdff7a1"
+          assert r["candidate_csv"]["species"]==1000
+          assert r["geometry"]["species"]==1000
+          assert r["geometry"]["per_species_frozen_invariant_failures"]==0
+          assert sha("results/history-candidate/relational_historical_localities_v0.1.csv")==r["geometry"]["localities_csv_sha256"]
+          assert sha("results/history-candidate/relational_historical_edges_v0.1.csv")==r["geometry"]["edges_csv_sha256"]
+          assert r["verification"]["all_species_exact"] is True
+          assert r["verification"]["sequence_identity_opened"] is False
+          assert r["verification"]["pairwise_genetic_distances_opened"] is False
+          assert not any(bool(v) for v in r["response_firewall"].values())
+          print({"geometry_status":r["status"],"edge_rows":r["geometry"]["edge_rows"]})
           PY
 
       - id: opportunity
