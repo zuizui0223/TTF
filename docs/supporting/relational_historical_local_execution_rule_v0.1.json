@@ -50,5 +50,9 @@
   "offline_import_contract": "Executor sets PYTHONPATH=<exact source bundle>/src and subprocess cwd=<exact source bundle root>; editable/package installation is not required.",
   "editable_install_required": false,
   "chelsa_staging_manifest_required": true,
-  "chelsa_staging_validation": "Before relation construction, require exact staged historical/current basename, order, byte size and SHA-256; historical resolved URLs must also match the response-blind staging manifest."
+  "chelsa_staging_validation": "Before relation construction, require exact staged historical/current basename, order, byte size and SHA-256; historical resolved URLs must also match the response-blind staging manifest.",
+  "final_artifact_handoff_executor": "scripts/run_relational_historical_local_from_artifact.py",
+  "final_artifact_handoff_contract": "Require the exact frozen occurrence binding, verify the GitHub artifact ZIP SHA-256 against binding.artifact_digest, extract exactly one occurrences_v0.2.csv and occurrence_ledger_v0.2.json, verify both file hashes against the binding, then invoke the unchanged local Study-C executor.",
+  "final_artifact_alternative_run_allowed": false,
+  "final_artifact_repacking_allowed": false
 }
