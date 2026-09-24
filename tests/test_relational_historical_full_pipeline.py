@@ -277,3 +277,41 @@ def test_historical_cache_resume_cannot_select_a_new_run_or_reopen_terminal_c():
     ) in resume
     assert receipt["resume_result_selection_allowed"] is False
     assert receipt["default_branch_resume_commit_sha"] == "b80a248242646e69c1ed060049b09b6e453ce6c1"
+
+
+def test_local_study_c_executor_preserves_one_shot_order_and_exact_inputs():
+    import json
+
+    text = (ROOT / "scripts/run_relational_historical_local_pipeline.py").read_text()
+    rule = json.loads(
+        (
+            ROOT
+            / "docs/supporting/relational_historical_local_execution_rule_v0.1.json"
+        ).read_text()
+    )
+
+    verify_impl = text.index("verify_implementation_binding(args.implementation_binding)")
+    verify_source = text.index("verify_source_archive(args.source_archive)")
+    verify_binding = text.index("verify_occurrence_binding(")
+    relation = text.index('"scripts/build_relational_historical_relation.py"')
+    extract = text.index("with zipfile.ZipFile(args.source_archive) as archive:")
+    development_q = text.index('"scripts/run_relational_historical_climate_qualification.py"')
+    mask = text.index('"scripts/freeze_relational_historical_character_mask.py"')
+    survivor_q = text.index('"--qualification-stage", "confirmatory_survivor"')
+    authorization = text.index('"scripts/freeze_relational_historical_empirical_authorization.py"')
+    empirical = text.index('"scripts/run_relational_historical_empirical.py"')
+
+    assert verify_impl < verify_source < verify_binding < relation < extract
+    assert relation < development_q < mask < survivor_q < authorization < empirical
+    assert "35941577015" in text
+    assert "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab" in text
+    assert "274_988_692" in text
+    assert "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5" in text
+
+    assert rule["status"] == "FROZEN_RESPONSE_BLIND_EXECUTION_EQUIVALENCE_BEFORE_STUDY_C_RELATION_RESULT"
+    assert rule["result_selection_rerun_allowed"] is False
+    assert rule["alternate_predictor_allowed"] is False
+    assert rule["source_repacking_allowed"] is False
+    assert rule["relation_result_seen"] is False
+    assert rule["genetic_response_used"] is False
+    assert all(v is False for v in rule["response_firewall"].values())

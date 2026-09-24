@@ -1,0 +1,46 @@
+{
+  "schema": "ttf_relational_historical_local_execution_rule_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_EXECUTION_EQUIVALENCE_BEFORE_STUDY_C_RELATION_RESULT",
+  "frozen_on": "2026-09-24",
+  "purpose": "Allow the already-frozen Study-C analysis to execute outside GitHub Actions when the exact source archive is locally available but the GitHub Actions cache transport is unavailable.",
+  "scientific_equivalence": {
+    "same_occurrence_binding": true,
+    "same_candidate_universe": true,
+    "same_historical_assets": true,
+    "same_current_environment_assets": true,
+    "same_relation_builder": true,
+    "same_geometry_builder": true,
+    "same_opportunity_builder": true,
+    "same_qualification_runner": true,
+    "same_character_mask": true,
+    "same_survivor_requalification": true,
+    "same_empirical_authorization": true,
+    "same_empirical_runner": true,
+    "same_alpha": true,
+    "same_final_state_logic": true
+  },
+  "required_source_archive": {
+    "size_bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+  },
+  "required_occurrence_run": {
+    "workflow_run_id": 35941577015,
+    "workflow_head_sha": "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab",
+    "binding": "benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json"
+  },
+  "implementation_binding": "benchmarks/frozen/relational_historical_implementation_binding_v0.1.json",
+  "executor": "scripts/run_relational_historical_local_pipeline.py",
+  "sequence_identity_opening_boundary": "The executor verifies source bytes and may extract the archive after the external historical relation passes, but it does not execute nucleotide-identity empirical scoring until the exact survivor synthetic requalification passes and the one-shot authorization is created.",
+  "result_selection_rerun_allowed": false,
+  "alternate_predictor_allowed": false,
+  "alternate_panel_allowed": false,
+  "source_repacking_allowed": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
