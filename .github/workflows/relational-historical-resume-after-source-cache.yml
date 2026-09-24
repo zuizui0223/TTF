@@ -1,0 +1,65 @@
+name: relational-historical-resume-after-source-cache
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - "seed frozen phylogatr archive cache"
+    types:
+      - completed
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  gate:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    outputs:
+      authorized: ${{ steps.gate.outputs.authorized }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: relational-ttf-v01
+      - id: gate
+        name: Authorize response-blind resume only after frozen occurrence binding
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          binding=Path("benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json")
+          final=Path("benchmarks/frozen/relational_program_final_state_v0.3.json")
+          authorized=False
+          reason="binding_absent"
+          if binding.is_file():
+              b=json.loads(binding.read_text())
+              assert b["schema"]=="ttf_relational_historical_occurrence_artifact_binding_v0.2"
+              assert b["status"]=="FROZEN_FINAL_BOUNDED_RESPONSE_BLIND_OCCURRENCE_ARTIFACT"
+              assert b["workflow_run_id"]==35941577015
+              assert b["workflow_head_sha"]=="ffacbd51d58689a4b18f7a2cb920f5a1385a74ab"
+              assert b["genetic_response_used"] is False
+              assert all(v is False for v in b["response_firewall"].values())
+              if final.is_file():
+                  p=json.loads(final.read_text())
+                  state=p.get("final_state")
+                  terminal={
+                      "DETECTED_C_AFTER_B_NULL","DETECTED_C_AFTER_B_NOT_EVALUABLE",
+                      "CLOSED_TWO_NULLS","CLOSED_PARTIAL_NOT_EVALUABLE","CLOSED_NO_EVALUABLE_TEST",
+                  }
+                  if state in terminal:
+                      reason=f"terminal_state:{state}"
+                  else:
+                      authorized=True;reason="binding_present_nonterminal"
+              else:
+                  authorized=True;reason="binding_present_no_terminal_state"
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"authorized={'true' if authorized else 'false'}\n")
+          print({"authorized":authorized,"reason":reason})
+          PY
+
+  execute_c:
+    name: Resume exact frozen Study C
+    needs: gate
+    if: needs.gate.outputs.authorized == 'true'
+    uses: zuizui0223/TTF/.github/workflows/relational-historical-from-bounded-binding-v02.yml@17923b1719d9a3ebce842c959e4547378ac28338
