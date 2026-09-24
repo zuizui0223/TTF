@@ -43,8 +43,10 @@
     "Study_C_T_st_computed": false,
     "Study_C_beta_hist_computed": false
   },
-  "executor_git_blob": "583da5779729bb48aa367c24965e74cec2190fe3",
+  "executor_git_blob": "c121a7617f500003fbbacf6f1cd81232c501dc70",
   "binding_verification": "Compute canonical Git blob SHA-1 directly from each bound file byte sequence; no .git directory is required, so the same check works in a git archive snapshot.",
   "source_bundle_compatible": true,
-  "git_blob_header_rule": "SHA1(b'blob ' + decimal_byte_length + bytes([0]) + file_bytes)"
+  "git_blob_header_rule": "SHA1(b'blob ' + decimal_byte_length + bytes([0]) + file_bytes)",
+  "offline_import_contract": "Executor sets PYTHONPATH=<exact source bundle>/src and subprocess cwd=<exact source bundle root>; editable/package installation is not required.",
+  "editable_install_required": false
 }

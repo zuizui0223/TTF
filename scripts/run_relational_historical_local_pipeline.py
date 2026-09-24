@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -13,6 +14,7 @@ from pathlib import Path
 
 SOURCE_SHA = "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
 SOURCE_SIZE = 274_988_692
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def sha256_path(path: Path) -> str:
@@ -37,7 +39,16 @@ def load(path: Path) -> dict:
 
 
 def run(*args: str) -> None:
-    subprocess.run([sys.executable, *args], check=True)
+    env = os.environ.copy()
+    src = str(REPO_ROOT / "src")
+    prior = env.get("PYTHONPATH", "")
+    env["PYTHONPATH"] = src if not prior else src + os.pathsep + prior
+    subprocess.run(
+        [sys.executable, *args],
+        check=True,
+        cwd=REPO_ROOT,
+        env=env,
+    )
 
 
 def verify_implementation_binding(path: Path) -> dict:
@@ -51,7 +62,7 @@ def verify_implementation_binding(path: Path) -> dict:
     if any(bool(v) for v in payload["response_firewall"].values()):
         raise RuntimeError("Study-C implementation binding response firewall is open")
     for rel, expected in payload["git_blobs"].items():
-        file_path = Path(rel)
+        file_path = REPO_ROOT / rel
         if not file_path.is_file():
             raise FileNotFoundError(f"missing Study-C bound implementation file: {rel}")
         actual = git_blob_sha_path(file_path)
@@ -108,7 +119,7 @@ def verify_occurrence_binding(binding_path: Path, occurrence_csv: Path, occurren
 
 
 def final_state(output_dir: Path) -> dict:
-    transition = load(Path("benchmarks/frozen/relational_environment_program_transition_v0.3.json"))
+    transition = load(REPO_ROOT / "benchmarks/frozen/relational_environment_program_transition_v0.3.json")
     b_state = transition["B_state"]
     empirical = output_dir / "relational_historical_empirical_result_v0.1.json"
     status_paths = {
@@ -191,17 +202,17 @@ def main() -> int:
     ap.add_argument(
         "--occurrence-binding",
         type=Path,
-        default=Path("benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json"),
+        default=REPO_ROOT / "benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json",
     )
     ap.add_argument(
         "--implementation-binding",
         type=Path,
-        default=Path("benchmarks/frozen/relational_historical_implementation_binding_v0.1.json"),
+        default=REPO_ROOT / "benchmarks/frozen/relational_historical_implementation_binding_v0.1.json",
     )
     ap.add_argument(
         "--local-execution-rule",
         type=Path,
-        default=Path("docs/supporting/relational_historical_local_execution_rule_v0.1.json"),
+        default=REPO_ROOT / "docs/supporting/relational_historical_local_execution_rule_v0.1.json",
     )
     ap.add_argument("--historical-asset", type=Path, action="append", required=True)
     ap.add_argument("--historical-url", action="append", required=True)
@@ -211,6 +222,20 @@ def main() -> int:
     ap.add_argument("--current-bio15", type=Path, required=True)
     ap.add_argument("--output-dir", type=Path, required=True)
     args = ap.parse_args()
+
+    args.source_archive = args.source_archive.resolve()
+    args.occurrences = args.occurrences.resolve()
+    args.occurrence_ledger = args.occurrence_ledger.resolve()
+    args.occurrence_binding = args.occurrence_binding.resolve()
+    args.implementation_binding = args.implementation_binding.resolve()
+    args.local_execution_rule = args.local_execution_rule.resolve()
+    args.historical_asset = [path.resolve() for path in args.historical_asset]
+    args.current_bio1 = args.current_bio1.resolve()
+    args.current_bio7 = args.current_bio7.resolve()
+    args.current_bio12 = args.current_bio12.resolve()
+    args.current_bio15 = args.current_bio15.resolve()
+    args.output_dir = args.output_dir.resolve()
+    os.chdir(REPO_ROOT)
 
     if len(args.historical_asset) != 8 or len(args.historical_url) != 8:
         raise RuntimeError("Study-C local executor requires exact eight historical assets and URLs")
@@ -293,7 +318,7 @@ def main() -> int:
         "--output-receipt", str(geometry_receipt),
     )
 
-    independent = load(Path("benchmarks/frozen/relational_historical_geometry_local_reconstruction_v0.1.json"))
+    independent = load(REPO_ROOT / "benchmarks/frozen/relational_historical_geometry_local_reconstruction_v0.1.json")
     if sha256_path(localities) != independent["geometry"]["localities_csv_sha256"]:
         raise RuntimeError("Study-C locality geometry SHA drift")
     if sha256_path(edges) != independent["geometry"]["edges_csv_sha256"]:

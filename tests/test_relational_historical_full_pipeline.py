@@ -316,6 +316,9 @@ def test_local_study_c_executor_preserves_one_shot_order_and_exact_inputs():
     assert rule["source_bundle_compatible"] is True
     assert "git_blob_sha_path" in text
     assert "git rev-parse" not in text
+    assert 'env["PYTHONPATH"]' in text
+    assert "cwd=REPO_ROOT" in text
+    assert rule["editable_install_required"] is False
     assert rule["relation_result_seen"] is False
     assert rule["genetic_response_used"] is False
     assert all(v is False for v in rule["response_firewall"].values())
@@ -385,3 +388,27 @@ def test_local_study_c_blob_binding_matches_without_git_metadata():
         (ROOT / "docs/supporting/relational_historical_local_execution_rule_v0.1.json").read_text()
     )
     assert module.git_blob_sha_path(script) == rule["executor_git_blob"]
+
+
+def test_local_study_c_subprocess_imports_from_source_bundle_without_install():
+    import os
+    import subprocess
+    import sys
+
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(ROOT / "src")
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "scripts/build_relational_historical_relation.py",
+            "--help",
+        ],
+        cwd=ROOT,
+        env=env,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        check=False,
+    )
+    assert completed.returncode == 0, completed.stderr
+    assert "--occurrences" in completed.stdout
