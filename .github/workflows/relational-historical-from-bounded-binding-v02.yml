@@ -1,0 +1,413 @@
+name: relational-historical-from-bounded-binding-v02
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 480
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: binding
+        name: Verify frozen bounded occurrence binding and C authorization
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          b=json.loads(Path("benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json").read_text())
+          t=json.loads(Path("benchmarks/frozen/relational_environment_program_transition_v0.3.json").read_text())
+          rule=json.loads(Path("docs/supporting/relational_program_transition_rule_v0.1.json").read_text())
+          assert b["schema"]=="ttf_relational_historical_occurrence_artifact_binding_v0.2"
+          assert b["status"]=="FROZEN_RESPONSE_BLIND_BOUNDED_OCCURRENCE_ARTIFACT"
+          assert b["artifact_name"]=="relational-historical-occurrence-final-v0.2"
+          assert b["genetic_response_used"] is False
+          assert all(v is False for v in b["response_firewall"].values())
+          assert t["schema"]==rule["receipt_schema"]
+          assert t["B_state"]=="NOT_EVALUABLE_B"
+          assert t["C_open_authorized"] is True
+          assert t["C_entry_state"]=="PROCEED_TO_C_AFTER_B_NOT_EVALUABLE"
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"run_id={int(b['workflow_run_id'])}\n")
+          PY
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          python -m pip install -e .
+          python -m pip install "rasterio>=1.4,<2"
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: relational-historical-occurrence-final-v0.2
+          path: input/occ
+          run-id: ${{ steps.binding.outputs.run_id }}
+          github-token: ${{ github.token }}
+
+      - id: occ
+        name: Verify exact bounded occurrence artifact
+        run: |
+          mkdir -p results/history results/history-candidate rasters/history rasters/current
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+          b=json.loads(Path("benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json").read_text())
+          ledger=Path("input/occ/occurrence_ledger_v0.2.json")
+          csv=Path("input/occ/occurrences_v0.2.csv")
+          assert sha(csv)==b["occurrence_csv_sha256"]
+          assert sha(ledger)==b["occurrence_ledger_sha256"]
+          p=json.loads(ledger.read_text())
+          assert p["schema"]=="ttf_relational_historical_occurrence_acquisition_v0.2"
+          assert p["species"]==1000
+          assert p["maximum_retry_rounds"]==1
+          assert p["additional_retry_authorized"] is False
+          assert p["scientific_query_change"] is False
+          assert p["relation_result_seen"] is False
+          assert p["genetic_response_used"] is False
+          assert p["status"]==b["occurrence_status"]
+          assert all(v is False for v in p["response_firewall"].values())
+          passed=p["status"]=="PASS_TO_HISTORICAL_ASSET_EXTRACTION"
+          Path("results/history/occurrence_ledger_v0.2.json").write_bytes(ledger.read_bytes())
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if passed else 'false'}\n")
+          print({"status":p["status"],"species_passing_ge_30":p["species_passing_ge_30"],"final_request_error_count":p["final_request_error_count"]})
+          PY
+
+      - name: Restore exact frozen phylogatR archive
+        if: steps.occ.outputs.passed == 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/phylogatr.zip
+          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5
+
+      - id: source
+        name: Require and extract exact archive
+        if: steps.occ.outputs.passed == 'true'
+        run: |
+          set -euo pipefail
+          test -f /tmp/phylogatr.zip
+          test "$(stat -c%s /tmp/phylogatr.zip)" = "274988692"
+          echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5  /tmp/phylogatr.zip" | sha256sum -c -
+          rm -rf /tmp/phylogatr-c
+          mkdir -p /tmp/phylogatr-c
+          unzip -q /tmp/phylogatr.zip -d /tmp/phylogatr-c
+          ROOT="$(dirname "$(find /tmp/phylogatr-c -type f -name genes.txt -print -quit)")"
+          test -f "$ROOT/genes.txt"
+          test -f "$ROOT/cite.txt"
+          echo "root=$ROOT" >> "$GITHUB_OUTPUT"
+
+      - name: Reconstruct frozen Study-C response-blind geometry
+        if: steps.occ.outputs.passed == 'true'
+        run: |
+          python scripts/reconstruct_relational_historical_geometry.py \
+            --root "${{ steps.source.outputs.root }}" \
+            --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv \
+            --history-rule docs/supporting/relational_historical_climate_exposure_rule_v0.1.json \
+            --neighbor-fraction 0.15 \
+            --output-localities results/history-candidate/relational_historical_localities_v0.1.csv \
+            --output-edges results/history-candidate/relational_historical_edges_v0.1.csv \
+            --output-receipt results/history-candidate/relational_historical_geometry_v0.1.json
+
+      - id: hist_assets
+        name: Resolve and freeze exact CHELSA-TraCE21k assets
+        if: steps.occ.outputs.passed == 'true'
+        run: |
+          set -u
+          : > results/history/resolved_urls.txt
+          failed=0
+          for var in bio01 bio07 bio12 bio15; do
+            for idx in -190 20; do
+              logical="CHELSA_TraCE21K_${var}_${idx}_V1.0.tif"
+              alt="CHELSA_TraCE21k_${var}_${idx}_V1.0.tif"
+              found=""
+              for base in \
+                "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio" \
+                "https://os.zhdk.cloud.switch.ch/envicloud/chelsa/chelsa_V1/chelsa_trace/bio"; do
+                for remote in "$logical" "$alt"; do
+                  url="$base/$remote"
+                  if curl -L --fail --retry 5 --retry-delay 5 --connect-timeout 30 "$url" -o "rasters/history/$logical"; then
+                    found="$url"; break 2
+                  fi
+                done
+              done
+              if [ -z "$found" ]; then failed=1; break 2; fi
+              echo "$found" >> results/history/resolved_urls.txt
+            done
+          done
+          if [ "$failed" = "1" ]; then
+            python - <<'PY'
+          import json
+          from pathlib import Path
+          Path("results/history/relational_historical_external_data_status_v0.1.json").write_text(
+              json.dumps({"schema":"ttf_relational_historical_external_data_status_v0.1","status":"NOT_EVALUABLE_HISTORICAL_EXTERNAL_DATA","stage":"historical_asset_resolution"},indent=2,sort_keys=True)+"\n"
+          )
+          PY
+            echo "passed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          mapfile -t URLS < results/history/resolved_urls.txt
+          python scripts/freeze_relational_historical_asset_receipt.py \
+            --rule docs/supporting/relational_historical_climate_exposure_rule_v0.1.json \
+            --asset rasters/history/CHELSA_TraCE21K_bio01_-190_V1.0.tif \
+            --asset rasters/history/CHELSA_TraCE21K_bio07_-190_V1.0.tif \
+            --asset rasters/history/CHELSA_TraCE21K_bio12_-190_V1.0.tif \
+            --asset rasters/history/CHELSA_TraCE21K_bio15_-190_V1.0.tif \
+            --asset rasters/history/CHELSA_TraCE21K_bio01_20_V1.0.tif \
+            --asset rasters/history/CHELSA_TraCE21K_bio07_20_V1.0.tif \
+            --asset rasters/history/CHELSA_TraCE21K_bio12_20_V1.0.tif \
+            --asset rasters/history/CHELSA_TraCE21K_bio15_20_V1.0.tif \
+            --resolved-url "${URLS[0]}" --resolved-url "${URLS[2]}" \
+            --resolved-url "${URLS[4]}" --resolved-url "${URLS[6]}" \
+            --resolved-url "${URLS[1]}" --resolved-url "${URLS[3]}" \
+            --resolved-url "${URLS[5]}" --resolved-url "${URLS[7]}" \
+            --output results/history/historical_asset_receipt_v0.1.json
+          echo "passed=true" >> "$GITHUB_OUTPUT"
+
+      - id: current_assets
+        name: Download frozen current CHELSA V2.1 nuisance layers
+        if: steps.hist_assets.outputs.passed == 'true'
+        run: |
+          set -u
+          base="https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio"
+          failed=0
+          for v in 1 7 12 15; do
+            if ! curl -L --fail --retry 5 --retry-delay 5 "$base/CHELSA_bio${v}_1981-2010_V.2.1.tif" -o "rasters/current/CHELSA_bio${v}_1981-2010_V.2.1.tif"; then
+              failed=1; break
+            fi
+          done
+          if [ "$failed" = "1" ]; then
+            python - <<'PY'
+          import json
+          from pathlib import Path
+          Path("results/history/relational_historical_external_data_status_v0.1.json").write_text(
+              json.dumps({"schema":"ttf_relational_historical_external_data_status_v0.1","status":"NOT_EVALUABLE_HISTORICAL_EXTERNAL_DATA","stage":"current_environment_asset_resolution"},indent=2,sort_keys=True)+"\n"
+          )
+          PY
+            echo "passed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "passed=true" >> "$GITHUB_OUTPUT"
+
+      - id: relation
+        name: Build frozen historical/current relation
+        if: steps.current_assets.outputs.passed == 'true'
+        run: |
+          python scripts/build_relational_historical_relation.py \
+            --occurrences input/occ/occurrences_v0.2.csv \
+            --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv \
+            --rule docs/supporting/relational_historical_climate_exposure_rule_v0.1.json \
+            --asset-receipt results/history/historical_asset_receipt_v0.1.json \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio01_-190_V1.0.tif \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio07_-190_V1.0.tif \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio12_-190_V1.0.tif \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio15_-190_V1.0.tif \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio01_20_V1.0.tif \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio07_20_V1.0.tif \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio12_20_V1.0.tif \
+            --historical-asset rasters/history/CHELSA_TraCE21K_bio15_20_V1.0.tif \
+            --current-bio1 rasters/current/CHELSA_bio1_1981-2010_V.2.1.tif \
+            --current-bio7 rasters/current/CHELSA_bio7_1981-2010_V.2.1.tif \
+            --current-bio12 rasters/current/CHELSA_bio12_1981-2010_V.2.1.tif \
+            --current-bio15 rasters/current/CHELSA_bio15_1981-2010_V.2.1.tif \
+            --output-npz results/history/relational_historical_design_v0.1.npz \
+            --output-summary results/history/relational_historical_design_v0.1.json
+          python - <<'PY'
+          import json,os
+          p=json.load(open("results/history/relational_historical_design_v0.1.json"))
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if p['status']=='PASS_RESPONSE_BLIND_HISTORICAL_RELATION_DESIGN' else 'false'}\n")
+          PY
+
+      - id: opportunity
+        name: Attach frozen historical opportunity geometry
+        if: steps.relation.outputs.passed == 'true'
+        run: |
+          python scripts/attach_relational_historical_opportunity.py \
+            --historical-design results/history/relational_historical_design_v0.1.npz \
+            --edges results/history-candidate/relational_historical_edges_v0.1.csv \
+            --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv \
+            --opportunity-rule docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json \
+            --output-npz results/history/relational_historical_opportunity_v0.1.npz \
+            --output-summary results/history/relational_historical_opportunity_v0.1.json
+          python - <<'PY'
+          import json,os
+          p=json.load(open("results/history/relational_historical_opportunity_v0.1.json"))
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if p['status']=='PASS_TO_HISTORICAL_DEVELOPMENT_SYNTHETIC_QUALIFICATION' else 'false'}\n")
+          PY
+
+      - id: qualification
+        name: Run frozen Study-C synthetic qualification
+        if: steps.opportunity.outputs.passed == 'true'
+        run: |
+          python scripts/run_relational_historical_climate_qualification.py \
+            --opportunity-design results/history/relational_historical_opportunity_v0.1.npz \
+            --opportunity-summary results/history/relational_historical_opportunity_v0.1.json \
+            --rule docs/supporting/relational_historical_climate_qualification_rule_v0.1.json \
+            --output results/history/relational_historical_qualification_v0.1.json
+          python - <<'PY'
+          import json,os
+          p=json.load(open("results/history/relational_historical_qualification_v0.1.json"))
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if p['status']=='PASS_TO_HISTORICAL_CONFIRMATORY_CHARACTER_MASK_PREPARATION' and p['gates']['overall_pass'] is True else 'false'}\n")
+          PY
+
+      - name: Open Study-C confirmatory canonical-valid masks only
+        if: steps.qualification.outputs.passed == 'true'
+        run: |
+          python scripts/freeze_relational_historical_character_mask.py \
+            --root "${{ steps.source.outputs.root }}" \
+            --opportunity-design results/history/relational_historical_opportunity_v0.1.npz \
+            --opportunity-summary results/history/relational_historical_opportunity_v0.1.json \
+            --development-qualification results/history/relational_historical_qualification_v0.1.json \
+            --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv \
+            --mask-rule docs/supporting/relational_historical_climate_character_mask_rule_v0.1.json \
+            --output-mask-result results/history/relational_historical_character_mask_result_v0.1.json \
+            --output-survivor-design results/history/relational_historical_survivor_design_v0.1.npz \
+            --output-survivor-summary results/history/relational_historical_survivor_summary_v0.1.json
+
+      - id: survivor
+        name: Requalify exact Study-C survivor geometry
+        if: steps.qualification.outputs.passed == 'true'
+        run: |
+          python scripts/run_relational_historical_climate_qualification.py \
+            --opportunity-design results/history/relational_historical_survivor_design_v0.1.npz \
+            --opportunity-summary results/history/relational_historical_survivor_summary_v0.1.json \
+            --rule docs/supporting/relational_historical_climate_qualification_rule_v0.1.json \
+            --qualification-stage confirmatory_survivor \
+            --output results/history/relational_historical_survivor_qualification_v0.1.json
+          python - <<'PY'
+          import json,os
+          p=json.load(open("results/history/relational_historical_survivor_qualification_v0.1.json"))
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if p['status']=='PASS_TO_HISTORICAL_EMPIRICAL_IDENTITY_OPENING_PREPARATION' and p['gates']['overall_pass'] is True else 'false'}\n")
+          PY
+
+      - name: Freeze one-shot Study-C identity-opening authorization
+        if: steps.survivor.outputs.passed == 'true'
+        run: |
+          python scripts/freeze_relational_historical_empirical_authorization.py \
+            --root "${{ steps.source.outputs.root }}" \
+            --source-archive-sha256 5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5 \
+            --survivor-design results/history/relational_historical_survivor_design_v0.1.npz \
+            --survivor-summary results/history/relational_historical_survivor_summary_v0.1.json \
+            --mask-result results/history/relational_historical_character_mask_result_v0.1.json \
+            --survivor-qualification results/history/relational_historical_survivor_qualification_v0.1.json \
+            --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv \
+            --opening-rule docs/supporting/relational_historical_climate_empirical_opening_rule_v0.1.json \
+            --output results/history/relational_historical_identity_opening_authorization_v0.1.json
+
+      - id: empirical
+        name: Execute authorized one-shot Study-C empirical test
+        if: steps.survivor.outputs.passed == 'true'
+        run: |
+          python scripts/run_relational_historical_empirical.py \
+            --root "${{ steps.source.outputs.root }}" \
+            --source-archive-sha256 5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5 \
+            --survivor-design results/history/relational_historical_survivor_design_v0.1.npz \
+            --survivor-summary results/history/relational_historical_survivor_summary_v0.1.json \
+            --mask-result results/history/relational_historical_character_mask_result_v0.1.json \
+            --survivor-qualification results/history/relational_historical_survivor_qualification_v0.1.json \
+            --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv \
+            --opening-rule docs/supporting/relational_historical_climate_empirical_opening_rule_v0.1.json \
+            --authorization results/history/relational_historical_identity_opening_authorization_v0.1.json \
+            --output results/history/relational_historical_empirical_result_v0.1.json
+
+      - name: Freeze final finite-program state
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          b=json.loads(Path("benchmarks/frozen/relational_environment_program_transition_v0.3.json").read_text())
+          b_state=b["B_state"]
+          if b_state not in {"STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER","NOT_EVALUABLE_B"}:
+              raise SystemExit(f"Study-C workflow cannot finalize from B state {b_state}")
+          out=Path("results/history")
+          empirical=out/"relational_historical_empirical_result_v0.1.json"
+          status_paths={
+              "occurrence":out/"occurrence_ledger_v0.2.json",
+              "external":out/"relational_historical_external_data_status_v0.1.json",
+              "relation":out/"relational_historical_design_v0.1.json",
+              "opportunity":out/"relational_historical_opportunity_v0.1.json",
+              "development_qualification":out/"relational_historical_qualification_v0.1.json",
+              "survivor_qualification":out/"relational_historical_survivor_qualification_v0.1.json",
+          }
+          c_state=None;c_decision=None;c_p=None
+          if empirical.is_file():
+              r=json.loads(empirical.read_text())
+              c_decision=r["decision"];c_p=r["primary"]["p_value_one_sided"]
+              if c_decision=="STUDY_C_HISTORICAL_RELATIONAL_POSITIVE": c_state="POSITIVE"
+              elif c_decision=="STUDY_C_HISTORICAL_RELATIONAL_NULL_WITH_QUALIFIED_POWER": c_state="QUALIFIED_NULL"
+              else: raise SystemExit(f"unexpected Study-C decision {c_decision}")
+          else:
+              statuses={}
+              for key,path in status_paths.items():
+                  if path.is_file(): statuses[key]=json.loads(path.read_text()).get("status")
+              not_eval=any(isinstance(v,str) and (v.startswith("NOT_EVALUABLE_") or v=="NOT_EVALUABLE_C_CHARACTER_MASK_OR_SURVIVOR_GEOMETRY") for v in statuses.values())
+              c_state="NOT_EVALUABLE" if not_eval else "INCOMPLETE_TECHNICAL_EXECUTION"
+          if c_state=="POSITIVE":
+              final="DETECTED_C_AFTER_B_NULL" if b_state=="STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER" else "DETECTED_C_AFTER_B_NOT_EVALUABLE"
+          elif c_state=="QUALIFIED_NULL":
+              final="CLOSED_TWO_NULLS" if b_state=="STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER" else "CLOSED_PARTIAL_NOT_EVALUABLE"
+          elif c_state=="NOT_EVALUABLE":
+              final="CLOSED_PARTIAL_NOT_EVALUABLE" if b_state=="STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER" else "CLOSED_NO_EVALUABLE_TEST"
+          else:
+              final="INCOMPLETE_TECHNICAL_EXECUTION"
+          payload={
+              "schema":"ttf_relational_program_final_state_v0.3",
+              "B_state":b_state,
+              "C_state":c_state,
+              "C_decision":c_decision,
+              "C_p_one_sided":c_p,
+              "final_state":final,
+              "no_additional_predictor_authorized":True,
+          }
+          (out/"relational_program_final_state_v0.3.json").write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
+          print(json.dumps(payload,sort_keys=True))
+          PY
+
+      - name: Persist terminal finite-program state
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("results/history/relational_program_final_state_v0.3.json")
+          if not p.is_file(): raise SystemExit(0)
+          state=json.loads(p.read_text()).get("final_state")
+          terminal={"DETECTED_C_AFTER_B_NULL","DETECTED_C_AFTER_B_NOT_EVALUABLE","CLOSED_TWO_NULLS","CLOSED_PARTIAL_NOT_EVALUABLE","CLOSED_NO_EVALUABLE_TEST"}
+          if state not in terminal:
+              print({"not_persisted_nonterminal_state":state});raise SystemExit(0)
+          Path("benchmarks/frozen/relational_program_final_state_v0.3.json").write_bytes(p.read_bytes())
+          PY
+          if [ -f benchmarks/frozen/relational_program_final_state_v0.3.json ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add benchmarks/frozen/relational_program_final_state_v0.3.json
+            git commit -m "Freeze terminal relational v0.3 state"
+            git fetch origin relational-ttf-v01
+            git rebase origin/relational-ttf-v01
+            git push origin HEAD:relational-ttf-v01
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: relational-historical-bounded-pipeline-v0.2
+          path: |
+            results/history/
+            results/history-candidate/
+          retention-days: 30
+          if-no-files-found: warn
