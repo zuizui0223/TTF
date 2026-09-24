@@ -51,6 +51,7 @@ on:
       - "benchmarks/frozen/relational_historical_geometry_reproduction_v0.1.json"
       - "docs/supporting/relational_historical_geometry_materialization_rule_v0.1.json"
       - "tests/test_relational_historical_full_pipeline.py"
+      - "tests/test_relational_historical_bounded_transport.py"
       - "docs/supporting/relational_historical_climate_opportunity_rule_v0.1.json"
       - "docs/supporting/relational_historical_climate_qualification_rule_v0.1.json"
       - "docs/supporting/relational_historical_climate_character_mask_rule_v0.1.json"
@@ -88,4 +89,4 @@ jobs:
           cat /tmp/relational_program_v03_closure.json
       - name: Run focused Study-B closure tests
         run: |
-          pytest -q tests/test_relational_program_v03_closure.py tests/test_relational_environment_artifact_binding.py tests/test_relational_environment_final_producer_trigger.py tests/test_relational_environment_compact_geometry.py tests/test_relational_historical_full_pipeline.py
+          pytest -q tests/test_relational_program_v03_closure.py tests/test_relational_environment_artifact_binding.py tests/test_relational_environment_final_producer_trigger.py tests/test_relational_environment_compact_geometry.py tests/test_relational_historical_full_pipeline.py tests/test_relational_historical_bounded_transport.py
