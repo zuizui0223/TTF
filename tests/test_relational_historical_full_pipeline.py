@@ -678,3 +678,41 @@ def test_local_final_artifact_handoff_runtime_rejects_digest_and_inner_hash_drif
     checked = module.verify_final_artifact(binding, artifact)
     assert checked["occurrence_csv_sha256"] == "0" * 64
     assert sha(found_occ) != checked["occurrence_csv_sha256"]
+
+
+def test_local_study_c_readiness_receipt_is_response_blind_and_single_run_bound():
+    import json
+
+    p = json.loads(
+        (
+            ROOT
+            / "benchmarks/frozen/relational_historical_local_readiness_v0.1.json"
+        ).read_text()
+    )
+
+    assert p["status"] == "READY_AWAITING_FROZEN_OCCURRENCE_FINAL_ONLY"
+    assert p["occurrence_gate"]["workflow_run_id"] == 35941577015
+    assert p["occurrence_gate"]["workflow_head_sha"] == "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab"
+    assert p["occurrence_gate"]["alternative_run_allowed"] is False
+    assert p["occurrence_gate"]["final_artifact_seen_at_freeze"] is False
+    assert p["occurrence_gate"]["binding_seen_at_freeze"] is False
+
+    assert p["exact_phylogatr_source"]["sha256"] == "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+    assert p["exact_phylogatr_source"]["size_bytes"] == 274988692
+    assert p["exact_phylogatr_source"]["source_repacking_allowed"] is False
+
+    assert p["chelsa"]["staging_manifest_sha256"] == "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450"
+    assert p["chelsa"]["historical_asset_count"] == 8
+    assert p["chelsa"]["current_asset_count"] == 4
+    assert p["chelsa"]["alternate_asset_selection_allowed"] is False
+
+    assert p["local_execution_bundle"]["source_bundle_commit_sha"] == "8c5fd223a518e19453c8273069fd8b4d72a1882c"
+    assert p["local_execution_bundle"]["executor_git_blob_sha1"] == "0f91a4ce29c9d0a1454673da2e2c979365eea86e"
+    assert p["local_execution_bundle"]["final_artifact_handoff_git_blob_sha1"] == "487de64b3e4abe411344edeb992a6294252c191c"
+    assert p["local_execution_bundle"]["implementation_bound_files"] == 31
+
+    assert p["validation"]["closure_status"] == "PASS_FROZEN_V03_CONTRACT_CLOSURE"
+    assert p["validation"]["focused_tests_passed"] == 41
+    assert p["relation_result_seen"] is False
+    assert p["genetic_response_used"] is False
+    assert all(v is False for v in p["response_firewall"].values())
