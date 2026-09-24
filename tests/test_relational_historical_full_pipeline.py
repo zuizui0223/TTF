@@ -578,3 +578,103 @@ def test_local_final_occurrence_artifact_handoff_is_digest_bound_and_run_fixed()
     assert "artifact_digest" in rule["final_artifact_handoff_contract"]
     assert "run_relational_historical_local_from_artifact.py" in source_bundle
     compile(wrapper, "scripts/run_relational_historical_local_from_artifact.py", "exec")
+
+
+def test_local_final_artifact_handoff_runtime_rejects_digest_and_inner_hash_drift(tmp_path):
+    import hashlib
+    import importlib.util
+    import json
+    import zipfile
+
+    script = ROOT / "scripts/run_relational_historical_local_from_artifact.py"
+    spec = importlib.util.spec_from_file_location("hist_local_artifact_handoff", script)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+
+    payload_dir = tmp_path / "payload"
+    payload_dir.mkdir()
+    occ = payload_dir / "occurrences_v0.2.csv"
+    ledger = payload_dir / "occurrence_ledger_v0.2.json"
+    occ.write_text("species,source_key,latitude,longitude,priority_rank,priority_sha256\n")
+    ledger.write_text(
+        json.dumps(
+            {
+                "schema": "ttf_relational_historical_occurrence_acquisition_v0.2",
+                "status": "PASS_TO_HISTORICAL_ASSET_EXTRACTION",
+                "species": 1000,
+                "maximum_retry_rounds": 1,
+                "additional_retry_authorized": False,
+                "scientific_query_change": False,
+                "genetic_response_used": False,
+                "response_firewall": {
+                    "Study_C_sequence_identity_opened": False,
+                    "Study_C_pairwise_genetic_distances_opened": False,
+                    "Study_C_T_st_computed": False,
+                    "Study_C_beta_hist_computed": False,
+                },
+            }
+        )
+    )
+
+    artifact = tmp_path / "final.zip"
+    with zipfile.ZipFile(artifact, "w", compression=zipfile.ZIP_DEFLATED) as z:
+        z.write(occ, arcname="occurrences_v0.2.csv")
+        z.write(ledger, arcname="occurrence_ledger_v0.2.json")
+
+    def sha(path):
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+
+    binding = tmp_path / "binding.json"
+    binding_payload = {
+        "schema": "ttf_relational_historical_occurrence_artifact_binding_v0.2",
+        "status": "FROZEN_FINAL_BOUNDED_RESPONSE_BLIND_OCCURRENCE_ARTIFACT",
+        "workflow_run_id": 35941577015,
+        "workflow_head_sha": "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab",
+        "artifact_id": 123,
+        "artifact_name": "relational-historical-occurrence-final-v0.2",
+        "artifact_digest": "sha256:" + sha(artifact),
+        "occurrence_csv_sha256": sha(occ),
+        "occurrence_ledger_sha256": sha(ledger),
+        "occurrence_status": "PASS_TO_HISTORICAL_ASSET_EXTRACTION",
+        "species_passing_ge_30": 999,
+        "final_request_error_count": 0,
+        "genetic_response_used": False,
+        "response_firewall": {
+            "Study_C_sequence_identity_opened": False,
+            "Study_C_pairwise_genetic_distances_opened": False,
+            "Study_C_T_st_computed": False,
+            "Study_C_beta_hist_computed": False,
+        },
+    }
+    binding.write_text(json.dumps(binding_payload))
+
+    checked = module.verify_final_artifact(binding, artifact)
+    assert checked["workflow_run_id"] == 35941577015
+
+    extracted = tmp_path / "extracted"
+    extracted.mkdir()
+    with zipfile.ZipFile(artifact) as z:
+        z.extractall(extracted)
+    found_occ, found_ledger = module.locate_exact_files(extracted)
+    assert sha(found_occ) == binding_payload["occurrence_csv_sha256"]
+    assert sha(found_ledger) == binding_payload["occurrence_ledger_sha256"]
+
+    binding_payload["artifact_digest"] = "sha256:" + "0" * 64
+    binding.write_text(json.dumps(binding_payload))
+    import pytest
+    with pytest.raises(RuntimeError, match="artifact ZIP SHA-256 drift"):
+        module.verify_final_artifact(binding, artifact)
+
+    binding_payload["artifact_digest"] = "sha256:" + sha(artifact)
+    binding_payload["workflow_run_id"] = 35941577016
+    binding.write_text(json.dumps(binding_payload))
+    with pytest.raises(RuntimeError, match="workflow run drift"):
+        module.verify_final_artifact(binding, artifact)
+
+    binding_payload["workflow_run_id"] = 35941577015
+    binding_payload["occurrence_csv_sha256"] = "0" * 64
+    binding.write_text(json.dumps(binding_payload))
+    checked = module.verify_final_artifact(binding, artifact)
+    assert checked["occurrence_csv_sha256"] == "0" * 64
+    assert sha(found_occ) != checked["occurrence_csv_sha256"]
