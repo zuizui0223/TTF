@@ -249,3 +249,29 @@ def test_historical_source_transport_holds_before_relation_without_closing_c():
     assert rule["relation_result_seen"] is False
     assert rule["genetic_response_used"] is False
     assert all(v is False for v in rule["response_firewall"].values())
+
+
+def test_historical_cache_resume_cannot_select_a_new_run_or_reopen_terminal_c():
+    import json
+
+    resume = (
+        ROOT / ".github/workflows/relational-historical-resume-after-source-cache.yml"
+    ).read_text()
+    receipt = json.loads(
+        (
+            ROOT
+            / "benchmarks/frozen/relational_historical_downstream_activation_repair_v0.1.json"
+        ).read_text()
+    )
+
+    assert '"seed frozen phylogatr archive cache"' in resume
+    assert 'b["workflow_run_id"]==35941577015' in resume
+    assert 'b["workflow_head_sha"]=="ffacbd51d58689a4b18f7a2cb920f5a1385a74ab"' in resume
+    assert '"DETECTED_C_AFTER_B_NOT_EVALUABLE"' in resume
+    assert '"CLOSED_PARTIAL_NOT_EVALUABLE"' in resume
+    assert (
+        "uses: zuizui0223/TTF/.github/workflows/relational-historical-from-bounded-binding-v02.yml@"
+        "17923b1719d9a3ebce842c959e4547378ac28338"
+    ) in resume
+    assert receipt["resume_result_selection_allowed"] is False
+    assert receipt["default_branch_resume_commit_sha"] == "b80a248242646e69c1ed060049b09b6e453ce6c1"

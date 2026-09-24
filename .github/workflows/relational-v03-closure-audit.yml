@@ -44,6 +44,7 @@ on:
       - "benchmarks/frozen/relational_historical_occurrence_binding_trigger_v0.2.json"
       - ".github/workflows/relational-historical-bind-bounded-occurrence.yml"
       - ".github/workflows/relational-historical-from-bounded-binding-v02.yml"
+      - ".github/workflows/relational-historical-resume-after-source-cache.yml"
       - "benchmarks/frozen/relational_historical_obsolete_binder_v0.1.json"
       - ".github/workflows/cancel-obsolete-study-c-binder.yml"
       - "benchmarks/frozen/relational_historical_geometry_local_reconstruction_v0.1.json"

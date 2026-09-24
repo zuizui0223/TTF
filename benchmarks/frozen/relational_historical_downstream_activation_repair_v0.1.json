@@ -31,5 +31,13 @@
   "default_branch_binder_commit_sha": "46c2c9fc9a7f2933dadf629fca30eb559a57d43e",
   "default_branch_binder_file_git_blob": "1ab3c021544f0ffde77ee6edac2e4e0d922420a6",
   "activation_edge": "main workflow_run binder -> reusable workflow pinned at 17923b1719d9a3ebce842c959e4547378ac28338 -> pre-relation exact-source transport gate -> exact Study-C implementation binding verification -> explicit checkout of relational-ttf-v01",
-  "bot_push_is_not_activation_dependency": true
+  "bot_push_is_not_activation_dependency": true,
+  "resume_workflow": ".github/workflows/relational-historical-resume-after-source-cache.yml",
+  "default_branch_resume_commit_sha": "b80a248242646e69c1ed060049b09b6e453ce6c1",
+  "resume_triggers": [
+    "manual workflow_dispatch",
+    "successful seed frozen phylogatr archive cache workflow_run"
+  ],
+  "resume_gate": "Exact frozen occurrence binding run 35941577015 must exist and v0.3 must not already be terminal.",
+  "resume_result_selection_allowed": false
 }
