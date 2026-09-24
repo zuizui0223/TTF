@@ -251,6 +251,7 @@ def test_historical_source_transport_holds_before_relation_without_closing_c():
     assert rule["relation_result_seen"] is False
     assert rule["genetic_response_used"] is False
     assert all(v is False for v in rule["response_firewall"].values())
+    compile(text, "scripts/run_relational_historical_local_pipeline.py", "exec")
 
 
 def test_historical_cache_resume_cannot_select_a_new_run_or_reopen_terminal_c():
@@ -315,3 +316,46 @@ def test_local_study_c_executor_preserves_one_shot_order_and_exact_inputs():
     assert rule["relation_result_seen"] is False
     assert rule["genetic_response_used"] is False
     assert all(v is False for v in rule["response_firewall"].values())
+
+
+def test_local_study_c_final_state_matches_current_v03_transition(tmp_path):
+    import importlib.util
+    import json
+
+    script = ROOT / "scripts/run_relational_historical_local_pipeline.py"
+    spec = importlib.util.spec_from_file_location("hist_local_pipeline", script)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+
+    # Current frozen transition is B NOT_EVALUABLE, so C positive/null/gate
+    # failure have three distinct licensed outcomes.
+    empirical = tmp_path / "relational_historical_empirical_result_v0.1.json"
+    empirical.write_text(
+        json.dumps(
+            {
+                "decision": "STUDY_C_HISTORICAL_RELATIONAL_POSITIVE",
+                "primary": {"p_value_one_sided": 0.01},
+            }
+        )
+    )
+    assert module.final_state(tmp_path)["final_state"] == "DETECTED_C_AFTER_B_NOT_EVALUABLE"
+
+    empirical.write_text(
+        json.dumps(
+            {
+                "decision": "STUDY_C_HISTORICAL_RELATIONAL_NULL_WITH_QUALIFIED_POWER",
+                "primary": {"p_value_one_sided": 0.40},
+            }
+        )
+    )
+    assert module.final_state(tmp_path)["final_state"] == "CLOSED_PARTIAL_NOT_EVALUABLE"
+
+    empirical.unlink()
+    (tmp_path / "relational_historical_qualification_v0.1.json").write_text(
+        json.dumps({"status": "NOT_EVALUABLE_HISTORICAL_SYNTHETIC_QUALIFICATION"})
+    )
+    result = module.final_state(tmp_path)
+    assert result["C_state"] == "NOT_EVALUABLE"
+    assert result["final_state"] == "CLOSED_NO_EVALUABLE_TEST"
+    assert result["no_additional_predictor_authorized"] is True
