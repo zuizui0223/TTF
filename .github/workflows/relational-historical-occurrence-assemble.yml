@@ -1,0 +1,112 @@
+name: relational-historical-occurrence-assemble
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - "benchmarks/frozen/relational_historical_occurrence_assembly_v0.1.json"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    timeout-minutes: 720
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+
+      - name: Wait for exact frozen occurrence runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          python - <<'PY'
+          import json,os,time,urllib.request
+          from pathlib import Path
+          c=json.loads(Path("benchmarks/frozen/relational_historical_occurrence_assembly_v0.1.json").read_text())
+          assert c["status"]=="FROZEN_RESPONSE_BLIND_ASSEMBLY_BEFORE_OCCURRENCE_RESULT"
+          assert c["source_map"]["recovery_shards"]==[0,1,2,3]
+          assert c["source_map"]["original_shards"]==list(range(4,20))
+          assert c["occurrence_result_seen"] is False and c["genetic_response_used"] is False
+          headers={"Authorization":f"Bearer {os.environ['GH_TOKEN']}","Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"}
+          deadline=time.time()+700*60
+          for key in ("original_run_id","recovery_run_id"):
+              run_id=int(c[key])
+              while True:
+                  req=urllib.request.Request(f"https://api.github.com/repos/{os.environ['REPO']}/actions/runs/{run_id}",headers=headers)
+                  with urllib.request.urlopen(req,timeout=60) as response: p=json.load(response)
+                  print({"run_id":run_id,"status":p["status"],"conclusion":p.get("conclusion")})
+                  if p["status"]=="completed":
+                      if p.get("conclusion") not in {"success","failure"}:
+                          raise SystemExit(f"occurrence source run ended unusably: {run_id} {p.get('conclusion')}")
+                      break
+                  if time.time()>=deadline: raise SystemExit("timed out waiting for occurrence source runs")
+                  time.sleep(60)
+          PY
+
+      - name: Download original occurrence artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: relational-historical-occ-*
+          path: input/original
+          merge-multiple: true
+          run-id: 35881616617
+          github-token: ${{ github.token }}
+
+      - name: Download cancelled-shard recovery artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: relational-historical-occ-recovery-*
+          path: input/recovery
+          merge-multiple: true
+          run-id: 35941160248
+          github-token: ${{ github.token }}
+
+      - name: Select exact frozen shard sources
+        run: |
+          python - <<'PY'
+          import json,shutil
+          from pathlib import Path
+          c=json.loads(Path("benchmarks/frozen/relational_historical_occurrence_assembly_v0.1.json").read_text())
+          out=Path("input/selected"); out.mkdir(parents=True,exist_ok=True)
+          for i in range(20):
+              root=Path("input/recovery" if i in c["source_map"]["recovery_shards"] else "input/original")
+              for prefix,suffix in (("occurrences-",".csv"),("ledger-",".json")):
+                  src=root/f"{prefix}{i}{suffix}"
+                  if not src.is_file():
+                      raise SystemExit(f"missing frozen Study-C shard file: {src}")
+                  shutil.copy2(src,out/src.name)
+          assert len(list(out.glob("occurrences-*.csv")))==20
+          assert len(list(out.glob("ledger-*.json")))==20
+          PY
+
+      - name: Aggregate exact Study-C occurrence acquisition
+        run: |
+          mkdir -p results/history
+          python scripts/aggregate_relational_historical_occurrences.py \
+            --input-dir input/selected \
+            --output-csv results/history/occurrences_v0.1.csv \
+            --output-ledger results/history/occurrence_ledger_v0.1.json
+          python - <<'PY'
+          import json
+          p=json.load(open("results/history/occurrence_ledger_v0.1.json"))
+          assert p["candidate_species_total"]==1000
+          assert all(v is False for v in p["response_firewall"].values())
+          print({"status":p["status"],"status_counts":p.get("status_counts"),"species_passing_ge_30":p.get("species_passing_ge_30")})
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-historical-occurrence-assembled-v0.1
+          path: |
+            results/history/occurrences_v0.1.csv
+            results/history/occurrence_ledger_v0.1.json
+          retention-days: 30
+          if-no-files-found: error
