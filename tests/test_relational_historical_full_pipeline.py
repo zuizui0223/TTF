@@ -251,7 +251,6 @@ def test_historical_source_transport_holds_before_relation_without_closing_c():
     assert rule["relation_result_seen"] is False
     assert rule["genetic_response_used"] is False
     assert all(v is False for v in rule["response_firewall"].values())
-    compile(text, "scripts/run_relational_historical_local_pipeline.py", "exec")
 
 
 def test_historical_cache_resume_cannot_select_a_new_run_or_reopen_terminal_c():
@@ -316,6 +315,7 @@ def test_local_study_c_executor_preserves_one_shot_order_and_exact_inputs():
     assert rule["relation_result_seen"] is False
     assert rule["genetic_response_used"] is False
     assert all(v is False for v in rule["response_firewall"].values())
+    compile(text, "scripts/run_relational_historical_local_pipeline.py", "exec")
 
 
 def test_local_study_c_final_state_matches_current_v03_transition(tmp_path):
