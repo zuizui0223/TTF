@@ -33,5 +33,6 @@
     "Study_C_pairwise_genetic_distances_opened": false,
     "Study_C_T_st_computed": false,
     "Study_C_beta_hist_computed": false
-  }
+  },
+  "execution_trigger_note": "Technical trigger after recovery workflow was committed; no scientific contract change."
 }
