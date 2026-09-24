@@ -20,6 +20,10 @@ FIELDS = ["species", "source_key", "latitude", "longitude", "priority_rank", "pr
 
 
 def load_script(name: str, relative: str):
+    for path in (ROOT, ROOT / "scripts"):
+        value = str(path)
+        if value not in sys.path:
+            sys.path.insert(0, value)
     spec = importlib.util.spec_from_file_location(name, ROOT / relative)
     module = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
