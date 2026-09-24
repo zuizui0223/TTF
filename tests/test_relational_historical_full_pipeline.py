@@ -33,7 +33,7 @@ def test_bounded_occurrence_binding_and_full_c_handoff_are_frozen():
     assert "relational-historical-occurrence-bounded-v02" in binder
     assert "relational-historical-occurrence-final-v0.2" in binder
     assert "ttf_relational_historical_occurrence_acquisition_v0.2" in binder
-    assert "FROZEN_RESPONSE_BLIND_BOUNDED_OCCURRENCE_ARTIFACT" in binder
+    assert "FROZEN_FINAL_BOUNDED_RESPONSE_BLIND_OCCURRENCE_ARTIFACT" in binder
 
     assert "relational_historical_occurrence_artifact_binding_v0.2.json" in downstream
     assert "reconstruct_relational_historical_geometry.py" in downstream
