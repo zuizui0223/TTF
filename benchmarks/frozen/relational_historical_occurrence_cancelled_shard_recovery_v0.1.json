@@ -1,0 +1,37 @@
+{
+  "schema": "ttf_relational_historical_occurrence_cancelled_shard_recovery_v0.1",
+  "status": "FROZEN_TECHNICAL_RECOVERY_ONLY",
+  "frozen_on": "2026-09-24",
+  "parent_execution": "benchmarks/frozen/relational_historical_occurrence_execution_v0.1.json",
+  "source_workflow_run_id": 35881616617,
+  "cancelled_shards": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "recovery_shards": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "shards_total": 20,
+  "max_parallel": 1,
+  "scientific_query_change": false,
+  "candidate_change": false,
+  "rule_change": false,
+  "note": "These four matrix jobs reached the frozen GBIF acquisition step but were cancelled and uploaded no artifact. Recovery reruns only the same frozen shard indices with the identical candidate CSV and acquisition script.",
+  "forbidden": [
+    "change candidate species or order",
+    "change GBIF query, time window, filters, thinning, cap, minimum n or shard boundaries",
+    "replace species based on occurrence or genetic outcomes",
+    "open Study-C sequence identity, T_st or beta_hist"
+  ],
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
