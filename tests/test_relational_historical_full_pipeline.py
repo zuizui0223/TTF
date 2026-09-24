@@ -79,19 +79,21 @@ def test_historical_geometry_materialization_is_hash_bound():
     assert "historical reconstructed edge CSV SHA drift" in reproducer
 
 
-def test_bounded_handoff_delays_archive_until_relation_passes():
+def test_bounded_handoff_requires_exact_source_transport_before_relation_but_delays_extraction():
     text = (ROOT / ".github/workflows/relational-historical-from-bounded-binding-v02.yml").read_text()
+    cache_gate = text.index("Hold Study C unless exact source archive is runner-readable")
     hist_assets = text.index("Resolve and freeze exact CHELSA-TraCE21k assets")
     current_assets = text.index("Download frozen current CHELSA V2.1 nuisance layers")
     relation = text.index("Build frozen historical/current relation")
-    archive = text.index("Restore exact frozen phylogatR archive")
+    extraction = text.index("Require and extract exact archive")
     geometry = text.index("Reconstruct frozen Study-C response-blind geometry")
     opportunity = text.index("Attach frozen historical opportunity geometry")
 
-    assert hist_assets < current_assets < relation < archive < geometry < opportunity
+    assert cache_gate < hist_assets < current_assets < relation < extraction < geometry < opportunity
     assert "relation_construction_before_geometry_materialization_allowed" not in text
-    # Execution ordering, rather than a changed scientific rule, ensures the
-    # response-blind relation can be evaluated before exact genetic geometry is needed.
+    # Transport readiness is checked before any relation is opened. Archive
+    # extraction and exact genetic geometry remain delayed until the frozen
+    # historical/current relation itself has passed.
 
 
 def test_historical_archive_hash_clerical_repair_is_explicit_and_downstream_is_canonical():
