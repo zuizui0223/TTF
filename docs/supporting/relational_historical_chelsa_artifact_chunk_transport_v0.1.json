@@ -1,0 +1,31 @@
+{
+  "schema": "ttf_relational_historical_chelsa_artifact_chunk_transport_v0.1",
+  "status": "FROZEN_TRANSPORT_ONLY_FROM_EXACT_STAGED_ARTIFACTS",
+  "frozen_on": "2026-09-24",
+  "source_run": {
+    "workflow_run_id": 35959224240,
+    "workflow_head_sha": "4ea89a703bce2ed88c715cb7cfcca94d1e3b27e4"
+  },
+  "source_artifacts": {
+    "historical": {
+      "artifact_id": 10791389409,
+      "name": "relational-c-chelsa-historical-v0.1",
+      "size_in_bytes": 4601398246,
+      "digest_sha256": "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2",
+      "expected_chunks": 24
+    },
+    "current": {
+      "artifact_id": 10791867875,
+      "name": "relational-c-chelsa-current-v0.1",
+      "size_in_bytes": 1085348527,
+      "digest_sha256": "724743d8666d32bc8717e52200a798369665c2f1965ba33021d3e5c68c5eff4c",
+      "expected_chunks": 6
+    }
+  },
+  "chunk_bytes": 200000000,
+  "rule": "Download the exact already-frozen GitHub artifact ZIP bytes by artifact ID, require the recorded artifact SHA-256, split those ZIP bytes without modification, and upload each byte chunk separately. Reassembly must reproduce the source artifact digest exactly before extraction.",
+  "scientific_asset_change": false,
+  "alternate_asset_selection_allowed": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false
+}

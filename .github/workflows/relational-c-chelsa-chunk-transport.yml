@@ -1,0 +1,313 @@
+name: relational-c-chelsa-chunk-transport
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - ".github/workflows/relational-c-chelsa-chunk-transport.yml"
+      - "docs/supporting/relational_historical_chelsa_artifact_chunk_transport_v0.1.json"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  chunk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify frozen chunk-transport rule
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("docs/supporting/relational_historical_chelsa_artifact_chunk_transport_v0.1.json").read_text())
+          assert p["schema"]=="ttf_relational_historical_chelsa_artifact_chunk_transport_v0.1"
+          assert p["status"]=="FROZEN_TRANSPORT_ONLY_FROM_EXACT_STAGED_ARTIFACTS"
+          assert p["source_run"]["workflow_run_id"]==35959224240
+          assert p["source_run"]["workflow_head_sha"]=="4ea89a703bce2ed88c715cb7cfcca94d1e3b27e4"
+          assert p["chunk_bytes"]==200000000
+          assert p["scientific_asset_change"] is False
+          assert p["alternate_asset_selection_allowed"] is False
+          assert p["relation_result_seen"] is False
+          assert p["genetic_response_used"] is False
+          PY
+      - name: Download and split exact historical artifact ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p results/chunks/historical results/manifests
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10791389409/zip" > /tmp/historical-artifact.zip
+          echo "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2  /tmp/historical-artifact.zip" | sha256sum -c -
+          split -b 200000000 -d -a 2 /tmp/historical-artifact.zip results/chunks/historical/part-
+          test "$(find results/chunks/historical -type f -name 'part-*' | wc -l)" -eq 24
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          rows=[]
+          for p in sorted(Path("results/chunks/historical").glob("part-*")):
+              h=hashlib.sha256(p.read_bytes()).hexdigest()
+              rows.append({"name":p.name,"size_bytes":p.stat().st_size,"sha256":h})
+          Path("results/manifests/historical.json").write_text(json.dumps(rows,indent=2)+"\n")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-00
+          path: results/chunks/historical/part-00
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-01
+          path: results/chunks/historical/part-01
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-02
+          path: results/chunks/historical/part-02
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-03
+          path: results/chunks/historical/part-03
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-04
+          path: results/chunks/historical/part-04
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-05
+          path: results/chunks/historical/part-05
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-06
+          path: results/chunks/historical/part-06
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-07
+          path: results/chunks/historical/part-07
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-08
+          path: results/chunks/historical/part-08
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-09
+          path: results/chunks/historical/part-09
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-10
+          path: results/chunks/historical/part-10
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-11
+          path: results/chunks/historical/part-11
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-12
+          path: results/chunks/historical/part-12
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-13
+          path: results/chunks/historical/part-13
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-14
+          path: results/chunks/historical/part-14
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-15
+          path: results/chunks/historical/part-15
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-16
+          path: results/chunks/historical/part-16
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-17
+          path: results/chunks/historical/part-17
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-18
+          path: results/chunks/historical/part-18
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-19
+          path: results/chunks/historical/part-19
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-20
+          path: results/chunks/historical/part-20
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-21
+          path: results/chunks/historical/part-21
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-22
+          path: results/chunks/historical/part-22
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-historical-zip-part-23
+          path: results/chunks/historical/part-23
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - name: Release historical working bytes
+        run: rm -f /tmp/historical-artifact.zip results/chunks/historical/part-*
+      - name: Download and split exact current artifact ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p results/chunks/current
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10791867875/zip" > /tmp/current-artifact.zip
+          echo "724743d8666d32bc8717e52200a798369665c2f1965ba33021d3e5c68c5eff4c  /tmp/current-artifact.zip" | sha256sum -c -
+          split -b 200000000 -d -a 2 /tmp/current-artifact.zip results/chunks/current/part-
+          test "$(find results/chunks/current -type f -name 'part-*' | wc -l)" -eq 6
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          rows=[]
+          for p in sorted(Path("results/chunks/current").glob("part-*")):
+              h=hashlib.sha256(p.read_bytes()).hexdigest()
+              rows.append({"name":p.name,"size_bytes":p.stat().st_size,"sha256":h})
+          Path("results/manifests/current.json").write_text(json.dumps(rows,indent=2)+"\n")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-current-zip-part-00
+          path: results/chunks/current/part-00
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-current-zip-part-01
+          path: results/chunks/current/part-01
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-current-zip-part-02
+          path: results/chunks/current/part-02
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-current-zip-part-03
+          path: results/chunks/current/part-03
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-current-zip-part-04
+          path: results/chunks/current/part-04
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-current-zip-part-05
+          path: results/chunks/current/part-05
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+      - name: Freeze chunk transport manifest
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          rule=json.loads(Path("docs/supporting/relational_historical_chelsa_artifact_chunk_transport_v0.1.json").read_text())
+          payload={
+              "schema":"ttf_relational_historical_chelsa_chunk_manifest_v0.1",
+              "status":"PASS_EXACT_STAGED_ARTIFACT_BYTE_CHUNKING",
+              "source_run":rule["source_run"],
+              "source_artifacts":rule["source_artifacts"],
+              "chunk_bytes":rule["chunk_bytes"],
+              "historical_chunks":json.loads(Path("results/manifests/historical.json").read_text()),
+              "current_chunks":json.loads(Path("results/manifests/current.json").read_text()),
+              "scientific_asset_change":False,
+              "relation_result_seen":False,
+              "genetic_response_used":False,
+          }
+          Path("results/manifests/manifest.json").write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
+          print(json.dumps({"status":payload["status"],"historical_chunks":len(payload["historical_chunks"]),"current_chunks":len(payload["current_chunks"])},sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-chelsa-chunk-manifest-v0.1
+          path: results/manifests/
+          retention-days: 30
+          if-no-files-found: error
