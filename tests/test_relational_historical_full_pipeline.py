@@ -312,6 +312,10 @@ def test_local_study_c_executor_preserves_one_shot_order_and_exact_inputs():
     assert rule["result_selection_rerun_allowed"] is False
     assert rule["alternate_predictor_allowed"] is False
     assert rule["source_repacking_allowed"] is False
+    assert rule["executor_git_blob"]
+    assert rule["source_bundle_compatible"] is True
+    assert "git_blob_sha_path" in text
+    assert "git rev-parse" not in text
     assert rule["relation_result_seen"] is False
     assert rule["genetic_response_used"] is False
     assert all(v is False for v in rule["response_firewall"].values())
@@ -359,3 +363,25 @@ def test_local_study_c_final_state_matches_current_v03_transition(tmp_path):
     assert result["C_state"] == "NOT_EVALUABLE"
     assert result["final_state"] == "CLOSED_NO_EVALUABLE_TEST"
     assert result["no_additional_predictor_authorized"] is True
+
+
+def test_local_study_c_blob_binding_matches_without_git_metadata():
+    import importlib.util
+    import json
+
+    script = ROOT / "scripts/run_relational_historical_local_pipeline.py"
+    spec = importlib.util.spec_from_file_location("hist_local_blob_binding", script)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+
+    binding = json.loads(
+        (ROOT / "benchmarks/frozen/relational_historical_implementation_binding_v0.1.json").read_text()
+    )
+    for rel, expected in binding["git_blobs"].items():
+        assert module.git_blob_sha_path(ROOT / rel) == expected
+
+    rule = json.loads(
+        (ROOT / "docs/supporting/relational_historical_local_execution_rule_v0.1.json").read_text()
+    )
+    assert module.git_blob_sha_path(script) == rule["executor_git_blob"]

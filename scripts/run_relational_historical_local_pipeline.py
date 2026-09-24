@@ -23,6 +23,14 @@ def sha256_path(path: Path) -> str:
     return h.hexdigest()
 
 
+def git_blob_sha_path(path: Path) -> str:
+    data = path.read_bytes()
+    h = hashlib.sha1()
+    h.update(f"blob {len(data)}\\0".encode())
+    h.update(data)
+    return h.hexdigest()
+
+
 def load(path: Path) -> dict:
     return json.loads(path.read_text())
 
@@ -42,11 +50,29 @@ def verify_implementation_binding(path: Path) -> dict:
     if any(bool(v) for v in payload["response_firewall"].values()):
         raise RuntimeError("Study-C implementation binding response firewall is open")
     for rel, expected in payload["git_blobs"].items():
-        actual = subprocess.check_output(
-            ["git", "rev-parse", f"HEAD:{rel}"], text=True
-        ).strip()
+        file_path = Path(rel)
+        if not file_path.is_file():
+            raise FileNotFoundError(f"missing Study-C bound implementation file: {rel}")
+        actual = git_blob_sha_path(file_path)
         if actual != expected:
             raise RuntimeError(f"Study-C bound implementation drift: {rel}")
+    return payload
+
+
+def verify_local_execution_rule(path: Path) -> dict:
+    payload = load(path)
+    if payload.get("schema") != "ttf_relational_historical_local_execution_rule_v0.1":
+        raise RuntimeError("unexpected Study-C local execution rule")
+    if payload.get("status") != "FROZEN_RESPONSE_BLIND_EXECUTION_EQUIVALENCE_BEFORE_STUDY_C_RELATION_RESULT":
+        raise RuntimeError("Study-C local execution rule is not frozen")
+    if payload.get("relation_result_seen") is not False or payload.get("genetic_response_used") is not False:
+        raise RuntimeError("Study-C local execution rule firewall is open")
+    if any(bool(v) for v in payload["response_firewall"].values()):
+        raise RuntimeError("Study-C local execution response firewall is open")
+    expected = str(payload.get("executor_git_blob", ""))
+    actual = git_blob_sha_path(Path(__file__))
+    if actual != expected:
+        raise RuntimeError("Study-C local executor blob drift")
     return payload
 
 
@@ -171,6 +197,11 @@ def main() -> int:
         type=Path,
         default=Path("benchmarks/frozen/relational_historical_implementation_binding_v0.1.json"),
     )
+    ap.add_argument(
+        "--local-execution-rule",
+        type=Path,
+        default=Path("docs/supporting/relational_historical_local_execution_rule_v0.1.json"),
+    )
     ap.add_argument("--historical-asset", type=Path, action="append", required=True)
     ap.add_argument("--historical-url", action="append", required=True)
     ap.add_argument("--current-bio1", type=Path, required=True)
@@ -183,6 +214,7 @@ def main() -> int:
     if len(args.historical_asset) != 8 or len(args.historical_url) != 8:
         raise RuntimeError("Study-C local executor requires exact eight historical assets and URLs")
 
+    verify_local_execution_rule(args.local_execution_rule)
     verify_implementation_binding(args.implementation_binding)
     verify_source_archive(args.source_archive)
     binding = verify_occurrence_binding(

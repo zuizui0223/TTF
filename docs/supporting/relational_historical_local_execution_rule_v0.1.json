@@ -42,5 +42,8 @@
     "Study_C_pairwise_genetic_distances_opened": false,
     "Study_C_T_st_computed": false,
     "Study_C_beta_hist_computed": false
-  }
+  },
+  "executor_git_blob": "f98bb35658238162f635d8d1e3cc2b9203c006f8",
+  "binding_verification": "Compute canonical Git blob SHA-1 directly from each bound file byte sequence; no .git directory is required, so the same check works in a git archive snapshot.",
+  "source_bundle_compatible": true
 }
