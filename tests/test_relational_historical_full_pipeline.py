@@ -539,3 +539,38 @@ def test_chelsa_staging_and_chunk_transport_are_bound_response_blind():
     assert "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2" in chunk_workflow
     assert "724743d8666d32bc8717e52200a798369665c2f1965ba33021d3e5c68c5eff4c" in chunk_workflow
     assert "split -b 200000000" in chunk_workflow
+
+
+def test_local_final_occurrence_artifact_handoff_is_digest_bound_and_run_fixed():
+    import json
+
+    wrapper = (
+        ROOT / "scripts/run_relational_historical_local_from_artifact.py"
+    ).read_text()
+    rule = json.loads(
+        (
+            ROOT
+            / "docs/supporting/relational_historical_local_execution_rule_v0.1.json"
+        ).read_text()
+    )
+    source_bundle = (
+        ROOT / ".github/workflows/relational-c-local-source-bundle.yml"
+    ).read_text()
+
+    assert "EXPECTED_RUN_ID = 35941577015" in wrapper
+    assert 'EXPECTED_RUN_HEAD = "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab"' in wrapper
+    assert 'binding.get("artifact_name") != "relational-historical-occurrence-final-v0.2"' in wrapper
+    assert 'binding.get("artifact_digest", "")' in wrapper
+    assert "Study-C final artifact ZIP SHA-256 drift" in wrapper
+    assert 'binding["occurrence_csv_sha256"]' in wrapper
+    assert 'binding["occurrence_ledger_sha256"]' in wrapper
+    assert 'ledger.get("maximum_retry_rounds", -1)' in wrapper
+    assert 'ledger.get("additional_retry_authorized") is not False' in wrapper
+    assert "scripts/run_relational_historical_local_pipeline.py" in wrapper
+
+    assert rule["final_artifact_handoff_executor"] == "scripts/run_relational_historical_local_from_artifact.py"
+    assert rule["final_artifact_alternative_run_allowed"] is False
+    assert rule["final_artifact_repacking_allowed"] is False
+    assert "artifact_digest" in rule["final_artifact_handoff_contract"]
+    assert "run_relational_historical_local_from_artifact.py" in source_bundle
+    compile(wrapper, "scripts/run_relational_historical_local_from_artifact.py", "exec")
