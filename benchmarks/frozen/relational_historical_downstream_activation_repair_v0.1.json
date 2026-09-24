@@ -26,5 +26,10 @@
     "Study_C_pairwise_genetic_distances_opened": false,
     "Study_C_T_st_computed": false,
     "Study_C_beta_hist_computed": false
-  }
+  },
+  "called_workflow_commit_sha": "c823eb8fe0b14133c66f01a26ee07d68e1a85a1a",
+  "default_branch_binder_commit_sha": "b6359cdfe059e194718b8de85bad6c1fbab6da7e",
+  "default_branch_binder_file_git_blob": "ea280c8961753d07b373b894b3081b1392845395",
+  "activation_edge": "main workflow_run binder -> reusable workflow pinned at c823eb8fe0b14133c66f01a26ee07d68e1a85a1a -> explicit checkout of relational-ttf-v01",
+  "bot_push_is_not_activation_dependency": true
 }

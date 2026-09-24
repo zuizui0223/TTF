@@ -157,3 +157,10 @@ jobs:
           git fetch origin relational-ttf-v01
           git rebase origin/relational-ttf-v01
           git push origin HEAD:relational-ttf-v01
+
+
+  execute_c:
+    name: Execute frozen Study C after binding
+    needs: bind
+    if: ${{ needs.bind.result == 'success' }}
+    uses: zuizui0223/TTF/.github/workflows/relational-historical-from-bounded-binding-v02.yml@c823eb8fe0b14133c66f01a26ee07d68e1a85a1a
