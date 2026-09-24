@@ -7,6 +7,7 @@ on:
     paths:
       - ".github/workflows/relational-c-local-source-bundle.yml"
       - "scripts/run_relational_historical_local_pipeline.py"
+      - "scripts/run_relational_historical_local_from_artifact.py"
       - "docs/supporting/relational_historical_local_execution_rule_v0.1.json"
       - "benchmarks/frozen/relational_historical_implementation_binding_v0.1.json"
 
