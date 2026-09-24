@@ -1,0 +1,41 @@
+{
+  "schema": "ttf_relational_historical_archive_hash_provenance_correction_v0.1",
+  "status": "FROZEN_CLERICAL_PROVENANCE_REPAIR_BEFORE_STUDY_C_RELATION_RESULT",
+  "frozen_on": "2026-09-24",
+  "purpose": "Repair a truncated source-archive SHA-256 literal in response-blind Study-C geometry provenance without changing any scientific rule, species, geometry, ecological relation, qualification gate, or genetic response.",
+  "legacy_malformed_literal": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5",
+  "canonical_source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "canonical_source_archive_bytes": 274988692,
+  "canonical_sources_of_truth": [
+    "docs/supporting/genetic_phylogatr_phase1_source_regeneration_v0.1.json",
+    "benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json",
+    "docs/supporting/relational_historical_climate_exposure_rule_v0.1.json",
+    "docs/supporting/relational_historical_geometry_materialization_rule_v0.1.json"
+  ],
+  "affected_immutable_receipts": [
+    "benchmarks/frozen/relational_historical_geometry_local_reconstruction_v0.1.json",
+    "benchmarks/frozen/relational_historical_geometry_reproduction_v0.1.json"
+  ],
+  "immutable_history_policy": "Do not rewrite the two pre-existing frozen receipts. Interpret their malformed source_archive SHA literal only through this explicit clerical correction; all downstream archive verification must use the canonical 64-hex SHA-256.",
+  "downstream_repair": ".github/workflows/relational-historical-from-bounded-binding-v02.yml",
+  "exact_geometry_unchanged": {
+    "species": 1000,
+    "locality_rows": 28735,
+    "edge_rows": 143642,
+    "locality_csv_sha256": "cbc09656be79b38ea10b38473c029a242023d1e179a2835a531fddf0deebd4a5",
+    "edge_csv_sha256": "f142467873eb5aec08230e436ff1fc92ac0cbfc8b9a1c1797e9ea1d31c5b98f2"
+  },
+  "incomplete_snapshot_chunk_removed": "benchmarks/frozen/relational_historical_geometry_snapshot_v0.1/part00.txt",
+  "snapshot_removal_reason": "The committed part00 was an incomplete non-decodable fragment and had no frozen snapshot contract; it cannot be used as an alternate geometry source.",
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "scientific_rule_change": false,
+  "ecological_predictor_change": false,
+  "v03_slot_change": false,
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}

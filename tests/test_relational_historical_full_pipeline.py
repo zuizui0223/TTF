@@ -92,3 +92,61 @@ def test_bounded_handoff_delays_archive_until_relation_passes():
     assert "relation_construction_before_geometry_materialization_allowed" not in text
     # Execution ordering, rather than a changed scientific rule, ensures the
     # response-blind relation can be evaluated before exact genetic geometry is needed.
+
+
+def test_historical_archive_hash_clerical_repair_is_explicit_and_downstream_is_canonical():
+    import json
+
+    canonical = "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+    legacy = "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5"
+    workflow = (
+        ROOT / ".github/workflows/relational-historical-from-bounded-binding-v02.yml"
+    ).read_text()
+    correction = json.loads(
+        (
+            ROOT
+            / "benchmarks/frozen/relational_historical_archive_hash_provenance_correction_v0.1.json"
+        ).read_text()
+    )
+    local = json.loads(
+        (
+            ROOT
+            / "benchmarks/frozen/relational_historical_geometry_local_reconstruction_v0.1.json"
+        ).read_text()
+    )
+    reproduction = json.loads(
+        (
+            ROOT
+            / "benchmarks/frozen/relational_historical_geometry_reproduction_v0.1.json"
+        ).read_text()
+    )
+    materialization = json.loads(
+        (
+            ROOT
+            / "docs/supporting/relational_historical_geometry_materialization_rule_v0.1.json"
+        ).read_text()
+    )
+
+    assert len(canonical) == 64
+    assert len(legacy) != 64
+    assert legacy not in workflow
+    assert canonical in workflow
+    assert materialization["source_archive_sha256"] == canonical
+
+    # Preserve the original response-blind receipts as immutable audit history.
+    # Their truncated literal is repaired only through this explicit provenance map.
+    assert local["source_archive"]["sha256"] == legacy
+    assert reproduction["source_archive"]["sha256"] == legacy
+    assert correction["legacy_malformed_literal"] == legacy
+    assert correction["canonical_source_archive_sha256"] == canonical
+    assert correction["affected_immutable_receipts"] == [
+        "benchmarks/frozen/relational_historical_geometry_local_reconstruction_v0.1.json",
+        "benchmarks/frozen/relational_historical_geometry_reproduction_v0.1.json",
+    ]
+    assert correction["relation_result_seen"] is False
+    assert correction["genetic_response_used"] is False
+    assert correction["scientific_rule_change"] is False
+    assert not (
+        ROOT
+        / "benchmarks/frozen/relational_historical_geometry_snapshot_v0.1/part00.txt"
+    ).exists()

@@ -199,7 +199,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: /tmp/phylogatr.zip
-          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5
+          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5
 
       - id: source
         name: Require and extract exact archive
@@ -208,7 +208,7 @@ jobs:
           set -euo pipefail
           test -f /tmp/phylogatr.zip
           test "$(stat -c%s /tmp/phylogatr.zip)" = "274988692"
-          echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5  /tmp/phylogatr.zip" | sha256sum -c -
+          echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5  /tmp/phylogatr.zip" | sha256sum -c -
           rm -rf /tmp/phylogatr-c
           mkdir -p /tmp/phylogatr-c
           unzip -q /tmp/phylogatr.zip -d /tmp/phylogatr-c
@@ -338,7 +338,7 @@ jobs:
         run: |
           python scripts/run_relational_historical_empirical.py \
             --root "${{ steps.source.outputs.root }}" \
-            --source-archive-sha256 5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5 \
+            --source-archive-sha256 5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5 \
             --survivor-design results/history/relational_historical_survivor_design_v0.1.npz \
             --survivor-summary results/history/relational_historical_survivor_summary_v0.1.json \
             --mask-result results/history/relational_historical_character_mask_result_v0.1.json \
