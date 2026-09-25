@@ -1,0 +1,409 @@
+name: relational-historical-retry-import-recovery-v01
+
+on:
+  push:
+    branches:
+      - relational-ttf-v01
+    paths:
+      - ".github/workflows/relational-historical-retry-import-recovery-v01.yml"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    outputs:
+      plan_sha256: ${{ steps.plan.outputs.plan_sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify frozen technical recovery contract
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/relational_historical_retry_import_recovery_v0.1.json").read_text())
+          assert p["schema"]=="ttf_relational_historical_retry_import_recovery_v0.1"
+          assert p["status"]=="FROZEN_TECHNICAL_RECOVERY_BEFORE_ANY_RETRY_QUERY"
+          assert p["original_execution"]["workflow_run_id"]==35941577015
+          assert p["original_execution"]["workflow_head_sha"]=="ffacbd51d58689a4b18f7a2cb920f5a1385a74ab"
+          assert p["original_execution"]["request_error_count"]==95
+          assert p["original_execution"]["retry_batch_count"]==24
+          assert p["original_execution"]["retry_jobs_failure"]==24
+          assert p["original_execution"]["retry_output_artifacts"]==0
+          assert p["failure_class"]["bounded_fetch_reached"] is False
+          assert p["failure_class"]["gbif_retry_query_consumed"] is False
+          assert p["recovery_execution"]["exact_retry_plan_artifact_id"]==10878157732
+          assert p["recovery_execution"]["exact_retry_plan_artifact_digest"]=="sha256:b4291a54514837f944f1cb9dbf14d320fd52293d24aa33b26d36ac063b7c7103"
+          assert p["recovery_execution"]["request_error_species"]==95
+          assert p["recovery_execution"]["retry_batches"]==24
+          assert p["recovery_execution"]["batch_size"]==4
+          assert p["recovery_execution"]["max_parallel"]==2
+          assert p["recovery_execution"]["per_species_wall_timeout_seconds"]==2700
+          assert p["recovery_execution"]["retry_round"]==1
+          assert p["recovery_execution"]["retry_script_changed"] is False
+          assert p["recovery_execution"]["scientific_query_change"] is False
+          assert p["recovery_execution"]["additional_retry_round_authorized"] is False
+          assert p["relation_result_seen"] is False and p["genetic_response_used"] is False
+          assert all(v is False for v in p["response_firewall"].values())
+          PY
+
+      - name: Verify original run and absence of consumed retry artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os,re,subprocess
+          repo=os.environ["GITHUB_REPOSITORY"]
+          run_id=35941577015
+          run=json.loads(subprocess.check_output(
+              ["gh","api",f"/repos/{repo}/actions/runs/{run_id}"],text=True
+          ))
+          assert run["conclusion"]=="failure"
+          jobs=[]
+          page=1
+          while True:
+              p=json.loads(subprocess.check_output(
+                  ["gh","api",f"/repos/{repo}/actions/runs/{run_id}/jobs?per_page=100&page={page}"],text=True
+              ))
+              chunk=p["jobs"]; jobs.extend(chunk)
+              if len(chunk)<100: break
+              page+=1
+          acquire=[j for j in jobs if j["name"].startswith("acquire (")]
+          retry=[j for j in jobs if j["name"].startswith("retry (")]
+          assert len(acquire)==250 and all(j["conclusion"]=="success" for j in acquire)
+          assert len(retry)==24 and all(j["conclusion"]=="failure" for j in retry)
+          arts=[]
+          page=1
+          while True:
+              p=json.loads(subprocess.check_output(
+                  ["gh","api",f"/repos/{repo}/actions/runs/{run_id}/artifacts?per_page=100&page={page}"],text=True
+              ))
+              chunk=p["artifacts"]; arts.extend(chunk)
+              if len(chunk)<100: break
+              page+=1
+          plan=[a for a in arts if a["id"]==10878157732]
+          assert len(plan)==1
+          assert plan[0]["name"]=="relational-historical-bounded-retry-plan-v0.2"
+          assert plan[0]["digest"]=="sha256:b4291a54514837f944f1cb9dbf14d320fd52293d24aa33b26d36ac063b7c7103"
+          retry_outputs=[a for a in arts if re.fullmatch(r"relational-historical-bounded-retry-\d+",a["name"])]
+          assert retry_outputs==[], retry_outputs
+          final=[a for a in arts if a["name"]=="relational-historical-occurrence-final-v0.2"]
+          assert final==[], final
+          PY
+
+      - name: Download and verify exact frozen retry plan
+        id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/plan
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10878157732/zip" > /tmp/plan.zip
+          echo "b4291a54514837f944f1cb9dbf14d320fd52293d24aa33b26d36ac063b7c7103  /tmp/plan.zip" | sha256sum -c -
+          unzip -oq /tmp/plan.zip -d input/plan
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          path=Path("input/plan/relational_historical_occurrence_retry_plan_v0.2.json")
+          p=json.loads(path.read_text())
+          assert p["schema"]=="ttf_relational_historical_occurrence_retry_plan_v0.2"
+          assert p["status"]=="RETRY_EXACT_INITIAL_REQUEST_ERRORS"
+          assert p["candidate_species"]==1000
+          assert p["request_error_count"]==95
+          assert len(p["request_error_species"])==95
+          assert p["retry_batch_size"]==4
+          assert p["retry_batch_count"]==24
+          assert p["maximum_retry_rounds"]==1
+          assert p["scientific_query_change"] is False
+          assert all(v is False for v in p["response_firewall"].values())
+          sha=hashlib.sha256(path.read_bytes()).hexdigest()
+          with open(os.environ["GITHUB_OUTPUT"],"a") as h:
+              h.write(f"plan_sha256={sha}\n")
+          print(json.dumps({"request_error_count":95,"retry_batch_count":24,"plan_sha256":sha},sort_keys=True))
+          PY
+
+  retry:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 210
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        batch: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ffacbd51d58689a4b18f7a2cb920f5a1385a74ab
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: relational-historical-bounded-retry-plan-v0.2
+          path: input/plan
+          run-id: 35941577015
+          github-token: ${{ github.token }}
+      - name: Execute exact previously-unconsumed retry batch
+        run: |
+          set -euo pipefail
+          mkdir -p results/retry
+          PYTHONPATH="$PWD" python scripts/retry_relational_historical_occurrences_bounded.py \
+            --plan input/plan/relational_historical_occurrence_retry_plan_v0.2.json \
+            --output-csv results/retry/occurrences-retry-${{ matrix.batch }}.csv \
+            --output-ledger results/retry/ledger-retry-${{ matrix.batch }}.json \
+            --batch-index ${{ matrix.batch }} \
+            --batch-size 4 \
+            --per-species-timeout-seconds 2700
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-historical-bounded-retry-recovery-${{ matrix.batch }}
+          path: results/retry/
+          retention-days: 30
+          if-no-files-found: error
+
+  finalize:
+    needs: [preflight,retry]
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ffacbd51d58689a4b18f7a2cb920f5a1385a74ab
+
+      - name: Download exact 250 initial bounded artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/initial
+          gh api --paginate "/repos/$GITHUB_REPOSITORY/actions/runs/35941577015/artifacts?per_page=100" \
+            --jq '.artifacts[] | select(.name | test("^relational-historical-bounded-[0-9]+$")) | [.id,.name] | @tsv' \
+            > /tmp/initial.tsv
+          test "$(wc -l < /tmp/initial.tsv)" -eq 250
+          while IFS=$'\t' read -r artifact_id artifact_name; do
+            zip="/tmp/${artifact_name}.zip"
+            gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/${artifact_id}/zip" > "$zip"
+            unzip -oq "$zip" -d input/initial
+          done < /tmp/initial.tsv
+
+      - name: Download exact original retry plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/plan
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10878157732/zip" > /tmp/plan.zip
+          echo "b4291a54514837f944f1cb9dbf14d320fd52293d24aa33b26d36ac063b7c7103  /tmp/plan.zip" | sha256sum -c -
+          unzip -oq /tmp/plan.zip -d input/plan
+
+      - name: Download exact 24 recovery retry artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/retry
+          gh api --paginate "/repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?per_page=100" \
+            --jq '.artifacts[] | select(.name | test("^relational-historical-bounded-retry-recovery-[0-9]+$")) | [.id,.name] | @tsv' \
+            > /tmp/retry.tsv
+          test "$(wc -l < /tmp/retry.tsv)" -eq 24
+          while IFS=$'\t' read -r artifact_id artifact_name; do
+            zip="/tmp/${artifact_name}.zip"
+            gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/${artifact_id}/zip" > "$zip"
+            unzip -oq "$zip" -d input/retry
+          done < /tmp/retry.tsv
+
+      - name: Finalize with unchanged frozen finalizer
+        run: |
+          set -euo pipefail
+          mkdir -p results/final
+          python scripts/finalize_relational_historical_occurrence_bounded.py \
+            --initial-dir input/initial \
+            --retry-dir input/retry \
+            --retry-plan input/plan/relational_historical_occurrence_retry_plan_v0.2.json \
+            --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv \
+            --output-csv results/final/occurrences_v0.2.csv \
+            --output-ledger results/final/occurrence_ledger_v0.2.json
+
+      - name: Validate terminal occurrence contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("results/final/occurrence_ledger_v0.2.json").read_text())
+          assert p["schema"]=="ttf_relational_historical_occurrence_acquisition_v0.2"
+          assert p["species"]==1000
+          assert p["initial_request_error_count"]==95
+          assert p["retry_rounds_completed"]==1
+          assert p["maximum_retry_rounds"]==1
+          assert p["additional_retry_authorized"] is False
+          assert p["scientific_query_change"] is False
+          assert p["relation_result_seen"] is False and p["genetic_response_used"] is False
+          assert all(v is False for v in p["response_firewall"].values())
+          assert p["status"] in {
+              "PASS_TO_HISTORICAL_ASSET_EXTRACTION",
+              "NOT_EVALUABLE_HISTORICAL_OCCURRENCE_GEOMETRY",
+              "NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT",
+          }
+          print(json.dumps(p,sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        id: final_upload
+        with:
+          name: relational-historical-occurrence-final-v0.2
+          path: results/final/
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Preserve final bytes before branch checkout
+        run: |
+          mkdir -p /tmp/study-c-final
+          cp results/final/occurrences_v0.2.csv /tmp/study-c-final/
+          cp results/final/occurrence_ledger_v0.2.json /tmp/study-c-final/
+          cp input/plan/relational_historical_occurrence_retry_plan_v0.2.json /tmp/study-c-final/
+
+      - name: Freeze recovered occurrence binding on study branch
+        env:
+          FINAL_ARTIFACT_ID: ${{ steps.final_upload.outputs.artifact-id }}
+          FINAL_ARTIFACT_DIGEST: ${{ steps.final_upload.outputs.artifact-digest }}
+        run: |
+          set -euo pipefail
+          git fetch origin relational-ttf-v01
+          git checkout -B relational-ttf-v01 origin/relational-ttf-v01
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          def sha(path):
+              return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+          trigger_path=Path("benchmarks/frozen/relational_historical_occurrence_binding_trigger_v0.2.json")
+          execution_path=Path("benchmarks/frozen/relational_historical_occurrence_execution_v0.2.json")
+          candidate_path=Path("benchmarks/frozen/relational_historical_candidates_v0.1.csv")
+          recovery_path=Path("benchmarks/frozen/relational_historical_retry_import_recovery_v0.1.json")
+          csv_path=Path("/tmp/study-c-final/occurrences_v0.2.csv")
+          ledger_path=Path("/tmp/study-c-final/occurrence_ledger_v0.2.json")
+          plan_path=Path("/tmp/study-c-final/relational_historical_occurrence_retry_plan_v0.2.json")
+          ledger=json.loads(ledger_path.read_text())
+          payload={
+              "schema":"ttf_relational_historical_occurrence_artifact_binding_v0.2",
+              "status":"FROZEN_FINAL_BOUNDED_RESPONSE_BLIND_OCCURRENCE_ARTIFACT",
+              "workflow_run_id":35941577015,
+              "workflow_head_sha":"ffacbd51d58689a4b18f7a2cb920f5a1385a74ab",
+              "artifact_workflow_run_id":int(os.environ["GITHUB_RUN_ID"]),
+              "artifact_workflow_head_sha":os.environ["GITHUB_SHA"],
+              "artifact_id":int(os.environ["FINAL_ARTIFACT_ID"]),
+              "artifact_name":"relational-historical-occurrence-final-v0.2",
+              "artifact_digest":os.environ["FINAL_ARTIFACT_DIGEST"],
+              "technical_recovery_receipt_sha256":sha(recovery_path),
+              "execution_rule_sha256":sha(execution_path),
+              "binding_trigger_sha256":sha(trigger_path),
+              "candidate_csv_sha256":sha(candidate_path),
+              "occurrence_csv_sha256":sha(csv_path),
+              "occurrence_ledger_sha256":sha(ledger_path),
+              "retry_plan_sha256":sha(plan_path),
+              "occurrence_status":ledger["status"],
+              "species_passing_ge_30":int(ledger["species_passing_ge_30"]),
+              "initial_request_error_count":int(ledger["initial_request_error_count"]),
+              "final_request_error_count":int(ledger["final_request_error_count"]),
+              "retry_rounds_completed":int(ledger["retry_rounds_completed"]),
+              "technical_recovery":"PYTHONPATH-only import-path recovery; frozen retry/acquire/finalizer scripts unchanged",
+              "genetic_response_used":False,
+              "response_firewall":ledger["response_firewall"],
+          }
+          Path("benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json").write_text(
+              json.dumps(payload,indent=2,sort_keys=True)+"\n"
+          )
+          result={
+              "schema":"ttf_relational_historical_retry_import_recovery_result_v0.1",
+              "status":"COMPLETED_EXACT_SINGLE_RETRY_RECOVERY",
+              "recovery_workflow_run_id":int(os.environ["GITHUB_RUN_ID"]),
+              "recovery_workflow_head_sha":os.environ["GITHUB_SHA"],
+              "original_workflow_run_id":35941577015,
+              "retry_plan_artifact_id":10878157732,
+              "final_artifact_id":int(os.environ["FINAL_ARTIFACT_ID"]),
+              "final_artifact_digest":os.environ["FINAL_ARTIFACT_DIGEST"],
+              "occurrence_status":ledger["status"],
+              "species_passing_ge_30":int(ledger["species_passing_ge_30"]),
+              "initial_request_error_count":95,
+              "final_request_error_count":int(ledger["final_request_error_count"]),
+              "retry_rounds_completed":1,
+              "additional_retry_authorized":False,
+              "scientific_query_change":False,
+              "relation_result_seen":False,
+              "genetic_response_used":False,
+              "response_firewall":ledger["response_firewall"],
+          }
+          Path("benchmarks/frozen/relational_historical_retry_import_recovery_result_v0.1.json").write_text(
+              json.dumps(result,indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps(payload,sort_keys=True))
+          print(json.dumps(result,sort_keys=True))
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json \
+                  benchmarks/frozen/relational_historical_retry_import_recovery_result_v0.1.json
+          git commit -m "Freeze recovered Study C occurrence artifact"
+          git fetch origin relational-ttf-v01
+          git rebase origin/relational-ttf-v01
+          git push origin HEAD:relational-ttf-v01
+
+      - name: Package exact final artifact ZIP for local handoff
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FINAL_ARTIFACT_ID: ${{ steps.final_upload.outputs.artifact-id }}
+          FINAL_ARTIFACT_DIGEST: ${{ steps.final_upload.outputs.artifact-digest }}
+        run: |
+          set -euo pipefail
+          mkdir -p results/local-handoff
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$FINAL_ARTIFACT_ID/zip" > results/local-handoff/relational-historical-occurrence-final-v0.2.zip
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          artifact=Path("results/local-handoff/relational-historical-occurrence-final-v0.2.zip")
+          binding_path=Path("benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json")
+          readiness_path=Path("benchmarks/frozen/relational_historical_local_readiness_v0.1.json")
+          binding=json.loads(binding_path.read_text())
+          digest="sha256:"+hashlib.sha256(artifact.read_bytes()).hexdigest()
+          assert int(binding["workflow_run_id"])==35941577015
+          assert binding["workflow_head_sha"]=="ffacbd51d58689a4b18f7a2cb920f5a1385a74ab"
+          assert int(binding["artifact_workflow_run_id"])==int(os.environ["GITHUB_RUN_ID"])
+          assert int(binding["artifact_id"])==int(os.environ["FINAL_ARTIFACT_ID"])
+          assert binding["artifact_digest"]==os.environ["FINAL_ARTIFACT_DIGEST"]==digest
+          Path("results/local-handoff/relational_historical_occurrence_artifact_binding_v0.2.json").write_bytes(binding_path.read_bytes())
+          Path("results/local-handoff/relational_historical_local_readiness_v0.1.json").write_bytes(readiness_path.read_bytes())
+          payload={
+              "schema":"ttf_relational_historical_local_final_handoff_manifest_v0.1",
+              "status":"PASS_EXACT_FINAL_OCCURRENCE_HANDOFF_PACKAGING",
+              "original_workflow_run_id":35941577015,
+              "artifact_workflow_run_id":int(binding["artifact_workflow_run_id"]),
+              "artifact_id":binding["artifact_id"],
+              "artifact_name":binding["artifact_name"],
+              "artifact_digest":binding["artifact_digest"],
+              "occurrence_status":binding["occurrence_status"],
+              "species_passing_ge_30":binding["species_passing_ge_30"],
+              "final_request_error_count":binding["final_request_error_count"],
+              "inner_zip_filename":artifact.name,
+              "inner_zip_sha256":digest.removeprefix("sha256:"),
+              "binding_sha256":hashlib.sha256(binding_path.read_bytes()).hexdigest(),
+              "readiness_sha256":hashlib.sha256(readiness_path.read_bytes()).hexdigest(),
+              "relation_result_seen":False,
+              "genetic_response_used":False,
+              "response_firewall":binding["response_firewall"],
+          }
+          Path("results/local-handoff/manifest.json").write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
+          print(json.dumps(payload,sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-local-final-handoff-v0.1
+          path: results/local-handoff/
+          retention-days: 30
+          compression-level: 0
+          if-no-files-found: error
