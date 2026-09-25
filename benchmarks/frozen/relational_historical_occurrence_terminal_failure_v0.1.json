@@ -1,0 +1,118 @@
+{
+  "schema": "ttf_relational_historical_occurrence_terminal_failure_v0.1",
+  "status": "IRREVERSIBLE_TECHNICAL_NOT_EVALUABLE_C_AFTER_FROZEN_RETRY_IMPLEMENTATION_FAILURE",
+  "frozen_on": "2026-09-26",
+  "source_program": "docs/supporting/relational_program_v0.3.json",
+  "source_execution_contract": "benchmarks/frozen/relational_historical_occurrence_execution_v0.2.json",
+  "source_binding_trigger": "benchmarks/frozen/relational_historical_occurrence_binding_trigger_v0.2.json",
+  "workflow_run": {
+    "id": 35941577015,
+    "name": "relational-historical-occurrence-bounded-v02",
+    "head_branch": "relational-ttf-v01",
+    "head_sha": "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab",
+    "conclusion": "failure",
+    "completed_at": "2026-09-25T17:37:08Z"
+  },
+  "initial_acquisition": {
+    "required_batches": 250,
+    "completed_batches": 250,
+    "acquire_job_failures": 0,
+    "candidate_species": 1000,
+    "status_counts_from_frozen_retry_plan": {
+      "PASS_OCCURRENCE_GEOMETRY": 653,
+      "FAIL_OCCURRENCE_GEOMETRY": 234,
+      "REJECTED_GBIF_TAXON_MATCH": 18,
+      "REQUEST_ERROR": 95
+    },
+    "note": "These are initial pre-retry statuses only; they are not a final occurrence ledger."
+  },
+  "frozen_retry_plan": {
+    "artifact_id": 10878157732,
+    "artifact_name": "relational-historical-bounded-retry-plan-v0.2",
+    "artifact_digest": "sha256:b4291a54514837f944f1cb9dbf14d320fd52293d24aa33b26d36ac063b7c7103",
+    "request_error_count": 95,
+    "retry_batch_count": 24,
+    "retry_batch_size": 4,
+    "maximum_retry_rounds": 1,
+    "scientific_query_change": false
+  },
+  "observed_execution_failure": {
+    "retry_jobs_required": 24,
+    "retry_jobs_failed": 24,
+    "failed_job_ids_by_batch": [
+      108179725711,
+      108179725395,
+      108179725688,
+      108179725619,
+      108179725664,
+      108179725422,
+      108179725665,
+      108179725442,
+      108179725676,
+      108179725629,
+      108179725586,
+      108179725509,
+      108179727460,
+      108179727484,
+      108179727592,
+      108179727408,
+      108179727634,
+      108179727583,
+      108179727463,
+      108179727552,
+      108179727603,
+      108179728082,
+      108179729394,
+      108179729198
+    ],
+    "failed_step": "Retry exact frozen initial REQUEST_ERROR species only",
+    "failure_signature": "ModuleNotFoundError: No module named 'scripts'",
+    "failing_import": "from scripts.acquire_relational_historical_occurrences_bounded import FIELDS, bounded_fetch",
+    "failure_occurs_before_batch_specific_retry_logic": true,
+    "retry_artifacts_uploaded": 0,
+    "finalize_job": "skipped",
+    "final_artifact_present": false,
+    "final_artifact_name": "relational-historical-occurrence-final-v0.2",
+    "frozen_binding_present": false,
+    "local_handoff_present": false
+  },
+  "unavailable_final_fields": {
+    "occurrence_status": null,
+    "species_passing_ge_30": null,
+    "final_request_error_count": null,
+    "final_artifact_id": null,
+    "final_artifact_digest": null,
+    "reason": "The frozen retry code failed at module import before any retry batch produced a ledger, so no valid final occurrence ledger exists."
+  },
+  "irreversibility_reasoning": [
+    "The prospective binding trigger fixes Study C to workflow run 35941577015 and head ffacbd51d58689a4b18f7a2cb920f5a1385a74ab.",
+    "All 24 frozen retry jobs failed before executing batch-specific occurrence requests, and the finalize job was skipped, so the exact required final artifact was never created.",
+    "Repairing the import requires code different from the frozen head; rerunning the failed jobs or substituting another occurrence run is not authorized by the frozen contract.",
+    "Therefore Study C cannot reach its downstream relation, qualification, mask, or empirical stages under the frozen execution without violating the prospective contract."
+  ],
+  "decision": {
+    "C_state": "NOT_EVALUABLE_C",
+    "biological_null": false,
+    "ecological_inadmissibility": false,
+    "failure_class": "TECHNICAL_RETRY_IMPLEMENTATION",
+    "replacement_run_authorized": false,
+    "rerun_authorized": false,
+    "threshold_change_authorized": false,
+    "downstream_Study_C_opening_authorized": false
+  },
+  "forbidden": [
+    "rerun workflow run 35941577015 or any failed retry job",
+    "substitute another occurrence run for the prospectively bound run",
+    "alter candidate species, candidate order, occurrence query, taxon matching, year window, thinning, cap, minimum n, timeout, retry count, or any downstream threshold",
+    "treat the initial 653 PASS_OCCURRENCE_GEOMETRY species as a finalized Study-C occurrence result",
+    "impute a final_request_error_count or species_passing_ge_30 value",
+    "interpret this technical failure as evidence against historical-climate-conditioned transfer",
+    "open Study-C sequence identity, pairwise genetic distance, T_st, or beta_hist after this NOT_EVALUABLE transition"
+  ],
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
