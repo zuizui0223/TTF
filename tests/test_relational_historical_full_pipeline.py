@@ -763,3 +763,22 @@ def test_default_branch_binder_packages_exact_local_final_handoff():
     assert receipt["local_final_handoff_output_artifact"] == "relational-c-local-final-handoff-v0.1"
     assert receipt["local_final_handoff_inner_artifact_repacked"] is False
     assert receipt["local_final_handoff_result_selection_allowed"] is False
+
+
+def test_default_branch_binder_is_valid_yaml_and_has_required_jobs():
+    import yaml
+
+    path = ROOT / ".github/workflows/relational-historical-bind-bounded-occurrence.yml"
+    payload = yaml.safe_load(path.read_text())
+
+    assert isinstance(payload, dict)
+    assert payload["name"] == "relational-historical-bind-bounded-occurrence"
+    jobs = payload["jobs"]
+    assert set(["bind", "package_local_handoff", "execute_c"]).issubset(jobs)
+    assert jobs["package_local_handoff"]["needs"] == "bind"
+    assert jobs["execute_c"]["needs"] == "bind"
+    assert jobs["execute_c"]["uses"].endswith(
+        "@17923b1719d9a3ebce842c959e4547378ac28338"
+    )
+    assert jobs["bind"]["outputs"]["artifact_id"] == "${{ steps.frozen.outputs.artifact_id }}"
+    assert jobs["bind"]["outputs"]["artifact_digest"] == "${{ steps.frozen.outputs.artifact_digest }}"
