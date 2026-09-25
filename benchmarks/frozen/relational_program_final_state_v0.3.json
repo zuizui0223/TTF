@@ -1,0 +1,9 @@
+{
+  "schema": "ttf_relational_program_final_state_v0.3",
+  "B_state": "NOT_EVALUABLE_B",
+  "C_state": "NOT_EVALUABLE",
+  "C_decision": null,
+  "C_p_one_sided": null,
+  "final_state": "CLOSED_NO_EVALUABLE_TEST",
+  "no_additional_predictor_authorized": true
+}
