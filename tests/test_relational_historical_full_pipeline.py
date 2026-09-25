@@ -782,3 +782,52 @@ def test_default_branch_binder_is_valid_yaml_and_has_required_jobs():
     )
     assert jobs["bind"]["outputs"]["artifact_id"] == "${{ steps.frozen.outputs.artifact_id }}"
     assert jobs["bind"]["outputs"]["artifact_digest"] == "${{ steps.frozen.outputs.artifact_digest }}"
+
+
+def test_retry_import_recovery_is_exact_and_prequery():
+    import json
+
+    receipt = json.loads(
+        (
+            ROOT
+            / "benchmarks/frozen/relational_historical_retry_import_recovery_v0.1.json"
+        ).read_text()
+    )
+    workflow = (
+        ROOT / ".github/workflows/relational-historical-retry-import-recovery-v01.yml"
+    ).read_text()
+
+    assert receipt["status"] == "FROZEN_TECHNICAL_RECOVERY_BEFORE_ANY_RETRY_QUERY"
+    assert receipt["original_execution"]["workflow_run_id"] == 35941577015
+    assert receipt["original_execution"]["workflow_head_sha"] == "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab"
+    assert receipt["original_execution"]["request_error_count"] == 95
+    assert receipt["original_execution"]["retry_batch_count"] == 24
+    assert receipt["original_execution"]["retry_jobs_failure"] == 24
+    assert receipt["original_execution"]["retry_output_artifacts"] == 0
+    assert receipt["failure_class"]["bounded_fetch_reached"] is False
+    assert receipt["failure_class"]["gbif_retry_query_consumed"] is False
+    assert receipt["recovery_execution"]["exact_retry_plan_artifact_id"] == 10878157732
+    assert receipt["recovery_execution"]["request_error_species"] == 95
+    assert receipt["recovery_execution"]["retry_batches"] == 24
+    assert receipt["recovery_execution"]["batch_size"] == 4
+    assert receipt["recovery_execution"]["max_parallel"] == 2
+    assert receipt["recovery_execution"]["per_species_wall_timeout_seconds"] == 2700
+    assert receipt["recovery_execution"]["retry_round"] == 1
+    assert receipt["recovery_execution"]["retry_script_changed"] is False
+    assert receipt["recovery_execution"]["scientific_query_change"] is False
+    assert receipt["recovery_execution"]["additional_retry_round_authorized"] is False
+    assert receipt["result_selection_allowed"] is False
+    assert receipt["relation_result_seen"] is False
+    assert receipt["genetic_response_used"] is False
+    assert all(v is False for v in receipt["response_firewall"].values())
+
+    assert "ref: ffacbd51d58689a4b18f7a2cb920f5a1385a74ab" in workflow
+    assert 'PYTHONPATH="$PWD" python scripts/retry_relational_historical_occurrences_bounded.py' in workflow
+    assert "--batch-size 4" in workflow
+    assert "--per-species-timeout-seconds 2700" in workflow
+    assert "max-parallel: 2" in workflow
+    assert "10878157732" in workflow
+    assert "b4291a54514837f944f1cb9dbf14d320fd52293d24aa33b26d36ac063b7c7103" in workflow
+    assert "scripts/finalize_relational_historical_occurrence_bounded.py" in workflow
+    assert "relational-historical-occurrence-final-v0.2" in workflow
+    assert "relational-c-local-final-handoff-v0.1" in workflow
