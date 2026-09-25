@@ -1,0 +1,178 @@
+{
+  "schema": "ttf_relational_historical_retry_import_recovery_v0.1",
+  "status": "FROZEN_TECHNICAL_RECOVERY_BEFORE_ANY_RETRY_QUERY",
+  "frozen_on": "2026-09-26",
+  "purpose": "Recover the prospectively authorized single retry round for the exact initial REQUEST_ERROR set after every original retry job failed at module import before bounded_fetch or any GBIF retry query could execute.",
+  "original_execution": {
+    "workflow_run_id": 35941577015,
+    "workflow_head_sha": "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab",
+    "conclusion": "failure",
+    "initial_acquire_jobs_success": 250,
+    "initial_acquire_jobs_failure": 0,
+    "plan_retry_conclusion": "success",
+    "retry_plan_artifact_id": 10878157732,
+    "retry_plan_artifact_digest": "sha256:b4291a54514837f944f1cb9dbf14d320fd52293d24aa33b26d36ac063b7c7103",
+    "initial_status_counts": {
+      "PASS_OCCURRENCE_GEOMETRY": 653,
+      "FAIL_OCCURRENCE_GEOMETRY": 234,
+      "REJECTED_GBIF_TAXON_MATCH": 18,
+      "REQUEST_ERROR": 95
+    },
+    "request_error_count": 95,
+    "retry_batch_count": 24,
+    "retry_jobs_failure": 24,
+    "retry_jobs_success": 0,
+    "retry_output_artifacts": 0,
+    "final_artifact_created": false,
+    "finalize_conclusion": "skipped"
+  },
+  "failed_retry_jobs": [
+    {
+      "name": "retry (0)",
+      "job_id": 108179725711
+    },
+    {
+      "name": "retry (1)",
+      "job_id": 108179725395
+    },
+    {
+      "name": "retry (2)",
+      "job_id": 108179725688
+    },
+    {
+      "name": "retry (3)",
+      "job_id": 108179725619
+    },
+    {
+      "name": "retry (4)",
+      "job_id": 108179725664
+    },
+    {
+      "name": "retry (5)",
+      "job_id": 108179725422
+    },
+    {
+      "name": "retry (6)",
+      "job_id": 108179725665
+    },
+    {
+      "name": "retry (7)",
+      "job_id": 108179725442
+    },
+    {
+      "name": "retry (8)",
+      "job_id": 108179725676
+    },
+    {
+      "name": "retry (9)",
+      "job_id": 108179725629
+    },
+    {
+      "name": "retry (10)",
+      "job_id": 108179725586
+    },
+    {
+      "name": "retry (11)",
+      "job_id": 108179725509
+    },
+    {
+      "name": "retry (12)",
+      "job_id": 108179727460
+    },
+    {
+      "name": "retry (13)",
+      "job_id": 108179727484
+    },
+    {
+      "name": "retry (14)",
+      "job_id": 108179727592
+    },
+    {
+      "name": "retry (15)",
+      "job_id": 108179727408
+    },
+    {
+      "name": "retry (16)",
+      "job_id": 108179727634
+    },
+    {
+      "name": "retry (17)",
+      "job_id": 108179727583
+    },
+    {
+      "name": "retry (18)",
+      "job_id": 108179727463
+    },
+    {
+      "name": "retry (19)",
+      "job_id": 108179727552
+    },
+    {
+      "name": "retry (20)",
+      "job_id": 108179727603
+    },
+    {
+      "name": "retry (21)",
+      "job_id": 108179728082
+    },
+    {
+      "name": "retry (22)",
+      "job_id": 108179729394
+    },
+    {
+      "name": "retry (23)",
+      "job_id": 108179729198
+    }
+  ],
+  "failure_class": {
+    "exception": "ModuleNotFoundError: No module named 'scripts'",
+    "frozen_script": "scripts/retry_relational_historical_occurrences_bounded.py",
+    "frozen_script_git_blob": "2fc77c270d073555f69dfec3e168af85596cd0b6",
+    "unconditional_import_line": "from scripts.acquire_relational_historical_occurrences_bounded import FIELDS, bounded_fetch",
+    "representative_jobs_verified": [
+      108179725711,
+      108179725395,
+      108179725688,
+      108179725619
+    ],
+    "bounded_fetch_reached": false,
+    "retry_species_status_lines_emitted": false,
+    "gbif_retry_query_consumed": false,
+    "rationale": "The identical frozen script raises during top-level module import before argparse, batch selection, bounded_fetch, or any network request. All 24 matrix jobs use this same script and failed before artifact upload."
+  },
+  "recovery_execution": {
+    "exact_source_checkout_sha": "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab",
+    "exact_retry_plan_artifact_id": 10878157732,
+    "exact_retry_plan_artifact_digest": "sha256:b4291a54514837f944f1cb9dbf14d320fd52293d24aa33b26d36ac063b7c7103",
+    "request_error_species": 95,
+    "retry_batches": 24,
+    "batch_size": 4,
+    "max_parallel": 2,
+    "per_species_wall_timeout_seconds": 2700,
+    "retry_round": 1,
+    "only_runtime_change": "Set PYTHONPATH=$PWD before invoking the unchanged frozen retry script so its existing top-level import resolves.",
+    "retry_script_changed": false,
+    "acquire_script_changed": false,
+    "finalizer_changed": false,
+    "scientific_query_change": false,
+    "candidate_change": false,
+    "retry_set_change": false,
+    "timeout_change": false,
+    "additional_retry_round_authorized": false
+  },
+  "terminal_rule": {
+    "unresolved_REQUEST_ERROR_after_recovery": "NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT",
+    "zero_REQUEST_ERROR_and_PASS_at_least_500": "PASS_TO_HISTORICAL_ASSET_EXTRACTION",
+    "zero_REQUEST_ERROR_and_PASS_below_500": "NOT_EVALUABLE_HISTORICAL_OCCURRENCE_GEOMETRY",
+    "biological_null": false
+  },
+  "result_selection_allowed": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
