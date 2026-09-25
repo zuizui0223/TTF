@@ -6,7 +6,10 @@ import csv
 import json
 from pathlib import Path
 
-from scripts.acquire_relational_historical_occurrences_bounded import FIELDS, bounded_fetch
+try:
+    from scripts.acquire_relational_historical_occurrences_bounded import FIELDS, bounded_fetch
+except ModuleNotFoundError:
+    from acquire_relational_historical_occurrences_bounded import FIELDS, bounded_fetch
 
 
 def main() -> int:
