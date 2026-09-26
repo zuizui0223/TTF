@@ -17,7 +17,7 @@
     },
     "contemporary_envelope_overlap": {
       "rule": "Among WGSRPD3 units with sampled butterfly records, fraction outside the contemporary host-resource envelope <= 0.10",
-      "maximum_outside_contemporary_fraction": 0.10,
+      "maximum_outside_contemporary_fraction": 0.1,
       "reason": "Large outside-envelope fractions indicate that the reconstructed resource surface is not a defensible opportunity set for that species."
     },
     "sampling_effort_identifiability": {
@@ -29,6 +29,10 @@
     },
     "climate_training_floor": {
       "minimum_valid_training_occurrence_records": 30
+    },
+    "occurrence_transport": {
+      "rule": "Per-species occurrence ledger status must equal COMPLETE; PARTIAL_TRANSPORT and REJECTED_GBIF_TAXON_MATCH do not enter the climate pilot.",
+      "reason": "Incomplete transport can convert unqueried deterministic pages into false never-observed resource units."
     }
   },
   "pilot_level_gate": {
@@ -46,6 +50,7 @@
     "climate_rasters_sampled_before_gate_freeze": false,
     "climate_mismatch_computed_before_gate_freeze": false,
     "climate_gap_effect_seen_before_gate_freeze": false,
-    "genetic_response_used": false
+    "genetic_response_used": false,
+    "occurrence_transport_complete_gate_added_before_climate_result": true
   }
 }
