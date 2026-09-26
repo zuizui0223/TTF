@@ -1,0 +1,61 @@
+{
+  "schema": "ttf_gbif_occurrence_pagination_order_diagnostic_v0.1",
+  "status": "PASS_EMPIRICAL_EXECUTION_STABILITY_CHECK",
+  "executed_on": "2026-09-26",
+  "workflow": {
+    "run_id": 36239340767,
+    "head_sha": "551d6cb68e862c33ccb59bb05bff5194b402663e",
+    "branch": "diagnostic/gbif-order-stability-20260926"
+  },
+  "scope": {
+    "taxon": "Vanessa cardui",
+    "gbif_taxon_key": 4299368,
+    "filters": {
+      "hasCoordinate": true,
+      "hasGeospatialIssue": false,
+      "occurrenceStatus": "PRESENT",
+      "year": "2010-2026"
+    },
+    "offsets_tested": [0, 300],
+    "full_request_limit": 100,
+    "chunk_request_limit": 10,
+    "chunks_per_window": 10,
+    "repeat_delay_seconds": 5
+  },
+  "result": {
+    "offset_0": {
+      "full_n": 100,
+      "chunked_n": 100,
+      "repeat_n": 100,
+      "full_equals_chunked_sequence": true,
+      "full_equals_repeated_sequence": true,
+      "full_set_equals_chunked_set": true,
+      "full_set_equals_repeated_set": true,
+      "full_unique": true,
+      "chunked_unique": true
+    },
+    "offset_300": {
+      "full_n": 100,
+      "chunked_n": 100,
+      "repeat_n": 100,
+      "full_equals_chunked_sequence": true,
+      "full_equals_repeated_sequence": true,
+      "full_set_equals_chunked_set": true,
+      "full_set_equals_repeated_set": true,
+      "full_unique": true,
+      "chunked_unique": true
+    }
+  },
+  "interpretation": {
+    "supports_chunk_reconstruction_within_current_execution_context": true,
+    "formal_long_term_order_guarantee": false,
+    "reason": "GBIF occurrence search documentation supports offset paging but describes search results as relevance-ordered and does not provide a general occurrence-search sort control. The diagnostic therefore validates current execution stability rather than asserting a permanent API ordering contract."
+  },
+  "independent_test_firewall": {
+    "independent_panel_species_used": false,
+    "independent_occurrence_geography_used": false,
+    "independent_host_overlap_used": false,
+    "independent_climate_result_used": false,
+    "primary_result_used": false
+  }
+}
