@@ -22,6 +22,9 @@ PROTOCOL_SCHEMAS = {
     "ttf_butterfly_climate_release_independent_test_v0.2": (
         "FROZEN_RESPONSE_BLIND_PRIMARY_INFERENCE_CORRECTION_BEFORE_INDEPENDENT_PRECLIMATE_OR_CLIMATE_RESULT"
     ),
+    "ttf_butterfly_climate_release_independent_test_v0.2.1": (
+        "FROZEN_RESPONSE_BLIND_ROW_ORDER_INVARIANT_PERMUTATION_FIX_BEFORE_INDEPENDENT_PRECLIMATE_OR_CLIMATE_RESULT"
+    ),
 }
 PANEL_SCHEMA = "ttf_butterfly_climate_release_independent_panel_v0.1"
 CLIMATE_SCHEMA = "ttf_butterfly_resource_envelope_climate_crossfit_v0.1"
@@ -128,8 +131,15 @@ def main() -> int:
     if len(informative) < minimum:
         payload = {
             "schema": (
-                "ttf_butterfly_climate_release_independent_result_v0.2"
-                if protocol_schema.endswith("_v0.2")
+                (
+                    "ttf_butterfly_climate_release_independent_result_v0.2.1"
+                    if protocol_schema.endswith("_v0.2.1")
+                    else "ttf_butterfly_climate_release_independent_result_v0.2"
+                )
+                if protocol_schema in {
+                    "ttf_butterfly_climate_release_independent_test_v0.2",
+                    "ttf_butterfly_climate_release_independent_test_v0.2.1",
+                }
                 else "ttf_butterfly_climate_release_independent_result_v0.1"
             ),
             "status": "NOT_EVALUABLE_INDEPENDENT_CLIMATE_RELEASE_TEST",
@@ -158,7 +168,10 @@ def main() -> int:
     ]
     primary = protocol["primary_test"]
     iterations = int(primary["permutation"]["iterations"])
-    if protocol_schema.endswith("_v0.2"):
+    if protocol_schema in {
+                    "ttf_butterfly_climate_release_independent_test_v0.2",
+                    "ttf_butterfly_climate_release_independent_test_v0.2.1",
+                }:
         test = freedman_lane_partial_spearman_permutation(
             response,
             predictor,
@@ -190,7 +203,10 @@ def main() -> int:
     payload = {
         "schema": (
                 "ttf_butterfly_climate_release_independent_result_v0.2"
-                if protocol_schema.endswith("_v0.2")
+                if protocol_schema in {
+                    "ttf_butterfly_climate_release_independent_test_v0.2",
+                    "ttf_butterfly_climate_release_independent_test_v0.2.1",
+                }
                 else "ttf_butterfly_climate_release_independent_result_v0.1"
             ),
         "status": "INDEPENDENT_TEST_COMPLETE",
@@ -233,8 +249,15 @@ def main() -> int:
             "primary_direction_frozen_before_independent_gbif": True,
             "quality_thresholds_frozen_before_independent_gbif": True,
             "primary_inference_method": (
-                "response_blind_residual_permutation_correction_after_transport_started_before_ecological_response"
-                if protocol_schema.endswith("_v0.2")
+                (
+                    "response_blind_row_order_invariant_residual_permutation_fix_after_transport_started_before_ecological_response"
+                    if protocol_schema.endswith("_v0.2.1")
+                    else "response_blind_residual_permutation_correction_after_transport_started_before_ecological_response"
+                )
+                if protocol_schema in {
+                    "ttf_butterfly_climate_release_independent_test_v0.2",
+                    "ttf_butterfly_climate_release_independent_test_v0.2.1",
+                }
                 else "raw_predictor_label_permutation_v0.1"
             ),
             "independent_ecological_response_seen_before_v0_2_correction": False,
