@@ -89,6 +89,102 @@ def load_pilot(path: Path) -> tuple[str, ...]:
     return names
 
 
+RESOLVER_VERSION = "gbif-exact-accepted-species-v0.2"
+
+
+def _accepted_match(species: str, payload: dict) -> tuple[bool, int, str, str, str]:
+    usage_key = int(payload.get("usageKey") or payload.get("key") or 0)
+    canonical = str(payload.get("canonicalName") or "").strip()
+    rank = str(payload.get("rank") or "").strip().upper()
+    match_type = str(payload.get("matchType") or "").strip().upper()
+    accepted = (
+        usage_key > 0
+        and rank == "SPECIES"
+        and canonical.lower() == species.lower()
+        and (
+            not match_type
+            or match_type in {"EXACT", "FUZZY"}
+        )
+    )
+    return accepted, usage_key, canonical, rank, match_type
+
+
+def resolve_species_metadata(species: str, *, deadline: float) -> dict:
+    strict = get_json(
+        "species/match",
+        {"name": species, "strict": "true"},
+        deadline=deadline,
+    )
+    accepted, usage_key, canonical, rank, match_type = _accepted_match(
+        species, strict
+    )
+    if accepted:
+        return {
+            "species": species,
+            "status": "MATCHED",
+            "usage_key": usage_key,
+            "canonical_name": canonical,
+            "rank": rank,
+            "match_type": match_type,
+            "resolver_version": RESOLVER_VERSION,
+            "resolver_route": "species_match_strict",
+        }
+
+    search = get_json(
+        "species/search",
+        {"q": species, "rank": "SPECIES", "limit": 20},
+        deadline=deadline,
+    )
+    candidates = []
+    for item in search.get("results") or []:
+        item_rank = str(item.get("rank") or "").strip().upper()
+        item_canonical = str(item.get("canonicalName") or "").strip()
+        item_status = str(
+            item.get("taxonomicStatus") or item.get("status") or ""
+        ).strip().upper()
+        item_key = int(item.get("key") or 0)
+        if (
+            item_key > 0
+            and item_rank == "SPECIES"
+            and item_canonical.lower() == species.lower()
+            and item_status == "ACCEPTED"
+        ):
+            candidates.append(
+                (item_key, item_canonical, item_rank, item_status)
+            )
+    unique = {}
+    for candidate in candidates:
+        unique[candidate[0]] = candidate
+    if len(unique) == 1:
+        item_key, item_canonical, item_rank, item_status = next(
+            iter(unique.values())
+        )
+        return {
+            "species": species,
+            "status": "MATCHED",
+            "usage_key": item_key,
+            "canonical_name": item_canonical,
+            "rank": item_rank,
+            "match_type": "EXACT_SEARCH_FALLBACK",
+            "taxonomic_status": item_status,
+            "resolver_version": RESOLVER_VERSION,
+            "resolver_route": "species_search_exact_accepted_unique",
+        }
+
+    return {
+        "species": species,
+        "status": "REJECTED_GBIF_TAXON_MATCH",
+        "usage_key": usage_key,
+        "canonical_name": canonical,
+        "rank": rank,
+        "match_type": match_type,
+        "resolver_version": RESOLVER_VERSION,
+        "resolver_route": "strict_then_exact_accepted_search",
+        "exact_accepted_search_candidates": len(unique),
+        "page_offsets": [],
+    }
+
+
 def metadata_for_species(
     species: str,
     state_dir: Path,
@@ -101,36 +197,19 @@ def metadata_for_species(
         meta = json.loads(meta_path.read_text(encoding="utf-8"))
         if meta.get("species") != species:
             raise RuntimeError("checkpoint species identity drift")
-        return meta
+        # Keep every prior successful exact strict match. Re-evaluate only
+        # previously rejected metadata under the new general resolver.
+        if meta.get("status") != "REJECTED_GBIF_TAXON_MATCH":
+            return meta
+        if meta.get("resolver_version") == RESOLVER_VERSION:
+            return meta
 
-    match = get_json(
-        "species/match",
-        {"name": species, "strict": "true"},
-        deadline=deadline,
-    )
-    usage_key = int(match.get("usageKey") or 0)
-    canonical = str(match.get("canonicalName") or "").strip()
-    rank = str(match.get("rank") or "").strip().upper()
-    match_type = str(match.get("matchType") or "").strip().upper()
-    accepted = (
-        usage_key > 0
-        and rank == "SPECIES"
-        and match_type in {"EXACT", "FUZZY"}
-        and canonical.lower() == species.lower()
-    )
-    if not accepted:
-        meta = {
-            "species": species,
-            "status": "REJECTED_GBIF_TAXON_MATCH",
-            "usage_key": usage_key,
-            "canonical_name": canonical,
-            "rank": rank,
-            "match_type": match_type,
-            "page_offsets": [],
-        }
+    meta = resolve_species_metadata(species, deadline=deadline)
+    if meta.get("status") == "REJECTED_GBIF_TAXON_MATCH":
         atomic_json(meta_path, meta)
         return meta
 
+    usage_key = int(meta["usage_key"])
     count = get_json(
         "occurrence/search",
         {
@@ -149,20 +228,15 @@ def metadata_for_species(
         page_size=300,
         maximum_pages=maximum_pages,
     )
-    meta = {
-        "species": species,
-        "status": "MATCHED",
-        "usage_key": usage_key,
-        "canonical_name": canonical,
-        "rank": rank,
-        "match_type": match_type,
-        "total_coordinate_records_2010_2026": total,
-        "page_size": 300,
-        "page_offsets": list(offsets),
-    }
+    meta.update(
+        {
+            "total_coordinate_records_2010_2026": total,
+            "page_size": 300,
+            "page_offsets": list(offsets),
+        }
+    )
     atomic_json(meta_path, meta)
     return meta
-
 
 def fetch_species_pages(
     species: str,
