@@ -1,4 +1,4 @@
-name: butterfly climate-release independent test v02
+name: butterfly climate-release independent test v02.1
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
       - ".github/workflows/butterfly-climate-release-independent-v01.yml"
       - "docs/exploratory/butterfly_climate_release_independent_test_v0.1.json"
       - "docs/exploratory/butterfly_climate_release_independent_test_v0.2.json"
+      - "docs/exploratory/butterfly_climate_release_independent_test_v0.2.1.json"
       - "src/ttf/butterfly_climate_release.py"
       - "src/ttf/checkpointed_gbif_occurrence.py"
       - "src/ttf/resource_envelope_climate.py"
@@ -348,7 +349,7 @@ jobs:
         id: gate
         run: |
           python scripts/apply_butterfly_climate_release_quality_gate.py \
-            --protocol-json docs/exploratory/butterfly_climate_release_independent_test_v0.2.json \
+            --protocol-json docs/exploratory/butterfly_climate_release_independent_test_v0.2.1.json \
             --panel-json inputs/panel/panel.json \
             --descriptors-csv inputs/reconstruction/butterfly-resource-envelope-pilot-v0.1/s1_resource_descriptors.csv \
             --overlap-json results/butterfly-climate-release-summary-v0.1/native_contemporary_overlap.json \
@@ -441,7 +442,7 @@ jobs:
             --occurrences-csv inputs/summary/occurrences.csv \
             --unit-table inputs/summary/wgsrpd3_unit_table.csv \
             --contemporary-footprints-json inputs/resource/contemporary_footprints.json \
-            --gate-rule-json docs/exploratory/butterfly_climate_release_independent_test_v0.2.json \
+            --gate-rule-json docs/exploratory/butterfly_climate_release_independent_test_v0.2.1.json \
             --quality-gate-json inputs/summary/preclimate_quality_gate.json \
             --level3-geojson _wgsrpd/geojson/level3.geojson \
             --raster rasters/CHELSA_bio1_1981-2010_V.2.1.tif \
@@ -454,7 +455,7 @@ jobs:
       - name: Run frozen primary host-breadth test
         run: |
           python scripts/test_butterfly_climate_release_hypothesis.py \
-            --protocol-json docs/exploratory/butterfly_climate_release_independent_test_v0.2.json \
+            --protocol-json docs/exploratory/butterfly_climate_release_independent_test_v0.2.1.json \
             --panel-json inputs/panel/panel.json \
             --climate-summary-json results/butterfly-climate-release-test-v0.1/climate_summary.json \
             --output-json results/butterfly-climate-release-test-v0.1/primary_result.json
@@ -466,6 +467,6 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: butterfly-climate-release-independent-result-v02
+          name: butterfly-climate-release-independent-result-v02-1
           path: results/butterfly-climate-release-test-v0.1/
           retention-days: 30
