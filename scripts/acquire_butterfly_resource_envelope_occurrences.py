@@ -296,6 +296,7 @@ def combine_records(state_root: Path, species: tuple[str, ...]) -> list[dict[str
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--pilot-json", type=Path, required=True)
+    ap.add_argument("--only-species", type=str, default=None)
     ap.add_argument("--state-dir", type=Path, required=True)
     ap.add_argument("--output-csv", type=Path, required=True)
     ap.add_argument("--output-ledger", type=Path, required=True)
@@ -304,6 +305,11 @@ def main() -> int:
     args = ap.parse_args()
 
     species = load_pilot(args.pilot_json)
+    if args.only_species is not None:
+        selected = str(args.only_species).strip()
+        if selected not in species:
+            raise RuntimeError(f"requested species is not in frozen pilot: {selected}")
+        species = (selected,)
     args.state_dir.mkdir(parents=True, exist_ok=True)
     ledgers = [
         fetch_species_pages(
