@@ -917,3 +917,43 @@ def test_study_c_recovery_terminal_gate_reduces_to_zero_unresolved_request_error
     # REQUEST_ERROR implies at least the 653 initial PASS species remain.
     assert recovery["terminal_rule"]["zero_REQUEST_ERROR_and_PASS_at_least_500"] == "PASS_TO_HISTORICAL_ASSET_EXTRACTION"
     assert recovery["terminal_rule"]["unresolved_REQUEST_ERROR_after_recovery"] == "NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT"
+
+
+def test_retry_import_recovery_is_bound_to_one_exact_run():
+    import json
+
+    p = json.loads(
+        (
+            ROOT
+            / "benchmarks/frozen/relational_historical_retry_import_recovery_run_binding_v0.1.json"
+        ).read_text()
+    )
+
+    assert p["status"] == "FROZEN_BEFORE_RECOVERY_RETRY_RESULT"
+    assert p["recovery_workflow"]["name"] == "relational-historical-retry-import-recovery-v01"
+    assert p["recovery_workflow"]["workflow_run_id"] == 36200833241
+    assert p["recovery_workflow"]["workflow_head_sha"] == "7478c3d6fc8e1e1926edd8baa7e2a0d17b2ca09b"
+    assert p["recovery_workflow"]["preflight_conclusion_at_freeze"] == "success"
+    assert p["recovery_workflow"]["retry_jobs_expected"] == 24
+    assert p["recovery_workflow"]["retry_artifacts_observed_at_freeze"] == 0
+    assert p["recovery_workflow"]["final_artifact_observed_at_freeze"] is False
+
+    assert p["original_occurrence_run"]["workflow_run_id"] == 35941577015
+    assert p["original_occurrence_run"]["workflow_head_sha"] == "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab"
+    assert p["exact_retry_plan"]["artifact_id"] == 10878157732
+    assert p["exact_retry_plan"]["request_error_species"] == 95
+    assert p["exact_retry_plan"]["retry_batch_count"] == 24
+
+    assert p["execution_invariants"]["retry_round"] == 1
+    assert p["execution_invariants"]["batch_size"] == 4
+    assert p["execution_invariants"]["max_parallel"] == 2
+    assert p["execution_invariants"]["per_species_wall_timeout_seconds"] == 2700
+    assert p["execution_invariants"]["only_runtime_change"] == "PYTHONPATH=$PWD"
+    assert p["execution_invariants"]["additional_retry_round_authorized"] is False
+    assert p["execution_invariants"]["scientific_query_change"] is False
+
+    assert p["duplicate_recovery_run_authorized"] is False
+    assert p["result_selection_allowed"] is False
+    assert p["relation_result_seen"] is False
+    assert p["genetic_response_used"] is False
+    assert all(v is False for v in p["response_firewall"].values())
