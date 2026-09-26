@@ -10,6 +10,7 @@ on:
       - "src/ttf/checkpointed_gbif_occurrence.py"
       - "scripts/acquire_butterfly_resource_envelope_occurrences.py"
       - "scripts/map_butterfly_resource_envelope_wgsrpd3.py"
+      - "scripts/diagnose_butterfly_resource_sampling_effort.py"
   workflow_dispatch:
 
 jobs:
@@ -176,11 +177,19 @@ jobs:
           python scripts/map_butterfly_resource_envelope_wgsrpd3.py             --pilot-json inputs/pilot/butterfly-resource-envelope-pilot-v0.1/pilot_species.json             --host-footprints-json inputs/pilot/butterfly-resource-envelope-pilot-v0.1/s1_host_resource_footprints.json             --occurrences-csv results/butterfly-resource-envelope-gbif-v0.1/occurrences.csv             --level3-geojson _wgsrpd/geojson/level3.geojson             --output-unit-table results/butterfly-resource-envelope-gbif-v0.1/wgsrpd3_unit_table.csv             --output-summary results/butterfly-resource-envelope-gbif-v0.1/wgsrpd3_resolution_summary.json
           cat results/butterfly-resource-envelope-gbif-v0.1/wgsrpd3_resolution_summary.json
 
+      - name: Diagnose sampling-effort sensitivity
+        run: |
+          python scripts/diagnose_butterfly_resource_sampling_effort.py \
+            --unit-table results/butterfly-resource-envelope-gbif-v0.1/wgsrpd3_unit_table.csv \
+            --output-csv results/butterfly-resource-envelope-gbif-v0.1/sampling_effort_sensitivity.csv \
+            --output-json results/butterfly-resource-envelope-gbif-v0.1/sampling_effort_sensitivity.json
+          cat results/butterfly-resource-envelope-gbif-v0.1/sampling_effort_sensitivity.json
+
       - name: Record output identities
         run: |
           (
             cd results/butterfly-resource-envelope-gbif-v0.1
-            sha256sum occurrences.csv occurrence_ledgers.json wgsrpd3_unit_table.csv wgsrpd3_resolution_summary.json > SHA256SUMS
+            sha256sum occurrences.csv occurrence_ledgers.json wgsrpd3_unit_table.csv wgsrpd3_resolution_summary.json sampling_effort_sensitivity.csv sampling_effort_sensitivity.json > SHA256SUMS
           )
           sha256sum _wgsrpd/geojson/level3.geojson > results/butterfly-resource-envelope-gbif-v0.1/WGSRPD3_SHA256
           cat results/butterfly-resource-envelope-gbif-v0.1/SHA256SUMS
