@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from ttf.butterfly_climate_release import (
     ExpansionDescriptor,
+    deterministic_residual_donor_indices,
     freedman_lane_partial_spearman_permutation,
     host_breadth_stratum,
     one_sided_partial_spearman_permutation,
@@ -187,3 +188,29 @@ def test_freedman_lane_keeps_predictor_control_structure_fixed():
     )
     assert result["observed_partial_spearman"] < 0
     assert 0 < result["one_sided_p_value"] <= 1
+
+
+def test_residual_donor_mapping_is_species_identity_invariant():
+    species = ["zeta", "alpha", "gamma", "beta"]
+    donors_a = deterministic_residual_donor_indices(
+        species,
+        iteration=17,
+        tag="row-order-invariance-test",
+    )
+    mapping_a = {
+        species[i]: species[int(donors_a[i])]
+        for i in range(len(species))
+    }
+
+    order = [2, 0, 3, 1]
+    reordered = [species[i] for i in order]
+    donors_b = deterministic_residual_donor_indices(
+        reordered,
+        iteration=17,
+        tag="row-order-invariance-test",
+    )
+    mapping_b = {
+        reordered[i]: reordered[int(donors_b[i])]
+        for i in range(len(reordered))
+    }
+    assert mapping_a == mapping_b
