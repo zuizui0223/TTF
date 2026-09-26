@@ -145,10 +145,19 @@ def main() -> int:
         minimum_eval_units = 2
         minimum_never_units = 2
         analysis_scope = "response_blind_pilot"
-    elif gate_schema == "ttf_butterfly_climate_release_independent_test_v0.1":
-        if gate_rule.get("status") != (
-            "FROZEN_PILOT_DERIVED_HYPOTHESIS_BEFORE_INDEPENDENT_GBIF_OR_CLIMATE"
-        ):
+    elif gate_schema in {
+        "ttf_butterfly_climate_release_independent_test_v0.1",
+        "ttf_butterfly_climate_release_independent_test_v0.2",
+    }:
+        expected_status = {
+            "ttf_butterfly_climate_release_independent_test_v0.1": (
+                "FROZEN_PILOT_DERIVED_HYPOTHESIS_BEFORE_INDEPENDENT_GBIF_OR_CLIMATE"
+            ),
+            "ttf_butterfly_climate_release_independent_test_v0.2": (
+                "FROZEN_RESPONSE_BLIND_PRIMARY_INFERENCE_CORRECTION_BEFORE_INDEPENDENT_PRECLIMATE_OR_CLIMATE_RESULT"
+            ),
+        }[gate_schema]
+        if gate_rule.get("status") != expected_status:
             raise RuntimeError("independent climate-release protocol is not frozen")
         if quality_schema != "ttf_butterfly_climate_release_preclimate_gate_v0.1":
             raise RuntimeError("unexpected independent preclimate quality-gate schema")
