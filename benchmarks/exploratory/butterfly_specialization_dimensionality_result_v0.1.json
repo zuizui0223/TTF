@@ -1,0 +1,63 @@
+{
+  "schema": "ttf_butterfly_specialization_dimensionality_result_v0.1",
+  "status": "EXPLORATORY_DESCRIPTIVE_RESULT_FROM_EXACT_S1_RECONSTRUCTION",
+  "source": {
+    "workflow_run_id": 36222306369,
+    "artifact_id": 10898504566,
+    "descriptor_sha256": "894f48dbca1760fc4fa75bfee8f663540ab4b9380f8b9daf2bc09440e8bb0cdc",
+    "butterfly_gbif_used": false,
+    "climate_used": false,
+    "genetic_response_used": false
+  },
+  "definitions": {
+    "taxonomic_host_breadth": "LepTraits NumberOfHostplantFamilies",
+    "geographic_resource_breadth": "count of native extant non-doubtful WCVP-v13 WGSRPD3 units in the union of resolved larval hosts",
+    "rank_discordance": "percentile rank of geographic resource breadth minus percentile rank of host-family breadth",
+    "large_discordance": "absolute rank discordance >= 0.5",
+    "specialist_wide": "host-family count == 1 and geographic resource breadth >= panel 75th percentile",
+    "generalist_narrow": "host-family count >= 6 and geographic resource breadth <= panel 25th percentile"
+  },
+  "full_resource_eligible_panel": {
+    "species": 239,
+    "spearman_host_family_vs_geographic_resource_breadth": 0.2762564748550703,
+    "median_absolute_rank_discordance": 0.19037656903765687,
+    "species_with_large_rank_discordance": 40,
+    "fraction_with_large_rank_discordance": 0.16736401673640167,
+    "geographic_resource_q25_units": 48.5,
+    "geographic_resource_q75_units": 167.5,
+    "specialist_wide_species": 19,
+    "generalist_narrow_species": 2
+  },
+  "host_taxonomy_lower_bound_adequate_subset": {
+    "definition": "resolved HOSTS-WCVP host-species count >= LepTraits NumberOfHostplantFamilies",
+    "species": 215,
+    "spearman_host_family_vs_geographic_resource_breadth": 0.398238154462201,
+    "median_absolute_rank_discordance": 0.17209302325581388,
+    "species_with_large_rank_discordance": 33,
+    "fraction_with_large_rank_discordance": 0.15348837209302327,
+    "geographic_resource_q25_units": 57.0,
+    "geographic_resource_q75_units": 174.0,
+    "specialist_wide_species": 18,
+    "generalist_narrow_species": 0,
+    "specialist_wide_examples": [
+      {"species": "Hylephila phyleus", "host_families": 1, "resolved_host_species": 11, "native_resource_units": 305},
+      {"species": "Atalopedes campestris", "host_families": 1, "resolved_host_species": 7, "native_resource_units": 303},
+      {"species": "Pararge aegeria", "host_families": 1, "resolved_host_species": 9, "native_resource_units": 241},
+      {"species": "Lerodea eufala", "host_families": 1, "resolved_host_species": 12, "native_resource_units": 233},
+      {"species": "Ypthima baldus", "host_families": 1, "resolved_host_species": 9, "native_resource_units": 226},
+      {"species": "Colias eurytheme", "host_families": 1, "resolved_host_species": 37, "native_resource_units": 215}
+    ]
+  },
+  "ecological_interpretation": {
+    "taxonomic_and_geographic_specialization_are_not_interchangeable": true,
+    "asymmetry": "Taxonomic specialists can have very broad geographic resource opportunity. Apparent generalist-but-geographically-narrow cases disappear under the conservative host-taxonomy completeness floor.",
+    "mechanistic_reading": "Using few host families does not imply a geographically restricted larval resource base: a specialist may use many host species within one family and/or hosts with broad native distributions.",
+    "consequence": "Butterfly specialization should be treated as at least two axes: taxonomic diet breadth and geographic resource breadth."
+  },
+  "claim_boundary": {
+    "exploratory": true,
+    "host_database_completeness_not_proven": true,
+    "WGSRPD3_is_coarse_geography": true,
+    "resource_opportunity_is_not_realized_butterfly_occupancy": true
+  }
+}
