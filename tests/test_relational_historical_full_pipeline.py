@@ -884,3 +884,36 @@ def test_study_c_recovery_must_resolve_before_terminal_v03_closure():
         assert result["relation_result_seen"] is False
         assert result["genetic_response_used"] is False
         assert all(v is False for v in result["response_firewall"].values())
+
+
+def test_study_c_recovery_terminal_gate_reduces_to_zero_unresolved_request_errors():
+    import json
+
+    recovery = json.loads(
+        (
+            ROOT
+            / "benchmarks/frozen/relational_historical_retry_import_recovery_v0.1.json"
+        ).read_text()
+    )
+    finalizer = (
+        ROOT / "scripts/finalize_relational_historical_occurrence_bounded.py"
+    ).read_text()
+
+    counts = recovery["original_execution"]["initial_status_counts"]
+    assert counts["PASS_OCCURRENCE_GEOMETRY"] == 653
+    assert counts["REQUEST_ERROR"] == 95
+    assert counts["PASS_OCCURRENCE_GEOMETRY"] >= 500
+
+    # The frozen finalizer replaces only the exact initial REQUEST_ERROR
+    # species with their retry states. Initial PASS species cannot be lost.
+    assert 'if species[name]["status"]!="REQUEST_ERROR":' in finalizer
+    assert 'species[name]=retry_species[name]' in finalizer
+    assert 'unresolved=[name for name in names if species[name]["status"]=="REQUEST_ERROR"]' in finalizer
+    assert 'passed=int(counts.get("PASS_OCCURRENCE_GEOMETRY",0))' in finalizer
+    assert '"PASS_TO_HISTORICAL_ASSET_EXTRACTION" if passed>=500' in finalizer
+
+    # Therefore, before seeing retry outcomes, the geometry threshold is
+    # already guaranteed if transport fully resolves: zero unresolved
+    # REQUEST_ERROR implies at least the 653 initial PASS species remain.
+    assert recovery["terminal_rule"]["zero_REQUEST_ERROR_and_PASS_at_least_500"] == "PASS_TO_HISTORICAL_ASSET_EXTRACTION"
+    assert recovery["terminal_rule"]["unresolved_REQUEST_ERROR_after_recovery"] == "NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT"
