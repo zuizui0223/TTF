@@ -13,6 +13,7 @@ def main() -> int:
     ap.add_argument("--descriptors-csv", type=Path, required=True)
     ap.add_argument("--overlap-json", type=Path, required=True)
     ap.add_argument("--effort-csv", type=Path, required=True)
+    ap.add_argument("--occurrence-ledgers-json", type=Path, required=True)
     ap.add_argument("--output-json", type=Path, required=True)
     args = ap.parse_args()
 
@@ -55,14 +56,30 @@ def main() -> int:
             if int(row["other_pilot_record_threshold"]) == effort_threshold:
                 effort[str(row["species"])] = row
 
-    species = sorted(set(overlap) | set(effort))
+    ledger_payload = json.loads(
+        args.occurrence_ledgers_json.read_text(encoding="utf-8")
+    )
+    if ledger_payload.get("schema") != (
+        "ttf_butterfly_resource_envelope_occurrence_matrix_v0.1"
+    ):
+        raise RuntimeError("unexpected occurrence-ledger matrix schema")
+    transport = {}
+    for ledger in ledger_payload.get("ledgers", []):
+        for row in ledger.get("species", []):
+            transport[str(row["species"])] = str(row["status"])
+
+    species = sorted(set(overlap) | set(effort) | set(transport))
     rows = []
     qualified = []
     for name in species:
         descriptor = descriptors.get(name)
         overlap_row = overlap.get(name)
         effort_row = effort.get(name)
+        transport_status = transport.get(name)
         reasons = []
+        transport_ok = transport_status == "COMPLETE"
+        if not transport_ok:
+            reasons.append("OCCURRENCE_TRANSPORT_NOT_COMPLETE")
         if descriptor is None:
             reasons.append("MISSING_RESOURCE_DESCRIPTOR")
         if overlap_row is None:
@@ -128,6 +145,8 @@ def main() -> int:
             {
                 "species": name,
                 "passed_preclimate_quality_gate": passed,
+                "occurrence_transport_status": transport_status,
+                "occurrence_transport_pass": transport_ok,
                 "host_family_count": host_families,
                 "resolved_host_species": resolved_hosts,
                 "host_taxonomy_lower_bound_pass": host_ok,
