@@ -1,0 +1,468 @@
+name: butterfly climate-release independent test v01
+
+on:
+  push:
+    branches:
+      - explore/butterfly-climate-release-v01
+    paths:
+      - ".github/workflows/butterfly-climate-release-independent-v01.yml"
+      - "docs/exploratory/butterfly_climate_release_independent_test_v0.1.json"
+      - "src/ttf/butterfly_climate_release.py"
+      - "src/ttf/checkpointed_gbif_occurrence.py"
+      - "src/ttf/resource_envelope_climate.py"
+      - "scripts/acquire_butterfly_resource_envelope_occurrences.py"
+      - "scripts/map_butterfly_resource_envelope_wgsrpd3.py"
+      - "scripts/build_butterfly_contemporary_resource_envelope.py"
+      - "scripts/build_wcvp_hosts_contemporary_sidecar.R"
+      - "scripts/compare_butterfly_native_contemporary_occurrence_overlap.py"
+      - "scripts/diagnose_butterfly_resource_sampling_effort.py"
+      - "scripts/apply_butterfly_climate_release_quality_gate.py"
+      - "scripts/analyze_butterfly_resource_envelope_climate.py"
+      - "scripts/test_butterfly_climate_release_hypothesis.py"
+  workflow_dispatch:
+
+concurrency:
+  group: butterfly-climate-release-independent-v01-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore exact independent panel
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-climate-release-independent-panel-v01
+          path: inputs/panel
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36238195242
+
+      - name: Verify panel and emit matrix
+        id: matrix
+        run: |
+          echo "d52ab353c46061cd0f16df95cdfee95920d9ce9b3c96da15ba115c30785cf2df  inputs/panel/panel.json" | sha256sum -c -
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import hashlib, json, re
+          from pathlib import Path
+          p=json.loads(Path("inputs/panel/panel.json").read_text())
+          assert p["schema"]=="ttf_butterfly_climate_release_independent_panel_v0.1"
+          assert p["status"]=="FROZEN_BEFORE_INDEPENDENT_GBIF_OR_CLIMATE"
+          assert p["species_count"]==32
+          assert p["species_sha256"]=="bbaaa28cf361fb02d558988bdd1a3f948a243b79c8d3bb1709e908edb1f0f204"
+          include=[]
+          for name in p["species"]:
+              stem=re.sub(r"[^a-z0-9]+","_",name.lower()).strip("_")
+              suffix=hashlib.sha256(name.encode()).hexdigest()[:8]
+              include.append({"id":f"{stem}_{suffix}","species":name})
+          print("matrix="+json.dumps({"include":include},separators=(",",":")))
+          PY
+
+  resource:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout exact WCVP v13 redistribution snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: matildabrown/rWCVPdata
+          ref: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
+          path: _wcvp
+
+      - name: Checkout exact HOSTS mirror
+        uses: actions/checkout@v4
+        with:
+          repository: globalbioticinteractions/HOSTS
+          ref: 808e0b869f9ec1adf8efff87cf6a395adda103e0
+          path: _hosts
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install TTF
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+
+      - name: Restore exact independent panel
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-climate-release-independent-panel-v01
+          path: inputs/panel
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36238195242
+
+      - name: Restore exact S1 resource reconstruction
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-resource-envelope-pilot-v01
+          path: inputs/reconstruction
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36222306369
+
+      - name: Verify exact inputs
+        run: |
+          echo "d52ab353c46061cd0f16df95cdfee95920d9ce9b3c96da15ba115c30785cf2df  inputs/panel/panel.json" | sha256sum -c -
+          cd inputs/reconstruction/butterfly-resource-envelope-pilot-v0.1
+          echo "546c38970789a153735d6e54cc66bdd2e8987a22b93b097aa2062e8c7f84baef  s1_host_resource_footprints.json" | sha256sum -c -
+          echo "894f48dbca1760fc4fa75bfee8f663540ab4b9380f8b9daf2bc09440e8bb0cdc  s1_resource_descriptors.csv" | sha256sum -c -
+
+      - name: Rebuild exact contemporary HOSTS-WCVP sidecar
+        run: |
+          test "$(git -C _wcvp rev-parse HEAD)" = "65bed76bae9d644ccb6ad200c05f9f5071d89e05"
+          test "$(git -C _hosts rev-parse HEAD)" = "808e0b869f9ec1adf8efff87cf6a395adda103e0"
+          Rscript scripts/build_wcvp_hosts_contemporary_sidecar.R \
+            _wcvp \
+            _hosts \
+            results/contemporary-host-sidecar
+
+      - name: Build independent contemporary resource envelopes
+        run: |
+          mkdir -p results/butterfly-climate-release-resource-v0.1
+          python scripts/build_butterfly_contemporary_resource_envelope.py \
+            --panel-json inputs/panel/panel.json \
+            --native-footprints-json inputs/reconstruction/butterfly-resource-envelope-pilot-v0.1/s1_host_resource_footprints.json \
+            --insect-host-csv results/contemporary-host-sidecar/insect_host_accepted.csv \
+            --contemporary-distribution-csv results/contemporary-host-sidecar/extant_nondoubtful_wgsrpd3.csv \
+            --output-footprints results/butterfly-climate-release-resource-v0.1/contemporary_footprints.json \
+            --output-comparison results/butterfly-climate-release-resource-v0.1/native_contemporary_comparison.json
+          (
+            cd results/butterfly-climate-release-resource-v0.1
+            sha256sum contemporary_footprints.json native_contemporary_comparison.json > SHA256SUMS
+          )
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-climate-release-resource-v01
+          path: results/butterfly-climate-release-resource-v0.1/
+          retention-days: 30
+
+  acquire:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install occurrence environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+
+      - name: Restore exact independent panel
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-climate-release-independent-panel-v01
+          path: inputs/panel
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36238195242
+
+      - name: Verify exact panel
+        run: |
+          echo "d52ab353c46061cd0f16df95cdfee95920d9ce9b3c96da15ba115c30785cf2df  inputs/panel/panel.json" | sha256sum -c -
+
+      - name: Restore per-species chunk checkpoints
+        uses: actions/cache@v4
+        with:
+          path: results/gbif-state/${{ matrix.id }}
+          key: butterfly-climate-release-gbif-v01-${{ matrix.id }}-${{ github.run_id }}
+          restore-keys: |
+            butterfly-climate-release-gbif-v01-${{ matrix.id }}-
+
+      - name: Acquire one independent-panel species
+        run: |
+          mkdir -p results/gbif-species/${{ matrix.id }}
+          for pass in 1 2; do
+            python scripts/acquire_butterfly_resource_envelope_occurrences.py \
+              --panel-json inputs/panel/panel.json \
+              --only-species "${{ matrix.species }}" \
+              --state-dir results/gbif-state/${{ matrix.id }} \
+              --output-csv results/gbif-species/${{ matrix.id }}/occurrences.csv \
+              --output-ledger results/gbif-species/${{ matrix.id }}/occurrence_ledger.json \
+              --species-seconds 600 \
+              --request-seconds 60 \
+              --maximum-pages 6
+            status=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("results/gbif-species/${{ matrix.id }}/occurrence_ledger.json")
+          print(json.loads(p.read_text())["status"])
+          PY
+            )
+            echo "${{ matrix.species }} pass ${pass}: ${status}"
+            if [ "${status}" != "RESUMABLE_PARTIAL_TRANSPORT" ]; then
+              break
+            fi
+          done
+          cat results/gbif-species/${{ matrix.id }}/occurrence_ledger.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: butterfly-climate-release-gbif-${{ matrix.id }}
+          path: results/gbif-species/${{ matrix.id }}/
+          retention-days: 30
+
+  summarize:
+    needs: [prepare, resource, acquire]
+    if: always() && needs.prepare.result == 'success' && needs.resource.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    outputs:
+      climate_authorized: ${{ steps.gate.outputs.climate_authorized }}
+      qualified_species_count: ${{ steps.gate.outputs.qualified_species_count }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install mapping environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+          python -m pip install "shapely>=2,<3"
+
+      - name: Restore exact independent panel
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-climate-release-independent-panel-v01
+          path: inputs/panel
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36238195242
+
+      - name: Restore exact S1 resource reconstruction
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-resource-envelope-pilot-v01
+          path: inputs/reconstruction
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36222306369
+
+      - name: Download current-run independent GBIF artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: butterfly-climate-release-gbif-*
+          path: inputs/species
+          merge-multiple: false
+
+      - name: Download current-run resource envelope
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-climate-release-resource-v01
+          path: inputs/resource
+
+      - name: Combine species occurrence outputs
+        run: |
+          mkdir -p results/butterfly-climate-release-summary-v0.1
+          python - <<'PY'
+          import csv, glob, json
+          from pathlib import Path
+          panel=json.loads(Path("inputs/panel/panel.json").read_text())
+          expected=set(panel["species"])
+          fields=["species","gbif_key","latitude","longitude","year","basis_of_record","dataset_key"]
+          rows=[]
+          ledgers=[]
+          for file in sorted(glob.glob("inputs/species/*/occurrences.csv")):
+              with open(file,newline="",encoding="utf-8") as handle:
+                  rows.extend(csv.DictReader(handle))
+          for file in sorted(glob.glob("inputs/species/*/occurrence_ledger.json")):
+              ledgers.append(json.loads(Path(file).read_text()))
+          seen={row["species"][0]["species"] for row in ledgers if row.get("species")}
+          if seen != expected:
+              print(json.dumps({"expected":len(expected),"ledger_species":len(seen),"missing":sorted(expected-seen)}))
+          unique={(r["species"],r["gbif_key"]):r for r in rows if r["species"] in expected}
+          out=Path("results/butterfly-climate-release-summary-v0.1/occurrences.csv")
+          with out.open("w",newline="",encoding="utf-8") as handle:
+              writer=csv.DictWriter(handle,fieldnames=fields)
+              writer.writeheader()
+              writer.writerows(unique[k] for k in sorted(unique))
+          Path("results/butterfly-climate-release-summary-v0.1/occurrence_ledgers.json").write_text(
+              json.dumps({"schema":"ttf_butterfly_resource_envelope_occurrence_matrix_v0.1","ledgers":ledgers},indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps({"occurrence_rows":len(unique),"ledger_species":len(seen)}))
+          PY
+
+      - name: Checkout official WGSRPD geometry
+        uses: actions/checkout@v4
+        with:
+          repository: tdwg/wgsrpd
+          ref: 52da7828aba9d461dd133c27b3bd7a4407161f54
+          path: _wgsrpd
+
+      - name: Map independent occurrences to WGSRPD3
+        run: |
+          python scripts/map_butterfly_resource_envelope_wgsrpd3.py \
+            --panel-json inputs/panel/panel.json \
+            --host-footprints-json inputs/reconstruction/butterfly-resource-envelope-pilot-v0.1/s1_host_resource_footprints.json \
+            --occurrences-csv results/butterfly-climate-release-summary-v0.1/occurrences.csv \
+            --level3-geojson _wgsrpd/geojson/level3.geojson \
+            --output-unit-table results/butterfly-climate-release-summary-v0.1/wgsrpd3_unit_table.csv \
+            --output-summary results/butterfly-climate-release-summary-v0.1/wgsrpd3_resolution_summary.json
+
+      - name: Compare with contemporary resource envelope
+        run: |
+          python scripts/compare_butterfly_native_contemporary_occurrence_overlap.py \
+            --native-unit-table results/butterfly-climate-release-summary-v0.1/wgsrpd3_unit_table.csv \
+            --contemporary-footprints-json inputs/resource/contemporary_footprints.json \
+            --output-json results/butterfly-climate-release-summary-v0.1/native_contemporary_overlap.json
+
+      - name: Diagnose independent-panel sampling effort
+        run: |
+          python scripts/diagnose_butterfly_resource_sampling_effort.py \
+            --unit-table results/butterfly-climate-release-summary-v0.1/wgsrpd3_unit_table.csv \
+            --host-footprints-json inputs/resource/contemporary_footprints.json \
+            --output-csv results/butterfly-climate-release-summary-v0.1/sampling_effort_sensitivity.csv \
+            --output-json results/butterfly-climate-release-summary-v0.1/sampling_effort_sensitivity.json
+
+      - name: Apply frozen independent pre-climate gate
+        id: gate
+        run: |
+          python scripts/apply_butterfly_climate_release_quality_gate.py \
+            --protocol-json docs/exploratory/butterfly_climate_release_independent_test_v0.1.json \
+            --panel-json inputs/panel/panel.json \
+            --descriptors-csv inputs/reconstruction/butterfly-resource-envelope-pilot-v0.1/s1_resource_descriptors.csv \
+            --overlap-json results/butterfly-climate-release-summary-v0.1/native_contemporary_overlap.json \
+            --effort-csv results/butterfly-climate-release-summary-v0.1/sampling_effort_sensitivity.csv \
+            --occurrence-ledgers-json results/butterfly-climate-release-summary-v0.1/occurrence_ledgers.json \
+            --output-json results/butterfly-climate-release-summary-v0.1/preclimate_quality_gate.json
+          cat results/butterfly-climate-release-summary-v0.1/preclimate_quality_gate.json
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+          p=json.loads(Path("results/butterfly-climate-release-summary-v0.1/preclimate_quality_gate.json").read_text())
+          print("climate_authorized=" + ("true" if p["status"]=="PASS_TO_INDEPENDENT_CLIMATE_CROSSFIT" else "false"))
+          print("qualified_species_count=" + str(p["qualified_species_count"]))
+          PY
+
+      - name: Record summary hashes
+        run: |
+          (
+            cd results/butterfly-climate-release-summary-v0.1
+            sha256sum occurrences.csv occurrence_ledgers.json wgsrpd3_unit_table.csv wgsrpd3_resolution_summary.json native_contemporary_overlap.json sampling_effort_sensitivity.csv sampling_effort_sensitivity.json preclimate_quality_gate.json > SHA256SUMS
+          )
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-climate-release-summary-v01
+          path: results/butterfly-climate-release-summary-v0.1/
+          retention-days: 30
+
+  climate:
+    needs: [resource, summarize]
+    if: needs.summarize.outputs.climate_authorized == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install climate environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+          python -m pip install "shapely>=2,<3" "rasterio>=1.4,<2"
+
+      - name: Restore exact independent panel
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-climate-release-independent-panel-v01
+          path: inputs/panel
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36238195242
+
+      - name: Download current-run ecology summary
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-climate-release-summary-v01
+          path: inputs/summary
+
+      - name: Download current-run resource envelope
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-climate-release-resource-v01
+          path: inputs/resource
+
+      - name: Checkout official WGSRPD geometry
+        uses: actions/checkout@v4
+        with:
+          repository: tdwg/wgsrpd
+          ref: 52da7828aba9d461dd133c27b3bd7a4407161f54
+          path: _wgsrpd
+
+      - name: Download CHELSA V2.1
+        run: |
+          set -euo pipefail
+          mkdir -p rasters
+          base="https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio"
+          for v in 1 7 12 15; do
+            curl -L --fail --retry 4 --retry-delay 5 \
+              "$base/CHELSA_bio${v}_1981-2010_V.2.1.tif" \
+              -o "rasters/CHELSA_bio${v}_1981-2010_V.2.1.tif"
+          done
+
+      - name: Run independent climate cross-fit
+        run: |
+          mkdir -p results/butterfly-climate-release-test-v0.1
+          python scripts/analyze_butterfly_resource_envelope_climate.py \
+            --occurrences-csv inputs/summary/occurrences.csv \
+            --unit-table inputs/summary/wgsrpd3_unit_table.csv \
+            --contemporary-footprints-json inputs/resource/contemporary_footprints.json \
+            --gate-rule-json docs/exploratory/butterfly_climate_release_independent_test_v0.1.json \
+            --quality-gate-json inputs/summary/preclimate_quality_gate.json \
+            --level3-geojson _wgsrpd/geojson/level3.geojson \
+            --raster rasters/CHELSA_bio1_1981-2010_V.2.1.tif \
+            --raster rasters/CHELSA_bio7_1981-2010_V.2.1.tif \
+            --raster rasters/CHELSA_bio12_1981-2010_V.2.1.tif \
+            --raster rasters/CHELSA_bio15_1981-2010_V.2.1.tif \
+            --output-unit-climate results/butterfly-climate-release-test-v0.1/unit_climate_crossfit.csv \
+            --output-summary results/butterfly-climate-release-test-v0.1/climate_summary.json
+
+      - name: Run frozen primary host-breadth test
+        run: |
+          python scripts/test_butterfly_climate_release_hypothesis.py \
+            --protocol-json docs/exploratory/butterfly_climate_release_independent_test_v0.1.json \
+            --panel-json inputs/panel/panel.json \
+            --climate-summary-json results/butterfly-climate-release-test-v0.1/climate_summary.json \
+            --output-json results/butterfly-climate-release-test-v0.1/primary_result.json
+          cat results/butterfly-climate-release-test-v0.1/primary_result.json
+          (
+            cd results/butterfly-climate-release-test-v0.1
+            sha256sum unit_climate_crossfit.csv climate_summary.json primary_result.json > SHA256SUMS
+          )
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-climate-release-independent-result-v01
+          path: results/butterfly-climate-release-test-v0.1/
+          retention-days: 30
