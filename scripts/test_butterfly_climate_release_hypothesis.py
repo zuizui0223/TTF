@@ -202,13 +202,17 @@ def main() -> int:
 
     payload = {
         "schema": (
-                "ttf_butterfly_climate_release_independent_result_v0.2"
-                if protocol_schema in {
-                    "ttf_butterfly_climate_release_independent_test_v0.2",
-                    "ttf_butterfly_climate_release_independent_test_v0.2.1",
-                }
-                else "ttf_butterfly_climate_release_independent_result_v0.1"
-            ),
+            (
+                "ttf_butterfly_climate_release_independent_result_v0.2.1"
+                if protocol_schema.endswith("_v0.2.1")
+                else "ttf_butterfly_climate_release_independent_result_v0.2"
+            )
+            if protocol_schema in {
+                "ttf_butterfly_climate_release_independent_test_v0.2",
+                "ttf_butterfly_climate_release_independent_test_v0.2.1",
+            }
+            else "ttf_butterfly_climate_release_independent_result_v0.1"
+        ),
         "status": "INDEPENDENT_TEST_COMPLETE",
         "protocol_schema": protocol_schema,
         "hypothesis": protocol["ecological_hypothesis"]["statement"],
@@ -261,6 +265,7 @@ def main() -> int:
                 else "raw_predictor_label_permutation_v0.1"
             ),
             "independent_ecological_response_seen_before_v0_2_correction": False,
+            "independent_ecological_response_seen_before_v0_2_1_row_order_fix": False,
             "never_observed_resource_unit_is_not_true_absence": True,
             "sampling_effort_proxy_is_other_independent_panel_butterflies": True,
             "genetic_response_used": False,
