@@ -232,6 +232,12 @@ def main() -> int:
             "panel_species_frozen_before_independent_gbif": True,
             "primary_direction_frozen_before_independent_gbif": True,
             "quality_thresholds_frozen_before_independent_gbif": True,
+            "primary_inference_method": (
+                "response_blind_residual_permutation_correction_after_transport_started_before_ecological_response"
+                if protocol_schema.endswith("_v0.2")
+                else "raw_predictor_label_permutation_v0.1"
+            ),
+            "independent_ecological_response_seen_before_v0_2_correction": False,
             "never_observed_resource_unit_is_not_true_absence": True,
             "sampling_effort_proxy_is_other_independent_panel_butterflies": True,
             "genetic_response_used": False,
