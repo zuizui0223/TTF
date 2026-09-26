@@ -8,9 +8,6 @@ import math
 from pathlib import Path
 
 import numpy as np
-from scipy.stats import spearmanr
-
-
 def load_rows(path: Path) -> list[dict[str, object]]:
     rows = []
     with path.open(newline="", encoding="utf-8") as handle:
@@ -53,6 +50,29 @@ def quantile(values: list[float], q: float) -> float:
     return float(np.quantile(np.asarray(values, dtype=float), q))
 
 
+def average_ranks(values: np.ndarray) -> np.ndarray:
+    values = np.asarray(values, dtype=float)
+    order = np.argsort(values, kind="mergesort")
+    ranks = np.empty(len(values), dtype=float)
+    start = 0
+    while start < len(order):
+        stop = start + 1
+        while stop < len(order) and values[order[stop]] == values[order[start]]:
+            stop += 1
+        average = 0.5 * ((start + 1) + stop)
+        ranks[order[start:stop]] = average
+        start = stop
+    return ranks
+
+
+def spearman(values_a: np.ndarray, values_b: np.ndarray) -> float:
+    a = average_ranks(np.asarray(values_a, dtype=float))
+    b = average_ranks(np.asarray(values_b, dtype=float))
+    if np.std(a) == 0 or np.std(b) == 0:
+        return float("nan")
+    return float(np.corrcoef(a, b)[0, 1])
+
+
 def analyze(rows: list[dict[str, object]]) -> dict:
     eligible = [
         row
@@ -64,20 +84,24 @@ def analyze(rows: list[dict[str, object]]) -> dict:
     units = np.asarray([int(r["host_wgsrpd3_unit_count"]) for r in eligible], float)
     resolved = np.asarray([int(r["resolved_host_species"]) for r in eligible], float)
 
-    rho_family_units = float(spearmanr(family, units).statistic)
-    rho_resolved_units = float(spearmanr(resolved, units).statistic)
-    rho_family_resolved = float(spearmanr(family, resolved).statistic)
+    rho_family_units = spearman(family, units)
+    rho_resolved_units = spearman(resolved, units)
+    rho_family_resolved = spearman(family, resolved)
 
     lower_bound_adequate = [
         r
         for r in eligible
         if int(r["resolved_host_species"]) >= float(r["host_family_count"])
     ]
-    adequate_rho = float(
-        spearmanr(
+    adequate_rho = spearman(
+        np.asarray(
             [float(r["host_family_count"]) for r in lower_bound_adequate],
+            dtype=float,
+        ),
+        np.asarray(
             [int(r["host_wgsrpd3_unit_count"]) for r in lower_bound_adequate],
-        ).statistic
+            dtype=float,
+        ),
     )
 
     y = np.log1p(units)
