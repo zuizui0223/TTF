@@ -66,6 +66,26 @@ def missing_page_offsets(
     return tuple(int(x) for x in planned_offsets if int(x) not in completed)
 
 
+def occurrence_window_chunks(
+    offset: int,
+    window_size: int,
+    *,
+    chunk_size: int = 50,
+) -> tuple[tuple[int, int], ...]:
+    """Partition one fixed ordinal occurrence window into transport-only chunks."""
+    offset = int(offset)
+    window_size = int(window_size)
+    chunk_size = int(chunk_size)
+    if offset < 0 or window_size < 0:
+        raise ValueError("offset and window_size must be nonnegative")
+    if chunk_size < 1:
+        raise ValueError("chunk_size must be positive")
+    return tuple(
+        (offset + start, min(chunk_size, window_size - start))
+        for start in range(0, window_size, chunk_size)
+    )
+
+
 def request_timeout_seconds(
     deadline_monotonic: float,
     *,
@@ -84,6 +104,7 @@ __all__ = [
     "PILOT_OCCURRENCE_TAG",
     "deterministic_page_offsets",
     "missing_page_offsets",
+    "occurrence_window_chunks",
     "request_timeout_seconds",
     "species_state_key",
 ]
