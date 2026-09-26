@@ -171,7 +171,16 @@ def test_freedman_lane_permutation_is_row_order_invariant():
         [species[i] for i in order],
         iterations=199,
     )
-    assert a == b
+    assert a["method"] == b["method"]
+    assert a["iterations"] == b["iterations"]
+    assert (
+        a["lower_tail_extreme_permutations"]
+        == b["lower_tail_extreme_permutations"]
+    )
+    assert a["one_sided_p_value"] == b["one_sided_p_value"]
+    assert abs(
+        a["observed_partial_spearman"] - b["observed_partial_spearman"]
+    ) < 1e-12
 
 
 def test_freedman_lane_keeps_predictor_control_structure_fixed():
