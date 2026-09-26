@@ -1,0 +1,57 @@
+{
+  "schema": "ttf_relational_historical_retry_import_recovery_run_binding_v0.1",
+  "status": "FROZEN_BEFORE_RECOVERY_RETRY_RESULT",
+  "frozen_on": "2026-09-26",
+  "purpose": "Bind the one prospectively authorized retry-import technical recovery to exactly one GitHub Actions run before any recovery retry artifact or terminal result exists.",
+  "recovery_workflow": {
+    "name": "relational-historical-retry-import-recovery-v01",
+    "workflow_run_id": 36200833241,
+    "workflow_head_sha": "7478c3d6fc8e1e1926edd8baa7e2a0d17b2ca09b",
+    "branch": "relational-ttf-v01",
+    "event": "push",
+    "preflight_conclusion_at_freeze": "success",
+    "retry_jobs_expected": 24,
+    "retry_jobs_in_progress_at_freeze": [
+      0,
+      1
+    ],
+    "retry_artifacts_observed_at_freeze": 0,
+    "final_artifact_observed_at_freeze": false
+  },
+  "source_recovery_receipt": "benchmarks/frozen/relational_historical_retry_import_recovery_v0.1.json",
+  "original_occurrence_run": {
+    "workflow_run_id": 35941577015,
+    "workflow_head_sha": "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab"
+  },
+  "exact_retry_plan": {
+    "artifact_id": 10878157732,
+    "artifact_digest": "sha256:b4291a54514837f944f1cb9dbf14d320fd52293d24aa33b26d36ac063b7c7103",
+    "request_error_species": 95,
+    "retry_batch_count": 24
+  },
+  "execution_invariants": {
+    "retry_round": 1,
+    "batch_size": 4,
+    "max_parallel": 2,
+    "per_species_wall_timeout_seconds": 2700,
+    "retry_script_changed": false,
+    "acquire_script_changed": false,
+    "finalizer_changed": false,
+    "only_runtime_change": "PYTHONPATH=$PWD",
+    "additional_retry_round_authorized": false,
+    "scientific_query_change": false,
+    "candidate_change": false,
+    "retry_set_change": false,
+    "timeout_change": false
+  },
+  "duplicate_recovery_run_authorized": false,
+  "result_selection_allowed": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
