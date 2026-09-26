@@ -18,6 +18,10 @@ on:
       - "docs/exploratory/butterfly_resource_envelope_climate_pilot_gate_v0.1.json"
   workflow_dispatch:
 
+concurrency:
+  group: butterfly-resource-envelope-gbif-v01-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   acquire:
     runs-on: ubuntu-latest
