@@ -36,10 +36,26 @@
       "finite wing-size proxy"
     ],
     "host_breadth_strata": {
-      "1_family": {"minimum": 1, "maximum": 1, "target_species": 8},
-      "2_families": {"minimum": 2, "maximum": 2, "target_species": 8},
-      "3_to_5_families": {"minimum": 3, "maximum": 5, "target_species": 8},
-      "6plus_families": {"minimum": 6, "maximum": null, "target_species": 8}
+      "1_family": {
+        "minimum": 1,
+        "maximum": 1,
+        "target_species": 8
+      },
+      "2_families": {
+        "minimum": 2,
+        "maximum": 2,
+        "target_species": 8
+      },
+      "3_to_5_families": {
+        "minimum": 3,
+        "maximum": 5,
+        "target_species": 8
+      },
+      "6plus_families": {
+        "minimum": 6,
+        "maximum": null,
+        "target_species": 8
+      }
     },
     "selection_within_stratum": {
       "algorithm": "deterministic farthest-point sampling",
@@ -85,11 +101,23 @@
     ],
     "sampling_effort_proxy": "sum of GBIF records from the other 31 independent-panel butterflies in the same WGSRPD3 unit",
     "minimum_species_passing_preclimate_gate": 12,
-    "if_below": "NOT_EVALUABLE_INDEPENDENT_CLIMATE_RELEASE_TEST"
+    "if_below": "NOT_EVALUABLE_INDEPENDENT_CLIMATE_RELEASE_TEST",
+    "thresholds": {
+      "maximum_outside_contemporary_fraction": 0.1,
+      "other_panel_record_effort_threshold": 10,
+      "minimum_effort_supported_host_units": 5,
+      "minimum_effort_supported_observed_units": 2,
+      "minimum_effort_supported_unobserved_units": 2
+    }
   },
   "climate_crossfit": {
     "dataset": "CHELSA V2.1 1981-2010",
-    "variables": ["bio1", "bio7", "bio12", "bio15"],
+    "variables": [
+      "bio1",
+      "bio7",
+      "bio12",
+      "bio15"
+    ],
     "observed_unit_split": "within each quality-qualified species, deterministic SHA256 50/50 split of observed units inside contemporary host envelope",
     "training": "climate center and scale estimated only from occurrence records in train-observed units",
     "evaluation": "compare held-out eval-observed resource units against never-observed contemporary resource units that pass the effort threshold",
