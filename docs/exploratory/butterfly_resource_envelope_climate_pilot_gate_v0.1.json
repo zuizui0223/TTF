@@ -1,0 +1,57 @@
+{
+  "schema": "ttf_butterfly_resource_envelope_climate_pilot_gate_v0.1",
+  "status": "FROZEN_EXPLORATORY_QUALITY_GATE_BEFORE_ANY_CLIMATE_RESULT",
+  "frozen_on": "2026-09-26",
+  "scope": "Ten-species response-blind butterfly resource-envelope pilot only.",
+  "purpose": "Select species for an exploratory climate-gap diagnostic using data-quality and identifiability criteria only, not climate-effect size.",
+  "required_inputs": {
+    "trait_resource_descriptors": "Exact S1 reconstruction from workflow run 36222306369.",
+    "contemporary_host_envelope": "WCVP-v13 extant non-doubtful host distributions including introduced ranges, rebuilt from fixed WCVP/HOSTS commits.",
+    "butterfly_occurrence_units": "Checkpointed GBIF pilot after conservative taxonomic resolution.",
+    "sampling_effort_proxy": "Other frozen pilot-species GBIF record count in the same WGSRPD3 unit."
+  },
+  "species_quality_gate": {
+    "host_taxonomy_lower_bound": {
+      "rule": "HOSTS-WCVP resolved host-species count >= LepTraits NumberOfHostplantFamilies",
+      "interpretation": "Necessary lower-bound consistency only; passing does not prove host-record completeness."
+    },
+    "contemporary_envelope_overlap": {
+      "rule": "Among WGSRPD3 units with sampled butterfly records, fraction outside the contemporary host-resource envelope <= 0.10",
+      "maximum_outside_contemporary_fraction": 0.1,
+      "reason": "Large outside-envelope fractions indicate that the reconstructed resource surface is not a defensible opportunity set for that species."
+    },
+    "sampling_effort_identifiability": {
+      "other_pilot_record_threshold": 10,
+      "minimum_effort_supported_host_units": 5,
+      "minimum_butterfly_observed_effort_supported_host_units": 2,
+      "minimum_butterfly_unobserved_effort_supported_host_units": 2,
+      "reason": "Require both states in locations where other pilot butterflies demonstrate nontrivial GBIF sampling."
+    },
+    "climate_training_floor": {
+      "minimum_valid_training_occurrence_records": 30
+    },
+    "occurrence_transport": {
+      "rule": "Per-species occurrence ledger status must equal COMPLETE; PARTIAL_TRANSPORT and REJECTED_GBIF_TAXON_MATCH do not enter the climate pilot.",
+      "reason": "Incomplete transport can convert unqueried deterministic pages into false never-observed resource units."
+    }
+  },
+  "pilot_level_gate": {
+    "minimum_species_passing_quality_gate": 3,
+    "if_below": "STOP_CLIMATE_PILOT_AS_NOT_IDENTIFIABLE_AT_CURRENT_RESOLUTION"
+  },
+  "climate_crossfit_rule": {
+    "observed_unit_split": "Within each quality-qualified species, restrict observed units to the contemporary host-resource envelope, then deterministically SHA256-split those observed-within-envelope WGSRPD3 units into train and held-out eval halves.",
+    "niche_training": "Estimate species climate center and scale only from GBIF records mapped to train-observed units inside the contemporary host-resource envelope.",
+    "comparison": "Within contemporary host-available units meeting the frozen sampling-effort threshold, compare held-out eval-observed units against never-observed host units.",
+    "primary_descriptive_direction": "Never-observed host units have larger climate mismatch to the training niche than held-out eval-observed host units.",
+    "inference": "Exploratory effect-size diagnostic only; no confirmatory p-value."
+  },
+  "response_firewall": {
+    "climate_rasters_sampled_before_gate_freeze": false,
+    "climate_mismatch_computed_before_gate_freeze": false,
+    "climate_gap_effect_seen_before_gate_freeze": false,
+    "genetic_response_used": false,
+    "occurrence_transport_complete_gate_added_before_climate_result": true,
+    "contemporary_host_envelope_crossfit_clarified_before_climate_result": true
+  }
+}

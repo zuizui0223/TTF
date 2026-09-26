@@ -1,0 +1,99 @@
+{
+  "schema": "ttf_butterfly_resource_envelope_exploratory_protocol_v0.1",
+  "status": "EXPLORATORY_RESPONSE_BLIND_BEFORE_BUTTERFLY_GBIF",
+  "created_on": "2026-09-26",
+  "program_scope": {
+    "independent_from_relational_v0_3": true,
+    "uses_genetic_response": false,
+    "uses_pairwise_transfer_response": false,
+    "purpose": "Evaluate whether the repository's trait and host-resource reconstruction machinery can support a new ecological question about realized occupancy inside larval-resource geography."
+  },
+  "ecological_question": "Within the geographic opportunity supplied by larval host plants, why do butterfly species occupy some resource-available regions but not others?",
+  "conceptual_decomposition": {
+    "larval_resource_geography": "Union of native, extant, non-doubtful WCVP-v13 WGSRPD level-3 units occupied by all resolved species-level larval host plants.",
+    "realized_butterfly_geography": "To be reconstructed later from butterfly GBIF occurrences, independently of the phylogatR genetic sampling coordinates.",
+    "resource_filling": "Butterfly occupancy within host-available WGSRPD3 units; this is not estimated in the present reconstruction-only stage.",
+    "candidate_explanatory_axes": [
+      "climate within host-available units",
+      "wing-size proxy",
+      "voltinism",
+      "LepTraits host-family breadth",
+      "habitat affinity"
+    ]
+  },
+  "existing_reconstructable_inputs": {
+    "S1_species_manifest": {
+      "file": "benchmarks/frozen/relational_prior_S1_species_exclusion_v0.1.json",
+      "species": 339,
+      "species_list_sha256": "56d3e785134656b0393d448df12f9d3745bc5944812395e2c7db7c0e50688f4b",
+      "source_design_sha256": "f2f2088c294ecfac3c49659439fd7858330452bd8fbea090513a6b3d590c98f8"
+    },
+    "LepTraits": {
+      "repository": "RiesLabGU/LepTraits",
+      "consensus_file": "consensus/consensus.csv",
+      "file_last_update_commit": "9702e22fc540ac7f25a174542a253cc81f83719c",
+      "expected_sha256": "6ec35b8a31e96c971aeaa228a48aae9f107c40c33695f0d470aa4382ca6d635b"
+    },
+    "HOSTS": {
+      "repository": "globalbioticinteractions/HOSTS",
+      "commit": "808e0b869f9ec1adf8efff87cf6a395adda103e0"
+    },
+    "WCVP": {
+      "repository": "matildabrown/rWCVPdata",
+      "commit": "65bed76bae9d644ccb6ad200c05f9f5071d89e05",
+      "version": "13",
+      "primary_distribution_rule": "introduced=0, extinct=0, location_doubtful=0, WGSRPD level 3"
+    },
+    "sidecar_expected_sha256": {
+      "insect_host_accepted.csv": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+      "native_extant_nondoubtful_wgsrpd3.csv": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558"
+    }
+  },
+  "stage_1_reconstruction": {
+    "target_panel": "the exact frozen S1 339-species butterfly list",
+    "rule": "Reapply the existing HOSTS-to-WCVP-to-WGSRPD3 footprint construction to S1 species rather than joining S1 directly to the intentionally disjoint S2 500-species panel.",
+    "outputs": [
+      "per-species native host-resource WGSRPD3 footprint",
+      "resolved host-species count",
+      "hosts with native distributions",
+      "LepTraits host-family breadth",
+      "wing-size proxy",
+      "voltinism",
+      "four habitat-affinity axes"
+    ]
+  },
+  "stage_2_response_blind_pilot_selection": {
+    "pilot_species": 10,
+    "eligible": "S1 species with positive LepTraits host-family breadth and at least one native host-resource WGSRPD3 unit",
+    "axes": [
+      "population-standardized log1p LepTraits NumberOfHostplantFamilies",
+      "population-standardized log1p native host-resource WGSRPD3 unit count"
+    ],
+    "algorithm": "deterministic farthest-point sampling in the two-dimensional resource-specialization space; fixed hash breaks exact ties",
+    "forbidden_inputs": [
+      "butterfly GBIF occurrence data",
+      "phylogatR genetic distances",
+      "TTF transfer scores"
+    ]
+  },
+  "stage_3_future_occurrence_pilot": {
+    "scope": "Only the frozen ten pilot species.",
+    "requirement": "Use butterfly GBIF occurrences, not phylogatR genetic sampling coordinates.",
+    "transport_design": [
+      "explicit per-species total deadline propagated to individual HTTP requests",
+      "deterministic occurrence-page offsets",
+      "page-level checkpoints",
+      "resume only unfinished pages",
+      "no species-level restart from page zero after partial success"
+    ],
+    "first_diagnostic": "Map butterfly occurrences to WGSRPD3 level-3 units and inspect whether host-available units contain enough occupied/unoccupied variation for a meaningful resource-filling analysis.",
+    "inference": "exploratory only"
+  },
+  "interpretation_boundary": {
+    "no_claim_that_hosts_limit_range_yet": true,
+    "no_claim_that_absent_GBIF_equals_true_absence": true,
+    "no_genetic_inference": true,
+    "no_confirmatory_p_value": true,
+    "pilot_can_be_abandoned_if_wgsrpd3_resolution_is_uninformative": true
+  }
+}

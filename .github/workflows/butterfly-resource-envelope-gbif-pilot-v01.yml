@@ -1,0 +1,360 @@
+name: butterfly resource-envelope GBIF WGSRPD3 pilot v01
+
+on:
+  push:
+    branches:
+      - explore/butterfly-resource-envelope-v01
+    paths:
+      - ".github/workflows/butterfly-resource-envelope-gbif-pilot-v01.yml"
+      - "benchmarks/exploratory/butterfly_resource_envelope_pilot_reconstruction_v0.1.json"
+      - "src/ttf/checkpointed_gbif_occurrence.py"
+      - "scripts/acquire_butterfly_resource_envelope_occurrences.py"
+      - "scripts/map_butterfly_resource_envelope_wgsrpd3.py"
+      - "scripts/diagnose_butterfly_resource_sampling_effort.py"
+      - "scripts/compare_butterfly_native_contemporary_occurrence_overlap.py"
+      - "scripts/apply_butterfly_resource_envelope_climate_gate.py"
+      - "scripts/analyze_butterfly_resource_envelope_climate.py"
+      - "src/ttf/resource_envelope_climate.py"
+      - "docs/exploratory/butterfly_resource_envelope_climate_pilot_gate_v0.1.json"
+  workflow_dispatch:
+
+concurrency:
+  group: butterfly-resource-envelope-gbif-v01-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - id: colias_christina
+            species: Colias christina
+          - id: vanessa_cardui
+            species: Vanessa cardui
+          - id: cercyonis_oetus
+            species: Cercyonis oetus
+          - id: satyrium_w_album
+            species: Satyrium w-album
+          - id: melitaea_aetherie
+            species: Melitaea aetherie
+          - id: lampides_boeticus
+            species: Lampides boeticus
+          - id: agraulis_vanillae
+            species: Agraulis vanillae
+          - id: graphium_sarpedon
+            species: Graphium sarpedon
+          - id: danaus_melanippus
+            species: Danaus melanippus
+          - id: satyrium_pruni
+            species: Satyrium pruni
+    steps:
+      - name: Checkout TTF exploratory branch
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install occurrence environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+
+      - name: Restore exact response-blind pilot artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-resource-envelope-pilot-v01
+          path: inputs/pilot
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36222306369
+
+      - name: Verify exact pilot species file
+        run: |
+          cd inputs/pilot/butterfly-resource-envelope-pilot-v0.1
+          echo "ea55d41263b9aaf210a7d29520457218b58dfd45c0dce4e50fad9bf8877cef35  pilot_species.json" | sha256sum -c -
+
+      - name: Restore per-species page checkpoints
+        uses: actions/cache@v4
+        with:
+          path: results/gbif-state/${{ matrix.id }}
+          key: butterfly-resource-envelope-gbif-v01-${{ matrix.id }}-${{ github.run_id }}
+          restore-keys: |
+            butterfly-resource-envelope-gbif-v01-${{ matrix.id }}-
+
+      - name: Acquire one frozen pilot species
+        run: |
+          mkdir -p results/gbif-species/${{ matrix.id }}
+          for pass in 1 2; do
+            echo "checkpointed acquisition pass ${pass}/2 for ${{ matrix.species }}"
+            python scripts/acquire_butterfly_resource_envelope_occurrences.py \
+              --pilot-json inputs/pilot/butterfly-resource-envelope-pilot-v0.1/pilot_species.json \
+              --only-species "${{ matrix.species }}" \
+              --state-dir results/gbif-state/${{ matrix.id }} \
+              --output-csv results/gbif-species/${{ matrix.id }}/occurrences.csv \
+              --output-ledger results/gbif-species/${{ matrix.id }}/occurrence_ledger.json \
+              --species-seconds 420 \
+              --request-seconds 120 \
+              --maximum-pages 6
+            status=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("results/gbif-species/${{ matrix.id }}/occurrence_ledger.json")
+          print(json.loads(p.read_text())["status"])
+          PY
+            )
+            echo "pass ${pass} status: ${status}"
+            if [ "${status}" != "RESUMABLE_PARTIAL_TRANSPORT" ]; then
+              break
+            fi
+          done
+          cat results/gbif-species/${{ matrix.id }}/occurrence_ledger.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: butterfly-resource-envelope-gbif-${{ matrix.id }}
+          path: results/gbif-species/${{ matrix.id }}/
+          retention-days: 30
+
+  summarize:
+    needs: acquire
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      climate_authorized: ${{ steps.gate.outputs.climate_authorized }}
+      qualified_species_count: ${{ steps.gate.outputs.qualified_species_count }}
+    steps:
+      - name: Checkout TTF exploratory branch
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install mapping environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+          python -m pip install "shapely>=2,<3"
+
+      - name: Restore exact response-blind pilot artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-resource-envelope-pilot-v01
+          path: inputs/pilot
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36222306369
+
+      - name: Verify exact pilot resource files
+        run: |
+          cd inputs/pilot/butterfly-resource-envelope-pilot-v0.1
+          echo "546c38970789a153735d6e54cc66bdd2e8987a22b93b097aa2062e8c7f84baef  s1_host_resource_footprints.json" | sha256sum -c -
+          echo "ea55d41263b9aaf210a7d29520457218b58dfd45c0dce4e50fad9bf8877cef35  pilot_species.json" | sha256sum -c -
+
+      - name: Restore exact contemporary host-resource envelope
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-contemporary-host-envelope-v01
+          path: inputs/contemporary
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36226267890
+
+      - name: Verify exact contemporary resource envelope
+        run: |
+          echo "6ed9e5cd25b71558f05613b02a6505f1c56a9a7bd8381549e262d44d1a54f2df  inputs/contemporary/butterfly-contemporary-host-envelope-v0.1/contemporary_footprints.json" | sha256sum -c -
+
+      - name: Download per-species GBIF artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: butterfly-resource-envelope-gbif-*
+          path: inputs/species
+          merge-multiple: false
+
+      - name: Combine species occurrence outputs
+        run: |
+          mkdir -p results/butterfly-resource-envelope-gbif-v0.1
+          python - <<'PY'
+          import csv, glob, json
+          from pathlib import Path
+
+          files=sorted(glob.glob("inputs/species/*/occurrences.csv"))
+          fields=["species","gbif_key","latitude","longitude","year","basis_of_record","dataset_key"]
+          rows=[]
+          for file in files:
+              with open(file,newline="",encoding="utf-8") as handle:
+                  rows.extend(csv.DictReader(handle))
+          unique={(r["species"],r["gbif_key"]):r for r in rows}
+          out=Path("results/butterfly-resource-envelope-gbif-v0.1/occurrences.csv")
+          with out.open("w",newline="",encoding="utf-8") as handle:
+              writer=csv.DictWriter(handle,fieldnames=fields)
+              writer.writeheader()
+              writer.writerows(unique[k] for k in sorted(unique))
+
+          ledgers=[]
+          for file in sorted(glob.glob("inputs/species/*/occurrence_ledger.json")):
+              ledgers.append(json.loads(Path(file).read_text()))
+          Path("results/butterfly-resource-envelope-gbif-v0.1/occurrence_ledgers.json").write_text(
+              json.dumps({"schema":"ttf_butterfly_resource_envelope_occurrence_matrix_v0.1","ledgers":ledgers},indent=2,sort_keys=True)+"\n"
+          )
+          print(json.dumps({"species_artifacts":len(files),"occurrence_rows":len(unique)}))
+          PY
+
+      - name: Checkout official WGSRPD geometry
+        uses: actions/checkout@v4
+        with:
+          repository: tdwg/wgsrpd
+          ref: 52da7828aba9d461dd133c27b3bd7a4407161f54
+          path: _wgsrpd
+
+      - name: Verify WGSRPD checkout
+        run: |
+          test "$(git -C _wgsrpd rev-parse HEAD)" = "52da7828aba9d461dd133c27b3bd7a4407161f54"
+          test -f _wgsrpd/geojson/level3.geojson
+
+      - name: Map butterfly records into host-resource WGSRPD3 units
+        run: |
+          python scripts/map_butterfly_resource_envelope_wgsrpd3.py             --pilot-json inputs/pilot/butterfly-resource-envelope-pilot-v0.1/pilot_species.json             --host-footprints-json inputs/pilot/butterfly-resource-envelope-pilot-v0.1/s1_host_resource_footprints.json             --occurrences-csv results/butterfly-resource-envelope-gbif-v0.1/occurrences.csv             --level3-geojson _wgsrpd/geojson/level3.geojson             --output-unit-table results/butterfly-resource-envelope-gbif-v0.1/wgsrpd3_unit_table.csv             --output-summary results/butterfly-resource-envelope-gbif-v0.1/wgsrpd3_resolution_summary.json
+          cat results/butterfly-resource-envelope-gbif-v0.1/wgsrpd3_resolution_summary.json
+
+      - name: Compare observed butterfly units with contemporary host envelope
+        run: |
+          python scripts/compare_butterfly_native_contemporary_occurrence_overlap.py \
+            --native-unit-table results/butterfly-resource-envelope-gbif-v0.1/wgsrpd3_unit_table.csv \
+            --contemporary-footprints-json inputs/contemporary/butterfly-contemporary-host-envelope-v0.1/contemporary_footprints.json \
+            --output-json results/butterfly-resource-envelope-gbif-v0.1/native_contemporary_overlap.json
+          cat results/butterfly-resource-envelope-gbif-v0.1/native_contemporary_overlap.json
+
+      - name: Diagnose contemporary-envelope sampling-effort sensitivity
+        run: |
+          python scripts/diagnose_butterfly_resource_sampling_effort.py \
+            --unit-table results/butterfly-resource-envelope-gbif-v0.1/wgsrpd3_unit_table.csv \
+            --host-footprints-json inputs/contemporary/butterfly-contemporary-host-envelope-v0.1/contemporary_footprints.json \
+            --output-csv results/butterfly-resource-envelope-gbif-v0.1/sampling_effort_sensitivity.csv \
+            --output-json results/butterfly-resource-envelope-gbif-v0.1/sampling_effort_sensitivity.json
+          cat results/butterfly-resource-envelope-gbif-v0.1/sampling_effort_sensitivity.json
+
+      - name: Apply frozen pre-climate ecology quality gate
+        id: gate
+        run: |
+          python scripts/apply_butterfly_resource_envelope_climate_gate.py \
+            --gate-json docs/exploratory/butterfly_resource_envelope_climate_pilot_gate_v0.1.json \
+            --descriptors-csv inputs/pilot/butterfly-resource-envelope-pilot-v0.1/s1_resource_descriptors.csv \
+            --overlap-json results/butterfly-resource-envelope-gbif-v0.1/native_contemporary_overlap.json \
+            --effort-csv results/butterfly-resource-envelope-gbif-v0.1/sampling_effort_sensitivity.csv \
+            --occurrence-ledgers-json results/butterfly-resource-envelope-gbif-v0.1/occurrence_ledgers.json \
+            --output-json results/butterfly-resource-envelope-gbif-v0.1/preclimate_quality_gate.json
+          cat results/butterfly-resource-envelope-gbif-v0.1/preclimate_quality_gate.json
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+          p=json.loads(Path("results/butterfly-resource-envelope-gbif-v0.1/preclimate_quality_gate.json").read_text())
+          print("climate_authorized=" + ("true" if p["status"]=="PASS_TO_EXPLORATORY_CLIMATE_PILOT" else "false"))
+          print("qualified_species_count=" + str(p["qualified_species_count"]))
+          PY
+
+      - name: Record output identities
+        run: |
+          (
+            cd results/butterfly-resource-envelope-gbif-v0.1
+            sha256sum occurrences.csv occurrence_ledgers.json wgsrpd3_unit_table.csv wgsrpd3_resolution_summary.json native_contemporary_overlap.json sampling_effort_sensitivity.csv sampling_effort_sensitivity.json preclimate_quality_gate.json > SHA256SUMS
+          )
+          sha256sum _wgsrpd/geojson/level3.geojson > results/butterfly-resource-envelope-gbif-v0.1/WGSRPD3_SHA256
+          cat results/butterfly-resource-envelope-gbif-v0.1/SHA256SUMS
+          cat results/butterfly-resource-envelope-gbif-v0.1/WGSRPD3_SHA256
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: butterfly-resource-envelope-gbif-pilot-summary-v01
+          path: results/butterfly-resource-envelope-gbif-v0.1/
+          retention-days: 30
+
+
+  climate:
+    needs: summarize
+    if: needs.summarize.outputs.climate_authorized == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout TTF exploratory branch
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install climate environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+          python -m pip install "shapely>=2,<3" "rasterio>=1.4,<2"
+
+      - name: Restore current-run GBIF ecology summary
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-resource-envelope-gbif-pilot-summary-v01
+          path: inputs/gbif
+
+      - name: Restore exact contemporary host-resource envelope
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-contemporary-host-envelope-v01
+          path: inputs/contemporary
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36226267890
+
+      - name: Checkout official WGSRPD geometry
+        uses: actions/checkout@v4
+        with:
+          repository: tdwg/wgsrpd
+          ref: 52da7828aba9d461dd133c27b3bd7a4407161f54
+          path: _wgsrpd
+
+      - name: Download current CHELSA V2.1 climate layers
+        run: |
+          set -euo pipefail
+          mkdir -p rasters
+          base="https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio"
+          for v in 1 7 12 15; do
+            curl -L --fail --retry 4 --retry-delay 5 \
+              "$base/CHELSA_bio${v}_1981-2010_V.2.1.tif" \
+              -o "rasters/CHELSA_bio${v}_1981-2010_V.2.1.tif"
+          done
+          ls -lh rasters/
+
+      - name: Run frozen exploratory climate cross-fit
+        run: |
+          mkdir -p results/butterfly-resource-envelope-climate-v0.1
+          python scripts/analyze_butterfly_resource_envelope_climate.py \
+            --occurrences-csv inputs/gbif/occurrences.csv \
+            --unit-table inputs/gbif/wgsrpd3_unit_table.csv \
+            --contemporary-footprints-json inputs/contemporary/butterfly-contemporary-host-envelope-v0.1/contemporary_footprints.json \
+            --gate-rule-json docs/exploratory/butterfly_resource_envelope_climate_pilot_gate_v0.1.json \
+            --quality-gate-json inputs/gbif/preclimate_quality_gate.json \
+            --level3-geojson _wgsrpd/geojson/level3.geojson \
+            --raster rasters/CHELSA_bio1_1981-2010_V.2.1.tif \
+            --raster rasters/CHELSA_bio7_1981-2010_V.2.1.tif \
+            --raster rasters/CHELSA_bio12_1981-2010_V.2.1.tif \
+            --raster rasters/CHELSA_bio15_1981-2010_V.2.1.tif \
+            --output-unit-climate results/butterfly-resource-envelope-climate-v0.1/unit_climate_crossfit.csv \
+            --output-summary results/butterfly-resource-envelope-climate-v0.1/summary.json
+          cat results/butterfly-resource-envelope-climate-v0.1/summary.json
+          (
+            cd results/butterfly-resource-envelope-climate-v0.1
+            sha256sum unit_climate_crossfit.csv summary.json > SHA256SUMS
+          )
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-resource-envelope-climate-v01
+          path: results/butterfly-resource-envelope-climate-v0.1/
+          retention-days: 30

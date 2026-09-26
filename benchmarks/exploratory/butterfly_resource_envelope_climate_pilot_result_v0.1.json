@@ -1,0 +1,117 @@
+{
+  "schema": "ttf_butterfly_resource_envelope_climate_pilot_result_v0.1",
+  "status": "EXPLORATORY_PILOT_COMPLETE_MIXED_CLIMATE_FILTERING",
+  "executed_on": "2026-09-26",
+  "workflow": {
+    "run_id": 36229542302,
+    "head_sha": "cec776a8ca67dd75238a5e80a5354870ecbcb5ff",
+    "gbif_summary_artifact": {
+      "artifact_id": 10901713146,
+      "name": "butterfly-resource-envelope-gbif-pilot-summary-v01",
+      "digest": "sha256:c30f7defd59b567c7cbc0e9898c228420fc5122792026b17e457cd7845e61318"
+    },
+    "climate_artifact": {
+      "artifact_id": 10901708198,
+      "name": "butterfly-resource-envelope-climate-v01",
+      "digest": "sha256:5b5d4185fca72528944dcb288aac9b549693788ba75f866119bda55e183808c6"
+    }
+  },
+  "preclimate_quality_gate": {
+    "status": "PASS_TO_EXPLORATORY_CLIMATE_PILOT",
+    "qualified_species": [
+      "Cercyonis oetus",
+      "Lampides boeticus",
+      "Melitaea aetherie"
+    ],
+    "qualified_species_count": 3,
+    "minimum_species_required": 3,
+    "criteria": {
+      "occurrence_transport": "COMPLETE",
+      "host_taxonomy_lower_bound": "resolved host-species count >= LepTraits host-family count",
+      "maximum_fraction_observed_units_outside_contemporary_resource_envelope": 0.10,
+      "other_pilot_record_effort_threshold": 10,
+      "minimum_effort_supported_host_units": 5,
+      "minimum_effort_supported_observed_units": 2,
+      "minimum_effort_supported_unobserved_units": 2
+    }
+  },
+  "climate_crossfit": {
+    "dataset": "CHELSA V2.1 1981-2010",
+    "variables": ["bio1", "bio7", "bio12", "bio15"],
+    "host_envelope": "WCVP-v13 extant non-doubtful host-resource WGSRPD3 units including introduced ranges",
+    "minimum_training_occurrence_records": 30,
+    "informative_species": 2,
+    "species": [
+      {
+        "species": "Cercyonis oetus",
+        "leptraits_host_family_count": 1,
+        "host_units": 209,
+        "train_observed_units": 8,
+        "eval_observed_host_units": 8,
+        "never_observed_host_units": 193,
+        "training_occurrence_records_with_climate": 1079,
+        "effort_supported_eval_observed_units": 3,
+        "effort_supported_never_observed_units": 47,
+        "median_mismatch_eval_observed": 1.269740923366184,
+        "median_mismatch_never_observed": 3.574397719605141,
+        "mismatch_delta_never_minus_eval_observed": 2.304656796238957,
+        "probability_never_observed_mismatch_greater": 0.9432624113475178,
+        "climate_crossfit_informative": true
+      },
+      {
+        "species": "Lampides boeticus",
+        "leptraits_host_family_count": 6,
+        "host_units": 333,
+        "train_observed_units": 40,
+        "eval_observed_host_units": 41,
+        "never_observed_host_units": 252,
+        "training_occurrence_records_with_climate": 1125,
+        "effort_supported_eval_observed_units": 11,
+        "effort_supported_never_observed_units": 46,
+        "median_mismatch_eval_observed": 1.7074062124121157,
+        "median_mismatch_never_observed": 1.5771229487510454,
+        "mismatch_delta_never_minus_eval_observed": -0.13028326366107024,
+        "probability_never_observed_mismatch_greater": 0.45849802371541504,
+        "climate_crossfit_informative": true
+      },
+      {
+        "species": "Melitaea aetherie",
+        "leptraits_host_family_count": 1,
+        "host_units": 21,
+        "train_observed_units": 2,
+        "eval_observed_host_units": 3,
+        "never_observed_host_units": 16,
+        "training_occurrence_records_with_climate": 141,
+        "effort_supported_eval_observed_units": 1,
+        "effort_supported_never_observed_units": 5,
+        "median_mismatch_eval_observed": 0.2501632380921154,
+        "median_mismatch_never_observed": 2.0231662333367053,
+        "mismatch_delta_never_minus_eval_observed": 1.7730029952445898,
+        "probability_never_observed_mismatch_greater": 1.0,
+        "climate_crossfit_informative": false,
+        "noninformative_reason": "fewer than two effort-supported held-out observed units"
+      }
+    ]
+  },
+  "pilot_interpretation": {
+    "uniform_climate_filtering_supported": false,
+    "species_specific_filtering_supported_as_exploratory_pattern": true,
+    "strong_positive_climate_filtering_seen_in_one_informative_specialist": true,
+    "near_zero_or_reverse_filtering_seen_in_one_informative_generalist": true,
+    "second_specialist_points_positive_but_is_not_informative": true
+  },
+  "pilot_derived_fresh_hypothesis": {
+    "hypothesis": "Within reconstructed larval-resource opportunity, climate filtering is stronger in taxonomic host specialists and weakens as host breadth increases.",
+    "status": "GENERATED_AFTER_PILOT_RESULT_REQUIRES_INDEPENDENT_PANEL",
+    "pilot_species_must_be_excluded_from_test": true,
+    "confirmatory_claim_from_pilot": false
+  },
+  "claim_boundary": {
+    "exploratory_only": true,
+    "no_confirmatory_p_value": true,
+    "never_observed_host_unit_is_not_true_absence": true,
+    "sampling_effort_proxy_is_other_pilot_butterflies_not_global_effort": true,
+    "host_database_completeness_not_proven": true,
+    "genetic_response_used": false
+  }
+}

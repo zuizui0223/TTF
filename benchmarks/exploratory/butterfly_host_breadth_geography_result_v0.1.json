@@ -1,0 +1,57 @@
+{
+  "schema": "ttf_butterfly_host_breadth_geography_exploratory_receipt_v0.1",
+  "status": "SUCCESS_EXPLORATORY_DESCRIPTIVE_RESULT",
+  "executed_on": "2026-09-26",
+  "workflow": {
+    "run_id": 36225788746,
+    "head_sha": "53ad1751642d682e2d2ae941103fea504afe94f8",
+    "artifact_id": 10900552270,
+    "artifact_name": "butterfly-host-breadth-geography-v01",
+    "artifact_digest": "sha256:4f7804cdfb223c67ded8b8812dd067f29d26e730c9c7d2f0fb80a73df6175636"
+  },
+  "source": {
+    "reconstruction_run_id": 36222306369,
+    "s1_resource_descriptors_sha256": "894f48dbca1760fc4fa75bfee8f663540ab4b9380f8b9daf2bc09440e8bb0cdc",
+    "butterfly_occurrences_used": false,
+    "genetic_response_used": false
+  },
+  "species": {
+    "S1_total": 339,
+    "resource_eligible": 239,
+    "lower_bound_host_taxonomy_adequate": 215
+  },
+  "descriptive_results": {
+    "spearman_host_family_count_vs_native_host_wgsrpd3_units": 0.2762564748550703,
+    "spearman_resolved_host_species_vs_native_host_wgsrpd3_units": 0.6264102117216259,
+    "spearman_host_family_count_vs_resolved_host_species": 0.38990530796012435,
+    "spearman_host_family_count_vs_native_host_wgsrpd3_units_lower_bound_adequate_only": 0.398238154462201,
+    "log_linear_model": {
+      "response": "log1p(native host-resource WGSRPD3 unit count)",
+      "predictors": [
+        "intercept",
+        "log1p(LepTraits host-family count)",
+        "log1p(HOSTS-WCVP resolved host-species count)"
+      ],
+      "coefficients": [
+        3.3586126239540395,
+        0.0024559060976578895,
+        0.5362304783723635
+      ],
+      "r_squared": 0.3471875996225615
+    },
+    "median_native_host_wgsrpd3_units_by_leptraits_host_family_band": {
+      "1_family": 76.0,
+      "2_families": 91.0,
+      "3_to_5_families": 110.0,
+      "6plus_families": 191.0
+    }
+  },
+  "ecological_interpretation": "Taxonomic host-family breadth and geographic host-resource breadth are related but not interchangeable. The number of resolved host species is much more strongly associated with geographic resource breadth than host-family count, and strong specialist/generalist counterexamples exist.",
+  "next_question": "Does geographic host-resource opportunity, rather than host-family breadth alone, predict realized butterfly occupancy after sampling effort and climate are separated?",
+  "claim_boundary": {
+    "exploratory_only": true,
+    "no_confirmatory_p_value": true,
+    "host_database_completeness_not_proven": true,
+    "native_host_geography_only": true
+  }
+}

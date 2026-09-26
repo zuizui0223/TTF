@@ -1,0 +1,98 @@
+name: butterfly resource-envelope exploratory pilot v01
+
+on:
+  push:
+    branches:
+      - explore/butterfly-resource-envelope-v01
+    paths:
+      - ".github/workflows/butterfly-resource-envelope-pilot-v01.yml"
+      - "src/ttf/butterfly_resource_envelope.py"
+      - "scripts/build_butterfly_resource_envelope_pilot.py"
+      - "scripts/build_wcvp_hosts_sidecar.R"
+      - "docs/exploratory/butterfly_resource_envelope_protocol_v0.1.json"
+      - "tests/test_butterfly_resource_envelope.py"
+  workflow_dispatch:
+
+jobs:
+  reconstruct:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout TTF exploratory branch
+        uses: actions/checkout@v4
+
+      - name: Checkout exact LepTraits snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: RiesLabGU/LepTraits
+          ref: 9702e22fc540ac7f25a174542a253cc81f83719c
+          path: _leptraits
+
+      - name: Checkout exact WCVP v13 redistribution snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: matildabrown/rWCVPdata
+          ref: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
+          path: _wcvp
+
+      - name: Checkout exact HOSTS mirror
+        uses: actions/checkout@v4
+        with:
+          repository: globalbioticinteractions/HOSTS
+          ref: 808e0b869f9ec1adf8efff87cf6a395adda103e0
+          path: _hosts
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install TTF test environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+
+      - name: Test response-blind pilot selector
+        run: pytest -q tests/test_butterfly_resource_envelope.py
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+
+      - name: Verify exact LepTraits file
+        run: |
+          test "$(git -C _leptraits rev-parse HEAD)" = "9702e22fc540ac7f25a174542a253cc81f83719c"
+          cp _leptraits/consensus/consensus.csv /tmp/leptraits_consensus.csv
+          echo "6ec35b8a31e96c971aeaa228a48aae9f107c40c33695f0d470aa4382ca6d635b  /tmp/leptraits_consensus.csv" | sha256sum -c -
+
+      - name: Rebuild exact HOSTS-WCVP sidecars
+        run: |
+          test "$(git -C _wcvp rev-parse HEAD)" = "65bed76bae9d644ccb6ad200c05f9f5071d89e05"
+          test "$(git -C _hosts rev-parse HEAD)" = "808e0b869f9ec1adf8efff87cf6a395adda103e0"
+          Rscript scripts/build_wcvp_hosts_sidecar.R             _wcvp             _hosts             results/resource-envelope-inputs
+
+      - name: Verify reconstructed sidecar identities
+        run: |
+          echo "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9  results/resource-envelope-inputs/insect_host_accepted.csv" | sha256sum -c -
+          echo "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558  results/resource-envelope-inputs/native_extant_nondoubtful_wgsrpd3.csv" | sha256sum -c -
+
+      - name: Reconstruct S1 resource envelopes and freeze exploratory ten-species pilot
+        run: |
+          mkdir -p results/butterfly-resource-envelope-pilot-v0.1
+          python scripts/build_butterfly_resource_envelope_pilot.py             --s1-manifest benchmarks/frozen/relational_prior_S1_species_exclusion_v0.1.json             --leptraits-csv /tmp/leptraits_consensus.csv             --insect-host-csv results/resource-envelope-inputs/insect_host_accepted.csv             --host-distribution-csv results/resource-envelope-inputs/native_extant_nondoubtful_wgsrpd3.csv             --output-table results/butterfly-resource-envelope-pilot-v0.1/s1_resource_descriptors.csv             --output-footprints results/butterfly-resource-envelope-pilot-v0.1/s1_host_resource_footprints.json             --output-pilot results/butterfly-resource-envelope-pilot-v0.1/pilot_species.json             --pilot-size 10
+          cat results/butterfly-resource-envelope-pilot-v0.1/pilot_species.json
+
+      - name: Record input and output hashes
+        run: |
+          (
+            cd results/butterfly-resource-envelope-pilot-v0.1
+            sha256sum s1_resource_descriptors.csv s1_host_resource_footprints.json pilot_species.json > SHA256SUMS
+          )
+          cat results/butterfly-resource-envelope-pilot-v0.1/SHA256SUMS
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-resource-envelope-pilot-v01
+          path: |
+            results/butterfly-resource-envelope-pilot-v0.1/
+            results/resource-envelope-inputs/counts.tsv
+          retention-days: 30
