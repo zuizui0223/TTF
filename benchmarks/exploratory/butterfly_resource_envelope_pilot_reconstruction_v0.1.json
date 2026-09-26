@@ -1,0 +1,50 @@
+{
+  "schema": "ttf_butterfly_resource_envelope_pilot_reconstruction_receipt_v0.1",
+  "status": "SUCCESS_EXPLORATORY_PILOT_RECONSTRUCTION",
+  "executed_on": "2026-09-26",
+  "workflow": {
+    "run_id": 36222306369,
+    "head_sha": "3f692750cb712e9be945fd2ab0c8a31a6fe8bf7f",
+    "artifact_id": 10898504566,
+    "artifact_name": "butterfly-resource-envelope-pilot-v01",
+    "artifact_digest": "sha256:25d2f9d6cfab745c7e68010bd769e076b95fb9f4fe9268da01d965bab047aa06"
+  },
+  "input_identity_verified": {
+    "s1_species_list_sha256": "56d3e785134656b0393d448df12f9d3745bc5944812395e2c7db7c0e50688f4b",
+    "leptraits_sha256": "6ec35b8a31e96c971aeaa228a48aae9f107c40c33695f0d470aa4382ca6d635b",
+    "insect_host_accepted_sha256": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "native_extant_nondoubtful_wgsrpd3_sha256": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558"
+  },
+  "reconstruction": {
+    "s1_species": 339,
+    "resource_eligible_species": 239,
+    "s1_resource_descriptors_sha256": "894f48dbca1760fc4fa75bfee8f663540ab4b9380f8b9daf2bc09440e8bb0cdc",
+    "s1_host_resource_footprints_sha256": "546c38970789a153735d6e54cc66bdd2e8987a22b93b097aa2062e8c7f84baef",
+    "pilot_species_json_sha256": "ea55d41263b9aaf210a7d29520457218b58dfd45c0dce4e50fad9bf8877cef35"
+  },
+  "pilot": {
+    "species_count": 10,
+    "species_sha256": "2e4fbd9f7b0a9f00b87f6b2af3a2c37da3de45bf0522e6102f3a4391900af7b9",
+    "species": [
+      "Colias christina",
+      "Vanessa cardui",
+      "Cercyonis oetus",
+      "Satyrium w-album",
+      "Melitaea aetherie",
+      "Lampides boeticus",
+      "Agraulis vanillae",
+      "Graphium sarpedon",
+      "Danaus melanippus",
+      "Satyrium pruni"
+    ],
+    "selection_used_butterfly_gbif": false,
+    "selection_used_genetic_response": false
+  },
+  "next_stage": "TEN_SPECIES_GBIF_TO_WGSRPD3_RESOLUTION_PILOT",
+  "claim_boundary": {
+    "exploratory_only": true,
+    "host_range_limitation_established": false,
+    "gbif_absence_treated_as_true_absence": false,
+    "genetic_inference": false
+  }
+}
