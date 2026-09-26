@@ -1,0 +1,76 @@
+{
+  "schema": "ttf_butterfly_climate_release_execution_binding_v0.2",
+  "status": "BOUND_BEFORE_PRECLIMATE_OR_CLIMATE_RESULT",
+  "bound_on": "2026-09-26",
+  "execution": {
+    "workflow_name": "butterfly climate-release independent test v02",
+    "run_id": 36240521463,
+    "head_sha": "98ff8706b3fd7344696d2968ad975f5ce675f131",
+    "branch": "explore/butterfly-climate-release-v01"
+  },
+  "superseded_execution": {
+    "run_id": 36239130041,
+    "head_sha": "4c2fd1093acfb72c9b9c7b681c46861a6a29aae3",
+    "conclusion": "cancelled",
+    "scientific_result_must_not_be_used": true
+  },
+  "independent_panel": {
+    "panel_workflow_run_id": 36238195242,
+    "panel_artifact_id": 10904666722,
+    "panel_json_sha256": "d52ab353c46061cd0f16df95cdfee95920d9ce9b3c96da15ba115c30785cf2df",
+    "species_count": 32,
+    "species_sha256": "bbaaa28cf361fb02d558988bdd1a3f948a243b79c8d3bb1709e908edb1f0f204",
+    "pilot_species_excluded": true
+  },
+  "scientific_contract": {
+    "protocol_schema": "ttf_butterfly_climate_release_independent_test_v0.2",
+    "protocol_file": "docs/exploratory/butterfly_climate_release_independent_test_v0.2.json",
+    "hypothesis": "Within larval host-resource opportunity, climatic filtering of realized butterfly distribution weakens as taxonomic host breadth increases.",
+    "primary_response": "species climate-filtering score P(mismatch_never_observed > mismatch_heldout_observed) + 0.5 P(tie)",
+    "primary_predictor": "LepTraits NumberOfHostplantFamilies",
+    "primary_control": "log1p contemporary host-resource WGSRPD3 unit count",
+    "observed_statistic": "partial Spearman on ranks",
+    "null_inference": "Freedman-Lane-style reduced-response residual permutation on ranks",
+    "permutations": 9999,
+    "alternative": "negative",
+    "alpha": 0.05,
+    "minimum_preclimate_qualified_species": 12,
+    "minimum_climate_informative_species": 12
+  },
+  "v0_2_correction": {
+    "reason": "Raw predictor-label permutation in v0.1 would break the observed predictor-control association. v0.2 preserves predictor-control structure by permuting reduced-model response residuals.",
+    "frozen_after_transport_started": true,
+    "frozen_before_independent_occurrence_geography_opened": true,
+    "frozen_before_independent_host_overlap_opened": true,
+    "frozen_before_preclimate_gate_opened": true,
+    "frozen_before_independent_climate_opened": true,
+    "frozen_before_primary_result_opened": true,
+    "panel_changed": false,
+    "transport_contract_changed": false,
+    "quality_gate_changed": false,
+    "climate_crossfit_changed": false,
+    "effect_score_changed": false,
+    "alternative_changed": false,
+    "alpha_changed": false,
+    "permutation_iterations_changed": false
+  },
+  "transport_contract": {
+    "maximum_windows_per_species": 6,
+    "ordinal_window_size_records": 300,
+    "transport_chunk_size_records": 10,
+    "request_timeout_seconds": 60,
+    "species_deadline_seconds_per_pass": 600,
+    "maximum_passes_per_job": 2,
+    "completed_windows_immutable": true,
+    "species_replacement_authorized": false
+  },
+  "response_firewall_at_binding": {
+    "independent_occurrence_geography_opened": false,
+    "independent_host_overlap_opened": false,
+    "preclimate_quality_gate_opened": false,
+    "independent_climate_values_opened": false,
+    "independent_climate_filtering_scores_opened": false,
+    "independent_primary_result_opened": false,
+    "genetic_response_used": false
+  }
+}
