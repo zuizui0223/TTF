@@ -1,0 +1,98 @@
+name: butterfly resource-envelope GBIF WGSRPD3 pilot v01
+
+on:
+  push:
+    branches:
+      - explore/butterfly-resource-envelope-v01
+    paths:
+      - ".github/workflows/butterfly-resource-envelope-gbif-pilot-v01.yml"
+      - "benchmarks/exploratory/butterfly_resource_envelope_pilot_reconstruction_v0.1.json"
+      - "src/ttf/checkpointed_gbif_occurrence.py"
+      - "scripts/acquire_butterfly_resource_envelope_occurrences.py"
+      - "scripts/map_butterfly_resource_envelope_wgsrpd3.py"
+  workflow_dispatch:
+
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout TTF exploratory branch
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install exploratory occurrence environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+          python -m pip install "shapely>=2,<3"
+
+      - name: Restore exact response-blind pilot artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-resource-envelope-pilot-v01
+          path: inputs/pilot
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36222306369
+
+      - name: Verify exact pilot artifact payload
+        run: |
+          cd inputs/pilot/butterfly-resource-envelope-pilot-v0.1
+          echo "894f48dbca1760fc4fa75bfee8f663540ab4b9380f8b9daf2bc09440e8bb0cdc  s1_resource_descriptors.csv" | sha256sum -c -
+          echo "546c38970789a153735d6e54cc66bdd2e8987a22b93b097aa2062e8c7f84baef  s1_host_resource_footprints.json" | sha256sum -c -
+          echo "ea55d41263b9aaf210a7d29520457218b58dfd45c0dce4e50fad9bf8877cef35  pilot_species.json" | sha256sum -c -
+
+      - name: Checkout official WGSRPD geometry
+        uses: actions/checkout@v4
+        with:
+          repository: tdwg/wgsrpd
+          ref: 52da7828aba9d461dd133c27b3bd7a4407161f54
+          path: _wgsrpd
+
+      - name: Verify WGSRPD checkout
+        run: |
+          test "$(git -C _wgsrpd rev-parse HEAD)" = "52da7828aba9d461dd133c27b3bd7a4407161f54"
+          test -f _wgsrpd/geojson/level3.geojson
+          sha256sum _wgsrpd/geojson/level3.geojson
+
+      - name: Restore resumable GBIF page checkpoints
+        uses: actions/cache@v4
+        with:
+          path: results/butterfly-resource-envelope-gbif-state
+          key: butterfly-resource-envelope-gbif-v01-${{ github.run_id }}
+          restore-keys: |
+            butterfly-resource-envelope-gbif-v01-
+
+      - name: Acquire only the frozen ten pilot species
+        run: |
+          mkdir -p results/butterfly-resource-envelope-gbif-v0.1
+          python scripts/acquire_butterfly_resource_envelope_occurrences.py             --pilot-json inputs/pilot/butterfly-resource-envelope-pilot-v0.1/pilot_species.json             --state-dir results/butterfly-resource-envelope-gbif-state             --output-csv results/butterfly-resource-envelope-gbif-v0.1/occurrences.csv             --output-ledger results/butterfly-resource-envelope-gbif-v0.1/occurrence_ledger.json             --species-seconds 240             --maximum-pages 8
+          cat results/butterfly-resource-envelope-gbif-v0.1/occurrence_ledger.json
+
+      - name: Map butterfly records into host-resource WGSRPD3 units
+        run: |
+          python scripts/map_butterfly_resource_envelope_wgsrpd3.py             --pilot-json inputs/pilot/butterfly-resource-envelope-pilot-v0.1/pilot_species.json             --host-footprints-json inputs/pilot/butterfly-resource-envelope-pilot-v0.1/s1_host_resource_footprints.json             --occurrences-csv results/butterfly-resource-envelope-gbif-v0.1/occurrences.csv             --level3-geojson _wgsrpd/geojson/level3.geojson             --output-unit-table results/butterfly-resource-envelope-gbif-v0.1/wgsrpd3_unit_table.csv             --output-summary results/butterfly-resource-envelope-gbif-v0.1/wgsrpd3_resolution_summary.json
+          cat results/butterfly-resource-envelope-gbif-v0.1/wgsrpd3_resolution_summary.json
+
+      - name: Record output identities
+        run: |
+          (
+            cd results/butterfly-resource-envelope-gbif-v0.1
+            sha256sum occurrences.csv occurrence_ledger.json wgsrpd3_unit_table.csv wgsrpd3_resolution_summary.json > SHA256SUMS
+          )
+          sha256sum _wgsrpd/geojson/level3.geojson > results/butterfly-resource-envelope-gbif-v0.1/WGSRPD3_SHA256
+          cat results/butterfly-resource-envelope-gbif-v0.1/SHA256SUMS
+          cat results/butterfly-resource-envelope-gbif-v0.1/WGSRPD3_SHA256
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: butterfly-resource-envelope-gbif-pilot-v01
+          path: |
+            results/butterfly-resource-envelope-gbif-v0.1/
+            results/butterfly-resource-envelope-gbif-state/
+          retention-days: 30
