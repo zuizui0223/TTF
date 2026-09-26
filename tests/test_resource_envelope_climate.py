@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import numpy as np
-from shapely.geometry import MultiPolygon, Polygon
+import pytest
 
 from ttf.resource_envelope_climate import (
     climate_mismatch,
@@ -42,12 +42,15 @@ def test_probability_greater_handles_ties():
 
 
 def test_deterministic_interior_points_cover_multipolygon_components():
+    shapely = pytest.importorskip("shapely")
+    from shapely.geometry import MultiPolygon, Point, Polygon
+
     a = Polygon([(0, 0), (1, 0), (1, 1), (0, 1)])
     b = Polygon([(10, 10), (11, 10), (11, 11), (10, 11)])
     geom = MultiPolygon([a, b])
     points = deterministic_interior_points(geom, maximum_points=8)
     assert points == deterministic_interior_points(geom, maximum_points=8)
     assert 2 <= len(points) <= 8
-    assert all(geom.covers(__import__("shapely").geometry.Point(x, y)) for x, y in points)
+    assert all(geom.covers(Point(x, y)) for x, y in points)
     assert any(x < 2 for x, _ in points)
     assert any(x > 9 for x, _ in points)
