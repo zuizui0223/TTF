@@ -6,6 +6,7 @@ import csv
 import json
 import os
 import time
+import subprocess
 from pathlib import Path
 from urllib.error import HTTPError
 from urllib.parse import urlencode
@@ -38,44 +39,82 @@ def get_json(
     deadline: float,
     attempts: int = 3,
 ) -> dict:
+    """Fetch one GBIF JSON response with a true wall-clock request cap.
+
+    urllib/socket timeouts do not bound the total duration of response.read().
+    curl --max-time does, so every page request is externally bounded while the
+    deterministic query itself remains unchanged.
+    """
     url = f"{GBIF}/{path}?{urlencode(params)}"
     last_detail = ""
     for attempt in range(attempts):
         timeout = request_timeout_seconds(deadline, per_request_cap=30.0)
+        cmd = [
+            "curl",
+            "--location",
+            "--silent",
+            "--show-error",
+            "--max-time",
+            f"{timeout:.3f}",
+            "--header",
+            f"User-Agent: {USER_AGENT}",
+            "--header",
+            "Accept: application/json",
+            "--write-out",
+            "\\n%{http_code}",
+            url,
+        ]
         try:
-            request = Request(
-                url,
-                headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+            proc = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=timeout + 2.0,
+                check=False,
             )
-            with urlopen(request, timeout=timeout) as response:
-                return json.loads(response.read().decode("utf-8"))
-        except HTTPError as exc:
-            body = ""
-            try:
-                body = exc.read(512).decode("utf-8", errors="replace").replace("\n", " ")
-            except Exception:
-                pass
-            last_detail = f"HTTP {exc.code}: {body[:300]}"
-            if exc.code not in RETRYABLE_HTTP:
-                raise RuntimeError(f"GBIF request failed: {url} ({last_detail})") from exc
-            retry_after = exc.headers.get("Retry-After")
-            try:
-                delay = float(retry_after) if retry_after else float(2**attempt)
-            except (TypeError, ValueError):
-                delay = float(2**attempt)
-        except TimeoutError:
-            raise
-        except Exception as exc:
-            last_detail = f"{type(exc).__name__}: {exc}"
+        except subprocess.TimeoutExpired:
+            proc = None
+            last_detail = f"hard subprocess timeout after {timeout:.1f}s"
             delay = float(2**attempt)
+        else:
+            stdout = proc.stdout or ""
+            if "\n" in stdout:
+                body, code_text = stdout.rsplit("\n", 1)
+            else:
+                body, code_text = stdout, "000"
+            try:
+                status_code = int(code_text.strip())
+            except ValueError:
+                status_code = 0
+
+            if proc.returncode == 0 and status_code == 200:
+                try:
+                    return json.loads(body)
+                except json.JSONDecodeError as exc:
+                    last_detail = f"JSONDecodeError: {exc}"
+                    delay = float(2**attempt)
+                else:
+                    delay = float(2**attempt)
+            else:
+                stderr = (proc.stderr or "").strip().replace("\n", " ")
+                last_detail = (
+                    f"curl_rc={proc.returncode} HTTP {status_code}: "
+                    f"{stderr[:180]} {body[:180]}"
+                ).strip()
+                if status_code and status_code not in RETRYABLE_HTTP:
+                    raise RuntimeError(
+                        f"GBIF request failed: {url} ({last_detail})"
+                    )
+                delay = float(2**attempt)
 
         remaining = deadline - time.monotonic()
         if remaining <= 1.0:
             raise TimeoutError("species total deadline exhausted")
         time.sleep(min(10.0, delay, max(0.0, remaining - 1.0)))
 
-    raise RuntimeError(f"GBIF request failed after {attempts} attempts: {url} ({last_detail})")
-
+    raise RuntimeError(
+        f"GBIF request failed after {attempts} attempts: {url} ({last_detail})"
+    )
 
 def load_pilot(path: Path) -> tuple[str, ...]:
     payload = json.loads(path.read_text(encoding="utf-8"))
