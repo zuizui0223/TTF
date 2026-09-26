@@ -957,3 +957,34 @@ def test_retry_import_recovery_is_bound_to_one_exact_run():
     assert p["relation_result_seen"] is False
     assert p["genetic_response_used"] is False
     assert all(v is False for v in p["response_firewall"].values())
+
+
+def test_original_retry_failures_are_all_prequery_import_only():
+    import json
+
+    p = json.loads(
+        (
+            ROOT
+            / "benchmarks/frozen/relational_historical_original_retry_failure_full_audit_v0.1.json"
+        ).read_text()
+    )
+
+    assert p["status"] == "PASS_ALL_24_RETRY_JOBS_FAILED_PREQUERY_IMPORT_ONLY"
+    assert p["original_workflow_run_id"] == 35941577015
+    assert p["expected_retry_jobs"] == 24
+    assert p["audited_retry_jobs"] == 24
+    assert len(p["failed_retry_job_ids"]) == 24
+    assert len(set(p["failed_retry_job_ids"])) == 24
+
+    inv = p["invariant_results"]
+    assert inv["module_not_found_scripts_error_jobs"] == 24
+    assert inv["jobs_with_species_status_output"] == 0
+    assert inv["retry_output_artifacts_observed"] == 0
+    assert inv["bounded_fetch_reached_jobs"] == 0
+    assert inv["gbif_retry_query_consumed_jobs"] == 0
+
+    assert p["additional_retry_round_authorized"] is False
+    assert p["result_selection_allowed"] is False
+    assert p["relation_result_seen"] is False
+    assert p["genetic_response_used"] is False
+    assert all(v is False for v in p["response_firewall"].values())
