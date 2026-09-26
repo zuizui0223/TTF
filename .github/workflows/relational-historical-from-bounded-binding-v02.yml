@@ -56,8 +56,15 @@ jobs:
           assert t["B_state"]=="NOT_EVALUABLE_B"
           assert t["C_open_authorized"] is True
           assert t["C_entry_state"]=="PROCEED_TO_C_AFTER_B_NOT_EVALUABLE"
+          provenance_run_id=int(b["workflow_run_id"])
+          artifact_run_id=int(b.get("artifact_workflow_run_id", provenance_run_id))
+          assert provenance_run_id==35941577015
+          if "artifact_workflow_run_id" in b:
+              assert artifact_run_id==36200833241
+              assert b["artifact_workflow_head_sha"]=="7478c3d6fc8e1e1926edd8baa7e2a0d17b2ca09b"
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
-              f.write(f"run_id={int(b['workflow_run_id'])}\n")
+              f.write(f"run_id={artifact_run_id}\n")
+              f.write(f"provenance_run_id={provenance_run_id}\n")
           PY
 
       - uses: actions/setup-python@v5

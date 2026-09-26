@@ -1,0 +1,46 @@
+{
+  "schema": "ttf_relational_historical_recovery_downstream_handoff_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_BEFORE_RECOVERY_RESULT",
+  "frozen_on": "2026-09-26",
+  "purpose": "Preserve original Study-C occurrence provenance while routing the recovered final artifact from the workflow run that actually owns it, and activate exactly one predeclared downstream transition after the exact recovery completes.",
+  "original_occurrence_execution": {
+    "workflow_run_id": 35941577015,
+    "workflow_head_sha": "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab"
+  },
+  "recovery_execution": {
+    "workflow_name": "relational-historical-retry-import-recovery-v01",
+    "workflow_run_id": 36200833241,
+    "workflow_head_sha": "7478c3d6fc8e1e1926edd8baa7e2a0d17b2ca09b"
+  },
+  "artifact_routing_rule": {
+    "provenance_run_id_field": "workflow_run_id",
+    "artifact_owner_run_id_field": "artifact_workflow_run_id",
+    "legacy_fallback_if_owner_field_absent": "workflow_run_id",
+    "artifact_name": "relational-historical-occurrence-final-v0.2",
+    "scientific_bytes_rewritten": false
+  },
+  "terminal_transition_rule": {
+    "PASS_TO_HISTORICAL_ASSET_EXTRACTION": "RUN_EXISTING_FROZEN_STUDY_C_DOWNSTREAM_PIPELINE",
+    "NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT": "FREEZE_C_NOT_EVALUABLE_AND_CLOSE_FINITE_PROGRAM",
+    "NOT_EVALUABLE_HISTORICAL_OCCURRENCE_GEOMETRY": "FREEZE_C_NOT_EVALUABLE_AND_CLOSE_FINITE_PROGRAM",
+    "additional_retry_authorized": false,
+    "replacement_predictor_authorized": false
+  },
+  "default_branch_listener_required": true,
+  "result_selection_allowed": false,
+  "scientific_rule_change": false,
+  "predictor_change": false,
+  "alpha_change": false,
+  "candidate_change": false,
+  "occurrence_query_change": false,
+  "qualification_change": false,
+  "genetic_estimator_change": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
