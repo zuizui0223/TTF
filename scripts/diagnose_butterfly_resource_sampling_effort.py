@@ -37,34 +37,51 @@ def load_rows(path: Path) -> list[dict[str, object]]:
     return rows
 
 
-def diagnose(rows: list[dict[str, object]]) -> tuple[list[dict[str, object]], dict]:
-    species = sorted({str(row["species"]) for row in rows})
+def diagnose(
+    rows: list[dict[str, object]],
+    *,
+    host_footprints: dict[str, frozenset[str]] | None = None,
+) -> tuple[list[dict[str, object]], dict]:
+    row_species = sorted({str(row["species"]) for row in rows})
+    species = (
+        sorted(host_footprints)
+        if host_footprints is not None
+        else row_species
+    )
     records_by_unit_species: dict[str, dict[str, int]] = defaultdict(dict)
+    observed_by_species: dict[str, set[str]] = defaultdict(set)
+    native_host_by_species: dict[str, set[str]] = defaultdict(set)
     for row in rows:
-        records_by_unit_species[str(row["unit"])][str(row["species"])] = int(
-            row["butterfly_record_count"]
-        )
+        target = str(row["species"])
+        unit = str(row["unit"])
+        records_by_unit_species[unit][target] = int(row["butterfly_record_count"])
+        if int(row["butterfly_observed"]):
+            observed_by_species[target].add(unit)
+        if int(row["host_available"]):
+            native_host_by_species[target].add(unit)
 
     out_rows: list[dict[str, object]] = []
     for target in species:
-        host_rows = [
-            row
-            for row in rows
-            if str(row["species"]) == target and int(row["host_available"]) == 1
-        ]
+        host_units = (
+            set(host_footprints.get(target, frozenset()))
+            if host_footprints is not None
+            else set(native_host_by_species.get(target, set()))
+        )
         for threshold in THRESHOLDS:
             supported = []
-            for row in host_rows:
-                unit = str(row["unit"])
+            for unit in sorted(host_units):
                 other_records = sum(
                     count
                     for sp, count in records_by_unit_species.get(unit, {}).items()
                     if sp != target
                 )
                 if other_records >= threshold:
-                    supported.append((row, other_records))
+                    supported.append((unit, other_records))
 
-            occupied = sum(int(row["butterfly_observed"]) for row, _ in supported)
+            occupied = sum(
+                int(unit in observed_by_species.get(target, set()))
+                for unit, _ in supported
+            )
             unoccupied = len(supported) - occupied
             fill = None if not supported else occupied / len(supported)
             informative = (
@@ -76,7 +93,7 @@ def diagnose(rows: list[dict[str, object]]) -> tuple[list[dict[str, object]], di
                 {
                     "species": target,
                     "other_pilot_record_threshold": threshold,
-                    "host_units_total": len(host_rows),
+                    "host_units_total": len(host_units),
                     "effort_supported_host_units": len(supported),
                     "occupied_effort_supported_host_units": occupied,
                     "unoccupied_effort_supported_host_units": unoccupied,
@@ -104,6 +121,11 @@ def diagnose(rows: list[dict[str, object]]) -> tuple[list[dict[str, object]], di
     summary = {
         "schema": "ttf_butterfly_resource_envelope_sampling_effort_sensitivity_v0.1",
         "status": "EXPLORATORY_SAMPLING_EFFORT_DIAGNOSTIC",
+        "host_envelope": (
+            "contemporary_extant_nondoubtful_including_introduced"
+            if host_footprints is not None
+            else "native_only_from_unit_table"
+        ),
         "effort_proxy": (
             "For each target species and WGSRPD3 unit, the total GBIF record count "
             "of the other nine frozen pilot species in that unit."
@@ -129,11 +151,26 @@ def diagnose(rows: list[dict[str, object]]) -> tuple[list[dict[str, object]], di
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--unit-table", type=Path, required=True)
+    ap.add_argument("--host-footprints-json", type=Path)
     ap.add_argument("--output-csv", type=Path, required=True)
     ap.add_argument("--output-json", type=Path, required=True)
     args = ap.parse_args()
 
-    rows, summary = diagnose(load_rows(args.unit_table))
+    host_footprints = None
+    if args.host_footprints_json is not None:
+        payload = json.loads(args.host_footprints_json.read_text(encoding="utf-8"))
+        if payload.get("schema") != (
+            "ttf_butterfly_resource_envelope_contemporary_footprints_v0.1"
+        ):
+            raise RuntimeError("unexpected contemporary host-footprint schema")
+        host_footprints = {
+            str(name): frozenset(map(str, units))
+            for name, units in payload.get("species", {}).items()
+        }
+    rows, summary = diagnose(
+        load_rows(args.unit_table),
+        host_footprints=host_footprints,
+    )
     args.output_csv.parent.mkdir(parents=True, exist_ok=True)
     fields = [
         "species",
