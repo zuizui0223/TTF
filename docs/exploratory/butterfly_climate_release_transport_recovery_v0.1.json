@@ -1,0 +1,46 @@
+{
+  "schema": "ttf_butterfly_climate_release_transport_recovery_v0.1",
+  "status": "FROZEN_TECHNICAL_RECOVERY_BEFORE_PRECLIMATE_OR_CLIMATE_RESULT",
+  "frozen_on": "2026-09-26",
+  "triggering_observation": {
+    "scope_inspected": "transport status, completed/missing offsets, curl timeout diagnostics, and occurrence row counts only",
+    "ecological_overlap_opened": false,
+    "preclimate_quality_gate_opened": false,
+    "climate_values_opened": false,
+    "climate_filtering_scores_opened": false,
+    "primary_host_breadth_test_opened": false,
+    "observed_failure": "Some exact 50-record GBIF subrequests returned HTTP 200 but did not finish transferring approximately 0.33 MB JSON bodies within the frozen 60-second request wall cap."
+  },
+  "unchanged_scientific_contract": {
+    "independent_panel_species_sha256": "bbaaa28cf361fb02d558988bdd1a3f948a243b79c8d3bb1709e908edb1f0f204",
+    "panel_species_replacement": false,
+    "gbif_filters_change": false,
+    "deterministic_window_offsets_change": false,
+    "ordinal_window_size_change": false,
+    "maximum_windows_per_species_change": false,
+    "period_change": false,
+    "resource_envelope_change": false,
+    "quality_threshold_change": false,
+    "climate_crossfit_change": false,
+    "primary_test_change": false
+  },
+  "technical_change": {
+    "original_window_size_records": 300,
+    "initial_transport_chunk_size_records": 50,
+    "recovery_transport_chunk_size_records": 10,
+    "rule": "Each unfinished frozen 300-record ordinal window is reconstructed from consecutive 10-record subrequests covering exactly the same ordinal indices. Completed 300-record windows remain immutable and are not re-fetched.",
+    "checkpointing": "Persist every successful 10-record subrequest and resume only missing subrequests.",
+    "request_timeout_cap_seconds": 60,
+    "species_total_deadline_seconds_per_pass": 600,
+    "maximum_passes_per_job": 2
+  },
+  "firewall": {
+    "pilot_species_added": false,
+    "independent_species_dropped": false,
+    "independent_species_added": false,
+    "occurrence_geography_used_to_choose_recovery": false,
+    "host_overlap_used_to_choose_recovery": false,
+    "climate_response_used_to_choose_recovery": false,
+    "genetic_response_used": false
+  }
+}
