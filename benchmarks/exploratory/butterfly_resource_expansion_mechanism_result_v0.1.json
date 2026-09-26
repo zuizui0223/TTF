@@ -1,0 +1,143 @@
+{
+  "schema": "ttf_butterfly_resource_expansion_mechanism_receipt_v0.1",
+  "status": "SUCCESS_EXPLORATORY_HOST_CONTRIBUTION_DECOMPOSITION",
+  "executed_on": "2026-09-27",
+  "workflow": {
+    "run_id": 36270981110,
+    "head_sha": "3d12ac051a1269996482a575869c09ae226caa42",
+    "artifact_id": 10915562949,
+    "artifact_name": "butterfly-resource-expansion-mechanism-v01",
+    "artifact_digest": "sha256:8812472e37c377044803761fb09cc4ce54c41be7d15881244d4dfd9ef50518ad"
+  },
+  "origin": {
+    "aggregate_result": "benchmarks/exploratory/butterfly_anthropogenic_resource_expansion_result_v0.1.json",
+    "known_before_mechanism_test": "Relative anthropogenic resource expansion was nearly unrelated to host-family breadth."
+  },
+  "full_resource_eligible_panel": {
+    "species": 239,
+    "expanded_species": 206,
+    "maximum_single_host_fractional_share": {
+      "q25": 0.3891369047619047,
+      "median": 0.5708020050125313,
+      "q75": 0.9622223889555822
+    },
+    "top_two_host_fractional_share_median": 0.8984270631329456,
+    "effective_contributor_number": {
+      "q25": 1.078970757349183,
+      "median": 2.1752924529216218,
+      "q75": 4.016464666012882
+    },
+    "fraction_added_units_with_multiple_contributing_hosts_median": 0.3117408906882591,
+    "spearman": {
+      "host_family_count_vs_effective_contributor_number": 0.3980294089358999,
+      "host_family_count_vs_maximum_single_host_fractional_share": -0.39096539476191006,
+      "resolved_host_species_vs_effective_contributor_number": 0.7949291504718969
+    },
+    "host_breadth_strata": {
+      "1_family": {
+        "expanded_species": 82,
+        "median_contributing_host_species": 3.0,
+        "median_effective_contributor_number": 1.6683309127004822,
+        "median_fraction_multi_host_added_units": 0.15227272727272728,
+        "median_maximum_single_host_fractional_share": 0.7465747904577693,
+        "median_top_two_host_fractional_share": 0.9935845410628019
+      },
+      "2_families": {
+        "expanded_species": 47,
+        "median_contributing_host_species": 3.0,
+        "median_effective_contributor_number": 1.9954751131221722,
+        "median_fraction_multi_host_added_units": 0.30666666666666664,
+        "median_maximum_single_host_fractional_share": 0.5758706467661693,
+        "median_top_two_host_fractional_share": 0.96
+      },
+      "3_to_5_families": {
+        "expanded_species": 44,
+        "median_contributing_host_species": 5.0,
+        "median_effective_contributor_number": 2.7820702954101937,
+        "median_fraction_multi_host_added_units": 0.2821969696969697,
+        "median_maximum_single_host_fractional_share": 0.4955246913580247,
+        "median_top_two_host_fractional_share": 0.755
+      },
+      "6plus_families": {
+        "expanded_species": 33,
+        "median_contributing_host_species": 11.0,
+        "median_effective_contributor_number": 4.885496183206105,
+        "median_fraction_multi_host_added_units": 0.4222222222222222,
+        "median_maximum_single_host_fractional_share": 0.3614457831325301,
+        "median_top_two_host_fractional_share": 0.5482142857142858
+      }
+    }
+  },
+  "host_taxonomy_lower_bound_adequate_subset": {
+    "species": 215,
+    "expanded_species": 191,
+    "maximum_single_host_fractional_share": {
+      "q25": 0.37970805047480727,
+      "median": 0.5462962962962963,
+      "q75": 0.930376095985233
+    },
+    "top_two_host_fractional_share_median": 0.8395061728395061,
+    "effective_contributor_number": {
+      "q25": 1.1501975686753858,
+      "median": 2.420968387354943,
+      "q75": 4.150816067998393
+    },
+    "fraction_added_units_with_multiple_contributing_hosts_median": 0.34065934065934067,
+    "spearman": {
+      "host_family_count_vs_effective_contributor_number": 0.4919670615030713,
+      "host_family_count_vs_maximum_single_host_fractional_share": -0.4861161332504768,
+      "resolved_host_species_vs_effective_contributor_number": 0.7763000864365797
+    },
+    "host_breadth_strata": {
+      "1_family": {
+        "expanded_species": 82,
+        "median_contributing_host_species": 3.0,
+        "median_effective_contributor_number": 1.6683309127004822,
+        "median_fraction_multi_host_added_units": 0.15227272727272728,
+        "median_maximum_single_host_fractional_share": 0.7465747904577693,
+        "median_top_two_host_fractional_share": 0.9935845410628019
+      },
+      "2_families": {
+        "expanded_species": 44,
+        "median_contributing_host_species": 3.0,
+        "median_effective_contributor_number": 2.0379743018815835,
+        "median_fraction_multi_host_added_units": 0.34714894847148947,
+        "median_maximum_single_host_fractional_share": 0.5659537787717827,
+        "median_top_two_host_fractional_share": 0.9486842105263158
+      },
+      "3_to_5_families": {
+        "expanded_species": 37,
+        "median_contributing_host_species": 6.0,
+        "median_effective_contributor_number": 3.3025977065293706,
+        "median_fraction_multi_host_added_units": 0.4126984126984127,
+        "median_maximum_single_host_fractional_share": 0.4392361111111111,
+        "median_top_two_host_fractional_share": 0.7222222222222223
+      },
+      "6plus_families": {
+        "expanded_species": 28,
+        "median_contributing_host_species": 13.0,
+        "median_effective_contributor_number": 5.232902350339408,
+        "median_fraction_multi_host_added_units": 0.4858732876712329,
+        "median_maximum_single_host_fractional_share": 0.313289241622575,
+        "median_top_two_host_fractional_share": 0.5425837742504408
+      }
+    }
+  },
+  "ecological_interpretation": {
+    "aggregate_expansion_rate_can_hide_distinct_architectures": true,
+    "specialist_pathway": "For taxonomic specialists, introduced geographic opportunity is commonly dominated by one or two known host species with highly redistributed ranges.",
+    "generalist_pathway": "For broad host generalists, added geographic opportunity is distributed across a larger portfolio of contributing host species with more overlap.",
+    "decoupling_explanation": "Specialists and generalists can therefore show similar proportional resource-geography expansion even though specialists achieve it through concentrated host redistribution and generalists through portfolio accumulation.",
+    "key_result": "Taxonomic breadth predicts the architecture of anthropogenic opportunity more strongly than it predicts the total proportional expansion itself."
+  },
+  "claim_boundary": {
+    "exploratory_only": true,
+    "does_not_measure_realized_butterfly_use_of_introduced_hosts": true,
+    "does_not_infer_causal_human_range_expansion_of_butterflies": true,
+    "HOSTS_completeness_not_proven": true,
+    "WCVP_introduced_status_is_distribution_status_not_introduction_timing": true,
+    "butterfly_GBIF_used": false,
+    "climate_used": false,
+    "genetic_response_used": false
+  }
+}
