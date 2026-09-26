@@ -14,6 +14,9 @@ PROTOCOL_SCHEMAS = {
     "ttf_butterfly_climate_release_independent_test_v0.2": (
         "FROZEN_RESPONSE_BLIND_PRIMARY_INFERENCE_CORRECTION_BEFORE_INDEPENDENT_PRECLIMATE_OR_CLIMATE_RESULT"
     ),
+    "ttf_butterfly_climate_release_independent_test_v0.2.1": (
+        "FROZEN_RESPONSE_BLIND_ROW_ORDER_INVARIANT_PERMUTATION_FIX_BEFORE_INDEPENDENT_PRECLIMATE_OR_CLIMATE_RESULT"
+    ),
 }
 PANEL_SCHEMA = "ttf_butterfly_climate_release_independent_panel_v0.1"
 OVERLAP_SCHEMA = (
