@@ -256,6 +256,7 @@ def metadata_for_species(
     deadline: float,
     maximum_pages: int,
     request_seconds: float,
+    transport_chunk_size: int,
 ) -> dict:
     meta_path = state_dir / "metadata.json"
     if meta_path.exists():
@@ -315,6 +316,7 @@ def fetch_species_pages(
     species_seconds: float,
     maximum_pages: int,
     request_seconds: float,
+    transport_chunk_size: int,
 ) -> dict:
     state_dir = state_root / species_state_key(species)
     state_dir.mkdir(parents=True, exist_ok=True)
@@ -327,6 +329,7 @@ def fetch_species_pages(
             deadline=deadline,
             maximum_pages=maximum_pages,
             request_seconds=request_seconds,
+            transport_chunk_size=transport_chunk_size,
         )
     except Exception as exc:
         return {
@@ -372,7 +375,7 @@ def fetch_species_pages(
             for chunk_offset, chunk_limit in occurrence_window_chunks(
                 offset,
                 window_size,
-                chunk_size=50,
+                chunk_size=int(transport_chunk_size),
             ):
                 chunk_path = (
                     chunk_dir
@@ -440,7 +443,7 @@ def fetch_species_pages(
                     "usage_key": int(meta["usage_key"]),
                     "offset": int(offset),
                     "window_size": int(window_size),
-                    "transport_chunk_size": 50,
+                    "transport_chunk_size": int(transport_chunk_size),
                     "records": records,
                 },
             )
@@ -500,6 +503,7 @@ def main() -> int:
     ap.add_argument("--species-seconds", type=float, default=600.0)
     ap.add_argument("--maximum-pages", type=int, default=12)
     ap.add_argument("--request-seconds", type=float, default=30.0)
+    ap.add_argument("--transport-chunk-size", type=int, default=50)
     args = ap.parse_args()
 
     panel_path = args.panel_json if args.panel_json is not None else args.pilot_json
@@ -517,6 +521,7 @@ def main() -> int:
             species_seconds=args.species_seconds,
             maximum_pages=args.maximum_pages,
             request_seconds=args.request_seconds,
+            transport_chunk_size=args.transport_chunk_size,
         )
         for name in species
     ]
@@ -554,7 +559,7 @@ def main() -> int:
             "request_attempts": 3,
             "maximum_pages_per_species": int(args.maximum_pages),
             "page_size": 300,
-            "missing_page_transport_chunk_size": 50,
+            "missing_page_transport_chunk_size": int(args.transport_chunk_size),
             "chunking_preserves_original_ordinal_page_windows": True,
         },
         "scientific_scope": {
