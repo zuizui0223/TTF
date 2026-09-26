@@ -89,9 +89,9 @@ def main() -> int:
                 outside_fraction is not None
                 and outside_fraction
                 <= float(
-                    q["contemporary_envelope_overlap"]["rule"]
-                    .split("<=")[-1]
-                    .strip()
+                    q["contemporary_envelope_overlap"][
+                        "maximum_outside_contemporary_fraction"
+                    ]
                 )
             )
             if not envelope_ok:
