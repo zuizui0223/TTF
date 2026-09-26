@@ -56,6 +56,7 @@ on:
       - ".github/workflows/relational-historical-retry-import-recovery-v01.yml"
       - "benchmarks/frozen/relational_historical_retry_import_recovery_v0.1.json"
       - "benchmarks/frozen/relational_historical_retry_import_recovery_run_binding_v0.1.json"
+      - "benchmarks/frozen/relational_historical_original_retry_failure_full_audit_v0.1.json"
       - "docs/supporting/relational_historical_local_final_handoff_transport_v0.1.json"
       - "docs/supporting/relational_historical_local_execution_rule_v0.1.json"
       - ".github/workflows/relational-c-chelsa-chunk-transport.yml"
