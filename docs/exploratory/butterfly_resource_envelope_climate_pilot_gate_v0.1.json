@@ -17,6 +17,7 @@
     },
     "contemporary_envelope_overlap": {
       "rule": "Among WGSRPD3 units with sampled butterfly records, fraction outside the contemporary host-resource envelope <= 0.10",
+      "maximum_outside_contemporary_fraction": 0.10,
       "reason": "Large outside-envelope fractions indicate that the reconstructed resource surface is not a defensible opportunity set for that species."
     },
     "sampling_effort_identifiability": {
