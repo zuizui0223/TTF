@@ -1,6 +1,14 @@
 from __future__ import annotations
 
-from scripts import acquire_butterfly_resource_envelope_occurrences as acquire
+import importlib.util
+from pathlib import Path
+
+
+SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "acquire_butterfly_resource_envelope_occurrences.py"
+SPEC = importlib.util.spec_from_file_location("butterfly_resource_occurrence_acquire", SCRIPT)
+assert SPEC is not None and SPEC.loader is not None
+acquire = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(acquire)
 
 
 def test_resolver_keeps_exact_strict_species(monkeypatch):
