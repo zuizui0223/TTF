@@ -1,0 +1,94 @@
+name: butterfly resource expansion mechanism v01
+
+on:
+  push:
+    branches:
+      - explore/butterfly-resource-expansion-mechanism-v01
+    paths:
+      - ".github/workflows/butterfly-resource-expansion-mechanism-v01.yml"
+      - "docs/exploratory/butterfly_resource_expansion_mechanism_protocol_v0.1.json"
+      - "scripts/analyze_butterfly_resource_expansion_mechanism.py"
+      - "tests/test_butterfly_resource_expansion_mechanism.py"
+  workflow_dispatch:
+
+concurrency:
+  group: butterfly-resource-expansion-mechanism-v01-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout exact WCVP v13 redistribution snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: matildabrown/rWCVPdata
+          ref: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
+          path: _wcvp
+
+      - name: Checkout exact HOSTS mirror
+        uses: actions/checkout@v4
+        with:
+          repository: globalbioticinteractions/HOSTS
+          ref: 808e0b869f9ec1adf8efff87cf6a395adda103e0
+          path: _hosts
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+
+      - name: Install TTF
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+
+      - name: Test host contribution decomposition
+        run: pytest -q tests/test_butterfly_resource_expansion_mechanism.py
+
+      - name: Restore exact S1 descriptor reconstruction
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-resource-envelope-pilot-v01
+          path: inputs/reconstruction
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36222306369
+
+      - name: Verify exact S1 descriptor identity
+        run: |
+          cd inputs/reconstruction/butterfly-resource-envelope-pilot-v0.1
+          echo "894f48dbca1760fc4fa75bfee8f663540ab4b9380f8b9daf2bc09440e8bb0cdc  s1_resource_descriptors.csv" | sha256sum -c -
+
+      - name: Rebuild exact native HOSTS-WCVP sidecar
+        run: |
+          test "$(git -C _wcvp rev-parse HEAD)" = "65bed76bae9d644ccb6ad200c05f9f5071d89e05"
+          test "$(git -C _hosts rev-parse HEAD)" = "808e0b869f9ec1adf8efff87cf6a395adda103e0"
+          Rscript scripts/build_wcvp_hosts_sidecar.R             _wcvp             _hosts             results/native-host-sidecar
+
+      - name: Rebuild exact contemporary HOSTS-WCVP sidecar
+        run: |
+          Rscript scripts/build_wcvp_hosts_contemporary_sidecar.R             _wcvp             _hosts             results/contemporary-host-sidecar
+          cmp             results/native-host-sidecar/insect_host_accepted.csv             results/contemporary-host-sidecar/insect_host_accepted.csv
+
+      - name: Decompose host contributions to introduced resource geography
+        run: |
+          mkdir -p results/butterfly-resource-expansion-mechanism-v0.1
+          python scripts/analyze_butterfly_resource_expansion_mechanism.py             --protocol-json docs/exploratory/butterfly_resource_expansion_mechanism_protocol_v0.1.json             --descriptors-csv inputs/reconstruction/butterfly-resource-envelope-pilot-v0.1/s1_resource_descriptors.csv             --insect-host-csv results/native-host-sidecar/insect_host_accepted.csv             --native-distribution-csv results/native-host-sidecar/native_extant_nondoubtful_wgsrpd3.csv             --contemporary-distribution-csv results/contemporary-host-sidecar/extant_nondoubtful_wgsrpd3.csv             --output-csv results/butterfly-resource-expansion-mechanism-v0.1/species_mechanism_metrics.csv             --output-json results/butterfly-resource-expansion-mechanism-v0.1/result.json
+          cat results/butterfly-resource-expansion-mechanism-v0.1/result.json
+          (
+            cd results/butterfly-resource-expansion-mechanism-v0.1
+            sha256sum species_mechanism_metrics.csv result.json > SHA256SUMS
+          )
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-resource-expansion-mechanism-v01
+          path: results/butterfly-resource-expansion-mechanism-v0.1/
+          retention-days: 30
