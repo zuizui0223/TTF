@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from ttf.butterfly_climate_release import (
     ExpansionDescriptor,
+    freedman_lane_partial_spearman_permutation,
     host_breadth_stratum,
     one_sided_partial_spearman_permutation,
     partial_spearman,
@@ -130,3 +131,59 @@ def test_permutation_test_is_deterministic():
     assert a == b
     assert a["observed_partial_spearman"] < 0
     assert 0 < a["one_sided_p_value"] <= 1
+
+
+def test_freedman_lane_observed_statistic_matches_partial_spearman():
+    species = ["a", "b", "c", "d", "e", "f", "g", "h"]
+    response = [0.91, 0.82, 0.74, 0.61, 0.55, 0.44, 0.31, 0.20]
+    predictor = [1, 1, 2, 2, 3, 5, 7, 10]
+    control = [20, 120, 55, 200, 80, 140, 95, 260]
+    expected = partial_spearman(response, predictor, control)
+    result = freedman_lane_partial_spearman_permutation(
+        response,
+        predictor,
+        control,
+        species,
+        iterations=199,
+    )
+    assert abs(result["observed_partial_spearman"] - expected) < 1e-12
+    assert result["method"].startswith("Freedman-Lane")
+
+
+def test_freedman_lane_permutation_is_row_order_invariant():
+    species = ["a", "b", "c", "d", "e", "f", "g", "h"]
+    response = [0.91, 0.82, 0.74, 0.61, 0.55, 0.44, 0.31, 0.20]
+    predictor = [1, 1, 2, 2, 3, 5, 7, 10]
+    control = [20, 120, 55, 200, 80, 140, 95, 260]
+    a = freedman_lane_partial_spearman_permutation(
+        response,
+        predictor,
+        control,
+        species,
+        iterations=199,
+    )
+    order = [6, 2, 7, 0, 5, 3, 1, 4]
+    b = freedman_lane_partial_spearman_permutation(
+        [response[i] for i in order],
+        [predictor[i] for i in order],
+        [control[i] for i in order],
+        [species[i] for i in order],
+        iterations=199,
+    )
+    assert a == b
+
+
+def test_freedman_lane_keeps_predictor_control_structure_fixed():
+    species = [f"sp{i}" for i in range(10)]
+    response = [0.95, 0.84, 0.81, 0.70, 0.62, 0.54, 0.43, 0.34, 0.25, 0.12]
+    predictor = [1, 1, 2, 2, 3, 4, 6, 7, 9, 12]
+    control = [10, 40, 25, 70, 55, 120, 90, 180, 160, 250]
+    result = freedman_lane_partial_spearman_permutation(
+        response,
+        predictor,
+        control,
+        species,
+        iterations=99,
+    )
+    assert result["observed_partial_spearman"] < 0
+    assert 0 < result["one_sided_p_value"] <= 1
