@@ -196,6 +196,10 @@ def fetch_species_pages(
         return {
             "species": species,
             "status": "REJECTED_GBIF_TAXON_MATCH",
+            "usage_key": int(meta.get("usage_key") or 0),
+            "canonical_name": str(meta.get("canonical_name") or ""),
+            "rank": str(meta.get("rank") or ""),
+            "match_type": str(meta.get("match_type") or ""),
             "completed_offsets": [],
             "missing_offsets": [],
         }
@@ -262,6 +266,9 @@ def fetch_species_pages(
         "species": species,
         "status": "COMPLETE" if not missing else "PARTIAL_TRANSPORT",
         "usage_key": int(meta["usage_key"]),
+        "canonical_name": str(meta.get("canonical_name") or ""),
+        "rank": str(meta.get("rank") or ""),
+        "match_type": str(meta.get("match_type") or ""),
         "planned_offsets": list(offsets),
         "completed_offsets": sorted(set(completed)),
         "missing_offsets": missing,
