@@ -15,6 +15,7 @@ from urllib.request import Request, urlopen
 from ttf.checkpointed_gbif_occurrence import (
     deterministic_page_offsets,
     missing_page_offsets,
+    occurrence_window_chunks,
     request_timeout_seconds,
     species_state_key,
 )
@@ -348,45 +349,86 @@ def fetch_species_pages(
     pending = list(missing_page_offsets(offsets, completed))
 
     error = None
+    total = int(meta.get("total_coordinate_records_2010_2026") or 0)
+    page_size = int(meta.get("page_size") or 300)
     for offset in pending:
         try:
-            payload = get_json(
-                "occurrence/search",
-                {
-                    "taxonKey": int(meta["usage_key"]),
-                    "hasCoordinate": "true",
-                    "hasGeospatialIssue": "false",
-                    "occurrenceStatus": "PRESENT",
-                    "year": "2010,2026",
-                    "limit": 300,
-                    "offset": offset,
-                },
-                deadline=deadline,
-                request_seconds=request_seconds,
-            )
+            window_size = max(0, min(page_size, total - int(offset)))
+            chunk_dir = pages_dir / f"offset_{offset:06d}_chunks"
+            chunk_dir.mkdir(exist_ok=True)
             records = []
-            for item in payload.get("results") or []:
-                key = int(item.get("key") or 0)
-                lat = item.get("decimalLatitude")
-                lon = item.get("decimalLongitude")
-                if key <= 0 or lat is None or lon is None:
-                    continue
-                records.append(
-                    {
-                        "key": key,
-                        "decimalLatitude": float(lat),
-                        "decimalLongitude": float(lon),
-                        "year": item.get("year"),
-                        "basisOfRecord": item.get("basisOfRecord"),
-                        "datasetKey": item.get("datasetKey"),
-                    }
+            for chunk_offset, chunk_limit in occurrence_window_chunks(
+                offset,
+                window_size,
+                chunk_size=50,
+            ):
+                chunk_path = (
+                    chunk_dir
+                    / f"offset_{chunk_offset:06d}_limit_{chunk_limit:03d}.json"
+                )
+                if chunk_path.exists():
+                    chunk_payload = json.loads(
+                        chunk_path.read_text(encoding="utf-8")
+                    )
+                    chunk_records = list(chunk_payload.get("records", []))
+                else:
+                    payload = get_json(
+                        "occurrence/search",
+                        {
+                            "taxonKey": int(meta["usage_key"]),
+                            "hasCoordinate": "true",
+                            "hasGeospatialIssue": "false",
+                            "occurrenceStatus": "PRESENT",
+                            "year": "2010,2026",
+                            "limit": int(chunk_limit),
+                            "offset": int(chunk_offset),
+                        },
+                        deadline=deadline,
+                        request_seconds=request_seconds,
+                    )
+                    chunk_records = []
+                    for item in payload.get("results") or []:
+                        key = int(item.get("key") or 0)
+                        lat = item.get("decimalLatitude")
+                        lon = item.get("decimalLongitude")
+                        if key <= 0 or lat is None or lon is None:
+                            continue
+                        chunk_records.append(
+                            {
+                                "key": key,
+                                "decimalLatitude": float(lat),
+                                "decimalLongitude": float(lon),
+                                "year": item.get("year"),
+                                "basisOfRecord": item.get("basisOfRecord"),
+                                "datasetKey": item.get("datasetKey"),
+                            }
+                        )
+                    atomic_json(
+                        chunk_path,
+                        {
+                            "species": species,
+                            "usage_key": int(meta["usage_key"]),
+                            "parent_page_offset": int(offset),
+                            "offset": int(chunk_offset),
+                            "limit": int(chunk_limit),
+                            "records": chunk_records,
+                        },
+                    )
+                records.extend(chunk_records)
+
+            keys = [int(row["key"]) for row in records]
+            if len(keys) != len(set(keys)):
+                raise RuntimeError(
+                    f"duplicate occurrence keys while rebuilding page window {offset}"
                 )
             atomic_json(
                 pages_dir / f"offset_{offset:06d}.json",
                 {
                     "species": species,
                     "usage_key": int(meta["usage_key"]),
-                    "offset": offset,
+                    "offset": int(offset),
+                    "window_size": int(window_size),
+                    "transport_chunk_size": 50,
                     "records": records,
                 },
             )
@@ -497,6 +539,8 @@ def main() -> int:
             "request_attempts": 3,
             "maximum_pages_per_species": int(args.maximum_pages),
             "page_size": 300,
+            "missing_page_transport_chunk_size": 50,
+            "chunking_preserves_original_ordinal_page_windows": True,
         },
         "scientific_scope": {
             "exploratory": True,
