@@ -1,0 +1,66 @@
+name: butterfly host specialization hierarchy v01
+
+on:
+  push:
+    branches:
+      - explore/butterfly-host-specialization-hierarchy-v01
+    paths:
+      - ".github/workflows/butterfly-host-specialization-hierarchy-v01.yml"
+      - "docs/exploratory/butterfly_host_specialization_hierarchy_protocol_v0.1.json"
+      - "scripts/analyze_butterfly_host_specialization_hierarchy.py"
+      - "tests/test_butterfly_host_specialization_hierarchy.py"
+  workflow_dispatch:
+
+concurrency:
+  group: butterfly-host-specialization-hierarchy-v01-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install TTF
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+
+      - name: Test within-stratum analysis
+        run: pytest -q tests/test_butterfly_host_specialization_hierarchy.py
+
+      - name: Restore exact host-contribution mechanism artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-resource-expansion-mechanism-v01
+          path: inputs/mechanism
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36270981110
+
+      - name: Verify exact mechanism source
+        run: |
+          test -f inputs/mechanism/species_mechanism_metrics.csv
+          test -f inputs/mechanism/result.json
+          sha256sum inputs/mechanism/species_mechanism_metrics.csv inputs/mechanism/result.json
+
+      - name: Analyze host-species portfolios within family-breadth strata
+        run: |
+          mkdir -p results/butterfly-host-specialization-hierarchy-v0.1
+          python scripts/analyze_butterfly_host_specialization_hierarchy.py             --protocol-json docs/exploratory/butterfly_host_specialization_hierarchy_protocol_v0.1.json             --species-metrics-csv inputs/mechanism/species_mechanism_metrics.csv             --output-json results/butterfly-host-specialization-hierarchy-v0.1/result.json
+          cat results/butterfly-host-specialization-hierarchy-v0.1/result.json
+          (
+            cd results/butterfly-host-specialization-hierarchy-v0.1
+            sha256sum result.json > SHA256SUMS
+          )
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-host-specialization-hierarchy-v01
+          path: results/butterfly-host-specialization-hierarchy-v0.1/
+          retention-days: 30
