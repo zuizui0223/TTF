@@ -10,11 +10,19 @@ import numpy as np
 
 from ttf.butterfly_climate_release import (
     average_ranks,
+    freedman_lane_partial_spearman_permutation,
     one_sided_partial_spearman_permutation,
 )
 
 
-PROTOCOL_SCHEMA = "ttf_butterfly_climate_release_independent_test_v0.1"
+PROTOCOL_SCHEMAS = {
+    "ttf_butterfly_climate_release_independent_test_v0.1": (
+        "FROZEN_PILOT_DERIVED_HYPOTHESIS_BEFORE_INDEPENDENT_GBIF_OR_CLIMATE"
+    ),
+    "ttf_butterfly_climate_release_independent_test_v0.2": (
+        "FROZEN_RESPONSE_BLIND_PRIMARY_INFERENCE_CORRECTION_BEFORE_INDEPENDENT_PRECLIMATE_OR_CLIMATE_RESULT"
+    ),
+}
 PANEL_SCHEMA = "ttf_butterfly_climate_release_independent_panel_v0.1"
 CLIMATE_SCHEMA = "ttf_butterfly_resource_envelope_climate_crossfit_v0.1"
 
@@ -38,11 +46,11 @@ def main() -> int:
     args = ap.parse_args()
 
     protocol = json.loads(args.protocol_json.read_text(encoding="utf-8"))
-    if protocol.get("schema") != PROTOCOL_SCHEMA:
+    protocol_schema = str(protocol.get("schema") or "")
+    expected_status = PROTOCOL_SCHEMAS.get(protocol_schema)
+    if expected_status is None:
         raise RuntimeError("unexpected independent-test protocol schema")
-    if protocol.get("status") != (
-        "FROZEN_PILOT_DERIVED_HYPOTHESIS_BEFORE_INDEPENDENT_GBIF_OR_CLIMATE"
-    ):
+    if protocol.get("status") != expected_status:
         raise RuntimeError("independent-test protocol is not frozen")
 
     panel = json.loads(args.panel_json.read_text(encoding="utf-8"))
@@ -67,8 +75,8 @@ def main() -> int:
     )
     if climate.get("schema") != CLIMATE_SCHEMA:
         raise RuntimeError("unexpected climate cross-fit schema")
-    if climate.get("analysis_program_schema") != PROTOCOL_SCHEMA:
-        raise RuntimeError("climate summary is not from independent protocol")
+    if climate.get("analysis_program_schema") != protocol_schema:
+        raise RuntimeError("climate summary is not from the selected independent protocol")
     if climate.get("analysis_scope") != "independent_pilot_derived_test":
         raise RuntimeError("climate summary scope drift")
 
@@ -119,7 +127,11 @@ def main() -> int:
     )
     if len(informative) < minimum:
         payload = {
-            "schema": "ttf_butterfly_climate_release_independent_result_v0.1",
+            "schema": (
+                "ttf_butterfly_climate_release_independent_result_v0.2"
+                if protocol_schema.endswith("_v0.2")
+                else "ttf_butterfly_climate_release_independent_result_v0.1"
+            ),
             "status": "NOT_EVALUABLE_INDEPENDENT_CLIMATE_RELEASE_TEST",
             "reason": "CLIMATE_INFORMATIVE_SPECIES_BELOW_FROZEN_MINIMUM",
             "independent_panel_species": len(panel_species),
@@ -146,13 +158,23 @@ def main() -> int:
     ]
     primary = protocol["primary_test"]
     iterations = int(primary["permutation"]["iterations"])
-    test = one_sided_partial_spearman_permutation(
-        response,
-        predictor,
-        control,
-        iterations=iterations,
-        tag=str(primary["permutation"]["tag"]),
-    )
+    if protocol_schema.endswith("_v0.2"):
+        test = freedman_lane_partial_spearman_permutation(
+            response,
+            predictor,
+            control,
+            [row["species"] for row in informative],
+            iterations=iterations,
+            tag=str(primary["permutation"]["tag"]),
+        )
+    else:
+        test = one_sided_partial_spearman_permutation(
+            response,
+            predictor,
+            control,
+            iterations=iterations,
+            tag=str(primary["permutation"]["tag"]),
+        )
     alpha = float(primary["alpha"])
     supported = (
         float(test["observed_partial_spearman"]) < 0
@@ -166,8 +188,13 @@ def main() -> int:
         )
 
     payload = {
-        "schema": "ttf_butterfly_climate_release_independent_result_v0.1",
+        "schema": (
+                "ttf_butterfly_climate_release_independent_result_v0.2"
+                if protocol_schema.endswith("_v0.2")
+                else "ttf_butterfly_climate_release_independent_result_v0.1"
+            ),
         "status": "INDEPENDENT_TEST_COMPLETE",
+        "protocol_schema": protocol_schema,
         "hypothesis": protocol["ecological_hypothesis"]["statement"],
         "independent_panel_species": len(panel_species),
         "climate_informative_species": len(informative),
