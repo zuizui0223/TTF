@@ -1,0 +1,54 @@
+name: butterfly native contemporary occurrence overlap v01
+
+on:
+  push:
+    branches:
+      - explore/butterfly-resource-envelope-v01
+    paths:
+      - ".github/workflows/butterfly-native-contemporary-overlap-v01.yml"
+      - "scripts/compare_butterfly_native_contemporary_occurrence_overlap.py"
+  workflow_dispatch:
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore checkpoint-resumed GBIF WGSRPD3 pilot
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-resource-envelope-gbif-pilot-summary-v01
+          path: inputs/gbif
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36225475742
+
+      - name: Verify exact interim unit table
+        run: |
+          echo "57fcf5e16552f8b433890b1ff13e536db53375428d1964dfd9e8b6d09adcfde0  inputs/gbif/wgsrpd3_unit_table.csv" | sha256sum -c -
+
+      - name: Restore contemporary resource envelope
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-contemporary-host-envelope-v01
+          path: inputs/contemporary
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36226267890
+
+      - name: Compare native and contemporary overlap
+        run: |
+          mkdir -p results/butterfly-native-contemporary-overlap-v0.1
+          python scripts/compare_butterfly_native_contemporary_occurrence_overlap.py \
+            --native-unit-table inputs/gbif/wgsrpd3_unit_table.csv \
+            --contemporary-footprints-json inputs/contemporary/butterfly-contemporary-host-envelope-v0.1/contemporary_footprints.json \
+            --output-json results/butterfly-native-contemporary-overlap-v0.1/result.json
+          sha256sum results/butterfly-native-contemporary-overlap-v0.1/result.json > results/butterfly-native-contemporary-overlap-v0.1/SHA256SUMS
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-native-contemporary-overlap-v01
+          path: results/butterfly-native-contemporary-overlap-v0.1/
+          retention-days: 30
