@@ -40,9 +40,9 @@
     "if_below": "STOP_CLIMATE_PILOT_AS_NOT_IDENTIFIABLE_AT_CURRENT_RESOLUTION"
   },
   "climate_crossfit_rule": {
-    "observed_unit_split": "Deterministic SHA256 split within species; half train-observed WGSRPD3 units and half held-out eval-observed units.",
-    "niche_training": "Estimate species climate center and scale only from GBIF records mapped to train-observed units.",
-    "comparison": "Within contemporary host-available units meeting the sampling-effort threshold, compare held-out eval-observed units against never-observed host units.",
+    "observed_unit_split": "Within each quality-qualified species, restrict observed units to the contemporary host-resource envelope, then deterministically SHA256-split those observed-within-envelope WGSRPD3 units into train and held-out eval halves.",
+    "niche_training": "Estimate species climate center and scale only from GBIF records mapped to train-observed units inside the contemporary host-resource envelope.",
+    "comparison": "Within contemporary host-available units meeting the frozen sampling-effort threshold, compare held-out eval-observed units against never-observed host units.",
     "primary_descriptive_direction": "Never-observed host units have larger climate mismatch to the training niche than held-out eval-observed host units.",
     "inference": "Exploratory effect-size diagnostic only; no confirmatory p-value."
   },
@@ -51,6 +51,7 @@
     "climate_mismatch_computed_before_gate_freeze": false,
     "climate_gap_effect_seen_before_gate_freeze": false,
     "genetic_response_used": false,
-    "occurrence_transport_complete_gate_added_before_climate_result": true
+    "occurrence_transport_complete_gate_added_before_climate_result": true,
+    "contemporary_host_envelope_crossfit_clarified_before_climate_result": true
   }
 }
