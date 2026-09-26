@@ -7,7 +7,14 @@ import json
 from pathlib import Path
 
 
-PROTOCOL_SCHEMA = "ttf_butterfly_climate_release_independent_test_v0.1"
+PROTOCOL_SCHEMAS = {
+    "ttf_butterfly_climate_release_independent_test_v0.1": (
+        "FROZEN_PILOT_DERIVED_HYPOTHESIS_BEFORE_INDEPENDENT_GBIF_OR_CLIMATE"
+    ),
+    "ttf_butterfly_climate_release_independent_test_v0.2": (
+        "FROZEN_RESPONSE_BLIND_PRIMARY_INFERENCE_CORRECTION_BEFORE_INDEPENDENT_PRECLIMATE_OR_CLIMATE_RESULT"
+    ),
+}
 PANEL_SCHEMA = "ttf_butterfly_climate_release_independent_panel_v0.1"
 OVERLAP_SCHEMA = (
     "ttf_butterfly_resource_envelope_native_contemporary_occurrence_overlap_v0.1"
@@ -27,11 +34,11 @@ def main() -> int:
     args = ap.parse_args()
 
     protocol = json.loads(args.protocol_json.read_text(encoding="utf-8"))
-    if protocol.get("schema") != PROTOCOL_SCHEMA:
+    protocol_schema = str(protocol.get("schema") or "")
+    expected_status = PROTOCOL_SCHEMAS.get(protocol_schema)
+    if expected_status is None:
         raise RuntimeError("unexpected independent-test protocol schema")
-    if protocol.get("status") != (
-        "FROZEN_PILOT_DERIVED_HYPOTHESIS_BEFORE_INDEPENDENT_GBIF_OR_CLIMATE"
-    ):
+    if protocol.get("status") != expected_status:
         raise RuntimeError("independent-test protocol is not frozen")
 
     panel = json.loads(args.panel_json.read_text(encoding="utf-8"))
@@ -201,6 +208,7 @@ def main() -> int:
         "species": rows,
         "climate_result_used": False,
         "pilot_climate_result_used_for_species_selection": False,
+        "protocol_schema": protocol_schema,
         "genetic_response_used": False,
     }
     args.output_json.parent.mkdir(parents=True, exist_ok=True)
