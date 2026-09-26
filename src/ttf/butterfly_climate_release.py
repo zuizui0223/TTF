@@ -10,6 +10,7 @@ import numpy as np
 
 PANEL_TAG = "butterfly-climate-release-independent-panel-v0.1"
 PRIMARY_TAG = "butterfly-climate-release-partial-spearman-v0.1"
+PRIMARY_TAG_V02 = "butterfly-climate-release-freedman-lane-v0.2"
 
 
 @dataclass(frozen=True)
@@ -182,6 +183,78 @@ def partial_spearman(
     return float(np.corrcoef(yr, xr)[0, 1])
 
 
+def _fit_reduced(y: np.ndarray, z: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    design = np.column_stack([np.ones(len(z)), z])
+    coef, *_ = np.linalg.lstsq(design, y, rcond=None)
+    fitted = design @ coef
+    return fitted, y - fitted
+
+
+def freedman_lane_partial_spearman_permutation(
+    response: Sequence[float],
+    predictor: Sequence[float],
+    control: Sequence[float],
+    species: Sequence[str],
+    *,
+    iterations: int = 9999,
+    tag: str = PRIMARY_TAG_V02,
+) -> dict[str, float | int | str]:
+    """One-sided conditional permutation test for ranked partial association.
+
+    The response, predictor and control are rank transformed once. The predictor
+    residual after removing the control is held fixed. Under the reduced null,
+    response ranks are fitted on the control; only those reduced-model residuals
+    are permuted, added back to the fixed reduced fitted values, re-residualized
+    on the same control, and correlated with the fixed predictor residual.
+    """
+    if not (
+        len(response) == len(predictor) == len(control) == len(species)
+    ):
+        raise ValueError("response, predictor, control and species lengths differ")
+    if len(set(map(str, species))) != len(species):
+        raise ValueError("species identities must be unique")
+    if iterations < 1:
+        raise ValueError("iterations must be positive")
+
+    y = average_ranks(response)
+    x = average_ranks(predictor)
+    z = average_ranks(control)
+    y_fitted, y_resid = _fit_reduced(y, z)
+    x_resid = _residualize(x, z)
+
+    sy = float(np.std(y_resid))
+    sx = float(np.std(x_resid))
+    if sy <= np.sqrt(np.finfo(float).eps) or sx <= np.sqrt(np.finfo(float).eps):
+        raise ValueError("partial Spearman residual has zero variance")
+    observed = float(np.corrcoef(y_resid, x_resid)[0, 1])
+
+    names = tuple(map(str, species))
+    extreme = 0
+    for i in range(iterations):
+        order = sorted(
+            range(len(names)),
+            key=lambda j: (
+                hashlib.sha256(
+                    f"{tag}|{i}|{names[j]}".encode("utf-8")
+                ).hexdigest(),
+                names[j],
+            ),
+        )
+        pseudo_y = y_fitted + y_resid[np.asarray(order, dtype=int)]
+        pseudo_resid = _residualize(pseudo_y, z)
+        stat = float(np.corrcoef(pseudo_resid, x_resid)[0, 1])
+        extreme += int(stat <= observed)
+
+    p_value = (extreme + 1) / (iterations + 1)
+    return {
+        "method": "Freedman-Lane-style reduced-response residual permutation on ranks",
+        "observed_partial_spearman": observed,
+        "iterations": int(iterations),
+        "lower_tail_extreme_permutations": int(extreme),
+        "one_sided_p_value": float(p_value),
+    }
+
+
 def deterministic_permutations(
     labels: Sequence[float],
     *,
@@ -235,8 +308,10 @@ __all__ = [
     "ExpansionDescriptor",
     "PANEL_TAG",
     "PRIMARY_TAG",
+    "PRIMARY_TAG_V02",
     "average_ranks",
     "farthest_point_species",
+    "freedman_lane_partial_spearman_permutation",
     "host_breadth_stratum",
     "one_sided_partial_spearman_permutation",
     "partial_spearman",
