@@ -831,3 +831,56 @@ def test_retry_import_recovery_is_exact_and_prequery():
     assert "scripts/finalize_relational_historical_occurrence_bounded.py" in workflow
     assert "relational-historical-occurrence-final-v0.2" in workflow
     assert "relational-c-local-final-handoff-v0.1" in workflow
+
+
+def test_study_c_recovery_must_resolve_before_terminal_v03_closure():
+    import json
+
+    recovery_path = (
+        ROOT
+        / "benchmarks/frozen/relational_historical_retry_import_recovery_v0.1.json"
+    )
+    recovery_result_path = (
+        ROOT
+        / "benchmarks/frozen/relational_historical_retry_import_recovery_result_v0.1.json"
+    )
+    final_state_path = (
+        ROOT
+        / "benchmarks/frozen/relational_program_final_state_v0.3.json"
+    )
+    terminal_failure_path = (
+        ROOT
+        / "benchmarks/frozen/relational_historical_occurrence_terminal_failure_v0.1.json"
+    )
+
+    recovery = json.loads(recovery_path.read_text())
+    assert recovery["status"] == "FROZEN_TECHNICAL_RECOVERY_BEFORE_ANY_RETRY_QUERY"
+    assert recovery["original_execution"]["workflow_run_id"] == 35941577015
+    assert recovery["original_execution"]["request_error_count"] == 95
+    assert recovery["original_execution"]["retry_output_artifacts"] == 0
+    assert recovery["failure_class"]["bounded_fetch_reached"] is False
+    assert recovery["failure_class"]["gbif_retry_query_consumed"] is False
+    assert recovery["recovery_execution"]["retry_round"] == 1
+    assert recovery["recovery_execution"]["additional_retry_round_authorized"] is False
+    assert recovery["result_selection_allowed"] is False
+    assert recovery["relation_result_seen"] is False
+    assert recovery["genetic_response_used"] is False
+    assert all(v is False for v in recovery["response_firewall"].values())
+
+    # Once this exact recovery has been prospectively frozen, the original
+    # import failure is not an irreversible C terminal state.  Until the
+    # recovery itself produces a frozen terminal result, the finite program
+    # must remain open at C and no canonical final-state receipt may exist.
+    if not recovery_result_path.exists():
+        assert not final_state_path.exists()
+        assert not terminal_failure_path.exists()
+    else:
+        result = json.loads(recovery_result_path.read_text())
+        assert result["schema"] == "ttf_relational_historical_retry_import_recovery_result_v0.1"
+        assert result["status"] == "COMPLETED_EXACT_SINGLE_RETRY_RECOVERY"
+        assert result["retry_rounds_completed"] == 1
+        assert result["additional_retry_authorized"] is False
+        assert result["scientific_query_change"] is False
+        assert result["relation_result_seen"] is False
+        assert result["genetic_response_used"] is False
+        assert all(v is False for v in result["response_firewall"].values())
