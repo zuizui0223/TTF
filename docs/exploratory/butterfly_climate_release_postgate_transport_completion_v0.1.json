@@ -1,0 +1,94 @@
+{
+  "schema": "ttf_butterfly_climate_release_postgate_transport_completion_v0.1",
+  "status": "FROZEN_POSTGATE_TECHNICAL_COMPLETION_AFTER_NOT_EVALUABLE_BEFORE_ANY_CLIMATE_RESULT",
+  "frozen_on": "2026-09-27",
+  "triggering_execution": {
+    "run_id": 36241187187,
+    "workflow_name": "butterfly climate-release independent test v02.1",
+    "head_sha": "0d4b19a67652dd233c0632eff9deadfb865bc7c3",
+    "summary_artifact_id": 10908815655,
+    "summary_artifact_digest": "sha256:cf666815a5ea65f74c084bb26f25e1e39f8278503ecc84fd88c8e60fafea560a",
+    "preclimate_quality_gate_sha256": "f88359a52c81bcacf6ba7e8ae8cb40db2a944c0d452e2436fec3ad6898d677ef",
+    "occurrence_ledgers_sha256": "44a83a466b79566e6f2623ae2a8a7160accc4ad62ac6b642bb706f136b7b872d",
+    "status": "NOT_EVALUABLE_INDEPENDENT_CLIMATE_RELEASE_TEST",
+    "qualified_species": 10,
+    "minimum_required": 12,
+    "climate_job_conclusion": "skipped"
+  },
+  "transport_census": {
+    "panel_species": 32,
+    "complete": 17,
+    "partial_transport": 14,
+    "rejected_gbif_taxon_match": 1,
+    "partial_missing_300_record_windows_total": 42
+  },
+  "recovery_population": {
+    "selection_rule": "Every and only species whose authoritative occurrence ledger status equals PARTIAL_TRANSPORT. Ecological overlap, sampling-effort gate state, host breadth, and predicted qualification are not used for recovery eligibility.",
+    "species_count": 14,
+    "species": [
+      "Anartia jatrophae",
+      "Aphantopus hyperantus",
+      "Brephidium exilis",
+      "Callophrys rubi",
+      "Coenonympha tullia",
+      "Dryas iulia",
+      "Erynnis tages",
+      "Junonia evarete",
+      "Melanitis leda",
+      "Neptis sappho",
+      "Papilio polytes",
+      "Phyciodes tharos",
+      "Pieris brassicae",
+      "Strymon melinus"
+    ],
+    "complete_species_refetched": false,
+    "rejected_taxon_species_replaced_or_recovered": false,
+    "species_replacement_authorized": false
+  },
+  "technical_completion_rule": {
+    "restore_checkpoint_state": "Restore the latest branch cache matching the exact frozen species checkpoint key prefix and require all 300-record windows listed as completed in the authoritative ledger to exist before any recovery query.",
+    "completed_windows_immutable": true,
+    "only_missing_windows_may_be_queried": true,
+    "gbif_filters_change": false,
+    "period_change": false,
+    "deterministic_window_offsets_change": false,
+    "maximum_windows_per_species_change": false,
+    "ordinal_window_size_records": 300,
+    "recovery_transport_chunk_size_records": 300,
+    "reason_for_single_window_transport": "The prior 10-record transport produced HTTP 429 pressure and one duplicate-key window under pagination drift. A single limit=300 request returns to the originally frozen scientific ordinal window and removes cross-request within-window ordering dependence.",
+    "request_timeout_cap_seconds": 600,
+    "species_total_deadline_seconds_per_pass": 3600,
+    "maximum_passes_per_job": 2,
+    "max_parallel_species": 1
+  },
+  "unchanged_scientific_contract": {
+    "independent_panel_species_sha256": "bbaaa28cf361fb02d558988bdd1a3f948a243b79c8d3bb1709e908edb1f0f204",
+    "protocol_schema": "ttf_butterfly_climate_release_independent_test_v0.2.1",
+    "resource_envelope_change": false,
+    "quality_threshold_change": false,
+    "minimum_preclimate_qualified_species": 12,
+    "climate_crossfit_change": false,
+    "minimum_climate_informative_species": 12,
+    "primary_effect_score_change": false,
+    "primary_predictor_change": false,
+    "primary_control_change": false,
+    "primary_inference_change": false,
+    "primary_alternative": "negative",
+    "alpha": 0.05,
+    "permutation_iterations": 9999
+  },
+  "postgate_provenance": {
+    "preclimate_quality_result_was_opened_before_this_recovery": true,
+    "recovery_is_therefore_not_fully_response_blind": true,
+    "mitigation": "Recovery is mandatory and uniform for all 14 PARTIAL_TRANSPORT species and cannot use ecological qualification state to choose, drop, replace, or prioritize species. The original frozen quality gate is rerun unchanged after transport completion.",
+    "independent_climate_values_opened_before_recovery": false,
+    "independent_climate_filtering_scores_opened_before_recovery": false,
+    "independent_primary_result_opened_before_recovery": false,
+    "genetic_response_used": false
+  },
+  "terminal_routes": {
+    "qualified_species_below_12_after_recovery": "NOT_EVALUABLE_INDEPENDENT_CLIMATE_RELEASE_TEST",
+    "qualified_species_at_least_12_but_climate_informative_below_12": "NOT_EVALUABLE_INDEPENDENT_CLIMATE_RELEASE_TEST",
+    "climate_informative_at_least_12": "RUN_FROZEN_V0_2_1_PRIMARY_TEST"
+  }
+}
