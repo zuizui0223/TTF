@@ -190,6 +190,35 @@ def _fit_reduced(y: np.ndarray, z: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     return fitted, y - fitted
 
 
+def deterministic_residual_donor_indices(
+    species: Sequence[str],
+    *,
+    iteration: int,
+    tag: str = PRIMARY_TAG_V02,
+) -> np.ndarray:
+    names = tuple(map(str, species))
+    if len(set(names)) != len(names):
+        raise ValueError("species identities must be unique")
+    canonical_targets = tuple(sorted(names))
+    donors = tuple(
+        sorted(
+            names,
+            key=lambda name: (
+                hashlib.sha256(
+                    f"{tag}|{int(iteration)}|{name}".encode("utf-8")
+                ).hexdigest(),
+                name,
+            ),
+        )
+    )
+    donor_for_target = dict(zip(canonical_targets, donors))
+    index_by_name = {name: i for i, name in enumerate(names)}
+    return np.asarray(
+        [index_by_name[donor_for_target[name]] for name in names],
+        dtype=int,
+    )
+
+
 def freedman_lane_partial_spearman_permutation(
     response: Sequence[float],
     predictor: Sequence[float],
@@ -231,16 +260,12 @@ def freedman_lane_partial_spearman_permutation(
     names = tuple(map(str, species))
     extreme = 0
     for i in range(iterations):
-        order = sorted(
-            range(len(names)),
-            key=lambda j: (
-                hashlib.sha256(
-                    f"{tag}|{i}|{names[j]}".encode("utf-8")
-                ).hexdigest(),
-                names[j],
-            ),
+        donor_indices = deterministic_residual_donor_indices(
+            names,
+            iteration=i,
+            tag=tag,
         )
-        pseudo_y = y_fitted + y_resid[np.asarray(order, dtype=int)]
+        pseudo_y = y_fitted + y_resid[donor_indices]
         pseudo_resid = _residualize(pseudo_y, z)
         stat = float(np.corrcoef(pseudo_resid, x_resid)[0, 1])
         extreme += int(stat <= observed)
@@ -310,6 +335,7 @@ __all__ = [
     "PRIMARY_TAG",
     "PRIMARY_TAG_V02",
     "average_ranks",
+    "deterministic_residual_donor_indices",
     "farthest_point_species",
     "freedman_lane_partial_spearman_permutation",
     "host_breadth_stratum",
