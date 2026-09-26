@@ -107,9 +107,11 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--occurrences-csv", type=Path, required=True)
     ap.add_argument("--unit-table", type=Path, required=True)
+    ap.add_argument("--contemporary-footprints-json", type=Path, required=True)
+    ap.add_argument("--gate-rule-json", type=Path, required=True)
+    ap.add_argument("--quality-gate-json", type=Path, required=True)
     ap.add_argument("--level3-geojson", type=Path, required=True)
     ap.add_argument("--raster", type=Path, action="append", required=True)
-    ap.add_argument("--effort-threshold", type=int, default=20)
     ap.add_argument("--unit-sample-points", type=int, default=16)
     ap.add_argument("--output-unit-climate", type=Path, required=True)
     ap.add_argument("--output-summary", type=Path, required=True)
@@ -117,30 +119,72 @@ def main() -> int:
 
     if len(args.raster) != 4:
         raise RuntimeError("exactly four CHELSA rasters are required in bio1,bio7,bio12,bio15 order")
-    if args.effort_threshold < 0:
-        raise ValueError("effort threshold must be nonnegative")
+
+    gate_rule = json.loads(args.gate_rule_json.read_text(encoding="utf-8"))
+    if gate_rule.get("schema") != "ttf_butterfly_resource_envelope_climate_pilot_gate_v0.1":
+        raise RuntimeError("unexpected climate pilot gate rule schema")
+    if gate_rule.get("status") != "FROZEN_EXPLORATORY_QUALITY_GATE_BEFORE_ANY_CLIMATE_RESULT":
+        raise RuntimeError("climate pilot gate rule is not frozen")
+
+    quality = json.loads(args.quality_gate_json.read_text(encoding="utf-8"))
+    if quality.get("schema") != "ttf_butterfly_resource_envelope_preclimate_quality_gate_result_v0.1":
+        raise RuntimeError("unexpected preclimate quality-gate result schema")
+    if quality.get("status") != "PASS_TO_EXPLORATORY_CLIMATE_PILOT":
+        raise RuntimeError("preclimate quality gate did not authorize climate pilot")
+    species = sorted(map(str, quality.get("qualified_species", [])))
+    minimum_species = int(gate_rule["pilot_level_gate"]["minimum_species_passing_quality_gate"])
+    if len(species) < minimum_species:
+        raise RuntimeError("qualified species fell below frozen pilot-level minimum")
+
+    q = gate_rule["species_quality_gate"]
+    effort_threshold = int(
+        q["sampling_effort_identifiability"]["other_pilot_record_threshold"]
+    )
+    minimum_training_records = int(
+        q["climate_training_floor"]["minimum_valid_training_occurrence_records"]
+    )
+    if effort_threshold < 0 or minimum_training_records < 2:
+        raise RuntimeError("invalid frozen climate-pilot quality threshold")
+
+    contemporary_payload = json.loads(
+        args.contemporary_footprints_json.read_text(encoding="utf-8")
+    )
+    if contemporary_payload.get("schema") != (
+        "ttf_butterfly_resource_envelope_contemporary_footprints_v0.1"
+    ):
+        raise RuntimeError("unexpected contemporary host-footprint schema")
+    contemporary = {
+        str(name): frozenset(map(str, units))
+        for name, units in contemporary_payload.get("species", {}).items()
+    }
+    missing_contemporary = [name for name in species if name not in contemporary]
+    if missing_contemporary:
+        raise RuntimeError(
+            "qualified species missing contemporary host footprint: "
+            + ", ".join(missing_contemporary)
+        )
 
     unit_rows = load_unit_table(args.unit_table)
-    species = sorted({str(row["species"]) for row in unit_rows})
     geometries, codes, code_names = load_level3(args.level3_geojson)
     code_to_geom = dict(zip(codes, geometries))
     code_to_name = dict(zip(codes, code_names))
     map_point = point_mapper(geometries, codes)
 
-    host_by_species = defaultdict(set)
     observed_by_species = defaultdict(set)
     records_by_unit_species = defaultdict(Counter)
     for row in unit_rows:
         name = str(row["species"])
         code = str(row["unit"])
-        if int(row["host_available"]):
-            host_by_species[name].add(code)
         if int(row["butterfly_observed"]):
             observed_by_species[name].add(code)
         count = int(row["butterfly_record_count"])
         if count:
             records_by_unit_species[code][name] += count
 
+    host_by_species = {
+        name: set(contemporary[name])
+        for name in species
+    }
     required_units = sorted(set().union(*(host_by_species[name] for name in species)))
     missing_geometry = [code for code in required_units if code not in code_to_geom]
     if missing_geometry:
@@ -215,16 +259,16 @@ def main() -> int:
         result_rows = []
         summaries = []
         for name in species:
-            observed = observed_by_species[name]
+            host_units = host_by_species[name]
+            observed = observed_by_species[name] & host_units
             train_units, eval_units = observed_unit_split(name, observed)
             train_vectors = []
             for code in train_units:
                 train_vectors.extend(occ_by_species_unit.get((name, code), []))
             train = np.asarray(train_vectors, dtype=float)
 
-            host_units = host_by_species[name]
             never_observed = host_units - observed
-            eval_host_observed = set(eval_units) & host_units
+            eval_host_observed = set(eval_units)
 
             eligible_codes = sorted(
                 code
@@ -234,7 +278,7 @@ def main() -> int:
                     count
                     for other, count in records_by_unit_species.get(code, {}).items()
                     if other != name
-                ) >= int(args.effort_threshold)
+                ) >= int(effort_threshold)
             )
 
             mismatch_by_code = {}
@@ -277,7 +321,7 @@ def main() -> int:
                         ),
                         "other_pilot_record_effort": other_effort,
                         "effort_supported": int(
-                            other_effort >= int(args.effort_threshold)
+                            other_effort >= int(effort_threshold)
                         ),
                         "climate_sample_points": unit_point_n.get(code, 0),
                         "bio1": (
@@ -308,7 +352,7 @@ def main() -> int:
                     "eval_observed_host_units": len(eval_host_observed),
                     "never_observed_host_units": len(never_observed),
                     "training_occurrence_records_with_climate": int(len(train)),
-                    "effort_threshold_other_pilot_records": int(args.effort_threshold),
+                    "effort_threshold_other_pilot_records": int(effort_threshold),
                     "effort_supported_eval_observed_units": len(occupied_mismatch),
                     "effort_supported_never_observed_units": len(unoccupied_mismatch),
                     "median_mismatch_eval_observed": (
@@ -327,7 +371,7 @@ def main() -> int:
                         occupied_mismatch,
                     ),
                     "climate_crossfit_informative": (
-                        len(train) >= 30
+                        len(train) >= minimum_training_records
                         and len(occupied_mismatch) >= 2
                         and len(unoccupied_mismatch) >= 2
                     ),
@@ -361,15 +405,21 @@ def main() -> int:
         "schema": "ttf_butterfly_resource_envelope_climate_crossfit_v0.1",
         "status": "EXPLORATORY_CLIMATE_CROSSFIT_DIAGNOSTIC",
         "variables": list(VARIABLES),
+        "quality_qualified_species": list(species),
+        "quality_gate_minimum_species": minimum_species,
+        "frozen_other_pilot_effort_threshold": effort_threshold,
+        "frozen_minimum_training_occurrence_records": minimum_training_records,
+        "host_envelope": "WCVP-v13 extant non-doubtful contemporary host-resource WGSRPD3 units including introduced ranges",
         "unit_climate": (
             "Median CHELSA V2.1 value over up to a fixed number of deterministic "
             "interior points per WGSRPD3 polygon/component."
         ),
         "crossfit": (
-            "Observed WGSRPD3 units are deterministically hash-split by species. "
-            "Climate niche center/scale is estimated only from GBIF occurrences "
-            "falling in train-observed units. Comparison uses held-out eval-observed "
-            "host units versus host units never observed for that butterfly."
+            "Observed WGSRPD3 units inside the contemporary host-resource envelope "
+            "are deterministically hash-split by species. Climate niche center/scale "
+            "is estimated only from GBIF occurrences falling in train-observed "
+            "within-envelope units. Comparison uses held-out eval-observed host units "
+            "versus contemporary host units never observed for that butterfly."
         ),
         "species": summaries,
         "informative_species": sum(
@@ -380,6 +430,8 @@ def main() -> int:
             "never_observed_is_not_true_absence": True,
             "other_pilot_effort_is_only_a_sampling_proxy": True,
             "host_database_completeness_not_proven": True,
+            "only_preclimate_quality_qualified_species_analyzed": True,
+            "contemporary_host_envelope_used": True,
             "no_confirmatory_p_value": True,
         },
     }
