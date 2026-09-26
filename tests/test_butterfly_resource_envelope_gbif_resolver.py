@@ -14,7 +14,7 @@ SPEC.loader.exec_module(acquire)
 def test_resolver_keeps_exact_strict_species(monkeypatch):
     calls = []
 
-    def fake_get_json(path, params, *, deadline, attempts=3):
+    def fake_get_json(path, params, *, deadline, request_seconds=30.0, attempts=3):
         calls.append((path, params))
         assert path == "species/match"
         return {
@@ -25,7 +25,7 @@ def test_resolver_keeps_exact_strict_species(monkeypatch):
         }
 
     monkeypatch.setattr(acquire, "get_json", fake_get_json)
-    result = acquire.resolve_species_metadata("Papilio machaon", deadline=999.0)
+    result = acquire.resolve_species_metadata("Papilio machaon", deadline=999.0, request_seconds=30.0)
     assert result["status"] == "MATCHED"
     assert result["usage_key"] == 123
     assert result["resolver_route"] == "species_match_strict"
@@ -33,7 +33,7 @@ def test_resolver_keeps_exact_strict_species(monkeypatch):
 
 
 def test_resolver_recovers_unique_exact_accepted_species_from_search(monkeypatch):
-    def fake_get_json(path, params, *, deadline, attempts=3):
+    def fake_get_json(path, params, *, deadline, request_seconds=30.0, attempts=3):
         if path == "species/match":
             return {
                 "usageKey": 0,
@@ -60,7 +60,7 @@ def test_resolver_recovers_unique_exact_accepted_species_from_search(monkeypatch
         }
 
     monkeypatch.setattr(acquire, "get_json", fake_get_json)
-    result = acquire.resolve_species_metadata("Graphium sarpedon", deadline=999.0)
+    result = acquire.resolve_species_metadata("Graphium sarpedon", deadline=999.0, request_seconds=30.0)
     assert result["status"] == "MATCHED"
     assert result["usage_key"] == 456
     assert result["match_type"] == "EXACT_SEARCH_FALLBACK"
@@ -68,7 +68,7 @@ def test_resolver_recovers_unique_exact_accepted_species_from_search(monkeypatch
 
 
 def test_resolver_rejects_ambiguous_exact_accepted_search(monkeypatch):
-    def fake_get_json(path, params, *, deadline, attempts=3):
+    def fake_get_json(path, params, *, deadline, request_seconds=30.0, attempts=3):
         if path == "species/match":
             return {
                 "usageKey": 0,
@@ -94,6 +94,6 @@ def test_resolver_rejects_ambiguous_exact_accepted_search(monkeypatch):
         }
 
     monkeypatch.setattr(acquire, "get_json", fake_get_json)
-    result = acquire.resolve_species_metadata("Alpha beta", deadline=999.0)
+    result = acquire.resolve_species_metadata("Alpha beta", deadline=999.0, request_seconds=30.0)
     assert result["status"] == "REJECTED_GBIF_TAXON_MATCH"
     assert result["exact_accepted_search_candidates"] == 2
