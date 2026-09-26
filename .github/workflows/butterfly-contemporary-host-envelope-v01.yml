@@ -1,0 +1,84 @@
+name: butterfly contemporary host-resource envelope v01
+
+on:
+  push:
+    branches:
+      - explore/butterfly-resource-envelope-v01
+    paths:
+      - ".github/workflows/butterfly-contemporary-host-envelope-v01.yml"
+      - "scripts/build_wcvp_hosts_contemporary_sidecar.R"
+      - "scripts/build_butterfly_contemporary_resource_envelope.py"
+  workflow_dispatch:
+
+jobs:
+  reconstruct:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout exact WCVP v13 redistribution snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: matildabrown/rWCVPdata
+          ref: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
+          path: _wcvp
+
+      - name: Checkout exact HOSTS mirror
+        uses: actions/checkout@v4
+        with:
+          repository: globalbioticinteractions/HOSTS
+          ref: 808e0b869f9ec1adf8efff87cf6a395adda103e0
+          path: _hosts
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install TTF
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+
+      - name: Restore exact response-blind pilot reconstruction
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-resource-envelope-pilot-v01
+          path: inputs/pilot
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36222306369
+
+      - name: Verify exact pilot inputs
+        run: |
+          cd inputs/pilot/butterfly-resource-envelope-pilot-v0.1
+          echo "546c38970789a153735d6e54cc66bdd2e8987a22b93b097aa2062e8c7f84baef  s1_host_resource_footprints.json" | sha256sum -c -
+          echo "ea55d41263b9aaf210a7d29520457218b58dfd45c0dce4e50fad9bf8877cef35  pilot_species.json" | sha256sum -c -
+
+      - name: Rebuild contemporary HOSTS-WCVP resource sidecar
+        run: |
+          test "$(git -C _wcvp rev-parse HEAD)" = "65bed76bae9d644ccb6ad200c05f9f5071d89e05"
+          test "$(git -C _hosts rev-parse HEAD)" = "808e0b869f9ec1adf8efff87cf6a395adda103e0"
+          Rscript scripts/build_wcvp_hosts_contemporary_sidecar.R             _wcvp             _hosts             results/contemporary-host-sidecar
+          cat results/contemporary-host-sidecar/counts.tsv
+
+      - name: Compare native and contemporary resource envelopes
+        run: |
+          mkdir -p results/butterfly-contemporary-host-envelope-v0.1
+          python scripts/build_butterfly_contemporary_resource_envelope.py             --pilot-json inputs/pilot/butterfly-resource-envelope-pilot-v0.1/pilot_species.json             --native-footprints-json inputs/pilot/butterfly-resource-envelope-pilot-v0.1/s1_host_resource_footprints.json             --insect-host-csv results/contemporary-host-sidecar/insect_host_accepted.csv             --contemporary-distribution-csv results/contemporary-host-sidecar/extant_nondoubtful_wgsrpd3.csv             --output-footprints results/butterfly-contemporary-host-envelope-v0.1/contemporary_footprints.json             --output-comparison results/butterfly-contemporary-host-envelope-v0.1/native_contemporary_comparison.json
+          (
+            cd results/butterfly-contemporary-host-envelope-v0.1
+            sha256sum contemporary_footprints.json native_contemporary_comparison.json > SHA256SUMS
+          )
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-contemporary-host-envelope-v01
+          path: |
+            results/butterfly-contemporary-host-envelope-v0.1/
+            results/contemporary-host-sidecar/counts.tsv
+          retention-days: 30
