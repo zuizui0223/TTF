@@ -33,7 +33,7 @@ def test_independent_climate_release_execution_binding_matches_frozen_contract()
         ).read_text()
     )
 
-    assert binding["status"] == "BOUND_BEFORE_PRECLIMATE_OR_CLIMATE_RESULT"
+    assert binding["status"] == "SUPERSEDED_BEFORE_PRECLIMATE_OR_CLIMATE_RESULT"
     assert binding["execution"]["run_id"] == 36239130041
     assert binding["execution"]["head_sha"] == (
         "4c2fd1093acfb72c9b9c7b681c46861a6a29aae3"
@@ -81,3 +81,20 @@ def test_independent_climate_release_execution_binding_matches_frozen_contract()
         value is False
         for value in binding["response_firewall_at_binding"].values()
     )
+
+
+def test_v01_execution_was_superseded_without_opening_ecological_response():
+    binding = json.loads(
+        (
+            ROOT
+            / "benchmarks/exploratory/butterfly_climate_release_execution_binding_v0.1.json"
+        ).read_text()
+    )
+    supersession = binding["supersession"]
+    assert supersession["independent_host_overlap_opened_before_supersession"] is False
+    assert supersession["preclimate_quality_gate_opened_before_supersession"] is False
+    assert supersession["independent_climate_values_opened_before_supersession"] is False
+    assert supersession["independent_climate_filtering_scores_opened_before_supersession"] is False
+    assert supersession["independent_primary_result_opened_before_supersession"] is False
+    assert supersession["transport_only_state_may_be_reused"] is True
+    assert supersession["scientific_result_from_run_36239130041_must_not_be_used"] is True
