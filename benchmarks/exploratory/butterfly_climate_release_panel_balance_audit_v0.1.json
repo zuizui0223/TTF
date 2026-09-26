@@ -1,0 +1,97 @@
+{
+  "schema": "ttf_butterfly_climate_release_panel_balance_audit_v0.1",
+  "status": "PASS_RESPONSE_BLIND_PANEL_BALANCE_AUDIT",
+  "audited_on": "2026-09-26",
+  "source": {
+    "panel_workflow_run_id": 36238195242,
+    "panel_artifact_id": 10904666722,
+    "panel_artifact_digest": "sha256:5db1ca0ce4b3247698243a93eb16ee8f47c499273196607a123982725eca8be2",
+    "panel_json_sha256": "d52ab353c46061cd0f16df95cdfee95920d9ce9b3c96da15ba115c30785cf2df",
+    "panel_csv_sha256": "0889c0bf9b773099e6ffcb236810f5ff829475df567b0a9ef962d631a0309b2c",
+    "species_sha256": "bbaaa28cf361fb02d558988bdd1a3f948a243b79c8d3bb1709e908edb1f0f204"
+  },
+  "scope": {
+    "species": 32,
+    "pilot_species_excluded": 10,
+    "new_independent_gbif_used": false,
+    "independent_climate_values_used": false,
+    "independent_primary_response_used": false,
+    "genetic_response_used": false
+  },
+  "strata": {
+    "1_family": {
+      "species": 8,
+      "host_family_range": [1.0, 1.0],
+      "native_host_resource_wgsrpd3_units": {
+        "minimum": 12,
+        "median": 53.0,
+        "maximum": 303
+      },
+      "resolved_host_species_median": 9.5,
+      "wing_size_proxy": {
+        "minimum": 1.7,
+        "median": 4.507142857,
+        "maximum": 13.2
+      }
+    },
+    "2_families": {
+      "species": 8,
+      "host_family_range": [2.0, 2.0],
+      "native_host_resource_wgsrpd3_units": {
+        "minimum": 14,
+        "median": 69.0,
+        "maximum": 218
+      },
+      "resolved_host_species_median": 8.0,
+      "wing_size_proxy": {
+        "minimum": 2.483333333333333,
+        "median": 3.67053571425,
+        "maximum": 8.05
+      }
+    },
+    "3_to_5_families": {
+      "species": 8,
+      "host_family_range": [3.0, 4.0],
+      "host_family_median": 3.5,
+      "native_host_resource_wgsrpd3_units": {
+        "minimum": 34,
+        "median": 95.5,
+        "maximum": 275
+      },
+      "resolved_host_species_median": 10.0,
+      "wing_size_proxy": {
+        "minimum": 1.7000000000000002,
+        "median": 6.14666666675,
+        "maximum": 12.333333335
+      }
+    },
+    "6plus_families": {
+      "species": 8,
+      "host_family_range": [6.0, 10.0],
+      "host_family_median": 7.0,
+      "native_host_resource_wgsrpd3_units": {
+        "minimum": 58,
+        "median": 169.0,
+        "maximum": 267
+      },
+      "resolved_host_species_median": 21.5,
+      "wing_size_proxy": {
+        "minimum": 2.85,
+        "median": 5.258333333333334,
+        "maximum": 7.79166666675
+      }
+    }
+  },
+  "interpretation": {
+    "equal_species_per_host_breadth_stratum": true,
+    "resource_breadth_varies_within_each_stratum": true,
+    "wing_size_varies_within_each_stratum": true,
+    "resource_breadth_is_not_perfectly_confounded_with_host_breadth_by_design": true,
+    "primary_test_still_controls_contemporary_resource_breadth": true
+  },
+  "claim_boundary": {
+    "design_audit_only": true,
+    "does_not_establish_power": true,
+    "does_not_use_or_predict_independent_test_result": true
+  }
+}

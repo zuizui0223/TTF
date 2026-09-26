@@ -122,16 +122,28 @@ def get_json(
         f"GBIF request failed after {attempts} attempts: {url} ({last_detail})"
     )
 
-def load_pilot(path: Path) -> tuple[str, ...]:
+def load_species_panel(path: Path) -> tuple[str, ...]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    if payload.get("schema") != "ttf_butterfly_resource_envelope_pilot_v0.1":
-        raise RuntimeError("unexpected pilot schema")
-    if payload.get("status") != "EXPLORATORY_RESPONSE_BLIND_PILOT_SELECTED":
-        raise RuntimeError("pilot is not in response-blind selected state")
-    names = tuple(map(str, payload.get("pilot_species", [])))
-    if len(names) != 10 or len(set(names)) != 10:
-        raise RuntimeError("expected exact ten-species exploratory pilot")
-    return names
+    schema = payload.get("schema")
+    if schema == "ttf_butterfly_resource_envelope_pilot_v0.1":
+        if payload.get("status") != "EXPLORATORY_RESPONSE_BLIND_PILOT_SELECTED":
+            raise RuntimeError("pilot is not in response-blind selected state")
+        names = tuple(map(str, payload.get("pilot_species", [])))
+        if len(names) != 10 or len(set(names)) != 10:
+            raise RuntimeError("expected exact ten-species exploratory pilot")
+        return names
+    if schema == "ttf_butterfly_climate_release_independent_panel_v0.1":
+        if payload.get("status") != "FROZEN_BEFORE_INDEPENDENT_GBIF_OR_CLIMATE":
+            raise RuntimeError("independent panel is not frozen")
+        names = tuple(map(str, payload.get("species", [])))
+        if len(names) != 32 or len(set(names)) != 32:
+            raise RuntimeError("expected exact 32-species independent panel")
+        return names
+    raise RuntimeError("unexpected butterfly species-panel schema")
+
+
+def load_pilot(path: Path) -> tuple[str, ...]:
+    return load_species_panel(path)
 
 
 RESOLVER_VERSION = "gbif-exact-accepted-species-v0.2"
@@ -244,6 +256,7 @@ def metadata_for_species(
     deadline: float,
     maximum_pages: int,
     request_seconds: float,
+    transport_chunk_size: int,
 ) -> dict:
     meta_path = state_dir / "metadata.json"
     if meta_path.exists():
@@ -303,6 +316,7 @@ def fetch_species_pages(
     species_seconds: float,
     maximum_pages: int,
     request_seconds: float,
+    transport_chunk_size: int,
 ) -> dict:
     state_dir = state_root / species_state_key(species)
     state_dir.mkdir(parents=True, exist_ok=True)
@@ -315,6 +329,7 @@ def fetch_species_pages(
             deadline=deadline,
             maximum_pages=maximum_pages,
             request_seconds=request_seconds,
+            transport_chunk_size=transport_chunk_size,
         )
     except Exception as exc:
         return {
@@ -360,7 +375,7 @@ def fetch_species_pages(
             for chunk_offset, chunk_limit in occurrence_window_chunks(
                 offset,
                 window_size,
-                chunk_size=50,
+                chunk_size=int(transport_chunk_size),
             ):
                 chunk_path = (
                     chunk_dir
@@ -428,7 +443,7 @@ def fetch_species_pages(
                     "usage_key": int(meta["usage_key"]),
                     "offset": int(offset),
                     "window_size": int(window_size),
-                    "transport_chunk_size": 50,
+                    "transport_chunk_size": int(transport_chunk_size),
                     "records": records,
                 },
             )
@@ -478,7 +493,9 @@ def combine_records(state_root: Path, species: tuple[str, ...]) -> list[dict[str
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--pilot-json", type=Path, required=True)
+    panel_group = ap.add_mutually_exclusive_group(required=True)
+    panel_group.add_argument("--pilot-json", type=Path)
+    panel_group.add_argument("--panel-json", type=Path)
     ap.add_argument("--only-species", type=str, default=None)
     ap.add_argument("--state-dir", type=Path, required=True)
     ap.add_argument("--output-csv", type=Path, required=True)
@@ -486,13 +503,15 @@ def main() -> int:
     ap.add_argument("--species-seconds", type=float, default=600.0)
     ap.add_argument("--maximum-pages", type=int, default=12)
     ap.add_argument("--request-seconds", type=float, default=30.0)
+    ap.add_argument("--transport-chunk-size", type=int, default=50)
     args = ap.parse_args()
 
-    species = load_pilot(args.pilot_json)
+    panel_path = args.panel_json if args.panel_json is not None else args.pilot_json
+    species = load_species_panel(panel_path)
     if args.only_species is not None:
         selected = str(args.only_species).strip()
         if selected not in species:
-            raise RuntimeError(f"requested species is not in frozen pilot: {selected}")
+            raise RuntimeError(f"requested species is not in frozen species panel: {selected}")
         species = (selected,)
     args.state_dir.mkdir(parents=True, exist_ok=True)
     ledgers = [
@@ -502,6 +521,7 @@ def main() -> int:
             species_seconds=args.species_seconds,
             maximum_pages=args.maximum_pages,
             request_seconds=args.request_seconds,
+            transport_chunk_size=args.transport_chunk_size,
         )
         for name in species
     ]
@@ -539,7 +559,7 @@ def main() -> int:
             "request_attempts": 3,
             "maximum_pages_per_species": int(args.maximum_pages),
             "page_size": 300,
-            "missing_page_transport_chunk_size": 50,
+            "missing_page_transport_chunk_size": int(args.transport_chunk_size),
             "chunking_preserves_original_ordinal_page_windows": True,
         },
         "scientific_scope": {

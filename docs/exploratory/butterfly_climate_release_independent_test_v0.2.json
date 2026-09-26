@@ -1,0 +1,183 @@
+{
+  "schema": "ttf_butterfly_climate_release_independent_test_v0.2",
+  "status": "FROZEN_RESPONSE_BLIND_PRIMARY_INFERENCE_CORRECTION_BEFORE_INDEPENDENT_PRECLIMATE_OR_CLIMATE_RESULT",
+  "frozen_on": "2026-09-26",
+  "origin": {
+    "pilot_result_file": "benchmarks/exploratory/butterfly_resource_envelope_climate_pilot_result_v0.1.json",
+    "pilot_workflow_run_id": 36229542302,
+    "pilot_species_count": 10,
+    "pilot_species_excluded_from_independent_test": true,
+    "hypothesis_generated_after_pilot_result": true,
+    "claim": "This is an independent prospective test of a pilot-derived ecological hypothesis, not a confirmatory re-analysis of the pilot."
+  },
+  "ecological_hypothesis": {
+    "statement": "Within larval host-resource opportunity, climatic filtering of realized butterfly distribution weakens as taxonomic host breadth increases.",
+    "mechanistic_interpretation": "Host specialists may possess geographically widespread resources yet remain physiologically constrained to a narrower climatic subset, whereas broad host generalists may realize resource opportunity across a wider range of climatic contexts.",
+    "direction": "negative association between host-family breadth and climate-filtering strength"
+  },
+  "independent_panel": {
+    "source": "Exact S1 339-species resource-descriptor reconstruction from workflow run 36222306369.",
+    "excluded_species": [
+      "Colias christina",
+      "Vanessa cardui",
+      "Cercyonis oetus",
+      "Satyrium w-album",
+      "Melitaea aetherie",
+      "Lampides boeticus",
+      "Agraulis vanillae",
+      "Graphium sarpedon",
+      "Danaus melanippus",
+      "Satyrium pruni"
+    ],
+    "eligibility_before_new_occurrence_response": [
+      "host_family_count > 0",
+      "native host-resource WGSRPD3 unit count >= 10",
+      "resolved HOSTS-WCVP host-species count >= LepTraits host-family count",
+      "finite wing-size proxy"
+    ],
+    "host_breadth_strata": {
+      "1_family": {
+        "minimum": 1,
+        "maximum": 1,
+        "target_species": 8
+      },
+      "2_families": {
+        "minimum": 2,
+        "maximum": 2,
+        "target_species": 8
+      },
+      "3_to_5_families": {
+        "minimum": 3,
+        "maximum": 5,
+        "target_species": 8
+      },
+      "6plus_families": {
+        "minimum": 6,
+        "maximum": null,
+        "target_species": 8
+      }
+    },
+    "selection_within_stratum": {
+      "algorithm": "deterministic farthest-point sampling",
+      "axes": [
+        "z(log1p native host-resource WGSRPD3 unit count)",
+        "z(log1p resolved HOSTS-WCVP host-species count)",
+        "z(wing-size proxy)"
+      ],
+      "tie_breaker": "SHA256 of fixed selection tag plus species name",
+      "selection_tag": "butterfly-climate-release-independent-panel-v0.1"
+    },
+    "target_species_total": 32,
+    "uses_new_butterfly_gbif": false,
+    "uses_climate_response": false,
+    "uses_genetic_response": false
+  },
+  "occurrence_transport": {
+    "period": "2010-2026",
+    "gbif_filters": {
+      "hasCoordinate": true,
+      "hasGeospatialIssue": false,
+      "occurrenceStatus": "PRESENT"
+    },
+    "deterministic_windows_per_species": 6,
+    "window_size_records": 300,
+    "transport_chunk_size_records": 50,
+    "checkpointing": "chunk and completed-window checkpoints; resume unfinished chunks only",
+    "scientific_window_rule_change_from_pilot": false
+  },
+  "resource_envelope": {
+    "dataset": "WCVP v13",
+    "host_interactions": "frozen HOSTS mirror",
+    "definition": "extant and non-doubtful WGSRPD3 distribution of resolved larval hosts, including native and introduced ranges",
+    "reason": "modern GBIF occurrence data require contemporary resource opportunity rather than native-only host geography"
+  },
+  "preclimate_quality_gate": {
+    "per_species": [
+      "occurrence transport status == COMPLETE",
+      "resolved host-species count >= LepTraits host-family count",
+      "fraction of observed WGSRPD3 units outside contemporary host envelope <= 0.10",
+      "at least 5 contemporary host units with >=10 GBIF records from other independent-panel butterflies",
+      "among those effort-supported units, at least 2 target-observed and at least 2 target-unobserved units"
+    ],
+    "sampling_effort_proxy": "sum of GBIF records from the other 31 independent-panel butterflies in the same WGSRPD3 unit",
+    "minimum_species_passing_preclimate_gate": 12,
+    "if_below": "NOT_EVALUABLE_INDEPENDENT_CLIMATE_RELEASE_TEST",
+    "thresholds": {
+      "maximum_outside_contemporary_fraction": 0.1,
+      "other_panel_record_effort_threshold": 10,
+      "minimum_effort_supported_host_units": 5,
+      "minimum_effort_supported_observed_units": 2,
+      "minimum_effort_supported_unobserved_units": 2
+    }
+  },
+  "climate_crossfit": {
+    "dataset": "CHELSA V2.1 1981-2010",
+    "variables": [
+      "bio1",
+      "bio7",
+      "bio12",
+      "bio15"
+    ],
+    "observed_unit_split": "within each quality-qualified species, deterministic SHA256 50/50 split of observed units inside contemporary host envelope",
+    "training": "climate center and scale estimated only from occurrence records in train-observed units",
+    "evaluation": "compare held-out eval-observed resource units against never-observed contemporary resource units that pass the effort threshold",
+    "minimum_training_occurrence_records": 30,
+    "minimum_effort_supported_eval_observed_units": 2,
+    "minimum_effort_supported_never_observed_units": 2,
+    "species_climate_filtering_score": "P(climate mismatch of never-observed unit > climate mismatch of held-out observed unit) + 0.5*P(tie)",
+    "neutral_score": 0.5,
+    "minimum_climate_informative_species": 12,
+    "if_below": "NOT_EVALUABLE_INDEPENDENT_CLIMATE_RELEASE_TEST"
+  },
+  "primary_test": {
+    "response": "species climate-filtering score",
+    "predictor": "LepTraits NumberOfHostplantFamilies",
+    "control": "contemporary host-resource WGSRPD3 unit count",
+    "statistic": "partial Spearman correlation computed as Pearson correlation between rank(response) residualized on rank(log1p contemporary resource breadth) and rank(host-family breadth) residualized on the same control",
+    "alternative": "negative",
+    "permutation": {
+      "iterations": 9999,
+      "method": "Freedman-Lane-style reduced-response residual permutation on ranked response",
+      "rule": "Fit rank(climate-filtering score) ~ 1 + rank(log1p contemporary host-resource WGSRPD3 units). Deterministically permute only the reduced-model response residuals across species, add them back to the fixed reduced fitted values, re-residualize the pseudo-response on the same control rank, and correlate with the fixed residualized host-family rank. This preserves the observed host-breadth/control structure.",
+      "deterministic_order": "For each iteration, order species by SHA256(tag|iteration|species); use that order as the residual permutation.",
+      "tag": "butterfly-climate-release-freedman-lane-v0.2"
+    },
+    "alpha": 0.05,
+    "decision": {
+      "support": "one-sided residual-permutation p < 0.05 and observed partial Spearman < 0",
+      "not_supported": "otherwise"
+    }
+  },
+  "secondary_descriptive": [
+    "unadjusted Spearman between climate-filtering score and host-family breadth",
+    "Spearman between climate-filtering score and contemporary resource breadth",
+    "climate-filtering score versus wing-size proxy",
+    "climate-filtering score by voltinism category"
+  ],
+  "response_firewall": {
+    "independent_panel_species_frozen_before_new_gbif": true,
+    "independent_gbif_seen_before_panel_freeze": false,
+    "independent_climate_values_seen_before_panel_freeze": false,
+    "independent_climate_filtering_scores_seen_before_panel_freeze": false,
+    "genetic_response_used": false,
+    "independent_occurrence_geography_seen_before_v0_2_freeze": false,
+    "independent_host_overlap_seen_before_v0_2_freeze": false,
+    "independent_preclimate_gate_seen_before_v0_2_freeze": false,
+    "independent_climate_values_seen_before_v0_2_freeze": false,
+    "independent_climate_filtering_scores_seen_before_v0_2_freeze": false,
+    "independent_primary_result_seen_before_v0_2_freeze": false
+  },
+  "supersedes": {
+    "schema": "ttf_butterfly_climate_release_independent_test_v0.1",
+    "reason": "Replace raw predictor-label permutation with reduced-model response-residual permutation so the conditional null preserves the frozen predictor-control structure.",
+    "panel_changed": false,
+    "gbif_contract_changed": false,
+    "resource_envelope_changed": false,
+    "preclimate_quality_gate_changed": false,
+    "climate_crossfit_changed": false,
+    "primary_effect_measure_changed": false,
+    "alternative_changed": false,
+    "alpha_changed": false,
+    "permutation_iterations_changed": false
+  }
+}

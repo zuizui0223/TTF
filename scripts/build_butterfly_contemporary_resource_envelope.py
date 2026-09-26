@@ -39,7 +39,9 @@ def load_sidecars(interactions: Path, distributions: Path):
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--pilot-json", type=Path, required=True)
+    panel_group = ap.add_mutually_exclusive_group(required=True)
+    panel_group.add_argument("--pilot-json", type=Path)
+    panel_group.add_argument("--panel-json", type=Path)
     ap.add_argument("--native-footprints-json", type=Path, required=True)
     ap.add_argument("--insect-host-csv", type=Path, required=True)
     ap.add_argument("--contemporary-distribution-csv", type=Path, required=True)
@@ -47,12 +49,21 @@ def main() -> int:
     ap.add_argument("--output-comparison", type=Path, required=True)
     args = ap.parse_args()
 
-    pilot = json.loads(args.pilot_json.read_text(encoding="utf-8"))
-    if pilot.get("schema") != "ttf_butterfly_resource_envelope_pilot_v0.1":
-        raise RuntimeError("unexpected pilot schema")
-    species = tuple(map(str, pilot["pilot_species"]))
-    if len(species) != 10 or len(set(species)) != 10:
-        raise RuntimeError("expected exact ten-species pilot")
+    panel_path = args.panel_json if args.panel_json is not None else args.pilot_json
+    panel = json.loads(panel_path.read_text(encoding="utf-8"))
+    schema = panel.get("schema")
+    if schema == "ttf_butterfly_resource_envelope_pilot_v0.1":
+        species = tuple(map(str, panel["pilot_species"]))
+        if len(species) != 10 or len(set(species)) != 10:
+            raise RuntimeError("expected exact ten-species pilot")
+    elif schema == "ttf_butterfly_climate_release_independent_panel_v0.1":
+        if panel.get("status") != "FROZEN_BEFORE_INDEPENDENT_GBIF_OR_CLIMATE":
+            raise RuntimeError("independent panel is not frozen")
+        species = tuple(map(str, panel["species"]))
+        if len(species) != 32 or len(set(species)) != 32:
+            raise RuntimeError("expected exact 32-species independent panel")
+    else:
+        raise RuntimeError("unexpected butterfly species-panel schema")
 
     native_payload = json.loads(args.native_footprints_json.read_text(encoding="utf-8"))
     if native_payload.get("schema") != "ttf_butterfly_resource_envelope_s1_footprints_v0.1":
@@ -101,7 +112,7 @@ def main() -> int:
             "with extinct=0 and location_doubtful=0, retaining both native and "
             "introduced distribution records."
         ),
-        "pilot_species": list(species),
+        "panel_species": list(species),
         "species": {
             name: sorted(contemporary.get(name, frozenset()))
             for name in species
@@ -119,7 +130,7 @@ def main() -> int:
         "status": "EXPLORATORY_RESOURCE_ENVELOPE_SENSITIVITY",
         "species": rows,
         "summary": {
-            "pilot_species": len(species),
+            "panel_species": len(species),
             "species_expanded_by_introduced_host_ranges": sum(
                 int(row["introduced_added_units"] > 0) for row in rows
             ),

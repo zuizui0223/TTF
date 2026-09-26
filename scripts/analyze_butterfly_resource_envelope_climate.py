@@ -121,30 +121,83 @@ def main() -> int:
         raise RuntimeError("exactly four CHELSA rasters are required in bio1,bio7,bio12,bio15 order")
 
     gate_rule = json.loads(args.gate_rule_json.read_text(encoding="utf-8"))
-    if gate_rule.get("schema") != "ttf_butterfly_resource_envelope_climate_pilot_gate_v0.1":
-        raise RuntimeError("unexpected climate pilot gate rule schema")
-    if gate_rule.get("status") != "FROZEN_EXPLORATORY_QUALITY_GATE_BEFORE_ANY_CLIMATE_RESULT":
-        raise RuntimeError("climate pilot gate rule is not frozen")
-
     quality = json.loads(args.quality_gate_json.read_text(encoding="utf-8"))
-    if quality.get("schema") != "ttf_butterfly_resource_envelope_preclimate_quality_gate_result_v0.1":
-        raise RuntimeError("unexpected preclimate quality-gate result schema")
-    if quality.get("status") != "PASS_TO_EXPLORATORY_CLIMATE_PILOT":
-        raise RuntimeError("preclimate quality gate did not authorize climate pilot")
-    species = sorted(map(str, quality.get("qualified_species", [])))
-    minimum_species = int(gate_rule["pilot_level_gate"]["minimum_species_passing_quality_gate"])
-    if len(species) < minimum_species:
-        raise RuntimeError("qualified species fell below frozen pilot-level minimum")
+    gate_schema = str(gate_rule.get("schema") or "")
+    quality_schema = str(quality.get("schema") or "")
 
-    q = gate_rule["species_quality_gate"]
-    effort_threshold = int(
-        q["sampling_effort_identifiability"]["other_pilot_record_threshold"]
-    )
-    minimum_training_records = int(
-        q["climate_training_floor"]["minimum_valid_training_occurrence_records"]
-    )
-    if effort_threshold < 0 or minimum_training_records < 2:
-        raise RuntimeError("invalid frozen climate-pilot quality threshold")
+    if gate_schema == "ttf_butterfly_resource_envelope_climate_pilot_gate_v0.1":
+        if gate_rule.get("status") != "FROZEN_EXPLORATORY_QUALITY_GATE_BEFORE_ANY_CLIMATE_RESULT":
+            raise RuntimeError("climate pilot gate rule is not frozen")
+        if quality_schema != "ttf_butterfly_resource_envelope_preclimate_quality_gate_result_v0.1":
+            raise RuntimeError("unexpected pilot preclimate quality-gate schema")
+        if quality.get("status") != "PASS_TO_EXPLORATORY_CLIMATE_PILOT":
+            raise RuntimeError("preclimate quality gate did not authorize climate pilot")
+        minimum_species = int(
+            gate_rule["pilot_level_gate"]["minimum_species_passing_quality_gate"]
+        )
+        q = gate_rule["species_quality_gate"]
+        effort_threshold = int(
+            q["sampling_effort_identifiability"]["other_pilot_record_threshold"]
+        )
+        minimum_training_records = int(
+            q["climate_training_floor"]["minimum_valid_training_occurrence_records"]
+        )
+        minimum_eval_units = 2
+        minimum_never_units = 2
+        analysis_scope = "response_blind_pilot"
+    elif gate_schema in {
+        "ttf_butterfly_climate_release_independent_test_v0.1",
+        "ttf_butterfly_climate_release_independent_test_v0.2",
+        "ttf_butterfly_climate_release_independent_test_v0.2.1",
+    }:
+        expected_status = {
+            "ttf_butterfly_climate_release_independent_test_v0.1": (
+                "FROZEN_PILOT_DERIVED_HYPOTHESIS_BEFORE_INDEPENDENT_GBIF_OR_CLIMATE"
+            ),
+            "ttf_butterfly_climate_release_independent_test_v0.2": (
+                "FROZEN_RESPONSE_BLIND_PRIMARY_INFERENCE_CORRECTION_BEFORE_INDEPENDENT_PRECLIMATE_OR_CLIMATE_RESULT"
+            ),
+            "ttf_butterfly_climate_release_independent_test_v0.2.1": (
+                "FROZEN_RESPONSE_BLIND_ROW_ORDER_INVARIANT_PERMUTATION_FIX_BEFORE_INDEPENDENT_PRECLIMATE_OR_CLIMATE_RESULT"
+            ),
+        }[gate_schema]
+        if gate_rule.get("status") != expected_status:
+            raise RuntimeError("independent climate-release protocol is not frozen")
+        if quality_schema != "ttf_butterfly_climate_release_preclimate_gate_v0.1":
+            raise RuntimeError("unexpected independent preclimate quality-gate schema")
+        if quality.get("status") != "PASS_TO_INDEPENDENT_CLIMATE_CROSSFIT":
+            raise RuntimeError("independent preclimate gate did not authorize cross-fit")
+        minimum_species = int(
+            gate_rule["preclimate_quality_gate"][
+                "minimum_species_passing_preclimate_gate"
+            ]
+        )
+        q = gate_rule["preclimate_quality_gate"]["thresholds"]
+        effort_threshold = int(q["other_panel_record_effort_threshold"])
+        climate_rule = gate_rule["climate_crossfit"]
+        minimum_training_records = int(
+            climate_rule["minimum_training_occurrence_records"]
+        )
+        minimum_eval_units = int(
+            climate_rule["minimum_effort_supported_eval_observed_units"]
+        )
+        minimum_never_units = int(
+            climate_rule["minimum_effort_supported_never_observed_units"]
+        )
+        analysis_scope = "independent_pilot_derived_test"
+    else:
+        raise RuntimeError("unexpected climate analysis protocol schema")
+
+    species = sorted(map(str, quality.get("qualified_species", [])))
+    if len(species) < minimum_species:
+        raise RuntimeError("qualified species fell below frozen minimum")
+    if (
+        effort_threshold < 0
+        or minimum_training_records < 2
+        or minimum_eval_units < 1
+        or minimum_never_units < 1
+    ):
+        raise RuntimeError("invalid frozen climate quality threshold")
 
     contemporary_payload = json.loads(
         args.contemporary_footprints_json.read_text(encoding="utf-8")
@@ -372,8 +425,8 @@ def main() -> int:
                     ),
                     "climate_crossfit_informative": (
                         len(train) >= minimum_training_records
-                        and len(occupied_mismatch) >= 2
-                        and len(unoccupied_mismatch) >= 2
+                        and len(occupied_mismatch) >= minimum_eval_units
+                        and len(unoccupied_mismatch) >= minimum_never_units
                     ),
                 }
             )
@@ -405,10 +458,14 @@ def main() -> int:
         "schema": "ttf_butterfly_resource_envelope_climate_crossfit_v0.1",
         "status": "EXPLORATORY_CLIMATE_CROSSFIT_DIAGNOSTIC",
         "variables": list(VARIABLES),
+        "analysis_program_schema": gate_schema,
+        "analysis_scope": analysis_scope,
         "quality_qualified_species": list(species),
         "quality_gate_minimum_species": minimum_species,
         "frozen_other_pilot_effort_threshold": effort_threshold,
         "frozen_minimum_training_occurrence_records": minimum_training_records,
+        "frozen_minimum_effort_supported_eval_observed_units": minimum_eval_units,
+        "frozen_minimum_effort_supported_never_observed_units": minimum_never_units,
         "host_envelope": "WCVP-v13 extant non-doubtful contemporary host-resource WGSRPD3 units including introduced ranges",
         "unit_climate": (
             "Median CHELSA V2.1 value over up to a fixed number of deterministic "
@@ -432,7 +489,7 @@ def main() -> int:
             "host_database_completeness_not_proven": True,
             "only_preclimate_quality_qualified_species_analyzed": True,
             "contemporary_host_envelope_used": True,
-            "no_confirmatory_p_value": True,
+            "crossfit_is_species_level_effect_estimation_not_the_primary_between_species_test": True,
         },
     }
     args.output_summary.write_text(

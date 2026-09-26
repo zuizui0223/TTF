@@ -1,0 +1,71 @@
+name: butterfly climate-release independent panel v01
+
+on:
+  push:
+    branches:
+      - explore/butterfly-climate-release-v01
+    paths:
+      - ".github/workflows/butterfly-climate-release-panel-v01.yml"
+      - "docs/exploratory/butterfly_climate_release_independent_test_v0.1.json"
+      - "src/ttf/butterfly_climate_release.py"
+      - "scripts/freeze_butterfly_climate_release_panel.py"
+      - "tests/test_butterfly_climate_release.py"
+  workflow_dispatch:
+
+concurrency:
+  group: butterfly-climate-release-panel-v01-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  freeze-panel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install TTF
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+
+      - name: Test independent design primitives
+        run: pytest -q tests/test_butterfly_climate_release.py
+
+      - name: Restore exact S1 resource descriptors
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-resource-envelope-pilot-v01
+          path: inputs/reconstruction
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36222306369
+
+      - name: Verify exact descriptor identity
+        run: |
+          cd inputs/reconstruction/butterfly-resource-envelope-pilot-v0.1
+          echo "894f48dbca1760fc4fa75bfee8f663540ab4b9380f8b9daf2bc09440e8bb0cdc  s1_resource_descriptors.csv" | sha256sum -c -
+
+      - name: Freeze exact independent panel
+        run: |
+          mkdir -p results/butterfly-climate-release-panel-v0.1
+          python scripts/freeze_butterfly_climate_release_panel.py \
+            --descriptors-csv inputs/reconstruction/butterfly-resource-envelope-pilot-v0.1/s1_resource_descriptors.csv \
+            --protocol-json docs/exploratory/butterfly_climate_release_independent_test_v0.1.json \
+            --output-json results/butterfly-climate-release-panel-v0.1/panel.json \
+            --output-csv results/butterfly-climate-release-panel-v0.1/panel.csv
+          (
+            cd results/butterfly-climate-release-panel-v0.1
+            sha256sum panel.json panel.csv > SHA256SUMS
+          )
+          cat results/butterfly-climate-release-panel-v0.1/panel.json
+          cat results/butterfly-climate-release-panel-v0.1/SHA256SUMS
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-climate-release-independent-panel-v01
+          path: results/butterfly-climate-release-panel-v0.1/
+          retention-days: 30
