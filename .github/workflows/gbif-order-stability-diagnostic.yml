@@ -1,0 +1,71 @@
+name: gbif occurrence pagination order diagnostic
+
+on:
+  push:
+    branches:
+      - diagnostic/gbif-order-stability-20260926
+    paths:
+      - ".github/workflows/gbif-order-stability-diagnostic.yml"
+  workflow_dispatch:
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compare one window to transport chunks on pilot taxon
+        run: |
+          python - <<'PY'
+          import json, time
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+
+          base="https://api.gbif.org/v1/occurrence/search"
+          common={
+              "taxonKey": 4299368,
+              "hasCoordinate": "true",
+              "hasGeospatialIssue": "false",
+              "occurrenceStatus": "PRESENT",
+              "year": "2010,2026",
+          }
+          def fetch(offset, limit):
+              q=dict(common,offset=offset,limit=limit)
+              req=Request(base+"?"+urlencode(q),headers={
+                  "User-Agent":"ttf-gbif-order-diagnostic/0.1",
+                  "Accept":"application/json",
+              })
+              with urlopen(req,timeout=180) as r:
+                  p=json.loads(r.read().decode())
+              return [int(x["key"]) for x in p.get("results",[])]
+
+          out={}
+          for offset in (0, 300):
+              full=fetch(offset,100)
+              chunks=[]
+              for sub in range(offset,offset+100,10):
+                  chunks.extend(fetch(sub,10))
+              time.sleep(5)
+              repeated=fetch(offset,100)
+              out[str(offset)]={
+                  "full_n":len(full),
+                  "chunked_n":len(chunks),
+                  "repeat_n":len(repeated),
+                  "full_equals_chunked_sequence":full==chunks,
+                  "full_equals_repeated_sequence":full==repeated,
+                  "full_set_equals_chunked_set":set(full)==set(chunks),
+                  "full_set_equals_repeated_set":set(full)==set(repeated),
+                  "full_unique":len(full)==len(set(full)),
+                  "chunked_unique":len(chunks)==len(set(chunks)),
+                  "first_keys_full":full[:5],
+                  "first_keys_chunked":chunks[:5],
+              }
+          print(json.dumps(out,indent=2,sort_keys=True))
+          assert all(v["full_equals_chunked_sequence"] for v in out.values()), out
+          assert all(v["full_equals_repeated_sequence"] for v in out.values()), out
+          PY
