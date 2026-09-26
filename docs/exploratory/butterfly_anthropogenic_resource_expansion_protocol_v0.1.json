@@ -1,0 +1,62 @@
+{
+  "schema": "ttf_butterfly_anthropogenic_resource_expansion_protocol_v0.1",
+  "status": "FROZEN_EXPLORATORY_BEFORE_FULL_S1_CONTEMPORARY_RESOURCE_RESULT",
+  "created_on": "2026-09-26",
+  "ecological_question": "Does anthropogenic redistribution of larval host plants disproportionately expand geographic resource opportunity for butterflies with broader taxonomic host breadth?",
+  "source_panel": {
+    "source": "Exact S1 339-species resource-descriptor reconstruction",
+    "descriptor_workflow_run_id": 36222306369,
+    "descriptor_sha256": "894f48dbca1760fc4fa75bfee8f663540ab4b9380f8b9daf2bc09440e8bb0cdc",
+    "native_footprints_sha256": "546c38970789a153735d6e54cc66bdd2e8987a22b93b097aa2062e8c7f84baef",
+    "resource_eligible_definition": "host_family_count > 0 and native host-resource WGSRPD3 unit count > 0"
+  },
+  "resource_geography": {
+    "interaction_source": {
+      "repository": "globalbioticinteractions/HOSTS",
+      "commit": "808e0b869f9ec1adf8efff87cf6a395adda103e0"
+    },
+    "distribution_source": {
+      "repository": "matildabrown/rWCVPdata",
+      "commit": "65bed76bae9d644ccb6ad200c05f9f5071d89e05",
+      "version": "13"
+    },
+    "native_envelope": "extinct=0, location_doubtful=0, introduced=0",
+    "contemporary_envelope": "extinct=0, location_doubtful=0, native and introduced both retained",
+    "spatial_unit": "WGSRPD level 3"
+  },
+  "derived_species_metrics": [
+    "native_resource_units",
+    "contemporary_resource_units",
+    "introduced_added_units = contemporary - native",
+    "contemporary_over_native_ratio",
+    "log_resource_expansion = log1p(contemporary) - log1p(native)",
+    "introduced_share_of_contemporary = introduced_added_units / contemporary"
+  ],
+  "primary_descriptive_association": {
+    "response": "log_resource_expansion",
+    "predictor": "LepTraits NumberOfHostplantFamilies",
+    "statistic": "Spearman correlation",
+    "inference": "exploratory descriptive; no confirmatory alpha or decision"
+  },
+  "completeness_sensitivity": {
+    "lower_bound_subset": "resolved HOSTS-WCVP host-species count >= LepTraits NumberOfHostplantFamilies",
+    "repeat_primary_association": true
+  },
+  "additional_descriptive": [
+    "Spearman host-family breadth vs introduced-added units",
+    "Spearman resolved host-species count vs log resource expansion",
+    "Spearman native resource breadth vs log resource expansion",
+    "host-breadth-stratum medians for native, contemporary, added, ratio and introduced share",
+    "descriptive least-squares model: log resource expansion ~ log1p(host-family count) + log1p(native resource units) + log1p(resolved host species)"
+  ],
+  "claim_boundary": {
+    "exploratory_only": true,
+    "does_not_measure_butterfly_range_expansion": true,
+    "does_not_measure_realized_use_of_introduced_hosts": true,
+    "WCVP_introduced_status_is_geographic_distribution_status_not_introduction_date": true,
+    "HOSTS_database_completeness_not_proven": true,
+    "butterfly_GBIF_not_used": true,
+    "climate_not_used": true,
+    "genetic_response_not_used": true
+  }
+}
