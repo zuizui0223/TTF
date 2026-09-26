@@ -1,0 +1,60 @@
+{
+  "schema": "ttf_butterfly_climate_release_transport_completion_rule_v0.1",
+  "status": "FROZEN_BEFORE_AUTHORITATIVE_PRECLIMATE_OR_CLIMATE_RESULT",
+  "frozen_on": "2026-09-26",
+  "applies_to": {
+    "protocol": "ttf_butterfly_climate_release_independent_test_v0.2.1",
+    "execution_run_id": 36241187187,
+    "execution_head_sha": "0d4b19a67652dd233c0632eff9deadfb865bc7c3",
+    "panel_species_sha256": "bbaaa28cf361fb02d558988bdd1a3f948a243b79c8d3bb1709e908edb1f0f204"
+  },
+  "trigger": {
+    "condition": "At least one independent-panel species ledger is PARTIAL_TRANSPORT after the two frozen acquisition passes in run 36241187187.",
+    "uses_occurrence_geography": false,
+    "uses_host_overlap": false,
+    "uses_preclimate_quality": false,
+    "uses_climate": false,
+    "uses_primary_result": false
+  },
+  "authority_rule": {
+    "if_no_partial_transport": "Run 36241187187 downstream preclimate, climate and primary outputs may be authoritative subject to the frozen quality gates.",
+    "if_any_partial_transport": "Any downstream preclimate, climate or primary outputs produced directly by run 36241187187 are provisional and must not be interpreted as the independent test result. A transport-completion execution must finish first.",
+    "reason": "Excluding species because large GBIF responses transferred slowly could turn technical transport properties into ecological sample selection."
+  },
+  "completion_recovery": {
+    "eligible_species": "Exactly species whose final run-36241187187 ledger status is PARTIAL_TRANSPORT.",
+    "ineligible_species": [
+      "species already COMPLETE",
+      "species REJECTED_GBIF_TAXON_MATCH",
+      "species outside the frozen 32-species panel"
+    ],
+    "species_replacement": false,
+    "scientific_filters_change": false,
+    "period_change": false,
+    "ordinal_window_offsets_change": false,
+    "ordinal_window_size_change": false,
+    "maximum_windows_change": false,
+    "transport_chunk_size_records": 10,
+    "completed_windows_immutable": true,
+    "completed_chunks_immutable": true,
+    "resume_only_missing_chunks": true,
+    "request_timeout_seconds": 60,
+    "species_deadline_seconds_per_pass": 600,
+    "additional_passes": 2,
+    "maximum_total_additional_completion_rounds": 1
+  },
+  "post_recovery": {
+    "merge_rule": "For each PARTIAL_TRANSPORT species, replace only its transport ledger and occurrence rows with the completion-recovery output. All originally COMPLETE and REJECTED ledgers remain immutable.",
+    "if_still_partial": "Species remains technical non-evaluable and is excluded by the already-frozen occurrence-transport quality gate.",
+    "rerun_scientific_pipeline": "Recompute WGSRPD3 mapping, contemporary overlap, sampling-effort diagnostic, frozen preclimate gate, climate cross-fit and primary v0.2.1 test from the merged post-recovery occurrence set.",
+    "threshold_or_hypothesis_change_authorized": false
+  },
+  "response_firewall_at_freeze": {
+    "independent_host_overlap_opened": false,
+    "preclimate_quality_gate_opened": false,
+    "independent_climate_values_opened": false,
+    "independent_climate_filtering_scores_opened": false,
+    "independent_primary_result_opened": false,
+    "genetic_response_used": false
+  }
+}
