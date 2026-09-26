@@ -1,6 +1,6 @@
 {
   "schema": "ttf_butterfly_climate_release_execution_binding_v0.2",
-  "status": "BOUND_BEFORE_PRECLIMATE_OR_CLIMATE_RESULT",
+  "status": "SUPERSEDED_BEFORE_PRECLIMATE_OR_CLIMATE_RESULT",
   "bound_on": "2026-09-26",
   "execution": {
     "workflow_name": "butterfly climate-release independent test v02",
@@ -72,5 +72,18 @@
     "independent_climate_filtering_scores_opened": false,
     "independent_primary_result_opened": false,
     "genetic_response_used": false
+  },
+  "superseded_on": "2026-09-26",
+  "supersession": {
+    "reason": "Code audit found that the deterministic residual permutation assigned the hash-ordered residual vector to current row positions, so the exact permutation realization could depend on input row order. No independent occurrence geography, host overlap, preclimate gate, climate value, filtering score, or primary result had been opened.",
+    "independent_occurrence_geography_opened_before_supersession": false,
+    "independent_host_overlap_opened_before_supersession": false,
+    "preclimate_quality_gate_opened_before_supersession": false,
+    "independent_climate_values_opened_before_supersession": false,
+    "independent_climate_filtering_scores_opened_before_supersession": false,
+    "independent_primary_result_opened_before_supersession": false,
+    "transport_only_state_may_be_reused": true,
+    "scientific_result_from_run_36240521463_must_not_be_used": true,
+    "successor_protocol": "ttf_butterfly_climate_release_independent_test_v0.2.1"
   }
 }
