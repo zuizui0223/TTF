@@ -80,7 +80,28 @@ jobs:
       - name: Acquire one frozen pilot species
         run: |
           mkdir -p results/gbif-species/${{ matrix.id }}
-          python scripts/acquire_butterfly_resource_envelope_occurrences.py             --pilot-json inputs/pilot/butterfly-resource-envelope-pilot-v0.1/pilot_species.json             --only-species "${{ matrix.species }}"             --state-dir results/gbif-state/${{ matrix.id }}             --output-csv results/gbif-species/${{ matrix.id }}/occurrences.csv             --output-ledger results/gbif-species/${{ matrix.id }}/occurrence_ledger.json             --species-seconds 120             --maximum-pages 6
+          for pass in 1 2 3 4; do
+            echo "checkpointed acquisition pass ${pass}/4 for ${{ matrix.species }}"
+            python scripts/acquire_butterfly_resource_envelope_occurrences.py \
+              --pilot-json inputs/pilot/butterfly-resource-envelope-pilot-v0.1/pilot_species.json \
+              --only-species "${{ matrix.species }}" \
+              --state-dir results/gbif-state/${{ matrix.id }} \
+              --output-csv results/gbif-species/${{ matrix.id }}/occurrences.csv \
+              --output-ledger results/gbif-species/${{ matrix.id }}/occurrence_ledger.json \
+              --species-seconds 120 \
+              --maximum-pages 6
+            status=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("results/gbif-species/${{ matrix.id }}/occurrence_ledger.json")
+          print(json.loads(p.read_text())["status"])
+          PY
+            )
+            echo "pass ${pass} status: ${status}"
+            if [ "${status}" != "RESUMABLE_PARTIAL_TRANSPORT" ]; then
+              break
+            fi
+          done
           cat results/gbif-species/${{ matrix.id }}/occurrence_ledger.json
 
       - uses: actions/upload-artifact@v4
