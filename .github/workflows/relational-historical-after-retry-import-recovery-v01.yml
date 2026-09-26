@@ -1,0 +1,165 @@
+name: relational-historical-after-retry-import-recovery-v01
+
+on:
+  workflow_run:
+    workflows:
+      - "relational-historical-retry-import-recovery-v01"
+    types:
+      - completed
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  gate:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.id == 36200833241
+    runs-on: ubuntu-latest
+    outputs:
+      route: ${{ steps.gate.outputs.route }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: relational-ttf-v01
+
+      - id: gate
+        name: Verify exact recovery result and choose frozen transition
+        env:
+          EVENT_RUN_ID: ${{ github.event.workflow_run.id }}
+          EVENT_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+
+          rule=json.loads(Path("benchmarks/frozen/relational_historical_recovery_downstream_handoff_v0.1.json").read_text())
+          result=json.loads(Path("benchmarks/frozen/relational_historical_retry_import_recovery_result_v0.1.json").read_text())
+          binding=json.loads(Path("benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json").read_text())
+
+          event_run=int(os.environ["EVENT_RUN_ID"])
+          event_head=os.environ["EVENT_HEAD_SHA"]
+          assert rule["schema"]=="ttf_relational_historical_recovery_downstream_handoff_v0.1"
+          assert rule["status"]=="FROZEN_RESPONSE_BLIND_BEFORE_RECOVERY_RESULT"
+          assert event_run==rule["recovery_execution"]["workflow_run_id"]==36200833241
+          assert event_head==rule["recovery_execution"]["workflow_head_sha"]=="7478c3d6fc8e1e1926edd8baa7e2a0d17b2ca09b"
+
+          assert result["schema"]=="ttf_relational_historical_retry_import_recovery_result_v0.1"
+          assert result["status"]=="COMPLETED_EXACT_SINGLE_RETRY_RECOVERY"
+          assert result["recovery_workflow_run_id"]==event_run
+          assert result["retry_rounds_completed"]==1
+          assert result["additional_retry_authorized"] is False
+          assert result["scientific_query_change"] is False
+          assert result["relation_result_seen"] is False
+          assert result["genetic_response_used"] is False
+          assert all(v is False for v in result["response_firewall"].values())
+
+          assert binding["schema"]=="ttf_relational_historical_occurrence_artifact_binding_v0.2"
+          assert binding["status"]=="FROZEN_FINAL_BOUNDED_RESPONSE_BLIND_OCCURRENCE_ARTIFACT"
+          assert binding["workflow_run_id"]==35941577015
+          assert binding["workflow_head_sha"]=="ffacbd51d58689a4b18f7a2cb920f5a1385a74ab"
+          assert binding["artifact_workflow_run_id"]==event_run
+          assert binding["artifact_workflow_head_sha"]==event_head
+          assert binding["occurrence_status"]==result["occurrence_status"]
+          assert binding["genetic_response_used"] is False
+          assert all(v is False for v in binding["response_firewall"].values())
+
+          status=result["occurrence_status"]
+          routes=rule["terminal_transition_rule"]
+          allowed={
+              "PASS_TO_HISTORICAL_ASSET_EXTRACTION",
+              "NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT",
+              "NOT_EVALUABLE_HISTORICAL_OCCURRENCE_GEOMETRY",
+          }
+          assert status in allowed
+          route="downstream" if status=="PASS_TO_HISTORICAL_ASSET_EXTRACTION" else "close_not_evaluable"
+          expected=routes[status]
+          if route=="downstream":
+              assert expected=="RUN_EXISTING_FROZEN_STUDY_C_DOWNSTREAM_PIPELINE"
+          else:
+              assert expected=="FREEZE_C_NOT_EVALUABLE_AND_CLOSE_FINITE_PROGRAM"
+
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"route={route}\n")
+          print(json.dumps({"occurrence_status":status,"route":route},sort_keys=True))
+          PY
+
+  execute_c:
+    needs: gate
+    if: needs.gate.outputs.route == 'downstream'
+    uses: zuizui0223/TTF/.github/workflows/relational-historical-from-bounded-binding-v02.yml@c1fdd8feb43ba56d3ee4be0ed69751fdc14b7f47
+
+  close_c_not_evaluable:
+    needs: gate
+    if: needs.gate.outputs.route == 'close_not_evaluable'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: relational-ttf-v01
+
+      - name: Freeze terminal finite-program state from exact recovery ledger
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          rule=json.loads(Path("benchmarks/frozen/relational_historical_recovery_downstream_handoff_v0.1.json").read_text())
+          result=json.loads(Path("benchmarks/frozen/relational_historical_retry_import_recovery_result_v0.1.json").read_text())
+          transition=json.loads(Path("benchmarks/frozen/relational_environment_program_transition_v0.3.json").read_text())
+
+          status=result["occurrence_status"]
+          assert status in {
+              "NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT",
+              "NOT_EVALUABLE_HISTORICAL_OCCURRENCE_GEOMETRY",
+          }
+          assert rule["terminal_transition_rule"][status]=="FREEZE_C_NOT_EVALUABLE_AND_CLOSE_FINITE_PROGRAM"
+          assert result["retry_rounds_completed"]==1
+          assert result["additional_retry_authorized"] is False
+          assert result["scientific_query_change"] is False
+          assert result["relation_result_seen"] is False
+          assert result["genetic_response_used"] is False
+          assert all(v is False for v in result["response_firewall"].values())
+
+          b_state=transition["B_state"]
+          assert b_state in {
+              "STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER",
+              "NOT_EVALUABLE_B",
+          }
+          final=(
+              "CLOSED_PARTIAL_NOT_EVALUABLE"
+              if b_state=="STUDY_B_ENVIRONMENT_RELATIONAL_NULL_WITH_QUALIFIED_POWER"
+              else "CLOSED_NO_EVALUABLE_TEST"
+          )
+          payload={
+              "schema":"ttf_relational_program_final_state_v0.3",
+              "B_state":b_state,
+              "C_state":"NOT_EVALUABLE",
+              "C_decision":None,
+              "C_p_one_sided":None,
+              "final_state":final,
+              "no_additional_predictor_authorized":True,
+          }
+          path=Path("benchmarks/frozen/relational_program_final_state_v0.3.json")
+          if path.exists():
+              assert json.loads(path.read_text())==payload
+          else:
+              path.write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
+          print(json.dumps(payload,sort_keys=True))
+          PY
+
+      - name: Persist exact terminal closure
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- benchmarks/frozen/relational_program_final_state_v0.3.json; then
+            echo "Terminal state already frozen identically."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/relational_program_final_state_v0.3.json
+          git commit -m "Freeze terminal relational v0.3 state after Study C recovery"
+          git fetch origin relational-ttf-v01
+          git rebase origin/relational-ttf-v01
+          git push origin HEAD:relational-ttf-v01
