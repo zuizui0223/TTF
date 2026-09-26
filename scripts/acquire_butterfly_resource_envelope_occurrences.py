@@ -58,6 +58,7 @@ def get_json(
             "--location",
             "--silent",
             "--show-error",
+            "--compressed",
             "--max-time",
             f"{timeout:.3f}",
             "--header",
