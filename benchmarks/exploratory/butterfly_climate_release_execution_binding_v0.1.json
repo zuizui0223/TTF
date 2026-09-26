@@ -1,6 +1,6 @@
 {
   "schema": "ttf_butterfly_climate_release_execution_binding_v0.1",
-  "status": "BOUND_BEFORE_PRECLIMATE_OR_CLIMATE_RESULT",
+  "status": "SUPERSEDED_BEFORE_PRECLIMATE_OR_CLIMATE_RESULT",
   "bound_on": "2026-09-26",
   "execution": {
     "workflow_name": "butterfly climate-release independent test v01",
@@ -63,5 +63,17 @@
     "climate variables change",
     "cross-fit split rule change",
     "primary statistic, alternative, alpha or permutation count change"
-  ]
+  ],
+  "superseded_on": "2026-09-26",
+  "supersession": {
+    "reason": "Code audit identified that raw host-breadth label permutation breaks the observed predictor-control association and is not the preferred conditional null for partial Spearman inference.",
+    "independent_host_overlap_opened_before_supersession": false,
+    "preclimate_quality_gate_opened_before_supersession": false,
+    "independent_climate_values_opened_before_supersession": false,
+    "independent_climate_filtering_scores_opened_before_supersession": false,
+    "independent_primary_result_opened_before_supersession": false,
+    "transport_only_state_may_be_reused": true,
+    "scientific_result_from_run_36239130041_must_not_be_used": true,
+    "successor_protocol": "ttf_butterfly_climate_release_independent_test_v0.2"
+  }
 }
