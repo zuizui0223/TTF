@@ -5,6 +5,7 @@ import pytest
 from ttf.checkpointed_gbif_occurrence import (
     deterministic_page_offsets,
     missing_page_offsets,
+    occurrence_window_chunks,
     request_timeout_seconds,
     species_state_key,
 )
@@ -53,3 +54,25 @@ def test_species_state_key_is_stable_and_name_specific():
     assert species_state_key("Papilio machaon") == species_state_key("Papilio machaon")
     assert species_state_key("Papilio machaon") != species_state_key("Pieris rapae")
     assert species_state_key("Papilio machaon").endswith("-Papilio_machaon")
+
+
+def test_occurrence_window_chunks_preserve_exact_ordinal_window():
+    chunks = occurrence_window_chunks(79_800, 300, chunk_size=50)
+    assert chunks == (
+        (79_800, 50),
+        (79_850, 50),
+        (79_900, 50),
+        (79_950, 50),
+        (80_000, 50),
+        (80_050, 50),
+    )
+    covered = [
+        index
+        for offset, limit in chunks
+        for index in range(offset, offset + limit)
+    ]
+    assert covered == list(range(79_800, 80_100))
+
+
+def test_occurrence_window_chunks_handle_short_final_window():
+    assert occurrence_window_chunks(600, 1, chunk_size=50) == ((600, 1),)
