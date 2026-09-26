@@ -37,6 +37,7 @@ def get_json(
     params: dict[str, object],
     *,
     deadline: float,
+    request_seconds: float = 30.0,
     attempts: int = 3,
 ) -> dict:
     """Fetch one GBIF JSON response with a true wall-clock request cap.
@@ -48,7 +49,10 @@ def get_json(
     url = f"{GBIF}/{path}?{urlencode(params)}"
     last_detail = ""
     for attempt in range(attempts):
-        timeout = request_timeout_seconds(deadline, per_request_cap=30.0)
+        timeout = request_timeout_seconds(
+            deadline,
+            per_request_cap=float(request_seconds),
+        )
         cmd = [
             "curl",
             "--location",
@@ -148,11 +152,17 @@ def _accepted_match(species: str, payload: dict) -> tuple[bool, int, str, str, s
     return accepted, usage_key, canonical, rank, match_type
 
 
-def resolve_species_metadata(species: str, *, deadline: float) -> dict:
+def resolve_species_metadata(
+    species: str,
+    *,
+    deadline: float,
+    request_seconds: float,
+) -> dict:
     strict = get_json(
         "species/match",
         {"name": species, "strict": "true"},
         deadline=deadline,
+        request_seconds=request_seconds,
     )
     accepted, usage_key, canonical, rank, match_type = _accepted_match(
         species, strict
@@ -173,6 +183,7 @@ def resolve_species_metadata(species: str, *, deadline: float) -> dict:
         "species/search",
         {"q": species, "rank": "SPECIES", "limit": 20},
         deadline=deadline,
+        request_seconds=request_seconds,
     )
     candidates = []
     for item in search.get("results") or []:
@@ -230,6 +241,7 @@ def metadata_for_species(
     *,
     deadline: float,
     maximum_pages: int,
+    request_seconds: float,
 ) -> dict:
     meta_path = state_dir / "metadata.json"
     if meta_path.exists():
@@ -243,7 +255,11 @@ def metadata_for_species(
         if meta.get("resolver_version") == RESOLVER_VERSION:
             return meta
 
-    meta = resolve_species_metadata(species, deadline=deadline)
+    meta = resolve_species_metadata(
+        species,
+        deadline=deadline,
+        request_seconds=request_seconds,
+    )
     if meta.get("status") == "REJECTED_GBIF_TAXON_MATCH":
         atomic_json(meta_path, meta)
         return meta
@@ -260,6 +276,7 @@ def metadata_for_species(
             "limit": 1,
         },
         deadline=deadline,
+        request_seconds=request_seconds,
     )
     total = int(count.get("count") or 0)
     offsets = deterministic_page_offsets(
@@ -283,6 +300,7 @@ def fetch_species_pages(
     *,
     species_seconds: float,
     maximum_pages: int,
+    request_seconds: float,
 ) -> dict:
     state_dir = state_root / species_state_key(species)
     state_dir.mkdir(parents=True, exist_ok=True)
@@ -294,6 +312,7 @@ def fetch_species_pages(
             state_dir,
             deadline=deadline,
             maximum_pages=maximum_pages,
+            request_seconds=request_seconds,
         )
     except Exception as exc:
         return {
@@ -342,6 +361,7 @@ def fetch_species_pages(
                     "offset": offset,
                 },
                 deadline=deadline,
+                request_seconds=request_seconds,
             )
             records = []
             for item in payload.get("results") or []:
@@ -422,6 +442,7 @@ def main() -> int:
     ap.add_argument("--output-ledger", type=Path, required=True)
     ap.add_argument("--species-seconds", type=float, default=600.0)
     ap.add_argument("--maximum-pages", type=int, default=12)
+    ap.add_argument("--request-seconds", type=float, default=30.0)
     args = ap.parse_args()
 
     species = load_pilot(args.pilot_json)
@@ -437,6 +458,7 @@ def main() -> int:
             args.state_dir,
             species_seconds=args.species_seconds,
             maximum_pages=args.maximum_pages,
+            request_seconds=args.request_seconds,
         )
         for name in species
     ]
@@ -470,7 +492,7 @@ def main() -> int:
             "page_checkpointing": True,
             "resume_only_unfinished_pages": True,
             "species_total_deadline_seconds": float(args.species_seconds),
-            "request_timeout_cap_seconds": 30.0,
+            "request_timeout_cap_seconds": float(args.request_seconds),
             "request_attempts": 3,
             "maximum_pages_per_species": int(args.maximum_pages),
             "page_size": 300,
