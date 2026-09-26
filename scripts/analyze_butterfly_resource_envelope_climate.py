@@ -148,6 +148,7 @@ def main() -> int:
     elif gate_schema in {
         "ttf_butterfly_climate_release_independent_test_v0.1",
         "ttf_butterfly_climate_release_independent_test_v0.2",
+        "ttf_butterfly_climate_release_independent_test_v0.2.1",
     }:
         expected_status = {
             "ttf_butterfly_climate_release_independent_test_v0.1": (
@@ -155,6 +156,9 @@ def main() -> int:
             ),
             "ttf_butterfly_climate_release_independent_test_v0.2": (
                 "FROZEN_RESPONSE_BLIND_PRIMARY_INFERENCE_CORRECTION_BEFORE_INDEPENDENT_PRECLIMATE_OR_CLIMATE_RESULT"
+            ),
+            "ttf_butterfly_climate_release_independent_test_v0.2.1": (
+                "FROZEN_RESPONSE_BLIND_ROW_ORDER_INVARIANT_PERMUTATION_FIX_BEFORE_INDEPENDENT_PRECLIMATE_OR_CLIMATE_RESULT"
             ),
         }[gate_schema]
         if gate_rule.get("status") != expected_status:
