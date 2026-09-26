@@ -122,16 +122,28 @@ def get_json(
         f"GBIF request failed after {attempts} attempts: {url} ({last_detail})"
     )
 
-def load_pilot(path: Path) -> tuple[str, ...]:
+def load_species_panel(path: Path) -> tuple[str, ...]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    if payload.get("schema") != "ttf_butterfly_resource_envelope_pilot_v0.1":
-        raise RuntimeError("unexpected pilot schema")
-    if payload.get("status") != "EXPLORATORY_RESPONSE_BLIND_PILOT_SELECTED":
-        raise RuntimeError("pilot is not in response-blind selected state")
-    names = tuple(map(str, payload.get("pilot_species", [])))
-    if len(names) != 10 or len(set(names)) != 10:
-        raise RuntimeError("expected exact ten-species exploratory pilot")
-    return names
+    schema = payload.get("schema")
+    if schema == "ttf_butterfly_resource_envelope_pilot_v0.1":
+        if payload.get("status") != "EXPLORATORY_RESPONSE_BLIND_PILOT_SELECTED":
+            raise RuntimeError("pilot is not in response-blind selected state")
+        names = tuple(map(str, payload.get("pilot_species", [])))
+        if len(names) != 10 or len(set(names)) != 10:
+            raise RuntimeError("expected exact ten-species exploratory pilot")
+        return names
+    if schema == "ttf_butterfly_climate_release_independent_panel_v0.1":
+        if payload.get("status") != "FROZEN_BEFORE_INDEPENDENT_GBIF_OR_CLIMATE":
+            raise RuntimeError("independent panel is not frozen")
+        names = tuple(map(str, payload.get("species", [])))
+        if len(names) != 32 or len(set(names)) != 32:
+            raise RuntimeError("expected exact 32-species independent panel")
+        return names
+    raise RuntimeError("unexpected butterfly species-panel schema")
+
+
+def load_pilot(path: Path) -> tuple[str, ...]:
+    return load_species_panel(path)
 
 
 RESOLVER_VERSION = "gbif-exact-accepted-species-v0.2"
@@ -478,7 +490,9 @@ def combine_records(state_root: Path, species: tuple[str, ...]) -> list[dict[str
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--pilot-json", type=Path, required=True)
+    panel_group = ap.add_mutually_exclusive_group(required=True)
+    panel_group.add_argument("--pilot-json", type=Path)
+    panel_group.add_argument("--panel-json", type=Path)
     ap.add_argument("--only-species", type=str, default=None)
     ap.add_argument("--state-dir", type=Path, required=True)
     ap.add_argument("--output-csv", type=Path, required=True)
@@ -488,11 +502,12 @@ def main() -> int:
     ap.add_argument("--request-seconds", type=float, default=30.0)
     args = ap.parse_args()
 
-    species = load_pilot(args.pilot_json)
+    panel_path = args.panel_json if args.panel_json is not None else args.pilot_json
+    species = load_species_panel(panel_path)
     if args.only_species is not None:
         selected = str(args.only_species).strip()
         if selected not in species:
-            raise RuntimeError(f"requested species is not in frozen pilot: {selected}")
+            raise RuntimeError(f"requested species is not in frozen species panel: {selected}")
         species = (selected,)
     args.state_dir.mkdir(parents=True, exist_ok=True)
     ledgers = [
