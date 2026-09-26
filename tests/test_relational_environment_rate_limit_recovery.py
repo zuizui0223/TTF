@@ -10,7 +10,9 @@ RECOVERY = Path("scripts/recover_relational_environment_rate_limit.py")
 def test_rate_limit_recovery_is_http_only_and_pre_result():
     p = json.loads(RULE.read_text())
     assert p["schema"] == "ttf_relational_environment_rate_limit_recovery_v0.1"
-    assert p["status"] == "FROZEN_HTTP_ONLY_RECOVERY_BEFORE_RELATION_RESULT"
+    assert p["status"] == "SUPERSEDED_PRE_RELATION_BY_SINGLETON_RECOVERY"
+    assert p["superseded_by"] == "benchmarks/frozen/relational_environment_rate_limit_singleton_trigger_v0.1.json"
+    assert p["superseded_before_relation_result"] is True
     assert p["source_request_error_species"] == [
         "Pyrrhosoma nymphula",
         "Lithobates clamitans",
