@@ -152,7 +152,7 @@ jobs:
       - name: Persist exact terminal closure
         run: |
           set -euo pipefail
-          if git diff --quiet -- benchmarks/frozen/relational_program_final_state_v0.3.json; then
+          if [ -z "$(git status --porcelain -- benchmarks/frozen/relational_program_final_state_v0.3.json)" ]; then
             echo "Terminal state already frozen identically."
             exit 0
           fi
