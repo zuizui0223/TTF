@@ -1,0 +1,93 @@
+name: butterfly anthropogenic resource expansion v01
+
+on:
+  push:
+    branches:
+      - explore/butterfly-resource-anthropogenic-expansion-v01
+    paths:
+      - ".github/workflows/butterfly-anthropogenic-resource-expansion-v01.yml"
+      - "docs/exploratory/butterfly_anthropogenic_resource_expansion_protocol_v0.1.json"
+      - "scripts/analyze_butterfly_anthropogenic_resource_expansion.py"
+      - "tests/test_butterfly_anthropogenic_resource_expansion.py"
+  workflow_dispatch:
+
+concurrency:
+  group: butterfly-anthropogenic-resource-expansion-v01-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout exact WCVP v13 redistribution snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: matildabrown/rWCVPdata
+          ref: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
+          path: _wcvp
+
+      - name: Checkout exact HOSTS mirror
+        uses: actions/checkout@v4
+        with:
+          repository: globalbioticinteractions/HOSTS
+          ref: 808e0b869f9ec1adf8efff87cf6a395adda103e0
+          path: _hosts
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+
+      - name: Install TTF
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+
+      - name: Test resource-expansion analysis
+        run: pytest -q tests/test_butterfly_anthropogenic_resource_expansion.py
+
+      - name: Restore exact S1 ecology reconstruction
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-resource-envelope-pilot-v01
+          path: inputs/reconstruction
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36222306369
+
+      - name: Verify exact S1 resource inputs
+        run: |
+          cd inputs/reconstruction/butterfly-resource-envelope-pilot-v0.1
+          echo "894f48dbca1760fc4fa75bfee8f663540ab4b9380f8b9daf2bc09440e8bb0cdc  s1_resource_descriptors.csv" | sha256sum -c -
+          echo "546c38970789a153735d6e54cc66bdd2e8987a22b93b097aa2062e8c7f84baef  s1_host_resource_footprints.json" | sha256sum -c -
+
+      - name: Rebuild exact contemporary HOSTS-WCVP sidecar
+        run: |
+          test "$(git -C _wcvp rev-parse HEAD)" = "65bed76bae9d644ccb6ad200c05f9f5071d89e05"
+          test "$(git -C _hosts rev-parse HEAD)" = "808e0b869f9ec1adf8efff87cf6a395adda103e0"
+          Rscript scripts/build_wcvp_hosts_contemporary_sidecar.R             _wcvp             _hosts             results/contemporary-host-sidecar
+          cat results/contemporary-host-sidecar/counts.tsv
+
+      - name: Analyze full S1 resource redistribution
+        run: |
+          mkdir -p results/butterfly-anthropogenic-resource-expansion-v0.1
+          python scripts/analyze_butterfly_anthropogenic_resource_expansion.py             --protocol-json docs/exploratory/butterfly_anthropogenic_resource_expansion_protocol_v0.1.json             --descriptors-csv inputs/reconstruction/butterfly-resource-envelope-pilot-v0.1/s1_resource_descriptors.csv             --native-footprints-json inputs/reconstruction/butterfly-resource-envelope-pilot-v0.1/s1_host_resource_footprints.json             --insect-host-csv results/contemporary-host-sidecar/insect_host_accepted.csv             --contemporary-distribution-csv results/contemporary-host-sidecar/extant_nondoubtful_wgsrpd3.csv             --output-csv results/butterfly-anthropogenic-resource-expansion-v0.1/species_metrics.csv             --output-json results/butterfly-anthropogenic-resource-expansion-v0.1/result.json
+          cat results/butterfly-anthropogenic-resource-expansion-v0.1/result.json
+          (
+            cd results/butterfly-anthropogenic-resource-expansion-v0.1
+            sha256sum species_metrics.csv result.json > SHA256SUMS
+          )
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-anthropogenic-resource-expansion-v01
+          path: |
+            results/butterfly-anthropogenic-resource-expansion-v0.1/
+            results/contemporary-host-sidecar/counts.tsv
+          retention-days: 30
