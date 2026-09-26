@@ -19,6 +19,7 @@ on:
       - "scripts/apply_butterfly_climate_release_quality_gate.py"
       - "scripts/analyze_butterfly_resource_envelope_climate.py"
       - "scripts/test_butterfly_climate_release_hypothesis.py"
+      - "docs/exploratory/butterfly_climate_release_transport_recovery_v0.1.json"
   workflow_dispatch:
 
 concurrency:
@@ -204,6 +205,7 @@ jobs:
               --output-ledger results/gbif-species/${{ matrix.id }}/occurrence_ledger.json \
               --species-seconds 600 \
               --request-seconds 60 \
+              --transport-chunk-size 10 \
               --maximum-pages 6
             status=$(python - <<'PY'
           import json
