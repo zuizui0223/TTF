@@ -1,4 +1,4 @@
-# Butterfly specialization is hierarchical: host portfolios structure resource opportunity while climate independently filters realized geography
+# Butterfly specialization is hierarchical: host portfolios structure resource opportunity while climate filters realized geography
 
 **Working manuscript v0.1 — 2026-09-27**
 
