@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use TTF, please cite the versioned archival release associated with the methods manuscript."
+title: "TTF: transferability qualification and abstention for cross-species inference"
+type: software
+authors:
+  - family-names: "ZHANG"
+    given-names: "Ruiqi"
+repository-code: "https://github.com/zuizui0223/TTF"
+abstract: >-
+  Methods and reproducibility infrastructure for prospectively qualifying
+  cross-species transfer claims, held-out evaluation, finite candidate
+  families, explicit abstention, and frozen empirical handoffs.
+keywords:
+  - transferability
+  - cross-species inference
+  - qualification
+  - abstention
+  - reproducibility
+  - spatial ecology
