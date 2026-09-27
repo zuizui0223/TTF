@@ -1,0 +1,138 @@
+name: butterfly specialization GEB review DOCX v01
+
+on:
+  push:
+    branches:
+      - submission/butterfly-geb-review-package-v01
+    paths:
+      - ".github/workflows/butterfly-specialization-review-docx-v01.yml"
+      - "scripts/render_butterfly_specialization_review_docx.py"
+      - "scripts/render_butterfly_specialization_manuscript_figures.py"
+      - "scripts/render_butterfly_specialization_blinded_manuscript.py"
+      - "manuscript/butterfly_specialization_ecology_v0.1.md"
+      - "manuscript/generated/butterfly_specialization_ecology_blinded_v0.1.md"
+      - "tests/test_butterfly_specialization_submission_bundle.py"
+      - "tests/test_butterfly_specialization_manuscript_bundle.py"
+  workflow_dispatch:
+
+concurrency:
+  group: butterfly-specialization-review-docx-v01-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install manuscript environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "numpy>=1.26" "matplotlib>=3.9,<4" "python-docx>=1.1,<2" "pytest>=8"
+
+      - name: Run manuscript and submission tests
+        run: |
+          pytest -q \
+            tests/test_butterfly_specialization_manuscript_bundle.py \
+            tests/test_butterfly_specialization_submission_bundle.py
+
+      - name: Restore exact S1 resource descriptors
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-resource-envelope-pilot-v01
+          path: inputs/s1
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36222306369
+
+      - name: Restore exact anthropogenic resource result
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-anthropogenic-resource-expansion-v01
+          path: inputs/anthropogenic
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36243549495
+
+      - name: Restore exact host-contribution mechanism result
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-resource-expansion-mechanism-v01
+          path: inputs/mechanism
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36270981110
+
+      - name: Restore exact independent climate result
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-climate-release-postgate-independent-result-v01
+          path: inputs/climate
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36270581743
+
+      - name: Verify exact figure source identities
+        run: |
+          echo "894f48dbca1760fc4fa75bfee8f663540ab4b9380f8b9daf2bc09440e8bb0cdc  inputs/s1/butterfly-resource-envelope-pilot-v0.1/s1_resource_descriptors.csv" | sha256sum -c -
+          echo "7b2a20387d656dbfcd7b3c38ec6a7fe2505474ad51f783dd1f201eb6b7eabd30  inputs/anthropogenic/butterfly-anthropogenic-resource-expansion-v0.1/species_metrics.csv" | sha256sum -c -
+          echo "b0f16c5fa9a5b4a0842d6d23f69de7a1f5e938a4a96fea426c97df2dd73e63aa  inputs/mechanism/species_mechanism_metrics.csv" | sha256sum -c -
+          echo "a73dca6e8b669f721d8f2745f27198d9b47a5cbd05dde6146cc8d4f1ddfbf79b  inputs/climate/primary_result.json" | sha256sum -c -
+
+      - name: Render exact five manuscript figures
+        run: |
+          mkdir -p results/geb-review/figures
+          python scripts/render_butterfly_specialization_manuscript_figures.py \
+            --descriptors-csv inputs/s1/butterfly-resource-envelope-pilot-v0.1/s1_resource_descriptors.csv \
+            --anthropogenic-csv inputs/anthropogenic/butterfly-anthropogenic-resource-expansion-v0.1/species_metrics.csv \
+            --mechanism-csv inputs/mechanism/species_mechanism_metrics.csv \
+            --climate-primary-json inputs/climate/primary_result.json \
+            --output-dir results/geb-review/figures
+
+      - name: Render blinded editable review DOCX
+        run: |
+          python scripts/render_butterfly_specialization_review_docx.py \
+            --input manuscript/generated/butterfly_specialization_ecology_blinded_v0.1.md \
+            --figures-dir results/geb-review/figures \
+            --output results/geb-review/butterfly_specialization_GEB_blinded_review_v0.1.docx
+
+      - name: Inspect DOCX package for anonymity and line numbering
+        run: |
+          python - <<'PY'
+          import zipfile
+          from pathlib import Path
+
+          p=Path("results/geb-review/butterfly_specialization_GEB_blinded_review_v0.1.docx")
+          assert p.exists() and p.stat().st_size > 100000
+          with zipfile.ZipFile(p) as z:
+              document=z.read("word/document.xml").decode("utf-8")
+              core=z.read("docProps/core.xml").decode("utf-8")
+              assert "w:lnNumType" in document
+              assert document.count("<a:blip") == 5
+              lower=(document+"\n"+core).lower()
+              for token in ("zuizui0223","ttf repository",".github/workflows/","repository provenance"):
+                  assert token not in lower, token
+          PY
+
+      - name: Record package identities
+        run: |
+          (
+            cd results/geb-review
+            sha256sum butterfly_specialization_GEB_blinded_review_v0.1.docx figures/*.pdf figures/*.png > SHA256SUMS
+          )
+          cat results/geb-review/SHA256SUMS
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-specialization-geb-review-package-v01
+          path: |
+            results/geb-review/butterfly_specialization_GEB_blinded_review_v0.1.docx
+            results/geb-review/SHA256SUMS
+            results/geb-review/figures/*.pdf
+            results/geb-review/figures/*.png
+          retention-days: 30
