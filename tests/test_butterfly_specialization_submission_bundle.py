@@ -62,6 +62,7 @@ def test_blinded_manuscript_has_geb_required_front_matter():
     if len(items) == 1:
         items = [item.strip() for item in keywords.group(1).split(",") if item.strip()]
     assert 6 <= len(items) <= 10
+    assert items == sorted(items, key=str.casefold)
 
 
 def test_blinded_manuscript_removes_internal_identity_tokens():
