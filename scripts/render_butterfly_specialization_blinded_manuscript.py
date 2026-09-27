@@ -39,15 +39,27 @@ def render_blinded(text: str) -> str:
         "Genetic responses from the precursor transferability program were not used in these analyses.",
     )
 
-    data_start = text.find("## Data and Code Availability")
-    refs_start = text.find("## References", data_start)
-    if data_start < 0 or refs_start < 0:
-        raise ValueError("could not locate Data and Code Availability / References sections")
-    text = text[:data_start] + ANON_DATA_CODE + text[refs_start:]
+    text = text.replace("## References (working)", "## References")
 
+    refs_start = text.find("## References")
+    data_start = text.find("## Data and Code Availability")
+    figures_start = text.find("## Figure legends")
     provenance_start = text.find("## Repository provenance")
+    if min(refs_start, data_start, figures_start) < 0:
+        raise ValueError(
+            "could not locate References / Data and Code Availability / Figure legends"
+        )
+    if not (refs_start < data_start < figures_start):
+        raise ValueError(
+            "GEB blinded-manuscript order must be References, Data and Code Availability, then Figure legends"
+        )
+
     if provenance_start >= 0:
         text = text[:provenance_start].rstrip() + "\n"
+
+    data_start = text.find("## Data and Code Availability")
+    figures_start = text.find("## Figure legends")
+    text = text[:data_start] + ANON_DATA_CODE + text[figures_start:]
 
     forbidden = (
         "TTF repository",
