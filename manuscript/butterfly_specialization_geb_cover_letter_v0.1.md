@@ -4,7 +4,7 @@
 
 Dear Editors,
 
-Please consider our Research Article, **“Butterfly specialization is hierarchical: host portfolios structure resource opportunity while climate independently filters realized geography,”** for publication in *Global Ecology and Biogeography*.
+Please consider our Research Article, **“Butterfly specialization is hierarchical: host portfolios structure resource opportunity while climate filters realized geography,”** for publication in *Global Ecology and Biogeography*.
 
 Ecological specialization is commonly summarized along a specialist–generalist axis, but that summary can collapse several different biological quantities. In this study, we separate family-level larval host breadth, species-level host portfolio richness, geographic resource breadth, anthropogenic resource-opportunity architecture, and climatic filtering of realized distributions.
 
@@ -14,7 +14,7 @@ We then tested a mechanistic extension on an independent butterfly panel: whethe
 
 We believe the manuscript fits *Global Ecology and Biogeography* because it uses broad-scale comparative and spatial analyses to derive a general ecological framework rather than a taxon-specific natural-history conclusion. The study also addresses a general consequence of human activity: redistribution of plant resources can alter ecological opportunity without simply erasing specialization, because similar aggregate opportunity may be assembled through very different interaction portfolios.
 
-The manuscript is approximately 4,100 words of main text with a structured abstract below 300 words and five planned display figures. The analyses are fully reproducible from versioned code, frozen input identities, workflow receipts, and externally sourced public datasets. We will provide a permanent archival repository and final Data and Code Availability statement for submission.
+The manuscript is approximately 4,000 words of main text with a structured abstract below 300 words and five rendered display figures. The analyses are fully reproducible from versioned code, frozen input identities, workflow receipts, and externally sourced public datasets. We will provide a permanent archival repository and final Data and Code Availability statement for submission.
 
 This manuscript is not under consideration elsewhere. All authors will approve the submitted version and agree to be accountable for the work.
 
