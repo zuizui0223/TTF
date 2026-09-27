@@ -223,10 +223,12 @@ def parse_markdown(source: str, figures_dir: Path) -> Document:
 
         if line.startswith("## "):
             heading = line[3:].strip()
-            p = doc.add_paragraph(heading, style="Heading 1")
-            p.paragraph_format.keep_with_next = True
             in_figure_legends = heading.lower().startswith("figure legends")
             in_references = heading.lower() == "references"
+            if in_figure_legends:
+                doc.add_page_break()
+            p = doc.add_paragraph(heading, style="Heading 1")
+            p.paragraph_format.keep_with_next = True
             i += 1
             continue
 
@@ -260,7 +262,8 @@ def parse_markdown(source: str, figures_dir: Path) -> Document:
             image = figures_dir / FIGURES[num]
             if not image.exists():
                 raise FileNotFoundError(image)
-            doc.add_page_break()
+            if num > 1:
+                doc.add_page_break()
             add_figure(doc, image)
             p = doc.add_paragraph()
             p.paragraph_format.first_line_indent = Inches(0)
