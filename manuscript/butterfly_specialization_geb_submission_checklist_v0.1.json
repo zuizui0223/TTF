@@ -1,0 +1,93 @@
+{
+  "schema": "ttf_butterfly_specialization_geb_submission_checklist_v0.1",
+  "status": "READY_PENDING_AUTHOR_METADATA_AND_PERMANENT_ARCHIVE",
+  "checked_on": "2026-09-27",
+  "journal": "Global Ecology and Biogeography",
+  "article_type": "Research Article",
+  "author_guideline_snapshot": {
+    "structured_abstract_max_words": 300,
+    "structured_abstract_headings": [
+      "Aim",
+      "Location",
+      "Time period",
+      "Major taxa studied",
+      "Methods",
+      "Results",
+      "Main conclusions"
+    ],
+    "typical_main_body_words": 5000,
+    "typical_display_pieces": "6-8",
+    "keywords_min": 6,
+    "keywords_max": 10,
+    "double_anonymous_review": true,
+    "separate_title_page_required": true,
+    "running_title_max_characters": 40,
+    "review_figures_embedded_in_main_text": true,
+    "line_or_combination_figures_vector_pdf_or_eps_preferred_after_acceptance": true,
+    "source": "Wiley Global Ecology and Biogeography Author Guidelines, checked 2026-09-27"
+  },
+  "manuscript": {
+    "working_source": "manuscript/butterfly_specialization_ecology_v0.1.md",
+    "blinded_review_source": "manuscript/generated/butterfly_specialization_ecology_blinded_v0.1.md",
+    "title_page_template": "manuscript/butterfly_specialization_geb_title_page_template_v0.1.md",
+    "running_title": "Dimensions of butterfly specialization",
+    "running_title_characters": 37,
+    "structured_abstract": true,
+    "abstract_words_approx": 266,
+    "keywords": [
+      "butterflies",
+      "climate filtering",
+      "ecological specialization",
+      "host breadth",
+      "introduced plants",
+      "niche breadth",
+      "resource geography"
+    ],
+    "keyword_count": 7,
+    "main_text_words_approx": 4012,
+    "double_anonymous_internal_tokens_removed_from_blinded_version": true
+  },
+  "figures": {
+    "count": 5,
+    "render_workflow_run_id": 36292128188,
+    "artifact_id": 10922059995,
+    "artifact_digest": "sha256:24e6fec206bb81dc9a8f7e32e9bfe1ea61622f631c94d3a84a612c87bd6bd2e5",
+    "formats_present": ["pdf", "png"],
+    "vector_pdf_available_for_all_five_figures": true,
+    "planned_review_display_pieces": 5,
+    "note": "Five figures is below the journal's typical 6-8 display-piece range, not a violation."
+  },
+  "cover_letter": {
+    "file": "manuscript/butterfly_specialization_geb_cover_letter_v0.1.md",
+    "journal_fit_paragraph_present": true,
+    "final_author_details_pending": true,
+    "optional_editor_and_reviewer_suggestions_pending": true
+  },
+  "scientific_integrity": {
+    "claim_map": "manuscript/butterfly_specialization_claim_map_v0.1.json",
+    "exploratory_resource_claims_labelled_exploratory": true,
+    "independent_negative_climate_primary_retained": true,
+    "response_driven_retuning_required": false,
+    "new_confirmatory_analysis_required": false
+  },
+  "remaining_before_submission": [
+    "Fill final authors, affiliations, emails and ORCIDs in the separate title page.",
+    "Fill CRediT author contributions.",
+    "Insert acknowledgements, funding and final conflict-of-interest disclosure.",
+    "Create the permanent archival snapshot and insert the public DOI in the title page and final public Data and Code Availability statement.",
+    "Export the blinded main manuscript to an editable review document with continuous line numbering and embed the five figures with their legends.",
+    "Remove document-property author metadata from the review file before upload.",
+    "Perform one final proofread of the exported review document."
+  ],
+  "complete_now": [
+    "Scientific analyses and claim boundaries.",
+    "Structured abstract under 300 words.",
+    "Seven keywords.",
+    "Main text approximately 4,000 words.",
+    "Separate double-anonymous title-page template.",
+    "Reproducible blinded-main-text renderer and generated blinded Markdown.",
+    "Five visually audited figures with vector PDFs.",
+    "Cover-letter draft.",
+    "Full test suite and manuscript claim checks."
+  ]
+}

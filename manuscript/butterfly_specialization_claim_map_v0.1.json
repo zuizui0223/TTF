@@ -1,0 +1,104 @@
+{
+  "schema": "ttf_butterfly_specialization_manuscript_claim_map_v0.1",
+  "status": "WORKING_SUBMISSION_CLAIM_MAP",
+  "manuscript": "manuscript/butterfly_specialization_ecology_v0.1.md",
+  "title": "Butterfly specialization is hierarchical: host portfolios structure resource opportunity while climate filters realized geography",
+  "central_claim": {
+    "text": "Butterfly specialization is hierarchical and multidimensional; family-level diet breadth, species-level host portfolios, geographic resource opportunity, anthropogenic opportunity architecture, and climate filtering are partially coupled but non-interchangeable ecological dimensions.",
+    "support_type": "synthesis of multiple completed analyses",
+    "allowed": true
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "claim": "Family-level host breadth only partially tracks geographic larval-resource breadth.",
+      "evidence": "239-species exact S1 resource reconstruction; host-taxonomy adequate sensitivity subset n=215.",
+      "status": "exploratory descriptive",
+      "key_statistic": "Spearman rho=0.276 full; 0.398 adequate subset",
+      "source": "benchmarks/exploratory/butterfly_specialization_dimensionality_result_v0.1.json"
+    },
+    {
+      "id": "C2",
+      "claim": "Introduced host ranges expand reconstructed geographic resource opportunity for most butterflies without a proportional expansion advantage for broad family-level generalists.",
+      "evidence": "239 resource-eligible species; 206 expand.",
+      "status": "exploratory descriptive",
+      "key_statistic": "86.2% expanded; Spearman host-family breadth vs log proportional expansion rho=0.008",
+      "source": "benchmarks/exploratory/butterfly_anthropogenic_resource_expansion_result_v0.1.json"
+    },
+    {
+      "id": "C3",
+      "claim": "Similar aggregate anthropogenic expansion is assembled through more concentrated host contributions in specialists and more distributed host portfolios in generalists.",
+      "evidence": "191 host-taxonomy adequate expanded species.",
+      "status": "exploratory post-result mechanism analysis",
+      "key_statistic": "rho host-family breadth vs effective contributor number=0.492; rho vs maximum single-host share=-0.486",
+      "source": "benchmarks/exploratory/butterfly_resource_expansion_mechanism_result_v0.1.json"
+    },
+    {
+      "id": "C4",
+      "claim": "Species-level host richness reveals hierarchical specialization within fixed family-level breadth categories.",
+      "evidence": "82 expanded one-family species plus within-stratum analyses.",
+      "status": "exploratory post-result follow-up",
+      "key_statistic": "one-family rho resolved host species vs effective contributors=0.734; vs maximum single-host share=-0.707",
+      "source": "benchmarks/exploratory/butterfly_host_specialization_hierarchy_result_v0.1.json"
+    },
+    {
+      "id": "C5",
+      "claim": "Climate commonly filters realized butterfly geography within reconstructed contemporary larval-resource opportunity.",
+      "evidence": "24 independent climate-informative species after frozen quality gates and uniform transport completion.",
+      "status": "independent cross-fit descriptive result",
+      "key_statistic": "median filtering score=0.801; 23/24 >0.5; 22/24 positive mismatch delta",
+      "source": "benchmarks/exploratory/butterfly_climate_release_postgate_independent_result_v0.1.json"
+    },
+    {
+      "id": "C6",
+      "claim": "Broader host-family diets do not detectably weaken climate filtering after contemporary resource breadth is controlled.",
+      "evidence": "Frozen independent v0.2.1 primary test.",
+      "status": "independent hypothesis test",
+      "key_statistic": "partial Spearman rho=-0.166; one-sided Freedman-Lane p=0.2237; n=24",
+      "decision": "PILOT_DERIVED_CLIMATE_RELEASE_HYPOTHESIS_NOT_SUPPORTED",
+      "source": "benchmarks/exploratory/butterfly_climate_release_postgate_independent_result_v0.1.json"
+    }
+  ],
+  "forbidden_overclaims": [
+    "Introduced host distributions caused butterfly range expansion.",
+    "Every reconstructed introduced-host region is currently used by the butterfly.",
+    "GBIF non-observation is true absence.",
+    "Host-family breadth has no ecological importance.",
+    "Climate alone determines realized butterfly distributions.",
+    "Species-level host portfolio structure explains climate filtering in the current independent data.",
+    "The post-gate transport completion was fully response-blind.",
+    "Exploratory resource analyses are confirmatory tests."
+  ],
+  "required_language": {
+    "resource_geography": "Use potential or reconstructed resource opportunity, not realized butterfly range.",
+    "anthropogenic": "Attribute expansion to introduced host distributions in the reconstructed opportunity surface, not causal butterfly expansion.",
+    "climate": "Use filtering or association language, not proof of physiological causation.",
+    "negative_primary": "State that the pilot-derived host-breadth climate-release hypothesis was not supported, not that host breadth has exactly zero effect."
+  },
+  "figure_claim_mapping": {
+    "Figure_1": [
+      "C1"
+    ],
+    "Figure_2": [
+      "C2"
+    ],
+    "Figure_3": [
+      "C3"
+    ],
+    "Figure_4": [
+      "C4"
+    ],
+    "Figure_5": [
+      "C5",
+      "C6"
+    ]
+  },
+  "submission_readiness": {
+    "scientific_story_complete": true,
+    "main_results_frozen": true,
+    "new_confirmatory_test_needed_for_current_manuscript": false,
+    "reference_list_needs_full_bibliographic_cleanup": false,
+    "figures_need_generation": false,
+    "word_count_and_target_journal_format_need_later_adaptation": false
+  }
+}
