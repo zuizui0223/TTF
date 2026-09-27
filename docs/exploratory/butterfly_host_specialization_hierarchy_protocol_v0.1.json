@@ -1,0 +1,53 @@
+{
+  "schema": "ttf_butterfly_host_specialization_hierarchy_protocol_v0.1",
+  "status": "FROZEN_EXPLORATORY_AFTER_RESOURCE_ARCHITECTURE_RESULT_BEFORE_WITHIN_STRATUM_ASSOCIATIONS",
+  "created_on": "2026-09-27",
+  "origin": {
+    "mechanism_result_workflow_run_id": 36270981110,
+    "mechanism_artifact_id": 10915562949,
+    "known_before_this_followup": [
+      "Across the full resource-eligible panel, resolved host-species count is strongly associated with effective contributor number.",
+      "Host-family breadth is associated with contributor architecture but much less strongly than resolved host-species count.",
+      "One-family species can range from one resolved host species to dozens."
+    ]
+  },
+  "ecological_question": "Within a fixed level of host-family breadth, does host-species richness still predict the architecture of anthropogenic geographic resource opportunity?",
+  "hypothesis": {
+    "statement": "Host-species richness within host-family strata increases portfolio-style anthropogenic opportunity, demonstrating that taxonomic family breadth and species-level resource breadth are distinct specialization dimensions.",
+    "status": "FRESH_EXPLORATORY_AFTER_MECHANISM_RESULT"
+  },
+  "source_data": {
+    "artifact": "butterfly-resource-expansion-mechanism-v01",
+    "artifact_id": 10915562949,
+    "artifact_digest": "sha256:8812472e37c377044803761fb09cc4ce54c41be7d15881244d4dfd9ef50518ad",
+    "species_metrics_file": "species_mechanism_metrics.csv",
+    "use_host_taxonomy_lower_bound_adequate_species": true,
+    "use_only_species_with_introduced_added_units_gt_zero": true
+  },
+  "strata": [
+    "1_family",
+    "2_families",
+    "3_to_5_families",
+    "6plus_families"
+  ],
+  "primary_descriptive": {
+    "focus_stratum": "1_family",
+    "association_1": "Spearman(resolved host-species count, effective contributor number)",
+    "association_2": "Spearman(resolved host-species count, maximum single-host fractional share)",
+    "reason": "Host-family breadth is exactly constant at one family, so any association reflects species-level host portfolio variation within taxonomic specialists."
+  },
+  "secondary_descriptive": [
+    "Repeat both associations in 2-family, 3-5-family, and 6+ family strata.",
+    "Within each stratum, Spearman(resolved host-species count, introduced-added resource units).",
+    "Within each stratum, summarize median effective contributor number by tertile of resolved host-species richness."
+  ],
+  "claim_boundary": {
+    "exploratory_only": true,
+    "no_confirmatory_alpha": true,
+    "post_result_followup": true,
+    "does_not_measure_realized_butterfly_host_use_in_introduced_ranges": true,
+    "does_not_measure_butterfly_range_expansion": true,
+    "HOSTS_completeness_not_proven": true,
+    "genetic_response_used": false
+  }
+}
