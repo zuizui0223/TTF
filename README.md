@@ -83,17 +83,17 @@ This repository therefore preserves failed gates and closure receipts alongside 
 
 ## Repository boundary
 
-Ecological analyses whose scientific contribution is the biology rather than the transfer methodology are being moved out of TTF.
+Ecological analyses whose primary scientific contribution is the biology are maintained in paper-specific repositories rather than in TTF.
 
-The butterfly specialization / host-resource / climate analysis is migrating to:
+The butterfly specialization / host-resource / climate ecology paper has been separated to:
 
 `https://github.com/zuizui0223/chocho`
 
-The migration is pinned to TTF commit:
+The split is pinned to TTF commit:
 
 `1a112334cca2f2ef5e234c3ae1fc1a80b8266956`
 
-The butterfly files remain on TTF `main` until the independent repository passes its paper-specific test suite. They will then be removed from the methods-only branch without rewriting TTF history.
+The destination repository independently passes its offline paper suite, and butterfly/Lepidoptera application files have been removed from TTF without rewriting repository history.
 
 ## Repository map
 
@@ -121,6 +121,12 @@ frozen rule
 
 The repository should make it possible to determine not only how a reported result was obtained, but also which alternatives were eligible before that result was known and why the analysis stopped where it did.
 
-## Development status
+## Workflow and development status
 
-The methods-only refactor is in progress. No historical frozen result is being rewritten. The active cleanup removes ecological paper surfaces only after their destination repository reproduces them independently.
+The methods-only repository split is complete. No historical frozen result was rewritten.
+
+The GitHub Actions surface is deliberately smaller than the historical workflow record. Current CI and supported reproducibility entrypoints remain under `.github/workflows/`; one-shot development, repair and recovery workflows are preserved byte-for-byte under `provenance/workflows/`. Their classification and original blob identities are recorded in `provenance/workflow_surface_classification_v0.1.json`.
+
+Normal pull requests run one full offline test suite. A second full methods audit is retained as a manual workflow rather than duplicating the same suite on every pull request.
+
+Further cleanup must preserve the frozen estimands, thresholds, finite candidate families, stopping decisions and empirical receipts.
