@@ -117,3 +117,31 @@ def test_submission_checklist_points_to_double_anonymous_bundle():
     assert payload["author_guideline_snapshot"]["separate_title_page_required"] is True
     assert payload["manuscript"]["keyword_count"] == 7
     assert payload["figures"]["vector_pdf_available_for_all_five_figures"] is True
+
+
+def test_blinded_manuscript_uses_geb_required_tail_order():
+    text = (
+        ROOT
+        / "manuscript"
+        / "generated"
+        / "butterfly_specialization_ecology_blinded_v0.1.md"
+    ).read_text(encoding="utf-8")
+    refs = text.index("## References")
+    data = text.index("## Data and Code Availability")
+    figures = text.index("## Figure legends")
+    assert refs < data < figures
+
+
+def test_manuscript_references_are_alphabetized():
+    text = (
+        ROOT / "manuscript" / "butterfly_specialization_ecology_v0.1.md"
+    ).read_text(encoding="utf-8")
+    start = text.index("## References")
+    end = text.index("## Data and Code Availability", start)
+    entries = [
+        line[2:].strip()
+        for line in text[start:end].splitlines()
+        if line.startswith("- ")
+    ]
+    assert len(entries) >= 10
+    assert entries == sorted(entries, key=str.casefold)
