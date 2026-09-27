@@ -1,6 +1,6 @@
 {
   "schema": "ttf_butterfly_specialization_submission_readiness_v0.1",
-  "status": "WORKING_MANUSCRIPT_READY_FOR_FIGURE_AND_REFERENCE_POLISH",
+  "status": "MANUSCRIPT_AND_FIGURES_READY_PENDING_AUTHOR_METADATA_AND_ARCHIVE",
   "created_on": "2026-09-27",
   "target_journal": {
     "primary": "Global Ecology and Biogeography",
@@ -16,10 +16,10 @@
   },
   "manuscript": {
     "file": "manuscript/butterfly_specialization_ecology_v0.1.md",
-    "working_title": "Butterfly specialization is hierarchical: host portfolios structure resource opportunity while climate independently filters realized geography",
-    "approx_total_words": 4608,
-    "approx_main_text_words": 4121,
-    "approx_abstract_words": 265,
+    "working_title": "Butterfly specialization is hierarchical: host portfolios structure resource opportunity while climate filters realized geography",
+    "approx_total_words": 5274,
+    "approx_main_text_words": 4012,
+    "approx_abstract_words": 266,
     "structured_abstract": true,
     "sections_complete": [
       "Abstract",
@@ -29,7 +29,9 @@
       "Discussion",
       "Limitations",
       "Conclusions",
-      "Figure plan"
+      "Figure legends",
+      "Data and Code Availability",
+      "References"
     ]
   },
   "scientific_state": {
@@ -46,22 +48,23 @@
     "renderer": "scripts/render_butterfly_specialization_manuscript_figures.py",
     "workflow": ".github/workflows/butterfly-specialization-manuscript-figures-v01.yml",
     "source_artifacts_hash_verified": true,
-    "render_status": "RUNNING_AT_RECEIPT_CREATION",
+    "render_status": "RENDERED_AND_VISUALLY_AUDITED",
     "planned_files": [
       "Figure1_taxonomic_vs_geographic_specialization",
       "Figure2_anthropogenic_resource_expansion",
       "Figure3_host_contribution_architecture",
       "Figure4_within_family_specialization_hierarchy",
       "Figure5_independent_climate_filtering"
-    ]
+    ],
+    "render_workflow_run_id": 36292128188,
+    "artifact_id": 10922059995,
+    "artifact_digest": "sha256:24e6fec206bb81dc9a8f7e32e9bfe1ea61622f631c94d3a84a612c87bd6bd2e5"
   },
   "remaining_before_submission": [
-    "Inspect and revise rendered figures for readability at journal column width.",
-    "Complete and verify full bibliography metadata for every in-text citation.",
-    "Add Data and Code Availability statement with archival repository details.",
-    "Add author list, affiliations, contributions, acknowledgements and funding.",
-    "Run final consistency audit between manuscript numbers and frozen result receipts.",
-    "Prepare GEB cover letter emphasizing broad conceptual relevance beyond butterflies."
+    "Insert final author list, affiliations, corresponding-author details, contributions, acknowledgements and funding.",
+    "Create the permanent archival snapshot and replace the Data and Code Availability DOI placeholder.",
+    "Apply final journal reference punctuation/style during submission formatting.",
+    "Perform final proofread after author metadata and archive DOI are inserted."
   ],
   "not_required": [
     "Additional response-driven predictor searches.",
