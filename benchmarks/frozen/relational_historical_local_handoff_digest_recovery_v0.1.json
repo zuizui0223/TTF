@@ -1,0 +1,66 @@
+{
+  "schema": "ttf_relational_historical_local_handoff_digest_recovery_v0.1",
+  "status": "FROZEN_POST_RESULT_TRANSPORT_REPAIR_ONLY",
+  "frozen_on": "2026-09-27",
+  "purpose": "Recover only the failed outer local-handoff packaging after the exact frozen Study-C final occurrence artifact and binding already exist. Normalize SHA-256 string representation only; do not alter, extract, recompress, rerun, or scientifically reinterpret the inner occurrence artifact.",
+  "upstream": {
+    "original_occurrence_run_id": 35941577015,
+    "original_occurrence_head_sha": "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab",
+    "exact_retry_recovery_run_id": 36200833241,
+    "exact_retry_recovery_head_sha": "7478c3d6fc8e1e1926edd8baa7e2a0d17b2ca09b",
+    "retry_plan_artifact_id": 10878157732,
+    "retry_plan_artifact_digest": "sha256:b4291a54514837f944f1cb9dbf14d320fd52293d24aa33b26d36ac063b7c7103",
+    "binding": "benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json",
+    "recovery_result": "benchmarks/frozen/relational_historical_retry_import_recovery_result_v0.1.json",
+    "downstream_rule": "benchmarks/frozen/relational_historical_recovery_downstream_handoff_v0.1.json",
+    "local_handoff_transport_rule": "docs/supporting/relational_historical_local_final_handoff_transport_v0.1.json"
+  },
+  "source_final_artifact": {
+    "artifact_id": 10931190147,
+    "artifact_name": "relational-historical-occurrence-final-v0.2",
+    "owner_workflow_run_id": 36200833241,
+    "owner_workflow_head_sha": "7478c3d6fc8e1e1926edd8baa7e2a0d17b2ca09b",
+    "github_api_digest": "sha256:f22744e73e0c63cb6f6d96cf1aa78df29b3d1cdd6123b7728d4d183371f1bb74",
+    "frozen_binding_digest": "f22744e73e0c63cb6f6d96cf1aa78df29b3d1cdd6123b7728d4d183371f1bb74",
+    "sha256_hex": "f22744e73e0c63cb6f6d96cf1aa78df29b3d1cdd6123b7728d4d183371f1bb74"
+  },
+  "observed_packaging_failure": {
+    "source_recovery_run_id": 36200833241,
+    "failed_step": "Package exact final artifact ZIP for local handoff",
+    "failure_class": "DIGEST_STRING_PREFIX_MISMATCH",
+    "cause": "The frozen binding stores the SHA-256 digest as 64 hexadecimal characters while the packaging code recomputed the same digest with a sha256: prefix and asserted raw string equality.",
+    "inner_artifact_integrity_failure": false,
+    "scientific_failure": false
+  },
+  "repair_contract": {
+    "digest_normalization": "Lowercase, remove at most one leading sha256: prefix, require exactly 64 hexadecimal characters, then require equality among binding digest, GitHub artifact API digest, and SHA-256 computed from the downloaded ZIP bytes.",
+    "exact_artifact_id_required": 10931190147,
+    "exact_artifact_owner_run_id_required": 36200833241,
+    "exact_artifact_owner_head_sha_required": "7478c3d6fc8e1e1926edd8baa7e2a0d17b2ca09b",
+    "inner_zip_extraction_allowed": false,
+    "inner_zip_recompression_allowed": false,
+    "inner_zip_reserialization_allowed": false,
+    "output_artifact_name": "relational-c-local-final-handoff-v0.1",
+    "terminal_program_transition": "Apply the already-frozen recovery downstream rule. Because the frozen occurrence status is NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT after the only authorized retry round, persist CLOSED_NO_EVALUABLE_TEST; do not open Study-C genetic response."
+  },
+  "digest_normalization_only": true,
+  "scientific_asset_change": false,
+  "occurrence_query_change": false,
+  "candidate_change": false,
+  "threshold_change": false,
+  "timeout_change": false,
+  "alpha_change": false,
+  "result_selection_allowed": false,
+  "alternate_run_allowed": false,
+  "retry_authorized": false,
+  "additional_retry_round_authorized": false,
+  "biological_null": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
