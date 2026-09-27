@@ -14,7 +14,7 @@ def test_history_information_finds_present_convergence_with_distinct_histories()
     r_current=np.clip(0.75+0.08*rng.normal(size=len(source)),0,1)
     latent_source=rng.normal(size=ns)
     latent_target=rng.normal(size=nt)
-    r_hist=1/(1+np.exp(-(latent_source[source]-latent_target[target]+0.5*rng.normal(size=len(source)))))
+    r_hist=1/(1+np.exp(-(latent_source[source]-latent_target[target-ns]+0.5*rng.normal(size=len(source)))))
 
     classes=np.asarray(["Insecta"]*(ns+nt))
     orders=np.asarray([f"o{i%5}" for i in range(ns+nt)])
