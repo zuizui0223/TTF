@@ -40,10 +40,14 @@ def render_blinded(text: str) -> str:
     )
 
     data_start = text.find("## Data and Code Availability")
-    refs_start = text.find("## References", data_start)
-    if data_start < 0 or refs_start < 0:
-        raise ValueError("could not locate Data and Code Availability / References sections")
-    text = text[:data_start] + ANON_DATA_CODE + text[refs_start:]
+    if data_start < 0:
+        raise ValueError("could not locate Data and Code Availability section")
+    next_section = text.find("\n## ", data_start + len("## Data and Code Availability"))
+    if next_section < 0:
+        data_end = len(text)
+    else:
+        data_end = next_section + 1
+    text = text[:data_start] + ANON_DATA_CODE + text[data_end:]
 
     provenance_start = text.find("## Repository provenance")
     if provenance_start >= 0:
