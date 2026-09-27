@@ -1,0 +1,564 @@
+{
+  "schema": "ttf_workflow_surface_classification_v0.1",
+  "frozen_from_commit": "f51e5d1cf891b2f0ca11fbdebd5cccba26734852",
+  "purpose": "Separate active/reproducible GitHub Actions entrypoints from historical workflow provenance without changing workflow bytes.",
+  "counts": {
+    "total": 98,
+    "active_or_rerunnable": 36,
+    "historical_provenance": 62
+  },
+  "classifications": [
+    {
+      "path": ".github/workflows/direct-insdc-metadata-smoke.yml",
+      "category": "ACTIVE_METHOD_CI",
+      "blob_sha": "b465cf5d9f16df1449dcc4b186f69d9ca863359a"
+    },
+    {
+      "path": ".github/workflows/gate-i-animal-external.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/gate-i-animal-external.yml",
+      "blob_sha": "62b7d82fae3c39e0fdb871da86cedd3f103fe653"
+    },
+    {
+      "path": ".github/workflows/gate-i-animal-precision.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/gate-i-animal-precision.yml",
+      "blob_sha": "3f276960b766c20f4783387995247d21b3ca4a65"
+    },
+    {
+      "path": ".github/workflows/gate-i-geometry.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/gate-i-geometry.yml",
+      "blob_sha": "0f1a580f2edb862f2c9a597b669235966fb804a7"
+    },
+    {
+      "path": ".github/workflows/gate-i-joint-finalize.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/gate-i-joint-finalize.yml",
+      "blob_sha": "371ad79833519db0e3828e4eb763bc6c9729a8db"
+    },
+    {
+      "path": ".github/workflows/gate-i-rgfca-pilot.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/gate-i-rgfca-pilot.yml",
+      "blob_sha": "0543b31f1038a50d15dbf8688689995ca92091aa"
+    },
+    {
+      "path": ".github/workflows/gate-i-rgfca-precision.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/gate-i-rgfca-precision.yml",
+      "blob_sha": "2380934a9ac98327b52df50ed4276af85d2ce117"
+    },
+    {
+      "path": ".github/workflows/genetic-decker-execution-benchmark-v02.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/genetic-decker-execution-benchmark-v02.yml",
+      "blob_sha": "e8e60eea10e841c0f4bf5ae34dcf4301cfd4c50e"
+    },
+    {
+      "path": ".github/workflows/genetic-decker-execution-benchmark-v03.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/genetic-decker-execution-benchmark-v03.yml",
+      "blob_sha": "e0813f712a60dce331915a4354955b05ddf49cc4"
+    },
+    {
+      "path": ".github/workflows/genetic-decker-execution-benchmark-v04.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/genetic-decker-execution-benchmark-v04.yml",
+      "blob_sha": "306baedc67d98d1f9e30318e69e77bd079e21ec2"
+    },
+    {
+      "path": ".github/workflows/genetic-decker-execution-benchmark.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/genetic-decker-execution-benchmark.yml",
+      "blob_sha": "d043ebfd80a3fb4fec2135b512675f82a9966084"
+    },
+    {
+      "path": ".github/workflows/genetic-decker-geometry-census.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/genetic-decker-geometry-census.yml",
+      "blob_sha": "552c72b128a2b4a682a2cbbb9c91f51eea841365"
+    },
+    {
+      "path": ".github/workflows/genetic-decker-geometry-freeze-v02.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/genetic-decker-geometry-freeze-v02.yml",
+      "blob_sha": "dc73f7ce7d9641c97a19465058c6d787ad0e699f"
+    },
+    {
+      "path": ".github/workflows/genetic-decker-geometry-freeze.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/genetic-decker-geometry-freeze.yml",
+      "blob_sha": "fde6265545c78bc4f8bf37352158d44cfa4b8657"
+    },
+    {
+      "path": ".github/workflows/genetic-gate-d-qualification-v02.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "e7cd17de0a6064e427090f099bda03071fb57b56"
+    },
+    {
+      "path": ".github/workflows/genetic-gate-d-qualification.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/genetic-gate-d-qualification.yml",
+      "blob_sha": "39638de44c2282cf8d8f7e167a776018624f112d"
+    },
+    {
+      "path": ".github/workflows/genetic-ibd-only-numeric-diagnostic.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/genetic-ibd-only-numeric-diagnostic.yml",
+      "blob_sha": "8d281d814fa3a2fd2ac90ca43b6d374a753959a1"
+    },
+    {
+      "path": ".github/workflows/genetic-interface-smoke.yml",
+      "category": "ACTIVE_METHOD_CI",
+      "blob_sha": "cb6160dbbbbd76ceda17a10f7d348b936dc21fbc"
+    },
+    {
+      "path": ".github/workflows/genetic-reciprocal-class-support.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/genetic-reciprocal-class-support.yml",
+      "blob_sha": "2383f574f8ec6bdc085a81f63f703840cf3118e6"
+    },
+    {
+      "path": ".github/workflows/genetic-self-detectability-qualification.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "50ba8922aa071b666213f84ff8aa4bd6f9ec9384"
+    },
+    {
+      "path": ".github/workflows/genetic-v04-execution-profile.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/genetic-v04-execution-profile.yml",
+      "blob_sha": "6d8bff5f0d5f4199cc6dccfb6cc8e086bd9331df"
+    },
+    {
+      "path": ".github/workflows/genetic-v05-batch-width-benchmark.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/genetic-v05-batch-width-benchmark.yml",
+      "blob_sha": "77a1f178ef46d6e562263eb226ea2c2026ba26ea"
+    },
+    {
+      "path": ".github/workflows/leptraits-census-input-snapshot.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/leptraits-census-input-snapshot.yml",
+      "blob_sha": "cfa53e66ba898defff8dc44dbaca24dcb4cb4bbb"
+    },
+    {
+      "path": ".github/workflows/methods-ci.yml",
+      "category": "ACTIVE_METHOD_CI",
+      "blob_sha": "d4c2081f78239c73a91fa7663015789d990b9879"
+    },
+    {
+      "path": ".github/workflows/phylogatr-phase1-schema-dryrun.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "befffea5c6f144dba71c2f598bb5b85f3bec7f51"
+    },
+    {
+      "path": ".github/workflows/qualification-heldout-bootstrap.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "96a1e8ee12eec20f380aecce00f8d2d54d6d9e23"
+    },
+    {
+      "path": ".github/workflows/qualification-pilot.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "d2877d3ef794152060a054b854b0530049f91d94"
+    },
+    {
+      "path": ".github/workflows/qualification-precision.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "ac0f1abacb0cabedf47e518153bad4ca24a5a693"
+    },
+    {
+      "path": ".github/workflows/relational-environment-bind-authoritative.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-environment-bind-authoritative.yml",
+      "blob_sha": "69415435a6d7f00bff271343c696242f81a2ea34"
+    },
+    {
+      "path": ".github/workflows/relational-environment-bind-qualification.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-environment-bind-qualification.yml",
+      "blob_sha": "14059133370983623f678c7b636ad21882242741"
+    },
+    {
+      "path": ".github/workflows/relational-environment-cutover-timeout-repair-long.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-environment-cutover-timeout-repair-long.yml",
+      "blob_sha": "145dbb9551f063e2ed659fe3947b95277a7c13ef"
+    },
+    {
+      "path": ".github/workflows/relational-environment-cutover-timeout-repair.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-environment-cutover-timeout-repair.yml",
+      "blob_sha": "56c64a966389969eb176d83f665d907c2e96bcb5"
+    },
+    {
+      "path": ".github/workflows/relational-environment-final-producer-trigger.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-environment-final-producer-trigger.yml",
+      "blob_sha": "d09534c6f9a4741c0c9398089ef5b5f7d206db95"
+    },
+    {
+      "path": ".github/workflows/relational-environment-final-recovery-audit-v03.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "3152547218e3e3ceefcd88e138d926441426c2fc"
+    },
+    {
+      "path": ".github/workflows/relational-environment-final-transport-transition.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-environment-final-transport-transition.yml",
+      "blob_sha": "87b74d74a2f01f3c19566b0efbabda8b5934a0bd"
+    },
+    {
+      "path": ".github/workflows/relational-environment-postqualification.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "bdf77c9b0a06ebd0f420bd83ba661540a7d3f398"
+    },
+    {
+      "path": ".github/workflows/relational-environment-qualification-v03.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "0ea9296dbd03647c6c415683b657ed419a40e6b0"
+    },
+    {
+      "path": ".github/workflows/relational-environment-relation.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "e678bbc0bb02fb45286379dc7027d80000a1aabc"
+    },
+    {
+      "path": ".github/workflows/relational-environment-repair-shard18-fine.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-environment-repair-shard18-fine.yml",
+      "blob_sha": "f79d9a0792101ed5f2a2ef291127380ea053f88a"
+    },
+    {
+      "path": ".github/workflows/relational-environment-transport-assemble.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-environment-transport-assemble.yml",
+      "blob_sha": "5e67ac3f74bad69a901a9615bc2640ce6f54eaeb"
+    },
+    {
+      "path": ".github/workflows/relational-environment-transport-completion.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-environment-transport-completion.yml",
+      "blob_sha": "4592d1013a165b24339e36cec455c26829d7973b"
+    },
+    {
+      "path": ".github/workflows/relational-environment-transport-cutover.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-environment-transport-cutover.yml",
+      "blob_sha": "69b216eac29ce04060a801f724e55744fe74fa8f"
+    },
+    {
+      "path": ".github/workflows/relational-environment-transport-fixed-parallel-v2.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-environment-transport-fixed-parallel-v2.yml",
+      "blob_sha": "350eab47b06eea8be508ee64363c06468ff9c317"
+    },
+    {
+      "path": ".github/workflows/relational-environment-transport-fixed-parallel.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-environment-transport-fixed-parallel.yml",
+      "blob_sha": "7426411d54b6b47ccf255e6e3e649081316689bc"
+    },
+    {
+      "path": ".github/workflows/relational-environment-transport-timeout-repair.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-environment-transport-timeout-repair.yml",
+      "blob_sha": "b23ea6c94aa57de85679899b2817f2a3ca64722d"
+    },
+    {
+      "path": ".github/workflows/relational-gbif-feasibility.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-gbif-feasibility.yml",
+      "blob_sha": "1766eff57398551f38c026e1deb5351c792df64c"
+    },
+    {
+      "path": ".github/workflows/relational-gbif-precensus.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-gbif-precensus.yml",
+      "blob_sha": "87c61bd07221c4e7b53e84e3c9b59bfa1590ec26"
+    },
+    {
+      "path": ".github/workflows/relational-gbif-transport-diagnostic.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-gbif-transport-diagnostic.yml",
+      "blob_sha": "032879b7ca734f41442b15da52810cf5ae3d6d47"
+    },
+    {
+      "path": ".github/workflows/relational-historical-after-retry-import-recovery-v01.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-historical-after-retry-import-recovery-v01.yml",
+      "blob_sha": "c32e6eaf2ffd0e2a10108deedccb9b9149b28bee"
+    },
+    {
+      "path": ".github/workflows/relational-historical-bind-bounded-occurrence.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-historical-bind-bounded-occurrence.yml",
+      "blob_sha": "9fd8a23d2d24463f5758eb0847c5d7e2e33ed153"
+    },
+    {
+      "path": ".github/workflows/relational-historical-prequalification.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "22331e827340062cebb6aada17fca9097a71476b"
+    },
+    {
+      "path": ".github/workflows/relational-historical-resume-after-source-cache.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/relational-historical-resume-after-source-cache.yml",
+      "blob_sha": "58ad017d2728c4e3fe176ef89f2b7dc66d056cf9"
+    },
+    {
+      "path": ".github/workflows/relational-source-bundle.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "c38a563460ec8036817b28cbe6f2b1df87354c6c"
+    },
+    {
+      "path": ".github/workflows/relational-v03-closure-audit.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "b84c576d1413d93c4892211cd188c2d1c9f51387"
+    },
+    {
+      "path": ".github/workflows/seed-phylogatr-archive-cache.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "632bfb5ac0bd131c5a1cf30f9f04bd79cc5bfdde"
+    },
+    {
+      "path": ".github/workflows/tests.yml",
+      "category": "ACTIVE_METHOD_CI",
+      "blob_sha": "46b76f81f5f1c63b515f172da0313b4b3f5c53fb"
+    },
+    {
+      "path": ".github/workflows/ttfc-conditional-null-centering-diagnostic.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "d197a52b72dfd4445f89736172058ad4003945b0"
+    },
+    {
+      "path": ".github/workflows/ttfc-normalization-bias-diagnostic.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "717d1f72d6d066bcf09b9e9e0ca01189019ed2e0"
+    },
+    {
+      "path": ".github/workflows/ttfc-phase-propensity-diagnostic.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "ba87ea20dbd2d74d76143098f48caff58efb0c4a"
+    },
+    {
+      "path": ".github/workflows/ttfc-support-overlap-diagnostic.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "4c0f0f1ff3a8b45d0f7d3da7253cc5b310b8b933"
+    },
+    {
+      "path": ".github/workflows/ttfc-training-leverage-diagnostic.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "2ad68f2cd30a73f22fc32fee22ee0c5329be50c2"
+    },
+    {
+      "path": ".github/workflows/ttfm-idealized-qualification.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "fe78c0363ad7743c7261300a4c97a3573361647c"
+    },
+    {
+      "path": ".github/workflows/ttfm-q4-1-strict-private.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "f601ee650100b5d913c5f01ead1d2a6b96a459cb"
+    },
+    {
+      "path": ".github/workflows/ttfm-q4-directionality.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "323fff75d6b92c07880678c0010b50fa7e2c83e6"
+    },
+    {
+      "path": ".github/workflows/ttfm-q5-1-coupling-geometry.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "f09c7bc739c859eeeba60bf3810efd850d3e4d6e"
+    },
+    {
+      "path": ".github/workflows/ttfm-q5-2-geometry-transport-development.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "71b92edebf10e003d22260385f22c070c67d1d5f"
+    },
+    {
+      "path": ".github/workflows/ttfm-q5-factor-diagnostic.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "a22896dbbac086fd2dba23819a600ed423ad2958"
+    },
+    {
+      "path": ".github/workflows/ttfm-q5-geometry-stress.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "71ccb7ccef1d3b0b694b4d5622f06b09c3feec37"
+    },
+    {
+      "path": ".github/workflows/ttfm-structural-diagnostic.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "6c10f7bd22b67a47d62097ee985a908019730835"
+    },
+    {
+      "path": ".github/workflows/v03-edge-length-diagnostic.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v03-edge-length-diagnostic.yml",
+      "blob_sha": "45089048c2a3ba46cb9a60efabb2eb600d271239"
+    },
+    {
+      "path": ".github/workflows/v03-freeze-fresh-external-geometry.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v03-freeze-fresh-external-geometry.yml",
+      "blob_sha": "040383ac2c1aced3daac0c21cd01f518f67c6df3"
+    },
+    {
+      "path": ".github/workflows/v03-freeze-rgfca-reserve-geometry.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v03-freeze-rgfca-reserve-geometry.yml",
+      "blob_sha": "fd1fcc5b686de05ee3d00ffed60f7b361eb3ad31"
+    },
+    {
+      "path": ".github/workflows/v03-fresh-external-precision.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v03-fresh-external-precision.yml",
+      "blob_sha": "9ce6ec87c5bc1e8925cd99e74d57812aa7b96cea"
+    },
+    {
+      "path": ".github/workflows/v03-length-control-ablation.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v03-length-control-ablation.yml",
+      "blob_sha": "a61d2bf05216581755e5ea3e82599121eca8fbe8"
+    },
+    {
+      "path": ".github/workflows/v03-rgfca-reserve-precision.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v03-rgfca-reserve-precision.yml",
+      "blob_sha": "80ecd17e8a06f7928bc20f368903d742e1c98812"
+    },
+    {
+      "path": ".github/workflows/v03-species-count-surface.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v03-species-count-surface.yml",
+      "blob_sha": "1b98ffc326052b6f1781b760523020cfb12fec91"
+    },
+    {
+      "path": ".github/workflows/v04-freeze-fresh-external-geometry.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v04-freeze-fresh-external-geometry.yml",
+      "blob_sha": "932a5984051baa556d3681f025f1dc13434a2cb9"
+    },
+    {
+      "path": ".github/workflows/v04-fresh-external-precision.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v04-fresh-external-precision.yml",
+      "blob_sha": "6a1a027aa1582ed4b447d3e3107e54a4733659d2"
+    },
+    {
+      "path": ".github/workflows/v04-private-geometry-diagnostic.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v04-private-geometry-diagnostic.yml",
+      "blob_sha": "747729af20e81713f4c472dab14e0e29f96aeedb"
+    },
+    {
+      "path": ".github/workflows/v04-propensity-seed-lock-audit.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v04-propensity-seed-lock-audit.yml",
+      "blob_sha": "03a1165baefd3ff3891d6ff233beac30ac880fde"
+    },
+    {
+      "path": ".github/workflows/v05-freeze-confirmation-panels.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v05-freeze-confirmation-panels.yml",
+      "blob_sha": "040d6598dbf2a4650768914e6b91bdfd7ef56c16"
+    },
+    {
+      "path": ".github/workflows/v05-one-sided-geometry-diagnostic.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v05-one-sided-geometry-diagnostic.yml",
+      "blob_sha": "f4224776dbdbb73392f0f13a8b28dbf1bc3eb731"
+    },
+    {
+      "path": ".github/workflows/v05-seal-existing-confirmation-panels.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v05-seal-existing-confirmation-panels.yml",
+      "blob_sha": "0046243276ee25c2eb1315027c4f786994a65121"
+    },
+    {
+      "path": ".github/workflows/v05-shared-geometry-observability.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v05-shared-geometry-observability.yml",
+      "blob_sha": "9ab15ca3b151d9d221ff29e346cf58bdaa40c97a"
+    },
+    {
+      "path": ".github/workflows/v06-private-null-diagnostic.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v06-private-null-diagnostic.yml",
+      "blob_sha": "f0be18e39fa780a46b2edf5b7cb7bee807680491"
+    },
+    {
+      "path": ".github/workflows/v07-profiled-private-null-diagnostic.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v07-profiled-private-null-diagnostic.yml",
+      "blob_sha": "a5a5e6e9e3e3c6aaa3dc51dff03ab1597663817e"
+    },
+    {
+      "path": ".github/workflows/v08-external-validity.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v08-external-validity.yml",
+      "blob_sha": "a47e9792d43bf5b1e64321a160df8ec7ef23f21f"
+    },
+    {
+      "path": ".github/workflows/v08-freeze-validity-panels.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v08-freeze-validity-panels.yml",
+      "blob_sha": "6560e3d3a65287312227a1ce24c9e3daac10dbf2"
+    },
+    {
+      "path": ".github/workflows/v08-rgfca-deployment-adequacy.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v08-rgfca-deployment-adequacy.yml",
+      "blob_sha": "f0d7ae4397d7b2b516cd0f4b2bfb1ee20d910d0d"
+    },
+    {
+      "path": ".github/workflows/v09-freeze-rgfca-reserve-b-max-density.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v09-freeze-rgfca-reserve-b-max-density.yml",
+      "blob_sha": "745f5547700f9d5e8aa4d4f7cf097e91092a36f2"
+    },
+    {
+      "path": ".github/workflows/v09-rgfca-reserve-b-deployment-adequacy.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v09-rgfca-reserve-b-deployment-adequacy.yml",
+      "blob_sha": "b5610a188658c52c903b6501186a7bf4e00a6c1b"
+    },
+    {
+      "path": ".github/workflows/v10-density-edge-scale-diagnostic.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/v10-density-edge-scale-diagnostic.yml",
+      "blob_sha": "2da9b4f3cb7ba4b428164e108582128758e9367f"
+    },
+    {
+      "path": ".github/workflows/v11-execution-geometry-audit.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "549f875543488e3db7612f9b2431fb908297848e"
+    },
+    {
+      "path": ".github/workflows/v11-freeze-fresh-plant-geometry.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "d14c43d08b5343894dc50361fe92eb19ed2f6627"
+    },
+    {
+      "path": ".github/workflows/v11-fresh-density-scaled-qualification.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "0c02835ae28b97dddbfdb7bfdc03aeda7b0a0644"
+    },
+    {
+      "path": ".github/workflows/v12-actual-geometry-requalification.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "06603ec14b4719d6e280028ea13fdbdef3384121"
+    },
+    {
+      "path": ".github/workflows/v12-classifiability-actual-geometry.yml",
+      "category": "REPRODUCIBLE_MANUAL_ENTRYPOINT",
+      "blob_sha": "65419014f6c133648da6ea8c174c279aab05e326"
+    },
+    {
+      "path": ".github/workflows/wcvp-v13-hosts-sidecar.yml",
+      "category": "HISTORICAL_PROVENANCE",
+      "archived_path": "provenance/workflows/wcvp-v13-hosts-sidecar.yml",
+      "blob_sha": "8e402e2dcd598de748013ad361a13e40d1534e10"
+    }
+  ]
+}
