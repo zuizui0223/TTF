@@ -56,17 +56,17 @@ Genetic responses from the original TTF program were not used in these analyses.
 
 ### 2.2 Butterfly trait panel
 
-We used the exact S1 butterfly reconstruction derived from the frozen LepTraits input. The resource descriptor table contained 339 species with major trait axes, including host-family breadth, wing-size proxies, voltinism, and habitat-affinity traits. Resource analyses were restricted to species with positive host-family breadth and at least one reconstructed native host-resource WGSRPD3 unit, yielding 239 species.
+We used the exact S1 butterfly reconstruction derived from the frozen LepTraits 1.0 input (Shirey et al. 2022). The resource descriptor table contained 339 species with major trait axes, including host-family breadth, wing-size proxies, voltinism, and habitat-affinity traits. Resource analyses were restricted to species with positive host-family breadth and at least one reconstructed native host-resource WGSRPD3 unit, yielding 239 species.
 
 Because host-interaction databases are incomplete, we also defined a conservative host-taxonomy lower-bound subset in which the number of resolved HOSTS-WCVP host species was at least as large as LepTraits host-family count. This condition is necessary but not sufficient for interaction completeness. It yielded 215 species.
 
 ### 2.3 Host interaction and plant distribution reconstruction
 
-Larval host records came from the fixed HOSTS mirror (commit `808e0b869f9ec1adf8efff87cf6a395adda103e0`). Plant taxonomy and distribution came from WCVP v13 through the fixed rWCVPdata snapshot (commit `65bed76bae9d644ccb6ad200c05f9f5071d89e05`).
+Larval host records came from the HOSTS database of lepidopteran host plants (Robinson et al. 2023), using the fixed mirror commit `808e0b869f9ec1adf8efff87cf6a395adda103e0`. Plant taxonomy and distribution came from the World Checklist of Vascular Plants (WCVP; Govaerts et al. 2021) through the fixed rWCVPdata v13 snapshot (commit `65bed76bae9d644ccb6ad200c05f9f5071d89e05`).
 
 Species-level host names were resolved to accepted WCVP plant identifiers. The **native resource envelope** for each butterfly was the union of WGSRPD3 units in which any resolved host was recorded as native, extant, and non-doubtful. The **contemporary resource envelope** retained both native and introduced records while continuing to exclude extinct and location-doubtful records.
 
-WGSRPD3 is intentionally coarse. We therefore interpret these envelopes as regional resource opportunity, not as local host occupancy or confirmed butterfly habitat.
+Geographic units followed level 3 of the World Geographical Scheme for Recording Plant Distributions (WGSRPD; Brummitt et al. 2001). WGSRPD3 is intentionally coarse. We therefore interpret these envelopes as regional resource opportunity, not as local host occupancy or confirmed butterfly habitat.
 
 ### 2.4 Taxonomic versus geographic specialization
 
@@ -123,7 +123,7 @@ The frozen hypothesis was:
 
 ### 2.9 Butterfly occurrence acquisition and quality gates
 
-Butterfly occurrences were acquired from GBIF for 2010-2026 using fixed filters requiring coordinates, no flagged geospatial issue, and occurrence status PRESENT. Each species had six deterministic ordinal windows of up to 300 records. Transport failures were handled through checkpointed technical recovery without species replacement or changes to scientific filters.
+Butterfly occurrences were acquired through the GBIF Occurrence API (GBIF.org 2026) for 2010-2026 using fixed filters requiring coordinates, no flagged geospatial issue, and occurrence status PRESENT. Each species had six deterministic ordinal windows of up to 300 records. Transport failures were handled through checkpointed technical recovery without species replacement or changes to scientific filters.
 
 The initial independent execution was not evaluable because only 10 species passed the frozen pre-climate gate, below the required minimum of 12. Fourteen species had incomplete transport. A post-gate technical recovery was therefore applied uniformly to all and only those 14 partial-transport species. The original quality thresholds, species panel, resource definition, and climate analysis were unchanged. After this completion, 31/32 species had complete occurrence transport; one species remained rejected at the GBIF taxon-resolution stage.
 
@@ -139,7 +139,7 @@ Twenty-four species passed after uniform transport completion, exceeding the fro
 
 ### 2.10 Climate cross-fitting
 
-Climate was represented by CHELSA v2.1 1981-2010 variables BIO1, BIO7, BIO12, and BIO15.
+Climate was represented by CHELSA v2.1 1981-2010 variables BIO1, BIO7, BIO12, and BIO15 (Karger et al. 2017, 2021).
 
 Within each quality-qualified species, observed WGSRPD3 units inside the contemporary host-resource envelope were deterministically split 50:50 into training and evaluation sets using a SHA256 species-by-unit rule.
 
@@ -363,6 +363,13 @@ The large external source datasets are not vendored into the repository. LepTrai
 
 ## References (working)
 
+- Brummitt, R. K., Pando, F., Hollis, S. & Brummitt, N. A. 2001. *World Geographical Scheme for Recording Plant Distributions*, 2nd edn. Hunt Institute for Botanical Documentation, Carnegie Mellon University.
+- GBIF.org. 2026. GBIF Occurrence API, version 1. Global Biodiversity Information Facility. Occurrence queries accessed September 2026.
+- Govaerts, R., Nic Lughadha, E., Black, N., Turner, R. & Paton, A. 2021. The World Checklist of Vascular Plants, a continuously updated resource for exploring global plant diversity. *Scientific Data* 8: 215. https://doi.org/10.1038/s41597-021-00997-6
+- Karger, D. N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., Zimmermann, N. E., Linder, H. P. & Kessler, M. 2017. Climatologies at high resolution for the earth's land surface areas. *Scientific Data* 4: 170122. https://doi.org/10.1038/sdata.2017.122
+- Karger, D. N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., Zimmermann, N. E., Linder, H. P. & Kessler, M. 2021. Climatologies at high resolution for the earth's land surface areas. EnviDat. https://doi.org/10.16904/envidat.228
+- Robinson, G. S., Ackery, P. R., Kitching, I., Beccaloni, G. W. & Hernández, L. M. 2023. HOSTS - a Database of the World's Lepidopteran Hostplants [Data set]. Natural History Museum. https://doi.org/10.5519/havt50xw
+- Shirey, V., Larsen, E., Doherty, A. et al. 2022. LepTraits 1.0: A globally comprehensive dataset of butterfly traits. *Scientific Data* 9: 382. https://doi.org/10.1038/s41597-022-01473-5
 - Chowdhury, S. et al. 2026. Extensive climate-induced range shifts in butterflies across the globe. *Nature Ecology & Evolution*. https://doi.org/10.1038/s41559-026-03117-y
 - Gross, C., Kawahara, A. & Daru, B. 2026. Climate and regional plant richness drive diet specialization in butterfly caterpillars. *Nature Communications*. https://doi.org/10.1038/s41467-026-73236-4
 - Guo, F., McKirdy, S. J., Gao, L. & Gao, G. 2026. Climate and traits are differentially associated with range extent and range geometry in global butterflies. *Ecological Indicators* 189: 115231. https://doi.org/10.1016/j.ecolind.2026.115231
