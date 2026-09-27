@@ -1,0 +1,11 @@
+{
+  "schema": "ttf_relational_environment_program_transition_v0.3",
+  "B_state": "NOT_EVALUABLE_B",
+  "C_open_authorized": true,
+  "C_entry_state": "PROCEED_TO_C_AFTER_B_NOT_EVALUABLE",
+  "source_stage": "final_transport_round4_timeout",
+  "Study_B_empirical_response_opened": false,
+  "failure_receipt": "benchmarks/frozen/relational_environment_final_transport_failure_v0.1.json",
+  "recovery_run_id": 35827478403,
+  "no_fifth_round_authorized": true
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "ttf_study_c_terminal_provenance_archive_v0.1",
+  "status": "POST_TERMINAL_PROVENANCE_ARCHIVE_ONLY",
+  "created_on": "2026-09-27",
+  "purpose": "Complete current-main provenance for the frozen Study-C local-readiness record without reactivating the closed Study-C execution route.",
+  "terminal_state": {
+    "receipt": "benchmarks/frozen/relational_program_final_state_v0.3.json",
+    "final_state": "CLOSED_NO_EVALUABLE_TEST",
+    "additional_predictor_authorized": false,
+    "study_c_execution_authorized": false
+  },
+  "frozen_implementation_binding": "benchmarks/frozen/relational_historical_implementation_binding_v0.1.json",
+  "exact_archived_executors": [
+    {
+      "original_path": "scripts/run_relational_historical_local_pipeline.py",
+      "archived_path": "provenance/scripts/run_relational_historical_local_pipeline.py",
+      "git_blob_sha1": "0f91a4ce29c9d0a1454673da2e2c979365eea86e"
+    },
+    {
+      "original_path": "scripts/run_relational_historical_local_from_artifact.py",
+      "archived_path": "provenance/scripts/run_relational_historical_local_from_artifact.py",
+      "git_blob_sha1": "487de64b3e4abe411344edeb992a6294252c191c"
+    }
+  ],
+  "archive_policy": {
+    "exact_blob_bytes_preserved": true,
+    "original_active_script_paths_restored": false,
+    "executor_reactivation_allowed": false,
+    "scientific_rule_change": false,
+    "occurrence_query_change": false,
+    "retry_authorized": false,
+    "genetic_response_opened": false
+  },
+  "note": "The pre-result readiness receipt names the original executor paths. Current main preserves their exact Git blobs under provenance/scripts instead of restoring dead execution entry points after the finite program has closed."
+}
