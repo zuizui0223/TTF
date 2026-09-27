@@ -117,7 +117,7 @@ def boxplot_by_stratum(ax, rows, field, ylabel, zero_line=False):
         [float(r[field]) for r in rows if r["host_breadth_stratum"] == stratum]
         for stratum in STRATA
     ]
-    ax.boxplot(values, labels=[STRATA_LABELS[s] for s in STRATA], showfliers=False)
+    ax.boxplot(values, tick_labels=[STRATA_LABELS[s] for s in STRATA], showfliers=False)
     for i, stratum in enumerate(STRATA, start=1):
         subset = [r for r in rows if r["host_breadth_stratum"] == stratum]
         for row in subset:
