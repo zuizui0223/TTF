@@ -45,14 +45,20 @@
     ],
     "keyword_count": 7,
     "main_text_words_approx": 4012,
-    "double_anonymous_internal_tokens_removed_from_blinded_version": true
+    "double_anonymous_internal_tokens_removed_from_blinded_version": true,
+    "geb_required_tail_order_verified": true,
+    "review_docx_renderer": "scripts/render_butterfly_specialization_review_docx.py",
+    "review_docx_workflow": ".github/workflows/butterfly-specialization-review-docx-v01.yml"
   },
   "figures": {
     "count": 5,
     "render_workflow_run_id": 36292128188,
     "artifact_id": 10922059995,
     "artifact_digest": "sha256:24e6fec206bb81dc9a8f7e32e9bfe1ea61622f631c94d3a84a612c87bd6bd2e5",
-    "formats_present": ["pdf", "png"],
+    "formats_present": [
+      "pdf",
+      "png"
+    ],
     "vector_pdf_available_for_all_five_figures": true,
     "planned_review_display_pieces": 5,
     "note": "Five figures is below the journal's typical 6-8 display-piece range, not a violation."
@@ -71,11 +77,11 @@
     "new_confirmatory_analysis_required": false
   },
   "remaining_before_submission": [
+    "Complete visual QA of the reproducibly generated blinded review DOCX.",
     "Fill final authors, affiliations, emails and ORCIDs in the separate title page.",
     "Fill CRediT author contributions.",
     "Insert acknowledgements, funding and final conflict-of-interest disclosure.",
     "Create the permanent archival snapshot and insert the public DOI in the title page and final public Data and Code Availability statement.",
-    "Export the blinded main manuscript to an editable review document with continuous line numbering and embed the five figures with their legends.",
     "Remove document-property author metadata from the review file before upload.",
     "Perform one final proofread of the exported review document."
   ],
