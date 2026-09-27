@@ -9,7 +9,7 @@ from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-from docx.shared import Inches, Pt
+from docx.shared import Inches, Pt, RGBColor
 
 
 FIGURE_FILES = {
@@ -27,6 +27,7 @@ def set_font(run, *, name="Times New Roman", size=12, bold=None, italic=None):
     run.font.name = name
     run._element.rPr.rFonts.set(qn("w:eastAsia"), name)
     run.font.size = Pt(size)
+    run.font.color.rgb = RGBColor(0, 0, 0)
     if bold is not None:
         run.bold = bold
     if italic is not None:
@@ -84,6 +85,22 @@ def add_page_number(section):
     run._r.extend([begin, instr, separate, end])
 
 
+def clear_paragraph_borders(paragraph):
+    p_pr = paragraph._p.get_or_add_pPr()
+    p_bdr = p_pr.find(qn("w:pBdr"))
+    if p_bdr is not None:
+        p_pr.remove(p_bdr)
+
+
+def clear_style_paragraph_borders(style):
+    p_pr = style._element.pPr
+    if p_pr is None:
+        return
+    p_bdr = p_pr.find(qn("w:pBdr"))
+    if p_bdr is not None:
+        p_pr.remove(p_bdr)
+
+
 def configure_document(doc: Document):
     section = doc.sections[0]
     section.top_margin = Inches(1)
@@ -106,6 +123,8 @@ def configure_document(doc: Document):
         style._element.rPr.rFonts.set(qn("w:eastAsia"), "Times New Roman")
         style.font.size = Pt(size)
         style.font.bold = True
+        style.font.color.rgb = RGBColor(0, 0, 0)
+        clear_style_paragraph_borders(style)
 
     doc.styles["Heading 1"].paragraph_format.keep_with_next = True
     doc.styles["Heading 2"].paragraph_format.keep_with_next = True
@@ -178,6 +197,7 @@ def render(markdown: str, figures_dir: Path) -> Document:
         if line.startswith("# "):
             p = doc.add_paragraph(style="Title")
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            clear_paragraph_borders(p)
             add_inline(p, line[2:].strip(), size=14)
             continue
 
