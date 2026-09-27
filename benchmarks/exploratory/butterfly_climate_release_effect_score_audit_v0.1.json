@@ -1,0 +1,47 @@
+{
+  "schema": "ttf_butterfly_climate_release_effect_score_audit_v0.1",
+  "status": "PASS_RESPONSE_BLIND_EFFECT_SCORE_IMPLEMENTATION_AUDIT",
+  "audited_on": "2026-09-26",
+  "implementation": {
+    "file": "src/ttf/resource_envelope_climate.py",
+    "observed_unit_split": {
+      "tag": "butterfly-resource-climate-crossfit-v0.1",
+      "rule": "Sort unique observed WGSRPD3 units by SHA256(tag|species|unit), use a bounded 50/50 split with at least one unit on each side when >=2 observed units exist.",
+      "row_order_independent": true
+    },
+    "climate_mismatch": {
+      "training": "occurrence-level CHELSA vectors from train-observed units only",
+      "standardization": "training mean and population SD separately for each climate axis",
+      "distance": "root mean squared standardized deviation across climate axes with nonzero training SD"
+    },
+    "species_filtering_score": {
+      "function": "probability_greater",
+      "definition": "P(mismatch_never_observed > mismatch_heldout_observed) + 0.5 * P(tie)",
+      "calculation": "all cross-pairs between effort-supported never-observed and held-out observed resource units",
+      "neutral_value": 0.5
+    }
+  },
+  "frozen_independent_contract": {
+    "protocol": "ttf_butterfly_climate_release_independent_test_v0.2.1",
+    "minimum_training_occurrence_records": 30,
+    "minimum_effort_supported_eval_observed_units": 2,
+    "minimum_effort_supported_never_observed_units": 2,
+    "climate_variables": ["bio1", "bio7", "bio12", "bio15"],
+    "climate_dataset": "CHELSA V2.1 1981-2010"
+  },
+  "audit_conclusion": {
+    "effect_score_matches_protocol": true,
+    "heldout_observed_units_do_not_train_species_climate_niche": true,
+    "never_observed_units_do_not_train_species_climate_niche": true,
+    "ties_receive_half_weight": true,
+    "no_effect_definition_change_authorized": true
+  },
+  "response_firewall": {
+    "independent_occurrence_geography_opened": false,
+    "independent_host_overlap_opened": false,
+    "preclimate_gate_opened": false,
+    "independent_climate_values_opened": false,
+    "independent_filtering_scores_opened": false,
+    "independent_primary_result_opened": false
+  }
+}

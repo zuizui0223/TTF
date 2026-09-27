@@ -1,0 +1,62 @@
+{
+  "schema": "ttf_butterfly_climate_release_transport_blocker_audit_v0.1",
+  "status": "DESCRIPTIVE_POSTGATE_BLOCKER_AUDIT",
+  "audited_on": "2026-09-27",
+  "source": {
+    "authoritative_run_id": 36241187187,
+    "summary_artifact_id": 10908815655,
+    "preclimate_quality_gate_sha256": "f88359a52c81bcacf6ba7e8ae8cb40db2a944c0d452e2436fec3ad6898d677ef"
+  },
+  "transport": {
+    "complete": 17,
+    "partial_transport": 14,
+    "rejected_taxon_match": 1
+  },
+  "partial_species_nontransport_gate_state_on_incomplete_occurrence_data": {
+    "partial_species": 14,
+    "partial_species_with_no_nontransport_failure_reason": 12,
+    "species": [
+      "Phyciodes tharos",
+      "Dryas iulia",
+      "Erynnis tages",
+      "Papilio polytes",
+      "Aphantopus hyperantus",
+      "Brephidium exilis",
+      "Melanitis leda",
+      "Coenonympha tullia",
+      "Strymon melinus",
+      "Callophrys rubi",
+      "Junonia evarete",
+      "Neptis sappho"
+    ],
+    "partial_species_with_additional_nontransport_failures": {
+      "Pieris brassicae": [
+        "CONTEMPORARY_ENVELOPE_OVERLAP_FAIL",
+        "SAMPLING_EFFORT_IDENTIFIABILITY_FAIL"
+      ],
+      "Anartia jatrophae": [
+        "CONTEMPORARY_ENVELOPE_OVERLAP_FAIL",
+        "SAMPLING_EFFORT_IDENTIFIABILITY_FAIL"
+      ]
+    }
+  },
+  "interpretation": {
+    "transport_incompleteness_is_a_material_blocker": true,
+    "recovery_is_scientifically_relevant_to_evaluability": true,
+    "this_does_not_predict_postrecovery_qualification": true,
+    "reason": "Completing occurrence transport can add observed WGSRPD3 units and alter contemporary-envelope overlap and other-panel effort counts; current nontransport passes under partial data are therefore not frozen future passes."
+  },
+  "recovery_selection_rule": {
+    "uses_this_nontransport_gate_state": false,
+    "uses_only_PARTIAL_TRANSPORT_status": true,
+    "recovers_all_14_partial_species": true
+  },
+  "claim_boundary": {
+    "postgate_descriptive_audit": true,
+    "not_a_primary_result": true,
+    "not_a_threshold_change": true,
+    "not_a_species_replacement_rule": true,
+    "no_climate_result_used": true,
+    "no_genetic_response_used": true
+  }
+}

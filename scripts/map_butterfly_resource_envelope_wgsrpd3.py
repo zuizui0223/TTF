@@ -11,14 +11,26 @@ from shapely.geometry import Point, shape
 from shapely.strtree import STRtree
 
 
-def load_pilot(path: Path) -> tuple[str, ...]:
+def load_species_panel(path: Path) -> tuple[str, ...]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    if payload.get("schema") != "ttf_butterfly_resource_envelope_pilot_v0.1":
-        raise RuntimeError("unexpected pilot schema")
-    names = tuple(map(str, payload.get("pilot_species", [])))
-    if len(names) != 10 or len(set(names)) != 10:
-        raise RuntimeError("expected exact ten-species pilot")
-    return names
+    schema = payload.get("schema")
+    if schema == "ttf_butterfly_resource_envelope_pilot_v0.1":
+        names = tuple(map(str, payload.get("pilot_species", [])))
+        if len(names) != 10 or len(set(names)) != 10:
+            raise RuntimeError("expected exact ten-species pilot")
+        return names
+    if schema == "ttf_butterfly_climate_release_independent_panel_v0.1":
+        if payload.get("status") != "FROZEN_BEFORE_INDEPENDENT_GBIF_OR_CLIMATE":
+            raise RuntimeError("independent panel is not frozen")
+        names = tuple(map(str, payload.get("species", [])))
+        if len(names) != 32 or len(set(names)) != 32:
+            raise RuntimeError("expected exact 32-species independent panel")
+        return names
+    raise RuntimeError("unexpected butterfly species-panel schema")
+
+
+def load_pilot(path: Path) -> tuple[str, ...]:
+    return load_species_panel(path)
 
 
 def load_host_footprints(path: Path) -> dict[str, frozenset[str]]:
@@ -79,7 +91,9 @@ def map_point(tree, geometries, codes, lon: float, lat: float):
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--pilot-json", type=Path, required=True)
+    panel_group = ap.add_mutually_exclusive_group(required=True)
+    panel_group.add_argument("--pilot-json", type=Path)
+    panel_group.add_argument("--panel-json", type=Path)
     ap.add_argument("--host-footprints-json", type=Path, required=True)
     ap.add_argument("--occurrences-csv", type=Path, required=True)
     ap.add_argument("--level3-geojson", type=Path, required=True)
@@ -87,12 +101,13 @@ def main() -> int:
     ap.add_argument("--output-summary", type=Path, required=True)
     args = ap.parse_args()
 
-    pilot = load_pilot(args.pilot_json)
+    panel_path = args.panel_json if args.panel_json is not None else args.pilot_json
+    pilot = load_species_panel(panel_path)
     footprints = load_host_footprints(args.host_footprints_json)
     missing_footprints = [name for name in pilot if name not in footprints]
     if missing_footprints:
         raise RuntimeError(
-            "pilot species missing host footprints: " + ", ".join(missing_footprints)
+            "panel species missing host footprints: " + ", ".join(missing_footprints)
         )
 
     geometries, codes, code_names = load_level3(args.level3_geojson)

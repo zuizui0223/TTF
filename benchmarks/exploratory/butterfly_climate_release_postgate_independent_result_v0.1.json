@@ -1,0 +1,134 @@
+{
+  "schema": "ttf_butterfly_climate_release_postgate_independent_result_receipt_v0.1",
+  "status": "INDEPENDENT_TEST_COMPLETE_HYPOTHESIS_NOT_SUPPORTED",
+  "executed_on": "2026-09-27",
+  "authoritative_scientific_protocol": {
+    "schema": "ttf_butterfly_climate_release_independent_test_v0.2.1",
+    "panel_species": 32,
+    "panel_species_sha256": "bbaaa28cf361fb02d558988bdd1a3f948a243b79c8d3bb1709e908edb1f0f204",
+    "pilot_species_excluded": true,
+    "minimum_preclimate_qualified_species": 12,
+    "minimum_climate_informative_species": 12
+  },
+  "postgate_recovery": {
+    "workflow_run_id": 36270581743,
+    "workflow_head_sha": "d30307eecb4e760701b936158fc95690286e4695",
+    "summary_artifact": {
+      "artifact_id": 10920120240,
+      "artifact_name": "butterfly-climate-release-postgate-summary-v01",
+      "artifact_digest": "sha256:658ca9e1966e3d02e6c09f314acd60e2bd5c08307f24bbd17efc2174ca035ab9",
+      "preclimate_quality_gate_sha256": "35c3f6571fb55ac86e84d352992f798b11afcc5f38b0ac2e69d987c630d19668",
+      "recovery_merge_receipt_sha256": "0231762248bf971c51761c0471a03cf1bbe48bd1c3b666f7ca406062a845f5ba"
+    },
+    "result_artifact": {
+      "artifact_id": 10919985332,
+      "artifact_name": "butterfly-climate-release-postgate-independent-result-v01",
+      "artifact_digest": "sha256:198dc927df3e34a06d7b383ad399bab5437819483759f19f085b65a827f6d50a",
+      "climate_summary_sha256": "4cd6c2bd239922c5ac7a1cf70b1609380aae9abfa27cc3f3c309c2a1a03d4e9b",
+      "primary_result_sha256": "a73dca6e8b669f721d8f2745f27198d9b47a5cbd05dde6146cc8d4f1ddfbf79b"
+    },
+    "transport_after_uniform_completion": {
+      "complete_species": 31,
+      "rejected_gbif_taxon_match": 1,
+      "partial_transport": 0,
+      "authoritative_original_outputs_used": 18,
+      "postgate_recovered_outputs_used": 14
+    },
+    "provenance_boundary": {
+      "original_preclimate_gate_was_seen_before_postgate_recovery": true,
+      "recovery_was_uniform_for_all_and_only_14_partial_transport_species": true,
+      "species_selection_or_replacement_from_gate_result": false,
+      "quality_threshold_change": false,
+      "climate_rule_change": false,
+      "primary_rule_change": false
+    }
+  },
+  "preclimate_gate_after_transport_completion": {
+    "status": "PASS_TO_INDEPENDENT_CLIMATE_CROSSFIT",
+    "qualified_species_count": 24,
+    "minimum_required": 12,
+    "qualified_species": [
+      "Colias eurytheme",
+      "Phyciodes tharos",
+      "Atalopedes campestris",
+      "Dryas iulia",
+      "Pyrgus communis",
+      "Erynnis tages",
+      "Papilio polytes",
+      "Biblis hyperia",
+      "Erynnis juvenalis",
+      "Aphantopus hyperantus",
+      "Papilio memnon",
+      "Brephidium exilis",
+      "Danaus genutia",
+      "Siproeta stelenes",
+      "Melanitis leda",
+      "Coenonympha tullia",
+      "Delias hyparete",
+      "Strymon melinus",
+      "Callophrys rubi",
+      "Euploea core",
+      "Junonia evarete",
+      "Neptis sappho",
+      "Pieris brassicae",
+      "Anartia jatrophae"
+    ]
+  },
+  "climate_crossfit": {
+    "climate_informative_species": 24,
+    "minimum_required": 12,
+    "climate_dataset": "CHELSA V2.1 1981-2010",
+    "variables": ["bio1", "bio7", "bio12", "bio15"],
+    "species_filtering_score_definition": "P(mismatch_never_observed > mismatch_heldout_observed) + 0.5 P(tie)",
+    "all_species_score_median": 0.8013787349014623,
+    "species_with_score_above_neutral_0_5": 23,
+    "species_with_score_below_neutral_0_5": 1,
+    "species_with_positive_mismatch_delta": 22,
+    "species_with_negative_mismatch_delta": 2,
+    "median_filtering_score_by_host_breadth_stratum": {
+      "1_family": 0.7956941244239631,
+      "2_families": 0.7481472550438069,
+      "3_to_5_families": 0.8131335718545021,
+      "6plus_families": 0.8013787349014623
+    }
+  },
+  "primary_test": {
+    "hypothesis": "Within larval host-resource opportunity, climatic filtering of realized butterfly distribution weakens as taxonomic host breadth increases.",
+    "response": "species climate-filtering score",
+    "predictor": "LepTraits NumberOfHostplantFamilies",
+    "control": "log1p contemporary host-resource WGSRPD3 unit count",
+    "statistic": "partial Spearman on ranks",
+    "null_inference": "species-identity-invariant Freedman-Lane-style reduced-response residual permutation on ranks",
+    "alternative": "negative",
+    "iterations": 9999,
+    "alpha": 0.05,
+    "observed_partial_spearman": -0.16643611123731772,
+    "lower_tail_extreme_permutations": 2236,
+    "one_sided_p_value": 0.2237,
+    "decision": "PILOT_DERIVED_CLIMATE_RELEASE_HYPOTHESIS_NOT_SUPPORTED"
+  },
+  "secondary_descriptive": {
+    "spearman_filtering_vs_host_family_count": -0.08278966535411611,
+    "spearman_filtering_vs_log_contemporary_resource_units": 0.26347826086956516,
+    "spearman_filtering_vs_wing_size_proxy": -0.27999999999999997,
+    "median_filtering_score_by_voltinism": {
+      "B": 0.7658132530120482,
+      "M": 0.8013787349014623,
+      "U": 0.949317738791423
+    }
+  },
+  "ecological_interpretation": {
+    "climate_filtering_is_common_across_informative_species": true,
+    "taxonomic_host_family_breadth_does_not_explain_filtering_strength_in_the_independent_test": true,
+    "key_result": "Most butterflies occupy climatically closer portions of their reconstructed larval-resource opportunity than the resource units they leave unobserved, but this filtering strength is not detectably relaxed in broader host-family generalists.",
+    "implication": "Taxonomic diet breadth is not a sufficient axis for explaining how butterflies convert host-resource opportunity into realized geographic distributions. Species-level host portfolio architecture, physiology, dispersal, or other life-history dimensions remain candidate explanations."
+  },
+  "claim_boundary": {
+    "pilot_species_used_in_primary_test": false,
+    "never_observed_resource_unit_is_not_true_absence": true,
+    "sampling_effort_proxy_is_other_independent_panel_butterflies": true,
+    "host_database_completeness_not_proven": true,
+    "postgate_recovery_is_not_fully_response_blind_but_was_uniform_for_all_partial_transport_species": true,
+    "genetic_response_used": false
+  }
+}

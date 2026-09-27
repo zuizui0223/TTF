@@ -1,0 +1,67 @@
+{
+  "schema": "ttf_butterfly_climate_release_execution_binding_v0.2.1",
+  "status": "BOUND_BEFORE_PRECLIMATE_OR_CLIMATE_RESULT",
+  "bound_on": "2026-09-26",
+  "execution": {
+    "workflow_name": "butterfly climate-release independent test v02.1",
+    "run_id": 36241187187,
+    "head_sha": "0d4b19a67652dd233c0632eff9deadfb865bc7c3",
+    "branch": "explore/butterfly-climate-release-v01"
+  },
+  "superseded_executions": [
+    {
+      "run_id": 36239130041,
+      "protocol": "v0.1",
+      "conclusion": "cancelled",
+      "reason": "raw predictor-label permutation conditional-null issue"
+    },
+    {
+      "run_id": 36240521463,
+      "protocol": "v0.2",
+      "conclusion": "superseded before ecological response",
+      "reason": "deterministic residual assignment could depend on input row order"
+    }
+  ],
+  "independent_panel": {
+    "panel_workflow_run_id": 36238195242,
+    "panel_artifact_id": 10904666722,
+    "panel_json_sha256": "d52ab353c46061cd0f16df95cdfee95920d9ce9b3c96da15ba115c30785cf2df",
+    "species_count": 32,
+    "species_sha256": "bbaaa28cf361fb02d558988bdd1a3f948a243b79c8d3bb1709e908edb1f0f204",
+    "pilot_species_excluded": true
+  },
+  "scientific_contract": {
+    "protocol_schema": "ttf_butterfly_climate_release_independent_test_v0.2.1",
+    "protocol_file": "docs/exploratory/butterfly_climate_release_independent_test_v0.2.1.json",
+    "hypothesis": "Within larval host-resource opportunity, climatic filtering of realized butterfly distribution weakens as taxonomic host breadth increases.",
+    "primary_response": "species climate-filtering score P(mismatch_never_observed > mismatch_heldout_observed) + 0.5 P(tie)",
+    "primary_predictor": "LepTraits NumberOfHostplantFamilies",
+    "primary_control": "log1p contemporary host-resource WGSRPD3 unit count",
+    "observed_statistic": "partial Spearman on ranks",
+    "null_inference": "species-identity-invariant Freedman-Lane-style reduced-response residual permutation on ranks",
+    "permutations": 9999,
+    "alternative": "negative",
+    "alpha": 0.05,
+    "minimum_preclimate_qualified_species": 12,
+    "minimum_climate_informative_species": 12
+  },
+  "transport_contract": {
+    "maximum_windows_per_species": 6,
+    "ordinal_window_size_records": 300,
+    "transport_chunk_size_records": 10,
+    "request_timeout_seconds": 60,
+    "species_deadline_seconds_per_pass": 600,
+    "maximum_passes_per_job": 2,
+    "completed_windows_immutable": true,
+    "species_replacement_authorized": false
+  },
+  "response_firewall_at_binding": {
+    "independent_occurrence_geography_opened": false,
+    "independent_host_overlap_opened": false,
+    "preclimate_quality_gate_opened": false,
+    "independent_climate_values_opened": false,
+    "independent_climate_filtering_scores_opened": false,
+    "independent_primary_result_opened": false,
+    "genetic_response_used": false
+  }
+}

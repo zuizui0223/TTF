@@ -1,0 +1,68 @@
+{
+  "schema": "ttf_butterfly_climate_release_independent_panel_receipt_v0.1",
+  "status": "FROZEN_BEFORE_INDEPENDENT_GBIF_OR_CLIMATE",
+  "frozen_on": "2026-09-26",
+  "protocol": "docs/exploratory/butterfly_climate_release_independent_test_v0.1.json",
+  "workflow": {
+    "run_id": 36238195242,
+    "head_sha": "cfc2ed496a7e55277df5bb1b2631b3ced55c8842",
+    "artifact_id": 10904666722,
+    "artifact_name": "butterfly-climate-release-independent-panel-v01",
+    "artifact_digest": "sha256:5db1ca0ce4b3247698243a93eb16ee8f47c499273196607a123982725eca8be2"
+  },
+  "files": {
+    "panel_json_sha256": "d52ab353c46061cd0f16df95cdfee95920d9ce9b3c96da15ba115c30785cf2df",
+    "panel_csv_sha256": "0889c0bf9b773099e6ffcb236810f5ff829475df567b0a9ef962d631a0309b2c"
+  },
+  "panel": {
+    "species_count": 32,
+    "species_sha256": "bbaaa28cf361fb02d558988bdd1a3f948a243b79c8d3bb1709e908edb1f0f204",
+    "stratum_target": {
+      "1_family": 8,
+      "2_families": 8,
+      "3_to_5_families": 8,
+      "6plus_families": 8
+    },
+    "species": [
+      "Troides aeacus",
+      "Nacaduba biocellata",
+      "Colias eurytheme",
+      "Hamadryas februa",
+      "Erynnis tristis",
+      "Phyciodes tharos",
+      "Atalopedes campestris",
+      "Dryas iulia",
+      "Historis acheronta",
+      "Pyrgus communis",
+      "Apodemia mormo",
+      "Erynnis tages",
+      "Papilio polytes",
+      "Biblis hyperia",
+      "Erynnis juvenalis",
+      "Aphantopus hyperantus",
+      "Papilio memnon",
+      "Brephidium exilis",
+      "Anthanassa frisia",
+      "Danaus genutia",
+      "Siproeta stelenes",
+      "Melanitis leda",
+      "Coenonympha tullia",
+      "Colobura dirce",
+      "Delias hyparete",
+      "Strymon melinus",
+      "Callophrys rubi",
+      "Euploea core",
+      "Junonia evarete",
+      "Neptis sappho",
+      "Pieris brassicae",
+      "Anartia jatrophae"
+    ]
+  },
+  "independence": {
+    "pilot_species_excluded": true,
+    "new_panel_gbif_used_in_selection": false,
+    "new_panel_climate_used_in_selection": false,
+    "genetic_response_used": false,
+    "panel_replacement_after_independent_response_authorized": false
+  }
+}

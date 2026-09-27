@@ -1,0 +1,66 @@
+{
+  "schema": "ttf_butterfly_climate_release_contemporary_resource_balance_v0.1",
+  "status": "PASS_RESPONSE_BLIND_CONTEMPORARY_RESOURCE_BALANCE_AUDIT",
+  "audited_on": "2026-09-26",
+  "source": {
+    "independent_panel_species_sha256": "bbaaa28cf361fb02d558988bdd1a3f948a243b79c8d3bb1709e908edb1f0f204",
+    "resource_workflow_run_id": 36239130041,
+    "resource_artifact_id": 10905452554,
+    "resource_artifact_digest": "sha256:3526bb922932cb2f8e66749f27c254a98e89ad7afcef22e81d7f904c04b673d7"
+  },
+  "scope": {
+    "species": 32,
+    "independent_occurrence_geography_used": false,
+    "independent_host_overlap_used": false,
+    "independent_climate_used": false,
+    "independent_primary_response_used": false,
+    "genetic_response_used": false
+  },
+  "resource_summary": {
+    "total_native_species_units": 3796,
+    "total_contemporary_species_units": 5883,
+    "introduced_added_species_units": 2087,
+    "species_expanded_by_introduced_host_ranges": 30
+  },
+  "association": {
+    "spearman_host_family_count_vs_native_resource_units": 0.36807189640968657,
+    "spearman_host_family_count_vs_contemporary_resource_units": 0.39711634055164935,
+    "interpretation": "Host-family breadth and geographic resource opportunity are positively related but far from interchangeable; the frozen primary control for contemporary resource breadth remains identifiable by design."
+  },
+  "contemporary_resource_units_by_host_breadth_stratum": {
+    "1_family": {
+      "species": 8,
+      "minimum": 14,
+      "median": 125.0,
+      "maximum": 361,
+      "median_contemporary_over_native_ratio": 1.6168604651162792
+    },
+    "2_families": {
+      "species": 8,
+      "minimum": 66,
+      "median": 114.5,
+      "maximum": 315,
+      "median_contemporary_over_native_ratio": 1.6576086956521738
+    },
+    "3_to_5_families": {
+      "species": 8,
+      "minimum": 48,
+      "median": 157.0,
+      "maximum": 357,
+      "median_contemporary_over_native_ratio": 1.4904092071611252
+    },
+    "6plus_families": {
+      "species": 8,
+      "minimum": 156,
+      "median": 261.5,
+      "maximum": 344,
+      "median_contemporary_over_native_ratio": 1.3909621983382014
+    }
+  },
+  "claim_boundary": {
+    "design_audit_only": true,
+    "does_not_use_occurrence_overlap": true,
+    "does_not_use_climate_filtering_scores": true,
+    "does_not_change_frozen_panel_or_primary_test": true
+  }
+}
