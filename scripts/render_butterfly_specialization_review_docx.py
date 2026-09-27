@@ -173,6 +173,7 @@ def parse_markdown(source: str, figures_dir: Path) -> Document:
     in_code = False
     code_lines: list[str] = []
     in_figure_legends = False
+    in_references = False
 
     i = 0
     while i < len(lines):
@@ -225,6 +226,7 @@ def parse_markdown(source: str, figures_dir: Path) -> Document:
             p = doc.add_paragraph(heading, style="Heading 1")
             p.paragraph_format.keep_with_next = True
             in_figure_legends = heading.lower().startswith("figure legends")
+            in_references = heading.lower() == "references"
             i += 1
             continue
 
@@ -267,9 +269,16 @@ def parse_markdown(source: str, figures_dir: Path) -> Document:
             continue
 
         if line.startswith("- "):
-            p = doc.add_paragraph(style="List Bullet")
-            p.paragraph_format.line_spacing = 2.0
-            add_inline(p, line[2:].strip())
+            if in_references:
+                p = doc.add_paragraph()
+                p.paragraph_format.left_indent = Inches(0.3)
+                p.paragraph_format.first_line_indent = Inches(-0.3)
+                p.paragraph_format.line_spacing = 2.0
+                add_inline(p, line[2:].strip())
+            else:
+                p = doc.add_paragraph(style="List Bullet")
+                p.paragraph_format.line_spacing = 2.0
+                add_inline(p, line[2:].strip())
             i += 1
             continue
 
