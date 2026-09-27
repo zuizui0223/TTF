@@ -1,0 +1,25 @@
+{
+  "additional_retry_authorized": false,
+  "final_artifact_digest": "f22744e73e0c63cb6f6d96cf1aa78df29b3d1cdd6123b7728d4d183371f1bb74",
+  "final_artifact_id": 10931190147,
+  "final_request_error_count": 95,
+  "genetic_response_used": false,
+  "initial_request_error_count": 95,
+  "occurrence_status": "NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT",
+  "original_workflow_run_id": 35941577015,
+  "recovery_workflow_head_sha": "7478c3d6fc8e1e1926edd8baa7e2a0d17b2ca09b",
+  "recovery_workflow_run_id": 36200833241,
+  "relation_result_seen": false,
+  "response_firewall": {
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_sequence_identity_opened": false
+  },
+  "retry_plan_artifact_id": 10878157732,
+  "retry_rounds_completed": 1,
+  "schema": "ttf_relational_historical_retry_import_recovery_result_v0.1",
+  "scientific_query_change": false,
+  "species_passing_ge_30": 653,
+  "status": "COMPLETED_EXACT_SINGLE_RETRY_RECOVERY"
+}

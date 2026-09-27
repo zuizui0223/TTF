@@ -1,0 +1,28 @@
+{
+  "artifact_bytes_rewritten": false,
+  "biological_null": false,
+  "digest_normalization_only": true,
+  "final_program_state": "CLOSED_NO_EVALUABLE_TEST",
+  "genetic_response_used": false,
+  "outer_handoff_artifact_digest": "dbca88a5d942a6a30c6e2aefed2845544114fe9ab5fe8c8bf9552d81e0aebe65",
+  "outer_handoff_artifact_id": 10931660156,
+  "outer_handoff_artifact_name": "relational-c-local-final-handoff-v0.1",
+  "recovery_workflow_head_sha": "8bc96ac8b970cf272e1c780e461dd3a3029ded91",
+  "recovery_workflow_run_id": 36318066664,
+  "relation_result_seen": false,
+  "response_firewall": {
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_sequence_identity_opened": false
+  },
+  "result_selection_allowed": false,
+  "retry_authorized": false,
+  "schema": "ttf_relational_historical_local_handoff_digest_recovery_result_v0.1",
+  "scientific_asset_change": false,
+  "source_occurrence_artifact_digest": "f22744e73e0c63cb6f6d96cf1aa78df29b3d1cdd6123b7728d4d183371f1bb74",
+  "source_occurrence_artifact_id": 10931190147,
+  "source_occurrence_artifact_owner_head_sha": "7478c3d6fc8e1e1926edd8baa7e2a0d17b2ca09b",
+  "source_occurrence_artifact_owner_run_id": 36200833241,
+  "status": "PASS_TRANSPORT_ONLY_DIGEST_NORMALIZATION_HANDOFF"
+}

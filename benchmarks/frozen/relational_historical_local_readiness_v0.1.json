@@ -1,0 +1,86 @@
+{
+  "schema": "ttf_relational_historical_local_readiness_v0.1",
+  "status": "READY_AWAITING_FROZEN_OCCURRENCE_FINAL_ONLY",
+  "frozen_on": "2026-09-24",
+  "purpose": "Freeze the response-blind local Study-C execution readiness state before the bounded occurrence run is complete and before any Study-C historical relation or genetic response is opened.",
+  "frozen_program": {
+    "parent": "docs/supporting/relational_program_v0.3.json",
+    "B_state": "NOT_EVALUABLE_B",
+    "C_slot": "historical climate displacement similarity",
+    "alpha_one_sided": 0.025,
+    "additional_predictor_authorized": false
+  },
+  "occurrence_gate": {
+    "workflow_run_id": 35941577015,
+    "workflow_head_sha": "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab",
+    "required_final_artifact_name": "relational-historical-occurrence-final-v0.2",
+    "required_binding": "benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json",
+    "alternative_run_allowed": false,
+    "binding_must_precede_execution": true,
+    "current_state_at_freeze": "IN_PROGRESS",
+    "final_artifact_seen_at_freeze": false,
+    "binding_seen_at_freeze": false
+  },
+  "exact_phylogatr_source": {
+    "size_bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "local_byte_verification_at_freeze": "PASS_EXACT_SIZE_AND_SHA256",
+    "source_repacking_allowed": false
+  },
+  "chelsa": {
+    "staging_run_id": 35959224240,
+    "staging_run_head_sha": "4ea89a703bce2ed88c715cb7cfcca94d1e3b27e4",
+    "staging_manifest_sha256": "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450",
+    "historical_asset_count": 8,
+    "current_asset_count": 4,
+    "local_asset_verification_at_freeze": "PASS_ALL_12_SIZE_AND_SHA256",
+    "historical_source_artifact": {
+      "artifact_id": 10791389409,
+      "digest_sha256": "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2",
+      "chunk_count": 24
+    },
+    "current_source_artifact": {
+      "artifact_id": 10791867875,
+      "digest_sha256": "724743d8666d32bc8717e52200a798369665c2f1965ba33021d3e5c68c5eff4c",
+      "chunk_count": 6
+    },
+    "chunk_transport_run_id": 35960161092,
+    "alternate_asset_selection_allowed": false
+  },
+  "local_execution_bundle": {
+    "source_bundle_commit_sha": "8c5fd223a518e19453c8273069fd8b4d72a1882c",
+    "source_bundle_artifact_id": 10794988269,
+    "source_bundle_artifact_digest_sha256": "959f496d323ddbe6ec0275c7d6b16424c766fced4626dd7b7d8dc32cf776bdb0",
+    "executor": "scripts/run_relational_historical_local_pipeline.py",
+    "executor_git_blob_sha1": "0f91a4ce29c9d0a1454673da2e2c979365eea86e",
+    "final_artifact_handoff": "scripts/run_relational_historical_local_from_artifact.py",
+    "final_artifact_handoff_git_blob_sha1": "487de64b3e4abe411344edeb992a6294252c191c",
+    "implementation_binding": "benchmarks/frozen/relational_historical_implementation_binding_v0.1.json",
+    "implementation_bound_files": 31,
+    "local_preflight_at_freeze": "PASS_SOURCE_RULE_IMPLEMENTATION_AND_CHELSA"
+  },
+  "validation": {
+    "closure_audit_run_id": 35968924508,
+    "closure_audit_head_sha": "fc7db8b3fa1b35ac602197dc1da4b7834c18472e",
+    "closure_status": "PASS_FROZEN_V03_CONTRACT_CLOSURE",
+    "focused_tests_passed": 41,
+    "final_handoff_runtime_guard_test": true
+  },
+  "activation_condition": "Only after the exact frozen occurrence run finishes and the prospectively bound binder creates the exact final occurrence artifact binding. Then verify artifact ZIP digest, internal occurrence CSV SHA-256 and ledger SHA-256 before invoking the already-bound local Study-C executor.",
+  "forbidden": [
+    "select a different occurrence run",
+    "change occurrence query, candidate species, retry policy, or minimum occurrence threshold",
+    "change CHELSA asset, time slice, variable, version, or resolved scientific object after seeing any Study-C result",
+    "change historical relation, opportunity geometry, qualification, mask, genetic estimator, alpha, or effect floor",
+    "open Study-C nucleotide identity, T_st, or beta_hist before the frozen gates authorize it",
+    "add a replacement predictor or reinterpret a technical hold as a biological null"
+  ],
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}

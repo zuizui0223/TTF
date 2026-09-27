@@ -1,0 +1,36 @@
+{
+  "schema": "ttf_relational_historical_local_final_handoff_transport_v0.1",
+  "status": "FROZEN_TRANSPORT_ONLY_BEFORE_FINAL_OCCURRENCE_RESULT",
+  "frozen_on": "2026-09-24",
+  "purpose": "Package the exact frozen Study-C final occurrence artifact ZIP bytes together with the frozen binding receipt for transport to the already-bound local Study-C executor without changing or reserializing the inner artifact.",
+  "source_run": {
+    "workflow_run_id": 35941577015,
+    "workflow_head_sha": "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab",
+    "artifact_name": "relational-historical-occurrence-final-v0.2"
+  },
+  "binding": "benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json",
+  "readiness_receipt": "benchmarks/frozen/relational_historical_local_readiness_v0.1.json",
+  "output_artifact_name": "relational-c-local-final-handoff-v0.1",
+  "package_contract": [
+    "read artifact_id and artifact_digest only from the prospectively generated frozen binding",
+    "download the original GitHub artifact ZIP bytes by exact artifact_id",
+    "require SHA-256 of downloaded ZIP bytes to equal binding.artifact_digest",
+    "require binding workflow_run_id and workflow_head_sha to equal the frozen source run",
+    "copy the binding and readiness receipt byte-for-byte; do not rewrite them",
+    "upload the original final artifact ZIP as a file inside the outer handoff artifact; do not extract, recompress, or reserialize the inner final artifact"
+  ],
+  "scientific_asset_change": false,
+  "occurrence_query_change": false,
+  "retry_policy_change": false,
+  "result_selection_allowed": false,
+  "alternate_run_allowed": false,
+  "repack_inner_artifact_allowed": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
