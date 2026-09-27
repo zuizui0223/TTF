@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use TTF or the archived genetic analysis package, please cite the versioned release associated with the manuscript."
+title: "TTF: Transferability Qualification and Abstention"
+type: software
+authors:
+  - family-names: "ZHANG"
+    given-names: "Ruiqi"
+repository-code: "https://github.com/zuizui0223/TTF"
+abstract: >-
+  Methods and reproducible analysis infrastructure for prospectively qualified
+  cross-unit transferability inference, held-out evaluation, finite candidate
+  families, explicit abstention, and lineage-disjoint genetic applications.
+keywords:
+  - transferability
+  - held-out inference
+  - abstention
+  - genetic structure
+  - reproducibility
+  - spatial ecology
