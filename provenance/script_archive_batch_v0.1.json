@@ -1,0 +1,57 @@
+{
+  "schema": "ttf_script_archive_batch_v0.1",
+  "created_on": "2026-09-27",
+  "source_commit": "321ad4ea1d060fe9e2539a050343bc12aab4e170",
+  "status": "FIRST_WAVE_LOW_RISK_HISTORICAL_ARCHIVE",
+  "policy": "Move only scripts with no current supported workflow/test/runbook dependency, preserving exact Git blob identity. This batch does not authorize moving the remaining script-surface candidates.",
+  "archived": [
+    {
+      "original_path": "scripts/build_wcvp_hosts_sidecar.R",
+      "archive_path": "provenance/scripts/build_wcvp_hosts_sidecar.R",
+      "git_blob_sha": "e5d5540a41b27509ab1a432868422f01bcf489f1",
+      "reason": "Paper-specific HOSTS/WCVP sidecar builder left behind after the butterfly ecology split; no current repository reference found."
+    },
+    {
+      "original_path": "scripts/aggregate_genetic_conditional_order_contrast_qualification.py",
+      "archive_path": "provenance/scripts/aggregate_genetic_conditional_order_contrast_qualification.py",
+      "git_blob_sha": "a3ff30dff54ff0c1a55acb823951740cd5e0a1b4",
+      "reason": "No current workflow, test, runbook, authorization, or other repository reference found."
+    },
+    {
+      "original_path": "scripts/merge_relational_environment_transport_retries.py",
+      "archive_path": "provenance/scripts/merge_relational_environment_transport_retries.py",
+      "git_blob_sha": "82f59daf2817f0a60b7d26da590ad75471ad34ef",
+      "reason": "Completed transport-retry utility; no current repository reference found after relational program closure."
+    },
+    {
+      "original_path": "scripts/retry_relational_environment_request_errors.py",
+      "archive_path": "provenance/scripts/retry_relational_environment_request_errors.py",
+      "git_blob_sha": "3c5a8bd5792dce20fb6fbc011ff3c325d4c4f769",
+      "reason": "Superseded bounded retry helper from completed Study-B transport recovery; no current repository reference found."
+    },
+    {
+      "original_path": "scripts/run_calibration.py",
+      "archive_path": "provenance/scripts/run_calibration.py",
+      "git_blob_sha": "e11aaf684e3090e05f67bfc908b71f26335d8c6f",
+      "reason": "Original monolithic calibration CLI; active qualification workflows use the cell-based calibration runners instead."
+    },
+    {
+      "original_path": "scripts/run_genetic_conditional_order_contrast_qualification_batch.py",
+      "archive_path": "provenance/scripts/run_genetic_conditional_order_contrast_qualification_batch.py",
+      "git_blob_sha": "8a7fccb3afe39fd1b720572566b4d3bf9a8c18bf",
+      "reason": "No current workflow, test, runbook, authorization, or other repository reference found."
+    },
+    {
+      "original_path": "scripts/run_genetic_conditional_order_qualification_batch.py",
+      "archive_path": "provenance/scripts/run_genetic_conditional_order_qualification_batch.py",
+      "git_blob_sha": "13fa08af7777bd47a33c12f3481aafad6b244c4d",
+      "reason": "No current workflow, test, runbook, authorization, or other repository reference found."
+    },
+    {
+      "original_path": "scripts/run_relational_host_resource_qualification.py",
+      "archive_path": "provenance/scripts/run_relational_host_resource_qualification.py",
+      "git_blob_sha": "b306f4f5d5e9306d957869367137b4452863ffd1",
+      "reason": "Superseded host-resource qualification CLI; no current repository reference found in the methods-only surface."
+    }
+  ]
+}
