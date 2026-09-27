@@ -2,7 +2,7 @@
   "schema": "ttf_butterfly_specialization_manuscript_claim_map_v0.1",
   "status": "WORKING_SUBMISSION_CLAIM_MAP",
   "manuscript": "manuscript/butterfly_specialization_ecology_v0.1.md",
-  "title": "Butterfly specialization is hierarchical: host portfolios structure resource opportunity while climate independently filters realized geography",
+  "title": "Butterfly specialization is hierarchical: host portfolios structure resource opportunity while climate filters realized geography",
   "central_claim": {
     "text": "Butterfly specialization is hierarchical and multidimensional; family-level diet breadth, species-level host portfolios, geographic resource opportunity, anthropogenic opportunity architecture, and climate filtering are partially coupled but non-interchangeable ecological dimensions.",
     "support_type": "synthesis of multiple completed analyses",
@@ -76,18 +76,29 @@
     "negative_primary": "State that the pilot-derived host-breadth climate-release hypothesis was not supported, not that host breadth has exactly zero effect."
   },
   "figure_claim_mapping": {
-    "Figure_1": ["C1"],
-    "Figure_2": ["C2"],
-    "Figure_3": ["C3"],
-    "Figure_4": ["C4"],
-    "Figure_5": ["C5", "C6"]
+    "Figure_1": [
+      "C1"
+    ],
+    "Figure_2": [
+      "C2"
+    ],
+    "Figure_3": [
+      "C3"
+    ],
+    "Figure_4": [
+      "C4"
+    ],
+    "Figure_5": [
+      "C5",
+      "C6"
+    ]
   },
   "submission_readiness": {
     "scientific_story_complete": true,
     "main_results_frozen": true,
     "new_confirmatory_test_needed_for_current_manuscript": false,
-    "reference_list_needs_full_bibliographic_cleanup": true,
-    "figures_need_generation": true,
-    "word_count_and_target_journal_format_need_later_adaptation": true
+    "reference_list_needs_full_bibliographic_cleanup": false,
+    "figures_need_generation": false,
+    "word_count_and_target_journal_format_need_later_adaptation": false
   }
 }
