@@ -1,0 +1,118 @@
+name: butterfly specialization GEB review DOCX v01
+
+on:
+  push:
+    branches:
+      - submission/butterfly-specialization-geb-bundle-v01
+    paths:
+      - ".github/workflows/butterfly-specialization-geb-review-docx-v01.yml"
+      - "scripts/render_butterfly_specialization_review_docx.py"
+      - "manuscript/generated/butterfly_specialization_ecology_blinded_v0.1.md"
+  workflow_dispatch:
+
+concurrency:
+  group: butterfly-specialization-geb-review-docx-v01-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install document renderer
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "python-docx>=1.1,<2" "Pillow>=10,<12"
+
+      - name: Restore exact manuscript figures
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-specialization-manuscript-figures-v01
+          path: inputs/figures
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36292128188
+
+      - name: Verify exact figure artifact
+        run: |
+          cd inputs/figures
+          sha256sum -c SHA256SUMS
+          test "$(find . -maxdepth 1 -name 'Figure*.png' | wc -l)" -eq 5
+          test "$(find . -maxdepth 1 -name 'Figure*.pdf' | wc -l)" -eq 5
+
+      - name: Render blinded editable review DOCX
+        run: |
+          mkdir -p results/butterfly-specialization-geb-review-v0.1
+          python scripts/render_butterfly_specialization_review_docx.py \
+            --input-markdown manuscript/generated/butterfly_specialization_ecology_blinded_v0.1.md \
+            --figures-dir inputs/figures \
+            --output-docx results/butterfly-specialization-geb-review-v0.1/butterfly_specialization_GEB_blinded_review_v0.1.docx
+
+      - name: Audit DOCX structure and anonymity
+        run: |
+          python - <<'PY'
+          import re
+          import zipfile
+          from pathlib import Path
+          from xml.etree import ElementTree as ET
+
+          path=Path("results/butterfly-specialization-geb-review-v0.1/butterfly_specialization_GEB_blinded_review_v0.1.docx")
+          assert path.exists() and path.stat().st_size > 100_000
+
+          with zipfile.ZipFile(path) as z:
+              names=set(z.namelist())
+              media=[name for name in names if name.startswith("word/media/")]
+              assert len(media)==5, media
+
+              document=z.read("word/document.xml").decode("utf-8")
+              assert "w:lnNumType" in document
+              assert 'w:restart="continuous"' in document
+              assert "Figure 5." in document
+              assert "Data and Code Availability" in document
+
+              core=ET.fromstring(z.read("docProps/core.xml"))
+              ns={
+                  "dc":"http://purl.org/dc/elements/1.1/",
+                  "cp":"http://schemas.openxmlformats.org/package/2006/metadata/core-properties",
+              }
+              creator=core.find("dc:creator",ns)
+              modified=core.find("cp:lastModifiedBy",ns)
+              assert creator is None or not (creator.text or "").strip()
+              assert modified is None or not (modified.text or "").strip()
+
+              combined="\\n".join(
+                  z.read(name).decode("utf-8",errors="ignore")
+                  for name in names if name.endswith(".xml")
+              ).lower()
+              for token in ("zuizui0223","ttf repository",".github/workflows/","original ttf program"):
+                  assert token not in combined, token
+
+          print({
+              "docx_bytes":path.stat().st_size,
+              "embedded_images":len(media),
+              "line_numbering":"continuous",
+              "metadata_creator_blank":True,
+          })
+          PY
+
+      - name: Record bundle identity
+        run: |
+          (
+            cd results/butterfly-specialization-geb-review-v0.1
+            sha256sum butterfly_specialization_GEB_blinded_review_v0.1.docx > SHA256SUMS
+          )
+          cp manuscript/butterfly_specialization_geb_submission_checklist_v0.1.json \
+            results/butterfly-specialization-geb-review-v0.1/submission_checklist.json
+          cat results/butterfly-specialization-geb-review-v0.1/SHA256SUMS
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-specialization-GEB-review-docx-v01
+          path: results/butterfly-specialization-geb-review-v0.1/
+          retention-days: 30
