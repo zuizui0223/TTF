@@ -1,0 +1,33 @@
+{
+  "schema": "ttf_methods_submission_readiness_v0.1",
+  "status": "SCIENCE_STORY_COMPLETE_REPOSITORY_AND_JOURNAL_PACKAGING_IN_PROGRESS",
+  "target_journal": "Methods in Ecology and Evolution",
+  "primary_manuscript": "manuscript/ttf_methods_v0.1.md",
+  "empirical_demonstration_manuscript": "manuscript/genetic_ttf_flagship_v0.2.md",
+  "claim_map": "manuscript/ttf_methods_claim_map_v0.1.json",
+  "scientific_state": {
+    "central_method_claim_defined": true,
+    "development_not_evaluable_example_frozen": true,
+    "observational_admissibility_failure_example_frozen": true,
+    "fresh_211_species_qualification_complete": true,
+    "single_authorized_empirical_opening_complete": true,
+    "post_result_retuning_allowed": false,
+    "new_response_driven_analysis_required": false
+  },
+  "repository_state": {
+    "butterfly_ecology_split_complete": true,
+    "historical_workflows_preserved_under_provenance": true,
+    "workflow_surface_classified": true,
+    "citation_metadata_prepared": true,
+    "license_selected": false,
+    "archive_doi_minted": false
+  },
+  "remaining_before_submission": [
+    "Complete journal-specific manuscript formatting and full reference audit.",
+    "Finalize author order, affiliations, CRediT, funding, acknowledgements, and conflict statements.",
+    "Choose a software license.",
+    "Freeze a versioned methods release and mint the archival DOI.",
+    "Insert release/DOI metadata into CITATION.cff and the manuscript data/code availability statement.",
+    "Run the full offline test suite on the final release commit."
+  ]
+}
