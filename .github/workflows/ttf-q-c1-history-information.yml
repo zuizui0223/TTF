@@ -6,6 +6,8 @@ on:
       - method/ttf-q-response-blind-qualification-v0-1
     paths:
       - ".github/workflows/ttf-q-c1-history-information.yml"
+      - "scripts/filter_ttf_q_climate_valid_occurrences.py"
+      - "src/ttf/climate_occurrence_filter.py"
   workflow_dispatch:
 
 permissions:
@@ -137,10 +139,30 @@ jobs:
             --resolved-url "${URLS[5]}" --resolved-url "${URLS[7]}" \
             --output results/c1_historical_asset_receipt.json
 
+      - name: Filter climate-invalid occurrence rows for fresh TTF-Q
+        run: |
+          python scripts/filter_ttf_q_climate_valid_occurrences.py \
+            --occurrences input/occ/occurrences_v0.2.csv \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_-190_V1.0.tif \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_-190_V1.0.tif \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_-190_V1.0.tif \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_20_V1.0.tif \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_20_V1.0.tif \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_20_V1.0.tif \
+            --raster input/chelsa-current/current/CHELSA_bio1_1981-2010_V.2.1.tif \
+            --raster input/chelsa-current/current/CHELSA_bio7_1981-2010_V.2.1.tif \
+            --raster input/chelsa-current/current/CHELSA_bio12_1981-2010_V.2.1.tif \
+            --raster input/chelsa-current/current/CHELSA_bio15_1981-2010_V.2.1.tif \
+            --output results/c1_climate_valid_occurrences.csv \
+            --summary results/c1_climate_valid_occurrences.json
+          cat results/c1_climate_valid_occurrences.json
+
       - name: Build response-blind historical/current relation design
         run: |
           python scripts/build_relational_historical_relation.py \
-            --occurrences input/occ/occurrences_v0.2.csv \
+            --occurrences results/c1_climate_valid_occurrences.csv \
             --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv \
             --rule docs/supporting/relational_historical_climate_exposure_rule_v0.1.json \
             --asset-receipt results/c1_historical_asset_receipt.json \
