@@ -343,6 +343,28 @@ The resulting picture is hierarchical: **host taxonomy describes who can be used
 
 ---
 
+## References
+
+- Brummitt, R. K., Pando, F., Hollis, S. & Brummitt, N. A. 2001. *World Geographical Scheme for Recording Plant Distributions*, 2nd edn. Hunt Institute for Botanical Documentation, Carnegie Mellon University.
+- Chowdhury, S. et al. 2026. Extensive climate-induced range shifts in butterflies across the globe. *Nature Ecology & Evolution*. https://doi.org/10.1038/s41559-026-03117-y
+- GBIF.org. 2026. GBIF Occurrence API, version 1. Global Biodiversity Information Facility. Occurrence queries accessed September 2026.
+- Govaerts, R., Nic Lughadha, E., Black, N., Turner, R. & Paton, A. 2021. The World Checklist of Vascular Plants, a continuously updated resource for exploring global plant diversity. *Scientific Data* 8: 215. https://doi.org/10.1038/s41597-021-00997-6
+- Gross, C., Kawahara, A. & Daru, B. 2026. Climate and regional plant richness drive diet specialization in butterfly caterpillars. *Nature Communications*. https://doi.org/10.1038/s41467-026-73236-4
+- Guo, F., McKirdy, S. J., Gao, L. & Gao, G. 2026. Climate and traits are differentially associated with range extent and range geometry in global butterflies. *Ecological Indicators* 189: 115231. https://doi.org/10.1016/j.ecolind.2026.115231
+- Karger, D. N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., Zimmermann, N. E., Linder, H. P. & Kessler, M. 2017. Climatologies at high resolution for the earth's land surface areas. *Scientific Data* 4: 170122. https://doi.org/10.1038/sdata.2017.122
+- Karger, D. N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., Zimmermann, N. E., Linder, H. P. & Kessler, M. 2021. Climatologies at high resolution for the earth's land surface areas. EnviDat. https://doi.org/10.16904/envidat.228
+- Lancaster, L. T. 2020. Host use diversification during range shifts shapes global variation in Lepidopteran dietary breadth. *Nature Ecology & Evolution* 4: 963–969. https://doi.org/10.1038/s41559-020-1199-1
+- Rashid, S., Wessely, J., Hausharter, J., Moser, D., Gattringer, A., Fiedler, K., Hülber, K. & Dullinger, S. 2026. Food Plant Availability Constrains Climatic Niches of Host-Specialized Europe-Centred Butterflies. *Diversity and Distributions* 32: e70245. https://doi.org/10.1111/ddi.70245
+- Robinson, G. S., Ackery, P. R., Kitching, I., Beccaloni, G. W. & Hernández, L. M. 2023. HOSTS - a Database of the World's Lepidopteran Hostplants [Data set]. Natural History Museum. https://doi.org/10.5519/havt50xw
+- Shirey, V., Larsen, E., Doherty, A. et al. 2022. LepTraits 1.0: A globally comprehensive dataset of butterfly traits. *Scientific Data* 9: 382. https://doi.org/10.1038/s41597-022-01473-5
+- Slove, J. & Janz, N. 2011. The relationship between diet breadth and geographic range size in the butterfly subfamily Nymphalinae: a study of global scale. *PLoS ONE* 6: e16057. https://doi.org/10.1371/journal.pone.0016057
+
+## Data and Code Availability
+
+For double-anonymous review, the analysis code, frozen scientific protocols, provenance receipts and figure-generation workflow will be supplied through an anonymized review repository. The large external datasets are obtained from their original providers (LepTraits, HOSTS, WCVP, GBIF, CHELSA and WGSRPD) using the versions, identifiers and query rules described in the Methods.
+
+A permanent public archival snapshot and DOI will replace this anonymized review statement in the final public version.
+
 ## Figure legends
 
 **Figure 1. Taxonomic host breadth only partly predicts geographic resource breadth.** Host-family count is plotted against the number of native, extant, non-doubtful WGSRPD level-3 units in the union of resolved larval host distributions for the 215 species meeting the conservative host-taxonomy lower-bound criterion. The y-axis is logarithmic. Orange points are one-family butterflies in the upper quartile of geographic resource breadth; named examples illustrate taxonomic specialists with broad resource geography. Spearman rho = 0.398.
@@ -354,25 +376,3 @@ The resulting picture is hierarchical: **host taxonomy describes who can be used
 **Figure 4. Species-level host portfolios reveal hierarchical specialization within one-family butterflies.** Analyses include 82 host-taxonomy-adequate butterflies whose known larval hosts all belong to exactly one plant family and whose resource envelope expanded. **a**, Resolved host-species richness versus effective contributor number (Spearman rho = 0.734). **b**, Resolved host-species richness versus maximum single-host fractional share (rho = -0.707). The x-axis is logarithmic. Family-level specialists therefore span a wide gradient from effectively one-host to multi-host anthropogenic opportunity architectures.
 
 **Figure 5. Climate filters realized geography independently of family-level diet breadth.** Twenty-four species passed the frozen independent quality gate and climate cross-fit. **a**, Species climate-filtering scores grouped by host-family breadth; horizontal segments are group medians and the dashed line marks the neutral value 0.5. **b**, Climate-filtering score versus host-family count; point size represents contemporary geographic resource breadth. The frozen primary test controlled contemporary resource breadth and did not support weaker climate filtering in broader host-family generalists (partial Spearman rho = -0.166; one-sided species-identity-invariant Freedman-Lane permutation p = 0.2237).
-
-## Data and Code Availability
-
-For double-anonymous review, the analysis code, frozen scientific protocols, provenance receipts and figure-generation workflow will be supplied through an anonymized review repository. The large external datasets are obtained from their original providers (LepTraits, HOSTS, WCVP, GBIF, CHELSA and WGSRPD) using the versions, identifiers and query rules described in the Methods.
-
-A permanent public archival snapshot and DOI will replace this anonymized review statement in the final public version.
-
-## References (working)
-
-- Brummitt, R. K., Pando, F., Hollis, S. & Brummitt, N. A. 2001. *World Geographical Scheme for Recording Plant Distributions*, 2nd edn. Hunt Institute for Botanical Documentation, Carnegie Mellon University.
-- GBIF.org. 2026. GBIF Occurrence API, version 1. Global Biodiversity Information Facility. Occurrence queries accessed September 2026.
-- Govaerts, R., Nic Lughadha, E., Black, N., Turner, R. & Paton, A. 2021. The World Checklist of Vascular Plants, a continuously updated resource for exploring global plant diversity. *Scientific Data* 8: 215. https://doi.org/10.1038/s41597-021-00997-6
-- Karger, D. N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., Zimmermann, N. E., Linder, H. P. & Kessler, M. 2017. Climatologies at high resolution for the earth's land surface areas. *Scientific Data* 4: 170122. https://doi.org/10.1038/sdata.2017.122
-- Karger, D. N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., Zimmermann, N. E., Linder, H. P. & Kessler, M. 2021. Climatologies at high resolution for the earth's land surface areas. EnviDat. https://doi.org/10.16904/envidat.228
-- Robinson, G. S., Ackery, P. R., Kitching, I., Beccaloni, G. W. & Hernández, L. M. 2023. HOSTS - a Database of the World's Lepidopteran Hostplants [Data set]. Natural History Museum. https://doi.org/10.5519/havt50xw
-- Shirey, V., Larsen, E., Doherty, A. et al. 2022. LepTraits 1.0: A globally comprehensive dataset of butterfly traits. *Scientific Data* 9: 382. https://doi.org/10.1038/s41597-022-01473-5
-- Chowdhury, S. et al. 2026. Extensive climate-induced range shifts in butterflies across the globe. *Nature Ecology & Evolution*. https://doi.org/10.1038/s41559-026-03117-y
-- Gross, C., Kawahara, A. & Daru, B. 2026. Climate and regional plant richness drive diet specialization in butterfly caterpillars. *Nature Communications*. https://doi.org/10.1038/s41467-026-73236-4
-- Guo, F., McKirdy, S. J., Gao, L. & Gao, G. 2026. Climate and traits are differentially associated with range extent and range geometry in global butterflies. *Ecological Indicators* 189: 115231. https://doi.org/10.1016/j.ecolind.2026.115231
-- Lancaster, L. T. 2020. Host use diversification during range shifts shapes global variation in Lepidopteran dietary breadth. *Nature Ecology & Evolution* 4: 963–969. https://doi.org/10.1038/s41559-020-1199-1
-- Rashid, S., Wessely, J., Hausharter, J., Moser, D., Gattringer, A., Fiedler, K., Hülber, K. & Dullinger, S. 2026. Food Plant Availability Constrains Climatic Niches of Host-Specialized Europe-Centred Butterflies. *Diversity and Distributions* 32: e70245. https://doi.org/10.1111/ddi.70245
-- Slove, J. & Janz, N. 2011. The relationship between diet breadth and geographic range size in the butterfly subfamily Nymphalinae: a study of global scale. *PLoS ONE* 6: e16057. https://doi.org/10.1371/journal.pone.0016057
