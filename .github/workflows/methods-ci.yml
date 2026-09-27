@@ -1,0 +1,28 @@
+name: methods-only CI
+
+on:
+  push:
+    branches:
+      - refactor/methods-only
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: methods-only-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test,lepidoptera]" "shapely>=2,<3"
+      - name: Run methods repository tests
+        run: pytest -q
