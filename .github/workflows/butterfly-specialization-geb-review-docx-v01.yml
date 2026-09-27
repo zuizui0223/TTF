@@ -1,0 +1,81 @@
+name: butterfly specialization GEB review docx v01
+
+on:
+  push:
+    branches:
+      - submission/butterfly-specialization-geb-review-docx-v01
+    paths:
+      - ".github/workflows/butterfly-specialization-geb-review-docx-v01.yml"
+      - "scripts/render_butterfly_specialization_blinded_manuscript.py"
+      - "scripts/render_butterfly_specialization_geb_review_docx.py"
+      - "manuscript/butterfly_specialization_ecology_v0.1.md"
+      - "manuscript/generated/butterfly_specialization_ecology_blinded_v0.1.md"
+      - "tests/test_butterfly_specialization_geb_review_docx.py"
+      - "tests/test_butterfly_specialization_submission_bundle.py"
+  workflow_dispatch:
+
+concurrency:
+  group: butterfly-specialization-geb-review-docx-v01-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install review-document environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install "python-docx>=1.1,<2" "Pillow>=10,<13"
+
+      - name: Test GEB submission source contract
+        run: |
+          pytest -q             tests/test_butterfly_specialization_submission_bundle.py             tests/test_butterfly_specialization_geb_review_docx.py
+
+      - name: Regenerate blinded Markdown exactly
+        run: |
+          mkdir -p results/butterfly-specialization-geb-review-v0.1
+          python scripts/render_butterfly_specialization_blinded_manuscript.py             --input manuscript/butterfly_specialization_ecology_v0.1.md             --output results/butterfly-specialization-geb-review-v0.1/blinded.md
+          diff -u             manuscript/generated/butterfly_specialization_ecology_blinded_v0.1.md             results/butterfly-specialization-geb-review-v0.1/blinded.md
+
+      - name: Restore exact visually-audited figures
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-specialization-manuscript-figures-v01
+          path: inputs/figures
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36292128188
+
+      - name: Verify exact figure identities
+        run: |
+          echo "c8bb417e08db2805cb85c5f390fe73b0d4d4f09874ad4264346b34b08f349793  inputs/figures/Figure1_taxonomic_vs_geographic_specialization.png" | sha256sum -c -
+          echo "c49d20c3cfcbc00c53ee9285ce4365a46480d209fcac69318bdc23a2f05b8fae  inputs/figures/Figure2_anthropogenic_resource_expansion.png" | sha256sum -c -
+          echo "e414ad428ae488b72b73f4303c10ce76506e8923e4e0319369d948ba474a756f  inputs/figures/Figure3_host_contribution_architecture.png" | sha256sum -c -
+          echo "a2eb39ca278505084ae1dbdace14b8b0e1e699eb010fe9bb58617edcf84bd8a2  inputs/figures/Figure4_within_family_specialization_hierarchy.png" | sha256sum -c -
+          echo "2cd2f5015595ff45d5f6e73a19a94a6ef87a147c3b728f6dfb0ccd7fbf3f1091  inputs/figures/Figure5_independent_climate_filtering.png" | sha256sum -c -
+
+      - name: Render anonymized editable GEB review DOCX
+        run: |
+          python scripts/render_butterfly_specialization_geb_review_docx.py             --markdown manuscript/generated/butterfly_specialization_ecology_blinded_v0.1.md             --figures-dir inputs/figures             --output results/butterfly-specialization-geb-review-v0.1/butterfly_specialization_ecology_GEB_review_v0.1.docx             --receipt results/butterfly-specialization-geb-review-v0.1/review_docx_receipt.json
+          (
+            cd results/butterfly-specialization-geb-review-v0.1
+            sha256sum butterfly_specialization_ecology_GEB_review_v0.1.docx blinded.md review_docx_receipt.json > SHA256SUMS
+          )
+          cat results/butterfly-specialization-geb-review-v0.1/review_docx_receipt.json
+          unzip -p results/butterfly-specialization-geb-review-v0.1/butterfly_specialization_ecology_GEB_review_v0.1.docx docProps/core.xml
+          echo
+          unzip -p results/butterfly-specialization-geb-review-v0.1/butterfly_specialization_ecology_GEB_review_v0.1.docx word/document.xml | grep -o 'w:lnNumType[^>]\+' | head -1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-specialization-geb-review-docx-v01
+          path: results/butterfly-specialization-geb-review-v0.1/
+          retention-days: 30

@@ -73,8 +73,6 @@
     "Insert final author list, affiliations, corresponding-author details, emails and ORCIDs in the separate title page.",
     "Complete CRediT contributions, acknowledgements, funding and conflict-of-interest statements.",
     "Create the permanent archival snapshot and replace DOI placeholders.",
-    "Export the blinded main manuscript to an editable review document with continuous line numbering and embedded figures.",
-    "Remove author metadata from the review document file properties.",
     "Perform final proofread after metadata and archive DOI are inserted."
   ],
   "not_required": [
@@ -83,5 +81,32 @@
     "Replacing species that failed original technical acquisition.",
     "Turning exploratory resource analyses into confirmatory claims."
   ],
-  "submission_checklist": "manuscript/butterfly_specialization_geb_submission_checklist_v0.1.json"
+  "submission_checklist": "manuscript/butterfly_specialization_geb_submission_checklist_v0.1.json",
+  "review_document": {
+    "status": "READY_AND_VISUALLY_AUDITED",
+    "receipt": "manuscript/butterfly_specialization_geb_review_docx_v0.1.json",
+    "workflow_run_id": 36311376235,
+    "artifact_id": 10928404850,
+    "artifact_digest": "sha256:4000dcaa92884b40227f7172810560c581e51e1ce25ff0f35c84d4d783816c90",
+    "docx_sha256": "7ed9b55533367a5734918868af1c7b989bb275e82c07d9a8e3e1121f16570b3e",
+    "page_count": 22,
+    "continuous_line_numbering": true,
+    "embedded_figures": 5,
+    "author_metadata_blank": true,
+    "all_pages_visually_audited": true
+  },
+  "complete_now": [
+    "Scientific analyses and claim boundaries.",
+    "Structured abstract under 300 words with the seven GEB Research Article headings.",
+    "Seven alphabetized, comma-separated keywords.",
+    "Main text approximately 4,000 words.",
+    "Separate double-anonymous title-page template.",
+    "Reproducible blinded-main-text renderer and generated blinded Markdown.",
+    "Five visually audited figures with vector PDFs.",
+    "Editable 22-page blinded review DOCX with continuous line numbering and five embedded figures.",
+    "Review-DOCX author metadata scrubbed and internal identity tokens absent.",
+    "Full 22-page visual audit of the review DOCX.",
+    "Cover-letter draft.",
+    "Full test suite and manuscript claim checks."
+  ]
 }
