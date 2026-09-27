@@ -18,7 +18,7 @@
 
 **Main conclusions:** Butterfly specialization is hierarchical and multidimensional. Family-level diet breadth masks species-level host portfolios that structure geographic and anthropogenic resource opportunity, while climate acts as a largely separate filter on realized geography.
 
-**Keywords:** butterflies; ecological specialization; host breadth; resource geography; introduced plants; climate filtering; niche breadth
+**Keywords:** butterflies; climate filtering; ecological specialization; host breadth; introduced plants; niche breadth; resource geography
 
 ---
 
