@@ -42,6 +42,31 @@ For focal vector `r`, two-way-FE residual `r_FE`, and control-residualized vecto
 - total unique fraction: `||r_unique||^2 / ||r||^2`;
 - a VIF-like quantity `1 / unique_fraction_after_FE`.
 
+### Exact information-loss decomposition
+
+The three fractions are not unrelated diagnostics. By construction they satisfy the exact identity
+
+```
+total_unique_fraction
+= source_target_FE_retained_fraction
+  × control_unique_fraction_after_FE
+```
+
+or, equivalently,
+
+```
+||r_unique||² / ||r||²
+= (||r_FE||² / ||r||²)
+  (||r_unique||² / ||r_FE||²).
+```
+
+This separates two different reasons a relational predictor can become uninformative:
+
+1. **endpoint-identity loss** — most apparent relation variation is actually source or target identity;
+2. **nuisance-redundancy loss** — the within-endpoint relation is largely reproduced by geography, lineage, current climate, or other declared controls.
+
+The decomposition is exact for the declared linear projection and therefore turns “not enough independent relation information” into a localized diagnosis rather than a binary failure label.
+
 For Study C this directly answers the scientifically useful question that survives the closed confirmatory program:
 
 > How much historical-climate similarity exists that cannot be reduced to current-climate similarity, geography, lineage, locality imbalance, or source/target identity?
