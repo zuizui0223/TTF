@@ -1,0 +1,31 @@
+{
+  "artifact_digest": "f22744e73e0c63cb6f6d96cf1aa78df29b3d1cdd6123b7728d4d183371f1bb74",
+  "artifact_id": 10931190147,
+  "artifact_name": "relational-historical-occurrence-final-v0.2",
+  "artifact_workflow_head_sha": "7478c3d6fc8e1e1926edd8baa7e2a0d17b2ca09b",
+  "artifact_workflow_run_id": 36200833241,
+  "binding_trigger_sha256": "f9b6bb3a1fc6874db3adda3e81c10bc36ec5a65cd090563be099e05d21f093d0",
+  "candidate_csv_sha256": "ad6375b4c2ec3f00193da90b3c68752f126d07cf18071b4f5dfddd422bdff7a1",
+  "execution_rule_sha256": "48647ad10b9ddbdf60cf4d1fbbf09947e1663f069566c1a984bb3bf7914d14ad",
+  "final_request_error_count": 95,
+  "genetic_response_used": false,
+  "initial_request_error_count": 95,
+  "occurrence_csv_sha256": "6acf3e63aa0a8dfa2bc9954ea0daf92406ef484ea9958fe1ff3813354f65e1b9",
+  "occurrence_ledger_sha256": "10bb5b2eaa8d48790644b5d7497c35994c9e8cd49d2f1f557dfaa13c00825a52",
+  "occurrence_status": "NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT",
+  "response_firewall": {
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_sequence_identity_opened": false
+  },
+  "retry_plan_sha256": "e7997e4e0236ff3b881cdbf3638720ce2bcab08bcaf1aaab779773cddb9b40a3",
+  "retry_rounds_completed": 1,
+  "schema": "ttf_relational_historical_occurrence_artifact_binding_v0.2",
+  "species_passing_ge_30": 653,
+  "status": "FROZEN_FINAL_BOUNDED_RESPONSE_BLIND_OCCURRENCE_ARTIFACT",
+  "technical_recovery": "PYTHONPATH-only import-path recovery; frozen retry/acquire/finalizer scripts unchanged",
+  "technical_recovery_receipt_sha256": "66756338826d3271098bd15e4364b2fa6175dc82103498ec6e7fcb928677ff9e",
+  "workflow_head_sha": "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab",
+  "workflow_run_id": 35941577015
+}
