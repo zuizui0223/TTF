@@ -1,0 +1,60 @@
+{
+  "schema": "ttf_methods_claim_map_v0.1",
+  "status": "WORKING_METHODS_MANUSCRIPT_CLAIM_MAP",
+  "manuscript": "manuscript/ttf_methods_v0.1.md",
+  "target_journal": "Methods in Ecology and Evolution",
+  "central_claim": {
+    "text": "Cross-unit transfer claims require prospective qualification on the realized deployment geometry and an explicit abstention state; TTF separates method validity, deployment detectability, observational admissibility, and the authorized empirical result so that NOT_EVALUABLE is distinguishable from a qualified negative result.",
+    "support_type": "frozen qualification and empirical receipts",
+    "allowed": true
+  },
+  "claims": [
+    {
+      "id": "M1",
+      "claim": "A cross-species transfer design can fail exact-geometry error control even when a separate within-species detectability gate passes.",
+      "status": "frozen development demonstration",
+      "key_statistic": "development Gate-D private Wilson upper=0.1003347533 > 0.10; shared power criterion passed; separate self-detectability qualification passed",
+      "interpretation": "Cross-species empirical opening was not licensed on the development geometry."
+    },
+    {
+      "id": "M2",
+      "claim": "Observational admissibility can fail after method-level qualification without licensing an ecological null result.",
+      "status": "frozen observational-support demonstration",
+      "key_statistic": "189/250 species met the frozen support minimum; no authorized empirical geometry was retained",
+      "interpretation": "Trait values and the empirical transfer statistic remained unopened."
+    },
+    {
+      "id": "M3",
+      "claim": "A fresh response-blind deployment can pass the same prospective logic and authorize one empirical opening.",
+      "status": "frozen fresh genetic qualification",
+      "key_statistic": "211 survivors; inherited 103 training / 108 evaluation split; private-null Wilson upper=0.0681; shared-A2 Wilson lower=0.9714",
+      "source": "benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json"
+    },
+    {
+      "id": "M4",
+      "claim": "TTF distinguishes a qualified negative cross-species result from a design that was not evaluable.",
+      "status": "single authorized empirical opening",
+      "key_statistic": "post-IBD transfer T=0.0325654847, p=0.7392607393; separately qualified self test p=0.008991009",
+      "source": "benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json"
+    },
+    {
+      "id": "M5",
+      "claim": "Finite candidate families and frozen stopping rules make abstention executable rather than rhetorical.",
+      "status": "repository-level methodological contract",
+      "interpretation": "Failed or exhausted candidate families close under their frozen confirmatory label; successors require a newly named development program."
+    }
+  ],
+  "forbidden_overclaims": [
+    "TTF proves that all biologically plausible private structure has been represented by the synthetic world family.",
+    "The fresh genetic result proves that cross-species genetic transfer is exactly zero.",
+    "The significant self test is a positive raw correlation; its raw statistic is negative and inference is null-relative.",
+    "A NOT_EVALUABLE endpoint identifies the biological mechanism that caused the gate failure.",
+    "One qualified deployment validates the method for every ecological domain or sampling geometry."
+  ],
+  "primary_distinction": {
+    "qualification_fail": "The empirical transfer claim is not licensed under the frozen design.",
+    "observational_fail": "The realized data do not support the predeclared estimand.",
+    "qualified_empirical_nondetection": "A valid negative result within the prospectively qualified domain.",
+    "qualified_empirical_detection": "Evidence for transfer under the frozen estimand and declared null family."
+  }
+}
