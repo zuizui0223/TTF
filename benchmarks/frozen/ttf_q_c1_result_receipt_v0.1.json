@@ -1,0 +1,49 @@
+{
+  "schema": "ttf_q_c1_frozen_result_receipt_v0.1",
+  "status": "FROZEN_FRESH_RESPONSE_BLIND_C1_RESULT",
+  "recorded_on": "2026-09-27",
+  "method_contract": "docs/supporting/ttf_q_v0.1.json",
+  "workflow": {
+    "run_id": 36326997088,
+    "head_sha": "91060f5244f6d61877201797f84bc7f08baaf930",
+    "conclusion": "success",
+    "artifact_id": 10934761226,
+    "artifact_digest_sha256": "8df562a20f6a7afbbe3c16ad731a647515f47e62d9a46cbd1189f5a53f6fe97f"
+  },
+  "design": {
+    "historical_design_sha256": "60baf46d171f0e881d214f5015ef10b73ea950fac698caf6dd13d6bd51a76230",
+    "candidate_species": 1000,
+    "admissible_species": 653,
+    "development_dyads": 15625,
+    "confirmatory_dyads": 40602,
+    "climate_invalid_occurrence_rows_removed": 3,
+    "species_lost_to_climate_validity_filter": 0
+  },
+  "development": {
+    "spearman_hist_vs_current": 0.620674221660972,
+    "source_target_fe_retained_variance_fraction": 0.673089829510409,
+    "control_unique_variance_fraction_after_fe": 0.5418505186037844,
+    "total_unique_variance_fraction": 0.3647140731871479,
+    "signal_effective_sources": 78.87490200901534,
+    "signal_effective_targets": 81.75677441028186,
+    "high_current_low_history_fraction": 0.03608907089838751,
+    "high_current_high_history_fraction": 0.615817762989506
+  },
+  "confirmatory": {
+    "spearman_hist_vs_current": 0.5921648134632297,
+    "source_target_fe_retained_variance_fraction": 0.661665702091796,
+    "control_unique_variance_fraction_after_fe": 0.5762487887003043,
+    "total_unique_variance_fraction": 0.3812840593549338,
+    "signal_effective_sources": 139.05722182695666,
+    "signal_effective_targets": 151.91030154043324,
+    "high_current_low_history_fraction": 0.026795389616786524,
+    "high_current_high_history_fraction": 0.5613240074869471
+  },
+  "interpretation": "Historical climate-displacement similarity contains substantial pairwise information not reducible to current-climate similarity, lineage, locality-count imbalance, or exact source/target identity. This is an ecological-information result, not a genetic-transfer effect test.",
+  "boundary": {
+    "relational_v03_final_state_unchanged": "CLOSED_NO_EVALUABLE_TEST",
+    "relational_v03_reopened": false,
+    "genetic_response_used": false,
+    "geographic_opportunity_used": false
+  }
+}
