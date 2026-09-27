@@ -1,0 +1,76 @@
+{
+  "schema": "ttf_butterfly_host_plant_driver_analysis_v0.1",
+  "status": "FROZEN_POST_RESULT_EXPLORATORY_BEFORE_PLANT_LEVEL_AGGREGATION",
+  "created_on": "2026-09-27",
+  "origin": {
+    "mechanism_result": "benchmarks/exploratory/butterfly_resource_expansion_mechanism_result_v0.1.json",
+    "known_before_analysis": [
+      "206/239 butterflies gain reconstructed resource opportunity when introduced host ranges are retained.",
+      "Proportional resource expansion is essentially unrelated to host-family breadth.",
+      "Specialists tend to have concentrated host-contribution architectures and generalists more distributed portfolios."
+    ]
+  },
+  "ecological_question": "Which host plant species contribute most broadly and most strongly to reconstructed anthropogenic expansion of butterfly larval-resource opportunity?",
+  "scope": {
+    "butterfly_panel": "239 exact S1 resource-eligible species",
+    "expanded_butterflies": 206,
+    "host_interactions": "fixed HOSTS mirror",
+    "plant_taxonomy_and_distribution": "WCVP v13",
+    "spatial_unit": "WGSRPD level 3",
+    "new_butterfly_gbif_used": false,
+    "climate_used": false,
+    "genetic_response_used": false
+  },
+  "plant_level_metrics": [
+    "butterfly_species_with_positive_fractional_credit",
+    "total_fractional_butterfly_unit_credit",
+    "median_fractional_share_within_butterfly",
+    "maximum_fractional_share_within_butterfly",
+    "butterfly_species_where_host_is_top_contributor_including_ties",
+    "butterfly_species_where_host_is_sole_contributor",
+    "native_wgsrpd3_units",
+    "contemporary_wgsrpd3_units",
+    "introduced_added_wgsrpd3_units"
+  ],
+  "cross_plant_concentration_metrics": [
+    "share of all butterfly fractional added-unit credit attributable to top 1 host plant",
+    "share attributable to top 5 host plants",
+    "share attributable to top 10 host plants",
+    "share attributable to top 25 host plants",
+    "number of host plants needed to reach 25%, 50%, and 75% of all butterfly fractional added-unit credit"
+  ],
+  "rankings": {
+    "primary": "butterfly_species_with_positive_fractional_credit descending, then total_fractional_butterfly_unit_credit descending",
+    "secondary": [
+      "total_fractional_butterfly_unit_credit descending",
+      "butterfly_species_where_host_is_top_contributor_including_ties descending",
+      "butterfly_species_where_host_is_sole_contributor descending"
+    ],
+    "top_rows_to_report": 25
+  },
+  "butterfly_example_table": {
+    "purpose": "Return ecological specificity to the manuscript by naming butterflies and their dominant redistributed hosts.",
+    "selection": [
+      "top 10 one-family butterflies by introduced_added_units among host-taxonomy-adequate expanded species",
+      "top 10 butterflies overall by introduced_added_units"
+    ],
+    "reported_fields": [
+      "butterfly species",
+      "host-family breadth",
+      "resolved host-species count",
+      "introduced-added resource units",
+      "dominant host accepted name",
+      "dominant host family",
+      "dominant host fractional share",
+      "dominant host introduced-added WGSRPD3 units"
+    ]
+  },
+  "interpretation_boundary": {
+    "exploratory_post_result": true,
+    "host_plant_driver_means_driver_of_reconstructed_resource_opportunity_not_realized_butterfly_range": true,
+    "does_not_prove_butterflies_use_introduced_host_populations_in_all_added_regions": true,
+    "WCVP_introduced_status_is_distribution_status_not_introduction_date": true,
+    "HOSTS_completeness_not_proven": true,
+    "cross_butterfly_credit_is_an_opportunity_metric_not_abundance_or_fitness": true
+  }
+}
