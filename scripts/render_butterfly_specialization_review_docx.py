@@ -11,7 +11,7 @@ from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-from docx.shared import Inches, Pt
+from docx.shared import Inches, Pt, RGBColor
 from PIL import Image
 
 
@@ -85,6 +85,7 @@ def configure_document(doc: Document) -> None:
     for name in ("Title", "Heading 1", "Heading 2", "Heading 3"):
         style = doc.styles[name]
         style.font.name = "Times New Roman"
+        style.font.color.rgb = RGBColor(0, 0, 0)
 
     doc.styles["Title"].font.size = Pt(16)
     doc.styles["Title"].font.bold = True
@@ -203,14 +204,19 @@ def parse_markdown(source: str, figures_dir: Path) -> Document:
             continue
 
         if line.strip() == "---":
-            doc.add_page_break()
             i += 1
             continue
 
         if line.startswith("# "):
-            p = doc.add_paragraph(style="Title")
+            p = doc.add_paragraph()
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            add_inline(p, line[2:].strip())
+            p.paragraph_format.first_line_indent = Inches(0)
+            p.paragraph_format.space_after = Pt(12)
+            run = p.add_run(line[2:].strip())
+            run.bold = True
+            run.font.name = "Times New Roman"
+            run.font.size = Pt(16)
+            run.font.color.rgb = RGBColor(0, 0, 0)
             i += 1
             continue
 
