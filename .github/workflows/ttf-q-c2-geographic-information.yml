@@ -1,6 +1,11 @@
 name: ttf-q-c2-geographic-information
 
 on:
+  push:
+    branches:
+      - method/ttf-q-response-blind-qualification-v0-1
+    paths:
+      - ".github/workflows/ttf-q-c2-geographic-information.yml"
   workflow_run:
     workflows:
       - "ttf-q-c1-history-information"
@@ -21,13 +26,14 @@ permissions:
 jobs:
   c2:
     if: >-
+      github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch' ||
       (github.event.workflow_run.conclusion == 'success' &&
        github.event.workflow_run.id == 36326997088)
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
-      C1_RUN_ID: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.id || inputs.c1_run_id }}
+      C1_RUN_ID: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.id || inputs.c1_run_id || 36326997088 }}
     steps:
       - uses: actions/checkout@v4
 
@@ -149,7 +155,7 @@ jobs:
       - name: Build C2 external geographic co-opportunity
         run: |
           mkdir -p results/c2
-          python scripts/attach_ttf_q_external_opportunity.py             --historical-design input/exact/c1_historical_design.npz             --occurrences input/exact/occurrences.csv             --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv             --rule docs/supporting/ttf_q_c2_geographic_opportunity_v0.2.json             --panel both             --output-npz results/c2/c2_external_opportunity.npz             --output-summary results/c2/c2_external_opportunity.json
+          python scripts/attach_ttf_q_external_opportunity.py             --historical-design input/exact/c1_historical_design.npz             --occurrences input/exact/occurrences.csv             --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv             --rule docs/supporting/ttf_q_c2_geographic_opportunity_v0.1.json             --panel both             --output-npz results/c2/c2_external_opportunity.npz             --output-summary results/c2/c2_external_opportunity.json
 
       - name: Compute nested C1-to-C2 information survival
         run: |
