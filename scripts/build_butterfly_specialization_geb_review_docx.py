@@ -138,6 +138,16 @@ def _set_review_layout(document: Document) -> None:
             paragraph.paragraph_format.keep_with_next = True
 
 
+def _resize_figures(document: Document) -> None:
+    target_width = Inches(6.35)
+    for shape in document.inline_shapes:
+        if not shape.width:
+            continue
+        ratio = shape.height / shape.width
+        shape.width = target_width
+        shape.height = int(target_width * ratio)
+
+
 def _format_figure_pages(document: Document) -> None:
     first_figure_seen = False
     for paragraph in document.paragraphs:
@@ -184,6 +194,7 @@ def build_docx(source: Path, figure_dir: Path, output: Path) -> None:
 
     _set_review_layout(document)
     _add_line_numbering(document)
+    _resize_figures(document)
     _format_figure_pages(document)
     _scrub_metadata(document)
 
