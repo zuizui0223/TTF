@@ -1,0 +1,61 @@
+{
+  "schema": "ttf_relational_historical_local_execution_rule_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_EXECUTION_EQUIVALENCE_BEFORE_STUDY_C_RELATION_RESULT",
+  "frozen_on": "2026-09-24",
+  "purpose": "Allow the already-frozen Study-C analysis to execute outside GitHub Actions when the exact source archive is locally available but the GitHub Actions cache transport is unavailable.",
+  "scientific_equivalence": {
+    "same_occurrence_binding": true,
+    "same_candidate_universe": true,
+    "same_historical_assets": true,
+    "same_current_environment_assets": true,
+    "same_relation_builder": true,
+    "same_geometry_builder": true,
+    "same_opportunity_builder": true,
+    "same_qualification_runner": true,
+    "same_character_mask": true,
+    "same_survivor_requalification": true,
+    "same_empirical_authorization": true,
+    "same_empirical_runner": true,
+    "same_alpha": true,
+    "same_final_state_logic": true
+  },
+  "required_source_archive": {
+    "size_bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+  },
+  "required_occurrence_run": {
+    "workflow_run_id": 35941577015,
+    "workflow_head_sha": "ffacbd51d58689a4b18f7a2cb920f5a1385a74ab",
+    "binding": "benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json"
+  },
+  "implementation_binding": "benchmarks/frozen/relational_historical_implementation_binding_v0.1.json",
+  "executor": "scripts/run_relational_historical_local_pipeline.py",
+  "sequence_identity_opening_boundary": "The executor verifies source bytes and may extract the archive after the external historical relation passes, but it does not execute nucleotide-identity empirical scoring until the exact survivor synthetic requalification passes and the one-shot authorization is created.",
+  "result_selection_rerun_allowed": false,
+  "alternate_predictor_allowed": false,
+  "alternate_panel_allowed": false,
+  "source_repacking_allowed": false,
+  "relation_result_seen": false,
+  "genetic_response_used": false,
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  },
+  "executor_git_blob": "0f91a4ce29c9d0a1454673da2e2c979365eea86e",
+  "binding_verification": "Compute canonical Git blob SHA-1 directly from each bound file byte sequence; no .git directory is required, so the same check works in a git archive snapshot.",
+  "source_bundle_compatible": true,
+  "git_blob_header_rule": "SHA1(b'blob ' + decimal_byte_length + bytes([0]) + file_bytes)",
+  "offline_import_contract": "Executor sets PYTHONPATH=<exact source bundle>/src and subprocess cwd=<exact source bundle root>; editable/package installation is not required.",
+  "editable_install_required": false,
+  "chelsa_staging_manifest_required": true,
+  "chelsa_staging_validation": "Before relation construction, require exact staged historical/current basename, order, byte size and SHA-256; historical resolved URLs must also match the response-blind staging manifest.",
+  "final_artifact_handoff_executor": "scripts/run_relational_historical_local_from_artifact.py",
+  "final_artifact_handoff_contract": "Require the exact frozen occurrence binding, verify the GitHub artifact ZIP SHA-256 against binding.artifact_digest, extract exactly one occurrences_v0.2.csv and occurrence_ledger_v0.2.json, verify both file hashes against the binding, then invoke the unchanged local Study-C executor.",
+  "final_artifact_alternative_run_allowed": false,
+  "final_artifact_repacking_allowed": false,
+  "final_artifact_handoff_executor_git_blob": "487de64b3e4abe411344edeb992a6294252c191c",
+  "chelsa_staging_manifest_sha256": "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450",
+  "chelsa_staging_manifest_source_commit": "4ea89a703bce2ed88c715cb7cfcca94d1e3b27e4"
+}
