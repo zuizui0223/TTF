@@ -1,0 +1,117 @@
+name: butterfly specialization GEB review DOCX v01
+
+on:
+  push:
+    branches:
+      - submission/butterfly-specialization-geb-export-v01
+    paths:
+      - ".github/workflows/butterfly-specialization-geb-review-docx-v01.yml"
+      - "scripts/build_butterfly_specialization_geb_review_docx.py"
+      - "manuscript/generated/butterfly_specialization_ecology_blinded_v0.1.md"
+  workflow_dispatch:
+
+concurrency:
+  group: butterfly-specialization-geb-review-docx-v01-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install document build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "python-docx>=1.1,<2" "pypandoc-binary>=1.15,<2"
+
+      - name: Restore audited manuscript figures
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-specialization-manuscript-figures-v01
+          path: inputs/figures
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36292128188
+
+      - name: Verify exact figure artifact contents
+        run: |
+          test -f inputs/figures/Figure1_taxonomic_vs_geographic_specialization.png
+          test -f inputs/figures/Figure2_anthropogenic_resource_expansion.png
+          test -f inputs/figures/Figure3_host_contribution_architecture.png
+          test -f inputs/figures/Figure4_within_family_specialization_hierarchy.png
+          test -f inputs/figures/Figure5_independent_climate_filtering.png
+          test -f inputs/figures/Figure1_taxonomic_vs_geographic_specialization.pdf
+          test -f inputs/figures/Figure2_anthropogenic_resource_expansion.pdf
+          test -f inputs/figures/Figure3_host_contribution_architecture.pdf
+          test -f inputs/figures/Figure4_within_family_specialization_hierarchy.pdf
+          test -f inputs/figures/Figure5_independent_climate_filtering.pdf
+
+      - name: Build blinded GEB review DOCX
+        run: |
+          mkdir -p results/geb-review-v0.1
+          python scripts/build_butterfly_specialization_geb_review_docx.py \
+            --manuscript manuscript/generated/butterfly_specialization_ecology_blinded_v0.1.md \
+            --figure-dir inputs/figures \
+            --output results/geb-review-v0.1/butterfly_specialization_GEB_blinded_review_v0.1.docx
+
+      - name: Audit generated review DOCX
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          from docx import Document
+
+          path=Path("results/geb-review-v0.1/butterfly_specialization_GEB_blinded_review_v0.1.docx")
+          assert path.exists() and path.stat().st_size > 100_000
+
+          doc=Document(path)
+          assert len(doc.inline_shapes) == 5, len(doc.inline_shapes)
+          assert doc.core_properties.author in ("", None)
+          assert doc.core_properties.last_modified_by in ("", None)
+
+          visible="\n".join(p.text for p in doc.paragraphs).lower()
+          for forbidden in (
+              "ttf repository",
+              ".github/workflows/",
+              "repository provenance",
+              "zuizui0223",
+              "original ttf program",
+          ):
+              assert forbidden not in visible, forbidden
+
+          with ZipFile(path) as z:
+              document_xml=z.read("word/document.xml").decode("utf-8")
+              assert "<w:lnNumType" in document_xml
+              assert 'w:countBy="1"' in document_xml
+              core_xml=z.read("docProps/core.xml").decode("utf-8")
+              assert "zuizui0223" not in core_xml.lower()
+
+          assert any(p.text.strip()=="Figures" for p in doc.paragraphs)
+          assert any(p.text.strip()=="References" for p in doc.paragraphs)
+          assert any(p.text.strip()=="Data and Code Availability" for p in doc.paragraphs)
+          print({
+              "paragraphs":len(doc.paragraphs),
+              "inline_shapes":len(doc.inline_shapes),
+              "size_bytes":path.stat().st_size,
+          })
+          PY
+
+      - name: Record output hash
+        run: |
+          (
+            cd results/geb-review-v0.1
+            sha256sum butterfly_specialization_GEB_blinded_review_v0.1.docx > SHA256SUMS
+          )
+          cat results/geb-review-v0.1/SHA256SUMS
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-specialization-GEB-blinded-review-v01
+          path: results/geb-review-v0.1/
+          retention-days: 30
