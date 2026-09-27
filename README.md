@@ -83,17 +83,15 @@ This repository therefore preserves failed gates and closure receipts alongside 
 
 ## Repository boundary
 
-Ecological analyses whose scientific contribution is the biology rather than the transfer methodology are being moved out of TTF.
-
-The butterfly specialization / host-resource / climate analysis is migrating to:
+The ecological butterfly paper has been separated from TTF into:
 
 `https://github.com/zuizui0223/chocho`
 
-The migration is pinned to TTF commit:
+The split is pinned to TTF commit:
 
 `1a112334cca2f2ef5e234c3ae1fc1a80b8266956`
 
-The butterfly files remain on TTF `main` until the independent repository passes its paper-specific test suite. They will then be removed from the methods-only branch without rewriting TTF history.
+The destination repository independently passes its paper-specific offline test suite, and the butterfly/Lepidoptera application surface has been removed from current TTF `main`. TTF history is unchanged, so the pre-split files remain inspectable through the frozen source commit.
 
 ## Repository map
 
@@ -103,8 +101,10 @@ The butterfly files remain on TTF `main` until the independent repository passes
 - `benchmarks/frozen/` — immutable qualification and empirical receipts.
 - `manuscript/` — methods manuscript material and generated handoffs.
 - `scripts/` — reproducible builders, qualification runs, audits, and renderers.
+- `.github/workflows/` — current CI and deliberately supported reproducibility entrypoints.
+- `provenance/workflows/` — completed, superseded, diagnostic, and recovery workflow definitions preserved byte-for-byte as historical provenance.
 
-Exploratory biological analyses are not part of the long-term methods-only surface and are being separated into paper-specific repositories.
+The workflow classification is machine-readable in `provenance/workflow_surface_classification_v0.1.json`. Exploratory biological papers live in paper-specific repositories rather than the active TTF surface.
 
 ## Reproducibility contract
 
@@ -123,4 +123,6 @@ The repository should make it possible to determine not only how a reported resu
 
 ## Development status
 
-The methods-only refactor is in progress. No historical frozen result is being rewritten. The active cleanup removes ecological paper surfaces only after their destination repository reproduces them independently.
+The methods-only repository split is complete. No historical frozen result was rewritten. The current cleanup phase reduces active repository surface area while preserving historical execution definitions and frozen receipts under explicit provenance paths.
+
+Repository-wide CI is `.github/workflows/tests.yml`. Historical workflow moves preserve the original Git blob identity and therefore do not alter the recorded execution definitions.

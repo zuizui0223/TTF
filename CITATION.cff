@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use TTF or its archived analysis package, please cite the versioned archival release."
+title: "TTF: Transferability Qualification and Abstention"
+type: software
+authors:
+  - family-names: "ZHANG"
+    given-names: "Ruiqi"
+repository-code: "https://github.com/zuizui0223/TTF"
+abstract: >-
+  Methods and reproducibility infrastructure for prospective qualification,
+  held-out cross-unit transfer inference, finite candidate families, frozen
+  stopping rules, and explicit NOT_EVALUABLE/abstention endpoints.
+keywords:
+  - transferability
+  - held-out inference
+  - qualification
+  - abstention
+  - reproducibility
+  - spatial ecology
