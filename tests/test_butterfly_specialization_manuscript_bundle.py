@@ -55,8 +55,8 @@ def test_butterfly_specialization_manuscript_bundle_is_internally_consistent():
 
     # Approximate main-text budget remains under the GEB typical 5,000 words.
     intro_start = manuscript.index("## 1. Introduction")
-    legend_start = manuscript.index("## Figure legends")
-    assert _words(manuscript[intro_start:legend_start]) <= 5000
+    references_start = manuscript.index("## References")
+    assert _words(manuscript[intro_start:references_start]) <= 5000
 
     # Submission sections expected in the working bundle.
     for heading in (
@@ -68,9 +68,14 @@ def test_butterfly_specialization_manuscript_bundle_is_internally_consistent():
         "## 6. Conclusions",
         "## Figure legends",
         "## Data and Code Availability",
-        "## References (working)",
+        "## References",
     ):
         assert heading in manuscript
+
+    assert manuscript.index("## References") < manuscript.index(
+        "## Data and Code Availability"
+    ) < manuscript.index("## Figure legends")
+    assert "## References (working)" not in manuscript
 
     # Core source values used in the paper remain identical to frozen receipts.
     assert (
