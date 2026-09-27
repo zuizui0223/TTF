@@ -343,43 +343,32 @@ The resulting picture is hierarchical: **host taxonomy describes who can be used
 
 ---
 
-## Figure plan
+## Figure legends
 
-### Figure 1 — Taxonomic breadth is not geographic breadth
-A. Host-family count versus native host-resource WGSRPD3 breadth for 239 species.  
-B. Rank discordance distribution.  
-C. Highlight conservative one-family / geographically broad species.
+**Figure 1. Taxonomic host breadth only partly predicts geographic resource breadth.** Host-family count is plotted against the number of native, extant, non-doubtful WGSRPD level-3 units in the union of resolved larval host distributions for the 215 species meeting the conservative host-taxonomy lower-bound criterion. The y-axis is logarithmic. Orange points are one-family butterflies in the upper quartile of geographic resource breadth; named examples illustrate taxonomic specialists with broad resource geography. Spearman rho = 0.398.
 
-### Figure 2 — Introduced host distributions expand opportunity across all specialization classes
-A. Native versus contemporary resource breadth.  
-B. Log proportional expansion by host-family stratum.  
-C. Fraction of species expanded in each stratum.
+**Figure 2. Introduced host distributions expand reconstructed resource opportunity across the specialization spectrum.** **a**, Native versus contemporary host-resource breadth for 239 resource-eligible butterflies. The dashed line is the 1:1 expectation; points above it gain WGSRPD3 resource units when introduced host distributions are retained. Overall, 206/239 species expanded. **b**, Log proportional resource expansion by host-family breadth class. Points are species, boxes show the interquartile range and median, and the dashed line marks zero expansion. Host-family breadth was nearly unrelated to proportional expansion (Spearman rho = 0.008).
 
-### Figure 3 — Similar expansion, different architectures
-A. Effective contributor number by host-family breadth.  
-B. Maximum single-host share by host-family breadth.  
-C. Conceptual examples of concentrated versus portfolio expansion.
+**Figure 3. Similar aggregate expansion is assembled through different host-contribution architectures.** Host-taxonomy-adequate butterflies whose resource envelopes expanded are grouped by host-family breadth. **a**, Effective number of host species contributing to introduced-added resource units. **b**, Fraction of introduced-added units attributable to the single largest contributing host. Points are species; boxes show the interquartile range and median. Broader diets distribute added opportunity across more hosts, whereas narrower diets are more often dominated by one host.
 
-### Figure 4 — Hierarchy inside one-family specialists
-A. Resolved host-species richness versus effective contributor number.  
-B. Resolved host-species richness versus maximum single-host share.  
-C. Low/mid/high species-richness tertile summaries.
+**Figure 4. Species-level host portfolios reveal hierarchical specialization within one-family butterflies.** Analyses include 82 host-taxonomy-adequate butterflies whose known larval hosts all belong to exactly one plant family and whose resource envelope expanded. **a**, Resolved host-species richness versus effective contributor number (Spearman rho = 0.734). **b**, Resolved host-species richness versus maximum single-host fractional share (rho = -0.707). The x-axis is logarithmic. Family-level specialists therefore span a wide gradient from effectively one-host to multi-host anthropogenic opportunity architectures.
 
-### Figure 5 — Climate is a separate filter
-A. Filtering score for 24 independent species grouped by host-family stratum.  
-B. Partial association after controlling for contemporary resource breadth, annotated with rho = -0.166 and p = 0.2237.  
-C. Conceptual synthesis from host taxonomy to realized geography.
+**Figure 5. Climate filters realized geography independently of family-level diet breadth.** Twenty-four species passed the frozen independent quality gate and climate cross-fit. **a**, Species climate-filtering scores grouped by host-family breadth; horizontal segments are group medians and the dashed line marks the neutral value 0.5. **b**, Climate-filtering score versus host-family count; point size represents contemporary geographic resource breadth. The frozen primary test controlled contemporary resource breadth and did not support weaker climate filtering in broader host-family generalists (partial Spearman rho = -0.166; one-sided species-identity-invariant Freedman-Lane permutation p = 0.2237).
 
----
+## Data and Code Availability
 
-## Working reference scaffold
+All analysis code, frozen scientific protocols, input identities, workflow definitions, and result receipts are versioned in the TTF repository. The manuscript figures are regenerated from hash-verified workflow artifacts using `scripts/render_butterfly_specialization_manuscript_figures.py` and `.github/workflows/butterfly-specialization-manuscript-figures-v01.yml`.
+
+The large external source datasets are not vendored into the repository. LepTraits, HOSTS, WCVP, GBIF, CHELSA and WGSRPD data are reconstructed or retrieved from their original sources using pinned repository commits, file hashes, query rules and workflow-run provenance recorded in the repository. A permanent archival snapshot of the code and frozen receipts will be deposited before submission; the archive DOI should replace this sentence in the submitted version.
+
+## References (working)
 
 - Chowdhury, S. et al. 2026. Extensive climate-induced range shifts in butterflies across the globe. *Nature Ecology & Evolution*. https://doi.org/10.1038/s41559-026-03117-y
 - Gross, C., Kawahara, A. & Daru, B. 2026. Climate and regional plant richness drive diet specialization in butterfly caterpillars. *Nature Communications*. https://doi.org/10.1038/s41467-026-73236-4
-- Lancaster, L. T. 2020. Host use diversification during range shifts shapes global variation in Lepidopteran dietary breadth. *Nature Ecology & Evolution* 4: 963-969. https://doi.org/10.1038/s41559-020-1199-1
-- Rashid et al. 2026. Food Plant Availability Constrains Climatic Niches of Host-Specialized Europe-Centred Butterflies. *Diversity and Distributions*. https://doi.org/10.1111/ddi.70245
-- Slove, J. & Janz, N. 2011. The relationship between diet breadth and geographic range size in the butterfly subfamily Nymphalinae: a study of global scale. *PLoS ONE*.
-- [Working citation] Climate and traits are differentially associated with range extent and range geometry in global butterflies. *Ecological Indicators* 189: 115231 (2026). https://doi.org/10.1016/j.ecolind.2026.115231
+- Guo, F., McKirdy, S. J., Gao, L. & Gao, G. 2026. Climate and traits are differentially associated with range extent and range geometry in global butterflies. *Ecological Indicators* 189: 115231. https://doi.org/10.1016/j.ecolind.2026.115231
+- Lancaster, L. T. 2020. Host use diversification during range shifts shapes global variation in Lepidopteran dietary breadth. *Nature Ecology & Evolution* 4: 963–969. https://doi.org/10.1038/s41559-020-1199-1
+- Rashid, S., Wessely, J., Hausharter, J., Moser, D., Gattringer, A., Fiedler, K., Hülber, K. & Dullinger, S. 2026. Food Plant Availability Constrains Climatic Niches of Host-Specialized Europe-Centred Butterflies. *Diversity and Distributions* 32: e70245. https://doi.org/10.1111/ddi.70245
+- Slove, J. & Janz, N. 2011. The relationship between diet breadth and geographic range size in the butterfly subfamily Nymphalinae: a study of global scale. *PLoS ONE* 6: e16057. https://doi.org/10.1371/journal.pone.0016057
 
 ## Repository provenance
 
