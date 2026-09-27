@@ -19,6 +19,11 @@ STRATA_LABELS = {
     "6plus_families": "6+ families",
 }
 
+POINT_COLOR = "#4C78A8"
+HIGHLIGHT_COLOR = "#F58518"
+MEDIAN_COLOR = "#222222"
+REFERENCE_COLOR = "#666666"
+
 
 def read_csv(path: Path) -> list[dict[str, str]]:
     with path.open(newline="", encoding="utf-8") as handle:
@@ -73,15 +78,18 @@ def figure1(descriptors: list[dict[str, str]], outdir: Path) -> None:
     rho = spearman(x, y)
 
     fig, ax = plt.subplots(figsize=(7.2, 5.4))
-    for row in adequate:
-        xv = float(row["host_family_count"])
-        yv = int(row["host_wgsrpd3_unit_count"])
-        ax.scatter(
-            xv + deterministic_jitter(row["species"]),
-            yv,
-            s=20,
-            alpha=0.55,
-        )
+    ax.scatter(
+        [
+            float(row["host_family_count"])
+            + deterministic_jitter(row["species"])
+            for row in adequate
+        ],
+        [int(row["host_wgsrpd3_unit_count"]) for row in adequate],
+        s=20,
+        alpha=0.45,
+        color=POINT_COLOR,
+        edgecolors="none",
+    )
 
     q75 = float(np.quantile(y, 0.75))
     highlights = sorted(
@@ -92,23 +100,36 @@ def figure1(descriptors: list[dict[str, str]], outdir: Path) -> None:
             and int(row["host_wgsrpd3_unit_count"]) >= q75
         ],
         key=lambda r: -int(r["host_wgsrpd3_unit_count"]),
-    )[:6]
-    for row in highlights:
-        xv = 1 + deterministic_jitter(row["species"])
-        yv = int(row["host_wgsrpd3_unit_count"])
-        ax.scatter(xv, yv, s=45, marker="o")
-        ax.annotate(
-            row["species"],
-            (xv, yv),
-            xytext=(5, 4),
-            textcoords="offset points",
-            fontsize=8,
-        )
+    )
+    ax.scatter(
+        [
+            1 + deterministic_jitter(row["species"])
+            for row in highlights
+        ],
+        [int(row["host_wgsrpd3_unit_count"]) for row in highlights],
+        s=38,
+        alpha=0.9,
+        color=HIGHLIGHT_COLOR,
+        label="1-family species in upper resource-breadth quartile",
+    )
+    examples = ", ".join(row["species"] for row in highlights[:6])
+    ax.text(
+        0.48,
+        0.08,
+        "Specialist-wide examples:\n" + examples,
+        transform=ax.transAxes,
+        fontsize=8,
+        va="bottom",
+        ha="left",
+        wrap=True,
+        bbox={"boxstyle": "round,pad=0.35", "facecolor": "white", "alpha": 0.85},
+    )
 
     ax.set_yscale("log")
     ax.set_xlabel("Larval host-plant families")
     ax.set_ylabel("Native host-resource breadth (WGSRPD3 units)")
-    ax.set_title(f"Taxonomic and geographic specialization are only partly coupled\nSpearman ρ = {rho:.3f}, n = {len(adequate)}")
+    ax.set_title(f"Taxonomic breadth only partly predicts resource geography\nSpearman ρ = {rho:.3f}, n = {len(adequate)}")
+    ax.legend(frameon=False, loc="upper right", fontsize=8)
     save(fig, outdir / "Figure1_taxonomic_vs_geographic_specialization")
 
 
@@ -117,7 +138,15 @@ def boxplot_by_stratum(ax, rows, field, ylabel, zero_line=False):
         [float(r[field]) for r in rows if r["host_breadth_stratum"] == stratum]
         for stratum in STRATA
     ]
-    ax.boxplot(values, tick_labels=[STRATA_LABELS[s] for s in STRATA], showfliers=False)
+    ax.boxplot(
+        values,
+        tick_labels=[STRATA_LABELS[s] for s in STRATA],
+        showfliers=False,
+        medianprops={"color": MEDIAN_COLOR, "linewidth": 1.8},
+        boxprops={"color": MEDIAN_COLOR},
+        whiskerprops={"color": MEDIAN_COLOR},
+        capprops={"color": MEDIAN_COLOR},
+    )
     for i, stratum in enumerate(STRATA, start=1):
         subset = [r for r in rows if r["host_breadth_stratum"] == stratum]
         for row in subset:
@@ -126,28 +155,32 @@ def boxplot_by_stratum(ax, rows, field, ylabel, zero_line=False):
                 float(row[field]),
                 s=14,
                 alpha=0.45,
+                color=POINT_COLOR,
+                edgecolors="none",
             )
     if zero_line:
-        ax.axhline(0, linewidth=1, linestyle="--")
+        ax.axhline(0, linewidth=1, linestyle="--", color=REFERENCE_COLOR)
     ax.set_ylabel(ylabel)
     ax.tick_params(axis="x", rotation=20)
 
 
 def figure2(anth: list[dict[str, str]], outdir: Path) -> None:
     fig, axes = plt.subplots(1, 2, figsize=(11.2, 4.8))
+    for label, ax in zip(("a", "b"), axes):
+        ax.text(-0.08, 1.04, label, transform=ax.transAxes, fontweight="bold", fontsize=12)
 
     native = np.asarray([int(r["native_resource_units"]) for r in anth], float)
     contemporary = np.asarray([int(r["contemporary_resource_units"]) for r in anth], float)
-    axes[0].scatter(native, contemporary, s=18, alpha=0.5)
+    axes[0].scatter(native, contemporary, s=18, alpha=0.45, color=POINT_COLOR, edgecolors="none")
     lo = max(1, min(native.min(), contemporary.min()))
     hi = max(native.max(), contemporary.max())
-    axes[0].plot([lo, hi], [lo, hi], linestyle="--", linewidth=1)
+    axes[0].plot([lo, hi], [lo, hi], linestyle="--", linewidth=1, color=REFERENCE_COLOR)
     axes[0].set_xscale("log")
     axes[0].set_yscale("log")
     axes[0].set_xlabel("Native resource breadth")
     axes[0].set_ylabel("Contemporary resource breadth")
     expanded = sum(int(r["introduced_added_units"]) > 0 for r in anth)
-    axes[0].set_title(f"Introduced host ranges expand opportunity\n{expanded}/{len(anth)} species expanded")
+    axes[0].set_title(f"Introduced host ranges expand resource opportunity\n{expanded}/{len(anth)} species expanded")
 
     boxplot_by_stratum(
         axes[1],
@@ -160,7 +193,7 @@ def figure2(anth: list[dict[str, str]], outdir: Path) -> None:
         [float(r["host_family_count"]) for r in anth],
         [float(r["log_resource_expansion"]) for r in anth],
     )
-    axes[1].set_title(f"No proportional generalist advantage\nSpearman ρ = {rho:.3f}")
+    axes[1].set_title(f"Proportional expansion is similar across diet classes\nSpearman ρ = {rho:.3f}")
 
     fig.tight_layout()
     save(fig, outdir / "Figure2_anthropogenic_resource_expansion")
@@ -177,13 +210,15 @@ def figure3(mech: list[dict[str, str]], outdir: Path) -> None:
     ]
 
     fig, axes = plt.subplots(1, 2, figsize=(11.2, 4.8))
+    for label, ax in zip(("a", "b"), axes):
+        ax.text(-0.08, 1.04, label, transform=ax.transAxes, fontweight="bold", fontsize=12)
     boxplot_by_stratum(
         axes[0],
         rows,
         "effective_contributor_number",
         "Effective contributing host species",
     )
-    axes[0].set_title("Generalists distribute expansion across more hosts")
+    axes[0].set_title("Effective number of contributing host species")
 
     boxplot_by_stratum(
         axes[1],
@@ -192,7 +227,7 @@ def figure3(mech: list[dict[str, str]], outdir: Path) -> None:
         "Maximum single-host share",
     )
     axes[1].set_ylim(-0.03, 1.03)
-    axes[1].set_title("Specialists are more often dominated by one host")
+    axes[1].set_title("Dominance of the largest host contribution")
 
     fig.tight_layout()
     save(fig, outdir / "Figure3_host_contribution_architecture")
@@ -213,13 +248,15 @@ def figure4(mech: list[dict[str, str]], outdir: Path) -> None:
     dominance = np.asarray([float(r["maximum_single_host_fractional_share"]) for r in rows])
 
     fig, axes = plt.subplots(1, 2, figsize=(11.2, 4.8))
-    axes[0].scatter(host_species, effective, s=22, alpha=0.6)
+    for label, ax in zip(("a", "b"), axes):
+        ax.text(-0.08, 1.04, label, transform=ax.transAxes, fontweight="bold", fontsize=12)
+    axes[0].scatter(host_species, effective, s=22, alpha=0.6, color=POINT_COLOR, edgecolors="none")
     axes[0].set_xscale("log")
     axes[0].set_xlabel("Resolved host species within the single host family")
     axes[0].set_ylabel("Effective contributing host species")
     axes[0].set_title(f"Portfolio richness within one-family specialists\nSpearman ρ = {spearman(host_species, effective):.3f}")
 
-    axes[1].scatter(host_species, dominance, s=22, alpha=0.6)
+    axes[1].scatter(host_species, dominance, s=22, alpha=0.6, color=POINT_COLOR, edgecolors="none")
     axes[1].set_xscale("log")
     axes[1].set_xlabel("Resolved host species within the single host family")
     axes[1].set_ylabel("Maximum single-host share")
@@ -233,6 +270,8 @@ def figure4(mech: list[dict[str, str]], outdir: Path) -> None:
 def figure5(primary: dict, outdir: Path) -> None:
     rows = primary["species"]
     fig, axes = plt.subplots(1, 2, figsize=(11.2, 4.8))
+    for label, ax in zip(("a", "b"), axes):
+        ax.text(-0.08, 1.04, label, transform=ax.transAxes, fontweight="bold", fontsize=12)
 
     score_values = []
     for i, stratum in enumerate(STRATA, start=1):
@@ -245,14 +284,16 @@ def figure5(primary: dict, outdir: Path) -> None:
                 float(row["climate_filtering_score"]),
                 s=28,
                 alpha=0.7,
+                color=POINT_COLOR,
+                edgecolors="none",
             )
         if vals:
-            axes[0].plot([i - 0.22, i + 0.22], [np.median(vals)] * 2, linewidth=2)
-    axes[0].axhline(0.5, linestyle="--", linewidth=1)
+            axes[0].plot([i - 0.22, i + 0.22], [np.median(vals)] * 2, linewidth=2, color=MEDIAN_COLOR)
+    axes[0].axhline(0.5, linestyle="--", linewidth=1, color=REFERENCE_COLOR)
     axes[0].set_xticks(range(1, 5), [STRATA_LABELS[s] for s in STRATA], rotation=20)
     axes[0].set_ylim(0, 1.02)
     axes[0].set_ylabel("Climate-filtering score")
-    axes[0].set_title("Climate filtering is strong across host-breadth classes")
+    axes[0].set_title("Climate filtering across host-breadth classes")
 
     x = np.asarray([float(r["host_family_count"]) for r in rows])
     y = np.asarray([float(r["climate_filtering_score"]) for r in rows])
@@ -266,13 +307,15 @@ def figure5(primary: dict, outdir: Path) -> None:
         y,
         s=sizes,
         alpha=0.65,
+        color=POINT_COLOR,
+        edgecolors="none",
     )
     pt = primary["primary_test"]
     axes[1].set_xlabel("Larval host-plant families")
     axes[1].set_ylabel("Climate-filtering score")
     axes[1].set_ylim(0, 1.02)
     axes[1].set_title(
-        "Broader diets do not weaken climate filtering\n"
+        "Frozen independent host-breadth test\n"
         f"partial ρ = {float(pt['observed_partial_spearman']):.3f}, "
         f"one-sided p = {float(pt['one_sided_p_value']):.4f}"
     )
