@@ -1,0 +1,269 @@
+name: relational-historical-local-handoff-digest-recovery-v01
+
+on:
+  push:
+    branches:
+      - recovery/study-c-local-handoff-v01
+    paths:
+      - "benchmarks/frozen/relational_historical_local_handoff_digest_recovery_v0.1.json"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    outputs:
+      artifact_id: ${{ steps.verify.outputs.artifact_id }}
+      expected_digest_hex: ${{ steps.verify.outputs.expected_digest_hex }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: recovery
+      - uses: actions/checkout@v4
+        with:
+          ref: relational-ttf-v01
+          path: authoritative
+      - id: verify
+        name: Verify frozen transport-only digest recovery
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, re
+          from pathlib import Path
+
+          recovery=Path('recovery')
+          auth=Path('authoritative')
+          repair=json.loads((recovery/'benchmarks/frozen/relational_historical_local_handoff_digest_recovery_v0.1.json').read_text())
+          binding=json.loads((auth/'benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json').read_text())
+          result=json.loads((auth/'benchmarks/frozen/relational_historical_retry_import_recovery_result_v0.1.json').read_text())
+          route=json.loads((auth/'benchmarks/frozen/relational_historical_recovery_downstream_handoff_v0.1.json').read_text())
+          transport=json.loads((auth/'docs/supporting/relational_historical_local_final_handoff_transport_v0.1.json').read_text())
+
+          def norm_digest(value):
+              value=str(value).strip().lower()
+              if value.startswith('sha256:'): value=value[7:]
+              assert re.fullmatch(r'[0-9a-f]{64}', value), value
+              return value
+
+          assert repair['schema']=='ttf_relational_historical_local_handoff_digest_recovery_v0.1'
+          assert repair['status']=='FROZEN_POST_RESULT_TRANSPORT_REPAIR_ONLY'
+          assert repair['scientific_asset_change'] is False
+          assert repair['result_selection_allowed'] is False
+          assert repair['alternate_run_allowed'] is False
+          assert repair['retry_authorized'] is False
+          assert repair['digest_normalization_only'] is True
+          assert all(v is False for v in repair['response_firewall'].values())
+
+          assert binding['workflow_run_id']==35941577015
+          assert binding['workflow_head_sha']=='ffacbd51d58689a4b18f7a2cb920f5a1385a74ab'
+          assert binding['artifact_workflow_run_id']==36200833241
+          assert binding['artifact_workflow_head_sha']=='7478c3d6fc8e1e1926edd8baa7e2a0d17b2ca09b'
+          assert binding['artifact_id']==10931190147
+          assert binding['artifact_name']=='relational-historical-occurrence-final-v0.2'
+          expected=norm_digest(binding['artifact_digest'])
+          assert expected==repair['source_final_artifact']['sha256_hex']
+
+          assert result['status']=='COMPLETED_EXACT_SINGLE_RETRY_RECOVERY'
+          assert result['occurrence_status']=='NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT'
+          assert result['initial_request_error_count']==95
+          assert result['final_request_error_count']==95
+          assert result['species_passing_ge_30']==653
+          assert result['retry_rounds_completed']==1
+          assert result['additional_retry_authorized'] is False
+          assert result['scientific_query_change'] is False
+          assert all(v is False for v in result['response_firewall'].values())
+
+          assert route['terminal_transition_rule'][result['occurrence_status']]=='FREEZE_C_NOT_EVALUABLE_AND_CLOSE_FINITE_PROGRAM'
+          assert route['terminal_transition_rule']['additional_retry_authorized'] is False
+          assert transport['source_run']['workflow_run_id']==35941577015
+          assert transport['source_run']['workflow_head_sha']=='ffacbd51d58689a4b18f7a2cb920f5a1385a74ab'
+          assert transport['output_artifact_name']=='relational-c-local-final-handoff-v0.1'
+          assert transport['alternate_run_allowed'] is False
+          assert transport['repack_inner_artifact_allowed'] is False
+
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write(f"artifact_id={binding['artifact_id']}\n")
+              f.write(f"expected_digest_hex={expected}\n")
+          print(json.dumps({'artifact_id':binding['artifact_id'],'digest_hex':expected,'occurrence_status':result['occurrence_status']},sort_keys=True))
+          PY
+
+  package:
+    needs: verify
+    runs-on: ubuntu-latest
+    outputs:
+      handoff_artifact_id: ${{ steps.upload.outputs.artifact-id }}
+      handoff_artifact_digest: ${{ steps.upload.outputs.artifact-digest }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: relational-ttf-v01
+      - name: Download and verify exact bound final artifact ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ needs.verify.outputs.artifact_id }}
+          EXPECTED_DIGEST_HEX: ${{ needs.verify.outputs.expected_digest_hex }}
+        run: |
+          set -euo pipefail
+          mkdir -p results/local-handoff
+          API_DIGEST="$(gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID" --jq '.digest')"
+          API_RUN_ID="$(gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID" --jq '.workflow_run.id')"
+          API_HEAD_SHA="$(gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID" --jq '.workflow_run.head_sha')"
+          test "$API_RUN_ID" = "36200833241"
+          test "$API_HEAD_SHA" = "7478c3d6fc8e1e1926edd8baa7e2a0d17b2ca09b"
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > results/local-handoff/relational-historical-occurrence-final-v0.2.zip
+          API_DIGEST="$API_DIGEST" python - <<'PY'
+          import hashlib,json,os,re
+          from pathlib import Path
+
+          def norm(value):
+              value=str(value).strip().lower()
+              if value.startswith('sha256:'): value=value[7:]
+              assert re.fullmatch(r'[0-9a-f]{64}', value), value
+              return value
+
+          artifact=Path('results/local-handoff/relational-historical-occurrence-final-v0.2.zip')
+          binding_path=Path('benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json')
+          readiness_path=Path('benchmarks/frozen/relational_historical_local_readiness_v0.1.json')
+          binding=json.loads(binding_path.read_text())
+          computed=hashlib.sha256(artifact.read_bytes()).hexdigest()
+          expected=norm(os.environ['EXPECTED_DIGEST_HEX'])
+          api=norm(os.environ['API_DIGEST'])
+          bound=norm(binding['artifact_digest'])
+          assert computed==expected==api==bound, (computed,expected,api,bound)
+          assert binding['artifact_id']==int(os.environ['ARTIFACT_ID'])
+          assert binding['artifact_workflow_run_id']==36200833241
+          assert binding['artifact_workflow_head_sha']=='7478c3d6fc8e1e1926edd8baa7e2a0d17b2ca09b'
+          assert binding['workflow_run_id']==35941577015
+          assert binding['workflow_head_sha']=='ffacbd51d58689a4b18f7a2cb920f5a1385a74ab'
+          assert binding['genetic_response_used'] is False
+          assert all(v is False for v in binding['response_firewall'].values())
+
+          Path('results/local-handoff/relational_historical_occurrence_artifact_binding_v0.2.json').write_bytes(binding_path.read_bytes())
+          Path('results/local-handoff/relational_historical_local_readiness_v0.1.json').write_bytes(readiness_path.read_bytes())
+          payload={
+              'schema':'ttf_relational_historical_local_final_handoff_manifest_v0.1',
+              'status':'PASS_EXACT_FINAL_OCCURRENCE_HANDOFF_PACKAGING',
+              'workflow_run_id':binding['workflow_run_id'],
+              'workflow_head_sha':binding['workflow_head_sha'],
+              'artifact_workflow_run_id':binding['artifact_workflow_run_id'],
+              'artifact_workflow_head_sha':binding['artifact_workflow_head_sha'],
+              'artifact_id':binding['artifact_id'],
+              'artifact_name':binding['artifact_name'],
+              'artifact_digest':binding['artifact_digest'],
+              'artifact_digest_sha256_hex':computed,
+              'inner_zip_filename':artifact.name,
+              'inner_zip_sha256':computed,
+              'binding_sha256':hashlib.sha256(binding_path.read_bytes()).hexdigest(),
+              'readiness_sha256':hashlib.sha256(readiness_path.read_bytes()).hexdigest(),
+              'digest_normalization':'optional sha256: prefix removed for equality only; artifact bytes unchanged',
+              'relation_result_seen':False,
+              'genetic_response_used':False,
+              'response_firewall':binding['response_firewall'],
+          }
+          Path('results/local-handoff/manifest.json').write_text(json.dumps(payload,indent=2,sort_keys=True)+'\n')
+          print(json.dumps(payload,sort_keys=True))
+          PY
+      - id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: relational-c-local-final-handoff-v0.1
+          path: results/local-handoff/
+          retention-days: 30
+          compression-level: 0
+          if-no-files-found: error
+
+  persist_terminal_state:
+    needs: [verify, package]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: relational-ttf-v01
+      - name: Freeze existing predeclared terminal transition and handoff receipt
+        env:
+          HANDOFF_ARTIFACT_ID: ${{ needs.package.outputs.handoff_artifact_id }}
+          HANDOFF_ARTIFACT_DIGEST: ${{ needs.package.outputs.handoff_artifact_digest }}
+          RECOVERY_WORKFLOW_RUN_ID: ${{ github.run_id }}
+          RECOVERY_WORKFLOW_HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os,re
+          from pathlib import Path
+
+          result=json.loads(Path('benchmarks/frozen/relational_historical_retry_import_recovery_result_v0.1.json').read_text())
+          route=json.loads(Path('benchmarks/frozen/relational_historical_recovery_downstream_handoff_v0.1.json').read_text())
+          transition=json.loads(Path('benchmarks/frozen/relational_environment_program_transition_v0.3.json').read_text())
+          binding=json.loads(Path('benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json').read_text())
+
+          status=result['occurrence_status']
+          assert status=='NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT'
+          assert route['terminal_transition_rule'][status]=='FREEZE_C_NOT_EVALUABLE_AND_CLOSE_FINITE_PROGRAM'
+          assert result['retry_rounds_completed']==1
+          assert result['additional_retry_authorized'] is False
+          assert result['scientific_query_change'] is False
+          assert all(v is False for v in result['response_firewall'].values())
+          assert transition['B_state']=='NOT_EVALUABLE_B'
+
+          final={
+              'schema':'ttf_relational_program_final_state_v0.3',
+              'B_state':'NOT_EVALUABLE_B',
+              'C_state':'NOT_EVALUABLE',
+              'C_decision':None,
+              'C_p_one_sided':None,
+              'final_state':'CLOSED_NO_EVALUABLE_TEST',
+              'no_additional_predictor_authorized':True,
+          }
+          final_path=Path('benchmarks/frozen/relational_program_final_state_v0.3.json')
+          if final_path.exists():
+              assert json.loads(final_path.read_text())==final
+          else:
+              final_path.write_text(json.dumps(final,indent=2,sort_keys=True)+'\n')
+
+          handoff_id=int(os.environ['HANDOFF_ARTIFACT_ID'])
+          handoff_digest=str(os.environ['HANDOFF_ARTIFACT_DIGEST'])
+          assert handoff_id>0
+          assert handoff_digest
+          receipt={
+              'schema':'ttf_relational_historical_local_handoff_digest_recovery_result_v0.1',
+              'status':'PASS_TRANSPORT_ONLY_DIGEST_NORMALIZATION_HANDOFF',
+              'source_occurrence_artifact_id':binding['artifact_id'],
+              'source_occurrence_artifact_digest':binding['artifact_digest'],
+              'source_occurrence_artifact_owner_run_id':binding['artifact_workflow_run_id'],
+              'source_occurrence_artifact_owner_head_sha':binding['artifact_workflow_head_sha'],
+              'outer_handoff_artifact_name':'relational-c-local-final-handoff-v0.1',
+              'outer_handoff_artifact_id':handoff_id,
+              'outer_handoff_artifact_digest':handoff_digest,
+              'recovery_workflow_run_id':int(os.environ['RECOVERY_WORKFLOW_RUN_ID']),
+              'recovery_workflow_head_sha':os.environ['RECOVERY_WORKFLOW_HEAD_SHA'],
+              'digest_normalization_only':True,
+              'artifact_bytes_rewritten':False,
+              'retry_authorized':False,
+              'scientific_asset_change':False,
+              'result_selection_allowed':False,
+              'final_program_state':'CLOSED_NO_EVALUABLE_TEST',
+              'biological_null':False,
+              'relation_result_seen':False,
+              'genetic_response_used':False,
+              'response_firewall':binding['response_firewall'],
+          }
+          Path('benchmarks/frozen/relational_historical_local_handoff_digest_recovery_result_v0.1.json').write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          print(json.dumps({'final_state':final['final_state'],'handoff_artifact_id':handoff_id,'handoff_artifact_digest':handoff_digest},sort_keys=True))
+          PY
+      - name: Commit terminal state and transport-only recovery receipt
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/frozen/relational_program_final_state_v0.3.json \
+                  benchmarks/frozen/relational_historical_local_handoff_digest_recovery_result_v0.1.json
+          if git diff --cached --quiet; then
+            echo "Terminal state and recovery receipt already frozen identically."
+            exit 0
+          fi
+          git commit -m "Freeze Study C local handoff recovery and terminal state"
+          git fetch origin relational-ttf-v01
+          git rebase origin/relational-ttf-v01
+          git push origin HEAD:relational-ttf-v01
