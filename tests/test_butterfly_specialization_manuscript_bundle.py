@@ -157,4 +157,4 @@ def test_manuscript_claim_map_preserves_inference_boundaries():
     forbidden = "\n".join(claim_map["forbidden_overclaims"])
     assert "caused butterfly range expansion" in forbidden
     assert "true absence" in forbidden
-    assert "confirmatory claims" in forbidden
+    assert "confirmatory tests" in forbidden
