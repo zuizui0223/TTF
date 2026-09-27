@@ -1,0 +1,80 @@
+{
+  "schema": "ttf_butterfly_specialization_manuscript_figures_v0.1",
+  "status": "RENDERED_AND_VISUALLY_AUDITED",
+  "rendered_on": "2026-09-27",
+  "workflow": {
+    "run_id": 36292128188,
+    "head_sha": "a5b51777615836b6cd86d489d33dbdc6653ec1c6",
+    "artifact_id": 10922059995,
+    "artifact_name": "butterfly-specialization-manuscript-figures-v01",
+    "artifact_digest": "sha256:24e6fec206bb81dc9a8f7e32e9bfe1ea61622f631c94d3a84a612c87bd6bd2e5"
+  },
+  "source_artifacts": {
+    "S1_resource_descriptors": {
+      "workflow_run_id": 36222306369,
+      "sha256": "894f48dbca1760fc4fa75bfee8f663540ab4b9380f8b9daf2bc09440e8bb0cdc"
+    },
+    "anthropogenic_species_metrics": {
+      "workflow_run_id": 36243549495,
+      "sha256": "7b2a20387d656dbfcd7b3c38ec6a7fe2505474ad51f783dd1f201eb6b7eabd30"
+    },
+    "mechanism_species_metrics": {
+      "workflow_run_id": 36270981110,
+      "sha256": "b0f16c5fa9a5b4a0842d6d23f69de7a1f5e938a4a96fea426c97df2dd73e63aa"
+    },
+    "independent_climate_primary": {
+      "workflow_run_id": 36270581743,
+      "sha256": "a73dca6e8b669f721d8f2745f27198d9b47a5cbd05dde6146cc8d4f1ddfbf79b"
+    }
+  },
+  "figures": [
+    {
+      "number": 1,
+      "stem": "Figure1_taxonomic_vs_geographic_specialization",
+      "pdf_sha256": "638d649c3e1fbe39dc4bb10f316b5a75944d5e739026d234aa0e6b5b868f91b0",
+      "png_sha256": "c8bb417e08db2805cb85c5f390fe73b0d4d4f09874ad4264346b34b08f349793",
+      "claim": "Taxonomic host-family breadth only partly predicts native geographic resource breadth; geographically broad one-family specialists are visible."
+    },
+    {
+      "number": 2,
+      "stem": "Figure2_anthropogenic_resource_expansion",
+      "pdf_sha256": "b35fc47a106350b8047aa295ad6e21134863d19c635cfd26bcc4646ec058b8a4",
+      "png_sha256": "c49d20c3cfcbc00c53ee9285ce4365a46480d209fcac69318bdc23a2f05b8fae",
+      "claim": "Introduced host distributions expand resource opportunity widely, without greater proportional expansion in broad host-family generalists."
+    },
+    {
+      "number": 3,
+      "stem": "Figure3_host_contribution_architecture",
+      "pdf_sha256": "4cc0f03c9eb6677426e525cb9408ac6b576ccf3f1b5355ee479573474fbb760f",
+      "png_sha256": "e414ad428ae488b72b73f4303c10ce76506e8923e4e0319369d948ba474a756f",
+      "claim": "Broader diets distribute anthropogenic opportunity across more contributing hosts and reduce dominance by one host."
+    },
+    {
+      "number": 4,
+      "stem": "Figure4_within_family_specialization_hierarchy",
+      "pdf_sha256": "5b086891d6ff483c09385978f20f7aa11386593d0e6b72b19fe8c22dac93fd5a",
+      "png_sha256": "a2eb39ca278505084ae1dbdace14b8b0e1e699eb010fe9bb58617edcf84bd8a2",
+      "claim": "Within one-family specialists, species-level host richness predicts portfolio architecture."
+    },
+    {
+      "number": 5,
+      "stem": "Figure5_independent_climate_filtering",
+      "pdf_sha256": "e76a7358712e672eb2516838840444482a2321cb018169013136cc3390783286",
+      "png_sha256": "2cd2f5015595ff45d5f6e73a19a94a6ef87a147c3b728f6dfb0ccd7fbf3f1091",
+      "claim": "Climate filtering is common across independent species, but broader host-family breadth does not significantly weaken filtering."
+    }
+  ],
+  "visual_audit": {
+    "consistent_point_styling": true,
+    "panel_labels_present": true,
+    "figure_1_annotation_overlap_resolved": true,
+    "log_axes_legible": true,
+    "neutral_reference_lines_legible": true,
+    "primary_negative_result_shown_without_visual_exaggeration": true
+  },
+  "claim_boundary": {
+    "figures_do_not_add_new_statistical_tests": true,
+    "figure_titles_do_not_convert_exploratory_results_to_confirmatory_claims": true,
+    "climate_figure_reports_the_frozen_non_supported_primary_test": true
+  }
+}
