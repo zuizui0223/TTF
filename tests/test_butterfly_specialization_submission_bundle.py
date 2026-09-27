@@ -65,6 +65,21 @@ def test_blinded_manuscript_has_geb_required_front_matter():
     assert items == sorted(items, key=str.casefold)
 
 
+def test_blinded_manuscript_has_geb_required_tail_order():
+    text = (
+        ROOT
+        / "manuscript"
+        / "generated"
+        / "butterfly_specialization_ecology_blinded_v0.1.md"
+    ).read_text(encoding="utf-8")
+
+    refs = text.index("## References")
+    data = text.index("## Data and Code Availability")
+    figures = text.index("## Figure legends")
+    assert refs < data < figures
+    assert "## References (working)" not in text
+
+
 def test_blinded_manuscript_removes_internal_identity_tokens():
     text = (
         ROOT
