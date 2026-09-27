@@ -59,8 +59,13 @@ This is a qualified non-detection of cross-species transfer under the declared e
 Primary frozen handoff:
 `benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json`
 
-Current manuscript:
-`manuscript/genetic_ttf_flagship_v0.2.md`
+Primary methods manuscript:
+`manuscript/ttf_methods_v0.1.md`
+
+Methods claim map:
+`manuscript/ttf_methods_claim_map_v0.1.json`
+
+The detailed genetic manuscript `manuscript/genetic_ttf_flagship_v0.2.md` is retained as the empirical demonstration/companion narrative rather than the primary methods-paper target.
 
 ## Why abstention is part of the method
 
