@@ -1,0 +1,92 @@
+name: butterfly host-plant drivers v01
+
+on:
+  push:
+    branches:
+      - explore/butterfly-host-plant-drivers-v01
+    paths:
+      - ".github/workflows/butterfly-host-plant-drivers-v01.yml"
+      - "docs/exploratory/butterfly_host_plant_driver_analysis_v0.1.json"
+      - "scripts/analyze_butterfly_host_plant_drivers.py"
+      - "tests/test_butterfly_host_plant_drivers.py"
+  workflow_dispatch:
+
+concurrency:
+  group: butterfly-host-plant-drivers-v01-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+
+      - name: Install TTF test environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+
+      - name: Test plant-driver aggregation
+        run: pytest -q tests/test_butterfly_host_plant_drivers.py
+
+      - name: Restore exact butterfly mechanism artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: butterfly-resource-expansion-mechanism-v01
+          path: inputs/mechanism
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: zuizui0223/TTF
+          run-id: 36270981110
+
+      - name: Verify exact mechanism inputs
+        run: |
+          cd inputs/mechanism
+          echo "37fb75f7ff500528a6e68a05ac8088acf4c1b77687577a757a77e97da05bc3a2  result.json" | sha256sum -c -
+          echo "b0f16c5fa9a5b4a0842d6d23f69de7a1f5e938a4a96fea426c97df2dd73e63aa  species_mechanism_metrics.csv" | sha256sum -c -
+
+      - name: Checkout exact WCVP v13 redistribution snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: matildabrown/rWCVPdata
+          ref: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
+          path: _wcvp
+
+      - name: Checkout exact HOSTS mirror
+        uses: actions/checkout@v4
+        with:
+          repository: globalbioticinteractions/HOSTS
+          ref: 808e0b869f9ec1adf8efff87cf6a395adda103e0
+          path: _hosts
+
+      - name: Rebuild exact native and contemporary host sidecars
+        run: |
+          test "$(git -C _wcvp rev-parse HEAD)" = "65bed76bae9d644ccb6ad200c05f9f5071d89e05"
+          test "$(git -C _hosts rev-parse HEAD)" = "808e0b869f9ec1adf8efff87cf6a395adda103e0"
+          Rscript scripts/build_wcvp_hosts_sidecar.R             _wcvp             _hosts             results/native-host-sidecar
+          Rscript scripts/build_wcvp_hosts_contemporary_sidecar.R             _wcvp             _hosts             results/contemporary-host-sidecar
+          cmp             results/native-host-sidecar/insect_host_accepted.csv             results/contemporary-host-sidecar/insect_host_accepted.csv
+
+      - name: Aggregate plant-level drivers
+        run: |
+          mkdir -p results/butterfly-host-plant-drivers-v0.1
+          python scripts/analyze_butterfly_host_plant_drivers.py             --protocol-json docs/exploratory/butterfly_host_plant_driver_analysis_v0.1.json             --mechanism-result-json inputs/mechanism/result.json             --species-metrics-csv inputs/mechanism/species_mechanism_metrics.csv             --insect-host-csv results/native-host-sidecar/insect_host_accepted.csv             --native-distribution-csv results/native-host-sidecar/native_extant_nondoubtful_wgsrpd3.csv             --contemporary-distribution-csv results/contemporary-host-sidecar/extant_nondoubtful_wgsrpd3.csv             --output-plant-csv results/butterfly-host-plant-drivers-v0.1/plant_driver_metrics.csv             --output-butterfly-examples-csv results/butterfly-host-plant-drivers-v0.1/butterfly_examples.csv             --output-json results/butterfly-host-plant-drivers-v0.1/result.json
+          cat results/butterfly-host-plant-drivers-v0.1/result.json
+          (
+            cd results/butterfly-host-plant-drivers-v0.1
+            sha256sum plant_driver_metrics.csv butterfly_examples.csv result.json > SHA256SUMS
+          )
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: butterfly-host-plant-drivers-v01
+          path: results/butterfly-host-plant-drivers-v0.1/
+          retention-days: 30
