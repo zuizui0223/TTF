@@ -1,0 +1,53 @@
+{
+  "schema": "ttf_q_b1_c1_information_ladder_result_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_B1_TO_C1_INFORMATION_LADDER",
+  "recorded_on": "2026-09-27",
+  "method_implementation": "src/ttf/ecological_information_ladder.py",
+  "exact_design_sha256": "60baf46d171f0e881d214f5015ef10b73ea950fac698caf6dd13d6bd51a76230",
+  "note": "Deterministic application of the pre-existing TTF-Q information-ladder implementation to the exact successful C1 design; both panels are reported without result-based selection.",
+  "development": {
+    "B1_current_climate": {
+      "source_target_fe_retained_variance_fraction": 0.4161678627285901,
+      "control_unique_variance_fraction_after_fe": 0.9763424040630193,
+      "total_unique_variance_fraction": 0.40632233159020026,
+      "signal_effective_sources": 53.071397656137925,
+      "signal_effective_targets": 68.0959609002992
+    },
+    "C1_history_given_current": {
+      "source_target_fe_retained_variance_fraction": 0.6730898295104087,
+      "control_unique_variance_fraction_after_fe": 0.5418505186037843,
+      "total_unique_variance_fraction": 0.36471407318714777,
+      "signal_effective_sources": 78.87490200901536,
+      "signal_effective_targets": 81.75677441028184
+    },
+    "partial_correlation_hist_current_after_endpoint_lineage_locality": 0.6687373665620326,
+    "history_fraction_remaining_after_adding_current_to_baseline": 0.5527903345636775
+  },
+  "confirmatory": {
+    "B1_current_climate": {
+      "source_target_fe_retained_variance_fraction": 0.45442092780547455,
+      "control_unique_variance_fraction_after_fe": 0.9708670418655807,
+      "total_unique_variance_fraction": 0.4411823019403137,
+      "signal_effective_sources": 96.25556819984874,
+      "signal_effective_targets": 113.18530549794754
+    },
+    "C1_history_given_current": {
+      "source_target_fe_retained_variance_fraction": 0.6616657020917958,
+      "control_unique_variance_fraction_after_fe": 0.5762487887003046,
+      "total_unique_variance_fraction": 0.38128405935493387,
+      "signal_effective_sources": 139.05722182695666,
+      "signal_effective_targets": 151.9103015404332
+    },
+    "partial_correlation_hist_current_after_endpoint_lineage_locality": 0.6433876336902743,
+    "history_fraction_remaining_after_adding_current_to_baseline": 0.5860523528144295
+  },
+  "interpretation": {
+    "B1": "Present-climate similarity itself carries non-redundant dyadic ecological information after endpoint identity, lineage and locality imbalance.",
+    "C1": "Historical-climate displacement adds a second, substantial information layer beyond present climate and the same baseline structure.",
+    "biological_response_variance_partition": false
+  },
+  "boundary": {
+    "relational_v03_reopened": false,
+    "genetic_response_used": false
+  }
+}
