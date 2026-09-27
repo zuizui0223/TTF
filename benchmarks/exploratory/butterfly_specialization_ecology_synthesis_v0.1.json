@@ -1,0 +1,87 @@
+{
+  "schema": "ttf_butterfly_specialization_ecology_synthesis_v0.1",
+  "status": "SYNTHESIS_OF_COMPLETED_EXPLORATORY_AND_INDEPENDENT_RESULTS",
+  "created_on": "2026-09-27",
+  "central_thesis": "Butterfly specialization is hierarchical and multidimensional: family-level diet breadth masks species-level host portfolios that structure geographic and anthropogenic resource opportunity, while climate independently filters the realized portion of that opportunity.",
+  "evidence": {
+    "taxonomic_vs_geographic_specialization": {
+      "source": "benchmarks/exploratory/butterfly_specialization_dimensionality_result_v0.1.json",
+      "resource_eligible_species": 239,
+      "host_taxonomy_adequate_species": 215,
+      "spearman_host_family_vs_native_resource_breadth_full": 0.2762564748550703,
+      "spearman_host_family_vs_native_resource_breadth_adequate": 0.398238154462201,
+      "large_rank_discordance_species_adequate": 33,
+      "specialist_wide_species_adequate": 18,
+      "interpretation": "Taxonomic host breadth and geographic resource breadth are related but not interchangeable."
+    },
+    "anthropogenic_resource_expansion": {
+      "source": "benchmarks/exploratory/butterfly_anthropogenic_resource_expansion_result_v0.1.json",
+      "species": 239,
+      "species_expanded": 206,
+      "fraction_expanded": 0.8619246861924686,
+      "native_species_units": 26530,
+      "contemporary_species_units": 41083,
+      "introduced_added_species_units": 14553,
+      "spearman_host_family_vs_log_resource_expansion": 0.00798541214928876,
+      "interpretation": "Anthropogenic host redistribution expands opportunity broadly across specialists and generalists rather than preferentially releasing taxonomic generalists."
+    },
+    "host_contribution_architecture": {
+      "source": "benchmarks/exploratory/butterfly_resource_expansion_mechanism_result_v0.1.json",
+      "host_taxonomy_adequate_expanded_species": 191,
+      "spearman_host_family_vs_effective_contributor_number": 0.4919670615030713,
+      "spearman_host_family_vs_maximum_single_host_share": -0.4861161332504768,
+      "spearman_resolved_host_species_vs_effective_contributor_number": 0.7763000864365797,
+      "median_effective_contributors_by_family_stratum": {
+        "1_family": 1.6683309127004822,
+        "2_families": 2.0379743018815835,
+        "3_to_5_families": 3.3025977065293706,
+        "6plus_families": 5.232902350339408
+      },
+      "interpretation": "Similar aggregate expansion can arise through concentrated one-host redistribution in specialists or distributed portfolio accumulation in generalists."
+    },
+    "within_stratum_hierarchy": {
+      "source": "benchmarks/exploratory/butterfly_host_specialization_hierarchy_result_v0.1.json",
+      "one_family_species": 82,
+      "one_family_resolved_host_species_range": [1, 37],
+      "one_family_spearman_host_species_vs_effective_contributors": 0.7338967715221224,
+      "one_family_spearman_host_species_vs_maximum_single_host_share": -0.7065837667974557,
+      "interpretation": "Even within one host-family breadth category, species-level host richness strongly changes portfolio architecture."
+    },
+    "independent_climate_filtering": {
+      "source": "benchmarks/exploratory/butterfly_climate_release_postgate_independent_result_v0.1.json",
+      "independent_panel_species": 32,
+      "climate_informative_species": 24,
+      "median_filtering_score": 0.8013787349014623,
+      "species_above_neutral_filtering_score": 23,
+      "species_with_positive_mismatch_delta": 22,
+      "primary_partial_spearman_host_family_control_resource_breadth": -0.16643611123731772,
+      "primary_one_sided_p_value": 0.2237,
+      "primary_decision": "PILOT_DERIVED_CLIMATE_RELEASE_HYPOTHESIS_NOT_SUPPORTED",
+      "interpretation": "Climate commonly filters realized distribution within larval-resource opportunity, but filtering strength is not detectably relaxed in broader host-family generalists."
+    }
+  },
+  "integrated_model": [
+    "host-family breadth",
+    "species-level host portfolio richness",
+    "geographic resource breadth",
+    "anthropogenic resource-opportunity architecture",
+    "climate and other filters",
+    "realized butterfly geography"
+  ],
+  "negative_results_reinterpreted": {
+    "host_family_breadth_does_not_predict_proportional_resource_expansion": "Family count misses the architecture of host contributions.",
+    "host_family_breadth_does_not_predict_climate_filtering_strength": "Climate acts as a separate filter rather than a simple consequence of taxonomic diet breadth.",
+    "taxonomic_vs_geographic_breadth_only_moderately_correlated": "Specialization contains distinct taxonomic and spatial dimensions."
+  },
+  "paper_level_claim": "The specialist-generalist continuum should be decomposed into hierarchical host taxonomy, host-species portfolio structure, spatial resource opportunity, anthropogenic opportunity architecture, and abiotic filtering rather than treated as a single ecological axis.",
+  "claim_boundary": {
+    "synthesis_introduces_no_new_test": true,
+    "exploratory_resource_results_remain_exploratory": true,
+    "climate_host_breadth_test_is_independent": true,
+    "does_not_measure_realized_use_of_every_introduced_host_population": true,
+    "never_observed_butterfly_unit_is_not_true_absence": true,
+    "HOSTS_completeness_not_proven": true,
+    "WGSRPD3_is_coarse_geography": true,
+    "genetic_response_used": false
+  }
+}
