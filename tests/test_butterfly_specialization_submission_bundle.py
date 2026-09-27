@@ -58,11 +58,15 @@ def test_blinded_manuscript_has_geb_required_front_matter():
         re.MULTILINE,
     )
     assert keywords is not None
-    items = [item.strip() for item in keywords.group(1).split(";") if item.strip()]
-    if len(items) == 1:
-        items = [item.strip() for item in keywords.group(1).split(",") if item.strip()]
+    assert ";" not in keywords.group(1)
+    items = [item.strip() for item in keywords.group(1).split(",") if item.strip()]
     assert 6 <= len(items) <= 10
     assert items == sorted(items, key=str.casefold)
+
+    refs = text.index("## References")
+    data_code = text.index("## Data and Code Availability")
+    figures = text.index("## Figure legends")
+    assert refs < data_code < figures
 
 
 def test_blinded_manuscript_removes_internal_identity_tokens():
