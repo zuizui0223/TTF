@@ -40,7 +40,10 @@
     "blinded_file": "manuscript/generated/butterfly_specialization_ecology_blinded_v0.1.md",
     "title_page_template": "manuscript/butterfly_specialization_geb_title_page_template_v0.1.md",
     "running_title": "Dimensions of butterfly specialization",
-    "keyword_count": 7
+    "keyword_count": 7,
+    "geb_tail_order": "References -> Data and Code Availability -> Figure legends and embedded figures",
+    "review_docx_renderer": "scripts/render_butterfly_specialization_review_docx.py",
+    "review_docx_workflow": ".github/workflows/butterfly-specialization-review-docx-v01.yml"
   },
   "scientific_state": {
     "central_story_complete": true,
@@ -70,10 +73,10 @@
     "vector_pdf_available_for_all_five_figures": true
   },
   "remaining_before_submission": [
+    "Visually QA the generated blinded review DOCX after the reproducible workflow completes.",
     "Insert final author list, affiliations, corresponding-author details, emails and ORCIDs in the separate title page.",
     "Complete CRediT contributions, acknowledgements, funding and conflict-of-interest statements.",
     "Create the permanent archival snapshot and replace DOI placeholders.",
-    "Export the blinded main manuscript to an editable review document with continuous line numbering and embedded figures.",
     "Remove author metadata from the review document file properties.",
     "Perform final proofread after metadata and archive DOI are inserted."
   ],
