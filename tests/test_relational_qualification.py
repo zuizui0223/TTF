@@ -62,6 +62,29 @@ def test_nonredundancy_reports_relation_variance_not_explained_by_controls():
     assert np.std(residual) < 0.2
 
 
+def test_information_loss_decomposition_is_exact():
+    source, target = complete_bipartite(11, 9)
+    rng = np.random.default_rng(81)
+    primary = rng.normal(size=len(source))
+    controls = np.column_stack((
+        0.4 * primary + rng.normal(size=len(source)),
+        rng.normal(size=len(source)),
+    ))
+    _, summary = residualize_primary_relation(
+        source,
+        target,
+        (primary - primary.mean()) / primary.std(),
+        controls,
+    )
+    assert np.isclose(
+        summary.total_unique_variance_fraction,
+        summary.source_target_fe_retained_variance_fraction
+        * summary.control_unique_variance_fraction_after_fe,
+        rtol=1e-12,
+        atol=1e-12,
+    )
+
+
 def test_dyadic_signal_support_detects_endpoint_concentration():
     source, target = complete_bipartite(10, 8)
     broad = np.ones(len(source))
