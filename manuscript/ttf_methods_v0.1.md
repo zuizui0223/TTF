@@ -138,6 +138,10 @@ frozen rule
 
 Failed gates and closure receipts are retained as first-class outputs because they establish that the workflow can actually stop.
 
-## 7. Planned repository refactor
+## 7. Repository and provenance boundary
 
-The butterfly specialization ecology paper is being migrated to `zuizui0223/chocho`. Once that repository independently passes its paper-specific tests, butterfly/Lepidoptera ecology scripts, exploratory receipts and submission materials will be removed from the TTF methods branch. Frozen methodological history needed to document qualification or abstention will remain only when it contributes directly to the methods argument.
+The methods repository is now separated from the butterfly specialization ecology paper, which is maintained in `zuizui0223/chocho`. The split is pinned to the pre-separation TTF source commit, and the destination ecology repository independently passes its paper-specific offline test suite.
+
+TTF retains only material whose primary purpose is to define, qualify, audit or demonstrate the transferability framework. Historical one-shot, recovery and superseded workflow definitions are not deleted: they are preserved byte-for-byte under `provenance/workflows/`, while current CI and deliberately supported reproduction entrypoints remain under `.github/workflows/`. The workflow classification and original blob identities are machine-readable.
+
+This separation is part of the reproducibility argument. It prevents application-specific ecological code from obscuring the method surface while preserving the complete frozen execution history needed to audit stopping decisions, failed gates and the single authorized empirical opening.
