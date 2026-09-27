@@ -4,8 +4,8 @@
   "purpose": "Separate active/reproducible GitHub Actions entrypoints from historical workflow provenance without changing workflow bytes.",
   "counts": {
     "total": 98,
-    "active_or_rerunnable": 36,
-    "historical_provenance": 62
+    "active_or_rerunnable": 35,
+    "historical_provenance": 63
   },
   "classifications": [
     {
@@ -144,8 +144,9 @@
     },
     {
       "path": ".github/workflows/methods-ci.yml",
-      "category": "ACTIVE_METHOD_CI",
-      "blob_sha": "d4c2081f78239c73a91fa7663015789d990b9879"
+      "category": "HISTORICAL_PROVENANCE",
+      "blob_sha": "d4c2081f78239c73a91fa7663015789d990b9879",
+      "archived_path": "provenance/workflows/methods-ci.yml"
     },
     {
       "path": ".github/workflows/phylogatr-phase1-schema-dryrun.yml",
@@ -560,5 +561,9 @@
       "archived_path": "provenance/workflows/wcvp-v13-hosts-sidecar.yml",
       "blob_sha": "8e402e2dcd598de748013ad361a13e40d1534e10"
     }
+  ],
+  "notes": [
+    "The duplicate methods-ci workflow was archived after PR #94 because tests.yml already runs the same repository-wide pytest gate on pull requests.",
+    "Historical workflow files are archived without changing their Git blob content."
   ]
 }
