@@ -1,0 +1,71 @@
+{
+  "schema": "ttf_q_c2_geographic_opportunity_v0.1",
+  "status": "FROZEN_BEFORE_C1_RESULT",
+  "frozen_on": "2026-09-27",
+  "purpose": "Add exactly one response-blind spatial co-opportunity control to the nested C1 historical-information conditioning set, so historical information loss can be localized to geography without reopening relational v0.3.",
+  "parent_method": "docs/supporting/ttf_q_v0.1.json",
+  "parent_c1": {
+    "method_doc": "docs/TTF_Q_C_HISTORY_INFORMATION_V01.md",
+    "workflow": ".github/workflows/ttf-q-c1-history-information.yml",
+    "bound_workflow_run_id": 36324363329,
+    "bound_head_sha": "2d50d0a54d34631f6377755940237f9d93274437",
+    "state_when_C2_frozen": "queued",
+    "C1_result_seen": false
+  },
+  "program_boundary": {
+    "relational_v03_final_state_required": "CLOSED_NO_EVALUABLE_TEST",
+    "relational_v03_reopening_authorized": false,
+    "legacy_C_retry_authorized": false,
+    "genetic_response_opening_authorized": false
+  },
+  "nested_conditioning": {
+    "C1_controls": [
+      "current_climate_similarity",
+      "same_class",
+      "same_order",
+      "same_family",
+      "absolute_log_retained_environment_occurrence_count_ratio",
+      "source_fixed_effect",
+      "target_fixed_effect"
+    ],
+    "C2_adds_exactly": [
+      "directed_external_geographic_co_opportunity_500km"
+    ],
+    "all_other_controls_unchanged": true,
+    "primary_relation_unchanged": "historical_climate_displacement_similarity"
+  },
+  "geographic_opportunity": {
+    "support_radius_km": 500,
+    "radius_inheritance": "Inherited from the prospectively frozen B/C spatial-opportunity scale; not selected using C1 or C2 outputs.",
+    "measure": "For each directed source-target dyad, the fraction of target response-blind occurrence coordinates whose nearest source occurrence coordinate is within 500 km great-circle distance.",
+    "hard_coverage_threshold": null,
+    "hard_filter_forbidden": true,
+    "reason": "TTF-Q characterizes information continuously rather than declaring low-overlap dyads failed.",
+    "genetic_edge_geometry_required": false,
+    "response_source_geometry_used": false
+  },
+  "nested_information_decomposition": {
+    "C1_total_unique_fraction": "historical relation variance surviving source/target identity and C1 controls",
+    "C2_total_unique_fraction": "historical relation variance surviving source/target identity and C1 controls plus geographic co-opportunity",
+    "geography_retained_fraction": "C2_total_unique_fraction / C1_total_unique_fraction",
+    "geography_attributable_fraction_of_C1_unique_information": "1 - geography_retained_fraction",
+    "interpretation": "This localizes how much history-specific relational information was spatial co-opportunity in disguise. It is not a test of a genetic-transfer effect."
+  },
+  "panels": [
+    "development",
+    "confirmatory"
+  ],
+  "reporting_policy": {
+    "report_both_panels": true,
+    "rank_or_select_panel_by_result": false,
+    "binary_pass_fail_forbidden": true,
+    "positive_genetic_transfer_claim_forbidden": true,
+    "historical_ecological_information_claim_allowed": true
+  },
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
