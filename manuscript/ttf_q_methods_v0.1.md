@@ -430,7 +430,7 @@ Broennimann, O., Fitzpatrick, M. C., Pearman, P. B., Petitpierre, B., Pellissier
 
 Cameron, A. C., Gelbach, J. B. & Miller, D. L. (2011). Robust inference with multiway clustering. *Journal of Business & Economic Statistics*, 29, 238–249. https://doi.org/10.1198/jbes.2010.07136
 
-Gould, E., Jones, C. S. et al. (2026). ‘But I can't preregister my research’: Improving the reproducibility and transparency of ecology and conservation with adaptive preregistration for model-based research. *Methods in Ecology and Evolution*. https://doi.org/10.1111/2041-210X.70311
+Gould, E., Jones, C. S., Yen, J. D. L., Fraser, H. S., Wootton, H. F., Good, M. K., Duncan, D. H., Hauser, C. E., Wintle, B. C. & Rumpff, L. (2026). ‘But I can't preregister my research’: Improving the reproducibility and transparency of ecology and conservation with adaptive preregistration for model-based research. *Methods in Ecology and Evolution*, 17, 1768–1787. https://doi.org/10.1111/2041-210X.70311
 
 Green, P. & MacLeod, C. J. (2016). SIMR: an R package for power analysis of generalized linear mixed models by simulation. *Methods in Ecology and Evolution*, 7, 493–498. https://doi.org/10.1111/2041-210X.12504
 
