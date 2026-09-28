@@ -56,10 +56,15 @@ def build_design(data: np.lib.npyio.NpzFile, kind: str, panel: str):
         same_family - same_family.mean(),
         zscore(np.abs(np.log(locality_ratio))),
     ]
-    if kind == "environment":
-        primary = zscore(np.asarray(data[f"{panel}_R_env"], float))
+    if kind in {"environment", "current"}:
+        relation_key = (
+            f"{panel}_R_env"
+            if kind == "environment"
+            else f"{panel}_R_current"
+        )
+        primary = zscore(np.asarray(data[relation_key], float))
         names = [
-            "z_R_env",
+            "z_R_env" if kind == "environment" else "z_R_current",
             "z_geographic_coverage",
             "centered_same_class",
             "centered_same_order",
@@ -93,7 +98,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--kind",
-        choices=("environment", "historical"),
+        choices=("environment", "current", "historical"),
         required=True,
     )
     parser.add_argument(
@@ -130,7 +135,8 @@ def main() -> int:
     support = dyadic_signal_support(source, target, residual)
 
     simulation = contract["detectability_surface"]
-    fixed_map = simulation["fixed_control_effects"][args.kind]
+    fixed_kind = "environment" if args.kind in {"environment", "current"} else "historical"
+    fixed_map = simulation["fixed_control_effects"][fixed_kind]
     fixed = np.zeros(len(predictor_names), dtype=float)
     index = {name: i for i, name in enumerate(predictor_names)}
     for name, value in fixed_map.items():
