@@ -9,6 +9,7 @@ import numpy as np
 
 from ttf.relational_benchmark import known_truth_design
 from ttf.relational_qualification import (
+    calibrated_detectability_envelope,
     detectability_surface,
     dyadic_signal_support,
     minimum_detectable_effects,
@@ -90,6 +91,11 @@ def main() -> int:
         surface,
         target_power=float(synth["target_power"]),
     )
+    calibrated_envelope=calibrated_detectability_envelope(
+        surface,
+        target_power=float(synth["target_power"]),
+        type1_wilson_upper_max=0.05,
+    )
     reference=contract["single_cell_reference"]
     null_rows=[row for row in surface if float(row["effect"])==0.0]
     type1_pass=all(float(row["wilson95_upper"])<=0.05 for row in null_rows)
@@ -117,6 +123,7 @@ def main() -> int:
             "max_target_signal_share":support.max_target_signal_share,
         },
         "minimum_detectable_effect_by_private_amplitude":mde,
+        "calibrated_evaluable_envelope":calibrated_envelope,
         "single_cell_reference":{
             "effect":float(reference["effect"]),
             "private_amplitude":float(reference["private_amplitude"]),
@@ -136,6 +143,7 @@ def main() -> int:
         "total_unique_variance_fraction":info.total_unique_variance_fraction,
         "signal_effective_sources":support.signal_effective_sources,
         "mde":mde,
+        "calibrated_envelope":calibrated_envelope,
         "binary_qualified":payload["single_cell_reference"]["binary_qualified"],
         "reference_power_lower":target[0]["wilson95_lower"],
     },sort_keys=True))
