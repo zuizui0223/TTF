@@ -100,6 +100,12 @@ S_{\mathrm{total}}
 S_F S_C.
 \]
 
+Here and throughout, **information** means the squared norm (or sum of
+squares) of the standardized focal relation remaining after the declared
+projection. It is a predictor-geometry quantity, not Fisher information,
+Shannon information, mutual information, or information about the unopened
+biological response.
+
 The equality is algebraic. Its value is diagnostic localization rather than novelty of the identity itself. A low S_F means that the focal relation is largely endpoint identity. A low S_C with a moderate or high S_F means that the relation varies within endpoints but is largely reproduced by the declared nuisance-control space.
 
 For nested control sets C_1 and C_2 = [C_1, G] fit on exactly the same dyads, let r_1 and r_2 be the respective residual focal relations. Incremental survival is
@@ -305,7 +311,7 @@ Across all 243 known-truth decomposition scenarios, the maximum absolute error a
 3.33\times10^{-16}.
 \]
 
-Thus the implementation recovered the prescribed nested information geometry to floating-point precision.
+Thus the implementation recovered the prescribed nested information geometry to floating-point precision. This first benchmark is primarily an implementation verification of the exact projection algebra; it is not, by itself, evidence that TTF-Q outperforms alternative design diagnostics. The non-trivial inferential validation comes from the second benchmark, where information amount, concentration, null qualification and detectability are deliberately allowed to diverge.
 
 Signal concentration was also identified independently of total information. Source-concentrated designs had lower effective-source signal counts than their broad counterparts in 100% of predeclared comparisons; target-concentrated designs had lower effective-target counts in 100%. Median effective endpoint counts under deliberate concentration were approximately 22–23% of those in matched broad-signal designs (Fig. 4).
 
