@@ -6,6 +6,12 @@ TTF-Q characterizes a dyadic predictor before the biological response is opened.
 The quantities below are properties of the focal predictor and its intended
 design matrix. They are **not** partitions of biological-response variance.
 
+Throughout TTF-Q, the word **information** is operational shorthand for the
+squared Euclidean norm (equivalently, sum of squares) of a standardized focal
+relation that remains after declared linear projections. It is not Fisher
+information, Shannon information, mutual information, or information about an
+unopened biological response.
+
 Let \(r \in \mathbb{R}^n\) be the centered focal source-target relation on a
 fixed dyad set. Let \(F\) denote the exact source/target fixed-effect design,
 and let \(M_F\) be its residual-maker. Let \(C\) be a matrix of declared
