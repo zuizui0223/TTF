@@ -260,7 +260,7 @@ After climate-raster validity filtering, 653 species retained sufficient ecologi
 
 #### Historical climate-displacement relation
 
-Historical climate data came from CHELSA-TraCE21k V1.0 at approximately 1-km resolution (Karger et al. 2023). Four bioclimatic variables were used at 21 ka BP and 0 BP:
+Historical climate data came from CHELSA-TraCE21k V1.0 at approximately 1-km resolution (Karger et al. 2023; Karger 2025). Four bioclimatic variables were used at 21 ka BP and 0 BP:
 
 - mean annual near-surface air temperature;
 - annual temperature range;
@@ -271,7 +271,7 @@ For each retained occurrence coordinate, the historical displacement vector was 
 
 #### Current climate relation
 
-The current-climate nuisance representation used CHELSA V2.1 1981–2010 bioclimatic variables bio1, bio7, bio12 and bio15 (Karger et al. 2017; CHELSA V2.1 data release). The same density and Schoener-overlap machinery was used to obtain R_current.
+The current-climate nuisance representation used CHELSA V2.1 1981–2010 bioclimatic variables bio1, bio7, bio12 and bio15 (Brun et al. 2022; Brun et al. 2022a). The same density and Schoener-overlap machinery was used to obtain R_current.
 
 Schoener-type overlap in gridded environmental space is established in ecological niche-comparison methodology (Broennimann et al. 2012); TTF-Q does not treat the overlap metric itself as a methodological innovation.
 
@@ -434,6 +434,10 @@ Gould, E., Jones, C. S., Yen, J. D. L., Fraser, H. S., Wootton, H. F., Good, M. 
 
 Green, P. & MacLeod, C. J. (2016). SIMR: an R package for power analysis of generalized linear mixed models by simulation. *Methods in Ecology and Evolution*, 7, 493–498. https://doi.org/10.1111/2041-210X.12504
 
-Karger, D. N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., Zimmermann, N. E., Linder, H. P. & Kessler, M. (2017). Climatologies at high resolution for the earth's land surface areas. *Scientific Data*, 4, 170122. https://doi.org/10.1038/sdata.2017.122
+Brun, P., Zimmermann, N. E., Hari, C., Pellissier, L. & Karger, D. N. (2022). Global climate-related predictors at kilometer resolution for the past and future. *Earth System Science Data*, 14, 5573–5603. https://doi.org/10.5194/essd-14-5573-2022
+
+Brun, P., Zimmermann, N. E., Hari, C., Pellissier, L. & Karger, D. N. (2022a). CHELSA-BIOCLIM+ A novel set of global climate-related predictors at kilometre-resolution. EnviDat. https://doi.org/10.16904/envidat.332
 
 Karger, D. N., Nobis, M. P., Normand, S., Graham, C. H. & Zimmermann, N. E. (2023). CHELSA-TraCE21k – high-resolution (1 km) downscaled transient temperature and precipitation data since the Last Glacial Maximum. *Climate of the Past*, 19, 439–456. https://doi.org/10.5194/cp-19-439-2023
+
+Karger, D. N. (2025). CHELSA-TraCE21k-centennial-bioclim and topographic data since the Last Glacial Maximum. EnviDat. https://doi.org/10.16904/envidat.691
