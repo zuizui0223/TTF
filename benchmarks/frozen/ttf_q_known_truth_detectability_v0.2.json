@@ -1,0 +1,101 @@
+{
+  "schema": "ttf_q_known_truth_detectability_frozen_result_v0.2",
+  "status": "FROZEN_COMPLETE_CALIBRATED_KNOWN_TRUTH_DETECTABILITY_BENCHMARK",
+  "recorded_on": "2026-09-28",
+  "contract": "docs/supporting/ttf_q_known_truth_detectability_v0.2.json",
+  "v01_calibration_audit": "benchmarks/frozen/ttf_q_known_truth_detectability_v01_calibration_audit.json",
+  "workflow": {
+    "run_id": 36375776238,
+    "head_sha": "5d7ad8f6d71ebcbb5eba1bf362c6a4412248540e",
+    "conclusion": "success",
+    "summary_artifact_id": 10951080870,
+    "summary_artifact_digest_sha256": "56364154d2814a4d0ec5b58c5a89fbb390bd5abef15928cd64a4bc1ed90fbcb4",
+    "aggregate_schema": "ttf_q_known_truth_detectability_benchmark_result_v0.2"
+  },
+  "single_cell_reference": {
+    "effect": 0.03,
+    "private_amplitude": 3.0,
+    "all_four_binary_qualified": false,
+    "same_binary_classification_pairs": 6,
+    "same_binary_but_different_evaluable_mde_pairs": 5
+  },
+  "scenarios": {
+    "reference": {
+      "truth_C2_total_unique_variance_fraction": 0.48,
+      "observed_total_unique_variance_fraction": 0.4799999999999999,
+      "signal_effective_sources": 28.39640143380346,
+      "type1_calibration_by_A": {
+        "A0": {"pass": true, "rejection_rate": 0.0362, "wilson95_upper": 0.04004269299890459},
+        "A1": {"pass": true, "rejection_rate": 0.0343, "wilson95_upper": 0.03804973175589044},
+        "A2": {"pass": true, "rejection_rate": 0.0340, "wilson95_upper": 0.03773479238965977},
+        "A3": {"pass": true, "rejection_rate": 0.0338, "wilson95_upper": 0.03752479188940666}
+      },
+      "evaluable_grid_mde_by_A": {"A0": 0.05, "A1": 0.08, "A2": 0.08, "A3": 0.10},
+      "legacy_reference_cell_power_wilson95_lower": 0.19065343629137976,
+      "legacy_reference_cell_power_pass": false
+    },
+    "endpoint_loss": {
+      "truth_C2_total_unique_variance_fraction": 0.16,
+      "observed_total_unique_variance_fraction": 0.16000000000000006,
+      "signal_effective_sources": 28.396401433803454,
+      "type1_calibration_by_A": {
+        "A0": {"pass": true, "rejection_rate": 0.0333, "wilson95_upper": 0.0369996453574417},
+        "A1": {"pass": true, "rejection_rate": 0.0338, "wilson95_upper": 0.03752479188940666},
+        "A2": {"pass": true, "rejection_rate": 0.0347, "wilson95_upper": 0.03846953776710967},
+        "A3": {"pass": true, "rejection_rate": 0.0344, "wilson95_upper": 0.03815469531341171}
+      },
+      "evaluable_grid_mde_by_A": {"A0": 0.08, "A1": 0.10, "A2": 0.15, "A3": 0.20},
+      "legacy_reference_cell_power_wilson95_lower": 0.10222378228920963,
+      "legacy_reference_cell_power_pass": false
+    },
+    "control_redundancy": {
+      "truth_C2_total_unique_variance_fraction": 0.15,
+      "observed_total_unique_variance_fraction": 0.14999999999999997,
+      "signal_effective_sources": 28.396401433803454,
+      "type1_calibration_by_A": {
+        "A0": {"pass": true, "rejection_rate": 0.0327, "wilson95_upper": 0.03636919037967548},
+        "A1": {"pass": true, "rejection_rate": 0.0341, "wilson95_upper": 0.03783978032829767},
+        "A2": {"pass": true, "rejection_rate": 0.0344, "wilson95_upper": 0.03815469531341171},
+        "A3": {"pass": true, "rejection_rate": 0.0360, "wilson95_upper": 0.03983303856203099}
+      },
+      "evaluable_grid_mde_by_A": {"A0": 0.08, "A1": 0.10, "A2": 0.15, "A3": 0.20},
+      "legacy_reference_cell_power_wilson95_lower": 0.10407414325107295,
+      "legacy_reference_cell_power_pass": false
+    },
+    "source_concentration": {
+      "truth_C2_total_unique_variance_fraction": 0.48,
+      "observed_total_unique_variance_fraction": 0.4799999999999999,
+      "signal_effective_sources": 6.14973649227898,
+      "max_source_signal_share": 0.1885839806043345,
+      "type1_calibration_by_A": {
+        "A0": {"pass": false, "rejection_rate": 0.0679, "wilson95_upper": 0.07299853461796721},
+        "A1": {"pass": false, "rejection_rate": 0.0647, "wilson95_upper": 0.0696905540664749},
+        "A2": {"pass": false, "rejection_rate": 0.0622, "wilson95_upper": 0.06710386499534587},
+        "A3": {"pass": false, "rejection_rate": 0.0613, "wilson95_upper": 0.06617213227673581}
+      },
+      "raw_grid_mde_by_A": {"A0": 0.05, "A1": 0.08, "A2": 0.08, "A3": 0.10},
+      "evaluable_grid_mde_by_A": {"A0": null, "A1": null, "A2": null, "A3": null},
+      "legacy_reference_cell_power_wilson95_lower": 0.2443667197375407,
+      "legacy_reference_cell_power_pass": false
+    }
+  },
+  "methodological_conclusion": {
+    "single_binary_label_conflates_distinct_design_states": true,
+    "reference_state": "calibrated but underpowered for beta=0.03 at A=3; moderate effects remain evaluable",
+    "endpoint_loss_state": "calibrated with reduced identifiable relation information and worsened MDE envelope",
+    "control_redundancy_state": "calibrated with reduced identifiable relation information and worsened MDE envelope",
+    "source_concentration_state": "same total unique relation information as reference but anti-conservative null behavior under the intended estimator; no evaluable MDE",
+    "effective_endpoint_counts_are_not_effective_sample_sizes": true,
+    "evaluable_envelope_axes": [
+      "identifiable relation information",
+      "signal concentration",
+      "null calibration",
+      "conditional detectability"
+    ]
+  },
+  "boundary": {
+    "relational_v03_reopened": false,
+    "genetic_response_used": false,
+    "empirical_B_or_C_outcome_used": false
+  }
+}
