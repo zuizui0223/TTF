@@ -6,14 +6,16 @@
   "target_article_type": "Research Article",
   "manuscript": {
     "path": "manuscript/ttf_q_methods_v0.1.md",
-    "approximate_word_count_whitespace_tokens": 4854,
+    "approximate_word_count_whitespace_tokens": 5065,
     "numbered_abstract_1_to_4": true,
     "data_code_for_peer_review_statement": true,
     "simulation_before_empirical_application": true,
     "discussion_separates_new_method_object_from_existing_components": true,
     "abstract_word_count": 320,
     "mee_initial_standard_article_word_limit": "7000-8000 including references",
-    "abstract_target_max": 350
+    "abstract_target_max": 350,
+    "figure_references_and_legends_complete": true,
+    "table_1_caption_and_text_reference_complete": true
   },
   "scientific_core": {
     "formal_evaluable_envelope_defined": true,
