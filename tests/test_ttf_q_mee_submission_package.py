@@ -68,3 +68,15 @@ def test_submission_audit_does_not_claim_license_or_author_fields_complete():
     assert audit["scientific_core"]["genetic_response_opened"] is False
     assert audit["peer_review_code"]["license"]=="BLOCKING_AUTHOR_CHOICE"
     assert audit["title_page"]["author_names_affiliations_correspondence"]=="PENDING_AUTHOR_INPUT"
+
+
+
+def test_anonymous_bundle_scanner_rejects_generic_identifying_metadata():
+    namespace=runpy.run_path(
+        str(ROOT/"scripts/build_ttf_q_peer_review_bundle.py")
+    )
+    scan=namespace["anonymity_hits"]
+    assert scan("https://github.com/example/project")
+    assert scan("contact: author@example.org")
+    assert scan("https://orcid.org/0000-0000-0000-0000")
+    assert not scan("https://doi.org/10.1111/example")
