@@ -1,0 +1,63 @@
+{
+  "schema": "ttf_q_known_truth_benchmark_v0.1",
+  "status": "FROZEN_BEFORE_BENCHMARK_RESULTS",
+  "frozen_on": "2026-09-28",
+  "purpose": "Evaluate whether TTF-Q recovers known dyadic predictor-information losses and distinguishes designs that a single power gate collapses to the same label.",
+  "parent_method": "docs/supporting/ttf_q_v0.1.json",
+  "truth_construction": {
+    "space": "exact source/target fixed-effect residual subspace",
+    "orthogonal_components": [
+      "baseline nuisance",
+      "geographic nuisance",
+      "unique focal-relation component"
+    ],
+    "endpoint_component": "exactly representable by source and target fixed effects",
+    "weights": {
+      "endpoint_retained_fraction": "f",
+      "baseline_survival_after_fe": "b",
+      "geography_survival_after_baseline": "g",
+      "C1_total_unique_fraction": "f*b",
+      "C2_total_unique_fraction": "f*b*g"
+    }
+  },
+  "decomposition_grid": {
+    "n_source": 20,
+    "n_target": 20,
+    "endpoint_retained_fraction": [0.25, 0.5, 0.75],
+    "baseline_survival_after_fe": [0.25, 0.5, 0.8],
+    "geography_survival_after_baseline": [0.25, 0.5, 0.8],
+    "concentration": ["broad", "source", "target"],
+    "seeds": [101, 202, 303]
+  },
+  "detectability_benchmark": {
+    "effects": [0.0, 0.01, 0.02, 0.03, 0.05, 0.08, 0.1],
+    "private_amplitudes": [0.0, 1.0, 2.0, 3.0],
+    "alpha_one_sided": 0.025,
+    "target_power": 0.8,
+    "worlds_per_cell": 1000,
+    "binary_reference_cell": {
+      "effect": 0.03,
+      "private_amplitude": 3.0
+    },
+    "required_demonstration": "At least two designs with the same binary reference-cell classification but materially different evaluable envelopes."
+  },
+  "validation_targets": [
+    "recover endpoint retained fraction",
+    "recover baseline survival after FE",
+    "recover geography survival after baseline",
+    "detect intended source/target concentration",
+    "calibrate null rejection over private-amplitude grid",
+    "show MDE degradation as unique information is removed or concentrated"
+  ],
+  "reporting": {
+    "complete_factor_grid": true,
+    "monte_carlo_uncertainty_required": true,
+    "result_based_scenario_selection_forbidden": true,
+    "fixed_seed_rule_required": true
+  },
+  "boundary": {
+    "relational_v03_reopened": false,
+    "genetic_response_used": false,
+    "empirical_B_or_C_outcome_used": false
+  }
+}
