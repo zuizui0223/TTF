@@ -307,13 +307,15 @@ Across all 243 known-truth decomposition scenarios, the maximum absolute error a
 
 Thus the implementation recovered the prescribed nested information geometry to floating-point precision.
 
-Signal concentration was also identified independently of total information. Source-concentrated designs had lower effective-source signal counts than their broad counterparts in 100% of predeclared comparisons; target-concentrated designs had lower effective-target counts in 100%. Median effective endpoint counts under deliberate concentration were approximately 22–23% of those in matched broad-signal designs.
+Signal concentration was also identified independently of total information. Source-concentrated designs had lower effective-source signal counts than their broad counterparts in 100% of predeclared comparisons; target-concentrated designs had lower effective-target counts in 100%. Median effective endpoint counts under deliberate concentration were approximately 22–23% of those in matched broad-signal designs (Fig. 4).
 
 ### 3.2 One binary gate conflated distinct known-truth states
 
 All four known-truth detectability designs received the same negative result at the legacy-style beta = 0.03, A = 3 reference cell.
 
-The calibrated evaluable envelopes were nevertheless different.
+The calibrated evaluable envelopes were nevertheless different (Fig. 2; Table 1).
+
+**Table 1. Known-truth calibration and evaluable minimum-detectable-effect benchmark.**
 
 | Constructed design | Total unique relation fraction | Null qualification | Evaluable MDE at A = 0 / 1 / 2 / 3 |
 | --- | ---: | --- | --- |
@@ -332,7 +334,7 @@ Among the six pairwise comparisons of the four designs, five had the same binary
 
 On the response-blind climate data, historical and current relation values were related but far from identical. Spearman correlation between R_hist and R_current was 0.621 in the development panel and 0.592 in the confirmatory ecological panel.
 
-For the current-climate relation, 41.6% of standardized relation variation survived exact source and target identity in the development panel. After lineage and sampling-imbalance controls, 40.6% of total variation remained unique. On the shared development geometry after adding continuous geographic co-opportunity, the total unique fraction was 0.285.
+For the current-climate relation, 41.6% of standardized relation variation survived exact source and target identity in the development panel (Fig. 1). After lineage and sampling-imbalance controls, 40.6% of total variation remained unique. On the shared development geometry after adding continuous geographic co-opportunity, the total unique fraction was 0.285.
 
 Historical climate showed a different pattern. After source and target identity, 67.3% of historical relation variation remained in development and 66.2% in confirmatory. Conditioning additionally on present climate, lineage and sampling imbalance left total unique fractions of 0.365 and 0.381, respectively.
 
@@ -348,7 +350,7 @@ Residual historical signal was not dominated by one or two endpoints. After geog
 
 On the shared 15,625-dyad development geometry, all tested nuisance-amplitude levels satisfied the inherited tau = 0.05 null-qualification ceiling for both climate relations.
 
-For current climate, beta = 0 rejection rates across A = 0, 1, 2 and 3 were 0.032, 0.027, 0.032 and 0.018; the maximum Wilson 95% upper bound was 0.0448. The evaluable grid MDE vector was 0.02, 0.02, 0.05 and 0.05.
+For current climate, beta = 0 rejection rates across A = 0, 1, 2 and 3 were 0.032, 0.027, 0.032 and 0.018; the maximum Wilson 95% upper bound was 0.0448. The evaluable grid MDE vector was 0.02, 0.02, 0.05 and 0.05 (Fig. 3).
 
 For historical climate given current climate, beta = 0 rejection rates were 0.022, 0.031, 0.023 and 0.033; the maximum Wilson upper bound was 0.0460. The evaluable grid MDE vector was 0.02, 0.03, 0.05 and 0.08.
 
@@ -445,3 +447,14 @@ Brun, P., Zimmermann, N. E., Hari, C., Pellissier, L. & Karger, D. N. (2022a). C
 Karger, D. N., Nobis, M. P., Normand, S., Graham, C. H. & Zimmermann, N. E. (2023). CHELSA-TraCE21k – high-resolution (1 km) downscaled transient temperature and precipitation data since the Last Glacial Maximum. *Climate of the Past*, 19, 439–456. https://doi.org/10.5194/cp-19-439-2023
 
 Karger, D. N. (2025). CHELSA-TraCE21k-centennial-bioclim and topographic data since the Last Glacial Maximum. EnviDat. https://doi.org/10.16904/envidat.691
+
+
+## Figure legends
+
+**Fig. 1. Response-blind relational information survival.** Fraction of total focal-relation variance retained on the shared development geometry after exact source/target identity, the baseline declared controls, and continuous geographic co-opportunity. Current climate and historical climate are shown separately; the historical baseline-control stage additionally conditions on current-climate similarity.
+
+**Fig. 2. Known-truth designs share a binary label but not an evaluable envelope.** Calibration-qualified grid minimum detectable effects across private-heterogeneity amplitudes A = 0–3 for the broad reference, endpoint-loss and control-redundancy designs. The predeclared source-concentrated design is not assigned an evaluable MDE because its beta = 0 cells exceed the declared Type-I qualification ceiling at every tested A.
+
+**Fig. 3. Empirical response-blind climate relation envelopes.** Calibration-qualified grid minimum detectable effects across private-heterogeneity amplitudes for present-climate similarity and historical climate-displacement similarity conditional on present climate on the 15,625-dyad development geometry. No genetic-response quantity is used.
+
+**Fig. 4. Equal unique relation information can have different endpoint concentration and null qualification.** The known-truth reference and source-concentrated designs retain the same total unique focal-relation fraction, but deliberate concentration lowers the inverse-Herfindahl effective source count and is accompanied by failure of the declared null-qualification ceiling under the intended estimator.
