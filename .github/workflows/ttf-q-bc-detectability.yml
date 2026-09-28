@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - method/ttf-q-response-blind-qualification-v0-1
+      - method/ttf-q-known-truth-benchmark
     paths:
       - ".github/workflows/ttf-q-bc-detectability.yml"
   workflow_dispatch:
@@ -93,13 +94,14 @@ jobs:
           rows=p["detectability_surface"]
           null=[r for r in rows if float(r["effect"])==0.0]
           payload={
-              "schema":"ttf_q_detectability_compact_v0.1",
+              "schema":"ttf_q_detectability_compact_v0.2",
               "status":"COMPLETE_RESPONSE_BLIND_DETECTABILITY_CHARACTERIZATION",
               "kind":kind,
               "panel":"development",
               "nonredundancy":p["nonredundancy"],
               "dyadic_signal_support":p["dyadic_signal_support"],
               "minimum_detectable_effect_by_private_amplitude":p["minimum_detectable_effect_by_private_amplitude"],
+              "calibrated_evaluable_envelope":p["calibrated_evaluable_envelope"],
               "null_rejection_rate_by_private_amplitude":{
                   f"{float(r['private_amplitude']):g}":float(r["rejection_rate"])
                   for r in null
