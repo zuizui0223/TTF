@@ -271,7 +271,7 @@ For each retained occurrence coordinate, the historical displacement vector was 
 
 #### Current climate relation
 
-The current-climate nuisance representation used CHELSA V2.1 1981–2010 bioclimatic variables bio1, bio7, bio12 and bio15 (Brun et al. 2022; Brun et al. 2022a). The same density and Schoener-overlap machinery was used to obtain R_current.
+The current-climate nuisance representation used CHELSA V2.1 1981–2010 bioclimatic variables bio1, bio7, bio12 and bio15 (Brun et al. 2022a,b). The same density and Schoener-overlap machinery was used to obtain R_current.
 
 Schoener-type overlap in gridded environmental space is established in ecological niche-comparison methodology (Broennimann et al. 2012); TTF-Q does not treat the overlap metric itself as a methodological innovation.
 
@@ -434,7 +434,7 @@ Gould, E., Jones, C. S., Yen, J. D. L., Fraser, H. S., Wootton, H. F., Good, M. 
 
 Green, P. & MacLeod, C. J. (2016). SIMR: an R package for power analysis of generalized linear mixed models by simulation. *Methods in Ecology and Evolution*, 7, 493–498. https://doi.org/10.1111/2041-210X.12504
 
-Brun, P., Zimmermann, N. E., Hari, C., Pellissier, L. & Karger, D. N. (2022). Global climate-related predictors at kilometer resolution for the past and future. *Earth System Science Data*, 14, 5573–5603. https://doi.org/10.5194/essd-14-5573-2022
+Brun, P., Zimmermann, N. E., Hari, C., Pellissier, L. & Karger, D. N. (2022b). Global climate-related predictors at kilometer resolution for the past and future. *Earth System Science Data*, 14, 5573–5603. https://doi.org/10.5194/essd-14-5573-2022
 
 Brun, P., Zimmermann, N. E., Hari, C., Pellissier, L. & Karger, D. N. (2022a). CHELSA-BIOCLIM+ A novel set of global climate-related predictors at kilometre-resolution. EnviDat. https://doi.org/10.16904/envidat.332
 
