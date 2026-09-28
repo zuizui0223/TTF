@@ -51,7 +51,7 @@
   },
   "known_truth_detectability": {
     "reference": {
-      "unique_fraction": 0.48,
+      "unique_fraction": 0.4799999999999999,
       "evaluable_mde_A0_A1_A2_A3": [
         0.05,
         0.08,
@@ -62,7 +62,7 @@
       "signal_effective_sources": 28.39640143380346
     },
     "endpoint_loss": {
-      "unique_fraction": 0.16,
+      "unique_fraction": 0.16000000000000006,
       "evaluable_mde_A0_A1_A2_A3": [
         0.08,
         0.1,
@@ -72,7 +72,7 @@
       "calibration_pass_all": true
     },
     "control_redundancy": {
-      "unique_fraction": 0.15,
+      "unique_fraction": 0.14999999999999997,
       "evaluable_mde_A0_A1_A2_A3": [
         0.08,
         0.1,
@@ -82,7 +82,7 @@
       "calibration_pass_all": true
     },
     "source_concentration": {
-      "unique_fraction": 0.48,
+      "unique_fraction": 0.4799999999999999,
       "signal_effective_sources": 6.14973649227898,
       "evaluable_mde_A0_A1_A2_A3": [
         null,
