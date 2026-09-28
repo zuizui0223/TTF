@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use TTF-Q, please cite the associated methods article and software release."
+title: "TTF-Q: evaluable envelopes for dyadic ecological predictors"
+type: software
+authors:
+  - family-names: "[FAMILY NAME]"
+    given-names: "[GIVEN NAMES]"
+    orcid: "https://orcid.org/[ORCID IF APPLICABLE]"
+version: "TTF-Q-v0.1"
+date-released: "[YYYY-MM-DD]"
+repository-code: "[PUBLIC REPOSITORY URL AFTER DOUBLE-ANONYMOUS REVIEW]"
+license: "[SPDX LICENSE IDENTIFIER AFTER AUTHOR CHOICE]"
+preferred-citation:
+  type: article
+  title: "Evaluable envelopes for dyadic ecological predictors: response-blind decomposition of information, calibration and detectability"
+  authors:
+    - family-names: "[FAMILY NAME]"
+      given-names: "[GIVEN NAMES]"
+  journal: "Methods in Ecology and Evolution"
+  year: "[YEAR]"
+  doi: "[DOI AFTER ACCEPTANCE]"

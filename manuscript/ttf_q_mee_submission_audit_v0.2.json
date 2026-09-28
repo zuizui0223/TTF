@@ -1,0 +1,59 @@
+{
+  "schema": "ttf_q_mee_submission_audit_v0.2",
+  "status": "SCIENTIFIC_PACKAGE_PREPARED_AUTHOR_CHOICES_REMAIN",
+  "checked_on": "2026-09-28",
+  "journal": "Methods in Ecology and Evolution",
+  "article_type": "Research Article",
+  "official_author_guideline_requirements": {
+    "standard_article_word_limit_including_references": "7000-8000",
+    "abstract_target_max_words": 350,
+    "abstract_numbered_1_to_4": true,
+    "data_code_for_peer_review_statement": true,
+    "double_anonymous_review": true,
+    "separate_title_page": true,
+    "code_data_available_anonymously_at_submission": true,
+    "open_source_license_required_for_method_code": true,
+    "continuous_line_and_page_numbering_for_main_document": true
+  },
+  "scientific_core": {
+    "known_truth_information_validation": "COMPLETE",
+    "known_truth_null_qualification_and_detectability_validation": "COMPLETE",
+    "response_blind_climate_application": "COMPLETE",
+    "figures_from_frozen_scalar_handoff": "COMPLETE",
+    "genetic_response_opened": false
+  },
+  "main_document": {
+    "source": "manuscript/ttf_q_methods_v0.1.md",
+    "blinded_source": "manuscript/ttf_q_methods_blinded_v0.1.md",
+    "blinded_source_builder": "scripts/build_ttf_q_blinded_manuscript.py",
+    "abstract_words_after_methods_merge": 320,
+    "approximate_full_words_after_methods_merge": 5065,
+    "figure_legends_and_text_references": "COMPLETE_IN_METHODS_BRANCH",
+    "AI_assisted_development_disclosure": "COMPLETE_IN_METHODS_BRANCH",
+    "exact_CHELSA_dataset_citations": "COMPLETE_IN_METHODS_BRANCH",
+    "final_double_spaced_line_numbered_submission_file": "PENDING"
+  },
+  "title_page": {
+    "template": "manuscript/ttf_q_title_page_template.md",
+    "author_names_affiliations_correspondence": "PENDING_AUTHOR_INPUT",
+    "acknowledgements_author_contributions_conflict": "PENDING_AUTHOR_INPUT"
+  },
+  "peer_review_code": {
+    "bundle_builder": "scripts/build_ttf_q_peer_review_bundle.py",
+    "public_repository_identity_scan": "IMPLEMENTED",
+    "git_history_excluded": true,
+    "distribution_metadata_anonymized_in_bundle": true,
+    "license": "BLOCKING_AUTHOR_CHOICE",
+    "license_issue": 111,
+    "bundle_generation": "BLOCKED_UNTIL_LICENSE_EXISTS"
+  },
+  "presubmission_enquiry": {
+    "draft": "manuscript/ttf_q_presubmission_enquiry_draft.md",
+    "recommended": true,
+    "reason": "The method integrates established statistical components into a new joint response-blind object; editorial scope confirmation is useful before submission."
+  },
+  "not_blocking_scientific_review": [
+    "repository CITATION.cff",
+    "permanent archive DOI before acceptance"
+  ]
+}
