@@ -29,12 +29,12 @@
     "empirical_calibrated_detectability_result": "benchmarks/frozen/ttf_q_bc_calibrated_detectability_result_v0.2.json",
     "manuscript_scalar_handoff": "manuscript/generated/ttf_q_scalar_results_v0.1.json",
     "figure_workflow": {
-      "run_id": 36381554838,
-      "head_sha": "e013f6da8da4a24649cec881dbdef227ff5e2f98",
+      "run_id": 36388336434,
+      "head_sha": "7604023674b99cd1404de0c3ef2fd04577c76dc1",
       "conclusion": "success",
-      "artifact_id": 10952314604,
-      "artifact_digest_sha256": "42976fa1dc17fdcaf4fa56eac0f76119252498367be1becfa1682fbfba706188",
-      "visual_audit": "PASS_OVERLAP_RESOLVED_AND_NULL_QUALIFICATION_VISIBLE"
+      "artifact_id": 10954424552,
+      "artifact_digest_sha256": "a9effe0946f3fa613765471b29d7353149895f58d15b69203a935b5c1c1d2a0d",
+      "visual_audit": "PASS_EXACT_SCALAR_HANDOFF_RERENDER"
     }
   },
   "packaging_remaining": {
