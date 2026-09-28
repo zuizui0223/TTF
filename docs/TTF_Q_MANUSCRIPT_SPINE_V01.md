@@ -88,8 +88,13 @@ this geographic co-opportunity measure. Roughly 82-83% survives.
 ## Empirical detectability result
 
 Using the same two-way source/target dependence-aware estimator and the frozen
-synthetic nuisance structure, TTF-Q reports the smallest effect-size grid point
-whose Wilson 95% lower power bound reaches 0.80.
+synthetic nuisance structure, TTF-Q first requires the beta=0 Wilson 95% upper
+bound to remain at or below the Type-I ceiling for each nuisance-amplitude
+regime. Only then does it report the smallest effect-size grid point whose
+Wilson 95% lower power bound reaches 0.80 as an **evaluable MDE**.
+
+All four tested nuisance-amplitude levels are calibration-qualified for both
+empirical climate relations.
 
 | private heterogeneity A | current climate | history given current |
 |---:|---:|---:|
@@ -98,13 +103,14 @@ whose Wilson 95% lower power bound reaches 0.80.
 | 2 | 0.05 | 0.05 |
 | 3 | 0.05 | 0.08 |
 
-Null rejection rates remain near the intended one-sided alpha=0.025:
+Null rejection rates and their Wilson upper bounds remain within the declared
+calibration ceiling of 0.05:
 
-- current: 0.032, 0.027, 0.032, 0.018;
-- historical: 0.022, 0.031, 0.023, 0.033.
+- current rejection rates: 0.032, 0.027, 0.032, 0.018; maximum Wilson upper 0.0448;
+- historical rejection rates: 0.022, 0.031, 0.023, 0.033; maximum Wilson upper 0.0460.
 
-The old single-cell reference of beta=0.03 at A=3 falls below the empirical
-grid MDE for both relations on this shared geometry. That does **not** rewrite
+The old single-cell reference of beta=0.03 at A=3 falls below the
+calibration-qualified empirical grid MDE for both relations on this shared geometry. That does **not** rewrite
 the old relational-v0.3 decision. It demonstrates why a single worst-case
 power gate is an impoverished summary of an otherwise informative design.
 
@@ -178,7 +184,8 @@ methods manuscript.
 - `benchmarks/frozen/ttf_q_c1_result_receipt_v0.1.json`
 - `benchmarks/frozen/ttf_q_c2_result_receipt_v0.1.json`
 - `benchmarks/frozen/ttf_q_b1_c1_information_ladder_v0.1.json`
-- `benchmarks/frozen/ttf_q_bc_detectability_result_v0.1.json`
+- `benchmarks/frozen/ttf_q_bc_detectability_result_v0.1.json` — original raw-surface audit
+- `benchmarks/frozen/ttf_q_bc_calibrated_detectability_result_v0.2.json` — calibration-qualified empirical envelope
 - `benchmarks/frozen/ttf_q_known_truth_decomposition_v0.1.json`
 - `benchmarks/frozen/ttf_q_known_truth_detectability_v0.2.json` (after v0.2 result freeze)
 - relational v0.3 remains `CLOSED_NO_EVALUABLE_TEST`.
