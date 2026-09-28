@@ -4,6 +4,7 @@ from pathlib import Path
 import numpy as np
 
 from ttf.relational_qualification import (
+    calibrated_detectability_envelope,
     detectability_surface,
     dyadic_signal_support,
     minimum_detectable_effects,
@@ -168,3 +169,47 @@ def test_ttf_q_contract_does_not_reopen_closed_v03():
         contract["interpretation_policy"]["binary_pass_fail_forbidden"]
         is True
     )
+
+
+def test_calibrated_envelope_suppresses_mde_when_type1_fails():
+    surface = [
+        {
+            "private_amplitude": 0.0,
+            "effect": 0.0,
+            "rejection_rate": 0.02,
+            "wilson95_lower": 0.01,
+            "wilson95_upper": 0.04,
+        },
+        {
+            "private_amplitude": 0.0,
+            "effect": 0.05,
+            "rejection_rate": 0.90,
+            "wilson95_lower": 0.85,
+            "wilson95_upper": 0.94,
+        },
+        {
+            "private_amplitude": 1.0,
+            "effect": 0.0,
+            "rejection_rate": 0.06,
+            "wilson95_lower": 0.04,
+            "wilson95_upper": 0.08,
+        },
+        {
+            "private_amplitude": 1.0,
+            "effect": 0.05,
+            "rejection_rate": 0.92,
+            "wilson95_lower": 0.88,
+            "wilson95_upper": 0.95,
+        },
+    ]
+    envelope = calibrated_detectability_envelope(
+        surface,
+        target_power=0.8,
+        type1_wilson_upper_max=0.05,
+    )
+    assert envelope["0"]["calibration_pass"] is True
+    assert envelope["0"]["raw_grid_mde"] == 0.05
+    assert envelope["0"]["evaluable_grid_mde"] == 0.05
+    assert envelope["1"]["calibration_pass"] is False
+    assert envelope["1"]["raw_grid_mde"] == 0.05
+    assert envelope["1"]["evaluable_grid_mde"] is None
