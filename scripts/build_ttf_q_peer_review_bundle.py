@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import shutil
 import tempfile
 import zipfile
@@ -54,6 +55,29 @@ PROHIBITED_TEXT = (
     "github.com/zuizui0223",
     "zuizui0223/TTF",
 )
+
+PROHIBITED_PATTERNS = {
+    "public_github_url": re.compile(r"https?://(?:www\\.)?github\\.com/", re.I),
+    "email_address": re.compile(
+        r"\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\b",
+        re.I,
+    ),
+    "orcid_url": re.compile(r"https?://(?:www\\.)?orcid\\.org/", re.I),
+}
+
+
+def anonymity_hits(body: str) -> list[str]:
+    hits = [
+        f"literal:{token}"
+        for token in PROHIBITED_TEXT
+        if token.lower() in body.lower()
+    ]
+    hits.extend(
+        f"pattern:{name}"
+        for name, pattern in PROHIBITED_PATTERNS.items()
+        if pattern.search(body)
+    )
+    return hits
 
 
 def sha256(path: Path) -> str:
@@ -113,7 +137,7 @@ def main() -> int:
             if not path.is_file() or path.suffix.lower() in {".png", ".jpg", ".jpeg", ".zip"}:
                 continue
             body = path.read_text(errors="ignore")
-            hits = [token for token in PROHIBITED_TEXT if token.lower() in body.lower()]
+            hits = anonymity_hits(body)
             if hits:
                 raise RuntimeError(
                     f"author-identifying public-repository token in "
