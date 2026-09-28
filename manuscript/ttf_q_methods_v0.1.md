@@ -291,6 +291,10 @@ TTF-Q was developed after the relational v0.3 B/C program had closed with no eva
 
 Machine-readable contracts were committed before each known-truth benchmark stage. When the first detectability benchmark revealed that raw MDEs could be reported despite unacceptable null behavior, the result was preserved as a diagnostic audit. A revised calibration rule and higher-precision null simulation were frozen before the second benchmark was run. This follows the broader principle that planned and post-result analytical changes should remain distinguishable (Gould et al. 2026).
 
+### 2.12 AI-assisted development disclosure
+
+OpenAI ChatGPT (GPT-5.6 Sol) was used during method development and manuscript preparation to assist with code drafting, test generation, documentation, repository auditing and language editing. AI-generated suggestions were not treated as scientific evidence. Code supporting reported results was executed through the repository test and workflow suite, and reported scalar results were locked to machine-readable frozen receipts. The authors remain responsible for the design, code, analyses, interpretation and manuscript content.
+
 ## 3. Results
 
 ### 3.1 TTF-Q exactly recovered known information losses
