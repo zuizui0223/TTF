@@ -1,0 +1,74 @@
+{
+  "schema": "ttf_q_known_truth_detectability_benchmark_v0.1",
+  "status": "FROZEN_BEFORE_DETECTABILITY_RESULTS",
+  "frozen_on": "2026-09-28",
+  "parent_decomposition_contract": "docs/supporting/ttf_q_known_truth_benchmark_v0.1.json",
+  "purpose": "Compare the old single-cell qualification summary with TTF-Q effect-size by heterogeneity evaluable envelopes on known-truth dyadic information designs.",
+  "geometry": {
+    "n_source": 30,
+    "n_target": 30,
+    "dyads": 900
+  },
+  "scenarios": {
+    "reference": {
+      "endpoint_retained_fraction": 0.75,
+      "baseline_survival_after_fe": 0.8,
+      "geography_survival_after_baseline": 0.8,
+      "concentration": "broad",
+      "seed": 1101
+    },
+    "endpoint_loss": {
+      "endpoint_retained_fraction": 0.25,
+      "baseline_survival_after_fe": 0.8,
+      "geography_survival_after_baseline": 0.8,
+      "concentration": "broad",
+      "seed": 1101
+    },
+    "control_redundancy": {
+      "endpoint_retained_fraction": 0.75,
+      "baseline_survival_after_fe": 0.25,
+      "geography_survival_after_baseline": 0.8,
+      "concentration": "broad",
+      "seed": 1101
+    },
+    "source_concentration": {
+      "endpoint_retained_fraction": 0.75,
+      "baseline_survival_after_fe": 0.8,
+      "geography_survival_after_baseline": 0.8,
+      "concentration": "source",
+      "seed": 1101
+    }
+  },
+  "synthetic_response": {
+    "effects": [0.0, 0.02, 0.03, 0.05, 0.08, 0.1, 0.15, 0.2],
+    "private_amplitudes": [0.0, 1.0, 2.0, 3.0],
+    "alpha_one_sided": 0.025,
+    "target_power": 0.8,
+    "worlds_per_cell": 500,
+    "block_size": 100,
+    "source_intercept_sd": 0.18,
+    "target_intercept_sd": 0.18,
+    "dyad_noise_sd": 0.32,
+    "random_slope_sd_per_amplitude": 0.12,
+    "fixed_baseline_control_effect": 0.1,
+    "fixed_geographic_control_effect": 0.1,
+    "response_transform": "tanh",
+    "seed_namespace": "ttf-q-known-truth-detectability-v0.1"
+  },
+  "single_cell_reference": {
+    "effect": 0.03,
+    "private_amplitude": 3.0,
+    "power_rule": "Wilson 95% lower bound >= 0.80",
+    "type1_rule": "Wilson 95% upper bound <= 0.05 for every beta=0 private-amplitude cell"
+  },
+  "required_comparison": {
+    "same_binary_classification_pair": true,
+    "different_evaluable_envelope_pair": true,
+    "different_envelope_definition": "minimum-detectable-effect vectors differ for at least one private-amplitude level"
+  },
+  "boundary": {
+    "relational_v03_reopened": false,
+    "genetic_response_used": false,
+    "empirical_B_or_C_outcome_used": false
+  }
+}
