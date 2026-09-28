@@ -29,9 +29,12 @@
     "empirical_calibrated_detectability_result": "benchmarks/frozen/ttf_q_bc_calibrated_detectability_result_v0.2.json",
     "manuscript_scalar_handoff": "manuscript/generated/ttf_q_scalar_results_v0.1.json",
     "figure_workflow": {
-      "run_id": 36381057840,
-      "head_sha": "0e2e66868af92e2d49b761023165ff8a7061ae32",
-      "conclusion": "success"
+      "run_id": 36381554838,
+      "head_sha": "e013f6da8da4a24649cec881dbdef227ff5e2f98",
+      "conclusion": "success",
+      "artifact_id": 10952314604,
+      "artifact_digest_sha256": "42976fa1dc17fdcaf4fa56eac0f76119252498367be1becfa1682fbfba706188",
+      "visual_audit": "PASS_OVERLAP_RESOLVED_AND_NULL_QUALIFICATION_VISIBLE"
     }
   },
   "packaging_remaining": {
