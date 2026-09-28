@@ -1,0 +1,76 @@
+name: ttf-q-known-truth-detectability-v02
+
+on:
+  push:
+    branches:
+      - method/ttf-q-known-truth-benchmark
+    paths:
+      - "docs/supporting/ttf_q_known_truth_detectability_v0.2.json"
+      - "scripts/run_ttf_q_known_truth_detectability.py"
+      - "scripts/aggregate_ttf_q_known_truth_detectability.py"
+      - "src/ttf/relational_qualification.py"
+      - ".github/workflows/ttf-q-known-truth-detectability-v02.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scenario:
+    strategy:
+      fail-fast: false
+      matrix:
+        scenario:
+          - reference
+          - endpoint_loss
+          - control_redundancy
+          - source_concentration
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install TTF-Q
+        run: python -m pip install -e .
+      - name: Run calibrated known-truth detectability scenario
+        run: |
+          mkdir -p results
+          python scripts/run_ttf_q_known_truth_detectability.py \
+            --contract docs/supporting/ttf_q_known_truth_detectability_v0.2.json \
+            --scenario "${{ matrix.scenario }}" \
+            --output "results/${{ matrix.scenario }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-q-known-truth-detectability-v02-${{ matrix.scenario }}
+          path: "results/${{ matrix.scenario }}.json"
+          retention-days: 30
+          if-no-files-found: error
+
+  aggregate:
+    needs: scenario
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download all v0.2 scenario results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: ttf-q-known-truth-detectability-v02-*
+          path: input
+          merge-multiple: true
+      - name: Aggregate calibrated benchmark
+        run: |
+          mkdir -p results
+          python scripts/aggregate_ttf_q_known_truth_detectability.py \
+            --input-dir input \
+            --output results/ttf_q_known_truth_detectability_v0.2.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-q-known-truth-detectability-v02-summary
+          path: results/ttf_q_known_truth_detectability_v0.2.json
+          retention-days: 30
+          if-no-files-found: error
