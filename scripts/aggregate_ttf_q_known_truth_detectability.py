@@ -25,6 +25,16 @@ def main() -> int:
     if set(rows)!=required:
         raise RuntimeError(f"detectability scenario set drift: {sorted(rows)}")
 
+    scenario_schemas={p["schema"] for p in rows.values()}
+    if len(scenario_schemas)!=1:
+        raise RuntimeError(f"mixed detectability scenario schema versions: {sorted(scenario_schemas)}")
+    scenario_schema=next(iter(scenario_schemas))
+    aggregate_schema=(
+        "ttf_q_known_truth_detectability_benchmark_result_v0.2"
+        if scenario_schema.endswith("_v0.2")
+        else "ttf_q_known_truth_detectability_benchmark_result_v0.1"
+    )
+
     pairs=[]
     for a,b in itertools.combinations(sorted(rows),2):
         pa,pb=rows[a],rows[b]
@@ -57,8 +67,13 @@ def main() -> int:
 
     demonstrations=[row for row in pairs if row["demonstrates_binary_information_loss"]]
     payload={
-        "schema":"ttf_q_known_truth_detectability_benchmark_result_v0.1",
-        "status":"COMPLETE_KNOWN_TRUTH_DETECTABILITY_BENCHMARK",
+        "schema":aggregate_schema,
+        "scenario_schema":scenario_schema,
+        "status":(
+            "COMPLETE_CALIBRATED_KNOWN_TRUTH_DETECTABILITY_BENCHMARK"
+            if aggregate_schema.endswith("_v0.2")
+            else "COMPLETE_KNOWN_TRUTH_DETECTABILITY_BENCHMARK"
+        ),
         "scenarios":{
             name:{
                 "truth":p["truth"],
