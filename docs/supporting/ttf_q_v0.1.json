@@ -1,0 +1,107 @@
+{
+  "schema": "ttf_q_response_blind_qualification_v0.1",
+  "status": "DEVELOPMENT_METHOD_SEPARATE_FROM_CLOSED_RELATIONAL_V03",
+  "created_on": "2026-09-27",
+  "name": "TTF-Q response-blind qualification of dyadic ecological predictors",
+  "purpose": "Characterize when a source-target ecological relation is stably measured, non-redundant with known structure, distributed across enough dyadic support, and capable of supporting intended inference before any biological response is opened.",
+  "boundary": {
+    "closed_v03_final_state": "CLOSED_NO_EVALUABLE_TEST",
+    "frozen_v03_receipt": "benchmarks/frozen/relational_program_final_state_v0.3.json",
+    "v03_reopening_authorized": false,
+    "v03_slot_replacement_authorized": false,
+    "genetic_response_opening_authorized": false,
+    "uses_v03_B_or_C_empirical_genetic_response": false,
+    "method_development_may_use_response_blind_external_relation_geometry": true
+  },
+  "outputs": {
+    "relation_repeatability": "Balanced one-way random-effects ICC across fixed dyads from response-blind resampling replicates of the relation; reported as a continuous measurement-stability diagnostic.",
+    "nonredundancy": "Fraction of focal-relation variance remaining after exact two-way source/target fixed-effect absorption and projection on the intended nuisance controls.",
+    "dyadic_signal_support": "Inverse-Herfindahl effective counts of squared residual focal-relation signal across dyads, source endpoints, and target endpoints; these are concentration diagnostics, not independent sample-size estimates.",
+    "detectability_surface": "Two-way-cluster-robust synthetic rejection rates over a frozen effect-size by private-heterogeneity grid, with Wilson intervals.",
+    "evaluable_envelope": "The continuous joint description above. No pass/fail status is assigned to the ecological predictor."
+  },
+  "case_studies": {
+    "B_environmental_niche_similarity": {
+      "primary": "z_R_env",
+      "controls": [
+        "z_geographic_coverage",
+        "centered_same_class",
+        "centered_same_order",
+        "centered_same_family",
+        "z_abs_log_locality_count_ratio"
+      ],
+      "legacy_state": "NOT_EVALUABLE_B",
+      "legacy_reason": "technical external-occurrence transport failure before relation qualification and before genetic-response opening"
+    },
+    "C_historical_climate_displacement_similarity": {
+      "primary": "z_R_hist",
+      "controls": [
+        "z_R_current",
+        "z_geographic_coverage",
+        "centered_same_class",
+        "centered_same_order",
+        "centered_same_family",
+        "z_abs_log_locality_count_ratio"
+      ],
+      "legacy_state": "NOT_EVALUABLE",
+      "legacy_reason": "bounded occurrence transport retained unresolved REQUEST_ERROR species after the single frozen retry; no genetic response opened",
+      "scientific_nonredundancy_question": "How much historical-climate similarity remains after current-climate similarity, geography, lineage, locality imbalance, and source/target identity are removed?"
+    }
+  },
+  "detectability_surface": {
+    "intended_inference_alpha": 0.025,
+    "worlds_per_cell": 1000,
+    "block_size": 100,
+    "standardized_effect_grid": [
+      0.0,
+      0.01,
+      0.02,
+      0.03,
+      0.05,
+      0.08,
+      0.1
+    ],
+    "private_amplitudes": [
+      0.0,
+      1.0,
+      2.0,
+      3.0
+    ],
+    "target_power": 0.8,
+    "response_transform": "tanh",
+    "source_intercept_sd": 0.18,
+    "target_intercept_sd": 0.18,
+    "dyad_noise_sd": 0.32,
+    "random_slope_sd_per_amplitude": 0.12,
+    "source_random_slope_predictor": "z_geographic_coverage",
+    "target_random_slope_predictor": "centered_same_order",
+    "seed_namespace": "ttf-q-response-blind-v0.1",
+    "fixed_control_effects": {
+      "environment": {
+        "z_geographic_coverage": 0.1,
+        "centered_same_class": 0.03,
+        "centered_same_order": 0.04,
+        "centered_same_family": 0.04,
+        "z_abs_log_locality_count_ratio": 0.05
+      },
+      "historical": {
+        "z_R_current": 0.1,
+        "z_geographic_coverage": 0.1,
+        "centered_same_class": 0.03,
+        "centered_same_order": 0.04,
+        "centered_same_family": 0.04,
+        "z_abs_log_locality_count_ratio": 0.05
+      }
+    },
+    "inheritance_note": "The synthetic world scale and nuisance structure are inherited from the prospectively frozen B/C qualification rules only to characterize the same intended inferential task. TTF-Q replaces their binary gate with a surface; it does not alter or revive either legacy slot."
+  },
+  "interpretation_policy": {
+    "binary_pass_fail_forbidden": true,
+    "null_ecological_conclusion_forbidden": true,
+    "positive_ecological_effect_claim_from_synthetic_worlds_forbidden": true,
+    "minimum_detectable_effect_is_grid_based": true,
+    "minimum_detectable_effect_rule": "smallest positive standardized effect whose Wilson 95% lower bound on rejection probability is at least target_power, separately for each private-heterogeneity amplitude",
+    "transport_failure_is_not_biological_failure": true,
+    "response_blindness_is_methodological_feature": true
+  }
+}

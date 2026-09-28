@@ -1,0 +1,250 @@
+name: ttf-q-c1-history-information
+
+on:
+  push:
+    branches:
+      - method/ttf-q-response-blind-qualification-v0-1
+    paths:
+      - ".github/workflows/ttf-q-c1-history-information.yml"
+      - "scripts/filter_ttf_q_climate_valid_occurrences.py"
+      - "src/ttf/climate_occurrence_filter.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  c1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 480
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install TTF-Q runtime
+        run: |
+          python -m pip install -e .
+          python -m pip install "rasterio>=1.4,<2"
+
+      - name: Verify fresh-program boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          q=json.loads(Path("docs/supporting/ttf_q_v0.1.json").read_text())
+          f=json.loads(Path("benchmarks/frozen/relational_program_final_state_v0.3.json").read_text())
+          assert f["final_state"]=="CLOSED_NO_EVALUABLE_TEST"
+          assert q["boundary"]["closed_v03_final_state"]==f["final_state"]
+          assert q["boundary"]["v03_reopening_authorized"] is False
+          assert q["boundary"]["genetic_response_opening_authorized"] is False
+          print({"v03":f["final_state"],"ttf_q":q["status"]})
+          PY
+
+      - name: Download exact response-blind Study-C occurrence artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/occ
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10931190147/zip" > /tmp/occ.zip
+          echo "f22744e73e0c63cb6f6d96cf1aa78df29b3d1cdd6123b7728d4d183371f1bb74  /tmp/occ.zip" | sha256sum -c -
+          unzip -q /tmp/occ.zip -d input/occ
+          rm -f /tmp/occ.zip
+          test -f input/occ/occurrences_v0.2.csv
+          test -f input/occ/occurrence_ledger_v0.2.json
+
+      - name: Verify occurrence bytes but do not revive v0.3
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          def sha(p):
+              h=hashlib.sha256()
+              with Path(p).open("rb") as f:
+                  for b in iter(lambda:f.read(1<<20),b""):
+                      h.update(b)
+              return h.hexdigest()
+          binding=json.loads(Path("benchmarks/frozen/relational_historical_occurrence_artifact_binding_v0.2.json").read_text())
+          ledger=json.loads(Path("input/occ/occurrence_ledger_v0.2.json").read_text())
+          assert sha("input/occ/occurrences_v0.2.csv")==binding["occurrence_csv_sha256"]
+          assert sha("input/occ/occurrence_ledger_v0.2.json")==binding["occurrence_ledger_sha256"]
+          assert ledger["status"]=="NOT_EVALUABLE_HISTORICAL_TECHNICAL_TRANSPORT"
+          assert ledger["species_passing_ge_30"]==653
+          assert ledger["final_request_error_count"]==95
+          assert ledger["genetic_response_used"] is False
+          assert all(v is False for v in ledger["response_firewall"].values())
+          Path("results").mkdir(exist_ok=True)
+          Path("results/c1_occurrence_provenance.json").write_text(json.dumps({
+              "schema":"ttf_q_c1_occurrence_provenance_v0.1",
+              "legacy_v03_status":ledger["status"],
+              "species_passing_ge_30":ledger["species_passing_ge_30"],
+              "unresolved_request_errors":ledger["final_request_error_count"],
+              "ttf_q_use":"method-development external-data characterization only",
+              "v03_reopened":False,
+              "genetic_response_used":False
+          },indent=2,sort_keys=True)+"\n")
+          PY
+
+      - name: Download exact staged historical CHELSA artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/chelsa-historical
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10791389409/zip" > /tmp/historical.zip
+          echo "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2  /tmp/historical.zip" | sha256sum -c -
+          unzip -q /tmp/historical.zip -d input/chelsa-historical
+          rm -f /tmp/historical.zip
+          echo "historical extracted"
+          df -h .
+
+      - name: Download exact staged current CHELSA artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/chelsa-current
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10791867875/zip" > /tmp/current.zip
+          echo "724743d8666d32bc8717e52200a798369665c2f1965ba33021d3e5c68c5eff4c  /tmp/current.zip" | sha256sum -c -
+          unzip -q /tmp/current.zip -d input/chelsa-current
+          rm -f /tmp/current.zip
+          test -f input/chelsa-historical/manifest.json
+          test -f input/chelsa-current/manifest.json
+          echo "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450  input/chelsa-historical/manifest.json" | sha256sum -c -
+          echo "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450  input/chelsa-current/manifest.json" | sha256sum -c -
+          df -h .
+
+      - name: Freeze exact historical asset receipt from staged URLs
+        run: |
+          set -euo pipefail
+          mapfile -t URLS < <(cut -f2 input/chelsa-historical/resolved_historical_urls.tsv)
+          test "${#URLS[@]}" -eq 8
+          python scripts/freeze_relational_historical_asset_receipt.py \
+            --rule docs/supporting/relational_historical_climate_exposure_rule_v0.1.json \
+            --asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif \
+            --asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_-190_V1.0.tif \
+            --asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_-190_V1.0.tif \
+            --asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_-190_V1.0.tif \
+            --asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif \
+            --asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_20_V1.0.tif \
+            --asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_20_V1.0.tif \
+            --asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_20_V1.0.tif \
+            --resolved-url "${URLS[0]}" --resolved-url "${URLS[2]}" \
+            --resolved-url "${URLS[4]}" --resolved-url "${URLS[6]}" \
+            --resolved-url "${URLS[1]}" --resolved-url "${URLS[3]}" \
+            --resolved-url "${URLS[5]}" --resolved-url "${URLS[7]}" \
+            --output results/c1_historical_asset_receipt.json
+
+      - name: Filter climate-invalid occurrence rows for fresh TTF-Q
+        run: |
+          python scripts/filter_ttf_q_climate_valid_occurrences.py \
+            --occurrences input/occ/occurrences_v0.2.csv \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_-190_V1.0.tif \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_-190_V1.0.tif \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_-190_V1.0.tif \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_20_V1.0.tif \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_20_V1.0.tif \
+            --raster input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_20_V1.0.tif \
+            --raster input/chelsa-current/current/CHELSA_bio1_1981-2010_V.2.1.tif \
+            --raster input/chelsa-current/current/CHELSA_bio7_1981-2010_V.2.1.tif \
+            --raster input/chelsa-current/current/CHELSA_bio12_1981-2010_V.2.1.tif \
+            --raster input/chelsa-current/current/CHELSA_bio15_1981-2010_V.2.1.tif \
+            --output results/c1_climate_valid_occurrences.csv \
+            --summary results/c1_climate_valid_occurrences.json
+          cat results/c1_climate_valid_occurrences.json
+
+      - name: Build response-blind historical/current relation design
+        run: |
+          python scripts/build_relational_historical_relation.py \
+            --occurrences results/c1_climate_valid_occurrences.csv \
+            --candidates benchmarks/frozen/relational_historical_candidates_v0.1.csv \
+            --rule docs/supporting/relational_historical_climate_exposure_rule_v0.1.json \
+            --asset-receipt results/c1_historical_asset_receipt.json \
+            --historical-asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif \
+            --historical-asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_-190_V1.0.tif \
+            --historical-asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_-190_V1.0.tif \
+            --historical-asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_-190_V1.0.tif \
+            --historical-asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif \
+            --historical-asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_20_V1.0.tif \
+            --historical-asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_20_V1.0.tif \
+            --historical-asset input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_20_V1.0.tif \
+            --current-bio1 input/chelsa-current/current/CHELSA_bio1_1981-2010_V.2.1.tif \
+            --current-bio7 input/chelsa-current/current/CHELSA_bio7_1981-2010_V.2.1.tif \
+            --current-bio12 input/chelsa-current/current/CHELSA_bio12_1981-2010_V.2.1.tif \
+            --current-bio15 input/chelsa-current/current/CHELSA_bio15_1981-2010_V.2.1.tif \
+            --output-npz results/c1_historical_design.npz \
+            --output-summary results/c1_historical_design.json
+          cat results/c1_historical_design.json
+
+      - name: Run C1 history-specific ecological information
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          p=json.load(open("results/c1_historical_design.json"))
+          assert p["status"]=="PASS_RESPONSE_BLIND_HISTORICAL_RELATION_DESIGN",p
+          assert p["historical_environment_admissible_species"]>=500
+          assert all(v is False for v in p["response_firewall"].values())
+          PY
+          python scripts/run_ttf_q_historical_information.py \
+            --historical-design results/c1_historical_design.npz \
+            --panel development \
+            --output results/c1_development.json
+          python scripts/run_ttf_q_historical_information.py \
+            --historical-design results/c1_historical_design.npz \
+            --panel confirmatory \
+            --output results/c1_confirmatory.json
+          cat results/c1_development.json
+          cat results/c1_confirmatory.json
+
+      - name: Build compact C1 result receipt
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path("results/c1_development.json").read_text())
+          c=json.loads(Path("results/c1_confirmatory.json").read_text())
+          design=json.loads(Path("results/c1_historical_design.json").read_text())
+          payload={
+              "schema":"ttf_q_c1_result_receipt_v0.1",
+              "status":"COMPLETE_RESPONSE_BLIND_HISTORY_INFORMATION_CHARACTERIZATION",
+              "admissible_species":design["historical_environment_admissible_species"],
+              "development":{
+                  "spearman_hist_vs_current":d["ecological_geometry"]["spearman_hist_vs_current"],
+                  "high_current_low_history_fraction":d["ecological_geometry"]["high_current_low_history_fraction"],
+                  "high_current_high_history_fraction":d["ecological_geometry"]["high_current_high_history_fraction"],
+                  "total_unique_variance_fraction":d["nonredundancy"]["total_unique_variance_fraction"],
+                  "control_unique_variance_fraction_after_fe":d["nonredundancy"]["control_unique_variance_fraction_after_fe"],
+                  "signal_effective_sources":d["dyadic_signal_support"]["signal_effective_sources"],
+                  "signal_effective_targets":d["dyadic_signal_support"]["signal_effective_targets"]
+              },
+              "confirmatory":{
+                  "spearman_hist_vs_current":c["ecological_geometry"]["spearman_hist_vs_current"],
+                  "high_current_low_history_fraction":c["ecological_geometry"]["high_current_low_history_fraction"],
+                  "high_current_high_history_fraction":c["ecological_geometry"]["high_current_high_history_fraction"],
+                  "total_unique_variance_fraction":c["nonredundancy"]["total_unique_variance_fraction"],
+                  "control_unique_variance_fraction_after_fe":c["nonredundancy"]["control_unique_variance_fraction_after_fe"],
+                  "signal_effective_sources":c["dyadic_signal_support"]["signal_effective_sources"],
+                  "signal_effective_targets":c["dyadic_signal_support"]["signal_effective_targets"]
+              },
+              "v03_reopened":False,
+              "genetic_response_used":False,
+              "geographic_opportunity_used":False
+          }
+          Path("results/c1_result_receipt.json").write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
+          print(json.dumps(payload,sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ttf-q-c1-history-information
+          path: results/
+          retention-days: 30
+          if-no-files-found: warn

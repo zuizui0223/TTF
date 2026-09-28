@@ -1,0 +1,77 @@
+{
+  "schema": "ttf_q_c2_geographic_opportunity_v0.2",
+  "status": "FROZEN_TECHNICAL_REBIND_BEFORE_REPAIRED_C1_RESULT",
+  "frozen_on": "2026-09-27",
+  "supersedes_execution_binding_only": "docs/supporting/ttf_q_c2_geographic_opportunity_v0.1.json",
+  "scientific_rule_change": false,
+  "purpose": "Preserve the already-frozen C2 geography decomposition while rebinding its parent artifact to the repaired C1 run after the first bound C1 run terminated before producing any C1 ecological result.",
+  "parent_method": "docs/supporting/ttf_q_v0.1.json",
+  "failed_parent_c1": {
+    "workflow_run_id": 36324363329,
+    "head_sha": "2d50d0a54d34631f6377755940237f9d93274437",
+    "conclusion": "failure",
+    "failure_stage": "historical/current relation construction before C1 result",
+    "failure_reason": "non-finite climate cells reached historical displacement arithmetic before the already-computed validity mask was applied",
+    "C1_result_produced": false,
+    "C1_result_seen_before_rebind": false
+  },
+  "parent_c1": {
+    "method_doc": "docs/TTF_Q_C_HISTORY_INFORMATION_V01.md",
+    "workflow": ".github/workflows/ttf-q-c1-history-information.yml",
+    "bound_workflow_run_id": 36326997088,
+    "bound_head_sha": "91060f5244f6d61877201797f84bc7f08baaf930",
+    "state_when_C2_rebound": "queued",
+    "C1_result_seen": false
+  },
+  "program_boundary": {
+    "relational_v03_final_state_required": "CLOSED_NO_EVALUABLE_TEST",
+    "relational_v03_reopening_authorized": false,
+    "legacy_C_retry_authorized": false,
+    "genetic_response_opening_authorized": false
+  },
+  "nested_conditioning": {
+    "C1_controls": [
+      "current_climate_similarity",
+      "same_class",
+      "same_order",
+      "same_family",
+      "absolute_log_retained_environment_occurrence_count_ratio",
+      "source_fixed_effect",
+      "target_fixed_effect"
+    ],
+    "C2_adds_exactly": [
+      "directed_external_geographic_co_opportunity_500km"
+    ],
+    "all_other_controls_unchanged": true,
+    "primary_relation_unchanged": "historical_climate_displacement_similarity"
+  },
+  "geographic_opportunity": {
+    "support_radius_km": 500,
+    "radius_inheritance": "Inherited from the prospectively frozen B/C spatial-opportunity scale; not selected using C1 or C2 outputs.",
+    "measure": "For each directed source-target dyad, the fraction of target response-blind occurrence coordinates whose nearest source occurrence coordinate is within 500 km great-circle distance.",
+    "hard_coverage_threshold": null,
+    "hard_filter_forbidden": true,
+    "genetic_edge_geometry_required": false,
+    "response_source_geometry_used": false
+  },
+  "nested_information_decomposition": {
+    "C1_total_unique_fraction": "historical relation variance surviving source/target identity and C1 controls",
+    "C2_total_unique_fraction": "historical relation variance surviving source/target identity and C1 controls plus geographic co-opportunity",
+    "geography_retained_fraction": "C2_total_unique_fraction / C1_total_unique_fraction",
+    "geography_attributable_fraction_of_C1_unique_information": "1 - geography_retained_fraction"
+  },
+  "panels": ["development", "confirmatory"],
+  "reporting_policy": {
+    "report_both_panels": true,
+    "rank_or_select_panel_by_result": false,
+    "binary_pass_fail_forbidden": true,
+    "positive_genetic_transfer_claim_forbidden": true,
+    "historical_ecological_information_claim_allowed": true
+  },
+  "response_firewall": {
+    "Study_C_sequence_identity_opened": false,
+    "Study_C_pairwise_genetic_distances_opened": false,
+    "Study_C_T_st_computed": false,
+    "Study_C_beta_hist_computed": false
+  }
+}
