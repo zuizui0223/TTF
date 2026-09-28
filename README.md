@@ -50,7 +50,8 @@ Primary TTF-Q materials:
 - `benchmarks/frozen/ttf_q_c1_result_receipt_v0.1.json` — history beyond current climate;
 - `benchmarks/frozen/ttf_q_c2_result_receipt_v0.1.json` — geography decomposition;
 - `benchmarks/frozen/ttf_q_b1_c1_information_ladder_v0.1.json` — present-to-historical information ladder;
-- `benchmarks/frozen/ttf_q_bc_detectability_result_v0.1.json` — detectability envelopes.
+- `benchmarks/frozen/ttf_q_bc_detectability_result_v0.1.json` — original response-blind detectability audit;
+- `benchmarks/frozen/ttf_q_bc_calibrated_detectability_result_v0.2.json` — calibration-qualified empirical envelopes.
 
 ## Primary estimand
 
