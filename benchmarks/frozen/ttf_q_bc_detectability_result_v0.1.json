@@ -1,0 +1,90 @@
+{
+  "schema": "ttf_q_bc_detectability_result_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_BC_DETECTABILITY_SURFACES",
+  "recorded_on": "2026-09-28",
+  "workflow": {
+    "run_id": 36367363614,
+    "head_sha": "8119ba6cedfbcbc05eb845a42b629cf764127ccf",
+    "conclusion": "success",
+    "historical_artifact": {
+      "id": 10948135601,
+      "digest_sha256": "03e7976d4595ffab9540090c08b539c6cfa76d6d4bceb1671603ae12030dcb0a"
+    },
+    "current_artifact": {
+      "id": 10947348635,
+      "digest_sha256": "beb6cb0fccf75748637014a19d7626fb7eb3da71be9217eb34092e79f098769a"
+    }
+  },
+  "design": {
+    "panel": "development",
+    "dyads": 15625,
+    "source_species": 125,
+    "target_species": 125,
+    "shared_response_blind_geometry": true,
+    "genetic_response_used": false
+  },
+  "B_current_climate": {
+    "total_unique_variance_fraction_after_geography": 0.2851335436621577,
+    "control_unique_variance_fraction_after_two_way_fe": 0.6851407069077595,
+    "signal_effective_dyads": 2221.3636841818566,
+    "signal_effective_sources": 61.88593452614219,
+    "signal_effective_targets": 74.63573230776603,
+    "maximum_source_signal_share": 0.034524438663898545,
+    "maximum_target_signal_share": 0.025514929997630872,
+    "minimum_detectable_effect_for_80pct_power_by_private_amplitude": {
+      "A0": 0.02,
+      "A1": 0.02,
+      "A2": 0.05,
+      "A3": 0.05
+    },
+    "null_rejection_rate_by_private_amplitude": {
+      "A0": 0.032,
+      "A1": 0.027,
+      "A2": 0.032,
+      "A3": 0.018
+    },
+    "information_ladder_before_geography": 0.40632233159020026,
+    "geography_retained_fraction": 0.7017422413044516,
+    "geography_attributable_fraction": 0.2982577586955484
+  },
+  "C_historical_given_current": {
+    "total_unique_variance_fraction_after_geography": 0.2989381245871325,
+    "control_unique_variance_fraction_after_two_way_fe": 0.4441281259658516,
+    "signal_effective_dyads": 2854.9262124376396,
+    "signal_effective_sources": 84.76305134893576,
+    "signal_effective_targets": 78.84898643443776,
+    "maximum_source_signal_share": 0.04022509877719898,
+    "maximum_target_signal_share": 0.046611443712831234,
+    "minimum_detectable_effect_for_80pct_power_by_private_amplitude": {
+      "A0": 0.02,
+      "A1": 0.03,
+      "A2": 0.05,
+      "A3": 0.08
+    },
+    "null_rejection_rate_by_private_amplitude": {
+      "A0": 0.022,
+      "A1": 0.031,
+      "A2": 0.023,
+      "A3": 0.033
+    },
+    "information_ladder_before_geography": 0.3647140731871479,
+    "geography_retained_fraction": 0.819650642967475,
+    "geography_attributable_fraction": 0.18034935703252497
+  },
+  "methodological_conclusion": {
+    "binary_single_effect_gate_is_incomplete": true,
+    "old_reference_effect_beta": 0.03,
+    "old_reference_private_amplitude": 3.0,
+    "shared_geometry_grid_mde_at_A3": {
+      "current_climate": 0.05,
+      "historical_given_current": 0.08
+    },
+    "interpretation": "A single beta=0.03 worst-case qualification cell would classify these response-blind designs as underpowered even though both contain broad non-redundant ecological information and have well-calibrated inference over substantial parts of the effect-size-by-heterogeneity surface. TTF-Q therefore reports the evaluable envelope rather than collapsing design capability to PASS/FAIL."
+  },
+  "boundary": {
+    "relational_v03_final_state_unchanged": "CLOSED_NO_EVALUABLE_TEST",
+    "relational_v03_reopened": false,
+    "legacy_alpha_recycled": false,
+    "empirical_genetic_effect_tested": false
+  }
+}
