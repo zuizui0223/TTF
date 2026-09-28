@@ -22,6 +22,33 @@ empirical biological conclusion
 
 A method may be statistically valid yet unusable for a particular dataset. A dataset may be observationally admissible yet show no cross-unit transfer. A failed qualification is therefore not an ecological null result: it is a stopping decision.
 
+## TTF-Q: evaluable envelopes for dyadic ecological predictors
+
+TTF-Q is the active response-blind method-development route for pairwise ecological predictors. It does **not** reopen the closed relational v0.3 B/C confirmatory family. Instead, it asks what can be established about a source-target relation before any biological response is opened.
+
+For each focal relation, TTF-Q decomposes:
+
+- variation removed by exact source and target identity;
+- additional redundancy with declared ecological and sampling controls;
+- information attributable to geographic co-opportunity;
+- concentration of residual relational signal across dyads, sources, and targets;
+- the effect-size × nuisance-heterogeneity region in which the intended dyadic estimator is detectably informative.
+
+The output is an **evaluable envelope**, not a binary PASS/FAIL label.
+
+The current response-blind climate case study shows two distinct information layers on a shared dyad geometry. Present-climate similarity retains non-redundant pairwise information after endpoint identity, lineage, sampling imbalance, and geography. Historical climate-displacement similarity adds a second layer beyond present climate; after adding continuous geographic co-opportunity, about **82–83%** of that previously unique historical information remains across the two frozen panels.
+
+These are ecological-predictor information results, not tests of a genetic-transferability effect.
+
+Primary TTF-Q materials:
+
+- `docs/TTF_Q_V01.md` — method definition;
+- `docs/TTF_Q_MANUSCRIPT_SPINE_V01.md` — manuscript logic and claim boundaries;
+- `benchmarks/frozen/ttf_q_c1_result_receipt_v0.1.json` — history beyond current climate;
+- `benchmarks/frozen/ttf_q_c2_result_receipt_v0.1.json` — geography decomposition;
+- `benchmarks/frozen/ttf_q_b1_c1_information_ladder_v0.1.json` — present-to-historical information ladder;
+- `benchmarks/frozen/ttf_q_bc_detectability_result_v0.1.json` — detectability envelopes.
+
 ## Primary estimand
 
 For a held-out unit (s), TTF learns a predictor from training units only and evaluates it on data from units excluded from fitting.
