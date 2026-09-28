@@ -1,0 +1,61 @@
+{
+  "schema": "ttf_q_bc_calibrated_detectability_result_v0.2",
+  "status": "FROZEN_RESPONSE_BLIND_CALIBRATED_BC_DETECTABILITY",
+  "recorded_on": "2026-09-28",
+  "supersedes_for_evaluable_mde_reporting": "benchmarks/frozen/ttf_q_bc_detectability_result_v0.1.json",
+  "workflow": {
+    "run_id": 36376038115,
+    "head_sha": "eb52acddb39e04ee2780babc50abff57e9852a5d",
+    "conclusion": "success",
+    "current_artifact": {
+      "id": 10951580020,
+      "digest_sha256": "17cad95b47c2b1ff83e19a40498d8b5a533ee81767425aafa56c1c58942d80f8"
+    },
+    "historical_artifact": {
+      "id": 10951390166,
+      "digest_sha256": "9c8367117695d19af5576c5f5c396471ac0868ac38056089477d78123be42c2a"
+    }
+  },
+  "design": {
+    "panel": "development",
+    "dyads": 15625,
+    "source_species": 125,
+    "target_species": 125,
+    "shared_response_blind_geometry": true
+  },
+  "current_climate": {
+    "total_unique_variance_fraction_after_geography": 0.2851335436621577,
+    "signal_effective_sources": 61.88593452614219,
+    "signal_effective_targets": 74.63573230776603,
+    "calibrated_evaluable_envelope": {
+      "A0": {"calibration_pass": true, "null_rejection_rate": 0.032, "null_wilson95_upper": 0.04482473808376865, "evaluable_grid_mde": 0.02},
+      "A1": {"calibration_pass": true, "null_rejection_rate": 0.027, "null_wilson95_upper": 0.03899873075304015, "evaluable_grid_mde": 0.02},
+      "A2": {"calibration_pass": true, "null_rejection_rate": 0.032, "null_wilson95_upper": 0.04482473808376865, "evaluable_grid_mde": 0.05},
+      "A3": {"calibration_pass": true, "null_rejection_rate": 0.018, "null_wilson95_upper": 0.028273255170507345, "evaluable_grid_mde": 0.05}
+    }
+  },
+  "historical_given_current": {
+    "total_unique_variance_fraction_after_geography": 0.2989381245871325,
+    "signal_effective_sources": 84.76305134893576,
+    "signal_effective_targets": 78.84898643443776,
+    "calibrated_evaluable_envelope": {
+      "A0": {"calibration_pass": true, "null_rejection_rate": 0.022, "null_wilson95_upper": 0.03308567334739963, "evaluable_grid_mde": 0.02},
+      "A1": {"calibration_pass": true, "null_rejection_rate": 0.031, "null_wilson95_upper": 0.04366549601229214, "evaluable_grid_mde": 0.03},
+      "A2": {"calibration_pass": true, "null_rejection_rate": 0.023, "null_wilson95_upper": 0.03427645066222667, "evaluable_grid_mde": 0.05},
+      "A3": {"calibration_pass": true, "null_rejection_rate": 0.033, "null_wilson95_upper": 0.04598126446708159, "evaluable_grid_mde": 0.08}
+    }
+  },
+  "interpretation": {
+    "all_empirical_case_amplitudes_calibration_qualified": true,
+    "current_climate_evaluable_mde_vector": [0.02, 0.02, 0.05, 0.05],
+    "historical_given_current_evaluable_mde_vector": [0.02, 0.03, 0.05, 0.08],
+    "legacy_beta_0p03_A3_below_evaluable_mde_for_both": true,
+    "meaning": "Both ecological relation designs are inferentially calibrated over the tested nuisance-amplitude grid, but the minimum detectable effect varies with nuisance heterogeneity. The historical relation remains evaluable despite requiring a larger effect under the most severe tested heterogeneity."
+  },
+  "boundary": {
+    "relational_v03_final_state_unchanged": "CLOSED_NO_EVALUABLE_TEST",
+    "relational_v03_reopened": false,
+    "genetic_response_used": false,
+    "empirical_genetic_effect_tested": false
+  }
+}

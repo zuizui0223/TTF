@@ -1,0 +1,38 @@
+{
+  "schema": "ttf_q_known_truth_decomposition_frozen_result_v0.1",
+  "status": "FROZEN_COMPLETE_KNOWN_TRUTH_INFORMATION_DECOMPOSITION",
+  "recorded_on": "2026-09-28",
+  "contract": "docs/supporting/ttf_q_known_truth_benchmark_v0.1.json",
+  "workflow": {
+    "run_id": 36374783074,
+    "head_sha": "86623e4e9328765cdaaf22c2fdc9f9b3fdf347ac",
+    "conclusion": "success",
+    "artifact_id": 10950458005,
+    "artifact_digest_sha256": "9a3b4aaddf94bbaa8afc1c951b9f9127f3012537137c7f64a689283111b39957"
+  },
+  "decomposition_grid": {
+    "scenarios": 243,
+    "endpoint_retained_fraction_levels": [0.25, 0.5, 0.75],
+    "baseline_survival_levels": [0.25, 0.5, 0.8],
+    "geography_survival_levels": [0.25, 0.5, 0.8],
+    "concentration_modes": ["broad", "source", "target"],
+    "seeds": [101, 202, 303]
+  },
+  "exact_recovery": {
+    "maximum_absolute_error_across_all_nested_information_quantities": 3.3306690738754696e-16,
+    "tolerance_declared_before_result": 1e-10,
+    "all_scenarios_within_tolerance": true
+  },
+  "signal_concentration": {
+    "source_concentration_detection_fraction": 1.0,
+    "target_concentration_detection_fraction": 1.0,
+    "median_source_effective_count_ratio_concentrated_vs_broad": 0.22478414942149139,
+    "median_target_effective_count_ratio_concentrated_vs_broad": 0.22791226459532427
+  },
+  "interpretation": "TTF-Q exactly recovers constructed endpoint, baseline-control, and geographic information-survival fractions across the full pre-frozen grid, while its effective endpoint diagnostics identify deliberately concentrated residual relation signal. This validates the information-decomposition layer independently of the empirical climate case study.",
+  "boundary": {
+    "relational_v03_reopened": false,
+    "genetic_response_used": false,
+    "empirical_B_or_C_outcome_used": false
+  }
+}

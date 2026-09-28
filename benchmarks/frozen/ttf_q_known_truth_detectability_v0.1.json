@@ -1,0 +1,78 @@
+{
+  "schema": "ttf_q_known_truth_detectability_frozen_result_v0.1",
+  "status": "FROZEN_COMPLETE_KNOWN_TRUTH_DETECTABILITY_BENCHMARK",
+  "recorded_on": "2026-09-28",
+  "contract": "docs/supporting/ttf_q_known_truth_detectability_v0.1.json",
+  "workflow": {
+    "run_id": 36374999045,
+    "head_sha": "13975c526b866ed3bc1eb93c03e48cb4237af12a",
+    "conclusion": "success",
+    "summary_artifact_id": 10949918873,
+    "summary_artifact_digest_sha256": "a883da6029fc83a6cc3987beb0f7c85407ad15b6bd01c27518ca3c5e4064bce0"
+  },
+  "single_cell_reference": {
+    "effect": 0.03,
+    "private_amplitude": 3.0,
+    "all_four_scenarios_binary_qualified": false,
+    "same_binary_classification_pair_count": 6,
+    "same_binary_but_different_envelope_pair_count": 6
+  },
+  "scenarios": {
+    "reference": {
+      "total_unique_variance_fraction": 0.48,
+      "signal_effective_sources": 28.367989406905362,
+      "minimum_detectable_effect_by_private_amplitude": {
+        "A0": 0.05,
+        "A1": 0.08,
+        "A2": 0.08,
+        "A3": 0.10
+      },
+      "reference_cell_wilson95_power_lower": 0.18776935138162992
+    },
+    "endpoint_loss": {
+      "total_unique_variance_fraction": 0.16,
+      "signal_effective_sources": 28.367989406905362,
+      "minimum_detectable_effect_by_private_amplitude": {
+        "A0": 0.08,
+        "A1": 0.10,
+        "A2": 0.15,
+        "A3": 0.15
+      },
+      "reference_cell_wilson95_power_lower": 0.08903690099400285
+    },
+    "control_redundancy": {
+      "total_unique_variance_fraction": 0.15,
+      "signal_effective_sources": 28.367989406905355,
+      "minimum_detectable_effect_by_private_amplitude": {
+        "A0": 0.10,
+        "A1": 0.10,
+        "A2": 0.15,
+        "A3": 0.15
+      },
+      "reference_cell_wilson95_power_lower": 0.10152682399523652
+    },
+    "source_concentration": {
+      "total_unique_variance_fraction": 0.48,
+      "signal_effective_sources": 5.816206084143926,
+      "minimum_detectable_effect_by_private_amplitude": {
+        "A0": 0.05,
+        "A1": 0.05,
+        "A2": 0.08,
+        "A3": 0.10
+      },
+      "reference_cell_wilson95_power_lower": 0.26530206305726467
+    }
+  },
+  "methodological_findings": {
+    "single_cell_gate_discards_design_information": true,
+    "unique_information_loss_degrades_detectability": true,
+    "endpoint_concentration_is_not_a_monotone_proxy_for_power": true,
+    "effective_endpoint_counts_are_independent_signal_concentration_diagnostics_not_effective_sample_sizes": true,
+    "interpretation": "All four pre-frozen designs receive the same negative beta=0.03, A=3 binary qualification, yet all six scenario pairs have different MDE envelopes. Removing identifiable relation information through endpoint absorption or control redundancy worsens detectability. Deliberate source concentration is correctly detected by the concentration diagnostic but does not monotonically worsen MDE, confirming that signal concentration and detectability are distinct dimensions rather than interchangeable sample-size concepts."
+  },
+  "boundary": {
+    "relational_v03_reopened": false,
+    "genetic_response_used": false,
+    "empirical_B_or_C_outcome_used": false
+  }
+}

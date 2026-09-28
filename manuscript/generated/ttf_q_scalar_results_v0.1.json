@@ -1,0 +1,102 @@
+{
+  "schema": "ttf_q_manuscript_scalar_handoff_v0.1",
+  "status": "GENERATED_FROM_FROZEN_RESPONSE_BLIND_RECEIPTS",
+  "information_decomposition": {
+    "known_truth_scenarios": 243,
+    "known_truth_max_absolute_error": 3.3306690738754696e-16,
+    "source_concentration_detection_fraction": 1,
+    "target_concentration_detection_fraction": 1
+  },
+  "climate_design": {
+    "candidate_species": 1000,
+    "admissible_species": 653,
+    "development_species": 250,
+    "development_dyads": 15625,
+    "confirmatory_species": 403,
+    "confirmatory_dyads": 40602
+  },
+  "current_climate": {
+    "development_endpoint_survival": 0.4161678627285901,
+    "development_unique_before_geography": 0.40632233159020026,
+    "development_unique_after_geography": 0.2851335436621577,
+    "development_evaluable_mde_A0_A1_A2_A3": [
+      0.02,
+      0.02,
+      0.05,
+      0.05
+    ],
+    "development_max_null_wilson95_upper": 0.04482473808376865
+  },
+  "historical_climate": {
+    "development_spearman_hist_current": 0.620674221660972,
+    "confirmatory_spearman_hist_current": 0.5921648134632297,
+    "development_unique_before_geography": 0.3647140731871479,
+    "confirmatory_unique_before_geography": 0.3812840593549338,
+    "development_unique_after_geography": 0.29893812458713254,
+    "confirmatory_unique_after_geography": 0.3163113642780213,
+    "development_geography_retained_fraction": 0.819650642967475,
+    "confirmatory_geography_retained_fraction": 0.8295950394914621,
+    "development_effective_sources_after_geography": 84.76305134893578,
+    "development_effective_targets_after_geography": 78.84898643443778,
+    "confirmatory_effective_sources_after_geography": 143.45713249162898,
+    "confirmatory_effective_targets_after_geography": 145.62309372960368,
+    "development_evaluable_mde_A0_A1_A2_A3": [
+      0.02,
+      0.03,
+      0.05,
+      0.08
+    ],
+    "development_max_null_wilson95_upper": 0.04598126446708159,
+    "development_endpoint_survival": 0.673089829510409
+  },
+  "known_truth_detectability": {
+    "reference": {
+      "unique_fraction": 0.4799999999999999,
+      "evaluable_mde_A0_A1_A2_A3": [
+        0.05,
+        0.08,
+        0.08,
+        0.1
+      ],
+      "calibration_pass_all": true,
+      "signal_effective_sources": 28.39640143380346
+    },
+    "endpoint_loss": {
+      "unique_fraction": 0.16000000000000006,
+      "evaluable_mde_A0_A1_A2_A3": [
+        0.08,
+        0.1,
+        0.15,
+        0.2
+      ],
+      "calibration_pass_all": true
+    },
+    "control_redundancy": {
+      "unique_fraction": 0.14999999999999997,
+      "evaluable_mde_A0_A1_A2_A3": [
+        0.08,
+        0.1,
+        0.15,
+        0.2
+      ],
+      "calibration_pass_all": true
+    },
+    "source_concentration": {
+      "unique_fraction": 0.4799999999999999,
+      "signal_effective_sources": 6.14973649227898,
+      "evaluable_mde_A0_A1_A2_A3": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "calibration_pass_all": false
+    },
+    "same_binary_classification_pairs": 6,
+    "same_binary_but_different_evaluable_mde_pairs": 5
+  },
+  "boundary": {
+    "relational_v03_final_state": "CLOSED_NO_EVALUABLE_TEST",
+    "genetic_response_used": false
+  }
+}

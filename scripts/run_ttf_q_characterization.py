@@ -10,6 +10,7 @@ from pathlib import Path
 import numpy as np
 
 from ttf.relational_qualification import (
+    calibrated_detectability_envelope,
     detectability_surface,
     dyadic_signal_support,
     minimum_detectable_effects,
@@ -205,6 +206,11 @@ def main() -> int:
                 surface,
                 target_power=float(simulation["target_power"]),
             )
+        ),
+        "calibrated_evaluable_envelope": calibrated_detectability_envelope(
+            surface,
+            target_power=float(simulation["target_power"]),
+            type1_wilson_upper_max=0.05,
         ),
         "interpretation_policy": {
             "binary_pass_fail_forbidden": True,

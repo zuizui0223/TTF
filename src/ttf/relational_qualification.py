@@ -362,3 +362,55 @@ def minimum_detectable_effects(
         )
         out[f"{amplitude:g}"] = eligible[0] if eligible else None
     return out
+
+
+def calibrated_detectability_envelope(
+    surface: Sequence[dict[str, float | int]],
+    *,
+    target_power: float = 0.80,
+    type1_wilson_upper_max: float = 0.05,
+) -> dict[str, dict[str, float | bool | None]]:
+    """Return per-heterogeneity detectability only where null calibration passes.
+
+    A minimum detectable effect is meaningful only when the same inferential
+    procedure controls false positives under the corresponding nuisance regime.
+    This function therefore pairs each raw MDE with the beta=0 calibration cell
+    at the same private-amplitude level and suppresses the MDE when the Wilson
+    upper bound exceeds the declared Type-I ceiling.
+    """
+    if not 0 < target_power < 1:
+        raise ValueError("target_power must lie in (0, 1)")
+    if not 0 < type1_wilson_upper_max < 1:
+        raise ValueError("type1_wilson_upper_max must lie in (0, 1)")
+
+    by_amplitude: dict[float, list[dict[str, float | int]]] = {}
+    for row in surface:
+        amplitude = float(row["private_amplitude"])
+        by_amplitude.setdefault(amplitude, []).append(row)
+
+    out: dict[str, dict[str, float | bool | None]] = {}
+    for amplitude, rows in sorted(by_amplitude.items()):
+        null_rows = [row for row in rows if float(row["effect"]) == 0.0]
+        if len(null_rows) != 1:
+            raise ValueError(
+                f"expected exactly one beta=0 calibration cell for A={amplitude:g}"
+            )
+        null = null_rows[0]
+        calibration_pass = (
+            float(null["wilson95_upper"]) <= type1_wilson_upper_max
+        )
+        eligible = sorted(
+            float(row["effect"])
+            for row in rows
+            if float(row["effect"]) > 0
+            and float(row["wilson95_lower"]) >= target_power
+        )
+        raw_mde = eligible[0] if eligible else None
+        out[f"{amplitude:g}"] = {
+            "null_rejection_rate": float(null["rejection_rate"]),
+            "null_wilson95_upper": float(null["wilson95_upper"]),
+            "calibration_pass": bool(calibration_pass),
+            "raw_grid_mde": raw_mde,
+            "evaluable_grid_mde": raw_mde if calibration_pass else None,
+        }
+    return out

@@ -1,0 +1,28 @@
+{
+  "schema": "ttf_q_known_truth_detectability_v01_calibration_audit",
+  "status": "POST_RESULT_METHOD_DIAGNOSTIC_REQUIRING_CALIBRATED_ENVELOPE",
+  "recorded_on": "2026-09-28",
+  "source_workflow_run_id": 36374999045,
+  "source_summary_artifact_id": 10949918873,
+  "source_summary_artifact_digest_sha256": "a883da6029fc83a6cc3987beb0f7c85407ad15b6bd01c27518ca3c5e4064bce0",
+  "diagnosis": "The v0.1 benchmark correctly shows that a single binary qualification discards information about design capability, but raw MDE values were reported even for nuisance-amplitude levels whose beta=0 Wilson upper bound exceeded the declared Type-I ceiling. Such MDE values are nominal detectability diagnostics, not evaluable-envelope claims.",
+  "observed_null_rejection_rates": {
+    "reference": {"A0": 0.036, "A1": 0.044, "A2": 0.030, "A3": 0.042},
+    "endpoint_loss": {"A0": 0.050, "A1": 0.036, "A2": 0.044, "A3": 0.048},
+    "control_redundancy": {"A0": 0.028, "A1": 0.052, "A2": 0.038, "A3": 0.036},
+    "source_concentration": {"A0": 0.070, "A1": 0.086, "A2": 0.062, "A3": 0.088}
+  },
+  "method_repair": {
+    "raw_mde_retained_as_descriptive": true,
+    "evaluable_mde_requires_same_amplitude_null_calibration": true,
+    "calibration_rule": "beta=0 Wilson 95% upper bound <= 0.05",
+    "uncalibrated_amplitude_evaluable_mde": null,
+    "implementation": "ttf.relational_qualification.calibrated_detectability_envelope"
+  },
+  "substantive_implication": "The deliberately source-concentrated design has the same unique relation variance as the broad reference design but materially inflated null rejection. Signal concentration and detectability/calibration are therefore distinct properties, and inverse-Herfindahl endpoint counts must not be interpreted as effective sample sizes.",
+  "boundary": {
+    "relational_v03_reopened": false,
+    "genetic_response_used": false,
+    "empirical_B_or_C_outcome_used": false
+  }
+}
