@@ -1,0 +1,33 @@
+name: ttf-q-figures
+
+on:
+  push:
+    branches:
+      - method/ttf-q-known-truth-benchmark
+    paths:
+      - "scripts/render_ttf_q_figures.py"
+      - "manuscript/generated/ttf_q_scalar_results_v0.1.json"
+      - ".github/workflows/ttf-q-figures.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install figure dependencies
+        run: python -m pip install "matplotlib>=3.9"
+      - name: Render frozen TTF-Q figures
+        run: python scripts/render_ttf_q_figures.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-q-manuscript-figures
+          path: manuscript/figures/ttf_q_v0.1/
+          retention-days: 30
+          if-no-files-found: error
