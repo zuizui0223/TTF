@@ -43,6 +43,7 @@ def test_ttf_q_manuscript_scalar_handoff_matches_frozen_receipts():
     assert handoff["current_climate"]["development_unique_after_geography"] == bc["current_climate"]["total_unique_variance_fraction_after_geography"]
 
     hist=handoff["historical_climate"]
+    assert hist["development_endpoint_survival"] == c1["development"]["source_target_fe_retained_variance_fraction"]
     assert hist["development_unique_before_geography"] == c1["development"]["total_unique_variance_fraction"]
     assert hist["confirmatory_unique_before_geography"] == c1["confirmatory"]["total_unique_variance_fraction"]
     assert hist["development_unique_after_geography"] == c2["development"]["C2_total_unique_variance_fraction"]
@@ -63,6 +64,8 @@ def test_ttf_q_manuscript_scalar_handoff_matches_frozen_receipts():
         source=kd["scenarios"][name]
         target=handoff["known_truth_detectability"][name]
         assert target["unique_fraction"] == source["observed_total_unique_variance_fraction"]
+        if name == "reference":
+            assert target["signal_effective_sources"] == source["signal_effective_sources"]
         expected=[
             source["evaluable_grid_mde_by_A"][k]
             for k in ("A0","A1","A2","A3")
