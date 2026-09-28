@@ -6,7 +6,7 @@
   "target_article_type": "Research Article",
   "manuscript": {
     "path": "manuscript/ttf_q_methods_v0.1.md",
-    "approximate_word_count_whitespace_tokens": 5065,
+    "approximate_word_count_whitespace_tokens": 5394,
     "numbered_abstract_1_to_4": true,
     "data_code_for_peer_review_statement": true,
     "simulation_before_empirical_application": true,
@@ -48,7 +48,7 @@
     "title_page": "PENDING",
     "repository_license": "BLOCKING_AUTHOR_CHOICE_MEE_REQUIRES_OPEN_SOURCE_LICENSE",
     "citation_file": "PENDING",
-    "final_reference_style_check": "PENDING",
+    "final_reference_style_check": "NOVELTY_POSITIONING_UPDATED_FORMATTING_STILL_PENDING",
     "presubmission_enquiry": "RECOMMENDED_BECAUSE_METHOD_COMBINES_ESTABLISHED_COMPONENTS_IN_A_NEW_JOINT_OBJECT"
   },
   "submission_positioning": {
@@ -60,7 +60,11 @@
       "two-way or dyadic cluster-robust inference",
       "Monte Carlo power analysis",
       "Wilson intervals",
-      "preregistration"
+      "preregistration",
+      "ecological collinearity diagnostics",
+      "simulation-based ecological study design",
+      "known-truth simulation validation",
+      "simulation-reporting guidance"
     ]
   }
 }
