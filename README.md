@@ -44,6 +44,9 @@ Primary TTF-Q materials:
 
 - `docs/TTF_Q_V01.md` — method definition;
 - `docs/TTF_Q_MANUSCRIPT_SPINE_V01.md` — manuscript logic and claim boundaries;
+- `docs/TTF_Q_THEORY_V01.md` — exact nested-information and calibrated-envelope definitions;
+- `benchmarks/frozen/ttf_q_known_truth_decomposition_v0.1.json` — 243-scenario exact-recovery benchmark;
+- `benchmarks/frozen/ttf_q_known_truth_detectability_v0.2.json` — calibration-qualified known-truth detectability benchmark;
 - `benchmarks/frozen/ttf_q_c1_result_receipt_v0.1.json` — history beyond current climate;
 - `benchmarks/frozen/ttf_q_c2_result_receipt_v0.1.json` — geography decomposition;
 - `benchmarks/frozen/ttf_q_b1_c1_information_ladder_v0.1.json` — present-to-historical information ladder;
