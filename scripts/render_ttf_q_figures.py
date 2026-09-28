@@ -33,7 +33,7 @@ def main() -> int:
         data["current_climate"]["development_unique_after_geography"],
     ]
     historical=[
-        0.673089829510409,
+        data["historical_climate"]["development_endpoint_survival"],
         data["historical_climate"]["development_unique_before_geography"],
         data["historical_climate"]["development_unique_after_geography"],
     ]
@@ -97,7 +97,7 @@ def main() -> int:
     ref=data["known_truth_detectability"]["reference"]
     con=data["known_truth_detectability"]["source_concentration"]
     labels=["Reference","Source-concentrated"]
-    effective_sources=[28.39640143380346,con["signal_effective_sources"]]
+    effective_sources=[ref["signal_effective_sources"],con["signal_effective_sources"]]
     unique=[ref["unique_fraction"],con["unique_fraction"]]
 
     fig,ax=plt.subplots(figsize=(7.4,4.7))
