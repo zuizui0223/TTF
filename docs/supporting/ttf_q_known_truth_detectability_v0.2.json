@@ -1,0 +1,83 @@
+{
+  "schema": "ttf_q_known_truth_detectability_benchmark_v0.2",
+  "status": "FROZEN_AFTER_V01_DIAGNOSTIC_BEFORE_V02_RESULTS",
+  "frozen_on": "2026-09-28",
+  "supersedes_for_evaluable_envelope_reporting": "docs/supporting/ttf_q_known_truth_detectability_v0.1.json",
+  "v01_calibration_audit": "benchmarks/frozen/ttf_q_known_truth_detectability_v01_calibration_audit.json",
+  "scientific_scenarios_changed": false,
+  "purpose": "Estimate the same predeclared known-truth designs with high-precision null calibration and report MDE only at nuisance amplitudes whose Type-I calibration is licensed.",
+  "geometry": {
+    "n_source": 30,
+    "n_target": 30,
+    "dyads": 900
+  },
+  "scenarios": {
+    "reference": {
+      "endpoint_retained_fraction": 0.75,
+      "baseline_survival_after_fe": 0.8,
+      "geography_survival_after_baseline": 0.8,
+      "concentration": "broad",
+      "seed": 2202
+    },
+    "endpoint_loss": {
+      "endpoint_retained_fraction": 0.25,
+      "baseline_survival_after_fe": 0.8,
+      "geography_survival_after_baseline": 0.8,
+      "concentration": "broad",
+      "seed": 2202
+    },
+    "control_redundancy": {
+      "endpoint_retained_fraction": 0.75,
+      "baseline_survival_after_fe": 0.25,
+      "geography_survival_after_baseline": 0.8,
+      "concentration": "broad",
+      "seed": 2202
+    },
+    "source_concentration": {
+      "endpoint_retained_fraction": 0.75,
+      "baseline_survival_after_fe": 0.8,
+      "geography_survival_after_baseline": 0.8,
+      "concentration": "source",
+      "seed": 2202
+    }
+  },
+  "synthetic_response": {
+    "effects": [0.0, 0.02, 0.03, 0.05, 0.08, 0.1, 0.15, 0.2],
+    "private_amplitudes": [0.0, 1.0, 2.0, 3.0],
+    "alpha_one_sided": 0.025,
+    "target_power": 0.8,
+    "calibration_worlds_per_cell": 10000,
+    "positive_worlds_per_cell": 1000,
+    "block_size": 100,
+    "source_intercept_sd": 0.18,
+    "target_intercept_sd": 0.18,
+    "dyad_noise_sd": 0.32,
+    "random_slope_sd_per_amplitude": 0.12,
+    "fixed_baseline_control_effect": 0.1,
+    "fixed_geographic_control_effect": 0.1,
+    "response_transform": "tanh",
+    "seed_namespace": "ttf-q-known-truth-detectability-v0.2"
+  },
+  "calibrated_envelope_rule": {
+    "type1_wilson95_upper_max": 0.05,
+    "evaluable_grid_mde": "smallest positive effect with Wilson 95% lower power >=0.80, reported only when the beta=0 calibration cell at the same private amplitude has Wilson 95% upper <=0.05",
+    "uncalibrated_amplitude": "report calibration failure and raw MDE descriptively; evaluable MDE is null"
+  },
+  "single_cell_reference": {
+    "effect": 0.03,
+    "private_amplitude": 3.0,
+    "role": "legacy-style summary shown only to demonstrate what information is lost by collapsing the full profile"
+  },
+  "reporting": {
+    "report_raw_mde": true,
+    "report_calibrated_envelope": true,
+    "report_null_rejection_and_wilson_bounds": true,
+    "report_all_four_scenarios": true,
+    "result_based_scenario_selection_forbidden": true
+  },
+  "boundary": {
+    "relational_v03_reopened": false,
+    "genetic_response_used": false,
+    "empirical_B_or_C_outcome_used": false
+  }
+}
