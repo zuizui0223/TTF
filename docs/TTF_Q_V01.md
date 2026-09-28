@@ -21,7 +21,7 @@ For directed source-target dyads `(s,t)`, let `R_st` be a focal ecological relat
 
 The intended model may also contain geographic opportunity, lineage indicators, locality-count imbalance, and exact source and target fixed effects.
 
-TTF-Q characterizes four response-blind properties.
+TTF-Q characterizes five response-blind properties.
 
 ## 1. Relation repeatability
 
@@ -85,9 +85,17 @@ plus the maximum source and target signal shares.
 
 These are **signal-concentration diagnostics**, not claims that dyads are independent and not replacements for cluster-robust inference.
 
-## 4. Detectability surface
+## 4. Null calibration
 
-The frozen B/C qualification code reduced a rich synthetic experiment to a binary gate at one effect size. TTF-Q retains the same intended two-way source/target dependence-aware estimator but reports the full surface.
+Detectability is not meaningful unless the intended inferential procedure first controls false positives under the same nuisance regime.
+
+For every private-heterogeneity amplitude `A`, TTF-Q therefore evaluates the `beta=0` cell and reports its rejection rate and Wilson 95% interval. An amplitude is **calibration-qualified** only when the Wilson upper bound is below the declared Type-I ceiling.
+
+This separates a design that is merely underpowered from a design for which the intended estimator is anti-conservative. Those are scientifically different limitations and must not share one opaque `NOT_EVALUABLE` label.
+
+## 5. Conditional detectability surface
+
+Only after calibration is assessed does TTF-Q summarize detectability. The method retains the intended two-way source/target dependence-aware estimator and reports the full effect-size × heterogeneity surface.
 
 The v0.1 case-study grid is:
 
@@ -99,7 +107,7 @@ The v0.1 case-study grid is:
 - response transform: `tanh`;
 - intended inference alpha: `0.025`.
 
-For every cell TTF-Q reports rejection rate and its Wilson 95% interval. It then reports, for each `A`, the smallest **grid** effect whose Wilson lower bound reaches the target power of 0.80.
+For every cell TTF-Q reports rejection rate and its Wilson 95% interval. It reports both a descriptive raw grid MDE and an **evaluable grid MDE**. The evaluable MDE is the smallest positive effect whose Wilson lower power bound reaches 0.80, but it is exposed only when the corresponding `beta=0` cell passes null calibration. Otherwise the evaluable MDE is `null` even when a nominal power threshold is reached.
 
 This converts the old question
 
@@ -107,9 +115,9 @@ This converts the old question
 
 into the more useful question
 
-> Under this actual dyadic geometry, what effect sizes are detectable as source/target heterogeneity worsens?
+> Under this actual dyadic geometry, which nuisance regimes are calibrated, and within those regimes what effect sizes are detectable?
 
-No ecological effect is inferred from the synthetic worlds.
+No ecological effect is inferred from the synthetic worlds. Signal-concentration metrics are also not treated as effective sample sizes; known-truth benchmarks show that concentration, calibration, and power are distinct axes.
 
 ## B and C as case studies
 
@@ -168,13 +176,10 @@ python scripts/run_ttf_q_characterization.py \
 
 If response-blind bootstrap relation replicates are available, pass a NumPy matrix with replicates in rows and fixed dyads in columns using `--relation-replicates`.
 
-## Next empirical step
+## Validation status
 
-The priority case study is C. Reconstruct the historical/current relation geometry from the already response-blind external assets under a new TTF-Q provenance chain, then quantify:
+The information-decomposition layer has now been validated on a pre-result-frozen known-truth benchmark. Across 243 constructed dyadic designs, prescribed endpoint, control, and geographic information-survival fractions were recovered with maximum absolute error of approximately `3.3e-16`; deliberately source- or target-concentrated signal was detected in every benchmark comparison.
 
-1. `R_hist` repeatability under occurrence resampling;
-2. the fraction of `R_hist` surviving `R_current` and all frozen controls;
-3. whether unique historical information is broadly distributed or concentrated in a few endpoints;
-4. the effect-size × heterogeneity detectability surface.
+A second pre-result-frozen benchmark demonstrates why calibration and detectability must remain separate. Broad reference, endpoint-loss, and control-redundancy designs are calibration-qualified but have different MDE envelopes, whereas an intentionally source-concentrated design with the same unique relation variance is anti-conservative under the tested estimator and therefore receives no evaluable MDE. Thus an evaluable envelope is the conjunction of identifiable information, signal-support structure, inferential calibration, and conditional power—not a relabeled power calculation.
 
-If the historical relation contains substantial, broadly distributed information after conditioning on current climate, that is a positive ecological result about historical climatic information even before any genetic-response analysis is considered.
+Response-blind occurrence-resampling repeatability remains an optional measurement layer rather than a prerequisite for these completed validation results.
