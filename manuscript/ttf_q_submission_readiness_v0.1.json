@@ -6,11 +6,14 @@
   "target_article_type": "Research Article",
   "manuscript": {
     "path": "manuscript/ttf_q_methods_v0.1.md",
-    "approximate_word_count_whitespace_tokens": 4784,
+    "approximate_word_count_whitespace_tokens": 4854,
     "numbered_abstract_1_to_4": true,
     "data_code_for_peer_review_statement": true,
     "simulation_before_empirical_application": true,
-    "discussion_separates_new_method_object_from_existing_components": true
+    "discussion_separates_new_method_object_from_existing_components": true,
+    "abstract_word_count": 320,
+    "mee_initial_standard_article_word_limit": "7000-8000 including references",
+    "abstract_target_max": 350
   },
   "scientific_core": {
     "formal_evaluable_envelope_defined": true,
@@ -41,7 +44,7 @@
     "final_figures": "COMPLETE_REPRODUCIBLE_FROM_FROZEN_SCALAR_HANDOFF",
     "double_anonymous_peer_review_snapshot": "PENDING",
     "title_page": "PENDING",
-    "repository_license": "PENDING_AUTHOR_CHOICE",
+    "repository_license": "BLOCKING_AUTHOR_CHOICE_MEE_REQUIRES_OPEN_SOURCE_LICENSE",
     "citation_file": "PENDING",
     "final_reference_style_check": "PENDING",
     "presubmission_enquiry": "RECOMMENDED_BECAUSE_METHOD_COMBINES_ESTABLISHED_COMPONENTS_IN_A_NEW_JOINT_OBJECT"
