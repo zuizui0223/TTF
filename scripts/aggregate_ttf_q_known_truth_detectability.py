@@ -16,7 +16,10 @@ def main() -> int:
     rows={}
     for path in sorted(args.input_dir.glob("*.json")):
         payload=json.loads(path.read_text())
-        if payload.get("schema")=="ttf_q_known_truth_detectability_scenario_v0.1":
+        if payload.get("schema") in {
+            "ttf_q_known_truth_detectability_scenario_v0.1",
+            "ttf_q_known_truth_detectability_scenario_v0.2",
+        }:
             rows[payload["scenario"]]=payload
     required={"reference","endpoint_loss","control_redundancy","source_concentration"}
     if set(rows)!=required:
@@ -29,10 +32,15 @@ def main() -> int:
             pa["single_cell_reference"]["binary_qualified"]
             == pb["single_cell_reference"]["binary_qualified"]
         )
-        different_envelope=(
-            pa["minimum_detectable_effect_by_private_amplitude"]
-            != pb["minimum_detectable_effect_by_private_amplitude"]
+        envelope_a=pa.get(
+            "calibrated_evaluable_envelope",
+            pa["minimum_detectable_effect_by_private_amplitude"],
         )
+        envelope_b=pb.get(
+            "calibrated_evaluable_envelope",
+            pb["minimum_detectable_effect_by_private_amplitude"],
+        )
+        different_envelope=(envelope_a!=envelope_b)
         pairs.append({
             "a":a,
             "b":b,
@@ -50,6 +58,7 @@ def main() -> int:
                 "truth":p["truth"],
                 "observed_information":p["observed_information"],
                 "minimum_detectable_effect_by_private_amplitude":p["minimum_detectable_effect_by_private_amplitude"],
+                "calibrated_evaluable_envelope":p.get("calibrated_evaluable_envelope"),
                 "single_cell_reference":p["single_cell_reference"],
                 "null_rejection_rate_by_private_amplitude":{
                     f"{float(row['private_amplitude']):g}":float(row["rejection_rate"])
@@ -72,7 +81,8 @@ def main() -> int:
         "scenario_summary":{
             name:{
                 "binary":x["single_cell_reference"]["binary_qualified"],
-                "mde":x["minimum_detectable_effect_by_private_amplitude"],
+                "raw_mde":x["minimum_detectable_effect_by_private_amplitude"],
+                "calibrated_envelope":x.get("calibrated_evaluable_envelope"),
             }
             for name,x in rows.items()
         },
