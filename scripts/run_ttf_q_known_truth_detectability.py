@@ -25,10 +25,19 @@ def main() -> int:
     args=ap.parse_args()
 
     contract=json.loads(args.contract.read_text())
-    if contract.get("schema")!="ttf_q_known_truth_detectability_benchmark_v0.1":
+    schema=contract.get("schema")
+    allowed={
+        "ttf_q_known_truth_detectability_benchmark_v0.1",
+        "ttf_q_known_truth_detectability_benchmark_v0.2",
+    }
+    if schema not in allowed:
         raise RuntimeError("unexpected detectability benchmark contract")
-    if contract.get("status")!="FROZEN_BEFORE_DETECTABILITY_RESULTS":
-        raise RuntimeError("detectability benchmark was not frozen before results")
+    if schema.endswith("_v0.1"):
+        if contract.get("status")!="FROZEN_BEFORE_DETECTABILITY_RESULTS":
+            raise RuntimeError("detectability benchmark was not frozen before results")
+    else:
+        if contract.get("status")!="FROZEN_AFTER_V01_DIAGNOSTIC_BEFORE_V02_RESULTS":
+            raise RuntimeError("calibrated detectability follow-up was not frozen before results")
     if args.scenario not in contract["scenarios"]:
         raise RuntimeError("unknown frozen scenario")
 
@@ -62,15 +71,13 @@ def main() -> int:
         residual,
     )
 
-    surface=detectability_surface(
-        design.source,
-        design.target,
-        predictors,
-        effects=synth["effects"],
+    common_kwargs=dict(
+        source=design.source,
+        target=design.target,
+        predictors=predictors,
         private_amplitudes=synth["private_amplitudes"],
         primary_index=0,
         alpha=float(synth["alpha_one_sided"]),
-        worlds_per_cell=int(synth["worlds_per_cell"]),
         source_intercept_sd=float(synth["source_intercept_sd"]),
         target_intercept_sd=float(synth["target_intercept_sd"]),
         dyad_noise_sd=float(synth["dyad_noise_sd"]),
@@ -83,22 +90,50 @@ def main() -> int:
         target_random_slope_index=2,
         random_slope_sd_per_amplitude=float(synth["random_slope_sd_per_amplitude"]),
         response_transform=str(synth["response_transform"]),
-        seed_namespace=f"{synth['seed_namespace']}|{args.scenario}",
         block_size=int(synth["block_size"]),
     )
+    if "calibration_worlds_per_cell" in synth:
+        null_surface=detectability_surface(
+            effects=[0.0],
+            worlds_per_cell=int(synth["calibration_worlds_per_cell"]),
+            seed_namespace=f"{synth['seed_namespace']}|{args.scenario}|calibration",
+            **common_kwargs,
+        )
+        positive_surface=detectability_surface(
+            effects=[float(x) for x in synth["effects"] if float(x)>0],
+            worlds_per_cell=int(synth["positive_worlds_per_cell"]),
+            seed_namespace=f"{synth['seed_namespace']}|{args.scenario}|positive",
+            **common_kwargs,
+        )
+        surface=sorted(
+            [*null_surface,*positive_surface],
+            key=lambda row:(float(row["private_amplitude"]),float(row["effect"])),
+        )
+    else:
+        surface=detectability_surface(
+            effects=synth["effects"],
+            worlds_per_cell=int(synth["worlds_per_cell"]),
+            seed_namespace=f"{synth['seed_namespace']}|{args.scenario}",
+            **common_kwargs,
+        )
 
     mde=minimum_detectable_effects(
         surface,
         target_power=float(synth["target_power"]),
     )
+    type1_upper=float(
+        contract.get("calibrated_envelope_rule",{}).get(
+            "type1_wilson95_upper_max",0.05
+        )
+    )
     calibrated_envelope=calibrated_detectability_envelope(
         surface,
         target_power=float(synth["target_power"]),
-        type1_wilson_upper_max=0.05,
+        type1_wilson_upper_max=type1_upper,
     )
     reference=contract["single_cell_reference"]
     null_rows=[row for row in surface if float(row["effect"])==0.0]
-    type1_pass=all(float(row["wilson95_upper"])<=0.05 for row in null_rows)
+    type1_pass=all(float(row["wilson95_upper"])<=type1_upper for row in null_rows)
     target=[
         row for row in surface
         if float(row["effect"])==float(reference["effect"])
@@ -109,7 +144,11 @@ def main() -> int:
     power_pass=float(target[0]["wilson95_lower"])>=float(synth["target_power"])
 
     payload={
-        "schema":"ttf_q_known_truth_detectability_scenario_v0.1",
+        "schema":(
+            "ttf_q_known_truth_detectability_scenario_v0.2"
+            if schema.endswith("_v0.2")
+            else "ttf_q_known_truth_detectability_scenario_v0.1"
+        ),
         "status":"COMPLETE_KNOWN_TRUTH_DETECTABILITY_SCENARIO",
         "scenario":args.scenario,
         "scenario_spec":spec,
