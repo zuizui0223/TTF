@@ -1,0 +1,53 @@
+{
+  "schema": "ttf_q_submission_readiness_v0.1",
+  "status": "SCIENTIFIC_CORE_READY_PACKAGING_INCOMPLETE",
+  "recorded_on": "2026-09-28",
+  "target_journal": "Methods in Ecology and Evolution",
+  "target_article_type": "Research Article",
+  "manuscript": {
+    "path": "manuscript/ttf_q_methods_v0.1.md",
+    "approximate_word_count_whitespace_tokens": 4784,
+    "numbered_abstract_1_to_4": true,
+    "data_code_for_peer_review_statement": true,
+    "simulation_before_empirical_application": true,
+    "discussion_separates_new_method_object_from_existing_components": true
+  },
+  "scientific_core": {
+    "formal_evaluable_envelope_defined": true,
+    "known_truth_information_benchmark_complete": true,
+    "known_truth_detectability_benchmark_complete": true,
+    "null_qualification_precedes_evaluable_mde": true,
+    "empirical_climate_case_complete_response_blind": true,
+    "development_and_confirmatory_ecological_panels_reported": true,
+    "relational_v03_reopened": false,
+    "genetic_response_used": false
+  },
+  "validation": {
+    "known_truth_scenarios": 243,
+    "maximum_nested_information_absolute_error": 3.3306690738754696e-16,
+    "known_truth_detectability_result": "benchmarks/frozen/ttf_q_known_truth_detectability_v0.2.json",
+    "empirical_calibrated_detectability_result": "benchmarks/frozen/ttf_q_bc_calibrated_detectability_result_v0.2.json",
+    "manuscript_scalar_handoff": "manuscript/generated/ttf_q_scalar_results_v0.1.json"
+  },
+  "packaging_remaining": {
+    "final_figures": "PENDING",
+    "double_anonymous_peer_review_snapshot": "PENDING",
+    "title_page": "PENDING",
+    "repository_license": "PENDING_AUTHOR_CHOICE",
+    "citation_file": "PENDING",
+    "final_reference_style_check": "PENDING",
+    "presubmission_enquiry": "RECOMMENDED_BECAUSE_METHOD_COMBINES_ESTABLISHED_COMPONENTS_IN_A_NEW_JOINT_OBJECT"
+  },
+  "submission_positioning": {
+    "do_not_submit_as": "a workflow that merely chains existing tools",
+    "submit_as": "a response-blind method object integrating exact nested predictor-information survival, signal concentration, null qualification and conditional detectability",
+    "existing_components_explicitly_not_claimed_as_new": [
+      "Schoener niche overlap",
+      "linear residualization",
+      "two-way or dyadic cluster-robust inference",
+      "Monte Carlo power analysis",
+      "Wilson intervals",
+      "preregistration"
+    ]
+  }
+}
