@@ -30,7 +30,7 @@ That framing misses a prior design problem. A source-target relation can appear 
 
 These failure modes are scientifically different. Endpoint redundancy says that apparent pairwise structure is mainly a property of the individual sources or targets. Nuisance redundancy says that the focal relation adds little beyond already-declared predictors. Signal concentration describes where the remaining relation information is located, not whether standard errors are valid. Null miscalibration is a property of the intended inferential procedure under a declared nuisance regime. Low power is meaningful only after calibration has been qualified. Collapsing these states into one PASS/FAIL gate discards information about why a design can or cannot support an intended claim.
 
-Several established methods address pieces of this problem. Ecological niche overlap can be estimated from occurrence data in environmental space, including by kernel-density approaches and Schoener-type overlap measures (Broennimann et al. 2012). Monte Carlo simulation is widely used to estimate power under complex mixed or hierarchical designs (Green & MacLeod 2016). Multiway and dyadic cluster-robust variance estimators address dependence created when observations share endpoints (Cameron et al. 2011; Aronow et al. 2015). Preregistration and related response-blind practices aim to constrain outcome-dependent analytical choice and clarify when analysis plans change (Gould et al. 2026). None of those components is claimed as new here.
+Several established methods address pieces of this problem. Ecological modelling has long treated predictor collinearity as a distinct threat to estimation and transferability (Dormann et al. 2013). Ecological niche overlap can be estimated from occurrence data in environmental space, including by kernel-density approaches and Schoener-type overlap measures (Broennimann et al. 2012). Monte Carlo simulation is widely used to estimate power under complex designs (Green & MacLeod 2016), including study-design procedures that map detectable effect sizes from pilot ecological data (Maslen et al. 2023). More generally, simulation has been advocated as a way to understand and validate complex ecological models before empirical use (DiRenzo et al. 2023), and transparent reporting standards for statistical simulation studies now emphasize explicit data-generating mechanisms, complete scenario reporting, Monte Carlo uncertainty and open code (Williams et al. 2024). Multiway and dyadic cluster-robust variance estimators address dependence created when observations share endpoints (Cameron et al. 2011; Aronow et al. 2015). Preregistration and related response-blind practices constrain outcome-dependent analytical choice and clarify when analysis plans change (Gould et al. 2026). None of those components is claimed as new here.
 
 The methodological gap addressed by TTF-Q is how to join them into a single pre-response characterization of a **dyadic predictor itself**. We define an evaluable envelope that keeps five questions distinct:
 
@@ -231,7 +231,7 @@ S_{\mathrm{C2}}=fbg.
 
 We crossed three values of f (0.25, 0.50, 0.75), three values of b (0.25, 0.50, 0.80), three values of g (0.25, 0.50, 0.80), three signal-concentration modes (broad, source-concentrated, target-concentrated) and three deterministic seeds, giving 243 predeclared scenarios.
 
-Exact-recovery error and the source/target concentration diagnostics were computed for every scenario.
+Exact-recovery error and the source/target concentration diagnostics were computed for every scenario. In line with recent recommendations for statistical simulation studies in ecology, the benchmark contract records the data-generating mechanism, target quantities, complete factor grid, deterministic seed rule and all predeclared scenarios rather than selecting favourable cells after simulation (Williams et al. 2024).
 
 ### 2.9 Known-truth detectability benchmark
 
@@ -364,7 +364,7 @@ The known-truth simulations demonstrate why this distinction matters. Endpoint l
 
 ### 4.1 What is new and what is not
 
-The individual components of TTF-Q are deliberately conventional. Projection on fixed effects and nuisance covariates is linear-model geometry. Multiway and dyadic cluster-robust inference are established approaches (Cameron et al. 2011; Aronow et al. 2015). Monte Carlo power analysis is established (Green & MacLeod 2016). Environmental niche overlap based on occurrence densities is established (Broennimann et al. 2012). Response-blind planning and preregistration principles are also increasingly developed for ecological modelling (Gould et al. 2026).
+The individual components of TTF-Q are deliberately conventional. Predictor collinearity diagnostics and remedies are well established in ecology (Dormann et al. 2013). Projection on fixed effects and nuisance covariates is linear-model geometry. Multiway and dyadic cluster-robust inference are established approaches (Cameron et al. 2011; Aronow et al. 2015). Simulation-based power and study-design analysis are established (Green & MacLeod 2016; Maslen et al. 2023), and known-truth simulation is already advocated for validating complex ecological models and statistical methods (DiRenzo et al. 2023; Williams et al. 2024). Environmental niche overlap based on occurrence densities is established (Broennimann et al. 2012). Response-blind planning and preregistration principles are also increasingly developed for ecological modelling (Gould et al. 2026).
 
 The contribution is the **joint response-blind method object**. TTF-Q treats predictor information survival, information-loss location, residual endpoint concentration, null qualification and conditional detectability as separate axes of one evaluable envelope. The exact nested identities make the information-loss axes auditable, while known-truth benchmarks show that the axes are not interchangeable.
 
@@ -436,6 +436,10 @@ Broennimann, O., Fitzpatrick, M. C., Pearman, P. B., Petitpierre, B., Pellissier
 
 Cameron, A. C., Gelbach, J. B. & Miller, D. L. (2011). Robust inference with multiway clustering. *Journal of Business & Economic Statistics*, 29, 238–249. https://doi.org/10.1198/jbes.2010.07136
 
+DiRenzo, G. V., Hanks, E. & Miller, D. A. W. (2023). A practical guide to understanding and validating complex models using data simulations. *Methods in Ecology and Evolution*, 14, 203–217. https://doi.org/10.1111/2041-210X.14030
+
+Dormann, C. F., Elith, J., Bacher, S., Buchmann, C., Carl, G., Carré, G., García Marquéz, J. R., Gruber, B., Lafourcade, B., Leitão, P. J., Münkemüller, T., McClean, C., Osborne, P. E., Reineking, B., Schröder, B., Skidmore, A. K., Zurell, D. & Lautenbach, S. (2013). Collinearity: a review of methods to deal with it and a simulation study evaluating their performance. *Ecography*, 36, 27–46. https://doi.org/10.1111/j.1600-0587.2012.07348.x
+
 Gould, E., Jones, C. S., Yen, J. D. L., Fraser, H. S., Wootton, H. F., Good, M. K., Duncan, D. H., Hauser, C. E., Wintle, B. C. & Rumpff, L. (2026). ‘But I can't preregister my research’: Improving the reproducibility and transparency of ecology and conservation with adaptive preregistration for model-based research. *Methods in Ecology and Evolution*, 17, 1768–1787. https://doi.org/10.1111/2041-210X.70311
 
 Green, P. & MacLeod, C. J. (2016). SIMR: an R package for power analysis of generalized linear mixed models by simulation. *Methods in Ecology and Evolution*, 7, 493–498. https://doi.org/10.1111/2041-210X.12504
@@ -448,6 +452,8 @@ Karger, D. N., Nobis, M. P., Normand, S., Graham, C. H. & Zimmermann, N. E. (202
 
 Karger, D. N. (2025). CHELSA-TraCE21k-centennial-bioclim and topographic data since the Last Glacial Maximum. EnviDat. https://doi.org/10.16904/envidat.691
 
+Maslen, B., Popovic, G., Lim, M., Marzinelli, E. & Warton, D. (2023). How many sites? Methods to assist design decisions when collecting multivariate data in ecology. *Methods in Ecology and Evolution*, 14, 1564–1573. https://doi.org/10.1111/2041-210X.14094
+
 
 ## Figure legends
 
@@ -458,3 +464,6 @@ Karger, D. N. (2025). CHELSA-TraCE21k-centennial-bioclim and topographic data si
 **Fig. 3. Empirical response-blind climate relation envelopes.** Calibration-qualified grid minimum detectable effects across private-heterogeneity amplitudes for present-climate similarity and historical climate-displacement similarity conditional on present climate on the 15,625-dyad development geometry. No genetic-response quantity is used.
 
 **Fig. 4. Equal unique relation information can have different endpoint concentration and null qualification.** The known-truth reference and source-concentrated designs retain the same total unique focal-relation fraction, but deliberate concentration lowers the inverse-Herfindahl effective source count and is accompanied by failure of the declared null-qualification ceiling under the intended estimator.
+
+
+Williams, C., Yang, Y., Lagisz, M., Morrison, K., Ricolfi, L., Warton, D. I. & Nakagawa, S. (2024). Transparent reporting items for simulation studies evaluating statistical methods: Foundations for reproducibility and reliability. *Methods in Ecology and Evolution*, 15, 1926–1939. https://doi.org/10.1111/2041-210X.14415

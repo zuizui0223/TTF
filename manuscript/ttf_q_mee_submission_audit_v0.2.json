@@ -27,11 +27,12 @@
     "blinded_source": "manuscript/ttf_q_methods_blinded_v0.1.md",
     "blinded_source_builder": "scripts/build_ttf_q_blinded_manuscript.py",
     "abstract_words_after_methods_merge": 320,
-    "approximate_full_words_after_methods_merge": 5065,
+    "approximate_full_words_after_methods_merge": 5394,
     "figure_legends_and_text_references": "COMPLETE_IN_METHODS_BRANCH",
     "AI_assisted_development_disclosure": "COMPLETE_IN_METHODS_BRANCH",
     "exact_CHELSA_dataset_citations": "COMPLETE_IN_METHODS_BRANCH",
-    "final_double_spaced_line_numbered_submission_file": "PENDING"
+    "final_double_spaced_line_numbered_submission_file": "PENDING",
+    "novelty_positioning_against_adjacent_methods": "UPDATED_WITH_DORMANN_2013_MASLEN_2023_DIRENZO_2023_WILLIAMS_2024"
   },
   "title_page": {
     "template": "manuscript/ttf_q_title_page_template.md",
