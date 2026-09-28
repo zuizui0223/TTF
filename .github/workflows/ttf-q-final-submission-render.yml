@@ -1,0 +1,31 @@
+name: ttf-q-final-submission-render
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install rendering dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc libreoffice
+          python -m pip install python-docx
+      - name: Render final MEE files
+        run: |
+          python scripts/render_ttf_q_submission_files.py \
+            --output-dir submission/ttf_q_v0.1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-q-mee-final-submission-files
+          path: submission/ttf_q_v0.1/
+          retention-days: 30
+          if-no-files-found: error

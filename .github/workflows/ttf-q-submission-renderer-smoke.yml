@@ -1,0 +1,52 @@
+name: ttf-q-submission-renderer-smoke
+
+on:
+  push:
+    branches:
+      - submission/ttf-q-render-tool
+    paths:
+      - "scripts/render_ttf_q_submission_files.py"
+      - ".github/workflows/ttf-q-submission-renderer-smoke.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install renderer smoke dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+          python -m pip install python-docx
+      - name: Render and structurally verify synthetic Main Document
+        run: |
+          python - <<'PY'
+          import runpy
+          import tempfile
+          from pathlib import Path
+
+          ns=runpy.run_path("scripts/render_ttf_q_submission_files.py")
+          with tempfile.TemporaryDirectory() as td:
+              root=Path(td)
+              source=root/"smoke.md"
+              reference=root/"reference.docx"
+              output=root/"main.docx"
+              source.write_text(
+                  "# Anonymous smoke manuscript\n\n"
+                  "This is a rendering smoke test.\n\n"
+                  "## Methods\n\n"
+                  "Equation: $S_{total}=S_F S_C$.\n"
+              )
+              ns["make_reference_docx"](reference)
+              ns["run_pandoc"](source,output,reference)
+              ns["assert_submission_docx"](output,require_line_numbers=True)
+              assert output.stat().st_size > 1000
+              print({"status":"PASS_TTF_Q_SUBMISSION_RENDERER_SMOKE","bytes":output.stat().st_size})
+          PY
