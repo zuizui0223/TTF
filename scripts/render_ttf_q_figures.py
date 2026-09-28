@@ -39,7 +39,7 @@ def main() -> int:
     ]
     fig,ax=plt.subplots(figsize=(7.4,4.7))
     ax.plot(stages,current,marker="o",label="Current climate")
-    ax.plot(stages,historical,marker="o",label="Historical climate | current")
+    ax.plot(stages,historical,marker="o",label="Historical climate")
     ax.set_ylim(0,0.75)
     ax.set_ylabel("Fraction of total focal-relation variance retained")
     ax.set_title("Response-blind relational information survival")
@@ -52,13 +52,17 @@ def main() -> int:
     # Figure 2: known-truth calibrated detectability.
     A=[0,1,2,3]
     fig,ax=plt.subplots(figsize=(7.4,4.7))
-    for key,label in [
-        ("reference","Reference"),
-        ("endpoint_loss","Endpoint loss"),
-        ("control_redundancy","Control redundancy"),
-    ]:
-        y=data["known_truth_detectability"][key]["evaluable_mde_A0_A1_A2_A3"]
-        ax.plot(A,y,marker="o",label=label)
+    reference=data["known_truth_detectability"]["reference"]["evaluable_mde_A0_A1_A2_A3"]
+    endpoint=data["known_truth_detectability"]["endpoint_loss"]["evaluable_mde_A0_A1_A2_A3"]
+    redundant=data["known_truth_detectability"]["control_redundancy"]["evaluable_mde_A0_A1_A2_A3"]
+    ax.plot(A,reference,marker="o",label="Reference")
+    ax.plot([x-0.035 for x in A],endpoint,marker="s",label="Endpoint loss")
+    ax.plot([x+0.035 for x in A],redundant,marker="^",linestyle="--",label="Control redundancy")
+    ax.text(
+        0.98,0.05,
+        "Source-concentrated design: null qualification FAIL at all A",
+        transform=ax.transAxes,ha="right",va="bottom",fontsize=9,
+    )
     ax.set_xticks(A)
     ax.set_xlabel("Private-heterogeneity amplitude A")
     ax.set_ylabel("Calibration-qualified grid MDE")
@@ -106,8 +110,17 @@ def main() -> int:
     ax.set_xticks(x,labels)
     ax.set_ylabel("Inverse-Herfindahl effective source count")
     ax.set_title("Equal unique information can have very different endpoint concentration")
-    for i,(n,u) in enumerate(zip(effective_sources,unique)):
-        ax.text(i,n+0.5,f"unique fraction = {u:.2f}",ha="center",va="bottom")
+    qualification=[
+        ref["calibration_pass_all"],
+        con["calibration_pass_all"],
+    ]
+    for i,(n,u,passed) in enumerate(zip(effective_sources,unique,qualification)):
+        state="PASS" if passed else "FAIL"
+        ax.text(
+            i,n+0.5,
+            f"unique fraction = {u:.2f}\nnull qualification: {state}",
+            ha="center",va="bottom",
+        )
     ax.set_ylim(0,max(effective_sources)*1.22)
     fig.tight_layout()
     p4=OUTPUT/"figure4_source_concentration.svg"
