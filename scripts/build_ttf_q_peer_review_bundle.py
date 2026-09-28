@@ -57,12 +57,12 @@ PROHIBITED_TEXT = (
 )
 
 PROHIBITED_PATTERNS = {
-    "public_github_url": re.compile(r"https?://(?:www\\.)?github\\.com/", re.I),
+    "public_github_url": re.compile(r"https?://(?:www\.)?github\.com/", re.I),
     "email_address": re.compile(
-        r"\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\b",
+        r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b",
         re.I,
     ),
-    "orcid_url": re.compile(r"https?://(?:www\\.)?orcid\\.org/", re.I),
+    "orcid_url": re.compile(r"https?://(?:www\.)?orcid\.org/", re.I),
 }
 
 
