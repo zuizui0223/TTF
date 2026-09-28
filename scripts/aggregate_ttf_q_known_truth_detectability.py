@@ -32,14 +32,20 @@ def main() -> int:
             pa["single_cell_reference"]["binary_qualified"]
             == pb["single_cell_reference"]["binary_qualified"]
         )
-        envelope_a=pa.get(
-            "calibrated_evaluable_envelope",
-            pa["minimum_detectable_effect_by_private_amplitude"],
-        )
-        envelope_b=pb.get(
-            "calibrated_evaluable_envelope",
-            pb["minimum_detectable_effect_by_private_amplitude"],
-        )
+        calibrated_a=pa.get("calibrated_evaluable_envelope")
+        calibrated_b=pb.get("calibrated_evaluable_envelope")
+        if calibrated_a is not None and calibrated_b is not None:
+            envelope_a={
+                amplitude: cell.get("evaluable_grid_mde")
+                for amplitude,cell in calibrated_a.items()
+            }
+            envelope_b={
+                amplitude: cell.get("evaluable_grid_mde")
+                for amplitude,cell in calibrated_b.items()
+            }
+        else:
+            envelope_a=pa["minimum_detectable_effect_by_private_amplitude"]
+            envelope_b=pb["minimum_detectable_effect_by_private_amplitude"]
         different_envelope=(envelope_a!=envelope_b)
         pairs.append({
             "a":a,
