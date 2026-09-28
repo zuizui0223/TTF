@@ -1,0 +1,44 @@
+{
+  "schema": "ttf_q_c2_frozen_result_receipt_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_GEOGRAPHY_INFORMATION_DECOMPOSITION",
+  "recorded_on": "2026-09-28",
+  "workflow": {
+    "run_id": 36328949191,
+    "head_sha": "72553e70acbf5b0e11dc2c8c6dee1c72b6e5a275",
+    "conclusion": "success",
+    "artifact_id": 10934507901,
+    "artifact_digest_sha256": "107aa5cb27fb086cf5711537d819b8e0b6021ba340eaff5e107767cbc81c6c9c"
+  },
+  "parent_c1_run_id": 36326997088,
+  "geographic_opportunity": {
+    "support_radius_km": 500.0,
+    "measure": "directed fraction of retained target occurrence coordinates whose nearest retained source occurrence coordinate is within 500 km great-circle distance",
+    "hard_coverage_filter_applied": false
+  },
+  "development": {
+    "C1_total_unique_variance_fraction": 0.3647140731871479,
+    "C2_total_unique_variance_fraction": 0.29893812458713254,
+    "geography_retained_fraction": 0.819650642967475,
+    "geography_attributable_fraction_of_C1_unique_information": 0.18034935703252497,
+    "signal_effective_sources_after_geography": 84.76305134893578,
+    "signal_effective_targets_after_geography": 78.84898643443778,
+    "max_source_signal_share_after_geography": 0.04022509877719897,
+    "max_target_signal_share_after_geography": 0.04661144371283123
+  },
+  "confirmatory": {
+    "C1_total_unique_variance_fraction": 0.3812840593549338,
+    "C2_total_unique_variance_fraction": 0.3163113642780213,
+    "geography_retained_fraction": 0.8295950394914621,
+    "geography_attributable_fraction_of_C1_unique_information": 0.17040496050853793,
+    "signal_effective_sources_after_geography": 143.45713249162898,
+    "signal_effective_targets_after_geography": 145.62309372960368,
+    "max_source_signal_share_after_geography": 0.022032956058825697,
+    "max_target_signal_share_after_geography": 0.024940683886335607
+  },
+  "interpretation": "Roughly 82-83% of the C1 history-specific ecological information survives addition of continuous geographic co-opportunity. Geography explains only about 17-18% of the previously unique historical relation, so the historical layer is not primarily a spatial-overlap proxy.",
+  "boundary": {
+    "relational_v03_final_state_unchanged": "CLOSED_NO_EVALUABLE_TEST",
+    "relational_v03_reopened": false,
+    "genetic_response_used": false
+  }
+}
