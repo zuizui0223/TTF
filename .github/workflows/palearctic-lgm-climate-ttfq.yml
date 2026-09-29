@@ -1,27 +1,179 @@
-name: palearctic-lgm-climate-ttfq
+name: palearctic-lgm-v03-response-blind-qualification
 
 on:
-  push:
-    branches:
-      - method/palearctic-lgm-response-blind-v0-1
-    paths:
-      - ".github/workflows/palearctic-lgm-climate-ttfq.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
-  group: palearctic-lgm-climate-ttfq-${{ github.ref }}
-  cancel-in-progress: true
+  group: palearctic-lgm-v03-response-blind-qualification-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  superseded:
+  qualify:
     runs-on: ubuntu-latest
+    timeout-minutes: 720
     steps:
-      - name: Stop superseded Lepidoptera-dominated v0.1 route
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install frozen response-blind runtime
         run: |
-          echo "SUPERSEDED_RESPONSE_BLIND_BEFORE_LGM_RELATION_OR_TTFQ_RESULT"
-          echo "The 44-species v0.1 panel contained 26 Lepidoptera and is retired"
-          echo "before any LGM relation, TTF-Q result, or subgroup genetic response."
-          echo "Continue only through the non-Lepidoptera v0.2 route."
+          python -m pip install -e .
+          python -m pip install "rasterio>=1.4,<2"
+
+      - name: Verify v0.3 response firewall and producer binding
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          panel=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json").read_text())
+          binding=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_producer_binding_v0.1.json").read_text())
+          rule=json.loads(Path("docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json").read_text())
+          assert panel["species_count"]==23
+          assert panel["source_clusters"]==11
+          assert panel["target_clusters"]==12
+          assert panel["dyads"]==132
+          assert binding["producer"]["workflow_run_id"]==36529160168
+          assert binding["producer"]["head_sha"]=="80a0cf7ac4cb672b9525ce15f7f9f5762e05af6a"
+          assert rule["role_assignment"]["species_may_occupy_both_roles"] is False
+          assert all(v is False for v in panel["response_firewall"].values())
+          assert all(v is False for v in binding["response_firewall"].values())
+          print({"panel":23,"sources":11,"targets":12,"bound_run":binding["producer"]["workflow_run_id"]})
+          PY
+
+      - name: Download exact bound GBIF aggregate and Palearctic realm
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/gbif input/realm
+          gh run download 36529160168             --repo "$GITHUB_REPOSITORY"             --name palearctic-lgm-gbif-occurrences-v02             --dir input/gbif
+          gh run download 36529160168             --repo "$GITHUB_REPOSITORY"             --name palearctic-realm-union-v02             --dir input/realm
+          test -f input/gbif/palearctic_lgm_occurrences_v0.2.csv
+          test -f input/gbif/palearctic_lgm_occurrences_v0.2.json
+          test -f input/realm/palearctic_union.geojson
+
+      - name: Bind exact v0.2 occurrence bytes to frozen v0.3 roles
+        id: bind
+        run: |
+          set -euo pipefail
+          mkdir -p results/v03
+          python scripts/bind_palearctic_lgm_occurrences_v03.py             --input-csv input/gbif/palearctic_lgm_occurrences_v0.2.csv             --input-summary input/gbif/palearctic_lgm_occurrences_v0.2.json             --panel-metadata benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json             --external-rule docs/supporting/genetic_palearctic_lgm_external_data_rule_v0.3.json             --binding benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_producer_binding_v0.1.json             --output-csv results/v03/palearctic_lgm_occurrences_v0.3.csv             --output-summary results/v03/palearctic_lgm_occurrences_v0.3.json
+          python - <<'PY'
+          import json,os
+          p=json.load(open("results/v03/palearctic_lgm_occurrences_v0.3.json"))
+          assert all(v is False for v in p["response_firewall"].values()),p
+          passed=p["status"]=="PASS_TO_V03_CURRENT_LGM_CLIMATE_EXTRACTION"
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if passed else 'false'}\n")
+          print({"status":p["status"],"species":p["admissible_species"],"source_clusters":p["source_clusters"],"target_clusters":p["target_clusters"]})
+          PY
+
+      - name: Download exact staged CHELSA current and TraCE21k assets
+        if: steps.bind.outputs.passed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/chelsa-historical input/chelsa-current
+
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10791389409/zip" > /tmp/historical.zip
+          echo "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2  /tmp/historical.zip" | sha256sum -c -
+          unzip -q /tmp/historical.zip -d input/chelsa-historical
+          rm -f /tmp/historical.zip
+
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10791867875/zip" > /tmp/current.zip
+          echo "724743d8666d32bc8717e52200a798369665c2f1965ba33021d3e5c68c5eff4c  /tmp/current.zip" | sha256sum -c -
+          unzip -q /tmp/current.zip -d input/chelsa-current
+          rm -f /tmp/current.zip
+
+          echo "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450  input/chelsa-historical/manifest.json" | sha256sum -c -
+          echo "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450  input/chelsa-current/manifest.json" | sha256sum -c -
+
+          for f in             input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_20_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_20_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_20_V1.0.tif             input/chelsa-current/current/CHELSA_bio1_1981-2010_V.2.1.tif             input/chelsa-current/current/CHELSA_bio7_1981-2010_V.2.1.tif             input/chelsa-current/current/CHELSA_bio12_1981-2010_V.2.1.tif             input/chelsa-current/current/CHELSA_bio15_1981-2010_V.2.1.tif; do
+              test -f "$f"
+          done
+
+      - name: Prepare frozen v0.3 current/LGM climate inputs
+        if: steps.bind.outputs.passed == 'true'
+        id: climate
+        run: |
+          set -euo pipefail
+          python scripts/prepare_palearctic_lgm_climate_inputs_v03.py             --occurrences results/v03/palearctic_lgm_occurrences_v0.3.csv             --panel-metadata benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json             --realm-geojson input/realm/palearctic_union.geojson             --climate-rule docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.3.json             --current-bio1 input/chelsa-current/current/CHELSA_bio1_1981-2010_V.2.1.tif             --current-bio7 input/chelsa-current/current/CHELSA_bio7_1981-2010_V.2.1.tif             --current-bio12 input/chelsa-current/current/CHELSA_bio12_1981-2010_V.2.1.tif             --current-bio15 input/chelsa-current/current/CHELSA_bio15_1981-2010_V.2.1.tif             --lgm-bio1 input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif             --lgm-bio7 input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_-190_V1.0.tif             --lgm-bio12 input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_-190_V1.0.tif             --lgm-bio15 input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_-190_V1.0.tif             --trace0-bio1 input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif             --trace0-bio7 input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_20_V1.0.tif             --trace0-bio12 input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_20_V1.0.tif             --trace0-bio15 input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_20_V1.0.tif             --output-occurrence-climate results/v03/palearctic_lgm_occurrence_climate_v0.3.csv             --output-grid results/v03/palearctic_lgm_climate_grid_v0.3.npz             --output-summary results/v03/palearctic_lgm_climate_inputs_v0.3.json
+          python - <<'PY'
+          import json,os
+          p=json.load(open("results/v03/palearctic_lgm_climate_inputs_v0.3.json"))
+          assert all(v is False for v in p["response_firewall"].values()),p
+          passed=p["status"]=="PASS_TO_V03_RESPONSE_BLIND_LGM_RELATION_BUILD"
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if passed else 'false'}\n")
+          print({"status":p["status"],"species":p.get("climate_valid_species"),"source_clusters":p.get("source_clusters"),"target_clusters":p.get("target_clusters")})
+          PY
+
+      - name: Build response-blind v0.3 LGM relation
+        if: steps.climate.outputs.passed == 'true'
+        id: relation
+        run: |
+          set -euo pipefail
+          python scripts/build_palearctic_lgm_relation_v03.py             --panel-metadata benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json             --occurrence-climate-csv results/v03/palearctic_lgm_occurrence_climate_v0.3.csv             --grid-npz results/v03/palearctic_lgm_climate_grid_v0.3.npz             --rule docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json             --climate-rule docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.3.json             --output-npz results/v03/palearctic_lgm_relation_design_v0.3.npz             --output-summary results/v03/palearctic_lgm_relation_design_v0.3.json
+          python - <<'PY'
+          import json,os
+          p=json.load(open("results/v03/palearctic_lgm_relation_design_v0.3.json"))
+          assert all(v is False for v in p["response_firewall"].values()),p
+          passed=p["status"]=="PASS_TO_V03_TTF_Q_RESPONSE_BLIND_CHARACTERIZATION"
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if passed else 'false'}\n")
+          print({"status":p["status"],"dyads":p.get("dyads"),"R_LGM":p.get("R_LGM"),"R_present":p.get("R_present")})
+          PY
+
+      - name: Run frozen v0.3 TTF-Q before any genetic response
+        if: steps.relation.outputs.passed == 'true'
+        run: |
+          set -euo pipefail
+          python scripts/run_palearctic_lgm_ttf_q_v03.py             --design-npz results/v03/palearctic_lgm_relation_design_v0.3.npz             --design-summary results/v03/palearctic_lgm_relation_design_v0.3.json             --execution docs/supporting/genetic_palearctic_lgm_ttf_q_execution_v0.3.json             --parent-rule docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json             --output results/v03/palearctic_lgm_ttf_q_result_v0.3.json
+          python - <<'PY'
+          import json
+          p=json.load(open("results/v03/palearctic_lgm_ttf_q_result_v0.3.json"))
+          assert all(v is False for v in p["response_firewall"].values()),p
+          assert p["status"] in {
+              "PASS_TO_ONE_SHOT_V03_SUBPANEL_GENETIC_RESPONSE",
+              "NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_LGM_RELATION",
+          },p["status"]
+          print({
+              "status":p["status"],
+              "opening_gates":p["opening_gates"],
+              "information":p["information"],
+              "signal_concentration":p["signal_concentration"],
+          })
+          PY
+
+      - name: Assert this workflow never opens genetics
+        if: always()
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          text=Path(".github/workflows/palearctic-lgm-climate-ttfq.yml").read_text()
+          forbidden=[
+              "pairwise_v03_T_st_computed": true",
+              "beta_LGM_computed": true",
+              "run_palearctic_lgm_genetic",
+              "compute_palearctic_lgm_T_st",
+          ]
+          for token in forbidden:
+              assert token not in text,token
+          print("response firewall remains closed")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: palearctic-lgm-v03-response-blind-qualification
+          path: results/v03/
+          retention-days: 30
+          if-no-files-found: warn
