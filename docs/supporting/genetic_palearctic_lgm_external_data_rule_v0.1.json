@@ -1,0 +1,43 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_external_data_rule_v0.1",
+  "status": "FROZEN_BEFORE_ANY_44_SPECIES_GBIF_OCCURRENCE_RESULT",
+  "frozen_on": "2026-09-29",
+  "parent_rule": "docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.1.json",
+  "formal_census_receipt": "benchmarks/frozen/genetic_palearctic_lgm_subpanel_census_v0.1.json",
+  "starting_panel": {
+    "species": 44,
+    "source_clusters": 22,
+    "target_clusters": 22,
+    "roles_frozen_before_external_data": true
+  },
+  "gbif": {
+    "years": "2010-2026",
+    "exact_species_match": true,
+    "has_coordinate": true,
+    "no_geospatial_issue": true,
+    "occurrence_status": "PRESENT",
+    "palearctic_filter": "RESOLVE Ecoregions 2017 REALM=Palearctic before thinning/cap",
+    "exact_coordinate_deduplication": true,
+    "deterministic_priority": "existing relational-env occurrence SHA256 priority",
+    "thinning_km": 10,
+    "maximum_retained_per_species": 200,
+    "minimum_retained_per_species": 30
+  },
+  "missingness": {
+    "species_below_30": "drop from external-data-admissible panel",
+    "backfill": false,
+    "resplit": false,
+    "roles": "inherit frozen source/target role from formal census",
+    "after_drop_require": {
+      "minimum_total_species": 40,
+      "minimum_source_clusters": 20,
+      "minimum_target_clusters": 20
+    },
+    "failure": "NOT_EVALUABLE_PALAEARCTIC_LGM_EXTERNAL_OCCURRENCES"
+  },
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_subpanel_T_st_computed": false,
+    "beta_LGM_computed": false
+  }
+}
