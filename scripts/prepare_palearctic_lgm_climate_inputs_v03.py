@@ -11,13 +11,30 @@ import numpy as np
 try:
     from scripts.prepare_palearctic_lgm_climate_inputs import (
         VARIABLES, compatibility, load_union, palearctic_grid_points,
-        sample_environment, sha256_path,
+        sample_scaled_raster, sha256_path,
     )
 except ModuleNotFoundError:
     from prepare_palearctic_lgm_climate_inputs import (
         VARIABLES, compatibility, load_union, palearctic_grid_points,
-        sample_environment, sha256_path,
+        sample_scaled_raster, sha256_path,
     )
+
+
+def sample_environment_byte_audited(paths: dict[str,Path], points: np.ndarray, *, dataset: str):
+    """Sample exact frozen COG bytes under the v0.4 byte-semantics rule.
+
+    The TraCE21k V1.0 bio01 COGs already contain Celsius-like Float32 values.
+    Apply the raster's GDAL scale/offset only; do not subtract 273.15 again.
+    """
+    cols=[]; metas={}
+    for var in VARIABLES:
+        values,meta=sample_scaled_raster(paths[var],points)
+        cols.append(np.asarray(values,dtype=float))
+        meta["logical_variable"]=var
+        meta["harmonization"]="gdal_scale_offset_only_byte_audited_v0.4"
+        meta["dataset_role"]=str(dataset)
+        metas[var]=meta
+    return np.column_stack(cols),metas
 
 
 def main() -> int:
@@ -35,7 +52,7 @@ def main() -> int:
     args=ap.parse_args()
 
     rule=json.loads(args.climate_rule.read_text())
-    if rule.get("schema")!="ttf_genetic_palearctic_lgm_climate_input_rule_v0.3":
+    if rule.get("schema")!="ttf_genetic_palearctic_lgm_climate_input_rule_v0.4":
         raise RuntimeError("unexpected v0.3 climate rule")
     panel=json.loads(args.panel_metadata.read_text())
     if panel.get("schema")!="ttf_genetic_palearctic_lgm_panel_metadata_v0.3":
@@ -65,7 +82,7 @@ def main() -> int:
     current_paths={var:getattr(args,f"current_{var}") for var in VARIABLES}
     lgm_paths={var:getattr(args,f"lgm_{var}") for var in VARIABLES}
     trace0_paths={var:getattr(args,f"trace0_{var}") for var in VARIABLES}
-    occ_env,current_meta=sample_environment(current_paths,occ_points,dataset="current")
+    occ_env,current_meta=sample_environment_byte_audited(current_paths,occ_points,dataset="current")
     valid_occ=np.isfinite(occ_env).all(axis=1)
 
     fields=["species","role","source_key","latitude","longitude","priority_rank","priority_sha256",*VARIABLES]
@@ -93,7 +110,7 @@ def main() -> int:
     )
     if not coverage_pass:
         payload={
-            "schema":"ttf_genetic_palearctic_lgm_climate_inputs_v0.3",
+            "schema":"ttf_genetic_palearctic_lgm_climate_inputs_v0.4",
             "status":str(rule["occurrence_climate_validity"]["failure"]),
             "formal_panel_species":23,
             "climate_valid_species":len(valid_species),
@@ -122,9 +139,9 @@ def main() -> int:
     geom=load_union(args.realm_geojson)
     resolution=float(rule["grid"]["resolution_degrees"])
     grid_points=palearctic_grid_points(geom,resolution)
-    current_grid,_=sample_environment(current_paths,grid_points,dataset="current")
-    lgm_grid,lgm_meta=sample_environment(lgm_paths,grid_points,dataset="lgm")
-    trace0_grid,trace0_meta=sample_environment(trace0_paths,grid_points,dataset="trace0")
+    current_grid,_=sample_environment_byte_audited(current_paths,grid_points,dataset="current")
+    lgm_grid,lgm_meta=sample_environment_byte_audited(lgm_paths,grid_points,dataset="lgm")
+    trace0_grid,trace0_meta=sample_environment_byte_audited(trace0_paths,grid_points,dataset="trace0")
     grid_valid=np.isfinite(current_grid).all(axis=1)&np.isfinite(lgm_grid).all(axis=1)
     current_valid=current_grid[grid_valid]
     lgm_valid=lgm_grid[grid_valid]
@@ -140,7 +157,7 @@ def main() -> int:
     )
 
     payload={
-        "schema":"ttf_genetic_palearctic_lgm_climate_inputs_v0.3",
+        "schema":"ttf_genetic_palearctic_lgm_climate_inputs_v0.4",
         "status":"PASS_TO_V03_RESPONSE_BLIND_LGM_RELATION_BUILD",
         "formal_panel_species":23,
         "climate_valid_species":len(valid_species),
