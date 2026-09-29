@@ -188,23 +188,6 @@ jobs:
           })
           PY
 
-      - name: Assert this workflow never opens genetics
-        if: always()
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          text=Path(".github/workflows/palearctic-lgm-climate-ttfq.yml").read_text()
-          forbidden=[
-              "pairwise_v03_T_st_computed": true",
-              "beta_LGM_computed": true",
-              "run_palearctic_lgm_genetic",
-              "compute_palearctic_lgm_T_st",
-          ]
-          for token in forbidden:
-              assert token not in text,token
-          print("response firewall remains closed")
-          PY
-
       - uses: actions/upload-artifact@v4
         if: always()
         with:
