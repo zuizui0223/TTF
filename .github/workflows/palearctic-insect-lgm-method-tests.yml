@@ -1,0 +1,51 @@
+name: palearctic-insect-lgm-method-tests
+
+on:
+  push:
+    branches:
+      - study/palearctic-insect-lgm-response-blind-v01
+    paths:
+      - "src/ttf/palearctic_lgm.py"
+      - "tests/test_palearctic_lgm.py"
+      - "tests/test_palearctic_insect_lgm_response_blind.py"
+      - "docs/supporting/palearctic_insect_lgm_refugia_v0.4.json"
+      - "benchmarks/frozen/palearctic_insect_lgm_taxonomic_candidates_v0.1.json"
+      - "scripts/acquire_palearctic_insect_lgm_occurrences.py"
+      - "scripts/aggregate_palearctic_insect_lgm_occurrences.py"
+      - "scripts/classify_palearctic_insect_lgm_panel.py"
+      - "scripts/build_palearctic_insect_lgm_relation.py"
+      - "scripts/run_palearctic_insect_lgm_bootstrap.py"
+      - "scripts/aggregate_palearctic_insect_lgm_bootstrap.py"
+      - "scripts/run_palearctic_insect_lgm_ttf_q.py"
+      - ".github/workflows/palearctic-insect-lgm-method-tests.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  focused:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install TTF test runtime
+        run: python -m pip install -e ".[test]"
+      - name: Run Palearctic-LGM focused tests
+        run: |
+          pytest -q \
+            tests/test_palearctic_lgm.py \
+            tests/test_palearctic_insect_lgm_response_blind.py
+      - name: Compile new response-blind entrypoints
+        run: |
+          python -m py_compile \
+            scripts/acquire_palearctic_insect_lgm_occurrences.py \
+            scripts/aggregate_palearctic_insect_lgm_occurrences.py \
+            scripts/classify_palearctic_insect_lgm_panel.py \
+            scripts/build_palearctic_insect_lgm_relation.py \
+            scripts/run_palearctic_insect_lgm_bootstrap.py \
+            scripts/aggregate_palearctic_insect_lgm_bootstrap.py \
+            scripts/run_palearctic_insect_lgm_ttf_q.py
