@@ -1,0 +1,32 @@
+{
+  "schema": "ttf_palearctic_insect_lgm_census_execution_v0.2",
+  "status": "FROZEN_AUTHORITATIVE_RESPONSE_BLIND_CENSUS_BEFORE_PANEL_RESULT",
+  "frozen_on": "2026-09-29",
+  "authoritative_run": {
+    "run_id": 36509193448,
+    "head_sha": "72bac4415e8584ed7025f4eac7ec40ab04b3819b"
+  },
+  "superseded_run": {
+    "run_id": 36507925539,
+    "head_sha": "0b72baa5b07a8bbd871a567a24b666bcb590ec79",
+    "authority": false,
+    "reason": "Pre-result code review found that REQUEST_ERROR could be silently treated as species ineligibility. This technical classification defect was fixed before any aggregate/formal panel result was opened."
+  },
+  "scientific_rules_changed": false,
+  "unchanged": {
+    "taxonomic_parent_species": 143,
+    "gbif_query": true,
+    "exact_match": true,
+    "years": "2010-2026",
+    "thinning_km": 10,
+    "maximum_occurrences": 200,
+    "minimum_occurrences": 30,
+    "palearctic_fraction_min": 0.8,
+    "realm_field": "WWF_REALM2",
+    "realm_value": "Palearctic"
+  },
+  "technical_rule": "REQUEST_ERROR must equal zero before formal panel classification; residual technical errors cannot become ecological exclusions.",
+  "genetic_response_used": false,
+  "subpanel_T_st_computed": false,
+  "subpanel_beta_LGM_computed": false
+}
