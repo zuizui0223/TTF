@@ -1,0 +1,27 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_opening_rule_v0.1",
+  "status": "FROZEN_BEFORE_FORMAL_ELIGIBILITY_AND_LGM_RESULTS",
+  "frozen_on": "2026-09-29",
+  "purpose": "Prevent subgroup genetic-response inspection until the Palearctic-Lepidoptera LGM predictor and exact subgroup inferential geometry are qualified.",
+  "required_before_subgroup_response_extraction": [
+    "formal Palearctic eligibility PASS with at least 20 species",
+    "deterministic subgroup train/evaluation split frozen",
+    "R_refugia constructed without genetic response",
+    "TTF-Q information-survival and concentration diagnostics frozen",
+    "exact subgroup synthetic null qualification PASS",
+    "exact subgroup conditional detectability judged adequate under the predeclared envelope rule"
+  ],
+  "genetic_target_if_opened": {
+    "existing_response": "endpoint-safe post-IBD within-species genetic turnover on the already frozen graph edges",
+    "primary_comparison": "Does restricting/weighting source species by higher R_refugia improve held-out target turnover prediction relative to a current-geography/current-climate matched baseline?",
+    "no_new_sequence_processing_rule": true,
+    "no_edge_rewiring": true,
+    "no_marker_switch": true
+  },
+  "interpretation": {
+    "qualified_positive": "within this Palearctic Lepidoptera subgroup, similarity of LGM-to-present climatic persistence carries information about reusable locations of post-IBD genetic differentiation beyond present geography and climate",
+    "qualified_null": "no detectable increment under the frozen subgroup and effect domain; not proof that shared refugia never matter",
+    "qualification_failure": "STOP_NOT_EVALUABLE; do not inspect subgroup genetic outcomes"
+  },
+  "historical_caveat": "The full 211-species response was previously opened. This is therefore a response-blindly redesigned subgroup re-analysis, not a pristine prospective confirmatory dataset."
+}
