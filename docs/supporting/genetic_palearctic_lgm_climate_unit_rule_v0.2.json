@@ -1,0 +1,71 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_climate_unit_rule_v0.2",
+  "status": "FROZEN_BYTE_SEMANTICS_CORRECTION_BEFORE_V03_R_LGM_OR_TTF_Q_RESULT",
+  "frozen_on": "2026-09-29",
+  "supersedes": "docs/supporting/genetic_palearctic_lgm_climate_unit_rule_v0.1.json",
+  "reason": "The CHELSA dataset page labels TraCE21k bioclim bio01 as Kelvin, but the exact frozen distributed V1.0 COG bytes used by this study store physically Celsius-like Float32 values with GDAL scale=1 and offset=0. Applying an additional Kelvin-to-Celsius subtraction would therefore shift the delivered data by -273.15 degrees a second time.",
+  "evidence": {
+    "historical_artifact_id": 10791389409,
+    "historical_artifact_zip_sha256": "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2",
+    "staging_manifest_sha256": "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450",
+    "trace0_bio01_filename": "CHELSA_TraCE21K_bio01_20_V1.0.tif",
+    "trace0_bio01_sha256": "c212394f3482f30fd6cceb820f7786c79ad782f364a5cbb7b9dbbe9666087a1d",
+    "trace0_bio01_raster_dtype": "float32",
+    "trace0_bio01_gdal_scale": 1.0,
+    "trace0_bio01_gdal_offset": 0.0,
+    "current_bio01_filename": "CHELSA_bio1_1981-2010_V.2.1.tif",
+    "current_bio01_sha256": "f584314e12be7cd63d0e2292f4655173030e3e547ce36a2a97ecbdabc4f87a53",
+    "current_bio01_raster_dtype": "uint16",
+    "current_bio01_gdal_scale": 0.1,
+    "current_bio01_gdal_offset": -273.15,
+    "fixed_palearctic_grid_cells_compared": 106046,
+    "trace0_vs_current_identity_bio01": {
+      "pearson": 0.9980538171693119,
+      "median_difference": 0.17083435058589203,
+      "q05_difference": -0.6749997138977619,
+      "q95_difference": 1.570833206176701
+    },
+    "trace0_vs_current_extra_minus_273_15_bio01": {
+      "pearson": 0.9980538171693107,
+      "median_difference": -272.9791656494141,
+      "q05_difference": -273.82499971389774,
+      "q95_difference": -271.5791667938233
+    },
+    "lgm_bio01_raw_fixed_grid_range": {
+      "minimum": -33.06666564941406,
+      "maximum": 29.79999923706057
+    },
+    "lgm_bio01_after_erroneous_extra_minus_273_15_range": {
+      "minimum": -306.21666564941404,
+      "maximum": -243.35000076293943
+    }
+  },
+  "transforms": {
+    "bio01": {
+      "current_CHELSA_V2_1": "apply_GDAL_scale_offset_only",
+      "TraCE21k_V1_0_exact_frozen_COG": "apply_GDAL_scale_offset_only; no additional 273.15 subtraction"
+    },
+    "bio07": {
+      "both": "apply_GDAL_scale_offset_only; temperature range is unchanged by Celsius/Kelvin origin"
+    },
+    "bio12": {
+      "both": "apply_GDAL_scale_offset_only"
+    },
+    "bio15": {
+      "both": "apply_GDAL_scale_offset_only"
+    }
+  },
+  "interpretation": "The official metadata unit label is retained as provider metadata, but scientific calculations follow the verified numerical semantics of the exact frozen distributed bytes. This correction is frozen before any v0.3 R_LGM or TTF-Q result and is not selected using genetic outcomes.",
+  "forbidden": [
+    "infer a post-result temperature shift from R_LGM, TTF-Q or genetic outcomes",
+    "apply an additional 273.15 subtraction to the exact frozen TraCE21k V1.0 bio01 COG bytes",
+    "replace the frozen climate assets or time slices because of this correction"
+  ],
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_v03_T_st_computed": false,
+    "beta_LGM_computed": false,
+    "v03_R_LGM_seen_before_correction": false,
+    "v03_TTF_Q_result_seen_before_correction": false
+  }
+}
