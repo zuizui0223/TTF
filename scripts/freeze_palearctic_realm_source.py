@@ -50,7 +50,7 @@ def main() -> int:
         if missing:
             raise RuntimeError(f"Ecoregions2017 vector components missing: {missing}")
 
-        reader=shapefile.Reader(str(shp))
+        reader=shapefile.Reader(str(shp), encoding="latin1")
         fields=[row[0] for row in reader.fields[1:]]
         if "REALM" not in fields:
             raise RuntimeError("Ecoregions2017 lacks required REALM field")
