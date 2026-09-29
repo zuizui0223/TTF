@@ -1,0 +1,61 @@
+name: palearctic-lgm-ecoregion-asset
+
+on:
+  push:
+    branches:
+      - method/palearctic-lgm-response-blind-v0-1
+    paths:
+      - ".github/workflows/palearctic-lgm-ecoregion-asset.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download RESOLVE Ecoregions 2017
+        run: |
+          mkdir -p external/ecoregions2017
+          curl --fail --location --retry 3 \
+            https://storage.googleapis.com/teow2016/Ecoregions2017.zip \
+            --output external/Ecoregions2017.zip
+          sha256sum external/Ecoregions2017.zip | tee external/Ecoregions2017.zip.sha256
+          unzip -q external/Ecoregions2017.zip -d external/ecoregions2017
+          find external/ecoregions2017 -maxdepth 2 -type f -printf '%P\n' | sort
+      - name: Verify realm field
+        run: |
+          python -m pip install pyshp
+          python - <<'PY'
+          import json, shapefile
+          from pathlib import Path
+          shp=next(Path("external/ecoregions2017").rglob("Ecoregions2017.shp"))
+          reader=shapefile.Reader(str(shp))
+          fields=[f[0] for f in reader.fields[1:]]
+          if "REALM" not in fields:
+              raise SystemExit(f"REALM missing: {fields}")
+          receipt={
+              "schema":"ttf_resolve_ecoregions2017_asset_receipt_v0.1",
+              "status":"FROZEN_PUBLIC_REALM_ASSET",
+              "source_url":"https://storage.googleapis.com/teow2016/Ecoregions2017.zip",
+              "shapefile_relative":str(shp.relative_to("external/ecoregions2017")),
+              "fields":fields,
+              "records":len(reader),
+          }
+          Path("external/ecoregions2017_asset_receipt.json").write_text(
+              json.dumps(receipt,indent=2,sort_keys=True)+"\n"
+          )
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: palearctic-lgm-ecoregions2017
+          path: |
+            external/Ecoregions2017.zip
+            external/Ecoregions2017.zip.sha256
+            external/ecoregions2017/
+            external/ecoregions2017_asset_receipt.json
+          retention-days: 30
+          if-no-files-found: error
