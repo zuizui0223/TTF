@@ -37,14 +37,20 @@ def zscore(x: np.ndarray) -> np.ndarray:
     return (values-float(values.mean()))/sd
 
 
-def read_census(path: Path):
-    rows=list(csv.DictReader(path.open(encoding="utf-8")))
-    retained=[row for row in rows if str(row.get("eligible","")).lower() in {"true","1","yes"}]
-    sources=sorted(row["species"] for row in retained if row.get("role")=="source")
-    targets=sorted(row["species"] for row in retained if row.get("role")=="target")
-    meta={row["species"]:row for row in retained}
-    if not sources or not targets or set(sources)&set(targets):
-        raise RuntimeError("census does not define disjoint non-empty source/target roles")
+def read_panel_metadata(path: Path):
+    payload=json.loads(path.read_text())
+    if payload.get("schema")!="ttf_genetic_palearctic_lgm_panel_metadata_v0.1":
+        raise RuntimeError("unexpected frozen panel metadata")
+    if any(bool(v) for v in payload["response_firewall"].values()):
+        raise RuntimeError("panel metadata response firewall is open")
+    rows=list(payload["rows"])
+    meta={str(row["species"]):dict(row) for row in rows}
+    sources=sorted(sp for sp,row in meta.items() if row["role"]=="source")
+    targets=sorted(sp for sp,row in meta.items() if row["role"]=="target")
+    if len(meta)!=44 or len(sources)!=22 or len(targets)!=22:
+        raise RuntimeError("frozen 44-species role geometry drift")
+    if set(sources)&set(targets):
+        raise RuntimeError("source/target role overlap")
     return sources,targets,meta
 
 
@@ -68,10 +74,12 @@ def read_occurrence_climate(path: Path, retained: set[str]):
 
 def main() -> int:
     ap=argparse.ArgumentParser()
-    ap.add_argument("--census-csv",type=Path,required=True)
+    ap.add_argument("--panel-metadata",type=Path,required=True)
     ap.add_argument("--occurrence-climate-csv",type=Path,required=True)
     ap.add_argument("--grid-npz",type=Path,required=True)
     ap.add_argument("--rule",type=Path,required=True)
+    ap.add_argument("--external-rule",type=Path,required=True)
+    ap.add_argument("--climate-rule",type=Path,required=True)
     ap.add_argument("--output-npz",type=Path,required=True)
     ap.add_argument("--output-summary",type=Path,required=True)
     ap.add_argument("--chunk-size",type=int,default=4096)
@@ -80,33 +88,51 @@ def main() -> int:
     rule=json.loads(args.rule.read_text())
     if rule.get("schema")!="ttf_genetic_palearctic_lgm_subpanel_rule_v0.1":
         raise RuntimeError("unexpected Palearctic-LGM rule")
+    external=json.loads(args.external_rule.read_text())
+    if external.get("schema")!="ttf_genetic_palearctic_lgm_external_data_rule_v0.1":
+        raise RuntimeError("unexpected external-data rule")
+    climate=json.loads(args.climate_rule.read_text())
+    if climate.get("schema")!="ttf_genetic_palearctic_lgm_climate_input_rule_v0.1":
+        raise RuntimeError("unexpected climate-input rule")
 
-    sources,targets,meta=read_census(args.census_csv)
-    species=sorted(set(sources)|set(targets))
-    filt=rule["authoritative_subpanel_filter"]
-    if len(species)<int(filt["minimum_species"]):
-        raise RuntimeError("formal census below frozen minimum species")
-    if len(sources)<int(filt["minimum_source_clusters"]) or len(targets)<int(filt["minimum_target_clusters"]):
-        raise RuntimeError("formal census below frozen source/target cluster minimum")
+    formal_sources,formal_targets,meta=read_panel_metadata(args.panel_metadata)
+    formal_species=sorted(set(formal_sources)|set(formal_targets))
 
-    occurrences=read_occurrence_climate(args.occurrence_climate_csv,set(species))
-    min_occ=int(rule["external_occurrences"]["minimum_retained_per_species"])
-    bad={sp:len(occurrences.get(sp,[])) for sp in species if len(occurrences.get(sp,[]))<min_occ}
-    if bad:
+    occurrences=read_occurrence_climate(args.occurrence_climate_csv,set(formal_species))
+    min_occ=int(climate["occurrence_climate_validity"]["minimum_rows_after_climate_validity_per_species"])
+    species=sorted(
+        sp for sp in formal_species
+        if len(occurrences.get(sp,[]))>=min_occ
+    )
+    sources=[sp for sp in formal_sources if sp in set(species)]
+    targets=[sp for sp in formal_targets if sp in set(species)]
+    req=climate["occurrence_climate_validity"]["after_drop_require"]
+    passed=(
+        len(species)>=int(req["minimum_total_species"])
+        and len(sources)>=int(req["minimum_source_clusters"])
+        and len(targets)>=int(req["minimum_target_clusters"])
+    )
+    if not passed:
         payload={
             "schema":"ttf_genetic_palearctic_lgm_relation_design_v0.1",
-            "status":"NOT_EVALUABLE_PALAEARCTIC_LGM_EXTERNAL_OCCURRENCES",
-            "species":len(species),
-            "minimum_retained_occurrences":min_occ,
-            "failed_species":bad,
+            "status":str(climate["occurrence_climate_validity"]["failure"]),
+            "formal_species":44,
+            "climate_valid_species":len(species),
+            "source_clusters":len(sources),
+            "target_clusters":len(targets),
+            "failed_species":{
+                sp:len(occurrences.get(sp,[]))
+                for sp in formal_species if sp not in set(species)
+            },
             "response_firewall":{
+                "species_level_genetic_scores_used":False,
                 "pairwise_subpanel_T_st_computed":False,
                 "beta_LGM_computed":False,
             },
         }
         args.output_summary.parent.mkdir(parents=True,exist_ok=True)
         args.output_summary.write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
-        print(json.dumps({"status":payload["status"],"failed_species":len(bad)},sort_keys=True))
+        print(json.dumps({"status":payload["status"],"climate_valid_species":len(species)},sort_keys=True))
         return 0
 
     pooled=np.vstack([
@@ -196,9 +222,11 @@ def main() -> int:
     payload={
         "schema":"ttf_genetic_palearctic_lgm_relation_design_v0.1",
         "status":"PASS_TO_TTF_Q_RESPONSE_BLIND_CHARACTERIZATION",
+        "formal_species":44,
         "species":len(species),
         "source_clusters":len(sources),
         "target_clusters":len(targets),
+        "dropped_before_relation":sorted(set(formal_species)-set(species)),
         "dyads":len(r_lgm),
         "R_LGM":{
             "min":float(r_lgm.min()),
@@ -218,10 +246,12 @@ def main() -> int:
             for row in species_extrapolation.values()
         )),
         "inputs":{
-            "census_csv_sha256":sha256_path(args.census_csv),
+            "panel_metadata_sha256":sha256_path(args.panel_metadata),
             "occurrence_climate_csv_sha256":sha256_path(args.occurrence_climate_csv),
             "grid_npz_sha256":sha256_path(args.grid_npz),
             "rule_sha256":sha256_path(args.rule),
+            "external_rule_sha256":sha256_path(args.external_rule),
+            "climate_rule_sha256":sha256_path(args.climate_rule),
         },
         "design_npz_sha256":sha256_path(args.output_npz),
         "response_firewall":{
