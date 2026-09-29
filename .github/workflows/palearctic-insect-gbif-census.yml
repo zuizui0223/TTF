@@ -1,0 +1,74 @@
+name: palearctic-insect-gbif-census
+
+on:
+  push:
+    branches:
+      - study/palearctic-insect-lgm-response-blind
+    paths:
+      - "benchmarks/frozen/genetic_palearctic_holometabola_panel_v0.1.json"
+      - "docs/supporting/genetic_palearctic_holometabola_lgm_program_v0.1.json"
+      - "scripts/census_palearctic_holometabola_gbif.py"
+      - "scripts/aggregate_palearctic_holometabola_gbif.py"
+      - ".github/workflows/palearctic-insect-gbif-census.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  census:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0,1,2,3]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Census frozen Palearctic panel
+        run: |
+          mkdir -p results
+          python scripts/census_palearctic_holometabola_gbif.py \
+            --panel benchmarks/frozen/genetic_palearctic_holometabola_panel_v0.1.json \
+            --shard-index "${{ matrix.shard }}" \
+            --shards 4 \
+            --output "results/shard_${{ matrix.shard }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: palearctic-gbif-census-${{ matrix.shard }}
+          path: "results/shard_${{ matrix.shard }}.json"
+          retention-days: 90
+          if-no-files-found: error
+
+  aggregate:
+    needs: census
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download census shards
+        uses: actions/download-artifact@v4
+        with:
+          pattern: palearctic-gbif-census-*
+          path: input
+          merge-multiple: true
+      - name: Aggregate response-blind GBIF support
+        run: |
+          mkdir -p results
+          python scripts/aggregate_palearctic_holometabola_gbif.py \
+            --input-dir input \
+            --contract docs/supporting/genetic_palearctic_holometabola_lgm_program_v0.1.json \
+            --panel benchmarks/frozen/genetic_palearctic_holometabola_panel_v0.1.json \
+            --output results/palearctic_gbif_census_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: palearctic-gbif-census-summary-v0-1
+          path: results/palearctic_gbif_census_v0.1.json
+          retention-days: 90
+          if-no-files-found: error
