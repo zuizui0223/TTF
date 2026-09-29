@@ -1,0 +1,79 @@
+{
+  "schema": "ttf_palearctic_lepidoptera_response_blind_screen_v0.1",
+  "status": "PASS_TO_LGM_PREDICTOR_CONSTRUCTION",
+  "executed_on": "2026-09-29",
+  "purpose": "Response-blind census of the 211 frozen Phase-2 survivors for a homogeneous Palearctic terrestrial-insect historical-biogeography subpanel. No nucleotide identity, pairwise genetic distance, Phase-4 species score, or pairwise genetic response is read.",
+  "source": {
+    "exact_phylogatr_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "identity_opening_authorization_sha256": "47ffa048052d7bea5e76ebc144dcd40ea7e86910033ae082acc58757ca92d4d9",
+    "authorization_survivors": 211
+  },
+  "screen": {
+    "taxon": {"class": "Insecta", "order": "Lepidoptera"},
+    "sampling_domain": {
+      "name": "conservative_temperate_palearctic_core_box",
+      "latitude_min": 30.0,
+      "latitude_max": 75.0,
+      "longitude_min": -25.0,
+      "longitude_max": 180.0,
+      "rationale": "A deliberately conservative sampling-domain screen, not a claim that the rectangle is a formal biogeographic-realm boundary."
+    },
+    "primary_rule": "all selected frozen COI localities lie inside the conservative Palearctic core box",
+    "sensitivity_rule": "at least 80% of selected frozen COI localities lie inside the same box",
+    "minimum_primary_species_to_continue": 20
+  },
+  "census": {
+    "survivors_total": 211,
+    "insecta": 183,
+    "lepidoptera": 90,
+    "primary_strict_species": 26,
+    "sensitivity_80pct_species": 29,
+    "primary_ordered_nonself_dyads": 650,
+    "sensitivity_ordered_nonself_dyads": 812,
+    "primary_localities_median": 17.5,
+    "primary_localities_min": 12,
+    "primary_localities_max": 69,
+    "primary_families": 13
+  },
+  "primary_species": [
+    {"species":"Acleris bergmanniana","family":"Tortricidae","nloc":16,"core_pal_frac_30":1.0},
+    {"species":"Agapeta hamana","family":"Tortricidae","nloc":25,"core_pal_frac_30":1.0},
+    {"species":"Agriopis aurantiaria","family":"Geometridae","nloc":44,"core_pal_frac_30":1.0},
+    {"species":"Alcis repandata","family":"Geometridae","nloc":69,"core_pal_frac_30":1.0},
+    {"species":"Ammoconia caecimacula","family":"Noctuidae","nloc":21,"core_pal_frac_30":1.0},
+    {"species":"Cnephasia incertana","family":"Tortricidae","nloc":20,"core_pal_frac_30":1.0},
+    {"species":"Cochylidia implicitana","family":"Tortricidae","nloc":13,"core_pal_frac_30":1.0},
+    {"species":"Coenotephria tophaceata","family":"Geometridae","nloc":13,"core_pal_frac_30":1.0},
+    {"species":"Coleophora lusciniaepennella","family":"Coleophoridae","nloc":19,"core_pal_frac_30":1.0},
+    {"species":"Dichagyris nigrescens","family":"Noctuidae","nloc":12,"core_pal_frac_30":1.0},
+    {"species":"Diplodoma laichartingella","family":"Psychidae","nloc":12,"core_pal_frac_30":1.0},
+    {"species":"Euchloe ausonia","family":"Pieridae","nloc":55,"core_pal_frac_30":1.0},
+    {"species":"Hoplodrina superstes","family":"Noctuidae","nloc":18,"core_pal_frac_30":1.0},
+    {"species":"Hypochalcia ahenella","family":"Pyralidae","nloc":22,"core_pal_frac_30":1.0},
+    {"species":"Malacosoma castrensis","family":"Lasiocampidae","nloc":12,"core_pal_frac_30":1.0},
+    {"species":"Metaxmeste phrygialis","family":"Crambidae","nloc":18,"core_pal_frac_30":1.0},
+    {"species":"Mompha lacteella","family":"Momphidae","nloc":13,"core_pal_frac_30":1.0},
+    {"species":"Notocelia uddmanniana","family":"Tortricidae","nloc":24,"core_pal_frac_30":1.0},
+    {"species":"Phiaris micana","family":"Tortricidae","nloc":15,"core_pal_frac_30":1.0},
+    {"species":"Pseudeustrotia candidula","family":"Noctuidae","nloc":15,"core_pal_frac_30":1.0},
+    {"species":"Pseudoterpna pruinata","family":"Geometridae","nloc":15,"core_pal_frac_30":1.0},
+    {"species":"Psoricoptera speciosella","family":"Gelechiidae","nloc":12,"core_pal_frac_30":1.0},
+    {"species":"Scopula decorata","family":"Geometridae","nloc":20,"core_pal_frac_30":1.0},
+    {"species":"Scythris picaepennis","family":"Scythrididae","nloc":14,"core_pal_frac_30":1.0},
+    {"species":"Teleiodes vulgella","family":"Gelechiidae","nloc":29,"core_pal_frac_30":1.0},
+    {"species":"Yponomeuta sedella","family":"Yponomeutidae","nloc":17,"core_pal_frac_30":1.0}
+  ],
+  "sensitivity_only_species": [
+    {"species":"Favonius quercus","family":"Lycaenidae","nloc":93,"core_pal_frac_30":0.956989247311828},
+    {"species":"Sphinx pinastri","family":"Sphingidae","nloc":41,"core_pal_frac_30":0.8780487804878049},
+    {"species":"Tomares ballus","family":"Lycaenidae","nloc":25,"core_pal_frac_30":0.96}
+  ],
+  "response_firewall": {
+    "sequence_identity_read_for_screen": false,
+    "pairwise_genetic_distance_read_for_screen": false,
+    "phase4_species_score_read_for_screen": false,
+    "pairwise_transfer_response_constructed": false
+  },
+  "next_authorized_step": "Construct the frozen response-blind LGM-SDM predictor for the primary 26-species panel, then run TTF-Q on that predictor before any subpanel genetic response is computed.",
+  "claim_boundary": "This receipt establishes only that a taxonomically and geographically coherent Palearctic-core Lepidoptera panel of useful size exists. It is not a genetic result and does not establish shared refugia or shared phylogeographic breaks."
+}
