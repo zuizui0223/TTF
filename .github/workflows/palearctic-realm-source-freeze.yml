@@ -1,0 +1,42 @@
+name: palearctic-realm-source-freeze
+
+on:
+  push:
+    branches:
+      - study/palearctic-insect-lgm-response-blind
+    paths:
+      - "scripts/freeze_palearctic_realm_source.py"
+      - ".github/workflows/palearctic-realm-source-freeze.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install source-audit dependency
+        run: python -m pip install pyshp
+      - name: Download exact Ecoregions2017 source
+        run: |
+          mkdir -p external results
+          curl --fail --location --retry 3 \
+            "https://storage.googleapis.com/teow2016/Ecoregions2017.zip" \
+            --output external/Ecoregions2017.zip
+      - name: Freeze realm source before panel membership
+        run: |
+          python scripts/freeze_palearctic_realm_source.py \
+            --zip external/Ecoregions2017.zip \
+            --output results/palearctic_realm_source_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: palearctic-realm-source-v0-1
+          path: results/palearctic_realm_source_v0.1.json
+          retention-days: 90
+          if-no-files-found: error
