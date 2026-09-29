@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 
 
-EXPECTED_PHASE1_GEOMETRY_SHA256 = "d6f0b1f360a77de279263145386e7956af0d43c9386048f319117522f933cb74"
+EXPECTED_SURVIVOR_GEOMETRY_SHA256 = "6e9ec4a6c56ffac82e91976aee2580a0b9d03e2b932dd907429fd09802419622"
 EXPECTED_AUTHORIZATION_SHA256 = "47ffa048052d7bea5e76ebc144dcd40ea7e86910033ae082acc58757ca92d4d9"
 
 
@@ -43,17 +43,17 @@ def deterministic_split(species: list[str], namespace: str) -> tuple[list[str],l
 
 def main() -> int:
     ap=argparse.ArgumentParser()
-    ap.add_argument("--phase1-geometry-csv",type=Path,required=True)
+    ap.add_argument("--survivor-geometry-csv",type=Path,required=True)
     ap.add_argument("--authorization-json",type=Path,required=True)
     ap.add_argument("--ecoregions",type=Path,required=True)
-    ap.add_argument("--realm-source-receipt",type=Path,required=True)
+    ap.add_argument("--realm-source-receipt",type=Path,required=True)\n    ap.add_argument("--realm-subset-receipt",type=Path,required=True)
     ap.add_argument("--contract",type=Path,required=True)
     ap.add_argument("--output-csv",type=Path,required=True)
     ap.add_argument("--output-json",type=Path,required=True)
     args=ap.parse_args()
 
     contract=load_contract(args.contract)
-    if sha256_path(args.phase1_geometry_csv)!=EXPECTED_PHASE1_GEOMETRY_SHA256:
+    if sha256_path(args.survivor_geometry_csv)!=EXPECTED_SURVIVOR_GEOMETRY_SHA256:
         raise RuntimeError("Phase-1 response-blind geometry CSV SHA256 drift")
     if sha256_path(args.authorization_json)!=EXPECTED_AUTHORIZATION_SHA256:
         raise RuntimeError("Phase-4 authorization SHA256 drift")
@@ -63,15 +63,22 @@ def main() -> int:
         raise RuntimeError("unexpected realm-source receipt")
     if source.get("status")!="FROZEN_BEFORE_PANEL_MEMBERSHIP":
         raise RuntimeError("realm source was not frozen before panel membership")
-    if sha256_path(args.ecoregions)!=source["ecoregions_vector_sha256"]:
-        raise RuntimeError("ecoregions vector SHA256 differs from frozen source receipt")
+    subset=json.loads(args.realm_subset_receipt.read_text())
+    if subset.get("schema")!="ttf_palearctic_realm_subset_receipt_v0.1":
+        raise RuntimeError("unexpected Palearctic realm subset receipt")
+    if subset.get("status")!="DERIVED_BEFORE_PANEL_MEMBERSHIP":
+        raise RuntimeError("Palearctic subset was not derived before panel membership")
+    if subset.get("source_receipt_sha256")!=sha256_path(args.realm_source_receipt):
+        raise RuntimeError("Palearctic subset/source receipt linkage drift")
+    if sha256_path(args.ecoregions)!=subset["geojson_sha256"]:
+        raise RuntimeError("Palearctic GeoJSON SHA256 differs from frozen subset receipt")
 
     auth=json.loads(args.authorization_json.read_text())
     survivors=set(auth["species"]["train_species"]+auth["species"]["eval_species"])
     if len(survivors)!=211:
         raise RuntimeError("authorization survivor count drift")
 
-    with args.phase1_geometry_csv.open(newline="",encoding="utf-8") as h:
+    with args.survivor_geometry_csv.open(newline="",encoding="utf-8") as h:
         rows=list(csv.DictReader(h))
     required={"species","class","order","family","latitude","longitude"}
     if not rows or not required.issubset(rows[0]):
@@ -165,10 +172,10 @@ def main() -> int:
         "schema":"ttf_genetic_palearctic_holometabola_panel_v0.1",
         "status":status,
         "contract_sha256":sha256_path(args.contract),
-        "phase1_geometry_csv_sha256":sha256_path(args.phase1_geometry_csv),
+        "survivor_geometry_csv_sha256":sha256_path(args.survivor_geometry_csv),
         "authorization_sha256":sha256_path(args.authorization_json),
-        "realm_source_receipt_sha256":sha256_path(args.realm_source_receipt),
-        "ecoregions_vector_sha256":sha256_path(args.ecoregions),
+        "realm_source_receipt_sha256":sha256_path(args.realm_source_receipt),\n        "realm_subset_receipt_sha256":sha256_path(args.realm_subset_receipt),
+        "palearctic_geojson_sha256":sha256_path(args.ecoregions),
         "survivor_species":len(survivors),
         "eligible_species":len(eligible),
         "minimum_species_to_continue":minimum,
