@@ -1,0 +1,49 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_climate_input_rule_v0.3",
+  "status": "FROZEN_BEFORE_BOUND_V0_3_GBIF_RESULT_OR_ANY_V0_3_CLIMATE_EXTRACTION",
+  "frozen_on": "2026-09-29",
+  "parent_rule": "docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json",
+  "external_rule": "docs/supporting/genetic_palearctic_lgm_external_data_rule_v0.3.json",
+  "unit_rule": "docs/supporting/genetic_palearctic_lgm_climate_unit_rule_v0.1.json",
+  "supersedes_for_v03_execution": "docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.2.json",
+  "grid": {
+    "crs": "EPSG:4326",
+    "resolution_degrees": 0.25,
+    "longitude_centres_formula": "-179.875 + 0.25*i, i=0..1439",
+    "latitude_centres_formula": "-89.875 + 0.25*j, j=0..719",
+    "realm_mask": "centroid intersects frozen RESOLVE 2017 Palearctic union",
+    "climate_validity": "finite/non-nodata in all four current CHELSA V2.1 and all four 21-ka TraCE21k rasters",
+    "paleocoastline_reconstruction": false
+  },
+  "climate": {
+    "variables": [
+      "bio1",
+      "bio7",
+      "bio12",
+      "bio15"
+    ],
+    "current": "CHELSA V2.1 1981-2010",
+    "lgm": "CHELSA-TraCE21k-centennial-bioclim V1.0 at 21 ka BP / index -190",
+    "trace0_diagnostic": "TraCE21k index 20 compared with CHELSA V2.1 current",
+    "raster_interpolation": "none; containing raster cell",
+    "apply_GDAL_scale_offset": true
+  },
+  "occurrence_climate_validity": {
+    "start_from": "v0.3-bound Palearctic-filtered, deduplicated, 10-km-thinned GBIF occurrences",
+    "minimum_rows_after_current_climate_validity_per_species": 30,
+    "drop_species_below_minimum": true,
+    "backfill": false,
+    "resplit": false,
+    "after_drop_require": {
+      "minimum_total_species": 20,
+      "minimum_source_clusters": 9,
+      "minimum_target_clusters": 9
+    },
+    "failure": "NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_LGM_CLIMATE_COVERAGE"
+  },
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_v03_T_st_computed": false,
+    "beta_LGM_computed": false
+  }
+}
