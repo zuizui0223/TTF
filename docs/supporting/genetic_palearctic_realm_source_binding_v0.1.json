@@ -1,0 +1,30 @@
+{
+  "schema": "ttf_genetic_palearctic_realm_source_binding_v0.1",
+  "status": "FROZEN_BEFORE_FORMAL_REALM_CLASSIFICATION",
+  "frozen_on": "2026-09-29",
+  "official_dataset": {
+    "title": "Simplified Biogeographical Realms of the World (polygons)",
+    "provider": "World Wildlife Fund - US / UNEP-WCMC",
+    "edition": "Version 2.0",
+    "publication_year": 2004,
+    "official_resource": "https://resources.unep-wcmc.org/products/f196d94a226d430fa214947d51dad35a"
+  },
+  "bound_processed_copy": {
+    "repository": "SpeciesFileGroup/taxonworks_doc",
+    "path": "docs/.vuepress/public/examples/shapefiles/biogeographical_regions_of_the_world_2004-eight_shapes.zip",
+    "git_blob_sha1": "f46cf5ebb398adaf6c0b6ddc189f5898a769e77c",
+    "vendored_path": "data/external/biogeographical_regions_of_the_world_2004-eight_shapes.zip",
+    "vendored_git_blob_sha1": "f46cf5ebb398adaf6c0b6ddc189f5898a769e77c",
+    "processing_documentation": "TaxonWorks documentation describes the WWF/UNEP-WCMC realm polygons and unions the realm pieces that were split at the prime meridian into eight realm shapes."
+  },
+  "formal_selection": {
+    "realm_label_accepted": ["Palearctic", "Palaearctic", "PA"],
+    "expected_total_realm_records": 8,
+    "expected_palearctic_records": 1
+  },
+  "authority": {
+    "can_change_palearctic_threshold": false,
+    "can_change_taxonomic_filter": false,
+    "can_use_genetic_response": false
+  }
+}
