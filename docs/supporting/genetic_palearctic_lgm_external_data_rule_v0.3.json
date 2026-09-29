@@ -1,0 +1,23 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_external_data_rule_v0.3",
+  "status": "FROZEN_BEFORE_V0_3_GBIF_COMPLETION",
+  "frozen_on": "2026-09-29",
+  "parent_rule": "docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json",
+  "census": "benchmarks/frozen/genetic_palearctic_lgm_nonlepidoptera_census_v0.3.json",
+  "acquisition_science": "Identical to v0.2: GBIF 2010-2026 exact species match, finite coordinates, no geospatial issue, PRESENT, RESOLVE Palearctic filter, exact-coordinate deduplication, 10-km thinning, maximum 200, minimum 30.",
+  "missingness": {
+    "request_error": "technical incomplete; retry REQUEST_ERROR only",
+    "below_30": "drop species",
+    "backfill": false,
+    "resplit": false,
+    "minimum_total_species": 20,
+    "minimum_source_clusters": 9,
+    "minimum_target_clusters": 9,
+    "failure": "NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_GBIF"
+  },
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_v03_T_st_computed": false,
+    "beta_LGM_computed": false
+  }
+}
