@@ -1,0 +1,45 @@
+{
+  "schema": "ttf_palearctic_insect_lgm_response_blind_prescreen_v0.1",
+  "status": "DESCRIPTIVE_RESPONSE_BLIND_FEASIBILITY_ONLY_NO_REALM_OR_SDM_AUTHORITY",
+  "recorded_on": "2026-09-29",
+  "source": {
+    "phylogatr_archive_size_bytes": 274988692,
+    "phylogatr_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "identity_opening_authorization_sha256": "47ffa048052d7bea5e76ebc144dcd40ea7e86910033ae082acc58757ca92d4d9",
+    "parent_survivors": 211
+  },
+  "response_blind_counts": {
+    "Insecta_among_211": 183,
+    "order_counts_among_Insecta": {
+      "Lepidoptera": 90,
+      "Diptera": 28,
+      "Hymenoptera": 25,
+      "Coleoptera": 21,
+      "Hemiptera": 6,
+      "Trichoptera": 5,
+      "Ephemeroptera": 2,
+      "Orthoptera": 2,
+      "Odonata": 2,
+      "Plecoptera": 1,
+      "Psocodea": 1
+    },
+    "coarse_temperate_Eurasia_proxy_fraction_0p80_Insecta": 51,
+    "coarse_proxy_0p80_terrestrial_core_orders": 47,
+    "coarse_proxy_terrestrial_core_by_parent_split": {
+      "prior_train": 15,
+      "prior_eval": 32
+    },
+    "coarse_proxy_terrestrial_core_order_counts": {
+      "Lepidoptera": 29,
+      "Coleoptera": 11,
+      "Hymenoptera": 7
+    }
+  },
+  "coarse_proxy_definition": "For feasibility only: fraction of exact response-blind COI occurrence localities within latitude 30-82 N and longitude -25 to 180 E >=0.80; this bounding proxy has no authority for final Palearctic eligibility.",
+  "formal_replacement_already_frozen": "Use TNC/WWF terrestrial ecoregions WWF_REALM2 == Palearctic and independent GBIF occurrence fraction >=0.80 under docs/supporting/palearctic_insect_lgm_refugia_v0.1.json.",
+  "genetic_response_used": false,
+  "species_level_Phase4_scores_read": false,
+  "pairwise_genetic_distances_read": false,
+  "subpanel_T_st_computed": false,
+  "interpretation": "The response-blind source contains enough apparently Palearctic terrestrial-core insects to justify formal TTF-Q qualification, but this prescreen cannot authorize response opening or define the final species panel."
+}
