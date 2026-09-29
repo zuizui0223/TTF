@@ -1,0 +1,59 @@
+{
+  "schema": "ttf_palearctic_insect_lgm_sdm_relation_v0.1",
+  "status": "FROZEN_BEFORE_LGM_SDM_RESULT_AND_BEFORE_SUBPANEL_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-29",
+  "eligibility_contract": "docs/supporting/palearctic_insect_lgm_eligibility_v0.1.json",
+  "scientific_hypothesis": "Species pairs with more similar LGM climatic refugial opportunity will show more spatially concordant post-IBD mitochondrial genetic discontinuity, beyond present climatic similarity and geographic sampling opportunity.",
+  "sdm": {
+    "occurrence_source": "fresh external GBIF occurrences; do not use genetic differentiation to select or filter occurrences",
+    "occurrence_window": "2010-2026",
+    "coordinate_deduplication": true,
+    "thinning_km": 10,
+    "maximum_occurrences_per_species": 200,
+    "minimum_occurrences_after_thinning": 30,
+    "no_failed_species_backfill": true,
+    "climate_source": "CHELSA-TraCE21k",
+    "times": [
+      "0 BP",
+      "21 ka BP"
+    ],
+    "variables": [
+      "bio01",
+      "bio07",
+      "bio12",
+      "bio15"
+    ],
+    "model_family": "regularized presence-background climatic SDM with fixed linear and quadratic feature basis",
+    "projection_domain": "WWF Palearctic terrestrial realm",
+    "model_quality_is_response_blind": true
+  },
+  "pairwise_predictors": {
+    "primary": "R_LGM = Schoener D between normalized 21 ka climatic-suitability surfaces on the common Palearctic grid",
+    "mandatory_current_nuisance": "R_current = Schoener D between normalized 0 BP suitability surfaces",
+    "mandatory_additional_controls": [
+      "exact source identity",
+      "exact target identity",
+      "current climatic suitability overlap",
+      "geographic genetic-sampling co-opportunity",
+      "lineage proximity",
+      "occurrence-count imbalance"
+    ],
+    "optional_sensitivity": "Stable-refugial opportunity based on cellwise min(S_LGM,S_current); sensitivity only and cannot replace R_LGM."
+  },
+  "ttf_q_order": [
+    "quantify SDM/relation repeatability if occurrence bootstrap reconstruction is feasible",
+    "remove exact source and target identity",
+    "remove declared current-climate, geography, lineage and sampling controls",
+    "quantify residual signal concentration",
+    "qualify null behavior of the intended dyadic estimator",
+    "report the effect-size by nuisance-heterogeneity evaluable envelope",
+    "only then decide whether the prespecified genetic subpanel response may be opened"
+  ],
+  "response_firewall": {
+    "species_level_phase4_scores_used": false,
+    "pairwise_genetic_distances_used": false,
+    "post_ibd_break_surface_used": false,
+    "subpanel_empirical_response_opening_authorized": false
+  },
+  "claim_boundary": "Passing TTF-Q would show only that the LGM relation is independently informative and inferentially evaluable on this subpanel geometry. It would not show that shared refugia cause concordant genetic breaks until the separately frozen genetic response is opened."
+}
