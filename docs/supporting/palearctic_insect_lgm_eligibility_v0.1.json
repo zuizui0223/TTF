@@ -1,0 +1,54 @@
+{
+  "schema": "ttf_palearctic_insect_lgm_eligibility_v0.1",
+  "status": "FROZEN_BEFORE_AUTHORITATIVE_WWF_REALM_ASSIGNMENT_AND_BEFORE_LGM_SDM",
+  "frozen_on": "2026-09-29",
+  "parent_response_blind_source": "benchmarks/frozen/palearctic_insect_response_blind_source_v0.1.json",
+  "biological_question": "Do Palearctic terrestrial insects inferred to share Last Glacial Maximum climatic refugial opportunity show concordant geographic locations of within-species mitochondrial genetic discontinuity?",
+  "candidate_universe": {
+    "parent_species": 211,
+    "required_class": "Insecta",
+    "geographic_unit": "exact unique latitude-longitude localities from the frozen COI genetic sampling panel",
+    "interpretation": "Realm eligibility describes the geography actually represented by the genetic panel, not the species' complete geographic range."
+  },
+  "palearctic_rule": {
+    "authoritative_dataset": "WWF (2004) Simplified Biogeographical Realms of the World, generalized from Olson et al. (2001), UNEP-WCMC service",
+    "service": "https://data-gis.unep-wcmc.org/server/rest/services/WWF_004_GeneralisedBiogeographicRealms2004/FeatureServer/0",
+    "required_realm": "Palearctic",
+    "required_realmcode": "PA",
+    "minimum_fraction_of_genetic_panel_localities_in_realm": 0.8,
+    "minimum_number_of_genetic_panel_localities_in_realm": 12,
+    "boundary_points": "inside_or_on_boundary",
+    "no_backfill": true
+  },
+  "terrestrial_core_rule": {
+    "allowed_orders": [
+      "Lepidoptera",
+      "Hymenoptera",
+      "Coleoptera",
+      "Orthoptera",
+      "Psocodea"
+    ],
+    "rationale": "Conservative terrestrial-core panel. Diptera and Hemiptera are excluded in v0.1 because the available species span mixed aquatic/terrestrial life histories; obligately aquatic-immature orders are excluded.",
+    "excluded_coleoptera_families": [
+      "Dytiscidae",
+      "Gyrinidae",
+      "Haliplidae",
+      "Hydrophilidae",
+      "Elmidae",
+      "Dryopidae",
+      "Noteridae",
+      "Hydraenidae",
+      "Scirtidae"
+    ],
+    "forbidden_post_screen_manual_rescue": true
+  },
+  "role_split": {
+    "rule": "Sort eligible species by SHA256('palearctic-insect-lgm-v0.1|'+species); lower half = source, upper half = target.",
+    "balanced_by_construction": true,
+    "uses_genetic_outcome": false,
+    "minimum_sources": 12,
+    "minimum_targets": 12,
+    "failure": "NOT_EVALUABLE_SUBPANEL_GEOMETRY"
+  },
+  "development_note": "A crude latitude/longitude proxy was inspected during method development and suggested that a panel of roughly several dozen species may exist. That proxy has no authority. Only the WWF realm assignment above determines eligibility."
+}
