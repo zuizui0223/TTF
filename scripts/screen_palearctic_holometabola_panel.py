@@ -46,7 +46,8 @@ def main() -> int:
     ap.add_argument("--survivor-geometry-csv",type=Path,required=True)
     ap.add_argument("--authorization-json",type=Path,required=True)
     ap.add_argument("--ecoregions",type=Path,required=True)
-    ap.add_argument("--realm-source-receipt",type=Path,required=True)\n    ap.add_argument("--realm-subset-receipt",type=Path,required=True)
+    ap.add_argument("--realm-source-receipt",type=Path,required=True)
+    ap.add_argument("--realm-subset-receipt",type=Path,required=True)
     ap.add_argument("--contract",type=Path,required=True)
     ap.add_argument("--output-csv",type=Path,required=True)
     ap.add_argument("--output-json",type=Path,required=True)
@@ -174,7 +175,8 @@ def main() -> int:
         "contract_sha256":sha256_path(args.contract),
         "survivor_geometry_csv_sha256":sha256_path(args.survivor_geometry_csv),
         "authorization_sha256":sha256_path(args.authorization_json),
-        "realm_source_receipt_sha256":sha256_path(args.realm_source_receipt),\n        "realm_subset_receipt_sha256":sha256_path(args.realm_subset_receipt),
+        "realm_source_receipt_sha256":sha256_path(args.realm_source_receipt),
+        "realm_subset_receipt_sha256":sha256_path(args.realm_subset_receipt),
         "palearctic_geojson_sha256":sha256_path(args.ecoregions),
         "survivor_species":len(survivors),
         "eligible_species":len(eligible),
