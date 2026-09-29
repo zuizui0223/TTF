@@ -1,0 +1,81 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_ttf_q_execution_v0.1",
+  "status": "FROZEN_BEFORE_AUTHORITATIVE_LGM_RELATION_RESULT_OR_SUBPANEL_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-29",
+  "parent_rule": "docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.1.json",
+  "predictor_order": [
+    "z_R_LGM",
+    "z_R_present",
+    "z_geographic_coverage",
+    "centered_same_order",
+    "centered_same_family",
+    "z_abs_log_retained_occurrence_count_ratio"
+  ],
+  "primary_index": 0,
+  "information_controls": [
+    "z_R_present",
+    "z_geographic_coverage",
+    "centered_same_order",
+    "centered_same_family",
+    "z_abs_log_retained_occurrence_count_ratio"
+  ],
+  "synthetic_world": {
+    "alpha_one_sided": 0.025,
+    "type1_wilson95_upper_max": 0.05,
+    "target_power": 0.8,
+    "null_worlds_per_amplitude": 10000,
+    "positive_worlds_per_cell": 1000,
+    "private_amplitudes": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "positive_effects": [
+      0.02,
+      0.03,
+      0.05,
+      0.08,
+      0.1,
+      0.15,
+      0.2
+    ],
+    "source_intercept_sd": 0.18,
+    "target_intercept_sd": 0.18,
+    "dyad_noise_sd": 0.32,
+    "fixed_coefficients": [
+      0,
+      0.1,
+      0.1,
+      0.04,
+      0.04,
+      0.05
+    ],
+    "source_random_slope_predictor": "z_geographic_coverage",
+    "target_random_slope_predictor": "centered_same_order",
+    "random_slope_sd_per_amplitude": 0.12,
+    "response_transform": "tanh",
+    "seed_namespace": "palearctic-lgm-ttf-q-v0.1"
+  },
+  "opening_rule": {
+    "minimum_total_unique_variance_fraction": 0.15,
+    "minimum_signal_effective_sources": 10,
+    "minimum_signal_effective_targets": 10,
+    "maximum_single_source_signal_share": 0.15,
+    "maximum_single_target_signal_share": 0.15,
+    "required_null_qualified_amplitudes": [
+      0,
+      1,
+      2
+    ],
+    "required_A2_evaluable_mde_max": 0.1,
+    "A3_role": "diagnostic only; cannot by itself block opening",
+    "if_passed": "PASS_TO_ONE_SHOT_SUBPANEL_GENETIC_RESPONSE",
+    "if_failed": "NOT_EVALUABLE_PALAEARCTIC_LGM_RELATION"
+  },
+  "response_firewall": {
+    "subgroup_pairwise_T_st_computed": false,
+    "subgroup_beta_LGM_computed": false,
+    "species_level_genetic_scores_used_for_qualification": false
+  }
+}
