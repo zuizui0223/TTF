@@ -6,6 +6,7 @@ on:
       - method/palearctic-lgm-response-blind-v0-1
     paths:
       - "benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_authority_v0.1.json"
+      - "benchmarks/frozen/genetic_palearctic_lgm_v03_assembly_trigger_v0.1.json"
   workflow_dispatch:
 
 permissions:
@@ -35,17 +36,31 @@ jobs:
           rule=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_assembly_rule_v0.1.json").read_text())
           auth=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_authority_v0.1.json").read_text())
           failover=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_technical_failover_v0.1.json").read_text())
+          transport3=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_transport3_amendment_v0.1.json").read_text())
+          correction=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_assembly_authority_provenance_correction_v0.1.json").read_text())
+          trigger_path=Path("benchmarks/frozen/genetic_palearctic_lgm_v03_assembly_trigger_v0.1.json")
+          if not trigger_path.is_file():
+              raise SystemExit("assembly trigger receipt is absent")
+          trigger=json.loads(trigger_path.read_text())
           assert rule["status"]=="FROZEN_BEFORE_AUTHORITATIVE_SHARD4_RESULT_AND_V03_ASSEMBLY"
+          assert correction["status"]=="PROVENANCE_CORRECTION_NO_SCIENTIFIC_CHANGE"
           assert auth["schema"]=="ttf_genetic_palearctic_lgm_v03_shard4_authority_v0.1"
           assert auth["status"]=="AUTHORITATIVE_SHARD4_FROZEN"
-          assert auth["selection_rule"]==rule["shard4_authority_rule"]
-          assert auth["source"] in {"parent","technical_failover"}
+          assert auth["selection_rule"]=="benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_transport3_amendment_v0.1.json"
+          assert auth["source"]=="transport3"
+          assert trigger["schema"]=="ttf_genetic_palearctic_lgm_v03_assembly_trigger_v0.1"
+          assert trigger["status"]=="AUTHORIZE_V03_OCCURRENCE_ASSEMBLY"
+          assert trigger["shard4_authority_artifact_id"]==auth["artifact_id"]
+          assert trigger["shard4_authority_digest_sha256"]==auth["artifact_digest_sha256"]
+          assert transport3["transport3"]["authoritative_if_execution_completes"] is True
           assert int(auth["artifact_id"])>0
           assert str(auth["artifact_digest_sha256"]).startswith("sha256:")
           assert all(v is False for v in rule["response_firewall"].values())
           assert all(v is False for v in auth["response_firewall"].values())
           assert failover["priority_rule"]["choosing_between_two_successful_results_by_ecological_content"] is False
-          print({"shard4_source":auth["source"],"artifact_id":auth["artifact_id"]})
+          assert correction["scientific_effect"]["external_data_gate_changed"] is False
+          assert correction["scientific_effect"]["source_target_roles_changed"] is False
+          print({"shard4_source":auth["source"],"artifact_id":auth["artifact_id"],"assembly_trigger":"verified"})
           PY
 
       - name: Download exact six authoritative shard artifacts
