@@ -1,0 +1,46 @@
+name: palearctic-realm-subset-export
+
+on:
+  push:
+    branches:
+      - study/palearctic-insect-lgm-response-blind
+    paths:
+      - "benchmarks/frozen/palearctic_realm_source_v0.1.json"
+      - "scripts/export_palearctic_realm_subset.py"
+      - ".github/workflows/palearctic-realm-subset-export.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install pyshp
+      - name: Download frozen Ecoregions2017 archive
+        run: |
+          mkdir -p external results
+          curl --fail --location --retry 3 \
+            "https://storage.googleapis.com/teow2016/Ecoregions2017.zip" \
+            --output external/Ecoregions2017.zip
+      - name: Export Palearctic subset before panel membership
+        run: |
+          python scripts/export_palearctic_realm_subset.py \
+            --zip external/Ecoregions2017.zip \
+            --source-receipt benchmarks/frozen/palearctic_realm_source_v0.1.json \
+            --output-geojson results/Ecoregions2017_Palearctic.geojson \
+            --output-receipt results/palearctic_realm_subset_receipt_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: palearctic-realm-vector-v0-1
+          path: |
+            results/Ecoregions2017_Palearctic.geojson
+            results/palearctic_realm_subset_receipt_v0.1.json
+          retention-days: 90
+          if-no-files-found: error
