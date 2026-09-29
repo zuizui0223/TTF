@@ -1,0 +1,94 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_empirical_opening_rule_v0.3",
+  "status": "FROZEN_BEFORE_V03_R_LGM_TTF_Q_RESULT_OR_SUBPANEL_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-29",
+  "parent_subpanel_rule": "docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json",
+  "qualification_rule": "docs/supporting/genetic_palearctic_lgm_ttf_q_execution_v0.3.json",
+  "scientific_question": "Among response-blind Palearctic non-Lepidoptera source-target pairs, does greater similarity of LGM climatic opportunity predict more similar post-IBD spatial genetic differentiation beyond present climate, geographic co-opportunity, lineage and sampling imbalance?",
+  "opening_condition": {
+    "required_ttf_q_status": "PASS_TO_ONE_SHOT_V03_SUBPANEL_GENETIC_RESPONSE",
+    "genetic_identity_may_be_opened_before_pass": false,
+    "one_shot_only": true,
+    "authorization_must_bind_exact_ttf_q_result_and_code_hashes_before_identity_opening": true
+  },
+  "empirical_species_geometry": {
+    "starting_species": "exact species and disjoint source/target roles retained in the frozen v0.3 relation design after GBIF and current-climate validity gates",
+    "marker": "mitochondrial COI/COX1 family under docs/supporting/relational_genetic_protocol_v0.1.json aliases",
+    "panel_selection": "for each species, choose the COI-family panel with most exact unique header-matched localities, then more aligned FASTA headers, then lexicographic locus identifier; identical to the response-blind Palearctic panel census rule",
+    "realm_clip": "retain only selected exact genetic localities intersecting the frozen RESOLVE 2017 Palearctic union before graph reconstruction",
+    "coordinate_deduplication": "exact latitude-longitude uniqueness before graph construction",
+    "graph": "density-scaled genetic kNN geometry",
+    "neighbor_fraction": 0.15,
+    "minimum_palearctic_localities": 12,
+    "minimum_endpoint_disjoint_training_edges": 5,
+    "no_backfill": true,
+    "no_role_resplit": true,
+    "survivor_rule": "If any relation-design species fails response-blind Palearctic genetic-geometry or character-mask support, remove only those unsupported species, require at least 20 total with at least 9 source and 9 target clusters, rebuild the exact dyad predictor subset, and rerun the frozen v0.3 TTF-Q on that survivor geometry before nucleotide identity opening. No genetic response is opened unless the survivor TTF-Q also passes.",
+    "survivor_failure": "NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_GENETIC_GEOMETRY"
+  },
+  "genetic_response": {
+    "sequence_identity": "opened once only after exact authorization",
+    "sequence_pair_distance": "uncorrected p-distance over jointly canonical A/C/G/T alignment columns",
+    "minimum_comparable_fraction": 0.5,
+    "locality_pair_distance": "arithmetic mean over every valid cross-locality sequence-pair p-distance",
+    "edge_response": "locality-pair p-distance on the frozen Palearctic-clipped density-scaled kNN edge",
+    "ibd_adjustment": "endpoint-safe leave-two-localities-out cross-fit rank IBD",
+    "minimum_ibd_training_edges": 5,
+    "source_training_response": "post-IBD turnover rank orthogonalized against within-source edge-length rank",
+    "target_evaluation_response": "raw post-IBD turnover rank",
+    "source_to_target_score": "T_st = Spearman correlation between source-only TTF field prediction and target post-IBD turnover",
+    "kernel": {
+      "bandwidth_km": 500,
+      "prior_strength": 0.25,
+      "prior_mean": 0,
+      "segment_points": 5,
+      "training_species_per_field": 1
+    },
+    "implementation": {
+      "post_ibd": "ttf.relational_genetic_empirical.post_ibd_responses",
+      "transfer": "ttf.relational_genetic_empirical.source_only_transfer_scores"
+    }
+  },
+  "relational_model": {
+    "response": "directed T_st in exact v0.3 relation-design dyad order",
+    "predictors_in_order": [
+      "z_R_LGM",
+      "z_R_present",
+      "z_geographic_coverage",
+      "centered_same_order",
+      "centered_same_family",
+      "z_abs_log_retained_occurrence_count_ratio"
+    ],
+    "predictors_must_be_loaded_from": "the exact TTF-Q-qualified v0.3 relation design; do not recompute or substitute predictors after identity opening",
+    "source_fixed_effect": true,
+    "target_fixed_effect": true,
+    "primary_index": 0,
+    "estimand": "beta_LGM on z_R_LGM",
+    "alternative": "beta_LGM > 0",
+    "covariance": "two-way source/target cluster-robust sandwich with dyad-intersection subtraction and finite-cluster corrections, using ttf.relational_dyadic.prepare_dyadic_regression and batch_primary_test",
+    "alpha_one_sided": 0.025,
+    "positive_decision": "beta_LGM > 0 AND one-sided p <= 0.025",
+    "otherwise_decision": "NO_POSITIVE_LGM_ASSOCIATION_UNDER_QUALIFIED_V03_DESIGN"
+  },
+  "serialization": {
+    "sequence_identity": false,
+    "edge_level_genetic_distance_vectors": false,
+    "dyad_level_T_st": true,
+    "R_LGM_R_present_and_declared_controls": true,
+    "pair_count_summary_by_species": true
+  },
+  "one_shot_rules": [
+    "Do not alter species, source/target roles, dyads, LGM/current relation definitions, controls, climate assets, genetic panel selection, Palearctic clip, graph rule, IBD adjustment, kernel, covariance, alpha or decision rule after nucleotide identity opening.",
+    "Do not replace R_LGM with a thresholded refugium overlap, another time slice, another palaeoclimate product, a taxonomic subgroup, interaction or alternate predictor after seeing T_st or beta_LGM.",
+    "No result-selection rerun is authorized.",
+    "A technical post-opening failure may be repaired only if the scientific bytes and rules are unchanged and the repair is frozen before the repaired result is inspected."
+  ],
+  "response_firewall": {
+    "v03_sequence_identity_opened": false,
+    "v03_pairwise_genetic_distances_opened": false,
+    "v03_T_st_computed": false,
+    "v03_beta_LGM_computed": false,
+    "v03_R_LGM_seen_when_this_rule_was_frozen": false,
+    "v03_TTF_Q_result_seen_when_this_rule_was_frozen": false
+  }
+}
