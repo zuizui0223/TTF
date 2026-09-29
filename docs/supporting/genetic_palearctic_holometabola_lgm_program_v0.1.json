@@ -49,7 +49,8 @@
       "species_disjoint": true,
       "no_taxonomic_rebalancing": true,
       "no_response_based_resplitting": true,
-      "primary_dyads": "complete source x target bipartite panel"
+      "primary_dyads": "complete source x target bipartite panel",
+      "post_sdm_policy": "Keep the frozen source/target assignment; drop ineligible species in place without resplitting or taxonomic balancing."
     }
   },
   "response_blind_feasibility_prescreen": {
@@ -119,6 +120,15 @@
       "binary_refugium_threshold": "10th percentile training-presence suitability, used only for sensitivity analysis",
       "primary_pairwise_refugial_relation": "Schoener D between normalized continuous 21-ka suitability surfaces on the union analysis grid",
       "sensitivity_pairwise_relation": "Jaccard overlap of thresholded 21-ka refugial cells"
+    },
+    "minimum_species_with_usable_sdm": 30,
+    "minimum_source_species_with_usable_sdm": 12,
+    "minimum_target_species_with_usable_sdm": 12,
+    "post_panel_failure_policy": {
+      "drop_failed_species_in_place": true,
+      "resplit_after_occurrence_or_sdm_failure": false,
+      "backfill": false,
+      "stop_if_thresholds_fail": "STOP_NOT_EVALUABLE_LGM_SDM_SUPPORT"
     }
   },
   "ttf_q_qualification": {
