@@ -6,10 +6,6 @@ on:
       - study/palearctic-insect-lgm-response-blind-v01
     paths:
       - "benchmarks/frozen/palearctic_insect_lgm_panel_binding_v0.1.json"
-      - "docs/supporting/palearctic_insect_lgm_refugia_v0.4.json"
-      - "src/ttf/palearctic_lgm.py"
-      - "scripts/build_palearctic_insect_lgm_relation.py"
-      - ".github/workflows/palearctic-insect-lgm-response-blind-relation.yml"
   workflow_dispatch:
 
 permissions:
