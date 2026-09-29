@@ -1,0 +1,224 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_nonlepidoptera_census_v0.2",
+  "status": "PASS_TO_FRESH_V02_GBIF_CENSUS",
+  "recorded_on": "2026-09-29",
+  "rule": "docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.2.json",
+  "source_survivors": "benchmarks/frozen/genetic_phase2_survivor_species_v0.1.json",
+  "exact_phylogatr_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5",
+  "realm_asset": {
+    "dataset": "RESOLVE Ecoregions 2017",
+    "zip_sha256": "be36d6209e443038d02e309f0447c6e7f2a62f5fe60c605ffe90d064952f2a60",
+    "workflow_run_id": 36509109425,
+    "artifact_id": 11008815910,
+    "artifact_digest_sha256": "afa82ac6ae7868c549ab90a3dfa502d81bd0481782ba26c98350d5e99ca2dd5c"
+  },
+  "chronology": {
+    "response_blind_feasibility_census_seen_before_freeze": true,
+    "genetic_response_used": false,
+    "LGM_relation_result_seen": false,
+    "TTF_Q_result_seen": false
+  },
+  "counts": {
+    "frozen_survivors": 211,
+    "nonlepidoptera_insecta": 93,
+    "retained_species": 23,
+    "retained_by_order": {
+      "Coleoptera": 14,
+      "Hymenoptera": 8,
+      "Diptera": 1
+    },
+    "directed_nonself_dyads_if_all_23_survive_external_data": 506
+  },
+  "retained_species": [
+    {
+      "species": "Alloxysta fulviceps",
+      "order": "Hymenoptera",
+      "family": "Charipidae",
+      "selected_unique_localities": 30,
+      "palearctic_localities": 24,
+      "palearctic_fraction": 0.8
+    },
+    {
+      "species": "Amara convexior",
+      "order": "Coleoptera",
+      "family": "Carabidae",
+      "selected_unique_localities": 17,
+      "palearctic_localities": 17,
+      "palearctic_fraction": 1
+    },
+    {
+      "species": "Ampedus sanguineus",
+      "order": "Coleoptera",
+      "family": "Ampedidae",
+      "selected_unique_localities": 28,
+      "palearctic_localities": 28,
+      "palearctic_fraction": 1
+    },
+    {
+      "species": "Anotylus rugosus",
+      "order": "Coleoptera",
+      "family": "Staphylinidae",
+      "selected_unique_localities": 33,
+      "palearctic_localities": 26,
+      "palearctic_fraction": 0.7878787878787878
+    },
+    {
+      "species": "Bombus lapidarius",
+      "order": "Hymenoptera",
+      "family": "Apidae",
+      "selected_unique_localities": 43,
+      "palearctic_localities": 42,
+      "palearctic_fraction": 0.9767441860465116
+    },
+    {
+      "species": "Dasytes niger",
+      "order": "Coleoptera",
+      "family": "Melyridae",
+      "selected_unique_localities": 21,
+      "palearctic_localities": 21,
+      "palearctic_fraction": 1
+    },
+    {
+      "species": "Drosophila subobscura",
+      "order": "Diptera",
+      "family": "Drosophilidae",
+      "selected_unique_localities": 30,
+      "palearctic_localities": 21,
+      "palearctic_fraction": 0.7
+    },
+    {
+      "species": "Euplectrus geometricida",
+      "order": "Hymenoptera",
+      "family": "Eulophidae",
+      "selected_unique_localities": 13,
+      "palearctic_localities": 13,
+      "palearctic_fraction": 1
+    },
+    {
+      "species": "Gaurotes virginea",
+      "order": "Coleoptera",
+      "family": "Cerambycidae",
+      "selected_unique_localities": 28,
+      "palearctic_localities": 28,
+      "palearctic_fraction": 1
+    },
+    {
+      "species": "Hemicrepidius hirtus",
+      "order": "Coleoptera",
+      "family": "Elateridae",
+      "selected_unique_localities": 16,
+      "palearctic_localities": 16,
+      "palearctic_fraction": 1
+    },
+    {
+      "species": "Hylaeus communis",
+      "order": "Hymenoptera",
+      "family": "Colletidae",
+      "selected_unique_localities": 16,
+      "palearctic_localities": 16,
+      "palearctic_fraction": 1
+    },
+    {
+      "species": "Microlestes maurus",
+      "order": "Coleoptera",
+      "family": "Carabidae",
+      "selected_unique_localities": 13,
+      "palearctic_localities": 13,
+      "palearctic_fraction": 1
+    },
+    {
+      "species": "Microlestes minutulus",
+      "order": "Coleoptera",
+      "family": "Carabidae",
+      "selected_unique_localities": 15,
+      "palearctic_localities": 14,
+      "palearctic_fraction": 0.9333333333333333
+    },
+    {
+      "species": "Monophadnus pallescens",
+      "order": "Hymenoptera",
+      "family": "Tenthredinidae",
+      "selected_unique_localities": 80,
+      "palearctic_localities": 61,
+      "palearctic_fraction": 0.7625
+    },
+    {
+      "species": "Nomada bifasciata",
+      "order": "Hymenoptera",
+      "family": "Apidae",
+      "selected_unique_localities": 12,
+      "palearctic_localities": 12,
+      "palearctic_fraction": 1
+    },
+    {
+      "species": "Oxypselaphus obscurus",
+      "order": "Coleoptera",
+      "family": "Carabidae",
+      "selected_unique_localities": 18,
+      "palearctic_localities": 17,
+      "palearctic_fraction": 0.9444444444444444
+    },
+    {
+      "species": "Philonthus cognatus",
+      "order": "Coleoptera",
+      "family": "Staphylinidae",
+      "selected_unique_localities": 41,
+      "palearctic_localities": 21,
+      "palearctic_fraction": 0.5121951219512195
+    },
+    {
+      "species": "Phyllotreta nemorum",
+      "order": "Coleoptera",
+      "family": "Chrysomelidae",
+      "selected_unique_localities": 14,
+      "palearctic_localities": 14,
+      "palearctic_fraction": 1
+    },
+    {
+      "species": "Picrostigeus recticauda",
+      "order": "Hymenoptera",
+      "family": "Ichneumonidae",
+      "selected_unique_localities": 17,
+      "palearctic_localities": 17,
+      "palearctic_fraction": 1
+    },
+    {
+      "species": "Pterostichus diligens",
+      "order": "Coleoptera",
+      "family": "Carabidae",
+      "selected_unique_localities": 23,
+      "palearctic_localities": 19,
+      "palearctic_fraction": 0.8260869565217391
+    },
+    {
+      "species": "Rhagonycha atra",
+      "order": "Coleoptera",
+      "family": "Cantharidae",
+      "selected_unique_localities": 13,
+      "palearctic_localities": 12,
+      "palearctic_fraction": 0.9230769230769231
+    },
+    {
+      "species": "Tenthredo zonula",
+      "order": "Hymenoptera",
+      "family": "Tenthredinidae",
+      "selected_unique_localities": 40,
+      "palearctic_localities": 37,
+      "palearctic_fraction": 0.925
+    },
+    {
+      "species": "Xantholinus linearis",
+      "order": "Coleoptera",
+      "family": "Staphylinidae",
+      "selected_unique_localities": 45,
+      "palearctic_localities": 18,
+      "palearctic_fraction": 0.4
+    }
+  ],
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_v02_T_st_computed": false,
+    "beta_LGM_computed": false
+  },
+  "next_step": "Acquire independent Palearctic GBIF occurrences for exactly these 23 species under a new v0.2 missingness contract; no backfill. If fewer than 20 remain, stop before LGM relation."
+}
