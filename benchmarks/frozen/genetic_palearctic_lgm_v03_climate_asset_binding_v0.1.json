@@ -1,0 +1,42 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_v03_climate_asset_binding_v0.1",
+  "status": "FROZEN_BEFORE_BOUND_V03_GBIF_RESULT_R_LGM_OR_TTF_Q_RESULT",
+  "frozen_on": "2026-09-29",
+  "parent_rule": "docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.3.json",
+  "reuse_reason": "Reuse exact response-blind CHELSA bytes already staged and byte-verified for TTF-Q climate characterization; no v0.3 ecological or genetic result was used to select these assets.",
+  "historical_trace21k": {
+    "artifact_id": 10791389409,
+    "download_zip_sha256": "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2",
+    "manifest_sha256": "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450",
+    "required_basenames": [
+      "CHELSA_TraCE21K_bio01_-190_V1.0.tif",
+      "CHELSA_TraCE21K_bio07_-190_V1.0.tif",
+      "CHELSA_TraCE21K_bio12_-190_V1.0.tif",
+      "CHELSA_TraCE21K_bio15_-190_V1.0.tif",
+      "CHELSA_TraCE21K_bio01_20_V1.0.tif",
+      "CHELSA_TraCE21K_bio07_20_V1.0.tif",
+      "CHELSA_TraCE21K_bio12_20_V1.0.tif",
+      "CHELSA_TraCE21K_bio15_20_V1.0.tif"
+    ]
+  },
+  "current_chelsa_v21": {
+    "artifact_id": 10791867875,
+    "download_zip_sha256": "724743d8666d32bc8717e52200a798369665c2f1965ba33021d3e5c68c5eff4c",
+    "manifest_sha256": "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450",
+    "required_basenames": [
+      "CHELSA_bio1_1981-2010_V.2.1.tif",
+      "CHELSA_bio7_1981-2010_V.2.1.tif",
+      "CHELSA_bio12_1981-2010_V.2.1.tif",
+      "CHELSA_bio15_1981-2010_V.2.1.tif"
+    ]
+  },
+  "selection_firewall": {
+    "v03_GBIF_aggregate_seen_for_asset_selection": false,
+    "v03_R_LGM_seen": false,
+    "v03_TTF_Q_result_seen": false,
+    "species_level_genetic_scores_used": false,
+    "pairwise_v03_T_st_computed": false,
+    "beta_LGM_computed": false
+  },
+  "substitution_after_result": false
+}
