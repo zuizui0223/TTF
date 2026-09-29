@@ -205,7 +205,18 @@
       "measurement_repeatability_icc_min": 0.7,
       "all_worlds_finite": true
     },
-    "rationale": "Opening requires at least the known-truth broad-reference-quality detectability domain; endpoint concentration remains a separately reported diagnostic rather than an effective sample-size gate."
+    "rationale": "Opening requires at least the known-truth broad-reference-quality detectability domain; endpoint concentration remains a separately reported diagnostic rather than an effective sample-size gate.",
+    "fixed_control_effects": {
+      "z_R_current": 0.1,
+      "z_geographic_coop": 0.1,
+      "centered_same_order": 0.04,
+      "centered_same_family": 0.04,
+      "z_abs_log_GBIF_count_ratio": 0.05
+    },
+    "source_random_slope_predictor": "z_geographic_coop",
+    "target_random_slope_predictor": "centered_same_order",
+    "response_transform": "tanh",
+    "synthetic_inheritance": "Same nuisance-effect magnitudes and source/target random-slope structure as the validated TTF-Q historical case, dropping only the unused same-class control."
   },
   "authorized_response_if_and_only_if_qualified": {
     "response": "freshly recomputed source-to-target post-IBD spatial genetic transfer score T_st restricted to the frozen Palearctic-insect panel and its new hash-assigned roles",
