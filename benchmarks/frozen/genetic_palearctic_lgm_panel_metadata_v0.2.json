@@ -1,0 +1,221 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_panel_metadata_v0.2",
+  "status": "FROZEN_RESPONSE_BLIND_NONLEPIDOPTERA_PANEL_METADATA",
+  "recorded_on": "2026-09-29",
+  "species_count": 23,
+  "dyad_geometry": "all directed non-self ordered pairs; every species may appear as source and target",
+  "rows": [
+    {
+      "species": "Alloxysta fulviceps",
+      "order": "Hymenoptera",
+      "family": "Charipidae",
+      "selected_unique_localities": 30,
+      "palearctic_localities": 24,
+      "palearctic_fraction": 0.8,
+      "class": "Insecta"
+    },
+    {
+      "species": "Amara convexior",
+      "order": "Coleoptera",
+      "family": "Carabidae",
+      "selected_unique_localities": 17,
+      "palearctic_localities": 17,
+      "palearctic_fraction": 1,
+      "class": "Insecta"
+    },
+    {
+      "species": "Ampedus sanguineus",
+      "order": "Coleoptera",
+      "family": "Ampedidae",
+      "selected_unique_localities": 28,
+      "palearctic_localities": 28,
+      "palearctic_fraction": 1,
+      "class": "Insecta"
+    },
+    {
+      "species": "Anotylus rugosus",
+      "order": "Coleoptera",
+      "family": "Staphylinidae",
+      "selected_unique_localities": 33,
+      "palearctic_localities": 26,
+      "palearctic_fraction": 0.7878787878787878,
+      "class": "Insecta"
+    },
+    {
+      "species": "Bombus lapidarius",
+      "order": "Hymenoptera",
+      "family": "Apidae",
+      "selected_unique_localities": 43,
+      "palearctic_localities": 42,
+      "palearctic_fraction": 0.9767441860465116,
+      "class": "Insecta"
+    },
+    {
+      "species": "Dasytes niger",
+      "order": "Coleoptera",
+      "family": "Melyridae",
+      "selected_unique_localities": 21,
+      "palearctic_localities": 21,
+      "palearctic_fraction": 1,
+      "class": "Insecta"
+    },
+    {
+      "species": "Drosophila subobscura",
+      "order": "Diptera",
+      "family": "Drosophilidae",
+      "selected_unique_localities": 30,
+      "palearctic_localities": 21,
+      "palearctic_fraction": 0.7,
+      "class": "Insecta"
+    },
+    {
+      "species": "Euplectrus geometricida",
+      "order": "Hymenoptera",
+      "family": "Eulophidae",
+      "selected_unique_localities": 13,
+      "palearctic_localities": 13,
+      "palearctic_fraction": 1,
+      "class": "Insecta"
+    },
+    {
+      "species": "Gaurotes virginea",
+      "order": "Coleoptera",
+      "family": "Cerambycidae",
+      "selected_unique_localities": 28,
+      "palearctic_localities": 28,
+      "palearctic_fraction": 1,
+      "class": "Insecta"
+    },
+    {
+      "species": "Hemicrepidius hirtus",
+      "order": "Coleoptera",
+      "family": "Elateridae",
+      "selected_unique_localities": 16,
+      "palearctic_localities": 16,
+      "palearctic_fraction": 1,
+      "class": "Insecta"
+    },
+    {
+      "species": "Hylaeus communis",
+      "order": "Hymenoptera",
+      "family": "Colletidae",
+      "selected_unique_localities": 16,
+      "palearctic_localities": 16,
+      "palearctic_fraction": 1,
+      "class": "Insecta"
+    },
+    {
+      "species": "Microlestes maurus",
+      "order": "Coleoptera",
+      "family": "Carabidae",
+      "selected_unique_localities": 13,
+      "palearctic_localities": 13,
+      "palearctic_fraction": 1,
+      "class": "Insecta"
+    },
+    {
+      "species": "Microlestes minutulus",
+      "order": "Coleoptera",
+      "family": "Carabidae",
+      "selected_unique_localities": 15,
+      "palearctic_localities": 14,
+      "palearctic_fraction": 0.9333333333333333,
+      "class": "Insecta"
+    },
+    {
+      "species": "Monophadnus pallescens",
+      "order": "Hymenoptera",
+      "family": "Tenthredinidae",
+      "selected_unique_localities": 80,
+      "palearctic_localities": 61,
+      "palearctic_fraction": 0.7625,
+      "class": "Insecta"
+    },
+    {
+      "species": "Nomada bifasciata",
+      "order": "Hymenoptera",
+      "family": "Apidae",
+      "selected_unique_localities": 12,
+      "palearctic_localities": 12,
+      "palearctic_fraction": 1,
+      "class": "Insecta"
+    },
+    {
+      "species": "Oxypselaphus obscurus",
+      "order": "Coleoptera",
+      "family": "Carabidae",
+      "selected_unique_localities": 18,
+      "palearctic_localities": 17,
+      "palearctic_fraction": 0.9444444444444444,
+      "class": "Insecta"
+    },
+    {
+      "species": "Philonthus cognatus",
+      "order": "Coleoptera",
+      "family": "Staphylinidae",
+      "selected_unique_localities": 41,
+      "palearctic_localities": 21,
+      "palearctic_fraction": 0.5121951219512195,
+      "class": "Insecta"
+    },
+    {
+      "species": "Phyllotreta nemorum",
+      "order": "Coleoptera",
+      "family": "Chrysomelidae",
+      "selected_unique_localities": 14,
+      "palearctic_localities": 14,
+      "palearctic_fraction": 1,
+      "class": "Insecta"
+    },
+    {
+      "species": "Picrostigeus recticauda",
+      "order": "Hymenoptera",
+      "family": "Ichneumonidae",
+      "selected_unique_localities": 17,
+      "palearctic_localities": 17,
+      "palearctic_fraction": 1,
+      "class": "Insecta"
+    },
+    {
+      "species": "Pterostichus diligens",
+      "order": "Coleoptera",
+      "family": "Carabidae",
+      "selected_unique_localities": 23,
+      "palearctic_localities": 19,
+      "palearctic_fraction": 0.8260869565217391,
+      "class": "Insecta"
+    },
+    {
+      "species": "Rhagonycha atra",
+      "order": "Coleoptera",
+      "family": "Cantharidae",
+      "selected_unique_localities": 13,
+      "palearctic_localities": 12,
+      "palearctic_fraction": 0.9230769230769231,
+      "class": "Insecta"
+    },
+    {
+      "species": "Tenthredo zonula",
+      "order": "Hymenoptera",
+      "family": "Tenthredinidae",
+      "selected_unique_localities": 40,
+      "palearctic_localities": 37,
+      "palearctic_fraction": 0.925,
+      "class": "Insecta"
+    },
+    {
+      "species": "Xantholinus linearis",
+      "order": "Coleoptera",
+      "family": "Staphylinidae",
+      "selected_unique_localities": 45,
+      "palearctic_localities": 18,
+      "palearctic_fraction": 0.4,
+      "class": "Insecta"
+    }
+  ],
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_v02_T_st_computed": false,
+    "beta_LGM_computed": false
+  }
+}
