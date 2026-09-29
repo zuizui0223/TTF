@@ -128,7 +128,10 @@
     "clamping": "each standardized climate predictor clipped to the pooled current-background 0.5th-99.5th percentile before prediction",
     "suitability_normalization": "clip numerical underflow then normalize positive predictions to sum 1 across Palearctic terrestrial cells separately for current and LGM projections",
     "background_rationale": "Presence-only records share collection bias across the same broad insect target group; target-group background is frozen before any SDM relation, TTF-Q qualification, or subpanel genetic response.",
-    "presence_background_interpretation": "Relative suitability / relative intensity only; no prevalence claim."
+    "presence_background_interpretation": "Relative suitability / relative intensity only; no prevalence claim.",
+    "presence_points": "For each formally eligible species, use only its retained response-blind GBIF occurrences whose coordinates fall inside the formal Palearctic terrestrial-realm polygon; out-of-realm retained points contribute only to the 0.80 eligibility fraction and are excluded from SDM fitting.",
+    "minimum_palearctic_presence_points": 24,
+    "minimum_palearctic_presence_points_rationale": "A species has at least 30 retained GBIF points and at least 0.80 Palearctic fraction, so the frozen eligibility rule implies at least 24 in-realm presence points; no additional post-census sample-size tuning is authorized."
   },
   "primary_relation": {
     "name": "R_LGM",
