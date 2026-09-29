@@ -149,7 +149,7 @@ def main() -> int:
     a2=mde(2.0)
     a3=mde(3.0)
     opening=(
-        float(repeatability.icc)>=float(domain["measurement_repeatability_icc_min"])
+        float(repeatability.repeatability_icc)>=float(domain["measurement_repeatability_icc_min"])
         and calibration_all
         and a2 is not None and float(a2)<=float(domain["evaluable_grid_mde_A2_max"])
         and a3 is not None and float(a3)<=float(domain["evaluable_grid_mde_A3_max"])
@@ -198,7 +198,7 @@ def main() -> int:
     args.output.write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
     print(json.dumps({
         "status":status,
-        "repeatability_icc":repeatability.icc,
+        "repeatability_icc":repeatability.repeatability_icc,
         "A2_mde":a2,
         "A3_mde":a3,
         "subpanel_response_authorized":bool(opening),
