@@ -1,0 +1,67 @@
+{
+  "schema": "ttf_palearctic_insect_lgm_eligibility_v0.2",
+  "status": "FROZEN_BEFORE_AUTHORITATIVE_WWF_REALM_ASSIGNMENT_AND_BEFORE_GBIF_CENSUS",
+  "frozen_on": "2026-09-29",
+  "supersedes": "docs/supporting/palearctic_insect_lgm_eligibility_v0.1.json",
+  "supersession_reason": "Technical ordering repair before any authoritative realm or GBIF result: the balanced source/target split must be applied after response-blind SDM occurrence admissibility, otherwise deterministic occurrence failures could create an avoidably imbalanced dyadic geometry.",
+  "scientific_filter_unchanged": {
+    "required_class": "Insecta",
+    "required_realm": "Palearctic",
+    "minimum_fraction_of_genetic_panel_localities_in_realm": 0.8,
+    "minimum_number_of_genetic_panel_localities_in_realm": 12,
+    "terrestrial_allowed_orders": [
+      "Lepidoptera",
+      "Hymenoptera",
+      "Coleoptera",
+      "Orthoptera",
+      "Psocodea"
+    ],
+    "excluded_coleoptera_families": [
+      "Dytiscidae",
+      "Gyrinidae",
+      "Haliplidae",
+      "Hydrophilidae",
+      "Elmidae",
+      "Dryopidae",
+      "Noteridae",
+      "Hydraenidae",
+      "Scirtidae"
+    ]
+  },
+  "stage_A_biological_eligibility": {
+    "realm_source": "WWF (2004) Simplified Biogeographical Realms of the World / UNEP-WCMC FeatureServer",
+    "realm_assignment_uses": "exact response-blind frozen genetic-panel localities only",
+    "no_manual_species_rescue": true
+  },
+  "stage_B_sdm_occurrence_admissibility": {
+    "source": "GBIF",
+    "years": [
+      2010,
+      2026
+    ],
+    "coordinate_required": true,
+    "exact_coordinate_deduplication": true,
+    "thinning_km": 10,
+    "cap_per_species": 200,
+    "minimum_after_thinning": 30,
+    "failed_species": "remove deterministically before role split; do not backfill",
+    "genetic_outcome_used": false
+  },
+  "stage_C_role_split": {
+    "namespace": "palearctic-insect-lgm-v0.2",
+    "rule": "Sort Stage-B survivors by SHA256(namespace+'|'+species); lower half = source, upper half = target.",
+    "minimum_sources": 12,
+    "minimum_targets": 12,
+    "failure": "NOT_EVALUABLE_SUBPANEL_GEOMETRY",
+    "uses_genetic_outcome": false
+  },
+  "stage_D_sdm_fit": {
+    "rule": "Fit the prespecified SDM for every Stage-C species. Cross-validation metrics are diagnostics and cannot be used to drop individual species post-split.",
+    "numerical_failure": "If any required species cannot produce a finite model/surface under the fixed method, stop the whole program as NOT_EVALUABLE_SDM_FIT rather than pruning or backfilling."
+  },
+  "response_firewall": {
+    "species_level_phase4_scores_used": false,
+    "pairwise_genetic_distances_used": false,
+    "break_surfaces_used": false
+  }
+}
