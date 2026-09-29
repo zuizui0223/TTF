@@ -1,0 +1,40 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_v03_shard4_transport2_amendment_v0.1",
+  "status": "FROZEN_BEFORE_TRANSPORT2_RESULT_AND_BEFORE_FAILOVER1_RESULT",
+  "frozen_on": "2026-09-29",
+  "parent_failure": {
+    "run_id": 36529160168,
+    "job_id": 109279746004,
+    "conclusion": "cancelled",
+    "acquisition_started_at": "2026-09-29T06:17:05Z",
+    "cancelled_at": "2026-09-29T07:47:05Z",
+    "failure_mode": "90-minute sequential GBIF transport timeout before shard artifact creation"
+  },
+  "first_failover": {
+    "run_id": 36538598112,
+    "result_seen_before_this_amendment": false,
+    "authority": "SUPERSEDED_BEFORE_RESULT_BY_TRANSPORT2",
+    "reason": "It retained the same sequential high-offset pagination structure that caused the observed parent technical timeout."
+  },
+  "transport2": {
+    "scientific_page_offsets_unchanged": true,
+    "GBIF_queries_unchanged": true,
+    "page_results_processed_in_frozen_offset_order": true,
+    "parallel_page_requests_per_species": 4,
+    "species_processed_in_frozen_shard_order": true,
+    "exact_coordinate_deduplication_unchanged": true,
+    "occurrence_priority_unchanged": true,
+    "10km_thinning_unchanged": true,
+    "maximum_200_unchanged": true,
+    "minimum_30_unchanged": true,
+    "authoritative_if_execution_completes": true,
+    "no_comparison_to_failover1_ecological_result": true
+  },
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_v03_T_st_computed": false,
+    "beta_LGM_computed": false,
+    "R_LGM_used": false,
+    "TTF_Q_used": false
+  }
+}
