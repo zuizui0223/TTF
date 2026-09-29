@@ -7,10 +7,16 @@ import json
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from scripts.acquire_palearctic_lgm_occurrences import (
-    in_palearctic,
-    load_palearctic_geometry,
-)
+try:
+    from scripts.acquire_palearctic_lgm_occurrences import (
+        in_palearctic,
+        load_palearctic_geometry,
+    )
+except ModuleNotFoundError:
+    from acquire_palearctic_lgm_occurrences import (
+        in_palearctic,
+        load_palearctic_geometry,
+    )
 from ttf.gbif_transport import get_json
 from ttf.relational_environment import (
     deterministic_page_offsets,
