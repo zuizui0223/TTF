@@ -27,11 +27,18 @@
     "standardization": "fit from present-day Palearctic-core land cells and reuse unchanged for LGM projection"
   },
   "sdm": {
-    "family": "regularized presence-background logistic climate model",
-    "features": "standardized linear and quadratic terms for the four frozen climate variables; no post-response feature search",
-    "background": "deterministic sample of Palearctic-core non-NA CHELSA land cells inside a 500-km buffer of the species occurrence convex hull",
-    "regularization": "single frozen ridge penalty selected before genetic response; no species-specific tuning from genetic outcomes",
-    "response_blind_quality_check": "spatially blocked occurrence-vs-background discrimination and non-degenerate LGM projection; failures remove only predictor-inadmissible species before TTF-Q"
+    "family": "regularized presence-background logistic climate SDM",
+    "prediction_grid": "0.5-degree cell centres over the frozen Palearctic-core box; retain only cells with finite values for all four required current and LGM climate variables",
+    "features": "standardized linear and squared terms for bio01, bio07, bio12 and bio15; no interactions",
+    "standardization": "per species from the current-climate accessible-background cells; the exact same means and SDs are reused for occurrences, current grid and LGM grid",
+    "background_accessibility": "grid cell centre is within 500 km great-circle distance of at least one retained GBIF occurrence",
+    "maximum_background_cells": 2000,
+    "background_subsampling": "if >2000 cells qualify, retain the first 2000 by SHA256('<species>|<lat>|<lon>')",
+    "ridge_logistic_C": 1,
+    "solver": "deterministic LBFGS; balanced presence/background weights",
+    "performance_metrics": "record present-climate occurrence-vs-background ROC-AUC descriptively only; AUC cannot select species, features, C, grid resolution or threshold",
+    "numeric_gate": "model fit finite; both current and LGM grid predictions finite and non-constant",
+    "failure": "PREDICTOR_INADMISSIBLE_SDM_NUMERICAL; no response-based replacement or retuning"
   },
   "pairwise_primary_relation": {
     "name": "R_LGM",
@@ -40,7 +47,8 @@
       0,
       1
     ],
-    "directionality": "symmetric predictor copied onto both source->target directions because the later genetic cross-prediction response is directed"
+    "directionality": "symmetric predictor copied onto both source->target directions because the later genetic cross-prediction response is directed",
+    "grid_resolution_degrees": 0.5
   },
   "declared_controls": [
     "present-day SDM Schoener D on the same grid",
