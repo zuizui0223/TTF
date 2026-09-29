@@ -6,6 +6,7 @@ on:
       - method/palearctic-lgm-response-blind-v0-1
     paths:
       - "benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_trigger_v0.1.json"
+      - ".github/workflows/palearctic-lgm-climate-ttfq.yml"
   workflow_dispatch:
 
 permissions:
@@ -14,12 +15,13 @@ permissions:
 
 concurrency:
   group: palearctic-lgm-v03-response-blind-qualification-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   qualify:
     runs-on: ubuntu-latest
     timeout-minutes: 720
+
     steps:
       - uses: actions/checkout@v4
 
@@ -32,184 +34,95 @@ jobs:
           python -m pip install -e .
           python -m pip install "rasterio>=1.4,<2"
 
-      - name: Verify v0.3 response firewall and producer binding
+      - name: Verify frozen v0.3 qualification authorization
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
+
           panel=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json").read_text())
           binding=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_producer_binding_v0.1.json").read_text())
-          assembly_rule=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_assembly_rule_v0.1.json").read_text())
-          shard4_auth=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_authority_v0.1.json").read_text())
+          assembly=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_assembly_rule_v0.1.json").read_text())
+          shard4=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_authority_v0.1.json").read_text())
+          trigger=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_trigger_v0.1.json").read_text())
           rule=json.loads(Path("docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json").read_text())
-          climate_assets=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_climate_asset_binding_v0.1.json").read_text())
-          trigger_path=Path("benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_trigger_v0.1.json")
-          if not trigger_path.is_file():
-              raise SystemExit("qualification trigger receipt is absent")
-          trigger=json.loads(trigger_path.read_text())
+          climate=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_climate_asset_binding_v0.1.json").read_text())
+
           assert trigger["schema"]=="ttf_genetic_palearctic_lgm_v03_qualification_trigger_v0.1"
           assert trigger["status"]=="AUTHORIZE_RESPONSE_BLIND_V03_QUALIFICATION"
           assert trigger["occurrence_input_mode"]=="REASSEMBLE_EXACT_SIX_AUTHORITATIVE_SHARDS"
+          assert trigger["authorized_steps"]["open_genetic_response"] is False
+          assert trigger["response_firewall"]["R_LGM_seen_before_trigger"] is False
+          assert trigger["response_firewall"]["TTF_Q_result_seen_before_trigger"] is False
+
           assert panel["species_count"]==23
           assert panel["source_clusters"]==11
           assert panel["target_clusters"]==12
           assert panel["dyads"]==132
+          assert rule["role_assignment"]["species_may_occupy_both_roles"] is False
+
           assert binding["producer"]["workflow_run_id"]==36529160168
           assert binding["producer"]["head_sha"]=="80a0cf7ac4cb672b9525ce15f7f9f5762e05af6a"
           assert trigger["parent_run_id"]==binding["producer"]["workflow_run_id"]
-          assert trigger["shard4_artifact_id"]==shard4_auth["artifact_id"]
-          assert trigger["shard4_artifact_digest_sha256"]==shard4_auth["artifact_digest_sha256"]
-          assert trigger["expected_external_gate"]["admissible_species"]==21
-          assert trigger["expected_external_gate"]["source_clusters"]==10
-          assert trigger["expected_external_gate"]["target_clusters"]==11
-          assert trigger["expected_external_gate"]["directed_dyads"]==110
-          assert trigger["response_firewall"]["pairwise_v03_T_st_computed"] is False
-          assert trigger["response_firewall"]["beta_LGM_computed"] is False
-          assert rule["role_assignment"]["species_may_occupy_both_roles"] is False
+
+          assert shard4["source"]=="transport3"
+          assert trigger["shard4_artifact_id"]==shard4["artifact_id"]
+          assert trigger["shard4_artifact_digest_sha256"]==shard4["artifact_digest_sha256"]
+
+          expected=trigger["expected_external_gate"]
+          assert expected["formal_species"]==23
+          assert expected["admissible_species"]==21
+          assert expected["source_clusters"]==10
+          assert expected["target_clusters"]==11
+          assert expected["directed_dyads"]==110
+          assert expected["request_errors"]==0
+
+          assert set(assembly["fixed_parent_shards"])=={"0","1","2","3","5"}
+          assert climate["historical_trace21k"]["artifact_id"]==10791389409
+          assert climate["current_chelsa_v21"]["artifact_id"]==10791867875
+          assert climate["substitution_after_result"] is False
+
           assert all(v is False for v in panel["response_firewall"].values())
           assert all(v is False for v in binding["response_firewall"].values())
-          assert climate_assets["historical_trace21k"]["artifact_id"]==10791389409
-          assert climate_assets["current_chelsa_v21"]["artifact_id"]==10791867875
-          assert all(v is False for v in climate_assets["selection_firewall"].values())
-          assert climate_assets["substitution_after_result"] is False
-          print({"panel":23,"sources":11,"targets":12,"bound_run":binding["producer"]["workflow_run_id"],"climate_assets":"byte_frozen"})
+          assert all(v is False for v in climate["selection_firewall"].values())
+          print({
+              "panel":23,
+              "external_gate":"21 species / 10 source / 11 target / 110 dyads",
+              "shard4_source":"transport3",
+              "climate_assets":"byte-frozen",
+              "genetic_response_open":False,
+          })
           PY
 
-      - name: Reassemble exact six authoritative GBIF shards and Palearctic realm
+      - name: Reassemble exact six authoritative GBIF shards
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           mkdir -p input/shards input/gbif input/realm raw
 
-          python - <<'PY' > /tmp/shards.tsv
+          python - <<'PY' > /tmp/shards.txt
           import json
-          rule=json.load(open("benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_assembly_rule_v0.1.json"))
+          assembly=json.load(open("benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_assembly_rule_v0.1.json"))
           trigger=json.load(open("benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_trigger_v0.1.json"))
           for shard in ("0","1","2","3","5"):
-              x=rule["fixed_parent_shards"][shard]
-              print(shard,x["artifact_id"],x["digest"].split(":",1)[1],sep="\t")
-          print("4",trigger["shard4_artifact_id"],trigger["shard4_artifact_digest_sha256"].split(":",1)[1],sep="\t")
+              x=assembly["fixed_parent_shards"][shard]
+              print(shard, x["artifact_id"], x["digest"].split(":",1)[1])
+          print("4", trigger["shard4_artifact_id"], trigger["shard4_artifact_digest_sha256"].split(":",1)[1])
           PY
 
-          while IFS=
-      - name: Bind exact v0.2 occurrence bytes to frozen v0.3 roles
-        id: bind
-        run: |
-          set -euo pipefail
-          mkdir -p results/v03
-          python scripts/bind_palearctic_lgm_occurrences_v03.py             --input-csv input/gbif/palearctic_lgm_occurrences_v0.2.csv             --input-summary input/gbif/palearctic_lgm_occurrences_v0.2.json             --panel-metadata benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json             --external-rule docs/supporting/genetic_palearctic_lgm_external_data_rule_v0.3.json             --binding benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_producer_binding_v0.1.json             --output-csv results/v03/palearctic_lgm_occurrences_v0.3.csv             --output-summary results/v03/palearctic_lgm_occurrences_v0.3.json
-          python - <<'PY'
-          import json,os
-          p=json.load(open("results/v03/palearctic_lgm_occurrences_v0.3.json"))
-          assert all(v is False for v in p["response_firewall"].values()),p
-          passed=p["status"]=="PASS_TO_V03_CURRENT_LGM_CLIMATE_EXTRACTION"
-          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
-              f.write(f"passed={'true' if passed else 'false'}\n")
-          e=json.load(open("benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_trigger_v0.1.json"))["expected_external_gate"]
-          assert p["admissible_species"]==e["admissible_species"]
-          assert p["source_clusters"]==e["source_clusters"]
-          assert p["target_clusters"]==e["target_clusters"]
-          assert p["directed_dyads"]==e["directed_dyads"]
-          print({"status":p["status"],"species":p["admissible_species"],"source_clusters":p["source_clusters"],"target_clusters":p["target_clusters"],"directed_dyads":p["directed_dyads"]})
-          PY
-
-      - name: Download exact staged CHELSA current and TraCE21k assets
-        if: steps.bind.outputs.passed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          mkdir -p input/chelsa-historical input/chelsa-current
-
-          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10791389409/zip" > /tmp/historical.zip
-          echo "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2  /tmp/historical.zip" | sha256sum -c -
-          unzip -q /tmp/historical.zip -d input/chelsa-historical
-          rm -f /tmp/historical.zip
-
-          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10791867875/zip" > /tmp/current.zip
-          echo "724743d8666d32bc8717e52200a798369665c2f1965ba33021d3e5c68c5eff4c  /tmp/current.zip" | sha256sum -c -
-          unzip -q /tmp/current.zip -d input/chelsa-current
-          rm -f /tmp/current.zip
-
-          echo "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450  input/chelsa-historical/manifest.json" | sha256sum -c -
-          echo "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450  input/chelsa-current/manifest.json" | sha256sum -c -
-
-          for f in             input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_20_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_20_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_20_V1.0.tif             input/chelsa-current/current/CHELSA_bio1_1981-2010_V.2.1.tif             input/chelsa-current/current/CHELSA_bio7_1981-2010_V.2.1.tif             input/chelsa-current/current/CHELSA_bio12_1981-2010_V.2.1.tif             input/chelsa-current/current/CHELSA_bio15_1981-2010_V.2.1.tif; do
-              test -f "$f"
-          done
-
-      - name: Prepare frozen v0.3 current/LGM climate inputs
-        if: steps.bind.outputs.passed == 'true'
-        id: climate
-        run: |
-          set -euo pipefail
-          python scripts/prepare_palearctic_lgm_climate_inputs_v03.py             --occurrences results/v03/palearctic_lgm_occurrences_v0.3.csv             --panel-metadata benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json             --realm-geojson input/realm/palearctic_union.geojson             --climate-rule docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.3.json             --current-bio1 input/chelsa-current/current/CHELSA_bio1_1981-2010_V.2.1.tif             --current-bio7 input/chelsa-current/current/CHELSA_bio7_1981-2010_V.2.1.tif             --current-bio12 input/chelsa-current/current/CHELSA_bio12_1981-2010_V.2.1.tif             --current-bio15 input/chelsa-current/current/CHELSA_bio15_1981-2010_V.2.1.tif             --lgm-bio1 input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif             --lgm-bio7 input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_-190_V1.0.tif             --lgm-bio12 input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_-190_V1.0.tif             --lgm-bio15 input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_-190_V1.0.tif             --trace0-bio1 input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif             --trace0-bio7 input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_20_V1.0.tif             --trace0-bio12 input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_20_V1.0.tif             --trace0-bio15 input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_20_V1.0.tif             --output-occurrence-climate results/v03/palearctic_lgm_occurrence_climate_v0.3.csv             --output-grid results/v03/palearctic_lgm_climate_grid_v0.3.npz             --output-summary results/v03/palearctic_lgm_climate_inputs_v0.3.json
-          python - <<'PY'
-          import json,os
-          p=json.load(open("results/v03/palearctic_lgm_climate_inputs_v0.3.json"))
-          assert all(v is False for v in p["response_firewall"].values()),p
-          passed=p["status"]=="PASS_TO_V03_RESPONSE_BLIND_LGM_RELATION_BUILD"
-          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
-              f.write(f"passed={'true' if passed else 'false'}\n")
-          print({"status":p["status"],"species":p.get("climate_valid_species"),"source_clusters":p.get("source_clusters"),"target_clusters":p.get("target_clusters")})
-          PY
-
-      - name: Build response-blind v0.3 LGM relation
-        if: steps.climate.outputs.passed == 'true'
-        id: relation
-        run: |
-          set -euo pipefail
-          python scripts/build_palearctic_lgm_relation_v03.py             --panel-metadata benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json             --occurrence-climate-csv results/v03/palearctic_lgm_occurrence_climate_v0.3.csv             --grid-npz results/v03/palearctic_lgm_climate_grid_v0.3.npz             --rule docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json             --climate-rule docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.3.json             --output-npz results/v03/palearctic_lgm_relation_design_v0.3.npz             --output-summary results/v03/palearctic_lgm_relation_design_v0.3.json
-          python - <<'PY'
-          import json,os
-          p=json.load(open("results/v03/palearctic_lgm_relation_design_v0.3.json"))
-          assert all(v is False for v in p["response_firewall"].values()),p
-          passed=p["status"]=="PASS_TO_V03_TTF_Q_RESPONSE_BLIND_CHARACTERIZATION"
-          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
-              f.write(f"passed={'true' if passed else 'false'}\n")
-          print({"status":p["status"],"dyads":p.get("dyads"),"R_LGM":p.get("R_LGM"),"R_present":p.get("R_present")})
-          PY
-
-      - name: Run frozen v0.3 TTF-Q before any genetic response
-        if: steps.relation.outputs.passed == 'true'
-        run: |
-          set -euo pipefail
-          python scripts/run_palearctic_lgm_ttf_q_v03.py             --design-npz results/v03/palearctic_lgm_relation_design_v0.3.npz             --design-summary results/v03/palearctic_lgm_relation_design_v0.3.json             --execution docs/supporting/genetic_palearctic_lgm_ttf_q_execution_v0.3.json             --parent-rule docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json             --output results/v03/palearctic_lgm_ttf_q_result_v0.3.json
-          python - <<'PY'
-          import json
-          p=json.load(open("results/v03/palearctic_lgm_ttf_q_result_v0.3.json"))
-          assert all(v is False for v in p["response_firewall"].values()),p
-          assert p["status"] in {
-              "PASS_TO_ONE_SHOT_V03_SUBPANEL_GENETIC_RESPONSE",
-              "NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_LGM_RELATION",
-          },p["status"]
-          print({
-              "status":p["status"],
-              "opening_gates":p["opening_gates"],
-              "information":p["information"],
-              "signal_concentration":p["signal_concentration"],
-          })
-          PY
-
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: palearctic-lgm-v03-response-blind-qualification
-          path: results/v03/
-          retention-days: 30
-          if-no-files-found: warn
-\t' read -r shard artifact sha; do
+          while read -r shard artifact sha; do
             gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact/zip" > "raw/shard_${shard}.zip"
             echo "$sha  raw/shard_${shard}.zip" | sha256sum -c -
             mkdir -p "raw/shard_${shard}"
             unzip -q "raw/shard_${shard}.zip" -d "raw/shard_${shard}"
             occ="$(find "raw/shard_${shard}" -type f -name "occurrences_${shard}.csv" -print -quit)"
             led="$(find "raw/shard_${shard}" -type f -name "ledger_${shard}.json" -print -quit)"
-            test -n "$occ" && test -n "$led"
+            test -n "$occ"
+            test -n "$led"
             cp "$occ" "input/shards/occurrences_${shard}.csv"
             cp "$led" "input/shards/ledger_${shard}.json"
-          done < /tmp/shards.tsv
+          done < /tmp/shards.txt
 
           test "$(find input/shards -type f | wc -l)" -eq 12
 
@@ -222,30 +135,44 @@ jobs:
           e=t["expected_external_gate"]
           assert p["status"]=="PASS_TO_V02_CURRENT_LGM_CLIMATE_EXTRACTION",p
           assert p["admissible_species"]==e["admissible_species"]
+          assert len(p["failed_occurrence_species"])==2
           assert not p["request_error_species"]
-          print({"v02_aggregate_status":p["status"],"admissible_species":p["admissible_species"]})
+          print({
+              "status":p["status"],
+              "admissible_species":p["admissible_species"],
+              "failed":p["failed_occurrence_species"],
+          })
           PY
 
           gh run download 36529160168             --repo "$GITHUB_REPOSITORY"             --name palearctic-realm-union-v02             --dir input/realm
-
-          test -f input/gbif/palearctic_lgm_occurrences_v0.2.csv
-          test -f input/gbif/palearctic_lgm_occurrences_v0.2.json
           test -f input/realm/palearctic_union.geojson
 
-      - name: Bind exact v0.2 occurrence bytes to frozen v0.3 roles
+      - name: Bind exact occurrence bytes to frozen v0.3 roles
         id: bind
         run: |
           set -euo pipefail
           mkdir -p results/v03
           python scripts/bind_palearctic_lgm_occurrences_v03.py             --input-csv input/gbif/palearctic_lgm_occurrences_v0.2.csv             --input-summary input/gbif/palearctic_lgm_occurrences_v0.2.json             --panel-metadata benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json             --external-rule docs/supporting/genetic_palearctic_lgm_external_data_rule_v0.3.json             --binding benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_producer_binding_v0.1.json             --output-csv results/v03/palearctic_lgm_occurrences_v0.3.csv             --output-summary results/v03/palearctic_lgm_occurrences_v0.3.json
+
           python - <<'PY'
           import json,os
           p=json.load(open("results/v03/palearctic_lgm_occurrences_v0.3.json"))
+          e=json.load(open("benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_trigger_v0.1.json"))["expected_external_gate"]
           assert all(v is False for v in p["response_firewall"].values()),p
-          passed=p["status"]=="PASS_TO_V03_CURRENT_LGM_CLIMATE_EXTRACTION"
+          assert p["status"]=="PASS_TO_V03_CURRENT_LGM_CLIMATE_EXTRACTION",p
+          assert p["admissible_species"]==e["admissible_species"]
+          assert p["source_clusters"]==e["source_clusters"]
+          assert p["target_clusters"]==e["target_clusters"]
+          assert p["directed_dyads"]==e["directed_dyads"]
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
-              f.write(f"passed={'true' if passed else 'false'}\n")
-          print({"status":p["status"],"species":p["admissible_species"],"source_clusters":p["source_clusters"],"target_clusters":p["target_clusters"]})
+              f.write("passed=true\n")
+          print({
+              "status":p["status"],
+              "species":p["admissible_species"],
+              "source_clusters":p["source_clusters"],
+              "target_clusters":p["target_clusters"],
+              "directed_dyads":p["directed_dyads"],
+          })
           PY
 
       - name: Download exact staged CHELSA current and TraCE21k assets
@@ -269,16 +196,18 @@ jobs:
           echo "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450  input/chelsa-historical/manifest.json" | sha256sum -c -
           echo "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450  input/chelsa-current/manifest.json" | sha256sum -c -
 
-          for f in             input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_20_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_20_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_20_V1.0.tif             input/chelsa-current/current/CHELSA_bio1_1981-2010_V.2.1.tif             input/chelsa-current/current/CHELSA_bio7_1981-2010_V.2.1.tif             input/chelsa-current/current/CHELSA_bio12_1981-2010_V.2.1.tif             input/chelsa-current/current/CHELSA_bio15_1981-2010_V.2.1.tif; do
-              test -f "$f"
+          for f in             input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_-190_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_20_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_20_V1.0.tif             input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_20_V1.0.tif             input/chelsa-current/current/CHELSA_bio1_1981-2010_V.2.1.tif             input/chelsa-current/current/CHELSA_bio7_1981-2010_V.2.1.tif             input/chelsa-current/current/CHELSA_bio12_1981-2010_V.2.1.tif             input/chelsa-current/current/CHELSA_bio15_1981-2010_V.2.1.tif
+          do
+            test -f "$f"
           done
 
-      - name: Prepare frozen v0.3 current/LGM climate inputs
+      - name: Prepare frozen v0.3 current and LGM climate inputs
         if: steps.bind.outputs.passed == 'true'
         id: climate
         run: |
           set -euo pipefail
           python scripts/prepare_palearctic_lgm_climate_inputs_v03.py             --occurrences results/v03/palearctic_lgm_occurrences_v0.3.csv             --panel-metadata benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json             --realm-geojson input/realm/palearctic_union.geojson             --climate-rule docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.3.json             --current-bio1 input/chelsa-current/current/CHELSA_bio1_1981-2010_V.2.1.tif             --current-bio7 input/chelsa-current/current/CHELSA_bio7_1981-2010_V.2.1.tif             --current-bio12 input/chelsa-current/current/CHELSA_bio12_1981-2010_V.2.1.tif             --current-bio15 input/chelsa-current/current/CHELSA_bio15_1981-2010_V.2.1.tif             --lgm-bio1 input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif             --lgm-bio7 input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_-190_V1.0.tif             --lgm-bio12 input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_-190_V1.0.tif             --lgm-bio15 input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_-190_V1.0.tif             --trace0-bio1 input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif             --trace0-bio7 input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_20_V1.0.tif             --trace0-bio12 input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_20_V1.0.tif             --trace0-bio15 input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_20_V1.0.tif             --output-occurrence-climate results/v03/palearctic_lgm_occurrence_climate_v0.3.csv             --output-grid results/v03/palearctic_lgm_climate_grid_v0.3.npz             --output-summary results/v03/palearctic_lgm_climate_inputs_v0.3.json
+
           python - <<'PY'
           import json,os
           p=json.load(open("results/v03/palearctic_lgm_climate_inputs_v0.3.json"))
@@ -286,7 +215,14 @@ jobs:
           passed=p["status"]=="PASS_TO_V03_RESPONSE_BLIND_LGM_RELATION_BUILD"
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write(f"passed={'true' if passed else 'false'}\n")
-          print({"status":p["status"],"species":p.get("climate_valid_species"),"source_clusters":p.get("source_clusters"),"target_clusters":p.get("target_clusters")})
+          print({
+              "status":p["status"],
+              "species":p.get("climate_valid_species"),
+              "source_clusters":p.get("source_clusters"),
+              "target_clusters":p.get("target_clusters"),
+              "grid":p.get("grid"),
+              "compatibility":p.get("compatibility_current_V2_1_vs_TraCE_0BP"),
+          })
           PY
 
       - name: Build response-blind v0.3 LGM relation
@@ -295,6 +231,7 @@ jobs:
         run: |
           set -euo pipefail
           python scripts/build_palearctic_lgm_relation_v03.py             --panel-metadata benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json             --occurrence-climate-csv results/v03/palearctic_lgm_occurrence_climate_v0.3.csv             --grid-npz results/v03/palearctic_lgm_climate_grid_v0.3.npz             --rule docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json             --climate-rule docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.3.json             --output-npz results/v03/palearctic_lgm_relation_design_v0.3.npz             --output-summary results/v03/palearctic_lgm_relation_design_v0.3.json
+
           python - <<'PY'
           import json,os
           p=json.load(open("results/v03/palearctic_lgm_relation_design_v0.3.json"))
@@ -302,7 +239,18 @@ jobs:
           passed=p["status"]=="PASS_TO_V03_TTF_Q_RESPONSE_BLIND_CHARACTERIZATION"
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write(f"passed={'true' if passed else 'false'}\n")
-          print({"status":p["status"],"dyads":p.get("dyads"),"R_LGM":p.get("R_LGM"),"R_present":p.get("R_present")})
+          print({
+              "status":p["status"],
+              "species":p.get("species"),
+              "source_clusters":p.get("source_clusters"),
+              "target_clusters":p.get("target_clusters"),
+              "dyads":p.get("dyads"),
+              "R_LGM":p.get("R_LGM"),
+              "R_present":p.get("R_present"),
+              "pearson_R_LGM_vs_R_present":p.get("pearson_R_LGM_vs_R_present"),
+              "current_grid_extrapolation_fraction":p.get("current_grid_extrapolation_fraction"),
+              "lgm_grid_extrapolation_fraction":p.get("lgm_grid_extrapolation_fraction"),
+          })
           PY
 
       - name: Run frozen v0.3 TTF-Q before any genetic response
@@ -310,6 +258,7 @@ jobs:
         run: |
           set -euo pipefail
           python scripts/run_palearctic_lgm_ttf_q_v03.py             --design-npz results/v03/palearctic_lgm_relation_design_v0.3.npz             --design-summary results/v03/palearctic_lgm_relation_design_v0.3.json             --execution docs/supporting/genetic_palearctic_lgm_ttf_q_execution_v0.3.json             --parent-rule docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json             --output results/v03/palearctic_lgm_ttf_q_result_v0.3.json
+
           python - <<'PY'
           import json
           p=json.load(open("results/v03/palearctic_lgm_ttf_q_result_v0.3.json"))
@@ -323,6 +272,7 @@ jobs:
               "opening_gates":p["opening_gates"],
               "information":p["information"],
               "signal_concentration":p["signal_concentration"],
+              "envelope":p["calibrated_evaluable_envelope"],
           })
           PY
 
