@@ -32,7 +32,7 @@ jobs:
       - name: Install frozen response-blind runtime
         run: |
           python -m pip install -e .
-          python -m pip install "rasterio>=1.4,<2"
+          python -m pip install "rasterio>=1.4,<2" "shapely>=2,<3"
 
       - name: Verify frozen v0.3 qualification authorization
         run: |
