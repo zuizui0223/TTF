@@ -1,0 +1,39 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_v03_shard4_authority_v0.1",
+  "status": "AUTHORITATIVE_SHARD4_FROZEN",
+  "recorded_on": "2026-09-29",
+  "selection_rule": "benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_transport3_amendment_v0.1.json",
+  "source": "transport3",
+  "run_id": 36539838478,
+  "job_id": 109312360458,
+  "head_sha": "e4a35ad803af561f373f0db98a71d332812ac6e4",
+  "artifact_id": 11021371777,
+  "artifact_name": "palearctic-lgm-v02-gbif-shard-4-transport3",
+  "artifact_digest_sha256": "sha256:5e00af950d141db5f92f91ce213232a8b47987625770530dab5a39baa860123a",
+  "selection_basis": {
+    "transport3_authority_was_frozen_before_result": true,
+    "transport3_execution_completed_successfully": true,
+    "ecological_status_used_to_choose_between_runs": false,
+    "superseded_parent_or_failover_results_may_not_replace_this_artifact": true
+  },
+  "descriptive_result_after_authority_selection": {
+    "species_requested": 4,
+    "request_errors": 0,
+    "pass_occurrence_geometry": 4,
+    "fail_occurrence_geometry": 0,
+    "retained_rows": 800,
+    "species": {
+      "Bombus lapidarius": 200,
+      "Hylaeus communis": 200,
+      "Philonthus cognatus": 200,
+      "Xantholinus linearis": 200
+    }
+  },
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_v03_T_st_computed": false,
+    "beta_LGM_computed": false,
+    "R_LGM_used_to_select_authority": false,
+    "TTF_Q_used_to_select_authority": false
+  }
+}
