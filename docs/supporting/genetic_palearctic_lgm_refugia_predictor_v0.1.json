@@ -1,0 +1,57 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_refugia_predictor_v0.1",
+  "status": "FROZEN_BEFORE_FORMAL_ELIGIBILITY_RESULT_AND_BEFORE_LGM_PREDICTOR_RESULT",
+  "frozen_on": "2026-09-29",
+  "purpose": "Construct a response-blind species-pair predictor for similarity of persistent climatic opportunity from the Last Glacial Maximum to the present.",
+  "biological_question": "Among Palearctic Lepidoptera, do species with more similar LGM-to-present refugial-persistence geography show more reusable locations of post-IBD genetic turnover?",
+  "occurrence_training": {
+    "source": "GBIF",
+    "years": "2010-2026",
+    "species_match": "exact accepted species",
+    "coordinate_required": true,
+    "deduplicate_coordinates": true,
+    "thin_km": 10,
+    "cap_per_species": 200,
+    "minimum_per_species": 30,
+    "rule_lineage": "reuse the existing TTF-Q deterministic response-blind occurrence policy"
+  },
+  "climate": {
+    "source": "CHELSA-TraCE21k",
+    "times": ["0 BP", "21 ka BP"],
+    "variables": ["bio01", "bio07", "bio12", "bio15"],
+    "grid_alignment": "common grid before projection"
+  },
+  "sdm": {
+    "model": "regularized Mahalanobis climatic-envelope model",
+    "reason": "low-tuning response-blind climatic suitability model; avoid result-driven algorithm competition",
+    "training": "fit current climatic centroid and shrinkage covariance from filtered current occurrences",
+    "suitability": "exp(-0.5 * squared Mahalanobis distance), rescaled within species to [0,1]",
+    "projection": "apply the same fitted climatic envelope to current and 21 ka climate grids",
+    "algorithm_search_after_result": false
+  },
+  "refugial_persistence": {
+    "cell_definition": "P_s(x) = min(S_current_s(x), S_LGM_s(x))",
+    "normalization": "divide P_s by its cell sum before pairwise overlap",
+    "focal_relation": "R_refugia(s,t) = Schoener D between normalized persistence surfaces",
+    "interpretation": "shared geography of climatic suitability persistent from LGM to present; not direct proof of demographic refugia"
+  },
+  "mandatory_response_blind_controls": [
+    "Schoener D between current suitability surfaces",
+    "directed current geographic co-opportunity from filtered occurrence coordinates",
+    "source and target identity",
+    "family relationship indicator(s) where estimable",
+    "source-target occurrence-count imbalance"
+  ],
+  "ttf_q_characterization": {
+    "endpoint_identity_survival": true,
+    "unique_information_after_controls": true,
+    "signal_concentration": true,
+    "null_qualification": true,
+    "conditional_detectability_envelope": true
+  },
+  "outcome_firewall": {
+    "genetic_response_used_for_sdm_selection": false,
+    "genetic_response_used_for_predictor_definition": false,
+    "species_level_phase4_scores_used": false
+  }
+}
