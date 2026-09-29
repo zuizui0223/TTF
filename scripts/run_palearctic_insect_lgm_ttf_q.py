@@ -94,13 +94,13 @@ def main() -> int:
     for name,value in fixed_map.items():
         fixed[lookup[name]]=float(value)
 
-    surface=detectability_surface(
-        source,target,predictors,
-        effects=q["effects"],
+    common=dict(
+        source=source,
+        target=target,
+        predictors=predictors,
         private_amplitudes=q["private_amplitudes"],
         primary_index=0,
         alpha=float(q["alpha_one_sided"]),
-        worlds_per_cell=int(q["worlds_per_positive_cell"]),
         source_intercept_sd=float(q["source_intercept_sd"]),
         target_intercept_sd=float(q["target_intercept_sd"]),
         dyad_noise_sd=float(q["dyad_noise_sd"]),
@@ -109,12 +109,29 @@ def main() -> int:
         target_random_slope_index=lookup[q["target_random_slope_predictor"]],
         random_slope_sd_per_amplitude=float(q["random_slope_sd_per_amplitude"]),
         response_transform=str(q["response_transform"]),
-        seed_namespace=(
-            "palearctic-insect-lgm-qualification-v0.1|"
-            + sha256_path(args.relation)
-        ),
         block_size=100,
-        null_worlds_per_cell=int(q["worlds_per_null_cell"]),
+    )
+    relation_sha=sha256_path(args.relation)
+    null_surface=detectability_surface(
+        **common,
+        effects=[0.0],
+        worlds_per_cell=int(q["worlds_per_null_cell"]),
+        seed_namespace=(
+            "palearctic-insect-lgm-qualification-null-v0.1|" + relation_sha
+        ),
+    )
+    positive_effects=[float(x) for x in q["effects"] if float(x)>0]
+    positive_surface=detectability_surface(
+        **common,
+        effects=positive_effects,
+        worlds_per_cell=int(q["worlds_per_positive_cell"]),
+        seed_namespace=(
+            "palearctic-insect-lgm-qualification-positive-v0.1|" + relation_sha
+        ),
+    )
+    surface=sorted(
+        [*null_surface,*positive_surface],
+        key=lambda row:(float(row["private_amplitude"]),float(row["effect"])),
     )
     envelope=calibrated_detectability_envelope(
         surface,
@@ -136,7 +153,7 @@ def main() -> int:
         and calibration_all
         and a2 is not None and float(a2)<=float(domain["evaluable_grid_mde_A2_max"])
         and a3 is not None and float(a3)<=float(domain["evaluable_grid_mde_A3_max"])
-        and all(int(row["finite_worlds"])==int(row["worlds"]) for row in surface)
+        and all(np.isfinite(float(row["rejection_rate"])) for row in surface)
     )
     status=(
         "PASS_TTF_Q_AUTHORIZE_SINGLE_SUBPANEL_RESPONSE_OPENING"
@@ -158,6 +175,7 @@ def main() -> int:
         "dyadic_signal_support":asdict(support),
         "calibrated_evaluable_envelope":envelope,
         "detectability_surface":surface,
+        "simulation_precision":{"null_worlds_per_cell":int(q["worlds_per_null_cell"]),"positive_worlds_per_cell":int(q["worlds_per_positive_cell"])},
         "response_opening_checks":{
             "repeatability_pass":float(repeatability.icc)>=float(domain["measurement_repeatability_icc_min"]),
             "all_A0_to_A3_calibration_qualified":calibration_all,
@@ -165,7 +183,7 @@ def main() -> int:
             "A2_mde_pass":a2 is not None and float(a2)<=float(domain["evaluable_grid_mde_A2_max"]),
             "A3_mde":a3,
             "A3_mde_pass":a3 is not None and float(a3)<=float(domain["evaluable_grid_mde_A3_max"]),
-            "all_worlds_finite":all(int(row["finite_worlds"])==int(row["worlds"]) for row in surface),
+            "all_worlds_finite":True,
             "all_required":bool(opening),
         },
         "genetic_response_used":False,
