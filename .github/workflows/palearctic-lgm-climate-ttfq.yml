@@ -1,6 +1,11 @@
 name: palearctic-lgm-v03-response-blind-qualification
 
 on:
+  push:
+    branches:
+      - method/palearctic-lgm-response-blind-v0-1
+    paths:
+      - "benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_trigger_v0.1.json"
   workflow_dispatch:
 
 permissions:
@@ -36,12 +41,23 @@ jobs:
           binding=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_producer_binding_v0.1.json").read_text())
           rule=json.loads(Path("docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json").read_text())
           climate_assets=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_climate_asset_binding_v0.1.json").read_text())
+          trigger_path=Path("benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_trigger_v0.1.json")
+          if not trigger_path.is_file():
+              raise SystemExit("qualification trigger receipt is absent")
+          trigger=json.loads(trigger_path.read_text())
+          assert trigger["schema"]=="ttf_genetic_palearctic_lgm_v03_qualification_trigger_v0.1"
+          assert trigger["status"]=="AUTHORIZE_RESPONSE_BLIND_V03_QUALIFICATION"
           assert panel["species_count"]==23
           assert panel["source_clusters"]==11
           assert panel["target_clusters"]==12
           assert panel["dyads"]==132
           assert binding["producer"]["workflow_run_id"]==36529160168
           assert binding["producer"]["head_sha"]=="80a0cf7ac4cb672b9525ce15f7f9f5762e05af6a"
+          assert trigger["producer_run_id"]==binding["producer"]["workflow_run_id"]
+          assert int(trigger["aggregate_artifact_id"])>0
+          assert str(trigger["aggregate_artifact_digest_sha256"]).startswith("sha256:")
+          assert trigger["response_firewall"]["pairwise_v03_T_st_computed"] is False
+          assert trigger["response_firewall"]["beta_LGM_computed"] is False
           assert rule["role_assignment"]["species_may_occupy_both_roles"] is False
           assert all(v is False for v in panel["response_firewall"].values())
           assert all(v is False for v in binding["response_firewall"].values())
@@ -52,14 +68,28 @@ jobs:
           print({"panel":23,"sources":11,"targets":12,"bound_run":binding["producer"]["workflow_run_id"],"climate_assets":"byte_frozen"})
           PY
 
-      - name: Download exact bound GBIF aggregate and Palearctic realm
+      - name: Download exact trigger-bound GBIF aggregate and Palearctic realm
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           mkdir -p input/gbif input/realm
-          gh run download 36529160168             --repo "$GITHUB_REPOSITORY"             --name palearctic-lgm-gbif-occurrences-v02             --dir input/gbif
+          readarray -t BIND < <(python - <<'PY'
+          import json
+          p=json.load(open("benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_trigger_v0.1.json"))
+          print(p["aggregate_artifact_id"])
+          print(p["aggregate_artifact_digest_sha256"].split(":",1)[1])
+          PY
+          )
+          ARTIFACT_ID="${BIND[0]}"
+          EXPECTED_ZIP_SHA="${BIND[1]}"
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > /tmp/gbif.zip
+          echo "$EXPECTED_ZIP_SHA  /tmp/gbif.zip" | sha256sum -c -
+          unzip -q /tmp/gbif.zip -d input/gbif
+          rm -f /tmp/gbif.zip
+
           gh run download 36529160168             --repo "$GITHUB_REPOSITORY"             --name palearctic-realm-union-v02             --dir input/realm
+
           test -f input/gbif/palearctic_lgm_occurrences_v0.2.csv
           test -f input/gbif/palearctic_lgm_occurrences_v0.2.json
           test -f input/realm/palearctic_union.geojson
