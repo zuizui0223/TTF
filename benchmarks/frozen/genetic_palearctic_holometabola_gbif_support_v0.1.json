@@ -1,0 +1,101 @@
+{
+  "schema": "ttf_genetic_palearctic_holometabola_gbif_support_v0.1",
+  "status": "PASS_GBIF_SUPPORT_TO_LGM_SDM",
+  "recorded_on": "2026-09-29",
+  "workflow": {
+    "run_id": 36538839049,
+    "head_sha": "57a2bb206704969141441d84f8a5b59c9be2bcc4",
+    "summary_artifact_id": 11018979295,
+    "summary_artifact_digest_sha256": "125b3e691b661cadce8489894a957410ea1c179c892404ba9e5b5055e564929a",
+    "summary_json_sha256": "c6b83708aef108c14e6d5f7201b9409b8a079bcc3c4e535bbae4f39ffcd68e7c"
+  },
+  "frozen_rules": {
+    "year_range": "1990,2026",
+    "thin_km": 10.0,
+    "required_thinned": 50,
+    "minimum_total_species": 30,
+    "minimum_source_species": 12,
+    "minimum_target_species": 12,
+    "resplit_after_failure": false,
+    "backfill": false
+  },
+  "panel_species": 44,
+  "usable_species": 42,
+  "usable_source_count": 21,
+  "usable_target_count": 21,
+  "usable_primary_dyads": 441,
+  "status_counts": {
+    "usable_lower_bound": 42,
+    "insufficient_complete_search": 2
+  },
+  "ineligible_species": [
+    {
+      "species": "Alloxysta fulviceps",
+      "frozen_side": "source",
+      "gbif_total_coordinate_count": 172,
+      "unique_exact_coordinates": 73,
+      "thinned_records": 38,
+      "status": "insufficient_complete_search"
+    },
+    {
+      "species": "Euplectrus geometricida",
+      "frozen_side": "target",
+      "gbif_total_coordinate_count": 217,
+      "unique_exact_coordinates": 52,
+      "thinned_records": 36,
+      "status": "insufficient_complete_search"
+    }
+  ],
+  "usable_source_species": [
+    "Ammoconia caecimacula",
+    "Ampedus sanguineus",
+    "Diplodoma laichartingella",
+    "Hemicrepidius hirtus",
+    "Hoplodrina superstes",
+    "Hylaeus communis",
+    "Hypochalcia ahenella",
+    "Malacosoma castrensis",
+    "Microlestes maurus",
+    "Microlestes minutulus",
+    "Mompha lacteella",
+    "Nomada bifasciata",
+    "Notocelia uddmanniana",
+    "Phiaris micana",
+    "Picrostigeus recticauda",
+    "Pseudeustrotia candidula",
+    "Rhagonycha atra",
+    "Scopula decorata",
+    "Scythris picaepennis",
+    "Teleiodes vulgella",
+    "Yponomeuta sedella"
+  ],
+  "usable_target_species": [
+    "Agapeta hamana",
+    "Agriopis aurantiaria",
+    "Alcis repandata",
+    "Amara convexior",
+    "Bombus lapidarius",
+    "Cnephasia incertana",
+    "Coenotephria tophaceata",
+    "Dasytes niger",
+    "Dichagyris nigrescens",
+    "Euchloe ausonia",
+    "Favonius quercus",
+    "Gaurotes virginea",
+    "Metaxmeste phrygialis",
+    "Oxypselaphus obscurus",
+    "Phyllotreta nemorum",
+    "Pseudoterpna pruinata",
+    "Psoricoptera speciosella",
+    "Pterostichus diligens",
+    "Sphinx pinastri",
+    "Tenthredo zonula",
+    "Tomares ballus"
+  ],
+  "firewall": {
+    "species_level_phase4_scores_read": false,
+    "pairwise_genetic_concordance_opened": false,
+    "lgm_sdm_fitted": false
+  },
+  "interpretation": "The frozen Palearctic panel retains sufficient external occurrence support to continue to response-blind LGM SDM construction. Two species fail only the predeclared occurrence-support gate and are dropped in place without backfill or resplitting."
+}
