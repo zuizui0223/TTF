@@ -109,8 +109,24 @@ def main() -> int:
         raise RuntimeError("unexpected eligibility contract")
     if contract.get("status") != "FROZEN_BEFORE_FORMAL_REALM_CLASSIFICATION":
         raise RuntimeError("eligibility contract was not frozen before formal classification")
-    if localities.get("outcome_firewall", {}).get("species_level_phase4_scores_used") is not False:
-        raise RuntimeError("response-blind locality input firewall is open")
+    firewall = localities.get("outcome_firewall", {})
+    score_keys = (
+        "species_level_phase4_scores_used",
+        "species_level_genetic_scores_used",
+    )
+    present_score_keys = [key for key in score_keys if key in firewall]
+    if len(present_score_keys) != 1:
+        raise RuntimeError(
+            "response-blind locality input must expose exactly one recognized "
+            "species-level genetic-score firewall key"
+        )
+    required_false = (
+        present_score_keys
+        + ["pairwise_genetic_distances_used", "nucleotide_identity_used"]
+    )
+    bad = {key: firewall.get(key) for key in required_false if firewall.get(key) is not False}
+    if bad:
+        raise RuntimeError(f"response-blind locality input firewall is open: {bad}")
 
     geoms = _load_palearctic_geometries(realm)
     minimum_fraction = float(contract["eligibility"]["minimum_palearctic_fraction"])
