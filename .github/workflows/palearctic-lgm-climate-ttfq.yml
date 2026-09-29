@@ -35,6 +35,7 @@ jobs:
           panel=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json").read_text())
           binding=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_producer_binding_v0.1.json").read_text())
           rule=json.loads(Path("docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json").read_text())
+          climate_assets=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_climate_asset_binding_v0.1.json").read_text())
           assert panel["species_count"]==23
           assert panel["source_clusters"]==11
           assert panel["target_clusters"]==12
@@ -44,7 +45,11 @@ jobs:
           assert rule["role_assignment"]["species_may_occupy_both_roles"] is False
           assert all(v is False for v in panel["response_firewall"].values())
           assert all(v is False for v in binding["response_firewall"].values())
-          print({"panel":23,"sources":11,"targets":12,"bound_run":binding["producer"]["workflow_run_id"]})
+          assert climate_assets["historical_trace21k"]["artifact_id"]==10791389409
+          assert climate_assets["current_chelsa_v21"]["artifact_id"]==10791867875
+          assert all(v is False for v in climate_assets["selection_firewall"].values())
+          assert climate_assets["substitution_after_result"] is False
+          print({"panel":23,"sources":11,"targets":12,"bound_run":binding["producer"]["workflow_run_id"],"climate_assets":"byte_frozen"})
           PY
 
       - name: Download exact bound GBIF aggregate and Palearctic realm
