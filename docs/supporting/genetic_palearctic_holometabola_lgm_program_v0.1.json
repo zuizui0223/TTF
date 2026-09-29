@@ -102,7 +102,8 @@
     },
     "accessible_area": {
       "definition": "1000-km geodesic buffer around the convex hull of thinned current occurrences, intersected with terrestrial cells",
-      "background_points": 10000
+      "background_points": 10000,
+      "background_selection": "all eligible 0.25-degree Palearctic grid cells inside M if <=10000, otherwise first 10000 by SHA256('palearctic-lgm-bg-v0.1|species|cell_index')"
     },
     "model": {
       "family": "regularized presence-background logistic species distribution model",
@@ -112,7 +113,18 @@
       "spatial_cv_folds": 5,
       "minimum_cv_auc": 0.7,
       "model_failure": "species becomes LGM-predictor-ineligible; no replacement",
-      "response_blind": true
+      "response_blind": true,
+      "regularization_candidates_C": [
+        0.01,
+        0.1,
+        1,
+        10
+      ],
+      "regularization_selection": "maximum mean five-fold spatial-block ROC-AUC; tie -> smallest C (strongest regularization)",
+      "spatial_blocks": "KMeans(k=5, random_state=20260929) on presence ECEF coordinates; assign background cells to nearest presence-cluster centroid",
+      "feature_standardization": "mean and population SD of the four current-climate variables across the species accessible-area background cells; then linear z terms plus z^2 terms",
+      "class_weight": "balanced",
+      "final_fit": "all current presences plus deterministic accessible-area background with selected C"
     },
     "projection": {
       "time": "21 ka BP",
@@ -129,6 +141,22 @@
       "resplit_after_occurrence_or_sdm_failure": false,
       "backfill": false,
       "stop_if_thresholds_fail": "STOP_NOT_EVALUABLE_LGM_SDM_SUPPORT"
+    },
+    "projection_grid": {
+      "domain": "Ecoregions2017 REALM=Palearctic",
+      "cell_size_degrees": 0.25,
+      "cell_reference": "cell centres on a fixed longitude/latitude grid anchored at -180,-90",
+      "mask": "cell centre must be inside the frozen Palearctic realm polygon and finite in all four current plus all four 21-ka climate rasters",
+      "same_grid_for_all_species": true,
+      "current_and_lgm_projection_on_same_cells": true,
+      "rationale": "Fit/extract climate at native CHELSA resolution but compare broad-scale refugial suitability on a common tractable geography."
+    },
+    "current_relation": "Schoener D between normalized predicted current-climate suitability surfaces on the fixed Palearctic projection grid",
+    "present_geographic_opportunity": "Jaccard overlap of the two species' 1000-km accessible-area masks on the fixed Palearctic projection grid",
+    "climate_validity": {
+      "presence_rule": "all four current variables finite at a retained occurrence",
+      "minimum_valid_presence_records": 50,
+      "projection_rule": "a Palearctic grid cell is retained only when all four current and all four 21-ka variables are finite"
     }
   },
   "ttf_q_qualification": {
