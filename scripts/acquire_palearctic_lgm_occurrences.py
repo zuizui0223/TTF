@@ -9,11 +9,7 @@ from pathlib import Path
 from shapely.geometry import Point, shape
 from shapely.prepared import prep
 
-try:
-    from scripts.acquire_relational_environment_occurrences import get_json
-except ModuleNotFoundError:
-    from acquire_relational_environment_occurrences import get_json
-
+from ttf.gbif_transport import get_json
 from ttf.relational_environment import (
     deterministic_page_offsets,
     filter_and_thin_occurrences,
