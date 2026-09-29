@@ -65,6 +65,28 @@ def main() -> int:
             )
 
     ledger = {str(row["species"]): row for row in gbif["species"]}
+    request_errors=sorted(
+        species for species,row in ledger.items()
+        if str(row.get("status"))=="REQUEST_ERROR"
+    )
+    if request_errors:
+        payload={
+            "schema":"ttf_palearctic_insect_lgm_panel_v0.1",
+            "status":"INCOMPLETE_TECHNICAL_TRANSPORT",
+            "candidate_species":len(candidates["species"]),
+            "request_error_species":request_errors,
+            "request_error_count":len(request_errors),
+            "response_firewall":candidates["response_firewall"],
+            "next_step":"technical retry of exactly REQUEST_ERROR species under unchanged GBIF contract; do not classify panel",
+        }
+        args.output_panel.parent.mkdir(parents=True,exist_ok=True)
+        args.output_panel.write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
+        print(json.dumps({
+            "status":payload["status"],
+            "request_error_count":len(request_errors),
+        },sort_keys=True))
+        return 0
+
     threshold = float(
         contract["response_blind_panel_eligibility"]["palearctic_realm"][
             "minimum_fraction_retained_occurrences_in_realm"
