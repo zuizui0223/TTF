@@ -156,11 +156,11 @@
     "current_relation_control": "R_current is Schoener D between source and target normalized suitability surfaces predicted on the same TraCE21k 0-BP Palearctic grid."
   },
   "declared_controls_in_order": [
-    "z_R_current: Schoener D between current SDM suitability surfaces",
-    "z_geographic_coop: directed fraction of target GBIF coordinates with nearest source coordinate <=500 km",
+    "z_R_current: Schoener D between current (TraCE21k 0-BP) SDM suitability surfaces",
+    "z_geographic_coop: directed fraction of target in-realm retained GBIF coordinates with nearest source in-realm retained GBIF coordinate <=500 km",
     "centered_same_order",
     "centered_same_family",
-    "z_abs_log_GBIF_count_ratio"
+    "z_abs_log_GBIF_count_ratio: absolute log ratio of finite TraCE21k-0BP in-realm presence counts actually used to fit the two species SDMs"
   ],
   "ttf_q_measurement_layer": {
     "occurrence_bootstrap_replicates": 100,
@@ -235,6 +235,8 @@
     "minimum_finite_current_climate_presence_points": 24,
     "no_species_backfill": true,
     "minimum_final_sdm_species": 30,
-    "failure": "NOT_EVALUABLE_PALEARCTIC_INSECT_LGM_SDM_SUPPORT"
+    "failure": "NOT_EVALUABLE_PALEARCTIC_INSECT_LGM_SDM_SUPPORT",
+    "require_all_final_species_models_converged": true,
+    "if_any_final_model_fails_to_converge": "NOT_EVALUABLE_PALEARCTIC_INSECT_LGM_SDM_FIT"
   }
 }
