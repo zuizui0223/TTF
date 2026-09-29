@@ -1,0 +1,60 @@
+{
+  "archive": {
+    "filename": "Ecoregions2017.zip",
+    "sha256": "be36d6209e443038d02e309f0447c6e7f2a62f5fe60c605ffe90d064952f2a60",
+    "size_bytes": 149248653
+  },
+  "citation_doi": "10.1093/biosci/bix014",
+  "genetic_pair_response_opened": false,
+  "interpretation": "This freezes only the external realm geometry source before any authoritative Palearctic species membership is computed.",
+  "panel_membership_opened": false,
+  "schema": "ttf_palearctic_realm_source_receipt_v0.1",
+  "source_url": "https://storage.googleapis.com/teow2016/Ecoregions2017.zip",
+  "status": "FROZEN_BEFORE_PANEL_MEMBERSHIP",
+  "vector": {
+    "components": {
+      ".dbf": {
+        "filename": "Ecoregions2017.dbf",
+        "sha256": "036987c540eef2dfd6e8a0678f3b85193649b3f63f545463dfcb2fed4f973ab5",
+        "size_bytes": 1027078
+      },
+      ".prj": {
+        "filename": "Ecoregions2017.prj",
+        "sha256": "db2f4b2a30c81a88981162acd3ff4629b86350834194efed1a6650446ccaecf4",
+        "size_bytes": 257
+      },
+      ".shp": {
+        "filename": "Ecoregions2017.shp",
+        "sha256": "d564235263d7a2f118cbb4fcb6e7593ef5f8c2f3600604d46047aa2712a83574",
+        "size_bytes": 243042148
+      },
+      ".shx": {
+        "filename": "Ecoregions2017.shx",
+        "sha256": "140342bc19d04a6f1ee11d1099a6c115f8c076f1396c6f2a5a55182471ff4c42",
+        "size_bytes": 6876
+      }
+    },
+    "dataset": "Ecoregions2017",
+    "ecoregions_vector_sha256": "d564235263d7a2f118cbb4fcb6e7593ef5f8c2f3600604d46047aa2712a83574",
+    "feature_count": 847,
+    "palearctic_feature_count": 205,
+    "realm_field": "REALM",
+    "unique_realms": [
+      "Afrotropic",
+      "Antarctica",
+      "Australasia",
+      "Indomalayan",
+      "N/A",
+      "Nearctic",
+      "Neotropic",
+      "Oceania",
+      "Palearctic"
+    ]
+  },
+  "workflow_provenance": {
+    "run_id": 36537523341,
+    "head_sha": "504c6ad646931537945fc079befe81d1e1d4b3af",
+    "artifact_id": 11018577836,
+    "artifact_digest_sha256": "8f26f6830fe6c2c7c246752ab95936877bb43d1cc75896f81eb7907f9d3eb8f3"
+  }
+}
