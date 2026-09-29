@@ -11,12 +11,19 @@
     "thin_km": 10,
     "maximum_retained_per_species": 200,
     "minimum_retained_per_species": 30,
-    "failure": "species is predictor-inadmissible; do not replace it based on any genetic quantity"
+    "failure": "species is predictor-inadmissible; do not replace it based on any genetic quantity",
+    "minimum_predictor_admissible_species": 20,
+    "if_fewer_than_minimum": "STOP_LGM_SDM_PANEL_TOO_SMALL; do not inspect or construct a subpanel genetic response"
   },
   "climate": {
     "current": "CHELSA V2.1 1981-2010",
     "lgm": "CHELSA-TraCE21k 21 ka BP",
-    "variables": ["bio01", "bio07", "bio12", "bio15"],
+    "variables": [
+      "bio01",
+      "bio07",
+      "bio12",
+      "bio15"
+    ],
     "standardization": "fit from present-day Palearctic-core land cells and reuse unchanged for LGM projection"
   },
   "sdm": {
@@ -29,7 +36,10 @@
   "pairwise_primary_relation": {
     "name": "R_LGM",
     "definition": "Schoener D between source and target LGM suitability rasters after each raster is normalized to sum to one on the shared Palearctic-core grid",
-    "range": [0.0, 1.0],
+    "range": [
+      0,
+      1
+    ],
     "directionality": "symmetric predictor copied onto both source->target directions because the later genetic cross-prediction response is directed"
   },
   "declared_controls": [
