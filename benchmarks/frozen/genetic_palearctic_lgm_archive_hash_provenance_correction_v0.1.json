@@ -1,0 +1,36 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_archive_hash_provenance_correction_v0.1",
+  "status": "PROVENANCE_CORRECTION_NO_SCIENTIFIC_CHANGE",
+  "recorded_on": "2026-09-29",
+  "canonical_exact_phylogatr_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "canonical_source": "benchmarks/frozen/genetic_phylogatr_phase4_empirical_handoff_v0.1.json",
+  "affected_frozen_receipts": [
+    {
+      "path": "benchmarks/frozen/genetic_palearctic_lgm_nonlepidoptera_census_v0.2.json",
+      "recorded_value": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5",
+      "issue": "59-character transcription truncation in descriptive provenance field only"
+    },
+    {
+      "path": "benchmarks/frozen/genetic_palearctic_lgm_nonlepidoptera_census_v0.3.json",
+      "recorded_value": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5",
+      "issue": "59-character transcription truncation inherited from v0.2 descriptive provenance field"
+    }
+  ],
+  "authoritative_rule_files_already_correct": [
+    "docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.2.json",
+    "docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json"
+  ],
+  "v03_role_assignment_check": {
+    "namespace": "palearctic-lgm-nonlep-role-v0.3",
+    "canonical_hash_used": true,
+    "stored_11_source_12_target_partition_matches_recomputation": true
+  },
+  "scientific_effect": {
+    "species_membership_changed": false,
+    "source_target_roles_changed": false,
+    "GBIF_selection_changed": false,
+    "R_LGM_changed": false,
+    "TTF_Q_changed": false,
+    "genetic_response_opened": false
+  }
+}
