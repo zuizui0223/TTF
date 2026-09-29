@@ -1,5 +1,7 @@
 # Palearctic non-Lepidoptera LGM extension v0.2
 
+> **Superseded before result.** The authoritative design is now [v0.3](GENETIC_PALEARCTIC_LGM_EXTENSION_V03.md), which retains the 23-species non-Lepidoptera domain but uses disjoint source/target roles. No v0.2 LGM relation, TTF-Q result, or subgroup genetic response was used to make that change.
+
 ## Question
 
 > Do Palearctic terrestrial holometabolous insects outside Lepidoptera that occupied similar LGM climatic refugial space show post-IBD genetic differentiation in more similar places?
