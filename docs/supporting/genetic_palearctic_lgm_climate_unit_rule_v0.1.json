@@ -1,0 +1,35 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_climate_unit_rule_v0.1",
+  "status": "FROZEN_BEFORE_ANY_PALAEARCTIC_LGM_RELATION_RESULT",
+  "frozen_on": "2026-09-29",
+  "parent_rule": "docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.1.json",
+  "reason": "Official CHELSA metadata report V2.1 bio01 in degrees Celsius and TraCE21k bio01 in Kelvin. The LGM predictor must use harmonized physical units before applying the current-climate PCA/KDE.",
+  "transforms": {
+    "bio01": {
+      "current_CHELSA_V2_1": "identity_degrees_C",
+      "TraCE21k": "kelvin_to_celsius: value - 273.15"
+    },
+    "bio07": {
+      "current_CHELSA_V2_1": "identity_temperature_range_degrees_C",
+      "TraCE21k": "identity_temperature_range_K_equals_degree_C_difference"
+    },
+    "bio12": {
+      "both": "identity_kg_m-2_year-1"
+    },
+    "bio15": {
+      "both": "identity_same_precipitation_seasonality_definition_100_times_SD_over_mean",
+      "note": "Provider unit labels differ across dataset pages, but the variable definition is the same coefficient-of-variation bioclimatic index. No result-derived rescaling is permitted."
+    }
+  },
+  "diagnostic_only": {
+    "compare_TraCE_0BP_to_V2_1_current_on_same_Palearctic_grid": true,
+    "report_per_variable_correlation_and_quantiles": true,
+    "can_change_transform_after_result": false,
+    "can_gate_or_select_predictors": false
+  },
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_subpanel_T_st_computed": false,
+    "beta_LGM_computed": false
+  }
+}
