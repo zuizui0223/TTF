@@ -1,0 +1,60 @@
+{
+  "schema": "ttf_palearctic_insect_lgm_genetic_response_v0.1",
+  "status": "FROZEN_BEFORE_ANY_SUBPANEL_SPECIES_LEVEL_GENETIC_RESPONSE_IS_READ",
+  "frozen_on": "2026-09-29",
+  "parent_lgm_relation": "docs/supporting/palearctic_insect_lgm_sdm_relation_v0.1.json",
+  "question": "Do species pairs that share LGM climatic refugial opportunity show spatially concordant post-IBD mitochondrial genetic discontinuities?",
+  "historical_disclosure": "The global 211-species Phase-4 result is already known, so this is a targeted secondary analysis. This contract forbids using species-level Phase-4 outputs to choose the subpanel, SDM relation, break-surface definition, split, covariates or qualification thresholds.",
+  "per_species_break_surface": {
+    "genetic_edge_response": "Use the already frozen Phase-4 locality-pair COI p-distance and endpoint-safe leave-two-localities-out rank-IBD residualization without refitting any genetic method parameter.",
+    "break_weight": "positive part of the frozen post-IBD residual turnover rank; w_e=max(r_e,0)",
+    "zero_positive_mass": "If any authorized species has zero total positive break weight, stop as NOT_EVALUABLE_BREAK_SURFACE; do not drop that species.",
+    "edge_location": "frozen graph-edge midpoint",
+    "kernel": "Gaussian great-circle/ECEF kernel",
+    "bandwidth_km": 500,
+    "bandwidth_provenance": "Inherited unchanged from genetic TTF v0.11 / phylogatR Phase-3 core; no re-optimization on this subpanel.",
+    "common_grid": "100-km equal-area Palearctic grid clipped to the authoritative WWF Palearctic realm.",
+    "normalization": "Normalize each species break-intensity surface to sum 1 over the common grid."
+  },
+  "pairwise_response": {
+    "role_geometry": "Only cross-role pairs from the deterministic balanced source/target split in the eligibility contract are used.",
+    "raw_response": "Y_break(s,t)=Schoener D between source and target normalized break-intensity surfaces.",
+    "analysis_response": "rank-normalize Y_break across authorized cross-role dyads, then z-standardize once before the dyadic model.",
+    "directionality": "The biological response is symmetric, but source/target roles are kept disjoint solely to preserve the existing two-way endpoint dependence structure."
+  },
+  "primary_model": {
+    "focal_predictor": "z(R_LGM)",
+    "mandatory_predictors": [
+      "R_current",
+      "genetic-sampling geographic co-opportunity",
+      "lineage proximity",
+      "occurrence-count imbalance"
+    ],
+    "endpoint_adjustment": "exact source and target fixed effects",
+    "inference": "two-way source/target cluster-robust one-sided test for positive beta_LGM",
+    "alpha": 0.05,
+    "interpretation_positive": "Greater shared LGM climatic refugial opportunity is associated with greater spatial concordance of post-IBD genetic discontinuity within the prespecified Palearctic terrestrial-insect panel.",
+    "interpretation_negative": "No detectable association under this qualified design; not proof that shared refugia never structure comparative phylogeographic breaks."
+  },
+  "authorization_rule": {
+    "required_before_response_opening": [
+      "authoritative WWF realm eligibility frozen",
+      "LGM and current SDM relations frozen",
+      "TTF-Q predictor-information decomposition complete",
+      "TTF-Q signal-concentration diagnostics complete",
+      "null qualification passes at A=0,1,2,3 for the intended dyadic estimator",
+      "evaluable grid MDE is <=0.10 at A=0,1,2"
+    ],
+    "meaningful_standardized_effect": 0.1,
+    "A3_role": "stress regime reported but A3 MDE need not be <=0.10; null qualification must still pass",
+    "failure": "STOP_NOT_EVALUABLE_DO_NOT_READ_SUBPANEL_SPECIES_LEVEL_GENETIC_RESPONSE"
+  },
+  "forbidden": [
+    "choosing a different break threshold after seeing genetic outcomes",
+    "changing the inherited 500-km genetic kernel bandwidth",
+    "dropping species because their genetic break surface looks unusual",
+    "redefining the Palearctic or terrestrial filter after genetic outcome inspection",
+    "replacing R_LGM with an alternative palaeoclimate relation because the primary association is weak",
+    "using the already-known global Phase-4 species-level scores to tune any part of this targeted analysis"
+  ]
+}
