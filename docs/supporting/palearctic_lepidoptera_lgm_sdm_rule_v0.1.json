@@ -38,7 +38,8 @@
     "solver": "deterministic LBFGS; balanced presence/background weights",
     "performance_metrics": "record present-climate occurrence-vs-background ROC-AUC descriptively only; AUC cannot select species, features, C, grid resolution or threshold",
     "numeric_gate": "model fit finite; both current and LGM grid predictions finite and non-constant",
-    "failure": "PREDICTOR_INADMISSIBLE_SDM_NUMERICAL; no response-based replacement or retuning"
+    "failure": "PREDICTOR_INADMISSIBLE_SDM_NUMERICAL; no response-based replacement or retuning",
+    "minimum_background_cells": 100
   },
   "pairwise_primary_relation": {
     "name": "R_LGM",
