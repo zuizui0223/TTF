@@ -1,0 +1,56 @@
+{
+  "schema": "ttf_palearctic_insect_response_blind_source_v0.1",
+  "status": "RECONSTRUCTED_RESPONSE_BLIND_FROM_EXACT_PHASE4_SOURCE",
+  "frozen_on": "2026-09-29",
+  "purpose": "Define the only permitted metadata surface for screening a Palearctic terrestrial-insect subpanel from the 211 final phylogatR survivors without reading species-level genetic outcomes.",
+  "exact_source_archive": {
+    "name": "phylogatr_results_exact_20260918.zip",
+    "size_bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+  },
+  "survivor_authorization": {
+    "sha256": "47ffa048052d7bea5e76ebc144dcd40ea7e86910033ae082acc58757ca92d4d9",
+    "survivor_species": 211,
+    "train_species": 103,
+    "eval_species": 108,
+    "species_list": "benchmarks/frozen/palearctic_insect_phase4_survivors_response_blind_v0.1.txt"
+  },
+  "reconstruction": {
+    "survivors_with_exactly_one_COI_family_metadata_row": 211,
+    "survivor_unique_locality_range": [
+      12,
+      295
+    ],
+    "insect_species": 183,
+    "insect_locality_rows": 4721,
+    "insect_order_counts": {
+      "Lepidoptera": 90,
+      "Diptera": 28,
+      "Hymenoptera": 25,
+      "Coleoptera": 21,
+      "Hemiptera": 6,
+      "Trichoptera": 5,
+      "Ephemeroptera": 2,
+      "Orthoptera": 2,
+      "Odonata": 2,
+      "Plecoptera": 1,
+      "Psocodea": 1
+    },
+    "locality_csv_sha256": "77d417403dc14a0050dff44f8457a98bc9ce504d0efd2167ecad05be743875ec"
+  },
+  "allowed_information": [
+    "final response-blind survivor identity from the pre-Phase4 authorization",
+    "genes.txt taxonomy and locus metadata",
+    "aligned FASTA header strings only",
+    "occurrence latitude-longitude associated with those headers",
+    "canonical/noncanonical character-support survivor status already fixed before Phase4"
+  ],
+  "forbidden_information": [
+    "nucleotide identity",
+    "pairwise genetic distances",
+    "Phase4 species-level genetic scores",
+    "species-specific empirical transfer results",
+    "post-IBD genetic break surfaces"
+  ],
+  "historical_context_disclosure": "The global 211-species empirical result has already been opened and is known. This new subpanel analysis is therefore a prospectively specified targeted secondary analysis, not an untouched confirmatory experiment. Species-level outcomes are nevertheless withheld from subpanel eligibility and TTF-Q qualification."
+}
