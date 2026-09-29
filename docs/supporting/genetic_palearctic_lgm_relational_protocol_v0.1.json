@@ -1,0 +1,96 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_relational_protocol_v0.1",
+  "status": "FROZEN_BEFORE_FORMAL_ELIGIBILITY_RESULT_AND_BEFORE_SUBGROUP_GENETIC_RESPONSE_EXTRACTION",
+  "frozen_on": "2026-09-29",
+  "purpose": "Define the primary dyadic comparative-phylogeographic test before formal Palearctic eligibility, LGM predictor construction, or subgroup genetic-response extraction.",
+  "scientific_question": "Among geographically supported Palearctic Lepidoptera source-target pairs, does similarity in LGM-to-present refugial-persistence geography predict how well the source species' post-IBD spatial genetic turnover transfers to the target species?",
+  "historical_caveat": "The aggregate 211-species Phase-4 response was previously opened. Species-level subgroup transfer responses are not consulted in defining this protocol; this is a response-blindly redesigned subgroup re-analysis, not a pristine prospective confirmatory dataset.",
+  "panel": {
+    "eligibility_contract": "docs/supporting/genetic_palearctic_lepidoptera_eligibility_v0.1.json",
+    "formal_minimum_species": 20,
+    "split": "new eligibility-contract-hash 50/50 split; do not inherit the global 103/108 Phase-4 split"
+  },
+  "pair_support": {
+    "definition": "fraction of target frozen graph-edge midpoints whose nearest source frozen graph-edge midpoint is within 500 km",
+    "support_radius_km": 500,
+    "minimum_target_coverage": 0.50,
+    "minimum_supported_sources_per_target": 5,
+    "unsupported_pairs": "excluded before any subgroup genetic response is computed",
+    "unsupported_targets": "excluded only if fewer than five response-blind supported training sources exist; this is geometry eligibility, not a genetic outcome filter"
+  },
+  "response": {
+    "name": "T_st",
+    "definition": "Spearman correlation between a source-only TTF field prediction and target endpoint-safe post-IBD edge turnover",
+    "directed": true,
+    "response_rule_lineage": "same source-only dyadic response already frozen for the relational host-resource TTF",
+    "marker": "mitochondrial COI/COX1",
+    "sequence_pair_distance": "uncorrected canonical A/C/G/T p-distance under the already frozen 50% comparable-column rule",
+    "ibd_adjustment": "endpoint-safe leave-two-localities-out rank IBD",
+    "source_training_response": "post-IBD turnover rank orthogonalized against source edge-length rank",
+    "target_evaluation_response": "raw post-IBD turnover rank",
+    "kernel": {
+      "bandwidth_km": 500,
+      "prior_strength": 0.25,
+      "prior_mean": 0,
+      "segment_points": 5,
+      "training_species_per_field": 1
+    },
+    "no_new_sequence_selection": true,
+    "no_edge_rewiring": true,
+    "recomputation_note": "If subgroup T_st is authorized, the already frozen p-distance/IBD response may be deterministically recomputed from the exact source archive because edge-level vectors were not serialized; no response definition or sequence-selection rule may change."
+  },
+  "predictor": {
+    "primary": "z_R_refugia",
+    "source": "docs/supporting/genetic_palearctic_lgm_refugia_predictor_v0.1.json",
+    "alternative": "beta_refugia > 0",
+    "thresholding_forbidden": true
+  },
+  "controls": {
+    "z_R_current": "Schoener D between current climatic-suitability surfaces from the same fitted climatic model",
+    "z_geographic_coverage": "continuous frozen directed graph-edge geographic coverage",
+    "z_log1p_centroid_distance_km": true,
+    "z_current_occurrence_coopportunity": "continuous current occurrence geographic co-opportunity from the same filtered response-blind occurrence layer",
+    "z_abs_log_locality_count_ratio": true,
+    "same_family_indicator": "include if nonconstant on the frozen supported dyad set; otherwise record deterministic zero-variance omission",
+    "source_fixed_effect": true,
+    "target_fixed_effect": true
+  },
+  "primary_estimand": {
+    "conceptual_model": "T_st = alpha_t + gamma_s + beta_R*z(R_refugia_st) + beta_C*z(R_current_st) + beta_G*z(graph_coverage_st) + beta_D*z(log1p(centroid_distance_km_st)) + beta_O*z(current_occurrence_coopportunity_st) + beta_M*z(abs_log_locality_count_ratio_st) + beta_F*same_family_st + epsilon_st",
+    "estimand": "beta_R",
+    "alpha_one_sided": 0.05,
+    "covariance": "two-way source/target cluster-robust sandwich with dyad intersection subtraction and finite-cluster corrections",
+    "ordinary_iid_dyad_inference_forbidden": true
+  },
+  "ttf_q_pre_response_qualification": {
+    "predictor_information": [
+      "endpoint identity survival of R_refugia",
+      "unique R_refugia information after all frozen controls",
+      "effective dyad/source/target signal concentration"
+    ],
+    "synthetic_response_link": "tanh(latent_st)",
+    "source_intercept_sd": 0.18,
+    "target_intercept_sd": 0.18,
+    "dyad_noise_sd": 0.32,
+    "private_structure": "source-specific slope on graph coverage and target-specific slope on centroid distance; each random-slope SD = 0.12*A",
+    "private_amplitudes": [0, 1, 2, 3],
+    "effect_grid_beta_R": [0, 0.03, 0.05, 0.08, 0.10, 0.15, 0.20, 0.30],
+    "worlds_per_cell": 2000,
+    "target_power": 0.80,
+    "type1_qualification_ceiling": 0.10,
+    "mde_rule": "evaluable grid MDE is reported only for amplitudes whose beta_R=0 Wilson 95% upper rejection bound is <=0.10",
+    "opening_detectability_requirement": "A0, A1 and A2 must be null-qualified and A2 evaluable grid MDE must be <=0.10; A3 is reported as stress sensitivity but does not independently veto opening if A0-A2 pass",
+    "numerical_requirement": "finite fits and response-blind predictor condition number < 1e4"
+  },
+  "opening_rule": {
+    "required": "all eligibility, predictor-information, null-qualification, A2 detectability and numerical requirements pass before subgroup T_st is extracted",
+    "failure": "STOP_NOT_EVALUABLE_DO_NOT_COMPUTE_SUBGROUP_T_ST"
+  },
+  "outcome_firewall": {
+    "species_level_global_phase4_scores_used": false,
+    "subgroup_T_st_computed": false,
+    "subgroup_beta_refugia_computed": false,
+    "pairwise_genetic_vectors_used_for_design": false,
+    "nucleotide_identity_used_for_design": false
+  }
+}
