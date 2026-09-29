@@ -6,6 +6,25 @@ import hashlib
 import numpy as np
 
 
+ROLE_NAMESPACE = "palearctic-insect-lgm-role-v0.1"
+ARCHIVE_SHA256 = "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5"
+
+
+def palearctic_role_order(species: list[str]) -> list[str]:
+    names=list(map(str,species))
+    if len(names) != len(set(names)):
+        raise ValueError("species names must be unique")
+    return sorted(
+        names,
+        key=lambda name: (
+            hashlib.sha256(
+                f"{ROLE_NAMESPACE}|{ARCHIVE_SHA256}|{name}".encode("utf-8")
+            ).hexdigest(),
+            name,
+        ),
+    )
+
+
 @dataclass(frozen=True)
 class ClimateScaling:
     mean: np.ndarray
