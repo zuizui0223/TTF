@@ -1,0 +1,91 @@
+{
+  "schema": "ttf_palearctic_insect_lgm_genetic_response_v0.1",
+  "status": "FROZEN_BEFORE_TTF_Q_QUALIFICATION_RESULT_AND_BEFORE_ANY_SUBPANEL_T_ST_OR_BETA_LGM",
+  "frozen_on": "2026-09-29",
+  "parent_study_contract": "docs/supporting/palearctic_insect_lgm_refugia_v0.4.json",
+  "prerequisite": {
+    "required_qualification_schema": "ttf_palearctic_insect_lgm_ttf_q_result_v0.1",
+    "required_status": "PASS_TTF_Q_AUTHORIZE_SINGLE_SUBPANEL_RESPONSE_OPENING",
+    "all_required_response_opening_checks": true,
+    "authorization_must_bind_exact_relation_and_repeatability_artifact_hashes": true
+  },
+  "source": {
+    "archive_name": "phylogatr_results_exact_20260918.zip",
+    "archive_size_bytes": 274988692,
+    "archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "exact_phase1_manifest_sha256": "daeedabbeb99fa304568f0f2b2e1c46e0dd6221fbac02b0491faf2435ef7b7b3",
+    "exact_phase1_geometry_csv_sha256": "d6f0b1f360a77de279263145386e7956af0d43c9386048f319117522f933cb74",
+    "parent_phase2_geometry_fingerprint_sha256": "cca0714047523793c609c51c7a2377e120a9ca0d5e18f61816283bafa692fe40",
+    "parent_phase4_authorization_sha256": "47ffa048052d7bea5e76ebc144dcd40ea7e86910033ae082acc58757ca92d4d9"
+  },
+  "panel": {
+    "species": "exact final SDM-admissible species_order frozen in the response-blind LGM relation artifact",
+    "sources": "exact source_species frozen in that relation artifact",
+    "targets": "exact target_species frozen in that relation artifact",
+    "source_target_disjoint": true,
+    "role_reassignment_after_qualification": false,
+    "species_deletion_after_qualification": false
+  },
+  "sequence_and_distance": {
+    "inherit": "docs/supporting/genetic_phylogatr_phase4_response_rule_v0.1.json",
+    "sequence_pair_distance": "uncorrected p-distance over jointly canonical A/C/G/T columns",
+    "minimum_comparable_fraction": 0.5,
+    "locality_pair_distance": "arithmetic mean over all valid cross-locality sequence pairs",
+    "edge_rewiring": false,
+    "divergence_based_sequence_deletion": false,
+    "marker_switching": false
+  },
+  "post_ibd_response": {
+    "implementation": "src/ttf/relational_genetic_empirical.py",
+    "species_response_function": "post_ibd_responses",
+    "min_training_edges": 5,
+    "ibd": "endpoint-safe leave-two-localities-out rank IBD inherited from the validated relational estimator",
+    "source_training_response": "post-IBD turnover rank orthogonalized against edge-length rank",
+    "target_evaluation_response": "raw post-IBD turnover rank"
+  },
+  "pairwise_transfer": {
+    "function": "source_only_transfer_scores",
+    "bandwidth_km": 500,
+    "prior_strength": 0.25,
+    "prior_mean": 0,
+    "segment_points": 5,
+    "output": "one T_st value for every frozen source x target dyad in the relation artifact"
+  },
+  "primary_model": {
+    "response": "T_st",
+    "predictors_in_order": [
+      "z_R_LGM",
+      "z_R_current",
+      "z_geographic_coop",
+      "centered_same_order",
+      "centered_same_family",
+      "z_abs_log_GBIF_count_ratio"
+    ],
+    "source_fixed_effect": true,
+    "target_fixed_effect": true,
+    "inference": "two-way source/target cluster-robust one-sided primary test",
+    "primary_estimand": "beta_LGM",
+    "alternative": "beta_LGM > 0",
+    "alpha": 0.025
+  },
+  "execution": {
+    "exactly_one_authorized_subpanel_opening": true,
+    "post_result_retuning": false,
+    "response_driven_species_replacement": false,
+    "response_driven_control_change": false,
+    "response_driven_SDM_change": false,
+    "serialize_sequence_identity": false,
+    "serialize_edge_level_genetic_distance_vectors": false
+  },
+  "existing_outcome_boundary": {
+    "global_211_species_phase4_result_already_known": true,
+    "species_level_phase4_scores_forbidden_as_design_inputs": true,
+    "this_is_independent_fresh_data_replication": false,
+    "allowed_claim": "prospectively specified secondary dyadic comparative-phylogeographic test on an existing genetic source"
+  },
+  "interpretation": {
+    "positive": "Within the frozen Palearctic terrestrial-insect secondary panel, higher overlap of independently reconstructed LGM climatic suitability geography predicts greater source-to-target transferability of post-IBD spatial genetic differentiation after declared present-climate, geographic, taxonomic and sampling controls.",
+    "null_with_qualification": "The frozen LGM climatic-refugial opportunity relation does not detectably explain source-target transfer heterogeneity in this selected panel under the qualified effect domain.",
+    "not_evaluable": "No biological conclusion; do not compute the subpanel genetic response when TTF-Q qualification fails."
+  }
+}
