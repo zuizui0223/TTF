@@ -1,0 +1,43 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_opening_rule_v0.2",
+  "status": "FROZEN_BEFORE_FORMAL_ELIGIBILITY_RESULT_AND_BEFORE_SUBGROUP_GENETIC_RESPONSE_EXTRACTION",
+  "frozen_on": "2026-09-29",
+  "supersedes_pre_result": "docs/supporting/genetic_palearctic_lgm_opening_rule_v0.1.json",
+  "reason_for_pre_result_supersession": "Replace an arbitrary source-pool weighting formulation with the already established directed single-source transfer response T_st. No formal eligibility result, LGM predictor result, subgroup T_st, or subgroup beta was available when this rule was frozen.",
+  "primary_protocol": "docs/supporting/genetic_palearctic_lgm_relational_protocol_v0.1.json",
+  "required_before_subgroup_response_extraction": [
+    "formal Palearctic-Lepidoptera eligibility PASS with at least 20 species",
+    "new deterministic subgroup train/evaluation split frozen",
+    "response-blind supported source-target dyad graph frozen",
+    "R_refugia and all declared controls constructed without genetic response",
+    "TTF-Q endpoint/control information-survival and signal-concentration diagnostics frozen",
+    "A0-A2 null qualification PASS under the frozen two-way dependence-aware estimator",
+    "A2 evaluable grid MDE <= 0.10 with target power 0.80",
+    "predictor condition number < 1e4"
+  ],
+  "authorized_response_if_all_pass": {
+    "name": "T_st",
+    "definition": "source-only TTF field prediction versus target post-IBD turnover Spearman score",
+    "exact_response_contract": "docs/supporting/genetic_palearctic_lgm_relational_protocol_v0.1.json",
+    "genetic_source": "exact previously bound phylogatR archive",
+    "no_species_or_dyad_change_after_opening": true
+  },
+  "primary_empirical_test_if_authorized": {
+    "estimand": "beta_R on z_R_refugia",
+    "alternative": "beta_R > 0",
+    "alpha": 0.05,
+    "source_target_fixed_effects": true,
+    "two_way_cluster_robust_inference": true
+  },
+  "interpretation": {
+    "qualified_positive": "Within the frozen Palearctic Lepidoptera subgroup, source-target pairs with more similar LGM-to-present climatic persistence have more reusable locations of post-IBD genetic differentiation beyond present climate, present geographic opportunity, broad lineage, endpoint identity and sampling geometry.",
+    "qualified_null": "No detectable historical-similarity increment in the frozen effect domain; not proof that shared refugia never matter.",
+    "qualification_failure": "STOP_NOT_EVALUABLE; subgroup genetic response remains unopened under this study."
+  },
+  "historical_caveat": "The full 211-species response was opened previously. This study is a response-blindly redesigned subgroup re-analysis and must never be described as a pristine prospective confirmatory dataset.",
+  "outcome_firewall": {
+    "species_level_global_phase4_scores_used_for_design": false,
+    "subgroup_T_st_opened": false,
+    "subgroup_beta_R_opened": false
+  }
+}
