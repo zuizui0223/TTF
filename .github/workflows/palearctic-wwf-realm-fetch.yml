@@ -1,0 +1,33 @@
+name: palearctic-wwf-realm-fetch
+
+on:
+  push:
+    branches:
+      - study/palearctic-insect-lgm-v0-1
+    paths:
+      - "scripts/fetch_wwf_palearctic_realm.py"
+      - ".github/workflows/palearctic-wwf-realm-fetch.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch authoritative Palearctic realm
+        run: |
+          python scripts/fetch_wwf_palearctic_realm.py \
+            --output-dir results/wwf_palearctic
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wwf-palearctic-realm-2004
+          path: results/wwf_palearctic/
+          retention-days: 30
+          if-no-files-found: error
