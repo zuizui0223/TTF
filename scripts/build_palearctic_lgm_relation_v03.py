@@ -63,7 +63,7 @@ def main() -> int:
     if rule.get("schema")!="ttf_genetic_palearctic_lgm_subpanel_rule_v0.3":
         raise RuntimeError("unexpected v0.3 parent rule")
     climate=json.loads(args.climate_rule.read_text())
-    if climate.get("schema")!="ttf_genetic_palearctic_lgm_climate_input_rule_v0.3":
+    if climate.get("schema")!="ttf_genetic_palearctic_lgm_climate_input_rule_v0.4":
         raise RuntimeError("unexpected v0.3 climate rule")
     panel=json.loads(args.panel_metadata.read_text())
     if panel.get("schema")!="ttf_genetic_palearctic_lgm_panel_metadata_v0.3":
