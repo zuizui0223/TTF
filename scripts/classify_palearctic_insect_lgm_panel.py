@@ -7,10 +7,6 @@ import hashlib
 import json
 from pathlib import Path
 
-from shapely.geometry import Point, shape
-from shapely.ops import unary_union
-
-
 ROLE_NAMESPACE = "palearctic-insect-lgm-role-v0.1"
 ARCHIVE_SHA = "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
 
@@ -34,6 +30,9 @@ def main() -> int:
     ap.add_argument("--realm-geojson", type=Path, required=True)
     ap.add_argument("--output-panel", type=Path, required=True)
     args = ap.parse_args()
+
+    from shapely.geometry import Point, shape
+    from shapely.ops import unary_union
 
     contract = json.loads(args.contract.read_text())
     candidates = json.loads(args.candidates.read_text())
