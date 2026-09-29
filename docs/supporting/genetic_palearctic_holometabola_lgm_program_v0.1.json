@@ -41,7 +41,16 @@
       "no_threshold_retuning_after_candidate_count_or_genetic_response": true
     },
     "minimum_species_to_continue": 30,
-    "if_below_minimum": "STOP_NOT_EVALUABLE_FOR_LGM_PAIRWISE_PROGRAM"
+    "if_below_minimum": "STOP_NOT_EVALUABLE_FOR_LGM_PAIRWISE_PROGRAM",
+    "dyadic_split": {
+      "inherit_parent_phase1_train_eval_split": false,
+      "reason": "The parent split is irrelevant to the new pairwise historical question and is imbalanced in the response-blind feasibility pre-screen.",
+      "rule": "After the authoritative eligible species list is fixed, sort species by SHA256('palearctic-holometabola-lgm-v0.1|'+species); assign the lower floor(n/2) to source and the remainder to target.",
+      "species_disjoint": true,
+      "no_taxonomic_rebalancing": true,
+      "no_response_based_resplitting": true,
+      "primary_dyads": "complete source x target bipartite panel"
+    }
   },
   "response_blind_feasibility_prescreen": {
     "authority": "DESCRIPTIVE_ONLY_NOT_FINAL_REALM_ASSIGNMENT",
@@ -55,11 +64,25 @@
       "Hymenoptera": 8,
       "Lepidoptera": 29
     },
-    "interpretation": "The program is not obviously sample-size-infeasible; the authoritative Ecoregions2017 screen still must be run."
+    "interpretation": "The program is not obviously sample-size-infeasible; the authoritative Ecoregions2017 screen still must be run.",
+    "parent_split_within_48": {
+      "train": 16,
+      "eval": 32
+    },
+    "locality_support_within_48": {
+      "minimum": 12,
+      "median": 18,
+      "maximum": 93,
+      "total_localities": 1179,
+      "families": 28
+    }
   },
   "lgm_sdm": {
     "occurrence_source": "GBIF external occurrence records, independent of the genetic response",
-    "occurrence_years": [1990, 2026],
+    "occurrence_years": [
+      1990,
+      2026
+    ],
     "coordinate_requirement": true,
     "thinning_km": 10,
     "maximum_occurrences_per_species": 1000,
@@ -68,7 +91,12 @@
     "climate": {
       "current_source": "CHELSA V2.1",
       "lgm_source": "CHELSA-TraCE21k 21 ka BP",
-      "variables": ["bio1", "bio7", "bio12", "bio15"],
+      "variables": [
+        "bio1",
+        "bio7",
+        "bio12",
+        "bio15"
+      ],
       "rationale": "Same four broad thermal/precipitation axes already fixed in the response-blind TTF historical-climate program."
     },
     "accessible_area": {
@@ -115,8 +143,22 @@
       "alpha_one_sided": 0.025,
       "type1_qualification_ceiling": 0.05,
       "target_power": 0.8,
-      "effect_grid": [0.0, 0.02, 0.03, 0.05, 0.08, 0.1, 0.15, 0.2],
-      "private_heterogeneity_amplitudes": [0.0, 1.0, 2.0, 3.0],
+      "effect_grid": [
+        0,
+        0.02,
+        0.03,
+        0.05,
+        0.08,
+        0.1,
+        0.15,
+        0.2
+      ],
+      "private_heterogeneity_amplitudes": [
+        0,
+        1,
+        2,
+        3
+      ],
       "minimum_null_worlds_per_amplitude": 5000,
       "minimum_positive_worlds_per_cell": 1000,
       "rule": "Report evaluable MDE only at nuisance amplitudes whose beta=0 Wilson 95% upper bound is <=0.05."
