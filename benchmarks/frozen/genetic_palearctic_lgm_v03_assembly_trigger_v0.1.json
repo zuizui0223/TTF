@@ -1,0 +1,29 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_v03_assembly_trigger_v0.1",
+  "status": "AUTHORIZE_V03_OCCURRENCE_ASSEMBLY",
+  "recorded_on": "2026-09-29",
+  "assembly_rule": "benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_assembly_rule_v0.1.json",
+  "authority_provenance_correction": "benchmarks/frozen/genetic_palearctic_lgm_v03_assembly_authority_provenance_correction_v0.1.json",
+  "shard4_authority_receipt": "benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_authority_v0.1.json",
+  "shard4_authority_artifact_id": 11021371777,
+  "shard4_authority_digest_sha256": "sha256:5e00af950d141db5f92f91ce213232a8b47987625770530dab5a39baa860123a",
+  "known_preassembly_external_data_summary": {
+    "completed_fixed_shards_species": 19,
+    "completed_fixed_shards_pass": 17,
+    "authoritative_shard4_species": 4,
+    "authoritative_shard4_pass": 4,
+    "expected_total_pass_if_assembly_is_byte_consistent": 21
+  },
+  "authorization_boundary": {
+    "assemble_external_occurrences": true,
+    "bind_v03_roles": true,
+    "build_R_LGM": false,
+    "run_TTF_Q": false,
+    "open_genetic_response": false
+  },
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_v03_T_st_computed": false,
+    "beta_LGM_computed": false
+  }
+}
