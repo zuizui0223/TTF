@@ -1,0 +1,36 @@
+{
+  "schema": "ttf_palearctic_lepidoptera_screen_rule_v0.1",
+  "status": "FROZEN_BEFORE_SUBPANEL_GENETIC_RESPONSE_READ",
+  "purpose": "Define a response-blind, taxonomically and geographically coherent Lepidoptera subset from the frozen 211-species phylogatR survivor panel before any subpanel genetic response is computed.",
+  "source": {
+    "exact_phylogatr_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "identity_opening_authorization_sha256": "47ffa048052d7bea5e76ebc144dcd40ea7e86910033ae082acc58757ca92d4d9",
+    "expected_survivors": 211
+  },
+  "panel_reconstruction": {
+    "marker_aliases": ["COI", "CO1", "COX1", "COXI", "MT-CO1", "CYTOCHROME C OXIDASE SUBUNIT I", "CYTOCHROME OXIDASE I"],
+    "allowed_fasta_surface": "header lines beginning with > only; sequence lines are discarded without decoding or interpretation",
+    "one_panel_per_species": "maximum exact unique matched localities; then maximum aligned-header count; then lexical raw-gene identifier"
+  },
+  "primary_screen": {
+    "class": "Insecta",
+    "order": "Lepidoptera",
+    "sampling_domain_name": "conservative_temperate_palearctic_core_box",
+    "latitude_min": 30.0,
+    "latitude_max": 75.0,
+    "longitude_min": -25.0,
+    "longitude_max": 180.0,
+    "required_fraction_of_selected_localities_inside": 1.0,
+    "minimum_species_to_continue": 20
+  },
+  "sensitivity_screen": {
+    "required_fraction_of_selected_localities_inside": 0.8
+  },
+  "interpretation": "The rectangle is a deliberately conservative sampling-domain screen, not a replacement definition of the Palearctic biogeographic realm. The primary panel is described as Palearctic-core sampled Lepidoptera.",
+  "response_firewall": {
+    "nucleotide_identity_used": false,
+    "pairwise_genetic_distance_used": false,
+    "phase4_species_score_used": false,
+    "subpanel_transfer_response_used": false
+  }
+}
