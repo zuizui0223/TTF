@@ -1,0 +1,55 @@
+{
+  "schema": "ttf_palearctic_lepidoptera_lgm_sdm_rule_v0.1",
+  "status": "FROZEN_BEFORE_SUBPANEL_GENETIC_RESPONSE_READ",
+  "purpose": "Construct a response-blind pairwise predictor of shared LGM suitable geography for the Palearctic-core Lepidoptera panel, then qualify that predictor with TTF-Q before any subpanel genetic response is computed.",
+  "panel_source": "benchmarks/frozen/palearctic_lepidoptera_response_blind_screen_v0.1.json",
+  "ecological_occurrences": {
+    "source": "GBIF occurrence records independent of the genetic response",
+    "years": "2010-2026",
+    "require_coordinates": true,
+    "exact_duplicate_coordinates_removed": true,
+    "thin_km": 10,
+    "maximum_retained_per_species": 200,
+    "minimum_retained_per_species": 30,
+    "failure": "species is predictor-inadmissible; do not replace it based on any genetic quantity"
+  },
+  "climate": {
+    "current": "CHELSA V2.1 1981-2010",
+    "lgm": "CHELSA-TraCE21k 21 ka BP",
+    "variables": ["bio01", "bio07", "bio12", "bio15"],
+    "standardization": "fit from present-day Palearctic-core land cells and reuse unchanged for LGM projection"
+  },
+  "sdm": {
+    "family": "regularized presence-background logistic climate model",
+    "features": "standardized linear and quadratic terms for the four frozen climate variables; no post-response feature search",
+    "background": "deterministic sample of Palearctic-core non-NA CHELSA land cells inside a 500-km buffer of the species occurrence convex hull",
+    "regularization": "single frozen ridge penalty selected before genetic response; no species-specific tuning from genetic outcomes",
+    "response_blind_quality_check": "spatially blocked occurrence-vs-background discrimination and non-degenerate LGM projection; failures remove only predictor-inadmissible species before TTF-Q"
+  },
+  "pairwise_primary_relation": {
+    "name": "R_LGM",
+    "definition": "Schoener D between source and target LGM suitability rasters after each raster is normalized to sum to one on the shared Palearctic-core grid",
+    "range": [0.0, 1.0],
+    "directionality": "symmetric predictor copied onto both source->target directions because the later genetic cross-prediction response is directed"
+  },
+  "declared_controls": [
+    "present-day SDM Schoener D on the same grid",
+    "directed present geographic co-opportunity at 500 km",
+    "same-family indicator",
+    "absolute log retained-occurrence-count ratio",
+    "exact source identity",
+    "exact target identity"
+  ],
+  "ttf_q_gate": {
+    "output": "full evaluable envelope; never a one-cell PASS/FAIL substitute",
+    "require_null_qualification_before_evaluable_mde": true,
+    "if_not_evaluable": "STOP; do not construct or inspect the Palearctic subpanel genetic response",
+    "if_evaluable": "authorize one frozen subpanel genetic-response construction and analysis"
+  },
+  "future_genetic_question_if_authorized": "Do source-target Lepidoptera pairs with more similar LGM suitable geography show stronger transfer/concordance of post-IBD spatial genetic differentiation?",
+  "response_firewall": {
+    "nucleotide_identity_may_have_been_opened_historically_for_the_full_211_species_program": true,
+    "species_level_or_pairwise_subpanel_response_inspected_for_this_design": false,
+    "claim_status": "fresh response-blind re-analysis design, not an independent untouched confirmatory dataset"
+  }
+}
