@@ -1,0 +1,109 @@
+name: palearctic-insect-lgm-response-blind-relation
+
+on:
+  push:
+    branches:
+      - study/palearctic-insect-lgm-response-blind-v01
+    paths:
+      - "benchmarks/frozen/palearctic_insect_lgm_panel_binding_v0.1.json"
+      - "docs/supporting/palearctic_insect_lgm_refugia_v0.4.json"
+      - "src/ttf/palearctic_lgm.py"
+      - "scripts/build_palearctic_insect_lgm_relation.py"
+      - ".github/workflows/palearctic-insect-lgm-response-blind-relation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  relation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install response-blind SDM runtime
+        run: |
+          python -m pip install -e .
+          python -m pip install "rasterio>=1.4,<2" "shapely>=2"
+      - name: Validate frozen execution binding
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("benchmarks/frozen/palearctic_insect_lgm_panel_binding_v0.1.json")
+          b=json.loads(p.read_text())
+          assert b["schema"]=="ttf_palearctic_insect_lgm_panel_binding_v0.1"
+          assert b["status"]=="FROZEN_AFTER_RESPONSE_BLIND_PANEL_RESULT_BEFORE_ANY_SDM_RELATION_RESULT"
+          assert b["genetic_response_used"] is False
+          assert b["subpanel_T_st_computed"] is False
+          assert b["subpanel_beta_LGM_computed"] is False
+          assert b["climate_artifact"]["artifact_id"]==10791389409
+          assert b["climate_artifact"]["zip_sha256"]=="0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2"
+          print({"panel_artifact_id":b["panel_artifact"]["artifact_id"],"panel_status":b["panel_status"]})
+          PY
+      - name: Download exact response-blind panel artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/panel
+          ARTIFACT_ID=$(python - <<'PY'
+          import json
+          print(json.load(open("benchmarks/frozen/palearctic_insect_lgm_panel_binding_v0.1.json"))["panel_artifact"]["artifact_id"])
+          PY
+          )
+          EXPECTED=$(python - <<'PY'
+          import json
+          print(json.load(open("benchmarks/frozen/palearctic_insect_lgm_panel_binding_v0.1.json"))["panel_artifact"]["zip_sha256"])
+          PY
+          )
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > /tmp/panel.zip
+          echo "$EXPECTED  /tmp/panel.zip" | sha256sum -c -
+          unzip -q /tmp/panel.zip -d input/panel
+          rm /tmp/panel.zip
+          test -f input/panel/palearctic_insect_lgm_panel_v0.1.json
+          test -f input/panel/palearctic_insect_lgm_gbif_occurrences_v0.1.csv
+          test -f input/panel/palearctic_realm_v0.1.geojson
+      - name: Download exact previously frozen TraCE21k artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/climate
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10791389409/zip" > /tmp/climate.zip
+          echo "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2  /tmp/climate.zip" | sha256sum -c -
+          unzip -q /tmp/climate.zip -d input/climate
+          rm /tmp/climate.zip
+          test -f input/climate/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif
+          test -f input/climate/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif
+      - name: Build frozen current-to-LGM SDM relation
+        run: |
+          mkdir -p results
+          python scripts/build_palearctic_insect_lgm_relation.py \
+            --contract docs/supporting/palearctic_insect_lgm_refugia_v0.4.json \
+            --panel input/panel/palearctic_insect_lgm_panel_v0.1.json \
+            --occurrences input/panel/palearctic_insect_lgm_gbif_occurrences_v0.1.csv \
+            --realm-geojson input/panel/palearctic_realm_v0.1.geojson \
+            --current-raster input/climate/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif \
+            --current-raster input/climate/historical/CHELSA_TraCE21K_bio07_20_V1.0.tif \
+            --current-raster input/climate/historical/CHELSA_TraCE21K_bio12_20_V1.0.tif \
+            --current-raster input/climate/historical/CHELSA_TraCE21K_bio15_20_V1.0.tif \
+            --lgm-raster input/climate/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif \
+            --lgm-raster input/climate/historical/CHELSA_TraCE21K_bio07_-190_V1.0.tif \
+            --lgm-raster input/climate/historical/CHELSA_TraCE21K_bio12_-190_V1.0.tif \
+            --lgm-raster input/climate/historical/CHELSA_TraCE21K_bio15_-190_V1.0.tif \
+            --output-relation results/palearctic_insect_lgm_relation_v0.1.npz \
+            --output-bootstrap-design results/palearctic_insect_lgm_bootstrap_design_v0.1.npz \
+            --output-summary results/palearctic_insect_lgm_relation_v0.1.json
+          cat results/palearctic_insect_lgm_relation_v0.1.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: palearctic-insect-lgm-response-blind-relation
+          path: results/
+          retention-days: 30
+          if-no-files-found: warn
