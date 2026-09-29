@@ -92,7 +92,10 @@ def main() -> int:
     if external.get("schema")!="ttf_genetic_palearctic_lgm_external_data_rule_v0.1":
         raise RuntimeError("unexpected external-data rule")
     climate=json.loads(args.climate_rule.read_text())
-    if climate.get("schema")!="ttf_genetic_palearctic_lgm_climate_input_rule_v0.1":
+    if climate.get("schema") not in {
+        "ttf_genetic_palearctic_lgm_climate_input_rule_v0.1",
+        "ttf_genetic_palearctic_lgm_climate_input_rule_v0.2",
+    }:
         raise RuntimeError("unexpected climate-input rule")
 
     formal_sources,formal_targets,meta=read_panel_metadata(args.panel_metadata)
