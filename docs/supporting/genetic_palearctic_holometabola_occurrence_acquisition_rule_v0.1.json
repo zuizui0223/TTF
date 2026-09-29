@@ -1,0 +1,37 @@
+{
+  "schema": "ttf_genetic_palearctic_holometabola_occurrence_acquisition_rule_v0.1",
+  "status": "FROZEN_BEFORE_FULL_OCCURRENCE_ASSET",
+  "frozen_on": "2026-09-29",
+  "source_support_receipt": "benchmarks/frozen/genetic_palearctic_holometabola_gbif_support_v0.1.json",
+  "source_support_status_required": "PASS_GBIF_SUPPORT_TO_LGM_SDM",
+  "gbif": {
+    "species_match": "strict exact-name query under the existing accepted_gbif_species_match rule",
+    "hasCoordinate": true,
+    "hasGeospatialIssue": false,
+    "occurrenceStatus": "PRESENT",
+    "year": "1990,2026",
+    "page_size": 300,
+    "maximum_pages": 20,
+    "page_offsets": "existing deterministic_page_offsets(total_count, page_size=300, maximum_pages=20)",
+    "maximum_count_considered_for_offsets": 100000
+  },
+  "retention": {
+    "exact_coordinate_deduplication": true,
+    "duplicate_coordinate_tie_break": "smallest GBIF occurrence key",
+    "priority": "SHA256('palearctic-lgm-occ-v0.1|species|source_key')",
+    "minimum_distance_km": 10.0,
+    "maximum_retained_per_species": 1000,
+    "minimum_required_per_species": 50
+  },
+  "failure_policy": {
+    "request_error": "INCOMPLETE_TECHNICAL; never ecological insufficiency",
+    "fewer_than_50_after_complete_frozen_acquisition": "species remains ineligible; no backfill or resplit",
+    "change_pages_after_result": false,
+    "change_thinning_after_result": false,
+    "change_cap_after_result": false
+  },
+  "firewall": {
+    "species_level_phase4_scores_read": false,
+    "pairwise_genetic_concordance_opened": false
+  }
+}
