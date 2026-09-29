@@ -1,0 +1,19 @@
+{
+  "feature_count": 205,
+  "genetic_pair_response_opened": false,
+  "geojson_sha256": "de9b12f8fa7d7ddf5970dd61a047f58f741f3f2cc1cfe48e70f289303338eb2c",
+  "geojson_size_bytes": 39609180,
+  "panel_membership_opened": false,
+  "realm_field": "REALM",
+  "realm_value": "Palearctic",
+  "schema": "ttf_palearctic_realm_subset_receipt_v0.1",
+  "source_archive_sha256": "be36d6209e443038d02e309f0447c6e7f2a62f5fe60c605ffe90d064952f2a60",
+  "source_receipt_sha256": "117f2860ec21ceafe1d657b874d0373ac0472e47506e42632dbd77e39bd95085",
+  "status": "DERIVED_BEFORE_PANEL_MEMBERSHIP",
+  "workflow_provenance": {
+    "run_id": 36537737420,
+    "head_sha": "c331b2193ca3a0f2b89f330d614a382f3859113e",
+    "artifact_id": 11019162426,
+    "artifact_digest_sha256": "5302237e097141355590fd98113cbc5dfdef28a9b015d12579ff16c4f473f2ce"
+  }
+}
