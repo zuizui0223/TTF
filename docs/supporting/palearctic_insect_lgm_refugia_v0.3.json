@@ -1,0 +1,230 @@
+{
+  "schema": "ttf_palearctic_insect_lgm_refugia_v0.3",
+  "status": "FROZEN_PRE_SDM_RESULT_SAME_PRODUCT_PALEOCLIMATE_PROJECTION_AMENDMENT",
+  "frozen_on": "2026-09-29",
+  "scientific_question": "Within a geographically and ecologically restricted Palearctic terrestrial-insect panel, do species pairs with more similar Last Glacial Maximum climatic-refugial opportunity show more similar post-IBD spatial genetic differentiation?",
+  "fresh_hypothesis": "Higher overlap of independently reconstructed LGM climatic suitability predicts greater source-to-target transfer of post-IBD genetic differentiation after controlling present-day climatic similarity, current geographic opportunity, taxonomy, sampling imbalance, and exact source/target identity.",
+  "relationship_to_prior_TTF": {
+    "relational_v03_reopened": false,
+    "genetic_phase4_global_result_already_exists": true,
+    "claim_status": "prospectively specified secondary analysis on an existing genetic data source; not an independent fresh-data confirmatory replication",
+    "forbidden_design_inputs": [
+      "manuscript/generated/genetic_ttf_phase4_v0.1/species_scores.csv",
+      "species-level Phase-4 transfer scores",
+      "pairwise genetic distances",
+      "subpanel T_st values",
+      "subpanel beta_LGM"
+    ],
+    "allowed_design_inputs": [
+      "exact Phase-4 authorization species list",
+      "phylogatR genes.txt taxonomy metadata",
+      "response-blind occurrence/geometry metadata",
+      "independent GBIF occurrences",
+      "public terrestrial-realm polygons",
+      "current and LGM climate rasters"
+    ]
+  },
+  "source_binding": {
+    "phylogatr_archive_name": "phylogatr_results_exact_20260918.zip",
+    "phylogatr_archive_size_bytes": 274988692,
+    "phylogatr_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "identity_opening_authorization_sha256": "47ffa048052d7bea5e76ebc144dcd40ea7e86910033ae082acc58757ca92d4d9",
+    "eligible_parent_species": 211,
+    "parent_species_source": "species.train_species union species.eval_species in the exact frozen Phase-4 authorization",
+    "marker": "the unique COI row in genes.txt for each of the 211 parent survivors"
+  },
+  "response_blind_panel_eligibility": {
+    "taxonomy": {
+      "class": "Insecta",
+      "terrestrial_core_orders": [
+        "Coleoptera",
+        "Hemiptera",
+        "Hymenoptera",
+        "Lepidoptera",
+        "Orthoptera",
+        "Psocodea"
+      ],
+      "rationale": "Conservative terrestrial-core definition fixed before formal realm census; aquatic-major insect orders and mixed Diptera are excluded rather than classified after results.",
+      "family_exclusions": [
+        "Dytiscidae",
+        "Elmidae",
+        "Gyrinidae",
+        "Haliplidae",
+        "Noteridae"
+      ]
+    },
+    "independent_occurrences": {
+      "provider": "GBIF occurrence/search",
+      "years": [
+        2010,
+        2026
+      ],
+      "taxon_match": "exact accepted species match",
+      "coordinates_required": true,
+      "geospatial_issue_rule": "exclude records with invalid geospatial status under the existing TTF external-occurrence contract",
+      "duplicates": "deterministic duplicate removal",
+      "thinning_km": 10,
+      "maximum_retained_per_species": 200,
+      "minimum_retained_per_species": 30,
+      "priority": "deterministic response-blind priority; no genetic quantity enters record choice"
+    },
+    "palearctic_realm": {
+      "dataset": "TNC/WWF terrestrial ecoregions",
+      "feature_service": "https://services.arcgis.com/F7DSX1DSNSiWmOqh/arcgis/rest/services/TNC_Terrestrial_Ecoregions/FeatureServer/0",
+      "realm_field": "WWF_REALM2",
+      "required_value": "Palearctic",
+      "first_successful_download_must_freeze_bytes_and_sha256": true,
+      "minimum_fraction_retained_occurrences_in_realm": 0.8,
+      "hard_geographic_bbox_forbidden": true
+    },
+    "minimum_species_to_construct_panel": 30,
+    "no_backfill_after_relation_or_qualification_result": true
+  },
+  "role_assignment": {
+    "rule": "SHA256('palearctic-insect-lgm-role-v0.1|<archive_sha256>|<species>'), species lexical tie-break",
+    "source": "lower floor(n/2) ranks",
+    "target": "remaining ranks",
+    "directed_dyads": "complete source x target cross-product",
+    "prior_103_108_split_reused": false
+  },
+  "sdm": {
+    "name": "fixed regularized presence-background climatic SDM",
+    "current_climate": {
+      "dataset": "CHELSA-TraCE21k-centennial-bioclim",
+      "model": "CHELSA-TraCE21k",
+      "version": "1.0",
+      "time": "0 BP",
+      "logical_time_index": 20,
+      "variables": [
+        "bio01",
+        "bio07",
+        "bio12",
+        "bio15"
+      ]
+    },
+    "lgm_climate": {
+      "dataset": "CHELSA-TraCE21k-centennial-bioclim",
+      "model": "CHELSA-TraCE21k",
+      "version": "1.0",
+      "time": "21 ka BP",
+      "logical_time_index": -190,
+      "variables": [
+        "bio01",
+        "bio07",
+        "bio12",
+        "bio15"
+      ]
+    },
+    "spatial_domain": "Palearctic terrestrial ecoregion cells only",
+    "grid_resolution_degrees": 0.25,
+    "background_cells": 20000,
+    "background_selection": "Target-group background: pool retained response-blind GBIF coordinates from the frozen 143-species taxonomic parent that fall inside the formal Palearctic terrestrial realm; map to 0.25-degree cells, deduplicate cells, then take up to 20,000 cells by SHA256('palearctic-insect-lgm-background-v0.2|<lon>|<lat>') rank. The same background is used for every species.",
+    "predictor_standardization": "means and population SDs from the fixed current Palearctic background",
+    "feature_basis": [
+      "linear standardized bio1/bio7/bio12/bio15",
+      "squared standardized bio1/bio7/bio12/bio15"
+    ],
+    "interactions": false,
+    "model": "L2-regularized logistic regression",
+    "regularization_C": 1,
+    "solver": "lbfgs",
+    "max_iter": 2000,
+    "presence_total_weight": 0.5,
+    "background_total_weight": 0.5,
+    "clamping": "each standardized climate predictor clipped to the pooled current-background 0.5th-99.5th percentile before prediction",
+    "suitability_normalization": "clip numerical underflow then normalize positive predictions to sum 1 across Palearctic terrestrial cells separately for current and LGM projections",
+    "background_rationale": "Presence-only records share collection bias across the same broad insect target group; target-group background is frozen before any SDM relation, TTF-Q qualification, or subpanel genetic response.",
+    "presence_background_interpretation": "Relative suitability / relative intensity only; no prevalence claim.",
+    "presence_points": "For each formally eligible species, use only its retained response-blind GBIF occurrences whose coordinates fall inside the formal Palearctic terrestrial-realm polygon; out-of-realm retained points contribute only to the 0.80 eligibility fraction and are excluded from SDM fitting.",
+    "minimum_palearctic_presence_points": 24,
+    "minimum_palearctic_presence_points_rationale": "A species has at least 30 retained GBIF points and at least 0.80 Palearctic fraction, so the frozen eligibility rule implies at least 24 in-realm presence points; no additional post-census sample-size tuning is authorized.",
+    "same_product_projection_rationale": "Fit and project within the same CHELSA-TraCE21k bioclim product so predictor definitions, units and downscaling model are identical between 0 BP and 21 ka BP. CHELSA V2.1 is not mixed into the primary SDM projection.",
+    "primary_sdm_current_baseline": "TraCE21k 0 BP only",
+    "chelsa_v21_role": "not used in the primary SDM or R_current; any future comparison to CHELSA V2.1 must be labelled sensitivity-only and cannot alter panel eligibility or response-opening qualification."
+  },
+  "primary_relation": {
+    "name": "R_LGM",
+    "definition": "Schoener D between source and target normalized LGM SDM suitability surfaces",
+    "range": [
+      0,
+      1
+    ],
+    "thresholding_forbidden": true,
+    "refugium_language": "interpret as shared LGM climatic-refugial opportunity, not direct proof of realized glacial refugia",
+    "current_relation_control": "R_current is Schoener D between source and target normalized suitability surfaces predicted on the same TraCE21k 0-BP Palearctic grid."
+  },
+  "declared_controls_in_order": [
+    "z_R_current: Schoener D between current SDM suitability surfaces",
+    "z_geographic_coop: directed fraction of target GBIF coordinates with nearest source coordinate <=500 km",
+    "centered_same_order",
+    "centered_same_family",
+    "z_abs_log_GBIF_count_ratio"
+  ],
+  "ttf_q_measurement_layer": {
+    "occurrence_bootstrap_replicates": 100,
+    "bootstrap": "resample retained GBIF occurrences within species with replacement; refit fixed SDM and rebuild R_LGM on unchanged dyads",
+    "primary_repeatability": "balanced one-way relation-repeatability ICC",
+    "minimum_repeatability_icc_for_response_opening": 0.7
+  },
+  "ttf_q_qualification": {
+    "exact_source_target_fixed_effects": true,
+    "report_nested_information_survival": true,
+    "report_inverse_herfindahl_dyad_source_target_concentration": true,
+    "predictor_condition_number_max_exclusive": 10000,
+    "alpha_one_sided": 0.025,
+    "target_power": 0.8,
+    "type1_wilson95_upper_ceiling": 0.05,
+    "effects": [
+      0,
+      0.02,
+      0.03,
+      0.05,
+      0.08,
+      0.1,
+      0.15,
+      0.2
+    ],
+    "private_amplitudes": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "source_intercept_sd": 0.18,
+    "target_intercept_sd": 0.18,
+    "dyad_noise_sd": 0.32,
+    "random_slope_sd_per_amplitude": 0.12,
+    "worlds_per_null_cell": 10000,
+    "worlds_per_positive_cell": 1000,
+    "response_opening_domain": {
+      "all_A0_to_A3_null_cells_calibration_qualified": true,
+      "evaluable_grid_mde_A2_max": 0.08,
+      "evaluable_grid_mde_A3_max": 0.1,
+      "measurement_repeatability_icc_min": 0.7,
+      "all_worlds_finite": true
+    },
+    "rationale": "Opening requires at least the known-truth broad-reference-quality detectability domain; endpoint concentration remains a separately reported diagnostic rather than an effective sample-size gate."
+  },
+  "authorized_response_if_and_only_if_qualified": {
+    "response": "freshly recomputed source-to-target post-IBD spatial genetic transfer score T_st restricted to the frozen Palearctic-insect panel and its new hash-assigned roles",
+    "primary_model": "T_st ~ z_R_LGM + declared controls + exact source FE + exact target FE",
+    "inference": "two-way source/target cluster-robust one-sided test",
+    "primary_estimand": "beta_LGM",
+    "alternative": "beta_LGM > 0",
+    "alpha": 0.025,
+    "single_authorized_opening": true,
+    "no_retuning_after_opening": true,
+    "if_qualification_fails": "CLOSE_AS_NOT_EVALUABLE_PALEARCTIC_INSECT_LGM; do not compute subpanel T_st or beta_LGM"
+  },
+  "interpretation_boundary": [
+    "A positive beta_LGM would support greater transfer of post-IBD spatial genetic structure among species with more similar LGM climatic suitability geography within this selected Palearctic terrestrial-insect panel.",
+    "It would not prove that all species occupied the modeled refugia, identify a single named refugium, or establish causality of glacial history.",
+    "A qualification failure is a design result, not evidence against refugial concordance.",
+    "This secondary analysis reuses a genetic source whose global Phase-4 result has already been opened; it must not be presented as an independent fresh-data replication.",
+    "The SDM uses target-group background to reduce shared GBIF sampling bias; remaining occurrence bias and palaeoclimate-model uncertainty remain limitations.",
+    "Primary current-to-LGM transfer uses the same TraCE21k product at 0 BP and 21 ka BP; cross-product CHELSA V2.1 to TraCE21k projection is forbidden for the primary analysis."
+  ],
+  "supersedes_for_sdm_and_qualification": "docs/supporting/palearctic_insect_lgm_refugia_v0.2.json",
+  "scientific_panel_rule_changed": false,
+  "genetic_response_used_for_amendment": false
+}
