@@ -1,0 +1,53 @@
+{
+  "schema": "ttf_genetic_palearctic_holometabola_feasibility_prescreen_v0.1",
+  "status": "DESCRIPTIVE_RESPONSE_BLIND_FEASIBILITY_ONLY",
+  "recorded_on": "2026-09-29",
+  "source": {
+    "parent_survivor_species": 211,
+    "exact_phylogatr_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "phase4_identity_opening_authorization_sha256": "47ffa048052d7bea5e76ebc144dcd40ea7e86910033ae082acc58757ca92d4d9"
+  },
+  "firewall": {
+    "species_level_phase4_scores_read": false,
+    "pairwise_genetic_concordance_constructed": false,
+    "pairwise_genetic_concordance_read": false,
+    "data_used": [
+      "genes.txt taxonomy",
+      "aligned FASTA header identifiers only",
+      "occurrence latitude/longitude",
+      "authorization survivor species names"
+    ]
+  },
+  "exact_response_blind_panel_reconstruction": {
+    "survivors_reconstructed": 211,
+    "failures": 0,
+    "insecta_species": 183,
+    "allowed_order_species_before_geographic_screen": {
+      "Lepidoptera": 90,
+      "Coleoptera": 21,
+      "Hymenoptera": 25
+    }
+  },
+  "provisional_core_palearctic_screen": {
+    "authority": "NON_AUTHORITATIVE_FEASIBILITY_ONLY",
+    "minimum_fraction": 0.8,
+    "eligible_species": 48,
+    "order_counts": {
+      "Lepidoptera": 29,
+      "Coleoptera": 11,
+      "Hymenoptera": 8
+    },
+    "phase1_parent_split_counts": {
+      "train": 16,
+      "eval": 32
+    },
+    "locality_support": {
+      "minimum_per_species": 12,
+      "median_per_species": 18.0,
+      "maximum_per_species": 93,
+      "total_localities": 1179
+    },
+    "families": 28,
+    "interpretation": "The official Ecoregions2017 Palearctic polygon screen may change membership. These counts only show that a >=30-species panel is plausible before any new pairwise genetic response is constructed."
+  }
+}
