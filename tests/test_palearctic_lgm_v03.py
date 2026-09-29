@@ -1,3 +1,4 @@
+import hashlib
 import json
 import runpy
 from dataclasses import make_dataclass
@@ -95,3 +96,36 @@ def test_v03_ttfq_signal_breadth_scales_with_realized_endpoint_count():
     )
     assert bad["source_signal_breadth"] is False
     assert bad["overall_pass"] is False
+
+
+def test_v03_role_hash_and_archive_provenance_are_canonical():
+    rule=json.loads(
+        (ROOT/"docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json").read_text()
+    )
+    panel=json.loads(
+        (ROOT/"benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json").read_text()
+    )
+    correction=json.loads(
+        (ROOT/"benchmarks/frozen/genetic_palearctic_lgm_archive_hash_provenance_correction_v0.1.json").read_text()
+    )
+
+    canonical=correction["canonical_exact_phylogatr_archive_sha256"]
+    assert len(canonical)==64
+    assert rule["role_assignment"]["exact_archive_sha256"]==canonical
+    assert correction["status"]=="PROVENANCE_CORRECTION_NO_SCIENTIFIC_CHANGE"
+
+    namespace=rule["role_assignment"]["namespace"]
+    species=sorted(row["species"] for row in panel["rows"])
+    ranked=sorted(
+        species,
+        key=lambda sp: (
+            hashlib.sha256(f"{namespace}|{canonical}|{sp}".encode()).hexdigest(),
+            sp,
+        ),
+    )
+    expected_source=set(ranked[:11])
+    expected_target=set(ranked[11:])
+    observed_source={row["species"] for row in panel["rows"] if row["role"]=="source"}
+    observed_target={row["species"] for row in panel["rows"] if row["role"]=="target"}
+    assert observed_source==expected_source
+    assert observed_target==expected_target
