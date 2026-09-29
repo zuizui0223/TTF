@@ -1,0 +1,73 @@
+{
+  "schema": "ttf_palearctic_insect_lgm_sdm_relation_v0.2",
+  "status": "FROZEN_BEFORE_GBIF_CENSUS_AND_BEFORE_ANY_SDM_RESULT",
+  "frozen_on": "2026-09-29",
+  "supersedes": "docs/supporting/palearctic_insect_lgm_sdm_relation_v0.1.json",
+  "eligibility_contract": "docs/supporting/palearctic_insect_lgm_eligibility_v0.2.json",
+  "occurrence": {
+    "source": "GBIF",
+    "years": [
+      2010,
+      2026
+    ],
+    "coordinate_deduplication": true,
+    "thinning_km": 10,
+    "maximum_per_species": 200,
+    "minimum_after_thinning": 30
+  },
+  "climate": {
+    "source": "CHELSA-TraCE21k",
+    "calibration_time": "0 BP",
+    "projection_time": "21 ka BP",
+    "variables": [
+      "bio01",
+      "bio07",
+      "bio12",
+      "bio15"
+    ],
+    "reason": "Same climatic dimensions at both time slices; no variable selection after model fitting."
+  },
+  "model": {
+    "family": "L2-regularized presence-background logistic climatic SDM",
+    "features": [
+      "linear bio01,bio07,bio12,bio15",
+      "squared bio01,bio07,bio12,bio15"
+    ],
+    "feature_standardization": "mean and SD from the current calibration background; reuse unchanged for the 21-ka projection",
+    "regularization_C": 1,
+    "background_domain": "1000-km great-circle buffer around current thinned occurrences, clipped to WWF Palearctic terrestrial realm",
+    "background_cells_per_species": 10000,
+    "background_seed": "first 64 bits of SHA256('palearctic-lgm-bg|'+species)",
+    "projection_domain": "entire WWF Palearctic terrestrial realm",
+    "current_fit_diagnostics": [
+      "spatial-block ROC-AUC",
+      "held-out log loss"
+    ],
+    "diagnostics_can_drop_species": false
+  },
+  "measurement_repeatability": {
+    "occurrence_bootstraps": 20,
+    "bootstrap_seed": "SHA256('palearctic-lgm-bootstrap|'+species+'|'+replicate)",
+    "refit_sdm_each_bootstrap": true,
+    "rebuild_R_LGM_each_bootstrap": true,
+    "ttf_q_use": "Report relation repeatability across fixed dyads before non-redundancy and detectability."
+  },
+  "relations": {
+    "primary": "R_LGM = Schoener D between normalized full-data 21-ka suitability surfaces",
+    "mandatory_current": "R_current = Schoener D between normalized full-data 0-BP suitability surfaces",
+    "sensitivity_only": "R_stable = Schoener D between normalized cellwise min(S_21ka,S_0BP) surfaces",
+    "primary_cannot_be_replaced_by_sensitivity": true
+  },
+  "additional_controls": [
+    "WWF-realm-clipped genetic-sampling geographic co-opportunity",
+    "same-order, same-family lineage indicators",
+    "absolute log ratio of retained GBIF occurrence counts",
+    "exact source and target fixed effects"
+  ],
+  "response_firewall": {
+    "species_level_phase4_scores_used": false,
+    "pairwise_genetic_distances_used": false,
+    "break_surfaces_used": false,
+    "genetic_model_result_opening_authorized": false
+  }
+}
