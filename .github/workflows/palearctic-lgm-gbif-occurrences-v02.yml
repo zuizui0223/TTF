@@ -1,0 +1,120 @@
+name: palearctic-lgm-gbif-occurrences-v02
+
+on:
+  push:
+    branches:
+      - method/palearctic-lgm-response-blind-v0-1
+    paths:
+      - ".github/workflows/palearctic-lgm-gbif-occurrences-v02.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  realm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download exact frozen RESOLVE asset
+        run: |
+          mkdir -p realm/raw realm/out
+          curl --fail --location --retry 3 \
+            https://storage.googleapis.com/teow2016/Ecoregions2017.zip \
+            --output realm/Ecoregions2017.zip
+          echo "be36d6209e443038d02e309f0447c6e7f2a62f5fe60c605ffe90d064952f2a60  realm/Ecoregions2017.zip" | sha256sum --check -
+          unzip -q realm/Ecoregions2017.zip -d realm/raw
+          python -m pip install geopandas pyogrio
+          python - <<'PY'
+          import geopandas as gpd
+          from pathlib import Path
+          shp=next(Path("realm/raw").rglob("Ecoregions2017.shp"))
+          gdf=gpd.read_file(shp).to_crs(4326)
+          realm=[c for c in gdf.columns if str(c).casefold()=="realm"][0]
+          pal=gdf[gdf[realm].astype(str).str.casefold()=="palearctic"].copy()
+          if pal.empty:
+              raise SystemExit("no Palearctic polygons")
+          union=pal.geometry.union_all()
+          out=gpd.GeoDataFrame({"REALM":["Palearctic"]},geometry=[union],crs=4326)
+          out.to_file("realm/out/palearctic_union.geojson",driver="GeoJSON")
+          print({"palearctic_source_polygons":len(pal),"union_empty":union.is_empty})
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: palearctic-realm-union-v02
+          path: realm/out/palearctic_union.geojson
+          retention-days: 30
+          if-no-files-found: error
+
+  acquire:
+    needs: realm
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        shard: [0,1,2,3,4,5]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install acquisition dependencies
+        run: |
+          python -m pip install -e .
+          python -m pip install shapely
+      - uses: actions/download-artifact@v4
+        with:
+          name: palearctic-realm-union-v02
+          path: realm
+      - name: Acquire frozen 23-species Palearctic GBIF shard
+        run: |
+          mkdir -p results
+          python scripts/acquire_palearctic_lgm_occurrences_v02.py \
+            --census benchmarks/frozen/genetic_palearctic_lgm_nonlepidoptera_census_v0.2.json \
+            --realm-geojson realm/palearctic_union.geojson \
+            --output-csv "results/occurrences_${{ matrix.shard }}.csv" \
+            --output-ledger "results/ledger_${{ matrix.shard }}.json" \
+            --shard-index "${{ matrix.shard }}" \
+            --shards 6
+      - uses: actions/upload-artifact@v4
+        with:
+          name: palearctic-lgm-v02-gbif-shard-${{ matrix.shard }}
+          path: results/
+          retention-days: 30
+          if-no-files-found: error
+
+  aggregate:
+    needs: acquire
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: palearctic-lgm-v02-gbif-shard-*
+          path: input
+          merge-multiple: true
+      - name: Aggregate exact non-Lepidoptera v0.2 occurrence result
+        run: |
+          mkdir -p results
+          python scripts/aggregate_palearctic_lgm_occurrences_v02.py \
+            --input-dir input \
+            --census benchmarks/frozen/genetic_palearctic_lgm_nonlepidoptera_census_v0.2.json \
+            --external-rule docs/supporting/genetic_palearctic_lgm_external_data_rule_v0.2.json \
+            --output-csv results/palearctic_lgm_occurrences_v0.2.csv \
+            --output-summary results/palearctic_lgm_occurrences_v0.2.json
+          cat results/palearctic_lgm_occurrences_v0.2.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: palearctic-lgm-gbif-occurrences-v02
+          path: results/
+          retention-days: 30
+          if-no-files-found: error
