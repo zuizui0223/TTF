@@ -177,7 +177,7 @@ def main() -> int:
         "source_count":len(source_species),
         "target_count":len(target_species),
         "primary_dyads":len(source_species)*len(target_species),
-        "genetic_pair_response_opened":false if False else False,
+        "genetic_pair_response_opened":False,
         "species_rows":output,
     }
     args.output_json.parent.mkdir(parents=True,exist_ok=True)
