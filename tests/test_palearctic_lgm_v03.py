@@ -129,3 +129,26 @@ def test_v03_role_hash_and_archive_provenance_are_canonical():
     observed_target={row["species"] for row in panel["rows"] if row["role"]=="target"}
     assert observed_source==expected_source
     assert observed_target==expected_target
+
+
+def test_v03_qualification_workflow_is_response_blind_and_complete():
+    text=(ROOT/".github/workflows/palearctic-lgm-climate-ttfq.yml").read_text()
+    required=[
+        "36529160168",
+        "bind_palearctic_lgm_occurrences_v03.py",
+        "prepare_palearctic_lgm_climate_inputs_v03.py",
+        "build_palearctic_lgm_relation_v03.py",
+        "run_palearctic_lgm_ttf_q_v03.py",
+        "genetic_palearctic_lgm_ttf_q_execution_v0.3.json",
+        "palearctic-lgm-v03-response-blind-qualification",
+    ]
+    for token in required:
+        assert token in text
+    forbidden=[
+        "run_palearctic_lgm_genetic",
+        "compute_palearctic_lgm_T_st",
+        "pairwise_v03_T_st_computed: true",
+        "beta_LGM_computed: true",
+    ]
+    for token in forbidden:
+        assert token not in text
