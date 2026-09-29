@@ -1,0 +1,142 @@
+{
+  "schema": "ttf_genetic_palearctic_holometabola_lgm_program_v0.1",
+  "status": "FROZEN_BEFORE_PAIRWISE_GENETIC_RESPONSE_CONSTRUCTION",
+  "frozen_on": "2026-09-29",
+  "purpose": "Test whether terrestrial Palearctic insect species that share modeled Last Glacial Maximum refugial geography show more concordant present-day post-IBD genetic break geography.",
+  "provenance_boundary": {
+    "parent_genetic_dataset": "fresh phylogatR Phase-2 survivor panel",
+    "parent_survivor_species": 211,
+    "exact_phylogatr_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "phase4_identity_opening_authorization_sha256": "47ffa048052d7bea5e76ebc144dcd40ea7e86910033ae082acc58757ca92d4d9",
+    "parent_phase2_geometry_fingerprint_sha256": "cca0714047523793c609c51c7a2377e120a9ca0d5e18f61816283bafa692fe40",
+    "aggregate_parent_phase4_result_already_known": true,
+    "species_pair_genetic_concordance_opened_for_this_program": false,
+    "species_pair_response_used_for_panel_selection": false,
+    "interpretation": "This is a fresh, outcome-shielded secondary analysis, not a new never-opened confirmatory dataset. The aggregate 211-species Phase-4 result is already known, but species eligibility and LGM predictor qualification are frozen before constructing or inspecting the new pairwise genetic-concordance response."
+  },
+  "panel_rule": {
+    "taxonomy": {
+      "class": "Insecta",
+      "allowed_orders": [
+        "Coleoptera",
+        "Hymenoptera",
+        "Lepidoptera"
+      ],
+      "rationale": "Restrict to predominantly terrestrial holometabolous insect orders and avoid obligately aquatic immature-stage orders represented in the parent panel."
+    },
+    "realm_source": {
+      "dataset": "Ecoregions2017",
+      "citation": "Dinerstein et al. 2017 BioScience 67:534-545",
+      "doi": "10.1093/biosci/bix014",
+      "download_identity": "https://storage.googleapis.com/teow2016/Ecoregions2017.zip",
+      "realm_field": "REALM",
+      "realm_value": "Palearctic"
+    },
+    "palearctic_membership": {
+      "unit": "exact selected Phase-1 COI locality",
+      "minimum_fraction_inside_palearctic": 0.8,
+      "boundary_rule": "point intersects a polygon whose REALM equals Palearctic",
+      "missing_or_unassigned_points": "count in denominator and not as Palearctic",
+      "no_species_backfill": true,
+      "no_threshold_retuning_after_candidate_count_or_genetic_response": true
+    },
+    "minimum_species_to_continue": 30,
+    "if_below_minimum": "STOP_NOT_EVALUABLE_FOR_LGM_PAIRWISE_PROGRAM"
+  },
+  "response_blind_feasibility_prescreen": {
+    "authority": "DESCRIPTIVE_ONLY_NOT_FINAL_REALM_ASSIGNMENT",
+    "rule": "conservative coordinate-box approximation to core Palearctic, applied before any species-pair genetic response inspection",
+    "parent_survivor_species": 211,
+    "insecta_species": 183,
+    "core_palearctic_fraction_at_least_0_8_all_insecta": 52,
+    "core_palearctic_fraction_at_least_0_8_allowed_orders": 48,
+    "allowed_order_counts": {
+      "Coleoptera": 11,
+      "Hymenoptera": 8,
+      "Lepidoptera": 29
+    },
+    "interpretation": "The program is not obviously sample-size-infeasible; the authoritative Ecoregions2017 screen still must be run."
+  },
+  "lgm_sdm": {
+    "occurrence_source": "GBIF external occurrence records, independent of the genetic response",
+    "occurrence_years": [1990, 2026],
+    "coordinate_requirement": true,
+    "thinning_km": 10,
+    "maximum_occurrences_per_species": 1000,
+    "minimum_thinned_occurrences_for_sdm": 50,
+    "insufficient_occurrences": "species becomes LGM-predictor-ineligible; no replacement",
+    "climate": {
+      "current_source": "CHELSA V2.1",
+      "lgm_source": "CHELSA-TraCE21k 21 ka BP",
+      "variables": ["bio1", "bio7", "bio12", "bio15"],
+      "rationale": "Same four broad thermal/precipitation axes already fixed in the response-blind TTF historical-climate program."
+    },
+    "accessible_area": {
+      "definition": "1000-km geodesic buffer around the convex hull of thinned current occurrences, intersected with terrestrial cells",
+      "background_points": 10000
+    },
+    "model": {
+      "family": "regularized presence-background logistic species distribution model",
+      "features": "linear plus quadratic standardized climate terms",
+      "regularization": "L2",
+      "regularization_strength_selection": "spatial-block cross-validation on current-climate occurrences only",
+      "spatial_cv_folds": 5,
+      "minimum_cv_auc": 0.7,
+      "model_failure": "species becomes LGM-predictor-ineligible; no replacement",
+      "response_blind": true
+    },
+    "projection": {
+      "time": "21 ka BP",
+      "continuous_suitability_retained": true,
+      "binary_refugium_threshold": "10th percentile training-presence suitability, used only for sensitivity analysis",
+      "primary_pairwise_refugial_relation": "Schoener D between normalized continuous 21-ka suitability surfaces on the union analysis grid",
+      "sensitivity_pairwise_relation": "Jaccard overlap of thresholded 21-ka refugial cells"
+    }
+  },
+  "ttf_q_qualification": {
+    "must_precede_pairwise_genetic_response_construction": true,
+    "focal_relation": "LGM refugial similarity",
+    "endpoint_identity": "exact source and target species fixed effects",
+    "baseline_controls": [
+      "current-climate niche similarity constructed with the same SDM machinery",
+      "present geographic opportunity / range overlap",
+      "same insect order indicator",
+      "absolute log occurrence-count ratio",
+      "genetic sampling-geometry imbalance"
+    ],
+    "nested_geography_step": "present geographic opportunity is added last and its incremental information survival is reported separately",
+    "signal_concentration": [
+      "effective dyad signal count",
+      "effective source signal count",
+      "effective target signal count",
+      "maximum endpoint signal share"
+    ],
+    "detectability": {
+      "alpha_one_sided": 0.025,
+      "type1_qualification_ceiling": 0.05,
+      "target_power": 0.8,
+      "effect_grid": [0.0, 0.02, 0.03, 0.05, 0.08, 0.1, 0.15, 0.2],
+      "private_heterogeneity_amplitudes": [0.0, 1.0, 2.0, 3.0],
+      "minimum_null_worlds_per_amplitude": 5000,
+      "minimum_positive_worlds_per_cell": 1000,
+      "rule": "Report evaluable MDE only at nuisance amplitudes whose beta=0 Wilson 95% upper bound is <=0.05."
+    },
+    "go_rule": "Open the new pairwise genetic-concordance response only if the authoritative panel has >=30 species, the LGM relation retains non-zero variation after declared controls, no single source or target contributes >=0.15 of residual signal mass, and at least one nuisance amplitude has an evaluable grid MDE <=0.10.",
+    "no_go_rule": "If any mandatory GO condition fails, close as NOT_EVALUABLE_LGM_PALEARCTIC_INSECT_PANEL and do not construct the pairwise genetic-concordance response."
+  },
+  "future_genetic_response_if_qualified": {
+    "status": "DEFINITION_FROZEN_RESPONSE_NOT_YET_CONSTRUCTED",
+    "primary_response": "symmetric pairwise concordance of post-IBD genetic differentiation geography",
+    "construction": "For each ordered species pair, train the already frozen genetic TTF spatial kernel on species i alone and score held-out post-IBD edge turnover in species j; combine i->j and j->i by arithmetic mean for an unordered pair.",
+    "pair_inclusion": "both directional scores must be computable under the frozen endpoint-safe IBD and genetic graph rules",
+    "primary_test": "Does LGM refugial similarity positively predict symmetric genetic-geography concordance after the declared response-blind controls?",
+    "alpha_one_sided": 0.025,
+    "species_endpoint_dependence": "two-way cluster-robust by the two species endpoints",
+    "not_allowed": [
+      "change the panel after pairwise response inspection",
+      "change LGM SDM variables or thresholds after pairwise response inspection",
+      "replace the LGM predictor after a null result",
+      "reinterpret the parent 211-species Phase-4 test as confirmatory evidence for this new historical hypothesis"
+    ]
+  }
+}
