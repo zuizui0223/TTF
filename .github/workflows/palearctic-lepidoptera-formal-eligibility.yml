@@ -1,0 +1,50 @@
+name: palearctic-lepidoptera-formal-eligibility
+
+on:
+  push:
+    branches:
+      - study/palearctic-lgm-response-blind-v01
+    paths:
+      - "data/frozen/palearctic_lepidoptera_response_blind_localities_v0.1.json"
+      - "data/external/biogeographical_regions_of_the_world_2004-eight_shapes.zip"
+      - "docs/supporting/genetic_palearctic_lepidoptera_eligibility_v0.1.json"
+      - "docs/supporting/genetic_palearctic_realm_source_binding_v0.1.json"
+      - "scripts/convert_wwf_realm_zip_to_geojson.py"
+      - "scripts/screen_palearctic_lepidoptera_response_blind.py"
+      - ".github/workflows/palearctic-lepidoptera-formal-eligibility.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  formal-screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install realm converter dependency
+        run: python -m pip install "pyshp==2.3.1"
+      - name: Convert byte-bound realm source
+        run: |
+          mkdir -p results/palearctic_lgm_v0.1
+          python scripts/convert_wwf_realm_zip_to_geojson.py \
+            --zip data/external/biogeographical_regions_of_the_world_2004-eight_shapes.zip \
+            --binding docs/supporting/genetic_palearctic_realm_source_binding_v0.1.json \
+            --output results/palearctic_lgm_v0.1/palearctic_realm.geojson
+      - name: Run formal response-blind eligibility screen
+        run: |
+          python scripts/screen_palearctic_lepidoptera_response_blind.py \
+            --localities data/frozen/palearctic_lepidoptera_response_blind_localities_v0.1.json \
+            --realm-geojson results/palearctic_lgm_v0.1/palearctic_realm.geojson \
+            --contract docs/supporting/genetic_palearctic_lepidoptera_eligibility_v0.1.json \
+            --output results/palearctic_lgm_v0.1/eligibility_result.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: palearctic-lepidoptera-formal-eligibility
+          path: results/palearctic_lgm_v0.1/
+          retention-days: 30
+          if-no-files-found: error
