@@ -1,0 +1,47 @@
+name: palearctic-insect-occurrence-assets
+
+on:
+  push:
+    branches:
+      - study/palearctic-insect-lgm-response-blind
+    paths:
+      - "benchmarks/frozen/genetic_palearctic_holometabola_gbif_support_v0.1.json"
+      - "docs/supporting/genetic_palearctic_holometabola_occurrence_acquisition_rule_v0.1.json"
+      - "scripts/acquire_palearctic_holometabola_occurrences.py"
+      - ".github/workflows/palearctic-insect-occurrence-assets.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  acquire:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0,1,2,3,4,5]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Acquire frozen current occurrences
+        run: |
+          mkdir -p results
+          python scripts/acquire_palearctic_holometabola_occurrences.py \
+            --support benchmarks/frozen/genetic_palearctic_holometabola_gbif_support_v0.1.json \
+            --rule docs/supporting/genetic_palearctic_holometabola_occurrence_acquisition_rule_v0.1.json \
+            --shard-index "${{ matrix.shard }}" --shards 6 \
+            --output-csv "results/occ_${{ matrix.shard }}.csv" \
+            --output-json "results/ledger_${{ matrix.shard }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: palearctic-occurrences-${{ matrix.shard }}
+          path: |
+            results/occ_${{ matrix.shard }}.csv
+            results/ledger_${{ matrix.shard }}.json
+          retention-days: 90
+          if-no-files-found: error
