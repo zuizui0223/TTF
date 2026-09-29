@@ -54,7 +54,7 @@ def main() -> int:
 
     contract=load_contract(args.contract)
     if sha256_path(args.survivor_geometry_csv)!=EXPECTED_SURVIVOR_GEOMETRY_SHA256:
-        raise RuntimeError("Phase-1 response-blind geometry CSV SHA256 drift")
+        raise RuntimeError("Phase-2 survivor geometry CSV SHA256 drift")
     if sha256_path(args.authorization_json)!=EXPECTED_AUTHORIZATION_SHA256:
         raise RuntimeError("Phase-4 authorization SHA256 drift")
 
@@ -82,7 +82,7 @@ def main() -> int:
         rows=list(csv.DictReader(h))
     required={"species","class","order","family","latitude","longitude"}
     if not rows or not required.issubset(rows[0]):
-        raise RuntimeError("Phase-1 geometry CSV schema drift")
+        raise RuntimeError("Phase-2 survivor geometry CSV schema drift")
 
     by={}
     for row in rows:
@@ -92,7 +92,7 @@ def main() -> int:
         by.setdefault(sp,[]).append(row)
     if set(by)!=survivors:
         missing=sorted(survivors-set(by))
-        raise RuntimeError(f"Phase-1 geometry is missing authorized survivors: {missing[:10]}")
+        raise RuntimeError(f"Phase-2 survivor geometry is missing authorized survivors: {missing[:10]}")
 
     try:
         import geopandas as gpd
