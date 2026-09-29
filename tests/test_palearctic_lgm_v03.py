@@ -135,6 +135,9 @@ def test_v03_qualification_workflow_is_response_blind_and_complete():
     text=(ROOT/".github/workflows/palearctic-lgm-climate-ttfq.yml").read_text()
     required=[
         "36529160168",
+        "genetic_palearctic_lgm_v03_climate_asset_binding_v0.1.json",
+        "10791389409",
+        "10791867875",
         "bind_palearctic_lgm_occurrences_v03.py",
         "prepare_palearctic_lgm_climate_inputs_v03.py",
         "build_palearctic_lgm_relation_v03.py",
