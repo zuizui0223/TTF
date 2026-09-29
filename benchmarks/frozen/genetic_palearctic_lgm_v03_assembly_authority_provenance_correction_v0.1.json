@@ -1,0 +1,26 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_v03_assembly_authority_provenance_correction_v0.1",
+  "status": "PROVENANCE_CORRECTION_NO_SCIENTIFIC_CHANGE",
+  "recorded_on": "2026-09-29",
+  "original_assembly_rule": "benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_assembly_rule_v0.1.json",
+  "original_shard4_authority_rule": "benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_technical_failover_v0.1.json",
+  "supersession_chain": [
+    "benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_transport2_amendment_v0.1.json",
+    "benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_transport3_amendment_v0.1.json"
+  ],
+  "authoritative_shard4_receipt": "benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_authority_v0.1.json",
+  "reason": "The original assembly rule froze before transport2/transport3 existed and therefore points to the then-current technical failover rule. Transport2 and transport3 each superseded the earlier transport path before their ecological results were seen. The final shard4 authority receipt follows that pre-result supersession chain.",
+  "scientific_effect": {
+    "species_set_changed": false,
+    "GBIF_query_changed": false,
+    "page_offsets_changed": false,
+    "realm_filter_changed": false,
+    "thinning_changed": false,
+    "minimum_occurrences_changed": false,
+    "source_target_roles_changed": false,
+    "external_data_gate_changed": false,
+    "R_LGM_changed": false,
+    "TTF_Q_changed": false,
+    "genetic_response_opened": false
+  }
+}
