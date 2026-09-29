@@ -1,0 +1,57 @@
+{
+  "schema": "ttf_genetic_palearctic_lepidoptera_eligibility_v0.1",
+  "status": "FROZEN_BEFORE_FORMAL_REALM_CLASSIFICATION",
+  "frozen_on": "2026-09-29",
+  "purpose": "Define a response-blind Palearctic Lepidoptera subgroup of the already completed 211-species phylogatR survivor universe for a new comparative-phylogeographic feasibility study.",
+  "historical_status": {
+    "global_211_species_phase4_was_previously_opened": true,
+    "subgroup_species_level_genetic_scores_consulted_for_this_design": false,
+    "claim": "response-blind subgroup redesign, not a newly collected prospective confirmatory response"
+  },
+  "source_universe": {
+    "phase4_authorized_survivors": 211,
+    "exact_source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "taxonomy_source": "phylogatR genes.txt metadata from the exact source archive",
+    "locality_source": "selected COI-family Phase-1 occurrence coordinates reconstructed with the frozen selection rule"
+  },
+  "eligibility": {
+    "class_exact": "Insecta",
+    "order_exact": "Lepidoptera",
+    "realm_dataset": {
+      "title": "Simplified Biogeographical Realms of the World (polygons)",
+      "edition": "Version 2.0",
+      "publication_year": 2004,
+      "provider": "World Wildlife Fund - US / UNEP-WCMC",
+      "layer_url": "https://data-gis.unep-wcmc.org/server/rest/services/WWF_004_GeneralisedBiogeographicRealms2004/FeatureServer/0",
+      "realm_field": "realmcode",
+      "palearctic_code": "PA"
+    },
+    "palearctic_fraction_definition": "fraction of frozen selected-panel unique localities intersecting the official Palearctic polygon",
+    "minimum_palearctic_fraction": 0.80,
+    "boundary_points": "count as inside",
+    "minimum_eligible_species": 20,
+    "minimum_species_rationale": "guarantee at least 10 species per half under the new deterministic 50/50 subgroup split before synthetic qualification"
+  },
+  "split": {
+    "inherit_global_211_split": false,
+    "reason": "the global 103/108 split was not designed for the subgroup and provisional screening showed strong subgroup imbalance",
+    "new_rule": "sort eligible species by SHA256('<eligibility_contract_sha256>|split|<species>'); lower floor(n/2) are training, remainder evaluation",
+    "response_independent": true
+  },
+  "provisional_screen": {
+    "performed_before_formal_realm_result": true,
+    "authority": "feasibility_only",
+    "genetic_response_used": false,
+    "note": "A coarse coordinate proxy suggested roughly 29 Palearctic-dominant Lepidoptera; it cannot determine formal eligibility."
+  },
+  "outcome_firewall": {
+    "species_level_phase4_scores_used": false,
+    "pairwise_genetic_distance_vectors_used": false,
+    "nucleotide_identity_used": false,
+    "global_phase4_aggregate_result_allowed_only_as_historical_context": true
+  },
+  "failure": {
+    "if_species_below_minimum": "STOP_SUBGROUP_NOT_EVALUABLE_BEFORE_LGM_MODELING",
+    "interpretation": "design infeasibility, not a biological null"
+  }
+}
