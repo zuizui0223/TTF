@@ -1,0 +1,75 @@
+name: palearctic-lepidoptera-gbif-occurrences
+
+on:
+  push:
+    branches:
+      - study/palearctic-lepidoptera-lgm-v01
+    paths:
+      - "benchmarks/frozen/palearctic_lepidoptera_response_blind_screen_v0.1.json"
+      - "docs/supporting/palearctic_lepidoptera_lgm_sdm_rule_v0.1.json"
+      - "scripts/acquire_palearctic_lepidoptera_occurrences.py"
+      - "scripts/aggregate_palearctic_lepidoptera_occurrences.py"
+      - ".github/workflows/palearctic-lepidoptera-gbif-occurrences.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  acquire:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0,1,2,3]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Acquire frozen response-blind GBIF occurrences
+        run: |
+          mkdir -p results
+          python scripts/acquire_palearctic_lepidoptera_occurrences.py \
+            --screen benchmarks/frozen/palearctic_lepidoptera_response_blind_screen_v0.1.json \
+            --output-csv "results/occurrences_${{ matrix.shard }}.csv" \
+            --output-ledger "results/ledger_${{ matrix.shard }}.json" \
+            --shard-index "${{ matrix.shard }}" \
+            --shards 4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: palearctic-lepidoptera-occurrences-${{ matrix.shard }}
+          path: results/
+          retention-days: 30
+          if-no-files-found: error
+
+  aggregate:
+    needs: acquire
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: palearctic-lepidoptera-occurrences-*
+          path: input
+          merge-multiple: true
+      - name: Aggregate exact 26-species occurrence transport
+        run: |
+          mkdir -p results
+          python scripts/aggregate_palearctic_lepidoptera_occurrences.py \
+            --screen benchmarks/frozen/palearctic_lepidoptera_response_blind_screen_v0.1.json \
+            --contract docs/supporting/palearctic_lepidoptera_lgm_sdm_rule_v0.1.json \
+            --input-dir input \
+            --output-csv results/palearctic_lepidoptera_occurrences_v0.1.csv \
+            --output-json results/palearctic_lepidoptera_occurrence_execution_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: palearctic-lepidoptera-occurrence-summary
+          path: results/
+          retention-days: 30
+          if-no-files-found: error
