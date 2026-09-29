@@ -38,10 +38,9 @@ def main() -> int:
         "replicates":100,
         "dyads":int(matrix.shape[1]),
         "repeatability":{
-            "icc":float(summary.icc),
+            "repeatability_icc":float(summary.repeatability_icc),
             "between_dyad_variance":float(summary.between_dyad_variance),
             "within_dyad_variance":float(summary.within_dyad_variance),
-            "mean_within_dyad_sd":float(summary.mean_within_dyad_sd),
             "median_within_dyad_sd":float(summary.median_within_dyad_sd),
         },
         "genetic_response_used":False,
