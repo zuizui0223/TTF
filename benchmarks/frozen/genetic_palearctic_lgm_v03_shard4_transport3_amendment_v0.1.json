@@ -1,0 +1,39 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_v03_shard4_transport3_amendment_v0.1",
+  "status": "FROZEN_BEFORE_TRANSPORT3_RESULT_AND_BEFORE_TRANSPORT2_RESULT",
+  "frozen_on": "2026-09-29",
+  "supersedes": "benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_transport2_amendment_v0.1.json",
+  "transport2": {
+    "run_id": 36539169614,
+    "result_seen_before_this_amendment": false,
+    "authority": "SUPERSEDED_BEFORE_RESULT_BY_TRANSPORT3",
+    "reason": "Transport2 preserved a 90-second per-request socket timeout and sequential species loop, leaving an unnecessarily large worst-case technical runtime."
+  },
+  "transport3": {
+    "scientific_species_set_unchanged": true,
+    "scientific_page_offsets_unchanged": true,
+    "GBIF_query_parameters_unchanged": true,
+    "page_results_processed_in_frozen_offset_order": true,
+    "species_results_processed_in_frozen_shard_order": true,
+    "page_workers_per_species": 4,
+    "species_workers": 2,
+    "request_timeout_seconds": 25,
+    "request_retries": 8,
+    "retryable_http_codes": [429, 500, 502, 503, 504],
+    "exact_coordinate_deduplication_unchanged": true,
+    "occurrence_priority_unchanged": true,
+    "10km_thinning_unchanged": true,
+    "maximum_200_unchanged": true,
+    "minimum_30_unchanged": true,
+    "if_any_required_request_exhausts_retries": "REQUEST_ERROR; fail closed at v0.3 external-data gate",
+    "authoritative_if_execution_completes": true,
+    "no_comparison_to_transport2_ecological_result": true
+  },
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_v03_T_st_computed": false,
+    "beta_LGM_computed": false,
+    "R_LGM_used": false,
+    "TTF_Q_used": false
+  }
+}
