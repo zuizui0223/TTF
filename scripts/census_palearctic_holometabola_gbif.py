@@ -3,9 +3,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import runpy
 from pathlib import Path
 
-from scripts.census_relational_gbif_occurrence import fetch_species
+_FETCH = runpy.run_path(str(Path(__file__).with_name("census_relational_gbif_occurrence.py")))
+fetch_species = _FETCH["fetch_species"]
 from ttf.relational_external import shard_items
 
 
