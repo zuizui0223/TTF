@@ -1,0 +1,36 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_v03_occurrence_assembly_rule_v0.1",
+  "status": "FROZEN_BEFORE_AUTHORITATIVE_SHARD4_RESULT_AND_V03_ASSEMBLY",
+  "frozen_on": "2026-09-29",
+  "parent_run_id": 36529160168,
+  "fixed_parent_shards": {
+    "0": {"artifact_id": 11015912664, "digest": "sha256:36a8ed8a5381e5ec6b8f57999eab4bd0e43325dbe0b426d69f2176d52ee9243d"},
+    "1": {"artifact_id": 11015742957, "digest": "sha256:89fb23989c1cf4567fa818a67e49fc19b5d73fde0b67510390d8e2b61462174b"},
+    "2": {"artifact_id": 11016082891, "digest": "sha256:a2f91e9e9d2699cdbafe8c50982b305a788c1bf5f5140105c27fc5c4f857c249"},
+    "3": {"artifact_id": 11016262584, "digest": "sha256:f644834731090ad96ceb4dacec289581f792a221875dc1c0253d7fd20eb80665"},
+    "5": {"artifact_id": 11015728555, "digest": "sha256:5e56f7424b410ad250ca26d9027328ca30805b766c974d7e24649496b70a0af1"}
+  },
+  "shard4_authority_rule": "benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_technical_failover_v0.1.json",
+  "shard4_authority_receipt": "benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_authority_v0.1.json",
+  "assembly": {
+    "extract_only": [
+      "occurrences_0.csv", "ledger_0.json",
+      "occurrences_1.csv", "ledger_1.json",
+      "occurrences_2.csv", "ledger_2.json",
+      "occurrences_3.csv", "ledger_3.json",
+      "occurrences_4.csv", "ledger_4.json",
+      "occurrences_5.csv", "ledger_5.json"
+    ],
+    "v02_aggregator": "scripts/aggregate_palearctic_lgm_occurrences_v02.py",
+    "v03_role_binder": "scripts/bind_palearctic_lgm_occurrences_v03.py",
+    "no_result_based_species_backfill": true,
+    "no_result_based_role_resplit": true
+  },
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_v03_T_st_computed": false,
+    "beta_LGM_computed": false,
+    "R_LGM_used_to_choose_shards": false,
+    "TTF_Q_used_to_choose_shards": false
+  }
+}
