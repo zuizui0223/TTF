@@ -141,13 +141,13 @@ def main() -> int:
 
     domain=q["response_opening_domain"]
     calibration_all=all(
-        bool(envelope[f"A{int(float(a))}"]["calibration_qualified"])
+        bool(envelope[f"{float(a):g}"]["calibration_pass"])
         for a in q["private_amplitudes"]
     )
-    def mde(A: str):
-        return envelope[A]["evaluable_grid_mde"]
-    a2=mde("A2")
-    a3=mde("A3")
+    def mde(amplitude: float):
+        return envelope[f"{float(amplitude):g}"]["evaluable_grid_mde"]
+    a2=mde(2.0)
+    a3=mde(3.0)
     opening=(
         float(repeatability.icc)>=float(domain["measurement_repeatability_icc_min"])
         and calibration_all
