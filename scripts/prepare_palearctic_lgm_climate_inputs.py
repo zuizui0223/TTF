@@ -35,16 +35,20 @@ def load_union(path: Path):
     return shape(payload)
 
 
-def global_centres(resolution: float=0.1) -> tuple[np.ndarray,np.ndarray]:
-    if not np.isclose(resolution,0.1):
-        raise ValueError("frozen grid resolution is 0.1 degrees")
-    lon=-179.95+0.1*np.arange(3600,dtype=float)
-    lat=-89.95+0.1*np.arange(1800,dtype=float)
-    return lon,lat
+def global_centres(resolution: float) -> tuple[np.ndarray,np.ndarray]:
+    if np.isclose(resolution,0.25):
+        lon=-179.875+0.25*np.arange(1440,dtype=float)
+        lat=-89.875+0.25*np.arange(720,dtype=float)
+        return lon,lat
+    if np.isclose(resolution,0.1):
+        lon=-179.95+0.1*np.arange(3600,dtype=float)
+        lat=-89.95+0.1*np.arange(1800,dtype=float)
+        return lon,lat
+    raise ValueError("unsupported frozen grid resolution")
 
 
-def palearctic_grid_points(geometry) -> np.ndarray:
-    lon,lat=global_centres(0.1)
+def palearctic_grid_points(geometry, resolution: float) -> np.ndarray:
+    lon,lat=global_centres(resolution)
     minx,miny,maxx,maxy=geometry.bounds
     lon=lon[(lon>=minx-0.05)&(lon<=maxx+0.05)]
     lat=lat[(lat>=miny-0.05)&(lat<=maxy+0.05)]
@@ -149,7 +153,10 @@ def main() -> int:
     args=ap.parse_args()
 
     rule=json.loads(args.climate_rule.read_text())
-    if rule.get("schema")!="ttf_genetic_palearctic_lgm_climate_input_rule_v0.1":
+    if rule.get("schema") not in {
+        "ttf_genetic_palearctic_lgm_climate_input_rule_v0.1",
+        "ttf_genetic_palearctic_lgm_climate_input_rule_v0.2",
+    }:
         raise RuntimeError("unexpected frozen climate input rule")
     panel=json.loads(args.panel_metadata.read_text())
     if panel.get("schema")!="ttf_genetic_palearctic_lgm_panel_metadata_v0.1":
@@ -233,7 +240,8 @@ def main() -> int:
         writer.writeheader(); writer.writerows(climate_rows)
 
     geom=load_union(args.realm_geojson)
-    grid_points=palearctic_grid_points(geom)
+    resolution=float(rule["grid"]["resolution_degrees"])
+    grid_points=palearctic_grid_points(geom,resolution)
     current_grid,_=sample_environment(current_paths,grid_points,dataset="current")
     lgm_grid,lgm_meta=sample_environment(lgm_paths,grid_points,dataset="lgm")
     trace0_grid,trace0_meta=sample_environment(trace0_paths,grid_points,dataset="trace0")
@@ -266,7 +274,7 @@ def main() -> int:
         "grid":{
             "candidate_palearctic_centroids":int(len(grid_points)),
             "common_current_lgm_finite_cells":int(grid_valid.sum()),
-            "resolution_degrees":0.1,
+            "resolution_degrees":resolution,
             "paleocoastline_reconstruction":False,
         },
         "compatibility_current_V2_1_vs_TraCE_0BP":compatibility(current_valid,trace0_valid),
