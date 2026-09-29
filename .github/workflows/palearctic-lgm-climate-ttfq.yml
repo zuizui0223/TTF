@@ -47,6 +47,8 @@ jobs:
           trigger=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_trigger_v0.1.json").read_text())
           rule=json.loads(Path("docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json").read_text())
           climate=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_climate_asset_binding_v0.1.json").read_text())
+          unit=json.loads(Path("docs/supporting/genetic_palearctic_lgm_climate_unit_rule_v0.2.json").read_text())
+          climate_rule=json.loads(Path("docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.4.json").read_text())
 
           assert trigger["schema"]=="ttf_genetic_palearctic_lgm_v03_qualification_trigger_v0.1"
           assert trigger["status"]=="AUTHORIZE_RESPONSE_BLIND_V03_QUALIFICATION"
@@ -81,6 +83,11 @@ jobs:
           assert climate["historical_trace21k"]["artifact_id"]==10791389409
           assert climate["current_chelsa_v21"]["artifact_id"]==10791867875
           assert climate["substitution_after_result"] is False
+          assert unit["status"]=="FROZEN_BYTE_SEMANTICS_CORRECTION_BEFORE_V03_R_LGM_OR_TTF_Q_RESULT"
+          assert unit["response_firewall"]["v03_R_LGM_seen_before_correction"] is False
+          assert unit["response_firewall"]["v03_TTF_Q_result_seen_before_correction"] is False
+          assert climate_rule["schema"]=="ttf_genetic_palearctic_lgm_climate_input_rule_v0.4"
+          assert climate_rule["unit_rule"]=="docs/supporting/genetic_palearctic_lgm_climate_unit_rule_v0.2.json"
 
           assert all(v is False for v in panel["response_firewall"].values())
           assert all(v is False for v in binding["response_firewall"].values())
@@ -206,11 +213,11 @@ jobs:
         id: climate
         run: |
           set -euo pipefail
-          python scripts/prepare_palearctic_lgm_climate_inputs_v03.py             --occurrences results/v03/palearctic_lgm_occurrences_v0.3.csv             --panel-metadata benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json             --realm-geojson input/realm/palearctic_union.geojson             --climate-rule docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.3.json             --current-bio1 input/chelsa-current/current/CHELSA_bio1_1981-2010_V.2.1.tif             --current-bio7 input/chelsa-current/current/CHELSA_bio7_1981-2010_V.2.1.tif             --current-bio12 input/chelsa-current/current/CHELSA_bio12_1981-2010_V.2.1.tif             --current-bio15 input/chelsa-current/current/CHELSA_bio15_1981-2010_V.2.1.tif             --lgm-bio1 input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif             --lgm-bio7 input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_-190_V1.0.tif             --lgm-bio12 input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_-190_V1.0.tif             --lgm-bio15 input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_-190_V1.0.tif             --trace0-bio1 input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif             --trace0-bio7 input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_20_V1.0.tif             --trace0-bio12 input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_20_V1.0.tif             --trace0-bio15 input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_20_V1.0.tif             --output-occurrence-climate results/v03/palearctic_lgm_occurrence_climate_v0.3.csv             --output-grid results/v03/palearctic_lgm_climate_grid_v0.3.npz             --output-summary results/v03/palearctic_lgm_climate_inputs_v0.3.json
+          python scripts/prepare_palearctic_lgm_climate_inputs_v03.py             --occurrences results/v03/palearctic_lgm_occurrences_v0.3.csv             --panel-metadata benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json             --realm-geojson input/realm/palearctic_union.geojson             --climate-rule docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.4.json             --current-bio1 input/chelsa-current/current/CHELSA_bio1_1981-2010_V.2.1.tif             --current-bio7 input/chelsa-current/current/CHELSA_bio7_1981-2010_V.2.1.tif             --current-bio12 input/chelsa-current/current/CHELSA_bio12_1981-2010_V.2.1.tif             --current-bio15 input/chelsa-current/current/CHELSA_bio15_1981-2010_V.2.1.tif             --lgm-bio1 input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif             --lgm-bio7 input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_-190_V1.0.tif             --lgm-bio12 input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_-190_V1.0.tif             --lgm-bio15 input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_-190_V1.0.tif             --trace0-bio1 input/chelsa-historical/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif             --trace0-bio7 input/chelsa-historical/historical/CHELSA_TraCE21K_bio07_20_V1.0.tif             --trace0-bio12 input/chelsa-historical/historical/CHELSA_TraCE21K_bio12_20_V1.0.tif             --trace0-bio15 input/chelsa-historical/historical/CHELSA_TraCE21K_bio15_20_V1.0.tif             --output-occurrence-climate results/v03/palearctic_lgm_occurrence_climate_v0.3.csv             --output-grid results/v03/palearctic_lgm_climate_grid_v0.3.npz             --output-summary results/v03/palearctic_lgm_climate_inputs_v0.4.json
 
           python - <<'PY'
           import json,os
-          p=json.load(open("results/v03/palearctic_lgm_climate_inputs_v0.3.json"))
+          p=json.load(open("results/v03/palearctic_lgm_climate_inputs_v0.4.json"))
           assert all(v is False for v in p["response_firewall"].values()),p
           passed=p["status"]=="PASS_TO_V03_RESPONSE_BLIND_LGM_RELATION_BUILD"
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
@@ -230,7 +237,7 @@ jobs:
         id: relation
         run: |
           set -euo pipefail
-          python scripts/build_palearctic_lgm_relation_v03.py             --panel-metadata benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json             --occurrence-climate-csv results/v03/palearctic_lgm_occurrence_climate_v0.3.csv             --grid-npz results/v03/palearctic_lgm_climate_grid_v0.3.npz             --rule docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json             --climate-rule docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.3.json             --output-npz results/v03/palearctic_lgm_relation_design_v0.3.npz             --output-summary results/v03/palearctic_lgm_relation_design_v0.3.json
+          python scripts/build_palearctic_lgm_relation_v03.py             --panel-metadata benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json             --occurrence-climate-csv results/v03/palearctic_lgm_occurrence_climate_v0.3.csv             --grid-npz results/v03/palearctic_lgm_climate_grid_v0.3.npz             --rule docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json             --climate-rule docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.4.json             --output-npz results/v03/palearctic_lgm_relation_design_v0.3.npz             --output-summary results/v03/palearctic_lgm_relation_design_v0.3.json
 
           python - <<'PY'
           import json,os
