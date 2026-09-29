@@ -66,7 +66,9 @@
       "thinning_km": 10,
       "maximum_retained_per_species": 200,
       "minimum_retained_per_species": 30,
-      "priority": "deterministic response-blind priority; no genetic quantity enters record choice"
+      "priority": "deterministic response-blind priority; no genetic quantity enters record choice",
+      "transport_completion_rule": "Formal Palearctic panel classification requires REQUEST_ERROR=0 across the exact frozen 143-species parent. Any residual REQUEST_ERROR is INCOMPLETE_TECHNICAL_TRANSPORT and cannot be treated as ecological ineligibility.",
+      "retry_policy": "The per-request acquisition already uses the frozen bounded HTTP retry/backoff. No result-driven species replacement is allowed. A later technical retry may target only species with REQUEST_ERROR and must preserve the identical scientific query/thinning contract."
     },
     "palearctic_realm": {
       "dataset": "TNC/WWF terrestrial ecoregions",
