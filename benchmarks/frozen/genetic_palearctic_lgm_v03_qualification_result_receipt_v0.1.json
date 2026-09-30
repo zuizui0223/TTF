@@ -1,0 +1,118 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_v03_qualification_result_receipt_v0.1",
+  "status": "CLOSED_NOT_EVALUABLE_WITHOUT_GENETIC_RESPONSE",
+  "recorded_on": "2026-10-01",
+  "authoritative_execution": {
+    "workflow_run_id": 36585250715,
+    "workflow_job_id": 109463708240,
+    "head_sha": "abef2bf46be891c6cfd7cad12b7e5bca78d11313",
+    "artifact_id": 11042044554,
+    "artifact_name": "palearctic-lgm-v03-response-blind-qualification",
+    "artifact_digest_sha256": "sha256:84d6b28d912482b0c8dcca90cd41f021f65484843e9ebc90895eda8d3fa2a52d",
+    "workflow_conclusion": "success"
+  },
+  "authoritative_files": {
+    "occurrence_result_json_sha256": "3ab1a1eaa9d113902bb3f555904f3ac282421e8cc582a28d2504332fe5b503ad",
+    "climate_inputs_json_sha256": "431a5203c5f8d82389b8ff7d34b895d56f0167adba31ea75961acee0cf1d5998",
+    "relation_summary_json_sha256": "e0d7260956224645bc0ac852a8e8e787bff217554b8fc861abe3e45899386b90",
+    "relation_design_npz_sha256": "630e873a3be7ce5019c20d3eeae742c368f041edfeb3b62a2653c25c10fe075f",
+    "ttf_q_result_json_sha256": "9c57d5614c62e5542e952979392ab6f2a2faf64b0a21815355aa0b9f976ecf28"
+  },
+  "external_data": {
+    "formal_species": 23,
+    "admissible_species": 21,
+    "source_clusters": 10,
+    "target_clusters": 11,
+    "directed_dyads": 110,
+    "failed_occurrence_species": [
+      "Alloxysta fulviceps",
+      "Euplectrus geometricida"
+    ],
+    "request_errors": 0,
+    "retained_occurrence_rows": 4127
+  },
+  "climate": {
+    "rule": "docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.4.json",
+    "status": "PASS_TO_V03_RESPONSE_BLIND_LGM_RELATION_BUILD",
+    "climate_valid_species": 21,
+    "source_clusters": 10,
+    "target_clusters": 11,
+    "common_current_lgm_grid_cells": 106046,
+    "current_grid_extrapolation_fraction": 0.684966901156102,
+    "lgm_grid_extrapolation_fraction": 0.8679818192105313,
+    "current_vs_trace0_diagnostic": {
+      "bio1_pearson": 0.9980538171693115,
+      "bio7_pearson": 0.9773712754038894,
+      "bio12_pearson": 0.9283234105745531,
+      "bio15_pearson": 0.9017277966512265
+    }
+  },
+  "relation": {
+    "status": "PASS_TO_V03_TTF_Q_RESPONSE_BLIND_CHARACTERIZATION",
+    "R_LGM_min": 0.3694224382204002,
+    "R_LGM_median": 0.673011600512448,
+    "R_LGM_max": 0.8572521568815858,
+    "R_present_min": 0.1127134835092769,
+    "R_present_median": 0.6303971686869498,
+    "R_present_max": 0.8559054319895394,
+    "pearson_R_LGM_vs_R_present": 0.8609968549112441
+  },
+  "ttf_q": {
+    "execution_rule": "docs/supporting/genetic_palearctic_lgm_ttf_q_execution_v0.3.json",
+    "status": "NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_LGM_RELATION",
+    "information": {
+      "source_target_fe_retained_variance_fraction": 0.5010605127348855,
+      "control_unique_variance_fraction_after_fe": 0.26141544259178545,
+      "total_unique_variance_fraction": 0.13098495570185703,
+      "minimum_total_unique_variance_fraction": 0.15,
+      "partial_sd_in_primary_sd_units": 0.3619184379136507,
+      "vif_like_after_fe": 3.8253287184780236
+    },
+    "signal_concentration": {
+      "effective_sources": 7.600660389419032,
+      "effective_source_fraction": 0.7600660389419032,
+      "max_source_share": 0.2129463598067416,
+      "effective_targets": 7.684787655929855,
+      "effective_target_fraction": 0.6986170596299869,
+      "max_target_share": 0.1934650485013274,
+      "maximum_allowed_single_endpoint_share": 0.15
+    },
+    "calibrated_null": {
+      "A0_rejection_rate": 0.0698,
+      "A0_wilson95_upper": 0.07496114651940568,
+      "A1_rejection_rate": 0.075,
+      "A1_wilson95_upper": 0.08032716299637867,
+      "A2_rejection_rate": 0.0739,
+      "A2_wilson95_upper": 0.07919267190180193,
+      "A3_rejection_rate": 0.0819,
+      "A3_wilson95_upper": 0.08743637816279476,
+      "maximum_allowed_wilson95_upper": 0.05
+    },
+    "opening_gates": {
+      "unique_information": false,
+      "source_signal_breadth": false,
+      "target_signal_breadth": false,
+      "null_qualification": false,
+      "A2_detectability": false,
+      "overall_pass": false
+    }
+  },
+  "decision": {
+    "genetic_response_authorized": false,
+    "pairwise_v03_T_st_may_be_computed": false,
+    "beta_LGM_may_be_computed": false,
+    "route_reopen_or_retune_allowed": false,
+    "next_step": "STOP_THIS_ROUTE"
+  },
+  "execution_v04_note": {
+    "rule": "docs/supporting/genetic_palearctic_lgm_ttf_q_execution_v0.4.json",
+    "role": "response-blind decision-equivalent short-circuit frozen after R_LGM characterization but before genetic response; not needed to establish the authoritative stop because the full v0.3 synthetic execution completed and independently failed all opening gates",
+    "may_reopen_route": false
+  },
+  "response_firewall": {
+    "species_level_genetic_scores_used_for_qualification": false,
+    "pairwise_v03_T_st_computed": false,
+    "beta_LGM_computed": false,
+    "nucleotide_identity_opened_for_this_subpanel": false
+  }
+}
