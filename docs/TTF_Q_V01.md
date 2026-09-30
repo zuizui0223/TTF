@@ -135,6 +135,20 @@ The legacy v0.3 state remains `NOT_EVALUABLE`. The bounded occurrence run left u
 
 C is especially informative because its non-redundancy axis has direct ecological meaning: present-day niche similarity can arise from similar or different late-Quaternary climatic trajectories.
 
+## Prospective stopping application
+
+TTF-Q has now also been used prospectively on a separately frozen Palearctic non-Lepidoptera LGM design. The formal panel contained 23 species with disjoint source and target roles; external-data filtering retained 21 species, 10 sources, 11 targets and 110 directed dyads.
+
+The focal `R_LGM` relation was strongly related to `R_present` (Pearson 0.861). After endpoint identity and all declared controls, only 0.131 of total focal-relation variation remained uniquely identifiable, below the prospectively frozen 0.15 minimum. Residual signal also exceeded the 0.15 single-endpoint concentration ceiling for both source (0.213) and target (0.193) endpoints.
+
+The response-blind deterministic opening gates therefore failed and the route closed as `NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_LGM_RELATION` before subgroup nucleotide identity, pairwise transfer scores or `beta_LGM` were opened.
+
+This is not a biological null. It demonstrates the intended use of TTF-Q: a plausible ecological hypothesis can be declined before outcome inspection when the realized predictor geometry does not support the planned inference. It also shows that evaluability is design-specific: the broad 653-species historical-climate geometry was informative and qualification-compatible, whereas the narrower Palearctic LGM design was not.
+
+Frozen case receipt:
+
+`benchmarks/frozen/ttf_q_palearctic_prospective_stop_case_v0.1.json`
+
 ## Interpretation boundary
 
 TTF-Q v0.1 is intentionally not another predictor search.
@@ -181,5 +195,7 @@ If response-blind bootstrap relation replicates are available, pass a NumPy matr
 The information-decomposition layer has now been validated on a pre-result-frozen known-truth benchmark. Across 243 constructed dyadic designs, prescribed endpoint, control, and geographic information-survival fractions were recovered with maximum absolute error of approximately `3.3e-16`; deliberately source- or target-concentrated signal was detected in every benchmark comparison.
 
 A second pre-result-frozen benchmark demonstrates why calibration and detectability must remain separate. Broad reference, endpoint-loss, and control-redundancy designs are calibration-qualified but have different MDE envelopes, whereas an intentionally source-concentrated design with the same unique relation variance is anti-conservative under the tested estimator and therefore receives no evaluable MDE. Thus an evaluable envelope is the conjunction of identifiable information, signal-support structure, inferential calibration, and conditional power—not a relabeled power calculation.
+
+The prospective Palearctic application supplies a third validation layer: TTF-Q was used before the subgroup biological response was opened and produced an operational stop rather than a retrospective explanation. This demonstrates that the method can govern whether an analysis proceeds, not merely describe predictor geometry after the fact.
 
 Response-blind occurrence-resampling repeatability remains an optional measurement layer rather than a prerequisite for these completed validation results.
