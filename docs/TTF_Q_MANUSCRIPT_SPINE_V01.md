@@ -192,9 +192,10 @@ single-gate comparison and empirical climate cases.
 **Figure 5 — prospective stopping application.**
 Frozen response-blind unique-information fraction and maximum source/target
 signal shares for the broad evaluable historical-climate geometry versus the
-Palearctic LGM design. The common 0.15 boundary is a minimum for unique
-information and a maximum for individual endpoint shares, making the
-prospective stop visually explicit.
+Palearctic LGM design. The dashed 0.15 boundary belongs specifically to the
+prospectively frozen Palearctic authorization rule: it is a minimum for unique
+information and a maximum for individual endpoint shares. The broad climate
+geometry is shown as context, not retrospectively judged by that rule.
 
 ## Remaining optional extension
 
