@@ -1,0 +1,365 @@
+{
+  "recorded_on": "2026-09-29",
+  "response_firewall": {
+    "beta_LGM_computed": false,
+    "pairwise_subpanel_T_st_computed": false,
+    "species_level_genetic_scores_used": false
+  },
+  "schema": "ttf_genetic_palearctic_lgm_panel_metadata_v0.1",
+  "species_count": 44,
+  "status": "FROZEN_RESPONSE_BLIND_44_SPECIES_PANEL_METADATA",
+  "rows": [
+    {
+      "species": "Agapeta hamana",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Tortricidae",
+      "palearctic_fraction": "0.92",
+      "role": "source"
+    },
+    {
+      "species": "Agriopis aurantiaria",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Geometridae",
+      "palearctic_fraction": "1.0",
+      "role": "target"
+    },
+    {
+      "species": "Alcis repandata",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Geometridae",
+      "palearctic_fraction": "0.9565217391304348",
+      "role": "target"
+    },
+    {
+      "species": "Alloxysta fulviceps",
+      "class": "Insecta",
+      "order": "Hymenoptera",
+      "family": "Charipidae",
+      "palearctic_fraction": "0.8",
+      "role": "target"
+    },
+    {
+      "species": "Amara convexior",
+      "class": "Insecta",
+      "order": "Coleoptera",
+      "family": "Carabidae",
+      "palearctic_fraction": "1.0",
+      "role": "target"
+    },
+    {
+      "species": "Ammoconia caecimacula",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Noctuidae",
+      "palearctic_fraction": "0.8571428571428571",
+      "role": "source"
+    },
+    {
+      "species": "Ampedus sanguineus",
+      "class": "Insecta",
+      "order": "Coleoptera",
+      "family": "Ampedidae",
+      "palearctic_fraction": "1.0",
+      "role": "source"
+    },
+    {
+      "species": "Bombus lapidarius",
+      "class": "Insecta",
+      "order": "Hymenoptera",
+      "family": "Apidae",
+      "palearctic_fraction": "0.9767441860465116",
+      "role": "target"
+    },
+    {
+      "species": "Cnephasia incertana",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Tortricidae",
+      "palearctic_fraction": "0.85",
+      "role": "source"
+    },
+    {
+      "species": "Coenotephria tophaceata",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Geometridae",
+      "palearctic_fraction": "1.0",
+      "role": "target"
+    },
+    {
+      "species": "Dasytes niger",
+      "class": "Insecta",
+      "order": "Coleoptera",
+      "family": "Melyridae",
+      "palearctic_fraction": "1.0",
+      "role": "source"
+    },
+    {
+      "species": "Dichagyris nigrescens",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Noctuidae",
+      "palearctic_fraction": "1.0",
+      "role": "target"
+    },
+    {
+      "species": "Diplodoma laichartingella",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Psychidae",
+      "palearctic_fraction": "0.8333333333333334",
+      "role": "source"
+    },
+    {
+      "species": "Euchloe ausonia",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Pieridae",
+      "palearctic_fraction": "0.9272727272727272",
+      "role": "source"
+    },
+    {
+      "species": "Euplectrus geometricida",
+      "class": "Insecta",
+      "order": "Hymenoptera",
+      "family": "Eulophidae",
+      "palearctic_fraction": "1.0",
+      "role": "target"
+    },
+    {
+      "species": "Favonius quercus",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Lycaenidae",
+      "palearctic_fraction": "0.9139784946236559",
+      "role": "target"
+    },
+    {
+      "species": "Gaurotes virginea",
+      "class": "Insecta",
+      "order": "Coleoptera",
+      "family": "Cerambycidae",
+      "palearctic_fraction": "1.0",
+      "role": "target"
+    },
+    {
+      "species": "Hemicrepidius hirtus",
+      "class": "Insecta",
+      "order": "Coleoptera",
+      "family": "Elateridae",
+      "palearctic_fraction": "1.0",
+      "role": "target"
+    },
+    {
+      "species": "Hoplodrina superstes",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Noctuidae",
+      "palearctic_fraction": "1.0",
+      "role": "source"
+    },
+    {
+      "species": "Hylaeus communis",
+      "class": "Insecta",
+      "order": "Hymenoptera",
+      "family": "Colletidae",
+      "palearctic_fraction": "1.0",
+      "role": "source"
+    },
+    {
+      "species": "Hypochalcia ahenella",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Pyralidae",
+      "palearctic_fraction": "0.9090909090909091",
+      "role": "target"
+    },
+    {
+      "species": "Malacosoma castrensis",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Lasiocampidae",
+      "palearctic_fraction": "0.8333333333333334",
+      "role": "source"
+    },
+    {
+      "species": "Metaxmeste phrygialis",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Crambidae",
+      "palearctic_fraction": "1.0",
+      "role": "target"
+    },
+    {
+      "species": "Microlestes maurus",
+      "class": "Insecta",
+      "order": "Coleoptera",
+      "family": "Carabidae",
+      "palearctic_fraction": "1.0",
+      "role": "target"
+    },
+    {
+      "species": "Microlestes minutulus",
+      "class": "Insecta",
+      "order": "Coleoptera",
+      "family": "Carabidae",
+      "palearctic_fraction": "0.9333333333333333",
+      "role": "target"
+    },
+    {
+      "species": "Mompha lacteella",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Momphidae",
+      "palearctic_fraction": "1.0",
+      "role": "target"
+    },
+    {
+      "species": "Nomada bifasciata",
+      "class": "Insecta",
+      "order": "Hymenoptera",
+      "family": "Apidae",
+      "palearctic_fraction": "1.0",
+      "role": "source"
+    },
+    {
+      "species": "Notocelia uddmanniana",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Tortricidae",
+      "palearctic_fraction": "0.9583333333333334",
+      "role": "source"
+    },
+    {
+      "species": "Oxypselaphus obscurus",
+      "class": "Insecta",
+      "order": "Coleoptera",
+      "family": "Carabidae",
+      "palearctic_fraction": "0.9444444444444444",
+      "role": "target"
+    },
+    {
+      "species": "Phiaris micana",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Tortricidae",
+      "palearctic_fraction": "1.0",
+      "role": "source"
+    },
+    {
+      "species": "Phyllotreta nemorum",
+      "class": "Insecta",
+      "order": "Coleoptera",
+      "family": "Chrysomelidae",
+      "palearctic_fraction": "1.0",
+      "role": "target"
+    },
+    {
+      "species": "Picrostigeus recticauda",
+      "class": "Insecta",
+      "order": "Hymenoptera",
+      "family": "Ichneumonidae",
+      "palearctic_fraction": "1.0",
+      "role": "source"
+    },
+    {
+      "species": "Pseudeustrotia candidula",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Noctuidae",
+      "palearctic_fraction": "0.9333333333333333",
+      "role": "target"
+    },
+    {
+      "species": "Pseudoterpna pruinata",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Geometridae",
+      "palearctic_fraction": "1.0",
+      "role": "source"
+    },
+    {
+      "species": "Psoricoptera speciosella",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Gelechiidae",
+      "palearctic_fraction": "1.0",
+      "role": "source"
+    },
+    {
+      "species": "Pterostichus diligens",
+      "class": "Insecta",
+      "order": "Coleoptera",
+      "family": "Carabidae",
+      "palearctic_fraction": "0.8260869565217391",
+      "role": "source"
+    },
+    {
+      "species": "Rhagonycha atra",
+      "class": "Insecta",
+      "order": "Coleoptera",
+      "family": "Cantharidae",
+      "palearctic_fraction": "0.9230769230769231",
+      "role": "source"
+    },
+    {
+      "species": "Scopula decorata",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Geometridae",
+      "palearctic_fraction": "1.0",
+      "role": "target"
+    },
+    {
+      "species": "Scythris picaepennis",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Scythrididae",
+      "palearctic_fraction": "0.9285714285714286",
+      "role": "source"
+    },
+    {
+      "species": "Sphinx pinastri",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Sphingidae",
+      "palearctic_fraction": "0.975609756097561",
+      "role": "source"
+    },
+    {
+      "species": "Teleiodes vulgella",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Gelechiidae",
+      "palearctic_fraction": "0.9655172413793104",
+      "role": "source"
+    },
+    {
+      "species": "Tenthredo zonula",
+      "class": "Insecta",
+      "order": "Hymenoptera",
+      "family": "Tenthredinidae",
+      "palearctic_fraction": "0.925",
+      "role": "target"
+    },
+    {
+      "species": "Tomares ballus",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Lycaenidae",
+      "palearctic_fraction": "0.92",
+      "role": "source"
+    },
+    {
+      "species": "Yponomeuta sedella",
+      "class": "Insecta",
+      "order": "Lepidoptera",
+      "family": "Yponomeutidae",
+      "palearctic_fraction": "0.8235294117647058",
+      "role": "target"
+    }
+  ]
+}

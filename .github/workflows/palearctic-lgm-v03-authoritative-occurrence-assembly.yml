@@ -1,0 +1,132 @@
+name: palearctic-lgm-v03-authoritative-occurrence-assembly
+
+on:
+  push:
+    branches:
+      - method/palearctic-lgm-response-blind-v0-1
+    paths:
+      - "benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_authority_v0.1.json"
+      - "benchmarks/frozen/genetic_palearctic_lgm_v03_assembly_trigger_v0.1.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: palearctic-lgm-v03-authoritative-occurrence-assembly-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verify frozen assembly and shard-4 authority receipts
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          rule=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_assembly_rule_v0.1.json").read_text())
+          auth=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_authority_v0.1.json").read_text())
+          failover=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_technical_failover_v0.1.json").read_text())
+          transport3=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_transport3_amendment_v0.1.json").read_text())
+          correction=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_assembly_authority_provenance_correction_v0.1.json").read_text())
+          trigger_path=Path("benchmarks/frozen/genetic_palearctic_lgm_v03_assembly_trigger_v0.1.json")
+          if not trigger_path.is_file():
+              raise SystemExit("assembly trigger receipt is absent")
+          trigger=json.loads(trigger_path.read_text())
+          assert rule["status"]=="FROZEN_BEFORE_AUTHORITATIVE_SHARD4_RESULT_AND_V03_ASSEMBLY"
+          assert correction["status"]=="PROVENANCE_CORRECTION_NO_SCIENTIFIC_CHANGE"
+          assert auth["schema"]=="ttf_genetic_palearctic_lgm_v03_shard4_authority_v0.1"
+          assert auth["status"]=="AUTHORITATIVE_SHARD4_FROZEN"
+          assert auth["selection_rule"]=="benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_transport3_amendment_v0.1.json"
+          assert auth["source"]=="transport3"
+          assert trigger["schema"]=="ttf_genetic_palearctic_lgm_v03_assembly_trigger_v0.1"
+          assert trigger["status"]=="AUTHORIZE_V03_OCCURRENCE_ASSEMBLY"
+          assert trigger["shard4_authority_artifact_id"]==auth["artifact_id"]
+          assert trigger["shard4_authority_digest_sha256"]==auth["artifact_digest_sha256"]
+          assert transport3["transport3"]["authoritative_if_execution_completes"] is True
+          assert int(auth["artifact_id"])>0
+          assert str(auth["artifact_digest_sha256"]).startswith("sha256:")
+          assert all(v is False for v in rule["response_firewall"].values())
+          assert all(v is False for v in auth["response_firewall"].values())
+          assert failover["priority_rule"]["choosing_between_two_successful_results_by_ecological_content"] is False
+          assert correction["scientific_effect"]["external_data_gate_changed"] is False
+          assert correction["scientific_effect"]["source_target_roles_changed"] is False
+          print({"shard4_source":auth["source"],"artifact_id":auth["artifact_id"],"assembly_trigger":"verified"})
+          PY
+
+      - name: Download exact six authoritative shard artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input raw
+          python - <<'PY' > /tmp/shards.tsv
+          import json
+          r=json.load(open("benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_assembly_rule_v0.1.json"))
+          a=json.load(open("benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_authority_v0.1.json"))
+          for shard in ("0","1","2","3","5"):
+              x=r["fixed_parent_shards"][shard]
+              print(shard,x["artifact_id"],x["digest"].split(":",1)[1],sep="\t")
+          print("4",a["artifact_id"],a["artifact_digest_sha256"].split(":",1)[1],sep="\t")
+          PY
+
+          while IFS=$'\t' read -r shard artifact sha; do
+            gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact/zip" > "raw/shard_${shard}.zip"
+            echo "$sha  raw/shard_${shard}.zip" | sha256sum -c -
+            mkdir -p "raw/shard_${shard}"
+            unzip -q "raw/shard_${shard}.zip" -d "raw/shard_${shard}"
+            occ="$(find "raw/shard_${shard}" -type f -name "occurrences_${shard}.csv" -print -quit)"
+            led="$(find "raw/shard_${shard}" -type f -name "ledger_${shard}.json" -print -quit)"
+            test -n "$occ" && test -n "$led"
+            cp "$occ" "input/occurrences_${shard}.csv"
+            cp "$led" "input/ledger_${shard}.json"
+          done < /tmp/shards.tsv
+
+          test "$(find input -type f | wc -l)" -eq 12
+          ls -lh input/
+
+      - name: Aggregate exact v0.2 occurrence surface
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          python scripts/aggregate_palearctic_lgm_occurrences_v02.py             --input-dir input             --census benchmarks/frozen/genetic_palearctic_lgm_nonlepidoptera_census_v0.2.json             --external-rule docs/supporting/genetic_palearctic_lgm_external_data_rule_v0.2.json             --output-csv results/palearctic_lgm_occurrences_v0.2.csv             --output-summary results/palearctic_lgm_occurrences_v0.2.json
+          cat results/palearctic_lgm_occurrences_v0.2.json
+
+      - name: Bind exact aggregate to frozen v0.3 roles and gates
+        run: |
+          set -euo pipefail
+          python scripts/bind_palearctic_lgm_occurrences_v03.py             --input-csv results/palearctic_lgm_occurrences_v0.2.csv             --input-summary results/palearctic_lgm_occurrences_v0.2.json             --panel-metadata benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json             --external-rule docs/supporting/genetic_palearctic_lgm_external_data_rule_v0.3.json             --binding benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_producer_binding_v0.1.json             --output-csv results/palearctic_lgm_occurrences_v0.3.csv             --output-summary results/palearctic_lgm_occurrences_v0.3.json
+          python - <<'PY'
+          import json
+          p=json.load(open("results/palearctic_lgm_occurrences_v0.3.json"))
+          assert all(v is False for v in p["response_firewall"].values()),p
+          assert p["status"] in {
+              "PASS_TO_V03_CURRENT_LGM_CLIMATE_EXTRACTION",
+              "INCOMPLETE_TECHNICAL_V03_GBIF_REQUEST_ERRORS",
+              "NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_GBIF",
+          },p["status"]
+          print({
+              "status":p["status"],
+              "admissible_species":p["admissible_species"],
+              "source_clusters":p["source_clusters"],
+              "target_clusters":p["target_clusters"],
+              "directed_dyads":p["directed_dyads"],
+          })
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: palearctic-lgm-v03-authoritative-occurrence-assembly
+          path: results/
+          retention-days: 30
+          if-no-files-found: error

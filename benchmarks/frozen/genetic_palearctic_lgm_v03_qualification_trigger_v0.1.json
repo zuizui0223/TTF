@@ -1,0 +1,39 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_v03_qualification_trigger_v0.1",
+  "status": "AUTHORIZE_RESPONSE_BLIND_V03_QUALIFICATION",
+  "recorded_on": "2026-09-29",
+  "occurrence_input_mode": "REASSEMBLE_EXACT_SIX_AUTHORITATIVE_SHARDS",
+  "parent_run_id": 36529160168,
+  "fixed_parent_shards_rule": "benchmarks/frozen/genetic_palearctic_lgm_v03_occurrence_assembly_rule_v0.1.json",
+  "shard4_authority_receipt": "benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_authority_v0.1.json",
+  "shard4_artifact_id": 11021371777,
+  "shard4_artifact_digest_sha256": "sha256:5e00af950d141db5f92f91ce213232a8b47987625770530dab5a39baa860123a",
+  "expected_external_gate": {
+    "formal_species": 23,
+    "admissible_species": 21,
+    "source_clusters": 10,
+    "target_clusters": 11,
+    "directed_dyads": 110,
+    "failed_occurrence_species": [
+      "Alloxysta fulviceps",
+      "Euplectrus geometricida"
+    ],
+    "request_errors": 0
+  },
+  "authorized_steps": {
+    "reassemble_external_occurrences": true,
+    "bind_v03_roles": true,
+    "sample_current_and_lgm_climate": true,
+    "build_R_LGM_and_declared_controls": true,
+    "run_frozen_TTF_Q": true,
+    "open_genetic_response": false
+  },
+  "stopping_rule": "If climate coverage or TTF-Q fails its frozen gate, stop without computing pairwise v0.3 T_st or beta_LGM.",
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_v03_T_st_computed": false,
+    "beta_LGM_computed": false,
+    "R_LGM_seen_before_trigger": false,
+    "TTF_Q_result_seen_before_trigger": false
+  }
+}

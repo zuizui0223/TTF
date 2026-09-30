@@ -1,0 +1,45 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_v03_shard4_technical_failover_v0.1",
+  "status": "FROZEN_BEFORE_FAILOVER_SHARD4_RESULT",
+  "frozen_on": "2026-09-29",
+  "authoritative_parent_run_id": 36529160168,
+  "authoritative_parent_head_sha": "80a0cf7ac4cb672b9525ce15f7f9f5762e05af6a",
+  "shard_index": 4,
+  "shards": 6,
+  "species": [
+    "Bombus lapidarius",
+    "Hylaeus communis",
+    "Philonthus cognatus",
+    "Xantholinus linearis"
+  ],
+  "priority_rule": {
+    "if_parent_shard4_succeeds": "use_parent_shard4_and_ignore_failover_result",
+    "if_parent_shard4_fails_or_times_out": "use_exact_failover_shard4_result",
+    "choosing_between_two_successful_results_by_ecological_content": false
+  },
+  "scientific_equivalence": {
+    "same_23_species_census": true,
+    "same_shard_index_and_modulo_assignment": true,
+    "same_exact_GBIF_species_match_rule": true,
+    "same_2010_2026_window": true,
+    "same_coordinate_and_geospatial_filters": true,
+    "same_RESOLVE_Palearctic_geometry": true,
+    "same_exact_coordinate_deduplication": true,
+    "same_occurrence_priority": true,
+    "same_10km_thinning": true,
+    "same_maximum_200": true,
+    "same_minimum_30": true,
+    "transport_only_changes_allowed": [
+      "longer workflow timeout",
+      "retry execution after transient network failure",
+      "packaged import path refactor with identical get_json retry semantics"
+    ]
+  },
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_v03_T_st_computed": false,
+    "beta_LGM_computed": false,
+    "R_LGM_used_to_choose_failover": false,
+    "TTF_Q_used_to_choose_failover": false
+  }
+}

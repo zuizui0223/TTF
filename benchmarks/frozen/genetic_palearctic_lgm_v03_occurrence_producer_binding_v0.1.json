@@ -1,0 +1,35 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_v03_occurrence_producer_binding_v0.1",
+  "status": "FROZEN_BEFORE_BOUND_GBIF_RESULT",
+  "frozen_on": "2026-09-29",
+  "v03_rule": "docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json",
+  "v03_external_rule": "docs/supporting/genetic_palearctic_lgm_external_data_rule_v0.3.json",
+  "producer": {
+    "workflow_run_id": 36529160168,
+    "workflow_name": "palearctic-lgm-gbif-occurrences-v02",
+    "head_sha": "80a0cf7ac4cb672b9525ce15f7f9f5762e05af6a",
+    "state_at_binding": "queued",
+    "conclusion_at_binding": null
+  },
+  "equivalence": {
+    "exact_species_membership_same_23": true,
+    "occurrence_query_independent_of_source_target_role": true,
+    "realm_filter_independent_of_role": true,
+    "thinning_and_cap_independent_of_role": true,
+    "role_column_from_v02_is_non_authoritative_for_v03": true,
+    "v03_role_assignment_source": "benchmarks/frozen/genetic_palearctic_lgm_panel_metadata_v0.3.json"
+  },
+  "acceptance": {
+    "require_no_REQUEST_ERROR": true,
+    "reapply_v03_minimum_total_species": 20,
+    "reapply_v03_minimum_source_clusters": 9,
+    "reapply_v03_minimum_target_clusters": 9,
+    "no_backfill": true
+  },
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_v03_T_st_computed": false,
+    "beta_LGM_computed": false,
+    "R_LGM_result_used_for_binding": false
+  }
+}

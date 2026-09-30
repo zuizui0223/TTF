@@ -1,0 +1,17 @@
+{
+  "schema": "ttf_resolve_ecoregions2017_asset_receipt_v0.1",
+  "status": "FROZEN_PUBLIC_REALM_ASSET",
+  "recorded_on": "2026-09-29",
+  "source_url": "https://storage.googleapis.com/teow2016/Ecoregions2017.zip",
+  "zip_sha256": "be36d6209e443038d02e309f0447c6e7f2a62f5fe60c605ffe90d064952f2a60",
+  "records": 847,
+  "realm_field": "REALM",
+  "workflow": {
+    "run_id": 36509109425,
+    "head_sha": "e9cb603c6a3b2b07939bd84e9e221a7a8639c875",
+    "conclusion": "success",
+    "artifact_id": 11008815910,
+    "artifact_digest_sha256": "afa82ac6ae7868c549ab90a3dfa502d81bd0481782ba26c98350d5e99ca2dd5c"
+  },
+  "role": "response-blind authoritative realm assignment for the Palearctic-LGM subpanel only"
+}

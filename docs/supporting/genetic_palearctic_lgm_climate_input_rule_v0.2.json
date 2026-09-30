@@ -1,0 +1,67 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_climate_input_rule_v0.2",
+  "status": "FROZEN_TECHNICAL_SUPERSESSION_BEFORE_ANY_CLIMATE_EXTRACTION_OR_R_LGM_RESULT",
+  "frozen_on": "2026-09-29",
+  "parent_rule": "docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.1.json",
+  "external_data_rule": "docs/supporting/genetic_palearctic_lgm_external_data_rule_v0.1.json",
+  "unit_rule": "docs/supporting/genetic_palearctic_lgm_climate_unit_rule_v0.1.json",
+  "grid": {
+    "crs": "EPSG:4326",
+    "resolution_degrees": 0.25,
+    "global_centroid_origin": {
+      "longitude": -179.875,
+      "latitude": -89.875
+    },
+    "longitude_centres_formula": "-179.875 + 0.25*i, i=0..1439",
+    "latitude_centres_formula": "-89.875 + 0.25*j, j=0..719",
+    "realm_mask": "centroid intersects frozen RESOLVE 2017 Palearctic union",
+    "climate_validity": "retain only cells finite and not nodata in all four current CHELSA V2.1 rasters and all four 21-ka TraCE21k rasters",
+    "paleocoastline_reconstruction": false,
+    "interpretation": "climatic suitability on the fixed contemporary Palearctic terrestrial realm mask, not a reconstruction of exposed LGM shelf land"
+  },
+  "raster_sampling": {
+    "apply_GDAL_scale_and_offset_if_present": true,
+    "then_apply_frozen_unit_harmonization": true,
+    "interpolation": "none; sample containing raster cell at point coordinate"
+  },
+  "occurrence_climate_validity": {
+    "start_from": "frozen Palearctic-filtered, deduplicated, 10-km-thinned GBIF occurrences",
+    "drop_row_if_any_current_bio1_bio7_bio12_bio15_value_is_nodata_or_nonfinite": true,
+    "minimum_rows_after_climate_validity_per_species": 30,
+    "drop_species_below_minimum": true,
+    "backfill": false,
+    "resplit": false,
+    "after_drop_require": {
+      "minimum_total_species": 40,
+      "minimum_source_clusters": 20,
+      "minimum_target_clusters": 20
+    },
+    "failure": "NOT_EVALUABLE_PALAEARCTIC_LGM_CLIMATE_COVERAGE"
+  },
+  "compatibility_diagnostic": {
+    "compare_TraCE_0BP_to_CHELSA_V2_1_current": true,
+    "same_grid": true,
+    "report": [
+      "pearson_correlation",
+      "median_difference",
+      "q05_difference",
+      "q95_difference"
+    ],
+    "diagnostic_only": true
+  },
+  "response_firewall": {
+    "species_level_genetic_scores_used": false,
+    "pairwise_subpanel_T_st_computed": false,
+    "beta_LGM_computed": false
+  },
+  "supersedes": "docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.1.json",
+  "supersession_reason": {
+    "response_blind_geometry_only": true,
+    "v0_1_palearctic_cells_at_0_1_degree": 670231,
+    "v0_2_palearctic_cells_at_0_25_degree": 107260,
+    "climate_values_inspected_before_change": false,
+    "R_LGM_computed_before_change": false,
+    "subgroup_genetic_response_inspected_before_change": false,
+    "rationale": "A 0.1-degree fixed grid creates unnecessary computational precision for broad late-Quaternary climatic opportunity. The 0.25-degree grid reduces exact KDE projection cost by about 6.25x while remaining finer than the intended macroecological refugial scale."
+  }
+}

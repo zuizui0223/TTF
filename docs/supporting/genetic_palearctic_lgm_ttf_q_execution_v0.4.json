@@ -1,0 +1,106 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_ttf_q_execution_v0.4",
+  "status": "FROZEN_DECISION_EQUIVALENT_SHORT_CIRCUIT_AFTER_RESPONSE_BLIND_RANK_AUDIT",
+  "frozen_on": "2026-09-29",
+  "parent_rule": "docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.3.json",
+  "predictor_order": [
+    "z_R_LGM",
+    "z_R_present",
+    "z_geographic_coverage",
+    "centered_same_order",
+    "centered_same_family",
+    "z_abs_log_retained_occurrence_count_ratio"
+  ],
+  "primary_index": 0,
+  "information_controls": [
+    "z_R_present",
+    "z_geographic_coverage",
+    "centered_same_order",
+    "centered_same_family",
+    "z_abs_log_retained_occurrence_count_ratio"
+  ],
+  "synthetic_world": {
+    "alpha_one_sided": 0.025,
+    "type1_wilson95_upper_max": 0.05,
+    "target_power": 0.8,
+    "null_worlds_per_amplitude": 10000,
+    "positive_worlds_per_cell": 1000,
+    "private_amplitudes": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "positive_effects": [
+      0.02,
+      0.03,
+      0.05,
+      0.08,
+      0.1,
+      0.15,
+      0.2
+    ],
+    "source_intercept_sd": 0.18,
+    "target_intercept_sd": 0.18,
+    "dyad_noise_sd": 0.32,
+    "fixed_coefficients": [
+      0,
+      0.1,
+      0.1,
+      0.04,
+      0.04,
+      0.05
+    ],
+    "source_random_slope_predictor": "z_geographic_coverage",
+    "target_random_slope_predictor": "centered_same_order",
+    "random_slope_sd_per_amplitude": 0.12,
+    "response_transform": "tanh",
+    "seed_namespace": "palearctic-nonlep-lgm-ttf-q-v0.3"
+  },
+  "opening_rule": {
+    "minimum_total_unique_variance_fraction": 0.15,
+    "minimum_effective_source_fraction": 0.5,
+    "minimum_effective_target_fraction": 0.5,
+    "maximum_single_source_signal_share": 0.15,
+    "maximum_single_target_signal_share": 0.15,
+    "required_null_qualified_amplitudes": [
+      0,
+      1,
+      2
+    ],
+    "required_A2_evaluable_mde_max": 0.1,
+    "A3_role": "diagnostic only; cannot by itself block opening",
+    "if_passed": "PASS_TO_ONE_SHOT_V03_SUBPANEL_GENETIC_RESPONSE",
+    "if_failed": "NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_LGM_RELATION"
+  },
+  "response_firewall": {
+    "subgroup_pairwise_v03_T_st_computed": false,
+    "subgroup_beta_LGM_computed": false,
+    "species_level_genetic_scores_used_for_qualification": false,
+    "v03_pairwise_T_st_seen_before_v04_freeze": false,
+    "v03_beta_LGM_seen_before_v04_freeze": false
+  },
+  "supersedes": "docs/supporting/genetic_palearctic_lgm_ttf_q_execution_v0.3.json",
+  "supersession_reason": {
+    "chronology": {
+      "corrected_v03_R_LGM_response_blind_characterization_seen": true,
+      "genetic_response_seen": false,
+      "pairwise_T_st_seen": false,
+      "beta_LGM_seen": false
+    },
+    "numerical_issue": "After source/target FE, z_abs_log_retained_occurrence_count_ratio is structurally target-only on the realized 21-species panel because all retained source occurrence counts equal 200 and only one target has 127. Its FE-residual SD is approximately 2.3e-16, making the full synthetic regression matrix rank-deficient/ill-conditioned despite the control contributing zero estimable information.",
+    "repair": "Evaluate the unchanged deterministic necessary opening gates (unique information and source/target signal breadth) first. If any necessary gate fails, stop as NOT_EVALUABLE without running synthetic calibration/power. Only if all deterministic gates pass, run the exact unchanged v0.3 synthetic world grid.",
+    "decision_equivalence": "A failure of any necessary opening gate already makes overall PASS logically impossible; short-circuiting cannot convert a fail to a pass or change any scientific threshold."
+  },
+  "execution_order": {
+    "first": "response-blind information decomposition and signal concentration",
+    "deterministic_required_gates": [
+      "unique_information",
+      "source_signal_breadth",
+      "target_signal_breadth"
+    ],
+    "if_any_deterministic_gate_fails": "STOP_NOT_EVALUABLE; synthetic envelope remains UNEVALUATED",
+    "if_all_deterministic_gates_pass": "run unchanged v0.3 synthetic_world, then null_qualification and A2_detectability gates"
+  },
+  "synthetic_world_inherited_without_change_from": "docs/supporting/genetic_palearctic_lgm_ttf_q_execution_v0.3.json"
+}

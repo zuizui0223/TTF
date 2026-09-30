@@ -1,0 +1,158 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_subpanel_rule_v0.2",
+  "status": "FROZEN_AFTER_RESPONSE_BLIND_NONLEPIDOPTERA_FEASIBILITY_CENSUS_BEFORE_V0_2_GBIF_LGM_RELATION_TTFQ_OR_GENETIC_RESPONSE",
+  "frozen_on": "2026-09-29",
+  "supersedes": "docs/supporting/genetic_palearctic_lgm_subpanel_rule_v0.1.json",
+  "purpose": "Define a non-Lepidoptera Palearctic terrestrial-holometabolous secondary analysis asking whether similarity in LGM climatic refugial opportunity predicts concordance of post-IBD spatial genetic structure.",
+  "chronology_and_claim_boundary": {
+    "global_211_species_phase4_result_already_opened": true,
+    "independent_confirmatory_claim_for_same_archive": false,
+    "v01_formal_response_blind_census_seen": true,
+    "v01_census_species": 44,
+    "v01_census_lepidoptera": 26,
+    "v01_LGM_relation_result_seen": false,
+    "v01_TTF_Q_result_seen": false,
+    "subgroup_pairwise_genetic_response_seen": false,
+    "reason_for_supersession": "Separate this study from the butterfly ecology paper and prevent a 26/44 Lepidoptera-dominated panel. This scope change was made before any LGM relation, TTF-Q result, or subgroup genetic response.",
+    "interpretation": "Prospectively frozen secondary ecological reanalysis within an already-opened archive; not an untouched confirmatory dataset."
+  },
+  "source_domain": {
+    "compact_survivor_manifest": "benchmarks/frozen/genetic_phase2_survivor_species_v0.1.json",
+    "exact_phylogatr_archive": {
+      "original_name": "phylogatr_results.zip",
+      "size_bytes": 274988692,
+      "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+    },
+    "realm_asset_receipt": "benchmarks/frozen/resolve_ecoregions2017_asset_receipt_v0.1.json",
+    "allowed_pre_response_surfaces": [
+      "species identity and taxonomy",
+      "selected COI-family FASTA headers only",
+      "occurrence coordinates linked to selected COI headers",
+      "external GBIF occurrences",
+      "current and LGM climate rasters",
+      "RESOLVE terrestrial-ecoregion realm polygons"
+    ],
+    "forbidden_before_opening": [
+      "species-level empirical transfer scores",
+      "pair-specific T_st for the new v0.2 panel",
+      "beta_LGM or any subgroup genetic coefficient",
+      "result-driven species replacement"
+    ]
+  },
+  "authoritative_subpanel_filter": {
+    "taxon": {
+      "class": "Insecta",
+      "lepidoptera_excluded": true,
+      "developmental_scope": "Holometabola excluding Lepidoptera, with a conservative terrestrial family filter.",
+      "allowed_orders": [
+        "Coleoptera",
+        "Hymenoptera",
+        "Diptera"
+      ],
+      "excluded_coleoptera_families": [
+        "Dytiscidae",
+        "Elmidae",
+        "Gyrinidae",
+        "Haliplidae",
+        "Hydrophilidae",
+        "Noteridae",
+        "Scirtidae"
+      ],
+      "allowed_diptera_families": [
+        "Drosophilidae",
+        "Phoridae",
+        "Mycetophilidae",
+        "Tachinidae",
+        "Muscidae",
+        "Calliphoridae"
+      ],
+      "rationale": "Avoid a second butterfly-dominated paper while retaining a coherent fully metamorphic terrestrial insect domain; ambiguous aquatic or semiaquatic Diptera are excluded rather than adjudicated after ecological results."
+    },
+    "palearctic": {
+      "dataset": "RESOLVE Ecoregions 2017 / Dinerstein et al. 2017",
+      "realm_field": "REALM",
+      "accepted_label_casefold": "palearctic",
+      "locality_surface": "exact unique coordinates linked to the selected COI-family aligned FASTA headers",
+      "rule": "Clip the new genetic subgeometry to Palearctic localities and require at least 12 Palearctic localities per species.",
+      "minimum_palearctic_localities": 12,
+      "fraction_is_diagnostic_only": true,
+      "rationale": "The question concerns evaluable genetic geography within the Palearctic, not whether the species is Palearctic-endemic; Holarctic species may enter if the Palearctic subgeometry itself is sufficient."
+    },
+    "minimum_species": 20,
+    "if_failed": "NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_PANEL",
+    "backfill": false
+  },
+  "dyad_geometry": {
+    "source_target_roles": "Every retained species appears as both a source and a target; self-dyads are excluded.",
+    "directed": true,
+    "self_dyads": false,
+    "expected_dyads_formula": "n*(n-1)",
+    "dependence": "Two-way source/target dependence is retained and explicitly qualified by TTF-Q.",
+    "no_result_based_role_split": true
+  },
+  "external_occurrences": {
+    "provider": "GBIF occurrence/search",
+    "years": "2010-2026",
+    "exact_taxon_match_required": true,
+    "finite_coordinates_required": true,
+    "deterministic_duplicate_removal": true,
+    "thinning_km": 10,
+    "maximum_retained_per_species": 200,
+    "minimum_retained_per_species": 30,
+    "restrict_training_occurrences_to_realm": "Palearctic",
+    "no_backfill_after_external_data_result": true,
+    "after_drop_minimum_species": 20,
+    "failure": "NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_GBIF"
+  },
+  "lgm_climatic_suitability_model": {
+    "inherit_from_v01": true,
+    "model": "presence-only climatic-envelope KDE hindcast",
+    "current_climate": "CHELSA V2.1 1981-2010 bio1/bio7/bio12/bio15",
+    "lgm_climate": "CHELSA-TraCE21k 21 ka BP bio01/bio07/bio12/bio15",
+    "common_space": "pooled current occurrence climate, z-standardized, canonical-sign PCA, all four whitened PCs",
+    "primary_relation": "Schoener D between normalized LGM suitability surfaces",
+    "nuisance_current_relation": "Schoener D between normalized current suitability surfaces",
+    "primary_thresholded_refugia": false
+  },
+  "dyadic_controls": {
+    "primary_predictor": "z_R_LGM",
+    "nuisance_predictors": [
+      "z_R_present",
+      "z_geographic_coverage",
+      "centered_same_order",
+      "centered_same_family",
+      "z_abs_log_retained_occurrence_count_ratio"
+    ],
+    "endpoint_identity": [
+      "source fixed effects",
+      "target fixed effects"
+    ]
+  },
+  "ttf_q_pre_response_characterization": {
+    "opening_rule_inherited_without_relaxation_from_v01": true,
+    "minimum_total_unique_variance_fraction": 0.15,
+    "minimum_signal_effective_sources": 10,
+    "minimum_signal_effective_targets": 10,
+    "maximum_single_source_signal_share": 0.15,
+    "maximum_single_target_signal_share": 0.15,
+    "required_null_qualified_amplitudes": [
+      0,
+      1,
+      2
+    ],
+    "maximum_evaluable_grid_mde_at_A2": 0.1,
+    "if_any_failed": "NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_LGM_RELATION"
+  },
+  "empirical_question_if_opening_is_authorized": {
+    "response": "Directed pairwise post-IBD transfer T_st under the already frozen genetic transfer operator, recomputed only for the v0.2 Palearctic-clipped subgeometry.",
+    "model": "T_st = source_FE + target_FE + beta_LGM*z_R_LGM + declared controls + error",
+    "alternative": "beta_LGM > 0",
+    "one_shot": true,
+    "biological_hypothesis": "Non-Lepidoptera Palearctic terrestrial insects with more similar LGM climatic refugial opportunity should share more reusable geography of post-IBD genetic differentiation."
+  },
+  "response_firewall": {
+    "species_level_genetic_scores_used_for_v02_selection": false,
+    "pairwise_v02_T_st_computed": false,
+    "beta_LGM_computed": false
+  }
+}

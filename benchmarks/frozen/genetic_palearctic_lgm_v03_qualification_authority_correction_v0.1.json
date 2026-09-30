@@ -1,0 +1,74 @@
+{
+  "schema": "ttf_genetic_palearctic_lgm_v03_qualification_authority_correction_v0.1",
+  "status": "AUTHORITATIVE_STOP_UNDER_V04_DETERMINISTIC_SHORT_CIRCUIT",
+  "recorded_on": "2026-10-01",
+  "corrects_interpretation_of": "benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_result_receipt_v0.1.json",
+  "chronology": {
+    "full_v03_qualification_run_id": 36585250715,
+    "full_v03_run_head_sha": "abef2bf46be891c6cfd7cad12b7e5bca78d11313",
+    "full_v03_run_started_at": "2026-09-29T14:47:01Z",
+    "v04_short_circuit_commit_sha": "1ecb33edcb597483409246a0921a7e44210fc380",
+    "v04_short_circuit_frozen_at": "2026-09-29T14:57:43Z",
+    "full_v03_run_completed_at": "2026-09-29T15:13:57Z",
+    "genetic_response_seen_before_v04_freeze": false,
+    "pairwise_T_st_seen_before_v04_freeze": false,
+    "beta_LGM_seen_before_v04_freeze": false
+  },
+  "authoritative_rule": "docs/supporting/genetic_palearctic_lgm_ttf_q_execution_v0.4.json",
+  "superseded_full_execution_rule": "docs/supporting/genetic_palearctic_lgm_ttf_q_execution_v0.3.json",
+  "decision_equivalence": {
+    "v04_changes_scientific_thresholds": false,
+    "v04_changes_predictors_or_controls": false,
+    "v04_changes_panel_or_roles": false,
+    "v04_changes_genetic_response": false,
+    "v04_only_short_circuits_after_any_required_deterministic_gate_failure": true
+  },
+  "authoritative_deterministic_characterization": {
+    "relation_design_npz_sha256": "630e873a3be7ce5019c20d3eeae742c368f041edfeb3b62a2653c25c10fe075f",
+    "dyads": 110,
+    "source_clusters": 10,
+    "target_clusters": 11,
+    "unique_information": {
+      "observed_total_unique_variance_fraction": 0.13098495570185703,
+      "required_minimum": 0.15,
+      "pass": false
+    },
+    "source_signal_breadth": {
+      "effective_sources": 7.600660389419032,
+      "effective_source_fraction": 0.7600660389419032,
+      "required_effective_fraction_minimum": 0.5,
+      "maximum_single_source_share": 0.2129463598067416,
+      "required_maximum_single_source_share": 0.15,
+      "pass": false
+    },
+    "target_signal_breadth": {
+      "effective_targets": 7.684787655929855,
+      "effective_target_fraction": 0.6986170596299869,
+      "required_effective_fraction_minimum": 0.5,
+      "maximum_single_target_share": 0.1934650485013274,
+      "required_maximum_single_target_share": 0.15,
+      "pass": false
+    },
+    "overall_deterministic_pass": false
+  },
+  "authoritative_decision": {
+    "status": "NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_LGM_RELATION",
+    "synthetic_envelope_required_under_v04": false,
+    "genetic_response_authorized": false,
+    "pairwise_v03_T_st_may_be_computed": false,
+    "beta_LGM_may_be_computed": false,
+    "route_reopen_or_retune_allowed": false
+  },
+  "completed_v03_synthetic_execution_after_supersession": {
+    "result_json_sha256": "9c57d5614c62e5542e952979392ab6f2a2faf64b0a21815355aa0b9f976ecf28",
+    "role": "NON_AUTHORITATIVE_DIAGNOSTIC_CORROBORATION_ONLY",
+    "null_calibration_also_failed": true,
+    "A2_detectability_also_failed": true,
+    "may_change_or_reopen_authoritative_v04_stop": false
+  },
+  "response_firewall": {
+    "subpanel_nucleotide_identity_opened": false,
+    "pairwise_v03_T_st_computed": false,
+    "beta_LGM_computed": false
+  }
+}

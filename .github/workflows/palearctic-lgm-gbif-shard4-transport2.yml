@@ -1,0 +1,97 @@
+name: palearctic-lgm-gbif-shard4-transport2
+# retrigger after direct-execution import repair
+
+on:
+  push:
+    branches:
+      - method/palearctic-lgm-response-blind-v0-1
+    paths:
+      - ".github/workflows/palearctic-lgm-gbif-shard4-transport2.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: palearctic-lgm-gbif-shard4-transport2-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  retry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verify frozen transport2 amendment
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/genetic_palearctic_lgm_v03_shard4_transport2_amendment_v0.1.json").read_text())
+          assert p["status"]=="FROZEN_BEFORE_TRANSPORT2_RESULT_AND_BEFORE_FAILOVER1_RESULT"
+          assert p["parent_failure"]["conclusion"]=="cancelled"
+          assert p["first_failover"]["result_seen_before_this_amendment"] is False
+          assert p["first_failover"]["authority"]=="SUPERSEDED_BEFORE_RESULT_BY_TRANSPORT2"
+          assert p["transport2"]["parallel_page_requests_per_species"]==4
+          assert p["transport2"]["scientific_page_offsets_unchanged"] is True
+          assert p["transport2"]["authoritative_if_execution_completes"] is True
+          assert all(v is False for v in p["response_firewall"].values())
+          print("transport2 amendment verified")
+          PY
+
+      - name: Install exact acquisition runtime
+        run: |
+          python -m pip install -e .
+          python -m pip install shapely
+
+      - name: Download exact parent-run Palearctic realm
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p realm
+          gh run download 36529160168             --repo "$GITHUB_REPOSITORY"             --name palearctic-realm-union-v02             --dir realm
+          test -f realm/palearctic_union.geojson
+
+      - name: Reacquire frozen shard 4 with parallel frozen offsets
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          python scripts/acquire_palearctic_lgm_occurrences_v02_transport2.py             --census benchmarks/frozen/genetic_palearctic_lgm_nonlepidoptera_census_v0.2.json             --realm-geojson realm/palearctic_union.geojson             --output-csv results/occurrences_4.csv             --output-ledger results/ledger_4.json             --shard-index 4             --shards 6
+          python - <<'PY'
+          import json
+          p=json.load(open("results/ledger_4.json"))
+          assert p["schema"]=="ttf_genetic_palearctic_lgm_occurrence_shard_v0.2"
+          assert p["shard_index"]==4 and p["shards"]==6
+          assert p["species_requested"]==4
+          assert p["transport"]["mode"]=="parallel_frozen_offsets"
+          assert p["transport"]["page_workers"]==4
+          assert p["transport"]["scientific_page_offsets_changed"] is False
+          assert [x["species"] for x in p["species"]]==[
+              "Bombus lapidarius",
+              "Hylaeus communis",
+              "Philonthus cognatus",
+              "Xantholinus linearis",
+          ]
+          assert all(v is False for v in p["response_firewall"].values())
+          print({
+              "request_errors":sum(x["status"]=="REQUEST_ERROR" for x in p["species"]),
+              "statuses":{x["species"]:x["status"] for x in p["species"]},
+              "retained":{x["species"]:x.get("retained_palearctic_after_exact_dedup_thinning_cap",0) for x in p["species"]},
+          })
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: palearctic-lgm-v02-gbif-shard-4-transport2
+          path: |
+            results/occurrences_4.csv
+            results/ledger_4.json
+          retention-days: 30
+          if-no-files-found: error
