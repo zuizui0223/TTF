@@ -4,8 +4,15 @@ on:
   push:
     branches:
       - main
-      - method/ttf-q-known-truth-benchmark
-      - method/ttf-q-prospective-stop-case
+    paths:
+      - "scripts/render_ttf_q_figures.py"
+      - "manuscript/generated/ttf_q_scalar_results_v0.1.json"
+      - "benchmarks/frozen/ttf_q_c2_result_receipt_v0.1.json"
+      - "benchmarks/frozen/ttf_q_palearctic_prospective_stop_case_v0.1.json"
+      - ".github/workflows/ttf-q-figures.yml"
+  pull_request:
+    branches:
+      - main
     paths:
       - "scripts/render_ttf_q_figures.py"
       - "manuscript/generated/ttf_q_scalar_results_v0.1.json"
