@@ -12,7 +12,7 @@ Target article type: Research Article, Methods in Ecology and Evolution
 
 3. In pre-result-frozen known-truth simulations, TTF-Q recovered prescribed endpoint, nuisance-control and geographic information-survival fractions across 243 dyadic designs with maximum absolute error of 3.33 × 10^-16. Deliberate source or target concentration was identified in every benchmark comparison. In a second benchmark, four designs failed the same legacy-style beta = 0.03, A = 3 cell but represented distinct states: broad, endpoint-loss and control-redundancy designs had different calibrated detectability envelopes, whereas a source-concentrated design retained the same identifiable relation information as the broad reference but violated the null-qualification ceiling and had no evaluable MDE.
 
-4. We applied TTF-Q to response-blind present and late-Quaternary climate relations across 653 animal species. Historical climate-displacement similarity retained 36–38% of its total variation after endpoint identity, present climate, lineage and sampling imbalance; 82–83% of that previously unique information remained after geographic co-opportunity was added. On the 15,625-dyad development geometry, both climate relations passed null qualification across the tested nuisance grid, while evaluable MDEs varied with nuisance heterogeneity. TTF-Q therefore separates identifiable information, signal concentration, inferential qualification and conditional detectability without inspecting the biological outcome.
+4. We applied TTF-Q to response-blind present and late-Quaternary climate relations across 653 animal species. Historical climate-displacement similarity retained 36–38% of its total variation after endpoint identity, present climate, lineage and sampling imbalance; 82–83% of that previously unique information remained after geographic co-opportunity was added. On the 15,625-dyad development geometry, both climate relations passed null qualification across the tested nuisance grid. In a separate prospectively frozen Palearctic non-Lepidoptera application, 21 species yielded 110 directed dyads, but LGM similarity retained only 13.1% unique variation and residual signal exceeded the predeclared single-endpoint concentration ceiling. TTF-Q closed that route before subgroup nucleotide identity, transfer scores or the focal genetic coefficient were opened.
 
 ## Data and code for peer review
 
@@ -291,13 +291,23 @@ The baseline response-blind controls were same-class, same-order and same-family
 
 Geographic co-opportunity was defined continuously for each directed source-target dyad as the fraction of target occurrence coordinates whose nearest source occurrence was within 500 km great-circle distance. No hard geographic filter was applied in TTF-Q.
 
-### 2.11 Response firewall and analytic provenance
+### 2.11 Prospective stopping application
+
+To test whether the evaluable-envelope logic could govern a real analysis rather than only characterize completed ecological geometry, we prospectively froze a secondary Palearctic insect application before constructing its subgroup genetic response. The parent 211-species aggregate genetic result was historically known, so this was not treated as an independent confirmatory dataset. However, species-level subgroup genetic scores, pairwise transfer scores, the subgroup focal coefficient and subgroup nucleotide identity were not used to define or qualify the new design.
+
+The formal panel contained 23 terrestrial Palearctic non-Lepidoptera insects assigned response-blindly to 11 source and 12 target species with no role overlap. External occurrence rules, current and 21-ka climate assets, climate variables, LGM relation, controls and TTF-Q thresholds were frozen before the focal relation was evaluated. After the minimum-30 occurrence rule, 21 species remained: 10 sources, 11 targets and 110 directed dyads.
+
+The focal relation, R_LGM, was Schoener's D between normalized continuous 21-ka climatic-opportunity surfaces estimated from the frozen four-variable CHELSA climate space. R_present, directed geographic co-opportunity, lineage indicators, occurrence-count imbalance and exact source/target fixed effects were declared controls. The prospective opening rule required at least 15% total unique focal-relation variation, at least 50% effective source and target signal breadth, and no single source or target carrying more than 15% of residual signal. A response-blind execution amendment, frozen after relation construction but before any genetic response or TTF-Q outcome was opened, allowed deterministic necessary gates to be evaluated first and the analysis to stop immediately if any failed. No threshold was changed.
+
+The application was defined to yield either authorization for one pre-specified genetic analysis or `NOT_EVALUABLE`. A qualification failure could not be interpreted as a biological null and could not be followed by a replacement subgroup, historical predictor or retuned threshold.
+
+### 2.12 Response firewall and analytic provenance
 
 TTF-Q was developed after the relational v0.3 B/C program had closed with no evaluable genetic test. That historical terminal state is retained unchanged. The fresh method program did not inspect nucleotide identity, pairwise genetic distances, T_st or the genetic relational coefficients.
 
 Machine-readable contracts were committed before each known-truth benchmark stage. When the first detectability benchmark revealed that raw MDEs could be reported despite unacceptable null behavior, the result was preserved as a diagnostic audit. A revised calibration rule and higher-precision null simulation were frozen before the second benchmark was run. This follows the broader principle that planned and post-result analytical changes should remain distinguishable (Gould et al. 2026).
 
-### 2.12 AI-assisted development disclosure
+### 2.13 AI-assisted development disclosure
 
 OpenAI ChatGPT (GPT-5.6 Sol) was used during method development and manuscript preparation to assist with code drafting, test generation, documentation, repository auditing and language editing. AI-generated suggestions were not treated as scientific evidence. Code supporting reported results was executed through the repository test and workflow suite, and reported scalar results were locked to machine-readable frozen receipts. The authors remain responsible for the design, code, analyses, interpretation and manuscript content.
 
@@ -362,6 +372,14 @@ For historical climate given current climate, beta = 0 rejection rates were 0.02
 
 The old beta = 0.03, A = 3 reference point therefore fell below the evaluable MDE for both relations, even though both designs were qualification-compatible and informative over substantial lower-heterogeneity or larger-effect regions.
 
+### 3.6 TTF-Q prospectively stopped a plausible LGM analysis before the biological response
+
+The Palearctic application passed its external-data gate with 21 species, 10 source clusters, 11 target clusters and 110 directed dyads. Its LGM and present-climate relations were strongly correlated (Pearson r = 0.861). After exact endpoint identity and all declared controls, the total unique fraction of R_LGM was 0.131, below the prospectively frozen minimum of 0.15.
+
+Residual relation information was also too concentrated. The inverse-Herfindahl effective-source and effective-target counts were 7.60 of 10 and 7.68 of 11, respectively, but the largest single-source share was 21.3% and the largest single-target share 19.3%, both above the frozen 15% ceiling. Thus all three deterministic necessary opening gates—unique information, source signal breadth and target signal breadth—failed.
+
+Under the response-blind short-circuit rule, those failures were sufficient to classify the relation as `NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_LGM_RELATION`. The subgroup biological response remained closed: no subgroup nucleotide identity, pairwise source-to-target transfer scores or focal genetic coefficient were computed. A full synthetic run that had already begun before the short-circuit amendment was frozen later also failed null qualification, but that result is reported only as non-authoritative corroboration of the prospectively determined stop.
+
 ## 4. Discussion
 
 TTF-Q replaces a binary question—whether a relational predictor passes one qualification cell—with a structured description of what information the predictor contains and where inference is licensed.
@@ -384,25 +402,33 @@ The historical result is strongest after the explicit geographic decomposition: 
 
 This distinction matters for comparative biogeography. Present ecological resemblance can arise through different historical trajectories. A relational variable intended to represent history should therefore be evaluated for information beyond present state and shared geography before it is used as an explanatory covariate.
 
-### 4.3 Relation information is not outcome importance
+### 4.3 The same ecological idea can be evaluable in one design and non-evaluable in another
+
+The prospective stopping application adds a distinction that simulations alone cannot demonstrate. Historical-climate relations were informative and qualification-compatible on the broad 653-species climate geometry, yet a biologically related LGM climatic-opportunity predictor failed prospectively in the narrower Palearctic insect design. TTF-Q therefore does not classify a predictor label—such as “historical climate”—as intrinsically good or bad. It evaluates the information geometry and inferential support created by a particular predictor, control set, endpoint composition and dyad structure.
+
+The Palearctic failure was also diagnostically specific. LGM similarity was strongly redundant with present-climate similarity, leaving only 13.1% unique variation after the declared model structure, and the remaining signal was disproportionately carried by a small number of source and target species. Those are design limitations that were knowable before the subgroup genetic response was inspected. The correct action was therefore to stop, not to interpret an eventual weak coefficient, change the historical predictor or search for a favorable subgroup.
+
+This prospective stop illustrates the practical value of response-blind qualification. It can prevent a biologically plausible analysis from becoming a post-outcome search for an estimable effect. Equally, `NOT_EVALUABLE` is not evidence against the biological hypothesis: the method declined to ask the outcome question under that realized design.
+
+### 4.4 Relation information is not outcome importance
 
 A high unique fraction does not imply a large biological effect. TTF-Q measures the amount of focal predictor variation available to identify an effect under a declared design; it does not estimate that effect. Likewise, the 82–83% historical geography-survival result is not a variance partition of any organismal response.
 
 This separation is intentional. Predictor geometry is often knowable before the response is opened, which makes it suitable for prospective design and for transparent decisions about whether a proposed relational analysis is worth pursuing.
 
-### 4.4 Signal concentration is not effective sample size
+### 4.5 Signal concentration is not effective sample size
 
 The known-truth concentration experiment provides a caution against overinterpreting inverse-Herfindahl endpoint counts. Source concentration was detected strongly, but its relationship with raw power was not a simple monotone reduction. In the higher-precision benchmark, its main failure was inflated null rejection under the intended estimator, not a uniquely ordered loss of MDE.
 
 We therefore use effective dyad/source/target counts only as labels for signal concentration. Standard errors and qualification remain the responsibility of the dependence-aware inferential procedure and its null simulations.
 
-### 4.5 Qualification is conditional on the declared synthetic worlds
+### 4.6 Qualification is conditional on the declared synthetic worlds
 
 The evaluable envelope is not universal. Null qualification and MDE depend on the simulated nuisance family. Unrepresented forms of private structure can still invalidate inference. The appropriate use of TTF-Q is therefore to make the synthetic world family explicit, test scientifically plausible nuisance regimes and report the envelope conditional on those regimes.
 
 In the present case, the nuisance family was inherited from a prospectively frozen relational design: source and target intercept heterogeneity, dyad noise, and source- and target-specific random slopes whose SD increased with amplitude A. Other applications should define their own nuisance family before outcome inspection.
 
-### 4.6 Measurement repeatability remains an extension
+### 4.7 Measurement repeatability remains an extension
 
 The current paper validates predictor non-redundancy, nested information loss, signal concentration, null qualification and detectability. TTF-Q also implements a response-blind relation-repeatability layer based on repeated reconstruction of fixed dyads, but the empirical climate example did not require full occurrence-bootstrap reconstruction to establish the core method.
 
@@ -414,9 +440,9 @@ A dyadic ecological predictor can fail before any biological response is analyse
 
 TTF-Q decomposes that pre-response problem into identifiable relation information, the location of information loss, residual signal concentration, null qualification and conditional detectability. Known-truth simulations show that these axes can be recovered exactly and can distinguish designs that a single binary power gate treats as identical.
 
-In the response-blind climate case, present and historical climate each carried substantial distinct pairwise information, and most history-specific information survived explicit geographic adjustment. Both relation designs were qualification-compatible across the tested nuisance grid, but the minimum detectable effect depended strongly on nuisance heterogeneity.
+In the response-blind 653-species climate case, present and historical climate each carried substantial distinct pairwise information, and most history-specific information survived explicit geographic adjustment. In contrast, a separately frozen 21-species Palearctic LGM application failed the necessary information and endpoint-support gates, and TTF-Q stopped the analysis before its subgroup genetic response was opened.
 
-The practical output of TTF-Q is therefore not permission to declare a predictor “good” or “bad”. It is a map of the inferential domain that exists before the outcome is opened.
+The practical output of TTF-Q is therefore not permission to declare a predictor “good” or “bad”. It is a map of the inferential domain that exists for a specific realized design before the outcome is opened—and, when that domain is inadequate, a principled reason not to run the biological test.
 
 ## Acknowledgements
 
@@ -470,6 +496,8 @@ Maslen, B., Popovic, G., Lim, M., Marzinelli, E. & Warton, D. (2023). How many s
 **Fig. 3. Empirical response-blind climate relation envelopes.** Calibration-qualified grid minimum detectable effects across private-heterogeneity amplitudes for present-climate similarity and historical climate-displacement similarity conditional on present climate on the 15,625-dyad development geometry. No genetic-response quantity is used.
 
 **Fig. 4. Equal unique relation information can have different endpoint concentration and null qualification.** The known-truth reference and source-concentrated designs retain the same total unique focal-relation fraction, but deliberate concentration lowers the inverse-Herfindahl effective source count and is accompanied by failure of the declared null-qualification ceiling under the intended estimator.
+
+**Fig. 5. A prospective application stopped before the biological response was opened.** Response-blind Palearctic LGM climatic-opportunity similarity was evaluated on 110 directed dyads from 21 species. The panel failed the prospectively frozen unique-information and endpoint-concentration gates, so the planned subgroup genetic response remained unopened. The figure contrasts this realized non-evaluable design with the broader response-blind climate geometry without interpreting the stop as a biological null.
 
 
 Williams, C., Yang, Y., Lagisz, M., Morrison, K., Ricolfi, L., Warton, D. I. & Nakagawa, S. (2024). Transparent reporting items for simulation studies evaluating statistical methods: Foundations for reproducibility and reliability. *Methods in Ecology and Evolution*, 15, 1926–1939. https://doi.org/10.1111/2041-210X.14415
