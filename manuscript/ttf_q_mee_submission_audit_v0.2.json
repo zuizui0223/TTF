@@ -1,7 +1,7 @@
 {
   "schema": "ttf_q_mee_submission_audit_v0.2",
   "status": "SCIENTIFIC_PACKAGE_PREPARED_AUTHOR_CHOICES_REMAIN",
-  "checked_on": "2026-09-28",
+  "checked_on": "2026-10-01",
   "journal": "Methods in Ecology and Evolution",
   "article_type": "Research Article",
   "official_author_guideline_requirements": {
@@ -19,22 +19,24 @@
     "known_truth_information_validation": "COMPLETE",
     "known_truth_null_qualification_and_detectability_validation": "COMPLETE",
     "response_blind_climate_application": "COMPLETE",
-    "figures_from_frozen_scalar_handoff": "COMPLETE",
-    "genetic_response_opened": false
+    "figures_from_frozen_scalar_handoff": "COMPLETE_FIVE_FIGURES",
+    "genetic_response_opened": false,
+    "prospective_response_blind_stop_application": "COMPLETE"
   },
   "main_document": {
     "source": "manuscript/ttf_q_methods_v0.1.md",
     "blinded_source": "manuscript/ttf_q_methods_blinded_v0.1.md",
     "blinded_source_builder": "scripts/build_ttf_q_blinded_manuscript.py",
-    "abstract_words_after_methods_merge": 320,
-    "approximate_full_words_after_methods_merge": 5482,
-    "figure_legends_and_text_references": "COMPLETE_IN_METHODS_BRANCH",
+    "abstract_words_after_methods_merge": 330,
+    "approximate_full_words_after_methods_merge": 6349,
+    "figure_legends_and_text_references": "COMPLETE_FIGURES_1_TO_5",
     "AI_assisted_development_disclosure": "COMPLETE_IN_METHODS_BRANCH",
     "exact_CHELSA_dataset_citations": "COMPLETE_IN_METHODS_BRANCH",
     "final_double_spaced_line_numbered_submission_file": "PENDING",
     "novelty_positioning_against_adjacent_methods": "UPDATED_WITH_DORMANN_2013_MASLEN_2023_DIRENZO_2023_WILLIAMS_2024",
     "information_term_scope": "SQUARED_NORM_OF_STANDARDIZED_FOCAL_RELATION_NOT_INFORMATION_THEORETIC",
-    "known_truth_exact_recovery_role": "IMPLEMENTATION_VERIFICATION_OF_EXACT_ALGEBRA"
+    "known_truth_exact_recovery_role": "IMPLEMENTATION_VERIFICATION_OF_EXACT_ALGEBRA",
+    "prospective_stop_case": "INTEGRATED_WITH_FROZEN_RECEIPT_AND_RESPONSE_FIREWALL"
   },
   "title_page": {
     "template": "manuscript/ttf_q_title_page_template.md",
