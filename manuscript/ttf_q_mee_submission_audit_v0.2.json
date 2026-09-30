@@ -28,7 +28,7 @@
     "blinded_source": "manuscript/ttf_q_methods_blinded_v0.1.md",
     "blinded_source_builder": "scripts/build_ttf_q_blinded_manuscript.py",
     "abstract_words_after_methods_merge": 330,
-    "approximate_full_words_after_methods_merge": 6306,
+    "approximate_full_words_after_methods_merge": 6349,
     "figure_legends_and_text_references": "COMPLETE_FIGURES_1_TO_5",
     "AI_assisted_development_disclosure": "COMPLETE_IN_METHODS_BRANCH",
     "exact_CHELSA_dataset_citations": "COMPLETE_IN_METHODS_BRANCH",
