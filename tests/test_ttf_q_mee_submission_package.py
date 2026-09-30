@@ -26,7 +26,7 @@ def test_ttf_q_main_document_meets_initial_mee_structure():
         assert number in abstract
     assert word_count(text) < 8000
     assert "## Figure legends" in text
-    for number in range(1,5):
+    for number in range(1,6):
         assert f"Fig. {number}" in text
     assert "Table 1." in text
     assert "AI-assisted development disclosure" in text
@@ -80,3 +80,19 @@ def test_anonymous_bundle_scanner_rejects_generic_identifying_metadata():
     assert scan("contact: author@example.org")
     assert scan("https://orcid.org/0000-0000-0000-0000")
     assert not scan("https://doi.org/10.1111/example")
+
+
+def test_new_prospective_stop_bundle_inputs_are_anonymous():
+    namespace=runpy.run_path(
+        str(ROOT/"scripts/build_ttf_q_peer_review_bundle.py")
+    )
+    scan=namespace["anonymity_hits"]
+    paths=[
+        "benchmarks/frozen/ttf_q_palearctic_prospective_stop_case_v0.1.json",
+        "benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_result_receipt_v0.1.json",
+        "benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_authority_correction_v0.1.json",
+        "docs/supporting/genetic_palearctic_lgm_ttf_q_execution_v0.4.json",
+    ]
+    for rel in paths:
+        body=(ROOT/rel).read_text()
+        assert scan(body)==[], rel
