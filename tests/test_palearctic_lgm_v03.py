@@ -166,3 +166,30 @@ def test_v03_qualification_requires_frozen_authoritative_shards():
     assert "shard4_artifact_id" in text
     assert "shard4_artifact_digest_sha256" in text
     assert "genetic_palearctic_lgm_v03_occurrence_assembly_rule_v0.1.json" in text
+
+
+def test_v03_qualification_result_closes_route_without_genetics():
+    result=json.loads(
+        (ROOT/"benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_result_receipt_v0.1.json").read_text()
+    )
+    assert result["status"]=="CLOSED_NOT_EVALUABLE_WITHOUT_GENETIC_RESPONSE"
+    assert result["authoritative_execution"]["workflow_run_id"]==36585250715
+    assert result["external_data"]=={
+        "formal_species":23,
+        "admissible_species":21,
+        "source_clusters":10,
+        "target_clusters":11,
+        "directed_dyads":110,
+        "failed_occurrence_species":["Alloxysta fulviceps","Euplectrus geometricida"],
+        "request_errors":0,
+        "retained_occurrence_rows":4127,
+    }
+    assert result["relation"]["pearson_R_LGM_vs_R_present"] > 0.86
+    assert result["ttf_q"]["information"]["total_unique_variance_fraction"] < 0.15
+    assert result["ttf_q"]["signal_concentration"]["max_source_share"] > 0.15
+    assert result["ttf_q"]["signal_concentration"]["max_target_share"] > 0.15
+    assert all(v is False for v in result["ttf_q"]["opening_gates"].values())
+    assert result["decision"]["genetic_response_authorized"] is False
+    assert result["decision"]["pairwise_v03_T_st_may_be_computed"] is False
+    assert result["decision"]["beta_LGM_may_be_computed"] is False
+    assert all(v is False for v in result["response_firewall"].values())
