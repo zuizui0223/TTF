@@ -98,6 +98,8 @@ Before any subgroup genetic response, the v0.3 relation must pass every frozen g
 
 A = 3 is a reported stress diagnostic only.
 
+The response-blind v0.4 execution amendment was frozen after the ecological relation had been characterized but before the genetic response or TTF-Q outcome was opened. It changes no threshold. It only evaluates the three deterministic necessary gates first (unique information, source signal breadth, target signal breadth) and stops immediately if any fails; synthetic calibration is run only if all three pass.
+
 Failure closes this route as
 `NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_LGM_RELATION`.
 
@@ -109,17 +111,14 @@ The response-blind LGM relation itself was computable, but it was strongly redun
 
 Signal breadth also failed because the identifiable residual relation was too concentrated. Effective source and target breadth were numerically broad enough (7.60/10 and 7.68/11), but the largest single source carried **21.29%** and the largest single target **19.35%** of residual signal, both above the frozen **15%** ceiling.
 
-The synthetic inferential check independently failed calibration. At private-heterogeneity amplitudes A=0,1,2, null rejection rates were **6.98%, 7.50%, and 7.39%**, with Wilson 95% upper bounds **7.50%, 8.03%, and 7.92%**, all above the allowed **5%** ceiling. Consequently the A=2 detectable-effect gate was not evaluable.
+Under the authoritative v0.4 short-circuit rule, those three deterministic failures are already sufficient to close the route. The formal outcome is therefore **NOT_EVALUABLE** without opening the genetic response and without needing synthetic calibration for the decision.
 
-All five opening gates were false:
+An already-running full v0.3 qualification subsequently completed its synthetic grid after v0.4 had been frozen. That non-authoritative diagnostic also failed calibration: at A=0,1,2, null rejection rates were **6.98%, 7.50%, and 7.39%**, with Wilson 95% upper bounds **7.50%, 8.03%, and 7.92%**, all above the allowed **5%** ceiling. It corroborates the stop but does not define or reopen the authoritative v0.4 decision.
 
-- unique information;
-- source signal breadth;
-- target signal breadth;
-- null qualification;
-- A=2 detectability.
+Therefore the route is **not a biological null test of the LGM hypothesis**. It is a design-level conclusion: with this response-blind Palearctic non-Lepidoptera panel, LGM climatic similarity is not sufficiently independent and sufficiently distributed across source and target endpoints to justify opening the genetic response.
 
-Therefore the route is **not a biological null test of the LGM hypothesis**. It is a design-level conclusion: with this response-blind Palearctic non-Lepidoptera panel, LGM climatic similarity is not sufficiently independent, distributed, and inferentially calibrated to justify opening the genetic response.
+The authority correction that fixes this chronology is
+`benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_authority_correction_v0.1.json`.
 
 ## Authorized response only after PASS
 
