@@ -14,7 +14,7 @@ We validate the method with pre-result-frozen known-truth simulations. Across 24
 
 Because the individual statistical ingredients are established, while the proposed contribution is their integration into a new response-blind method object with exact information decomposition and known-truth validation, we would appreciate guidance on whether this is within scope as a Research Article before formal submission.
 
-The manuscript is currently approximately 5,000 words excluding final title-page material, with reproducible simulations, tests, an empirical ecological application, and anonymized code prepared for peer review.
+The manuscript is currently approximately 6,350 words excluding final title-page material, with reproducible simulations, two response-blind ecological applications, tests, and anonymized code prepared for peer review.
 
 Kind regards,
 
