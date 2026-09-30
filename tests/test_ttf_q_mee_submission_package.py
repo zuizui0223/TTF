@@ -96,3 +96,10 @@ def test_new_prospective_stop_bundle_inputs_are_anonymous():
     for rel in paths:
         body=(ROOT/rel).read_text()
         assert scan(body)==[], rel
+
+
+def test_figure_renderer_includes_prospective_stop_figure():
+    text=(ROOT/"scripts/render_ttf_q_figures.py").read_text()
+    assert "ttf_q_palearctic_prospective_stop_case_v0.1.json" in text
+    assert "figure5_prospective_stop.svg" in text
+    assert "for p in (p1,p2,p3,p4,p5)" in text
