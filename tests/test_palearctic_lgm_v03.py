@@ -157,10 +157,12 @@ def test_v03_qualification_workflow_is_response_blind_and_complete():
         assert token not in text
 
 
-def test_v03_qualification_requires_frozen_aggregate_trigger():
+def test_v03_qualification_requires_frozen_authoritative_shards():
     text=(ROOT/".github/workflows/palearctic-lgm-climate-ttfq.yml").read_text()
     token="benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_trigger_v0.1.json"
     assert token in text
     assert "AUTHORIZE_RESPONSE_BLIND_V03_QUALIFICATION" in text
-    assert "aggregate_artifact_id" in text
-    assert "aggregate_artifact_digest_sha256" in text
+    assert "REASSEMBLE_EXACT_SIX_AUTHORITATIVE_SHARDS" in text
+    assert "shard4_artifact_id" in text
+    assert "shard4_artifact_digest_sha256" in text
+    assert "genetic_palearctic_lgm_v03_occurrence_assembly_rule_v0.1.json" in text
