@@ -29,6 +29,7 @@ def test_renderer_requires_continuous_line_numbering_and_page_field_by_contract(
 
 def test_smoke_workflow_renders_current_manuscript_inputs():
     workflow=(ROOT/".github/workflows/ttf-q-submission-renderer-smoke.yml").read_text()
+    assert "pull_request:" in workflow
     assert "manuscript/ttf_q_methods_blinded_v0.1.md" in workflow
     assert "manuscript/ttf_q_title_page_template.md" in workflow
     assert "PASS_TTF_Q_CURRENT_MANUSCRIPT_RENDERER_SMOKE" in workflow
