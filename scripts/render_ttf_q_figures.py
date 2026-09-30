@@ -151,17 +151,17 @@ def main() -> int:
     ax.axhline(0.15,linestyle="--",linewidth=1.2)
     ax.text(
         2.48,0.154,
-        "predeclared 0.15 boundary",
+        "Palearctic predeclared 0.15 boundary",
         ha="right",va="bottom",fontsize=8.5,
     )
     ax.set_xticks(x,labels)
     ax.set_ylim(0,0.34)
     ax.set_ylabel("Response-blind relation diagnostic")
-    ax.set_title("TTF-Q stopped the Palearctic design before outcome opening")
+    ax.set_title("Prospective Palearctic stop relative to broad climate geometry")
     ax.legend()
     ax.text(
         0.02,0.98,
-        "Unique fraction must be ≥ 0.15; endpoint shares must be ≤ 0.15",
+        "Palearctic rule: unique fraction ≥ 0.15; endpoint shares ≤ 0.15",
         transform=ax.transAxes,ha="left",va="top",fontsize=8.5,
     )
     fig.tight_layout()
