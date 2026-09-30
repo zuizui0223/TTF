@@ -1,0 +1,56 @@
+name: ttf-q-submission-readiness
+
+on:
+  push:
+    branches:
+      - main
+      - submission/ttf-q-readiness-v2
+    paths:
+      - "manuscript/ttf_q_methods_v0.1.md"
+      - "manuscript/ttf_q_methods_blinded_v0.1.md"
+      - "manuscript/ttf_q_title_page_template.md"
+      - "manuscript/ttf_q_presubmission_enquiry_draft.md"
+      - "scripts/build_ttf_q_blinded_manuscript.py"
+      - "scripts/build_ttf_q_peer_review_bundle.py"
+      - "scripts/render_ttf_q_submission_files.py"
+      - "scripts/check_ttf_q_submission_readiness.py"
+      - "scripts/render_ttf_q_figures.py"
+      - "benchmarks/frozen/ttf_q_palearctic_prospective_stop_case_v0.1.json"
+      - "manuscript/ttf_q_mee_submission_audit_v0.2.json"
+      - "LICENSE"
+      - ".github/workflows/ttf-q-submission-readiness.yml"
+  workflow_dispatch:
+    inputs:
+      require_ready:
+        description: "Fail unless author blockers are resolved"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run TTF-Q submission readiness audit
+        run: |
+          mkdir -p submission/readiness
+          EXTRA=""
+          if [ "${{ inputs.require_ready || false }}" = "true" ]; then
+            EXTRA="--require-ready"
+          fi
+          python scripts/check_ttf_q_submission_readiness.py \
+            --output submission/readiness/ttf_q_submission_readiness.json \
+            $EXTRA
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-q-submission-readiness
+          path: submission/readiness/ttf_q_submission_readiness.json
+          retention-days: 30
+          if-no-files-found: error
