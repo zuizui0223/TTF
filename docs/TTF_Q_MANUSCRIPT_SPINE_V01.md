@@ -114,6 +114,21 @@ calibration-qualified empirical grid MDE for both relations on this shared geome
 the old relational-v0.3 decision. It demonstrates why a single worst-case
 power gate is an impoverished summary of an otherwise informative design.
 
+## Prospective stopping application
+
+A separately frozen Palearctic non-Lepidoptera application asked whether LGM climatic-opportunity similarity was suitable for a planned genetic-transferability test. The formal response-blind panel contained 23 species; external-data filtering retained 21 species, 10 sources, 11 targets and 110 directed dyads.
+
+The realized LGM relation was much less usable than the broad 653-species historical-climate relation:
+
+- Pearson correlation with present-climate similarity: **0.861**;
+- total unique focal-relation fraction after endpoint identity and declared controls: **0.131**, below the frozen **0.15** minimum;
+- maximum source residual-signal share: **21.3%**, above the **15%** ceiling;
+- maximum target residual-signal share: **19.3%**, above the **15%** ceiling.
+
+All three deterministic necessary opening gates therefore failed. TTF-Q stopped the study as `NOT_EVALUABLE` before subgroup nucleotide identity, pairwise transfer scores or the focal genetic coefficient were opened.
+
+This is the key practical demonstration: the same broad ecological idea—historical climate similarity—can be evaluable on one realized design and non-evaluable on another. TTF-Q qualifies the design, not the predictor label.
+
 ## Known-truth method validation
 
 The decomposition is not justified only by the climate case study. A pre-result-frozen benchmark constructed dyadic predictors with exact truth for endpoint-retained fraction, baseline-control survival, and geographic survival. Across **243** scenarios, TTF-Q recovered all nested information fractions with maximum absolute error **3.33e-16**. Deliberate source and target concentration was detected in **100%** of the corresponding comparisons.
@@ -138,6 +153,11 @@ This benchmark establishes two points that a binary gate cannot represent: ident
 4. **The historical layer is not mainly geography in disguise.** About
    82-83% of C1 unique historical information survives explicit geographic
    co-opportunity adjustment in two independently assigned panels.
+5. **Evaluability belongs to the realized design, not the ecological label.**
+   A prospectively frozen Palearctic LGM application failed unique-information
+   and endpoint-concentration gates and was stopped before its biological
+   response was opened, despite the broader historical-climate relation being
+   evaluable.
 
 ## Claims explicitly not made
 
@@ -145,6 +165,7 @@ This benchmark establishes two points that a binary gate cannot represent: ident
 - no v0.3 B or C confirmatory test is reopened;
 - no old alpha is recycled;
 - no NOT_EVALUABLE state is converted to a biological null or positive;
+- the Palearctic stop is not evidence against an LGM effect; the outcome test was never opened;
 - synthetic detectability is not evidence that a biological effect exists;
 - current and historical unique-variance fractions are predictor-information
   decompositions, not partitions of biological-response variance.
@@ -168,9 +189,12 @@ Effect size on x, private heterogeneity A on y, with calibration-qualified
 regions distinguished from anti-conservative regions; include the known-truth
 single-gate comparison and empirical climate cases.
 
-**Figure 5 — endpoint support.**
-Source and target signal-share distributions, explicitly presented as
-concentration diagnostics rather than effective sample sizes.
+**Figure 5 — prospective stopping application.**
+Frozen response-blind unique-information fraction and maximum source/target
+signal shares for the broad evaluable historical-climate geometry versus the
+Palearctic LGM design. The common 0.15 boundary is a minimum for unique
+information and a maximum for individual endpoint shares, making the
+prospective stop visually explicit.
 
 ## Remaining optional extension
 
