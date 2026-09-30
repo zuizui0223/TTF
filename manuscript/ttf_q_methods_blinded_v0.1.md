@@ -16,7 +16,7 @@ Target article type: Research Article, Methods in Ecology and Evolution
 
 ## Data and code for peer review
 
-An anonymized peer-review archive containing the implementation, machine-readable method contracts, known-truth benchmark rules, frozen benchmark receipts, response-blind climate receipts, tests and figure-generation code is supplied with the submission. The archive contains no version-control history or author-identifying repository metadata. The manuscript uses no genetic-response quantity from the permanently closed relational v0.3 B/C program.
+An anonymized peer-review archive containing the implementation, machine-readable method contracts, known-truth benchmark rules, frozen benchmark receipts, response-blind climate and prospective-stop receipts, tests and figure-generation code is supplied with the submission. The archive contains no version-control history or author-identifying repository metadata. The manuscript uses no genetic-response quantity from the permanently closed relational v0.3 B/C program.
 
 ## Keywords
 
@@ -42,7 +42,7 @@ The methodological gap addressed by TTF-Q is how to join them into a single pre-
 
 TTF-Q is intentionally response blind: all five questions can be answered before the biological outcome being predicted is opened. This ordering is useful not only for confirmatory analyses. It also provides an interpretable diagnostic for exploratory relational predictors, because it separates poor measurement or redundant geometry from the absence of an empirical biological association.
 
-We develop the method in three steps. First, we derive exact nested information-survival identities for fixed dyadic predictor geometry. Second, we validate those quantities and the separation of signal concentration from inferential qualification in known-truth simulations frozen before results were generated. Third, we apply TTF-Q to present-climate and late-Quaternary climate-displacement relations built from occurrence and CHELSA climate data. The empirical climate example remains entirely response blind; no genetic-transferability outcome from the earlier TTF program is opened.
+We develop and demonstrate the method in four steps. First, we derive exact nested information-survival identities for fixed dyadic predictor geometry. Second, we validate those quantities and the separation of signal concentration from inferential qualification in known-truth simulations frozen before results were generated. Third, we apply TTF-Q to present-climate and late-Quaternary climate-displacement relations built from occurrence and CHELSA climate data. Fourth, we use the same response-blind logic prospectively to decide whether a separately frozen Palearctic LGM analysis may open its subgroup biological response. No genetic-transferability outcome is used to qualify either ecological application.
 
 ## 2. Materials and Methods
 
