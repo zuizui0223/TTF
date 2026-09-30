@@ -29,6 +29,10 @@ FILES = [
     "benchmarks/frozen/ttf_q_bc_calibrated_detectability_result_v0.2.json",
     "benchmarks/frozen/ttf_q_known_truth_decomposition_v0.1.json",
     "benchmarks/frozen/ttf_q_known_truth_detectability_v0.2.json",
+    "benchmarks/frozen/ttf_q_palearctic_prospective_stop_case_v0.1.json",
+    "benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_result_receipt_v0.1.json",
+    "benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_authority_correction_v0.1.json",
+    "docs/supporting/genetic_palearctic_lgm_ttf_q_execution_v0.4.json",
     "src/ttf/relational_dyadic.py",
     "src/ttf/relational_qualification.py",
     "src/ttf/relational_benchmark.py",
@@ -49,6 +53,7 @@ FILES = [
     "tests/test_ttf_q_known_truth_detectability_v02.py",
     "tests/test_ttf_q_bc_calibrated_detectability.py",
     "tests/test_ttf_q_manuscript_scalar_handoff.py",
+    "tests/test_ttf_q_palearctic_prospective_stop.py",
 ]
 
 PROHIBITED_TEXT = (
