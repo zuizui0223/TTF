@@ -172,6 +172,9 @@ def test_v03_qualification_result_closes_route_without_genetics():
     result=json.loads(
         (ROOT/"benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_result_receipt_v0.1.json").read_text()
     )
+    authority=json.loads(
+        (ROOT/"benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_authority_correction_v0.1.json").read_text()
+    )
     assert result["status"]=="CLOSED_NOT_EVALUABLE_WITHOUT_GENETIC_RESPONSE"
     assert result["authoritative_execution"]["workflow_run_id"]==36585250715
     assert result["external_data"]=={
@@ -185,11 +188,25 @@ def test_v03_qualification_result_closes_route_without_genetics():
         "retained_occurrence_rows":4127,
     }
     assert result["relation"]["pearson_R_LGM_vs_R_present"] > 0.86
-    assert result["ttf_q"]["information"]["total_unique_variance_fraction"] < 0.15
-    assert result["ttf_q"]["signal_concentration"]["max_source_share"] > 0.15
-    assert result["ttf_q"]["signal_concentration"]["max_target_share"] > 0.15
-    assert all(v is False for v in result["ttf_q"]["opening_gates"].values())
-    assert result["decision"]["genetic_response_authorized"] is False
-    assert result["decision"]["pairwise_v03_T_st_may_be_computed"] is False
-    assert result["decision"]["beta_LGM_may_be_computed"] is False
-    assert all(v is False for v in result["response_firewall"].values())
+
+    # v0.4 was frozen before the v0.3 synthetic result completed and is the
+    # authoritative decision rule. Any deterministic gate failure closes the
+    # route without requiring the synthetic envelope.
+    assert authority["status"]=="AUTHORITATIVE_STOP_UNDER_V04_DETERMINISTIC_SHORT_CIRCUIT"
+    deterministic=authority["authoritative_deterministic_characterization"]
+    assert deterministic["unique_information"]["pass"] is False
+    assert deterministic["source_signal_breadth"]["pass"] is False
+    assert deterministic["target_signal_breadth"]["pass"] is False
+    assert deterministic["overall_deterministic_pass"] is False
+
+    diagnostic=authority["completed_v03_synthetic_execution_after_supersession"]
+    assert diagnostic["role"]=="NON_AUTHORITATIVE_DIAGNOSTIC_CORROBORATION_ONLY"
+    assert diagnostic["null_calibration_also_failed"] is True
+    assert diagnostic["may_change_or_reopen_authoritative_v04_stop"] is False
+
+    decision=authority["authoritative_decision"]
+    assert decision["genetic_response_authorized"] is False
+    assert decision["pairwise_v03_T_st_may_be_computed"] is False
+    assert decision["beta_LGM_may_be_computed"] is False
+    assert decision["route_reopen_or_retune_allowed"] is False
+    assert all(v is False for v in authority["response_firewall"].values())
