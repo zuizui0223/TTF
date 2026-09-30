@@ -4,7 +4,14 @@ on:
   push:
     branches:
       - main
-      - method/ttf-q-render-smoke-current-manuscript
+    paths:
+      - "scripts/render_ttf_q_submission_files.py"
+      - "manuscript/ttf_q_methods_blinded_v0.1.md"
+      - "manuscript/ttf_q_title_page_template.md"
+      - ".github/workflows/ttf-q-submission-renderer-smoke.yml"
+  pull_request:
+    branches:
+      - main
     paths:
       - "scripts/render_ttf_q_submission_files.py"
       - "manuscript/ttf_q_methods_blinded_v0.1.md"
