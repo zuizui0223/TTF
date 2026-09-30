@@ -162,7 +162,7 @@ def check_state(root: Path = ROOT) -> dict[str, object]:
         status = "READY_FOR_FINAL_RENDER"
 
     return {
-        "schema": "ttf_q_submission_readiness_check_v0.1",
+        "schema": "ttf_q_submission_readiness_check_v0.2",
         "status": status,
         "scientific_package_ready": scientific_ready,
         "final_render_ready": final_render_ready,
