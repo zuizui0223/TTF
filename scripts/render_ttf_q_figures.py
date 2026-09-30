@@ -12,6 +12,8 @@ import matplotlib.pyplot as plt
 
 
 INPUT = Path("manuscript/generated/ttf_q_scalar_results_v0.1.json")
+C2_RECEIPT = Path("benchmarks/frozen/ttf_q_c2_result_receipt_v0.1.json")
+STOP_CASE = Path("benchmarks/frozen/ttf_q_palearctic_prospective_stop_case_v0.1.json")
 OUTPUT = Path("manuscript/figures/ttf_q_v0.1")
 
 
@@ -21,6 +23,8 @@ def sha256(path: Path) -> str:
 
 def main() -> int:
     data=json.loads(INPUT.read_text())
+    c2=json.loads(C2_RECEIPT.read_text())
+    stop=json.loads(STOP_CASE.read_text())
     OUTPUT.mkdir(parents=True,exist_ok=True)
     mpl.rcParams["svg.fonttype"]="none"
     mpl.rcParams["svg.hashsalt"]="ttf-q-v0.1"
@@ -127,15 +131,57 @@ def main() -> int:
     fig.savefig(p4,format="svg",metadata={"Date":None})
     plt.close(fig)
 
+    # Figure 5: a prospectively frozen application can stop before outcome opening.
+    broad=[
+        c2["development"]["C2_total_unique_variance_fraction"],
+        c2["development"]["max_source_signal_share_after_geography"],
+        c2["development"]["max_target_signal_share_after_geography"],
+    ]
+    pal=[
+        stop["authoritative_deterministic_ttf_q"]["unique_information"]["observed_total_unique_variance_fraction"],
+        stop["authoritative_deterministic_ttf_q"]["source_signal_breadth"]["maximum_single_source_share"],
+        stop["authoritative_deterministic_ttf_q"]["target_signal_breadth"]["maximum_single_target_share"],
+    ]
+    labels=["Unique relation\nfraction","Max source\nsignal share","Max target\nsignal share"]
+    x=[0,1,2]
+    width=0.34
+    fig,ax=plt.subplots(figsize=(7.4,4.9))
+    ax.bar([v-width/2 for v in x],broad,width=width,label="Broad climate geometry")
+    ax.bar([v+width/2 for v in x],pal,width=width,label="Palearctic prospective case")
+    ax.axhline(0.15,linestyle="--",linewidth=1.2)
+    ax.text(
+        2.48,0.154,
+        "predeclared 0.15 boundary",
+        ha="right",va="bottom",fontsize=8.5,
+    )
+    ax.set_xticks(x,labels)
+    ax.set_ylim(0,0.34)
+    ax.set_ylabel("Response-blind relation diagnostic")
+    ax.set_title("TTF-Q stopped the Palearctic design before outcome opening")
+    ax.legend()
+    ax.text(
+        0.02,0.98,
+        "Unique fraction must be ≥ 0.15; endpoint shares must be ≤ 0.15",
+        transform=ax.transAxes,ha="left",va="top",fontsize=8.5,
+    )
+    fig.tight_layout()
+    p5=OUTPUT/"figure5_prospective_stop.svg"
+    fig.savefig(p5,format="svg",metadata={"Date":None})
+    plt.close(fig)
+
     manifest={
         "schema":"ttf_q_figure_manifest_v0.1",
         "status":"DESCRIPTIVE_RENDERING_FROM_FROZEN_SCALAR_HANDOFF",
         "input":str(INPUT),
         "input_sha256":sha256(INPUT),
+        "additional_frozen_inputs":{
+            str(C2_RECEIPT):sha256(C2_RECEIPT),
+            str(STOP_CASE):sha256(STOP_CASE),
+        },
         "new_inference_performed":False,
         "figures":{
             p.name:sha256(p)
-            for p in (p1,p2,p3,p4)
+            for p in (p1,p2,p3,p4,p5)
         },
     }
     manifest_path=OUTPUT/"figure_manifest.json"
