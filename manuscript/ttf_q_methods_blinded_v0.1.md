@@ -299,7 +299,7 @@ The formal panel contained 23 terrestrial Palearctic non-Lepidoptera insects ass
 
 The focal relation, R_LGM, was Schoener's D between normalized continuous 21-ka climatic-opportunity surfaces estimated from the frozen four-variable CHELSA climate space. R_present, directed geographic co-opportunity, lineage indicators, occurrence-count imbalance and exact source/target fixed effects were declared controls. The prospective opening rule required at least 15% total unique focal-relation variation, at least 50% effective source and target signal breadth, and no single source or target carrying more than 15% of residual signal. A response-blind execution amendment, frozen after relation construction but before any genetic response or TTF-Q outcome was opened, allowed deterministic necessary gates to be evaluated first and the analysis to stop immediately if any failed. No threshold was changed.
 
-The application was defined to yield either authorization for one pre-specified genetic analysis or `NOT_EVALUABLE`. A qualification failure could not be interpreted as a biological null and could not be followed by a replacement subgroup, historical predictor or retuned threshold.
+The application was defined to yield either authorization for one pre-specified genetic analysis or `NOT_EVALUABLE`. This binary authorization was an application-specific governance rule layered on the multidimensional TTF-Q envelope; it did not replace the envelope with a universal score or threshold. A qualification failure could not be interpreted as a biological null and could not be followed by a replacement subgroup, historical predictor or retuned threshold.
 
 ### 2.12 Response firewall and analytic provenance
 
@@ -408,7 +408,7 @@ The prospective stopping application adds a distinction that simulations alone c
 
 The Palearctic failure was also diagnostically specific. LGM similarity was strongly redundant with present-climate similarity, leaving only 13.1% unique variation after the declared model structure, and the remaining signal was disproportionately carried by a small number of source and target species. Those are design limitations that were knowable before the subgroup genetic response was inspected. The correct action was therefore to stop, not to interpret an eventual weak coefficient, change the historical predictor or search for a favorable subgroup.
 
-This prospective stop illustrates the practical value of response-blind qualification. It can prevent a biologically plausible analysis from becoming a post-outcome search for an estimable effect. Equally, `NOT_EVALUABLE` is not evidence against the biological hypothesis: the method declined to ask the outcome question under that realized design.
+This prospective stop illustrates the practical value of response-blind qualification. It can prevent a biologically plausible analysis from becoming a post-outcome search for an estimable effect. The stop rule is downstream governance of outcome opening, not a replacement for the evaluable envelope itself. Equally, `NOT_EVALUABLE` is not evidence against the biological hypothesis: the method declined to ask the outcome question under that realized design.
 
 ### 4.4 Relation information is not outcome importance
 
