@@ -38,7 +38,9 @@ The output is an **evaluable envelope**, not a binary PASS/FAIL label.
 
 The current response-blind climate case study shows two distinct information layers on a shared dyad geometry. Present-climate similarity retains non-redundant pairwise information after endpoint identity, lineage, sampling imbalance, and geography. Historical climate-displacement similarity adds a second layer beyond present climate; after adding continuous geographic co-opportunity, about **82–83%** of that previously unique historical information remains across the two frozen panels.
 
-These are ecological-predictor information results, not tests of a genetic-transferability effect.
+A separate prospectively frozen Palearctic non-Lepidoptera application provides the first operational stopping example. After external filtering it retained 21 species and 110 directed dyads, but LGM climatic similarity retained only **13.1%** unique relation variation and exceeded the predeclared single-endpoint concentration ceiling for both sources and targets. TTF-Q therefore closed the route before subgroup nucleotide identity, pairwise transfer scores, or the focal genetic coefficient were opened. This contrast shows that evaluability belongs to the realized design, not to a predictor label such as “historical climate.”
+
+These are ecological-predictor information and qualification results, not tests of a genetic-transferability effect.
 
 Primary TTF-Q materials:
 
@@ -47,6 +49,7 @@ Primary TTF-Q materials:
 - `docs/TTF_Q_THEORY_V01.md` — exact nested-information and calibrated-envelope definitions;
 - `benchmarks/frozen/ttf_q_known_truth_decomposition_v0.1.json` — 243-scenario exact-recovery benchmark;
 - `benchmarks/frozen/ttf_q_known_truth_detectability_v0.2.json` — calibration-qualified known-truth detectability benchmark;
+- `benchmarks/frozen/ttf_q_palearctic_prospective_stop_case_v0.1.json` — prospective response-blind stopping application;
 - `benchmarks/frozen/ttf_q_c1_result_receipt_v0.1.json` — history beyond current climate;
 - `benchmarks/frozen/ttf_q_c2_result_receipt_v0.1.json` — geography decomposition;
 - `benchmarks/frozen/ttf_q_b1_c1_information_ladder_v0.1.json` — present-to-historical information ladder;
