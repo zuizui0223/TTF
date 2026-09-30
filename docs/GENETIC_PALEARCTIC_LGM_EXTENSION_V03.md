@@ -2,9 +2,11 @@
 
 ## Status
 
-**Authoritative response-blind design.** This v0.3 specification supersedes v0.2 before any v0.3 `R_LGM`, TTF-Q result, pairwise subgroup `T_st`, or `beta_LGM` was opened.
+**Closed at the response-blind TTF-Q gate.** The authoritative qualification run (GitHub Actions run `36585250715`) completed the frozen external-data, climate, LGM-relation and TTF-Q sequence and returned `NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_LGM_RELATION`.
 
-The parent 211-species aggregate genetic result is historically known, so this is a prespecified same-archive secondary ecological analysis rather than an independent confirmation.
+The subgroup genetic response was therefore **never opened**: no v0.3 pairwise `T_st`, no `beta_LGM`, and no subpanel nucleotide identity were computed. The immutable result receipt is `benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_result_receipt_v0.1.json`.
+
+The parent 211-species aggregate genetic result is historically known, so this remains a prespecified same-archive secondary ecological analysis rather than an independent confirmation.
 
 ## Biological question
 
@@ -61,8 +63,8 @@ v0.3 source/target roles are reapplied only after the bound aggregate is complet
 
 ## Frozen climate assets and relation
 
-The climate contract is
-`docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.3.json`.
+The authoritative climate contract is
+`docs/supporting/genetic_palearctic_lgm_climate_input_rule_v0.4.json`, frozen before `R_LGM` after a byte-level audit of the exact TraCE21k bio01 raster semantics.
 
 The exact already-staged CHELSA bytes are frozen in
 `benchmarks/frozen/genetic_palearctic_lgm_v03_climate_asset_binding_v0.1.json` before the bound v0.3 GBIF result, `R_LGM`, or TTF-Q result is opened.
@@ -99,6 +101,26 @@ A = 3 is a reported stress diagnostic only.
 Failure closes this route as
 `NOT_EVALUABLE_NONLEPIDOPTERA_PALEARCTIC_LGM_RELATION`.
 
+## Qualification result
+
+The frozen external-data gate retained **21 of 23 species**, giving **10 source species, 11 target species, and 110 directed dyads**. The two occurrence failures were *Alloxysta fulviceps* (25 retained records) and *Euplectrus geometricida* (28), both below the prospectively frozen minimum of 30. There were no unresolved request errors.
+
+The response-blind LGM relation itself was computable, but it was strongly redundant with present climate: `R_LGM` and `R_present` had Pearson correlation **0.861**. After source/target fixed effects and all declared controls, only **0.13098** of the original `R_LGM` variance remained uniquely identifiable, below the frozen **0.15** gate.
+
+Signal breadth also failed because the identifiable residual relation was too concentrated. Effective source and target breadth were numerically broad enough (7.60/10 and 7.68/11), but the largest single source carried **21.29%** and the largest single target **19.35%** of residual signal, both above the frozen **15%** ceiling.
+
+The synthetic inferential check independently failed calibration. At private-heterogeneity amplitudes A=0,1,2, null rejection rates were **6.98%, 7.50%, and 7.39%**, with Wilson 95% upper bounds **7.50%, 8.03%, and 7.92%**, all above the allowed **5%** ceiling. Consequently the A=2 detectable-effect gate was not evaluable.
+
+All five opening gates were false:
+
+- unique information;
+- source signal breadth;
+- target signal breadth;
+- null qualification;
+- A=2 detectability.
+
+Therefore the route is **not a biological null test of the LGM hypothesis**. It is a design-level conclusion: with this response-blind Palearctic non-Lepidoptera panel, LGM climatic similarity is not sufficiently independent, distributed, and inferentially calibrated to justify opening the genetic response.
+
 ## Authorized response only after PASS
 
 A TTF-Q PASS does **not** itself open genetics. It only permits a separate one-shot empirical authorization to be frozen.
@@ -126,4 +148,4 @@ This correction changes no membership, role, ecological relation, qualification,
 
 bound GBIF aggregate -> v0.3 role binding -> exact frozen climate assets -> climate validity gate -> `R_LGM` relation -> TTF-Q.
 
-The workflow contains no genetic-response execution step.
+The workflow contains no genetic-response execution step. The authoritative qualification failed before genetics, so the route is permanently closed without computing subpanel `T_st` or `beta_LGM`.
