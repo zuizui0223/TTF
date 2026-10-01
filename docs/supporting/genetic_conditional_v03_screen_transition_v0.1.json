@@ -1,0 +1,89 @@
+{
+  "schema": "ttf_genetic_conditional_v03_screen_transition_v0.1",
+  "status": "DO_NOT_ADVANCE_ORDER_SOURCE_POOL_ROUTE_TRANSITION_TO_FIXED_DYAD_CODISTRIBUTION",
+  "recorded_on": "2026-10-01",
+  "parent_protocol": "docs/supporting/genetic_conditional_geometry_matched_development_v0.3.json",
+  "response_firewall": {
+    "new_empirical_nucleotide_identity_opened_for_this_screen": false,
+    "new_empirical_pairwise_genetic_distances_opened_for_this_screen": false,
+    "new_empirical_T_st_opened_for_this_screen": false
+  },
+  "development_screen": {
+    "authority": "exact_frozen_development_geometry_and_predeclared_v0.3_seed_namespaces",
+    "geometry_sha256": "d4affc28a2f9da89d0566b0f52123f4711009c99e985baff9f44767da996a9cd",
+    "local_reproduction_receipt_sha256": "ea609b39a90ea045ed28fb4380ce880f7a840a4be50f304218102e3ebf9f4756",
+    "frozen_criteria": {
+      "maximum_private_rejections_per_50": 5,
+      "minimum_same_order_A2_rejections_per_50": 35
+    },
+    "cells": {
+      "private_A0p5": {
+        "worlds": 50,
+        "rejections": 0
+      },
+      "private_A1": {
+        "worlds": 50,
+        "rejections": 1
+      },
+      "private_A2": {
+        "worlds": 50,
+        "rejections": 1
+      },
+      "private_A3": {
+        "worlds": 50,
+        "rejections": 0
+      },
+      "same_order_A2": {
+        "worlds": 50,
+        "rejections": 37
+      }
+    },
+    "private_pass": true,
+    "positive_control_pass": true,
+    "screen_pass": true
+  },
+  "survivor_semantic_diagnostic": {
+    "authority": "noncanonical_semantic_reconstruction_only",
+    "canonical_survivor_geometry_sha256_expected": "2c921ac40da2569b619c02132c5c72cb187352067f6b7793570d06c7aef6862e",
+    "reconstructed_geometry_sha256_used": "814887d5df3094e6bb79dfb7136a828b265ea4f67e85b9e21ea4a767cade7bc2",
+    "local_diagnostic_receipt_sha256": "51a3df315d4640465e156fc145d32514f767ce892fab4779c32e6076a8c0530c",
+    "species": 214,
+    "train_species": 103,
+    "eval_species": 111,
+    "matched_targets": 63,
+    "cells": {
+      "private_A0p5": {
+        "worlds": 50,
+        "rejections": 0
+      },
+      "private_A1": {
+        "worlds": 50,
+        "rejections": 0
+      },
+      "private_A2": {
+        "worlds": 50,
+        "rejections": 1
+      },
+      "private_A3": {
+        "worlds": 50,
+        "rejections": 0
+      },
+      "same_order_A2": {
+        "worlds": 50,
+        "rejections": 15
+      }
+    },
+    "private_type1_diagnostic": "PASS_LIKE",
+    "positive_control_diagnostic": "BELOW_PREDECLARED_SCREEN_TARGET",
+    "formal_qualification_claim_allowed": false,
+    "note": "The reconstructed survivor geometry is not byte-identical to the canonical frozen artifact. These values are a semantic development diagnostic only and must not be represented as a formal survivor qualification result."
+  },
+  "transition_decision": {
+    "threshold_retuning_authorized": false,
+    "matching_retuning_authorized": false,
+    "confirmatory_identity_opening_authorized_by_this_record": false,
+    "source_pool_order_route_advanced": false,
+    "next_named_design": "fixed_dyad_codistribution_geometry_null_centered",
+    "next_design_document": "docs/GENETIC_TTF_CODISTRIBUTION_DYAD_V01.md"
+  }
+}
