@@ -22,9 +22,7 @@ If landscape position has a lineage-general component — for example through mo
 
 Operational prediction:
 
-[
-T = operatorname{mean}_s ho(widehat{D}^{,postIBD}_s, D^{postIBD}_s) > 	ext{qualified null expectation}.
-]
+`T = mean across held-out species of Spearman(predicted post-IBD differentiation, observed post-IBD differentiation)`
 
 A positive result would establish a reusable place component. It would not, by itself, identify a specific barrier mechanism.
 
@@ -62,20 +60,11 @@ The framing connects directly to the field's long-standing concordance problem.
 
 Traditional logic:
 
-[
-	ext{similar breaks in observed taxa}
-Rightarrow
-	ext{shared biogeographic process}.
-]
+`similar breaks in observed taxa -> shared biogeographic process`
 
 Predictive logic used here:
 
-[
-	ext{shared geographic component}
-Rightarrow
-	ext{structure learned without species }s
-	ext{ should predict species }s.
-]
+`shared geographic component -> structure learned without species s should predict species s`
 
 The second criterion is intentionally stronger because the evaluation lineage is absent from field fitting.
 
