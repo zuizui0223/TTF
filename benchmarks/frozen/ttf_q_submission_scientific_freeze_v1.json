@@ -1,0 +1,119 @@
+{
+  "schema": "ttf_q_submission_scientific_freeze_v1",
+  "status": "SCIENTIFIC_CONTENT_FROZEN_AWAITING_AUTHOR_INPUT_ONLY",
+  "frozen_on": "2026-10-01",
+  "source_main_sha": "944d6a06311360107f85f4c62c39ab5fd549ff40",
+  "scope": "Freeze the TTF-Q scientific manuscript, response-blind case studies, figures, tests, and submission infrastructure after prospective-stop integration. Further scientific edits require an explicit correction, reviewer/editor request, or author-directed change; routine polishing must not reopen analyses or add post-outcome variants.",
+  "scientific_state": {
+    "prospective_palearctic_route": "CLOSED_NOT_EVALUABLE_WITHOUT_GENETIC_RESPONSE",
+    "subpanel_nucleotide_identity_opened": false,
+    "pairwise_T_st_computed": false,
+    "beta_LGM_computed": false,
+    "replacement_subgroup_or_predictor_authorized": false,
+    "response_blind_climate_application_complete": true,
+    "known_truth_validation_complete": true,
+    "prospective_stop_application_complete": true
+  },
+  "manuscript_bindings": {
+    "manuscript/ttf_q_methods_v0.1.md": {
+      "git_blob_sha": "1a74495bab5a5fd2dba6133387474f0205cff6c1"
+    },
+    "manuscript/ttf_q_methods_blinded_v0.1.md": {
+      "git_blob_sha": "3eed6156b30ca424b1b76131408b25865beed5cf"
+    },
+    "manuscript/ttf_q_mee_submission_audit_v0.2.json": {
+      "git_blob_sha": "f1de68496b245abf7701206500a2aa71c0b386f8"
+    }
+  },
+  "method_and_case_bindings": {
+    "benchmarks/frozen/ttf_q_palearctic_prospective_stop_case_v0.1.json": {
+      "git_blob_sha": "ebc97b41d811242f9fea1e25d588cfa60f3d1b2a"
+    },
+    "benchmarks/frozen/genetic_palearctic_lgm_v03_qualification_authority_correction_v0.1.json": {
+      "git_blob_sha": "a5f8342e95f7c216968e94d2499011b385f40742"
+    },
+    "scripts/check_ttf_q_submission_readiness.py": {
+      "git_blob_sha": "7fd03413cd3a43c6ed43c74eefe1039c81511397"
+    },
+    "scripts/render_ttf_q_figures.py": {
+      "git_blob_sha": "6c97902a4ce682d7f5f84074b6e92d82670ad053"
+    },
+    "scripts/render_ttf_q_submission_files.py": {
+      "git_blob_sha": "dc42f735f0d3185e1b68700bea205e7526360b66"
+    }
+  },
+  "validated_execution": {
+    "tests": {
+      "workflow_run_id": 36793888188,
+      "job_id": 110152775058,
+      "conclusion": "success",
+      "pytest": "485 passed",
+      "runtime_seconds": 324.91
+    },
+    "figures": {
+      "workflow_run_id": 36793888140,
+      "artifact_id": 11133605978,
+      "artifact_name": "ttf-q-manuscript-figures",
+      "artifact_digest_sha256": "sha256:34044dda75624b776d94c8f1a1b03fb70a8d291b8933cb407b6a0fae9a489938",
+      "figure_count": 5,
+      "conclusion": "success"
+    },
+    "submission_readiness": {
+      "workflow_run_id": 36793888241,
+      "artifact_id": 11132994930,
+      "artifact_name": "ttf-q-submission-readiness",
+      "artifact_digest_sha256": "sha256:4f5367d299b4a5115bfc0d28fc45fb698b276e8936da0efc0650c4eacbd7a7cc",
+      "status": "AUTHOR_INPUT_REQUIRED",
+      "scientific_package_ready": true,
+      "structural_failures": [],
+      "metrics": {
+        "abstract_words": 330,
+        "blinded_document_words": 6404,
+        "expected_figure_count": 5,
+        "abstract_limit": 350,
+        "main_document_limit": 8000
+      }
+    },
+    "current_manuscript_renderer_smoke": {
+      "workflow_run_id": 36793888183,
+      "job_id": 110152772302,
+      "conclusion": "success",
+      "main_docx_bytes": 42171,
+      "title_docx_bytes": 23887,
+      "continuous_line_numbering_verified": true,
+      "page_field_verified": true
+    }
+  },
+  "remaining_author_input": {
+    "hard_blockers": [
+      "choose open-source license",
+      "complete title-page author/affiliation/correspondence/acknowledgement/contribution/conflict fields"
+    ],
+    "author_action": [
+      "send or decline the prepared MEE presubmission scope enquiry"
+    ],
+    "non_blocking_until_public_release": [
+      "final CITATION.cff",
+      "permanent archive DOI"
+    ]
+  },
+  "freeze_policy": {
+    "allowed_without_scientific_unfreeze": [
+      "license addition after explicit author choice",
+      "title-page identity and declaration fields",
+      "presubmission enquiry correspondence",
+      "final file rendering",
+      "CITATION.cff and DOI after public-release metadata exist",
+      "purely technical packaging fixes that do not alter scientific content"
+    ],
+    "requires_explicit_scientific_unfreeze": [
+      "new analysis",
+      "new predictor",
+      "new subgroup",
+      "threshold change",
+      "new outcome opening",
+      "new ecological or genetic claim",
+      "substantive manuscript reinterpretation"
+    ]
+  }
+}
