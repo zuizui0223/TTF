@@ -177,8 +177,18 @@ TTF provides the prospective split, endpoint-safe IBD residualization, exact-geo
 
 ## Next-step research question
 
-The frozen result motivates, but does not answer:
+The frozen result motivates, but does not answer two nested questions.
+
+First:
+
+> **Does geographic recurrence emerge when source and target lineages actually share the same landscape?**
+
+This is a codistribution / geographic co-opportunity question. It must be tested on fresh outcomes rather than by selecting a favorable subset of the completed 211-species result.
+
+Second, conditional on geographic co-opportunity:
 
 > **Which pairs of lineages should share a geographic barrier response?**
 
-A future fresh study could prospectively test whether recurrence is conditional on dispersal traits, habitat, present climatic niche or shared historical range displacement. That question should be treated as a new hypothesis family rather than used to retune the completed 211-species result.
+A future fresh study can test whether excess recurrence is conditional on dispersal traits, habitat, present climatic niche or shared historical range displacement. The preferred design keeps the source-to-target transfer operator fixed and treats geographic co-opportunity and biological similarity as response-blind dyadic predictors. This avoids changing the training source pool as a function of taxonomy or ecology.
+
+Neither question may be used to retune the completed 211-species result.
