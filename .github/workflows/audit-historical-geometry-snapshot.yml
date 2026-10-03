@@ -1,0 +1,101 @@
+name: audit historical geometry snapshot blobs
+
+on:
+  push:
+    branches:
+      - prospective/codistributed-recurrence-insecta-v0-1
+    paths:
+      - ".github/workflows/audit-historical-geometry-snapshot.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Decode historical snapshot blobs
+        run: |
+          python - <<'PY'
+          import base64, gzip, hashlib, json, subprocess, zlib
+          from pathlib import Path
+
+          cases = [
+              ("v1", "7b28b04a9fdeeacb3ce25bc73af93e99df9317a2"),
+              ("v2", "afea6e0ebf4674965afff29c052bae2b22620cef"),
+          ]
+          path = "benchmarks/frozen/relational_historical_geometry_snapshot_v0.1/part00.txt"
+          out = Path("results/snapshot-audit")
+          out.mkdir(parents=True, exist_ok=True)
+          summaries = []
+
+          for label, ref in cases:
+              encoded = subprocess.check_output(["git","show",f"{ref}:{path}"])
+              compact = b"".join(encoded.split())
+              row = {
+                  "label": label,
+                  "ref": ref,
+                  "git_blob_file_bytes": len(encoded),
+                  "base64_compact_bytes": len(compact),
+                  "base64_sha256": hashlib.sha256(encoded).hexdigest(),
+              }
+              try:
+                  compressed = base64.b64decode(compact, validate=True)
+                  row["base64_valid"] = True
+                  row["gzip_bytes"] = len(compressed)
+                  row["gzip_sha256"] = hashlib.sha256(compressed).hexdigest()
+              except Exception as exc:
+                  row["base64_valid"] = False
+                  row["base64_error"] = repr(exc)
+                  summaries.append(row)
+                  continue
+
+              inflater = zlib.decompressobj(16 + zlib.MAX_WBITS)
+              raw = b""
+              try:
+                  raw = inflater.decompress(compressed)
+                  raw += inflater.flush()
+                  row["zlib_error"] = None
+              except Exception as exc:
+                  row["zlib_error"] = repr(exc)
+                  raw = raw + getattr(inflater, "unconsumed_tail", b"")
+              row["gzip_stream_eof"] = bool(inflater.eof)
+              row["uncompressed_prefix_bytes"] = len(raw)
+              row["uncompressed_prefix_sha256"] = hashlib.sha256(raw).hexdigest()
+              row["raw_prefix"] = raw[:200].decode("utf-8", errors="replace")
+              row["raw_suffix"] = raw[-400:].decode("utf-8", errors="replace")
+
+              try:
+                  obj = json.loads(raw.decode("utf-8"))
+                  row["json_complete"] = True
+                  row["json_type"] = type(obj).__name__
+                  if isinstance(obj, dict):
+                      row["species_entries"] = len(obj)
+                      row["locality_rows"] = sum(len(v) for v in obj.values())
+                      names = sorted(map(str, obj))
+                      row["first_species"] = names[:5]
+                      row["last_species"] = names[-5:]
+                      Path(out / f"{label}_snapshot.json").write_text(
+                          json.dumps(obj, sort_keys=True, separators=(",",":"))+"\n",
+                          encoding="utf-8",
+                      )
+              except Exception as exc:
+                  row["json_complete"] = False
+                  row["json_error"] = repr(exc)
+
+              summaries.append(row)
+
+          payload = {"schema":"ttf_historical_snapshot_blob_audit_v0.1","cases":summaries}
+          (out/"snapshot_blob_audit.json").write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
+          print(json.dumps(payload,sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: historical-geometry-snapshot-audit
+          path: results/snapshot-audit/
+          retention-days: 30

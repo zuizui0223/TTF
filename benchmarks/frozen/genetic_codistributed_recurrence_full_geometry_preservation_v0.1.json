@@ -1,0 +1,44 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_full_geometry_preservation_v0.1",
+  "status": "PASS_EXACT_RESPONSE_BLIND_FULL_GEOMETRY_PRESERVED",
+  "recorded_on": "2026-10-03",
+  "source_archive": {
+    "bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "exact_bytes_recovered": true
+  },
+  "fresh1000": {
+    "species": 1000,
+    "locality_rows": 28355,
+    "edge_rows": 167828,
+    "localities_sha256": "45387ff3a7ca4b19c292fa3ed9c3763601cc47c6d7b255cee2be3b809bf47630",
+    "edges_sha256": "b9256dc6e3e96324a068066a91c74518e23d2357630c1f9d344b764b193739ed",
+    "matches_frozen_2026_09_23_reconstruction": true
+  },
+  "canonical_panels": {
+    "library_root": "/TTF/source/fresh1000_full_geometry_20260923/",
+    "development": {
+      "species": 381,
+      "sources": 190,
+      "targets": 191,
+      "localities_sha256": "e17f4dfdf5f184443e087f5ddcd829aa1c3c03cacfbfac123502d05911f56a3a",
+      "edges_sha256": "613aca949cf0b2e3fd233c0e7bb54e34ec8e627aeeb4ff54b1fb84e90bb9da6b"
+    },
+    "confirmatory": {
+      "species": 381,
+      "sources": 190,
+      "targets": 191,
+      "localities_sha256": "1128b7048df55ce1e4105088f207e7596f29e9b6bc1e6575a3e647c5a23eb621",
+      "edges_sha256": "910478390e518e35337380b5030928c76f7d671ebb1ac76caee31ecbc868bf12"
+    },
+    "panel_membership_and_role_digests": "bound by docs/supporting/genetic_codistributed_recurrence_panel_provenance_correction_rule_v0.2.json"
+  },
+  "permitted_use": "Response-blind geometry qualification, information audit, synthetic private/shared worlds, and confirmatory survivor requalification. Genetic sequence identity is not present in these files.",
+  "response_firewall": {
+    "development_sequence_identity_opened": false,
+    "confirmatory_sequence_identity_opened": false,
+    "empirical_pairwise_genetic_distance_opened": false,
+    "empirical_T_st_opened": false,
+    "empirical_beta_G_opened": false
+  }
+}

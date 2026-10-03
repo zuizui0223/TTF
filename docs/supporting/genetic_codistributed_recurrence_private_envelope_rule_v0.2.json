@@ -1,0 +1,58 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_private_envelope_rule_v0.2",
+  "status": "FROZEN_BEFORE_V0_2_SYNTHETIC_RESULTS",
+  "frozen_on": "2026-10-03",
+  "parent_failure": "benchmarks/frozen/genetic_codistributed_recurrence_dyadic_qualification_result_v0.1.json",
+  "statistic": "beta_G point estimate from exact source/target FE regression on z(G_st) plus frozen controls",
+  "null_calibration": "one-sided least-favourable Monte Carlo envelope across private A reference distributions",
+  "p_value": "maximum across A of (1 + count(reference_A >= observed_beta_G))/(N_reference + 1)",
+  "geometry": {
+    "sources": 190,
+    "targets": 191,
+    "dyads": 36290
+  },
+  "synthetic": {
+    "reference_seed_namespace": "codistributed-recurrence-envelope-v0.2-reference",
+    "evaluation_seed_namespace": "codistributed-recurrence-envelope-v0.2-evaluation",
+    "reference_worlds_per_A": 999,
+    "evaluation_worlds_per_cell": 500,
+    "private_amplitudes": [
+      0.5,
+      1,
+      2,
+      3
+    ],
+    "beta_G_grid": [
+      0.01,
+      0.02,
+      0.03,
+      0.05,
+      0.08,
+      0.1,
+      0.15
+    ],
+    "source_intercept_sd": 0.18,
+    "target_intercept_sd": 0.18,
+    "source_G_slope_sd_multiplier": 0.12,
+    "target_G_slope_sd_multiplier": 0.12,
+    "dyad_noise_sd": 0.32,
+    "nuisance_coefficients": [
+      0.1,
+      -0.08,
+      0.05,
+      0.04
+    ],
+    "response_link": "tanh"
+  },
+  "gates": {
+    "alpha_one_sided": 0.05,
+    "private_null": "Wilson 95% upper rejection bound <=0.10 for every evaluation A",
+    "evaluable_MDE": "smallest beta_G grid point with Wilson 95% lower power bound >=0.80 for each A; no MDE if its null cell is unqualified"
+  },
+  "firewall": {
+    "nucleotide_identity_opened": false,
+    "T_st_opened": false,
+    "beta_G_empirical_opened": false
+  },
+  "note": "This is a newly named development estimator with fresh seeds. It does not alter or rescue the closed v0.1 asymptotic rule."
+}

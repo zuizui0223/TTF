@@ -1,0 +1,77 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_execution_readiness_v0.1",
+  "status": "READY_FOR_RESPONSE_BLIND_EXECUTION_BLOCKED_ONLY_BY_EXACT_ARCHIVE_ACCESS",
+  "recorded_on": "2026-10-03",
+  "branch": "prospective/codistributed-recurrence-insecta-v0-1",
+  "head_sha": "a257fc786e2139cefeb9c9fac629ee0c0cc40938",
+  "study": {
+    "question": "Does sharing more of the same landscape make post-IBD phylogeographic structure more recurrent across lineages?",
+    "domain_species": 762,
+    "development_species": 381,
+    "confirmatory_species": 381,
+    "source_species_per_panel": 190,
+    "target_species_per_panel": 191,
+    "dyads_per_panel": 36290,
+    "focal_relation": "continuous symmetric 500-km edge-midpoint co-opportunity G_st",
+    "focal_relation_thresholded": false
+  },
+  "response_blind_evidence": {
+    "development_G_unique_fraction": 0.21486864264952774,
+    "confirmatory_G_unique_fraction": 0.20539481030366277,
+    "prior_asymptotic_dyadic_route": "CLOSED_TYPE1_FAILURE",
+    "calibrated_dyadic_envelope": "PASS",
+    "actual_fixed_dyad_geometry_null_rule": "docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json",
+    "confirmatory_survivor_rule": "docs/supporting/genetic_codistributed_recurrence_confirmatory_mask_rule_v0.1.json"
+  },
+  "implementation": {
+    "module": "src/ttf/codistributed_geometry_null.py",
+    "runner": "scripts/run_codistributed_recurrence_fixed_tst_screen.py",
+    "workflow": ".github/workflows/codistributed-recurrence-response-blind-geometry.yml",
+    "endpoint_safe_toy_cache_test_fixed_without_relaxing_production_minimum": true
+  },
+  "ci": {
+    "methods_only": {
+      "run_id": 37109476878,
+      "conclusion": "success"
+    },
+    "full_tests": {
+      "run_id": 37109476955,
+      "conclusion": "success"
+    }
+  },
+  "exact_source_blocker": {
+    "phylogatr_job_id": 14574208,
+    "historical_result_url": "https://phylogatr.osc.edu/searches/14574208?results_format=tgz",
+    "historical_upload_session": "2026-09-16",
+    "expected_archive_name": "phylogatr_results_exact_20260918.zip",
+    "expected_size_bytes": 274988692,
+    "expected_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "current_library_copy_available": false,
+    "current_google_drive_copy_available": false,
+    "current_actions_cache_available": false,
+    "old_chat_reusable_file_reference_available": false,
+    "requires_authenticated_phylogatr_access": true
+  },
+  "next_legal_machine_transition": [
+    "obtain the bytes for phylogatR Job 14574208 under authenticated OSC/phylogatR access",
+    "require exact size and SHA-256 match before use",
+    "seed the frozen GitHub Actions archive cache or otherwise provide the exact bytes to the response-blind workflow",
+    "run exact fresh-1000 geometry reconstruction",
+    "run development fixed-dyad T_st screen",
+    "if and only if screen passes, run formal fixed-dyad qualification",
+    "if and only if formal qualification passes, proceed to confirmatory character-mask and survivor gates"
+  ],
+  "forbidden": [
+    "substitute a byte-different archive",
+    "rerun a new portal query as an inferential substitute unless it reproduces the exact frozen SHA-256",
+    "open development nucleotide identity",
+    "open confirmatory nucleotide identity before all survivor gates pass",
+    "change G_st, radius, controls, private amplitudes, centering weights, or seed namespaces after response opening"
+  ],
+  "response_firewall": {
+    "development_nucleotide_identity_opened": false,
+    "confirmatory_nucleotide_identity_opened": false,
+    "empirical_T_st_opened": false,
+    "empirical_beta_G_opened": false
+  }
+}
