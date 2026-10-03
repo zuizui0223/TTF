@@ -14,7 +14,7 @@ permissions:
 jobs:
   geometry:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
 
@@ -143,6 +143,16 @@ jobs:
           print(json.dumps(manifest,sort_keys=True))
           PY
 
+      - name: Run development fixed-dyad T_st screen
+        run: |
+          python scripts/run_codistributed_recurrence_fixed_tst_screen.py \
+            --localities results/codistribution/development_localities.csv \
+            --edges results/codistribution/development_edges.csv \
+            --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv \
+            --design benchmarks/frozen/genetic_codistributed_recurrence_response_blind_design_v0.1.json \
+            --rule docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json \
+            --output results/codistribution/fixed_tst_screen_v0.3.json
+
       - uses: actions/upload-artifact@v4
         with:
           name: codistributed-recurrence-exact-geometry-v0.1
@@ -153,5 +163,6 @@ jobs:
             results/codistribution/confirmatory_edges.csv
             results/codistribution/codistributed_recurrence_exact_geometry_v0.1.json
             results/codistribution/fresh1000_geometry_receipt.json
+            results/codistribution/fixed_tst_screen_v0.3.json
           retention-days: 30
           if-no-files-found: error
