@@ -37,8 +37,26 @@ EXPECTED_DESIGN_SCHEMA="ttf_genetic_codistributed_recurrence_response_blind_desi
 EXPECTED_RULE_SCHEMA="ttf_genetic_codistributed_recurrence_geometry_null_rule_v0.3"
 
 
+SOURCE_ARCHIVE_SHA256="5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+PANEL_TAG="place-recurrence-insecta-fresh-v0.1"
+
+
 def digest_labels(names):
-    return hashlib.sha256(("\n".join(sorted(map(str,names)))+"\n").encode()).hexdigest()
+    return hashlib.sha256("\n".join(sorted(map(str,names))).encode()).hexdigest()
+
+
+def ranked_role_digest(names, panel_label):
+    tag=f"{PANEL_TAG}|{panel_label}-role"
+    ordered=sorted(
+        map(str,names),
+        key=lambda name:(
+            hashlib.sha256(
+                f"{tag}|{SOURCE_ARCHIVE_SHA256}|{name}".encode()
+            ).hexdigest(),
+            name,
+        ),
+    )
+    return hashlib.sha256("\n".join(ordered).encode()).hexdigest()
 
 
 def read_csv(path: Path):
@@ -250,8 +268,10 @@ def main():
     if len(sources)!=190 or len(targets)!=191 or len(geometries)!=381:
         raise RuntimeError("development role counts drift")
     sel=design["selection"]["development"]
-    if digest_labels(sources)!=sel["source_digest_sha256"]: raise RuntimeError("source digest drift")
-    if digest_labels(targets)!=sel["target_digest_sha256"]: raise RuntimeError("target digest drift")
+    if ranked_role_digest(sources,"development")!=sel["source_digest_sha256"]:
+        raise RuntimeError("source digest drift")
+    if ranked_role_digest(targets,"development")!=sel["target_digest_sha256"]:
+        raise RuntimeError("target digest drift")
 
     sources,targets,pairs,G,prepared=build_design(
         midpoint,geometries,role,meta,
