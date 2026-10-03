@@ -6,6 +6,8 @@ from ttf.codistributed_geometry_null import (
     fit_geometry_null_center,
     frozen_uint64_seed,
     least_favourable_beta_pvalues,
+    prepare_fixed_dyad_transfer_cache,
+    score_fixed_dyad_transfer_cache,
     source_only_transfer_scores_batch,
 )
 from ttf.core import SpeciesEdges
@@ -102,6 +104,31 @@ def test_batch_single_source_operator_matches_scalar_reference():
         )
     np.testing.assert_allclose(batch,expected,rtol=0,atol=1e-14)
 
+
+
+
+def test_cached_batch_operator_matches_uncached_batch():
+    source=_edges("s",[[0,0],[1,0],[2,0],[3,0]])
+    target1=_edges("t1",[[0,0.2],[1,0.2],[2,0.2],[3,0.2]])
+    target2=_edges("t2",[[0,-0.3],[1,-0.3],[2,-0.3],[3,-0.3]])
+    edge_map={"s":source,"t1":target1,"t2":target2}
+    pairs=[("s","t1"),("s","t2")]
+    train={"s":np.asarray([[0.1,0.8],[0.9,0.2],[0.3,0.6],[0.7,0.4]])}
+    evaluation={
+        "t1":np.asarray([[0.2,0.7],[0.8,0.1],[0.4,0.9],[0.6,0.3]]),
+        "t2":np.asarray([[0.7,0.4],[0.1,0.8],[0.9,0.2],[0.3,0.6]]),
+    }
+    uncached=source_only_transfer_scores_batch(
+        edge_map,train,evaluation,pairs,
+        bandwidth_km=2.0,prior_strength=0.25,prior_mean=0.0,segment_points=5,
+    )
+    cache=prepare_fixed_dyad_transfer_cache(
+        edge_map,pairs,
+        bandwidth_km=2.0,prior_strength=0.25,prior_mean=0.0,segment_points=5,
+        min_training_edges=3,
+    )
+    cached=score_fixed_dyad_transfer_cache(cache,train,evaluation)
+    np.testing.assert_allclose(cached,uncached,rtol=0,atol=1e-14)
 
 def test_least_favourable_beta_pvalue_takes_maximum_component():
     refs={
