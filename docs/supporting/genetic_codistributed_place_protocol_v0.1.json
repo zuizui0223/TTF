@@ -1,0 +1,90 @@
+{
+  "schema": "ttf_genetic_codistributed_place_protocol_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_BEFORE_ANY_GENETIC_RESPONSE_OPENING",
+  "frozen_on": "2026-10-03",
+  "scientific_independence": {
+    "statement": "Newly named successor study. It does not reopen or reuse inferential alpha from conditional-order v0.2/v0.3 or relational v0.3.",
+    "closed_routes_remain_closed": true,
+    "prior_empirical_211_result_immutable": true
+  },
+  "source_universe": {
+    "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "candidate_csv_sha256": "08dca43252ea93d43f3095f17b0267ec7ff049f0ec8b3e9c412dd784319ab575",
+    "compact_geometry_npz_sha256": "d0776b4b5646e999f0c09ad937e4050fafe6fec018f17f0d37cd2c5b5f12a79b",
+    "selected_species": 1000,
+    "prior_species_excluded": 750,
+    "prior_exclusion_breakdown": {
+      "original_fresh_phase1": 250,
+      "conditional_two_panel": 500
+    },
+    "response_state": "NUCLEOTIDE_IDENTITY_AND_GENETIC_TRANSFER_UNOPENED_FOR_THIS_1000_SPECIES_UNIVERSE"
+  },
+  "biological_question": "Among species that genuinely share the same sampled geography, does post-IBD spatial genetic differentiation recur strongly enough that locations learned from other lineages predict an unseen lineage?",
+  "hypotheses": {
+    "place_recurrence": "Strongly codistributed lineages share a reusable geographic component of post-IBD spatial differentiation.",
+    "lineage_conditioned": "Even among strongly codistributed lineages, within-species spatial structure is not predictably recurrent across unseen lineages."
+  },
+  "panel_assignment": {
+    "panel_hash": "SHA256('codistributed-place-v0.1-panel|<source_archive_sha256>|<species>'), species tie-break",
+    "development": "first 500",
+    "confirmatory": "last 500",
+    "within_development_split": "SHA256('codistributed-place-v0.1-development-split|<source_archive_sha256>|<species>'), first 250 train / last 250 eval",
+    "within_confirmatory_split": "SHA256('codistributed-place-v0.1-confirmatory-split|<source_archive_sha256>|<species>'), first 250 train / last 250 eval"
+  },
+  "codistribution_rule": {
+    "spatial_object": "frozen graph-edge midpoints in ECEF kilometres",
+    "radius_km": 500,
+    "directed_coverage": "fraction of target edge midpoints whose nearest source edge midpoint is <=500 km",
+    "symmetric_coverage": "min(target_to_source_coverage, source_to_target_coverage)",
+    "primary_threshold": 0.5,
+    "minimum_training_source_species_per_target": 5,
+    "rule_role": "eligibility/support definition only; it is not an empirical genetic response and is not compared against a looser source pool"
+  },
+  "estimator": {
+    "target_response": "endpoint-safe within-species post-IBD residual turnover on the inherited graph",
+    "prediction": "500-km Gaussian field fitted only from the target's codistributed training source species",
+    "source_weighting": "equal total weight per selected source species, multiplied by N_train/N_selected so total pre-kernel source mass and prior influence remain comparable across targets",
+    "prior_strength": 0.25,
+    "prior_mean": 0,
+    "segment_points": 5,
+    "target_score": "Spearman correlation between predicted edge exposure and observed target post-IBD turnover",
+    "primary_statistic": "species-equal mean target score across response-blind supported evaluation species",
+    "alpha": 0.05,
+    "direction": "upper-tail"
+  },
+  "qualification": {
+    "development_geometry_only_before_response": true,
+    "private_null_residual_amplitudes": [
+      0.5,
+      1,
+      2,
+      3
+    ],
+    "private_null_worlds_per_cell": 1999,
+    "private_null_type1_requirement": "For every private cell, Wilson 95% upper bound of rejection rate at alpha=0.05 must be <=0.10.",
+    "positive_control": {
+      "name": "globally_shared_A2",
+      "shared_fraction": 1,
+      "residual_amplitude": 2,
+      "worlds": 500,
+      "requirement": "Wilson 95% lower bound of power must be >=0.80."
+    },
+    "confirmatory_character_mask": "Open canonical/noncanonical character masks only after development qualification. Remove failed species without graph repair, threshold change, or replacement.",
+    "survivor_requalification": "Repeat exact private-null and shared-positive qualification on the confirmatory survivor geometry before nucleotide identity is opened.",
+    "failure_state": "NOT_EVALUABLE; no empirical genetic response is opened."
+  },
+  "interpretation_branches": {
+    "positive": "Among strongly codistributed lineages in the tested panel, post-IBD spatial differentiation contains a reusable place component.",
+    "qualified_non_detection": "Even after requiring strong geographic co-distribution, no reusable place component is detected under the qualified test; this supports stronger lineage conditioning at the tested scale.",
+    "not_evaluable": "No biological conclusion."
+  },
+  "prohibited": [
+    "reopen conditional-order v0.2/v0.3",
+    "compare same-order versus different-order source pools",
+    "select the codistribution threshold after genetic outcomes are viewed",
+    "inspect subgroup genetic scores to choose a favourable region, order, family or clade",
+    "change the 500-km radius, >=0.50 symmetric coverage rule or >=5-source rule after response opening",
+    "recycle relational-v0.3 alpha",
+    "interpret post-IBD recurrence as direct proof of a named physical barrier"
+  ]
+}
