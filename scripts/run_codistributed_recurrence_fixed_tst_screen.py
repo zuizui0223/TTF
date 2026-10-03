@@ -87,7 +87,7 @@ def coverage_fraction(target,source,radius=500.0,chunk=64):
     return hit/len(t)
 
 
-@njit(cache=True)
+@njit(cache=False)
 def _directed_coverage_flat(points, offsets, query_index, reference_index, threshold2):
     q0=offsets[query_index]
     q1=offsets[query_index+1]
@@ -105,7 +105,7 @@ def _directed_coverage_flat(points, offsets, query_index, reference_index, thres
     return covered / (q1-q0)
 
 
-@njit(cache=True)
+@njit(cache=False)
 def _symmetric_coverage_grid(
     points, offsets, centers, radii, source_index, target_index, radius
 ):
