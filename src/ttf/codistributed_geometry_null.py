@@ -11,9 +11,13 @@ from .chunked_transfer import prepare_chunked_transfer, score_chunked_batch
 from .core import SpeciesEdges
 from .genetic_geometry import GeneticSamplingGeometry
 from .genetic_simulate import GeneticSyntheticWorld, simulate_genetic_distance_world
+from .geometry_control import length_orthogonalized_turnover
+from .phylogatr_compact_ibd import (
+    crossfit_ibd_residuals_compact,
+    prepare_compact_crossfit_ibd_design,
+)
 from .private_null_inference import envelope_upper_pvalues
 from .relational_dyadic import BatchPrimaryResult, PreparedDyadicRegression, batch_primary_test
-from .relational_genetic_empirical import RelationalSpeciesResponse, post_ibd_responses
 
 
 @dataclass(frozen=True)
@@ -91,18 +95,28 @@ def post_ibd_response_batch(
         name: np.empty((edge_map[name].n_edges, width), dtype=float)
         for name in labels
     }
+    ibd_design = {
+        name: prepare_compact_crossfit_ibd_design(
+            edge_map[name].length,
+            edge_map[name].nodes,
+            min_training_edges=int(min_training_edges),
+        )
+        for name in labels
+    }
     for column, world in enumerate(batch):
         missing = set(labels) - set(map(str, world.genetic_distance))
         if missing:
             raise ValueError(f"synthetic world is missing species: {sorted(missing)}")
         for name in labels:
-            response = post_ibd_responses(
-                edge_map[name],
+            residual = crossfit_ibd_residuals_compact(
                 world.genetic_distance[name],
-                min_training_edges=int(min_training_edges),
+                ibd_design[name],
+            ).residual_turnover
+            train[name][:, column] = length_orthogonalized_turnover(
+                residual,
+                edge_map[name].length,
             )
-            train[name][:, column] = response.train_turnover
-            evaluation[name][:, column] = response.eval_turnover
+            evaluation[name][:, column] = residual
     return train, evaluation
 
 
