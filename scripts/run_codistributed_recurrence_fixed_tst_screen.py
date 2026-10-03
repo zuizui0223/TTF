@@ -221,7 +221,7 @@ def main():
             raise RuntimeError("unexpected screen-result schema")
         if prior_screen.get("status")!="PASS_TO_FORMAL_FIXED_TST_QUALIFICATION":
             raise RuntimeError("formal qualification is not authorized by the screen result")
-        if not bool(prior_screen.get("screen_gate",{}).get("overall_pass",False)):
+        if not bool(prior_screen.get("gate",{}).get("overall_pass",False)):
             raise RuntimeError("screen result does not record overall PASS")
 
     loc=read_csv(args.localities); ed=read_csv(args.edges); cand=read_csv(args.candidates)
