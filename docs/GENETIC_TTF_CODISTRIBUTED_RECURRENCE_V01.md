@@ -120,6 +120,34 @@ Screen, formal-reference, formal-evaluation and shared-positive worlds use disjo
 
 Execution is currently blocked only by absence of the exact 274,988,692-byte phylogatR archive (SHA-256 `5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5`). The retained compact midpoint geometry is sufficient for the response-blind G_st / TTF-Q audits but not for reconstructing endpoint-safe graph nodes required by the actual fixed-dyad T_st qualification. No genetic response has been opened.
 
+## Comparative-phylogeographic novelty
+
+The study is intentionally anchored in the classical **codistributed-species** problem rather than in an animal-wide claim about universal barriers.
+
+Previous comparative phylogeography has mainly asked whether already-observed taxa show spatially concordant breaks, divergence histories, or barrier associations. Examples include congruence tests among nine Californian codistributed taxa (Lapointe & Rissler 2005), explicit tests of microhabitat-mediated discordance between two codistributed montane sedges (Massatti & Knowles 2014), and the recent synthesis of mapped phylogeographic breaks across 229 North American mammal species (Jensen et al. 2024). Papadopoulou & Knowles (2016) argued that such discordance should itself become predictable from organismal biology.
+
+The present prospective study asks a different question:
+
+> **Does the amount of sampled geography actually shared by two lineages predict how much post-IBD spatial genetic information transfers from one lineage to the other?**
+
+This distinction matters. `G_st` is measured before genetic response, continuously for every fixed source-target dyad, and the target lineage remains absent from source-field fitting. The response is predictive reuse of place information, not retrospective overlap of manually identified breaks and not proximity to a pre-labelled mountain, river, or ecotone.
+
+The closest large-scale contrast is Jensen et al. (2024): their analysis asks where literature-derived breaks in 229 North American mammals fall relative to candidate geographic barriers and whether species traits explain variation in barrier effects. Here no break catalogue or named barrier layer enters the primary estimand. Instead, geographic co-opportunity itself is asked to predict out-of-lineage transfer skill across a fresh prospective insect panel.
+
+This yields a sharper biological distinction:
+
+- **place component:** greater geographic co-opportunity raises excess source-to-target recurrence;
+- **lineage-conditioned component:** even when two lineages share sampled geography, their post-IBD spatial differentiation remains non-reusable.
+
+A positive `beta_G` would therefore support a reusable place component without claiming that a specific physical barrier caused it. A qualified null would show that simple lack of shared geographic opportunity is insufficient to explain the broad 211-species non-transfer result.
+
+### References added for positioning
+
+- Lapointe, F.-J. & Rissler, L. J. (2005). Congruence, consensus, and the comparative phylogeography of codistributed species in California. *The American Naturalist* 166:290–299. doi:10.1086/431283.
+- Massatti, R. & Knowles, L. L. (2014). Microhabitat differences impact phylogeographic concordance of codistributed species: genomic evidence in montane sedges from the Rocky Mountains. *Evolution* 68:2833–2846. doi:10.1111/evo.12491.
+- Papadopoulou, A. & Knowles, L. L. (2016). Toward a paradigm shift in comparative phylogeography driven by trait-based hypotheses. *PNAS* 113:8018–8024. doi:10.1073/pnas.1601069113.
+- Jensen, A. J. et al. (2024). Geographic barriers but not life history traits shape the phylogeography of North American mammals. *Global Ecology and Biogeography* 33:e13875. doi:10.1111/geb.13875.
+
 ## Required opening gates
 
 Before confirmatory nucleotide identity:
