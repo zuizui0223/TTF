@@ -16,6 +16,7 @@ from collections import Counter
 from pathlib import Path
 
 import numpy as np
+from numba import njit
 
 from ttf.codistributed_geometry_null import (
     GeometryNullCenter,
@@ -86,6 +87,77 @@ def coverage_fraction(target,source,radius=500.0,chunk=64):
     return hit/len(t)
 
 
+@njit(cache=True)
+def _directed_coverage_flat(points, offsets, query_index, reference_index, threshold2):
+    q0=offsets[query_index]
+    q1=offsets[query_index+1]
+    r0=offsets[reference_index]
+    r1=offsets[reference_index+1]
+    covered=0
+    for i in range(q0,q1):
+        for j in range(r0,r1):
+            dx=points[i,0]-points[j,0]
+            dy=points[i,1]-points[j,1]
+            dz=points[i,2]-points[j,2]
+            if dx*dx+dy*dy+dz*dz <= threshold2:
+                covered += 1
+                break
+    return covered / (q1-q0)
+
+
+@njit(cache=True)
+def _symmetric_coverage_grid(
+    points, offsets, centers, radii, source_index, target_index, radius
+):
+    out=np.empty(len(source_index)*len(target_index),dtype=np.float64)
+    threshold2=radius*radius
+    row=0
+    for si in range(len(source_index)):
+        s=source_index[si]
+        for ti in range(len(target_index)):
+            t=target_index[ti]
+            dx=centers[s,0]-centers[t,0]
+            dy=centers[s,1]-centers[t,1]
+            dz=centers[s,2]-centers[t,2]
+            cd=(dx*dx+dy*dy+dz*dz)**0.5
+            if cd > radii[s]+radii[t]+radius:
+                out[row]=0.0
+            else:
+                target_to_source=_directed_coverage_flat(
+                    points,offsets,t,s,threshold2
+                )
+                source_to_target=_directed_coverage_flat(
+                    points,offsets,s,t,threshold2
+                )
+                out[row]=min(target_to_source,source_to_target)
+            row += 1
+    return out
+
+
+def fast_symmetric_coverage(midpoint, sources, targets, radius):
+    labels=tuple(sorted(midpoint))
+    label_index={name:i for i,name in enumerate(labels)}
+    offsets=np.zeros(len(labels)+1,dtype=np.int64)
+    arrays=[]
+    centers=np.empty((len(labels),3),dtype=float)
+    radii=np.empty(len(labels),dtype=float)
+    for i,name in enumerate(labels):
+        pts=np.asarray(midpoint[name],dtype=float)
+        if pts.ndim!=2 or pts.shape[1]!=3 or len(pts)==0:
+            raise ValueError(f"invalid midpoint geometry for {name}")
+        arrays.append(pts)
+        offsets[i+1]=offsets[i]+len(pts)
+        center=np.mean(pts,axis=0)
+        centers[i]=center
+        radii[i]=float(np.max(np.linalg.norm(pts-center,axis=1)))
+    points=np.vstack(arrays)
+    source_index=np.asarray([label_index[name] for name in sources],dtype=np.int64)
+    target_index=np.asarray([label_index[name] for name in targets],dtype=np.int64)
+    return _symmetric_coverage_grid(
+        points,offsets,centers,radii,source_index,target_index,float(radius)
+    )
+
+
 def reconstruct_geometries(locality_rows,edge_rows,candidate_rows):
     meta={r["species"]:r for r in candidate_rows}
     loc_by={}
@@ -151,9 +223,8 @@ def build_design(midpoint,geometries,role,meta,radius,expected_condition):
     pairs=[(s,t) for s in sources for t in targets]
 
     center={name:np.mean(midpoint[name],axis=0) for name in geometries}
-    radial={name:float(np.max(np.linalg.norm(midpoint[name]-center[name],axis=1))) for name in geometries}
 
-    G=np.empty(len(pairs),dtype=float)
+    G=fast_symmetric_coverage(midpoint,sources,targets,float(radius))
     centroid=np.empty(len(pairs),dtype=float)
     edge_ratio=np.empty(len(pairs),dtype=float)
     locality_ratio=np.empty(len(pairs),dtype=float)
@@ -164,12 +235,6 @@ def build_design(midpoint,geometries,role,meta,radius,expected_condition):
         edge_ratio[i]=abs(np.log(geometries[s].n_edges/geometries[t].n_edges))
         locality_ratio[i]=abs(np.log(geometries[s].n_localities/geometries[t].n_localities))
         same_order[i]=float(meta[s]["order"]==meta[t]["order"])
-        if cd > radial[s]+radial[t]+float(radius):
-            G[i]=0.0
-        else:
-            f=coverage_fraction(midpoint[t],midpoint[s],radius=radius)
-            r=coverage_fraction(midpoint[s],midpoint[t],radius=radius)
-            G[i]=min(f,r)
 
     X=np.column_stack((
         zscore(G),zscore(centroid),zscore(edge_ratio),zscore(locality_ratio),zscore(same_order)
