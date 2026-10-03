@@ -146,12 +146,57 @@ jobs:
       - name: Run development fixed-dyad T_st screen
         run: |
           python scripts/run_codistributed_recurrence_fixed_tst_screen.py \
+            --stage screen \
             --localities results/codistribution/development_localities.csv \
             --edges results/codistribution/development_edges.csv \
             --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv \
             --design benchmarks/frozen/genetic_codistributed_recurrence_response_blind_design_v0.1.json \
             --rule docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json \
             --output results/codistribution/fixed_tst_screen_v0.3.json
+
+      - name: Read fixed-dyad screen gate
+        id: fixed_tst_screen
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=json.loads(Path("results/codistribution/fixed_tst_screen_v0.3.json").read_text())
+          assert p["schema"]=="ttf_genetic_codistributed_recurrence_fixed_tst_screen_v0.3"
+          passed=p["status"]=="PASS_TO_FORMAL_FIXED_TST_QUALIFICATION"
+          assert bool(p["gate"]["overall_pass"]) == passed
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if passed else 'false'}\n")
+          print(json.dumps({"status":p["status"],"gate":p["gate"]},sort_keys=True))
+          PY
+
+      - name: Run formal fixed-dyad T_st qualification
+        if: steps.fixed_tst_screen.outputs.passed == 'true'
+        run: |
+          python scripts/run_codistributed_recurrence_fixed_tst_screen.py \
+            --stage formal \
+            --screen-result results/codistribution/fixed_tst_screen_v0.3.json \
+            --localities results/codistribution/development_localities.csv \
+            --edges results/codistribution/development_edges.csv \
+            --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv \
+            --design benchmarks/frozen/genetic_codistributed_recurrence_response_blind_design_v0.1.json \
+            --rule docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json \
+            --output results/codistribution/fixed_tst_qualification_v0.3.json
+
+      - name: Verify formal qualification transition
+        if: steps.fixed_tst_screen.outputs.passed == 'true'
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("results/codistribution/fixed_tst_qualification_v0.3.json").read_text())
+          assert p["schema"]=="ttf_genetic_codistributed_recurrence_fixed_tst_qualification_v0.3"
+          assert p["status"] in {
+              "PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION",
+              "NOT_EVALUABLE_CODISTRIBUTED_RECURRENCE_FIXED_TST",
+          }
+          assert all(v is False for v in p["response_firewall"].values())
+          print(json.dumps({"status":p["status"],"gate":p["gate"]},sort_keys=True))
+          PY
 
       - uses: actions/upload-artifact@v4
         with:
@@ -164,5 +209,6 @@ jobs:
             results/codistribution/codistributed_recurrence_exact_geometry_v0.1.json
             results/codistribution/fresh1000_geometry_receipt.json
             results/codistribution/fixed_tst_screen_v0.3.json
+            results/codistribution/fixed_tst_qualification_v0.3.json
           retention-days: 30
           if-no-files-found: error
