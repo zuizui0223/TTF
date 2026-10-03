@@ -148,6 +148,19 @@ A positive `beta_G` would therefore support a reusable place component without c
 - Papadopoulou, A. & Knowles, L. L. (2016). Toward a paradigm shift in comparative phylogeography driven by trait-based hypotheses. *PNAS* 113:8018–8024. doi:10.1073/pnas.1601069113.
 - Jensen, A. J. et al. (2024). Geographic barriers but not life history traits shape the phylogeography of North American mammals. *Global Ecology and Biogeography* 33:e13875. doi:10.1111/geb.13875.
 
+## Confirmatory survivor contract
+
+The confirmatory transition is also frozen before any nucleotide identity is opened in `docs/supporting/genetic_codistributed_recurrence_confirmatory_mask_rule_v0.1.json`.
+
+After a development formal PASS, only canonical/noncanonical character masks may be inspected. A species survives only if every unchanged frozen graph edge has at least one cross-locality sequence pair with >=50% jointly canonical columns. Failed species are dropped with all incident dyads; there is no backfill, resplitting, rewiring, marker switching or G-threshold rescue.
+
+The surviving confirmatory design must then independently pass two response-blind gates:
+
+1. **relation information:** total unique G fraction >=0.15 and maximum residual G signal share <=0.15 for both source and target endpoints, under the same source/target fixed effects and controls;
+2. **actual-T_st geometry:** the identical v0.3 centering/envelope procedure, run with survivor-specific disjoint seeds, must have private-null Wilson upper <=0.10 in every A cell and shared-A2 power Wilson lower >=0.80.
+
+Only after both gates pass can one confirmatory empirical opening occur.
+
 ## Required opening gates
 
 Before confirmatory nucleotide identity:
