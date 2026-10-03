@@ -1,0 +1,81 @@
+{
+  "schema": "ttf_genetic_codistributed_place_response_blind_census_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_CODISTRIBUTION_FEASIBILITY_COMPLETE",
+  "executed_on": "2026-10-03",
+  "inputs": {
+    "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "candidate_csv_sha256": "08dca43252ea93d43f3095f17b0267ec7ff049f0ec8b3e9c412dd784319ab575",
+    "compact_geometry_npz_sha256": "d0776b4b5646e999f0c09ad937e4050fafe6fec018f17f0d37cd2c5b5f12a79b",
+    "species": 1000,
+    "edge_midpoints": 167828
+  },
+  "codistribution": {
+    "radius_km": 500,
+    "symmetric_minimum_coverage": 0.5,
+    "qualifying_undirected_pairs_all_1000": 56818,
+    "qualifying_pair_graph_digest_sha256": "e42d380abf04461570366e70b6d5c7c14382187fabb10397421fe306553ec78d"
+  },
+  "development": {
+    "panel_species": 500,
+    "train_species": 250,
+    "eval_species": 250,
+    "panel_digest_sha256": "804211e558c8a4dbe5570f1bea2464f97ace0a3dc442cfe889f68a18166c9617",
+    "train_digest_sha256": "e0e3a01d734c4047add7661dbd3f57cd6b462c78a6d10f70332556d6e4eb76e5",
+    "eval_digest_sha256": "b51dea44eecc8c6a8780a9a0ddfbcd22aa88c64dc05877d50f0ca80434d56991",
+    "within_panel_codistributed_pairs": 14858,
+    "eligible_train_to_eval_dyads_all_targets": 7460,
+    "eligible_train_to_eval_dyads_supported_targets": 7400,
+    "supported_dyad_digest_sha256": "0dd4675d7fd3789ab513766efba5225330697e2c6b881679ffa416d5e54c3c51",
+    "eval_source_count_quantiles": {
+      "min": 0,
+      "q10": 1,
+      "q25": 7.25,
+      "median": 33,
+      "q75": 47,
+      "q90": 57,
+      "max": 64
+    },
+    "eval_targets_ge5_sources": 200,
+    "eval_targets_ge10_sources": 182,
+    "supported_eval_species_digest_sha256": "01c1d6604e5754759b6cb41c8873ce92a78f608c8e5168e2fdfa5476af1583df",
+    "supported_eval_orders_n": 17,
+    "largest_order": "Lepidoptera",
+    "largest_order_count": 94,
+    "largest_order_fraction": 0.47
+  },
+  "confirmatory": {
+    "panel_species": 500,
+    "train_species": 250,
+    "eval_species": 250,
+    "panel_digest_sha256": "5e16c83b68412597bfe6f854d46dd258c9006febba6b4ae6fc22719508e2f64f",
+    "train_digest_sha256": "db3e20d04dcf1c46cd2bc95d671c4b61d7aaf903a3181ae747c411c6034fa912",
+    "eval_digest_sha256": "7f4b4f4278fa4b730f52d35d5149acb0fb7089644e962c807a83604e8da9061d",
+    "within_panel_codistributed_pairs": 13496,
+    "eligible_train_to_eval_dyads_all_targets": 6764,
+    "eligible_train_to_eval_dyads_supported_targets": 6720,
+    "supported_dyad_digest_sha256": "6748e81b61c8e7c5d0632b453c24edee8fe932fabc49053a82c929364d7324e8",
+    "eval_source_count_quantiles": {
+      "min": 0,
+      "q10": 1,
+      "q25": 7,
+      "median": 32.5,
+      "q75": 42,
+      "q90": 50,
+      "max": 60
+    },
+    "eval_targets_ge5_sources": 203,
+    "eval_targets_ge10_sources": 181,
+    "supported_eval_species_digest_sha256": "62dc3a0fa0306e44e0e4d5b971c4675440bb1bc9420d26f2e5f2b01f76c83984",
+    "supported_eval_orders_n": 23,
+    "largest_order": "Lepidoptera",
+    "largest_order_count": 90,
+    "largest_order_fraction": 0.4433497536945813
+  },
+  "interpretation": "The fresh genetic-response universe contains enough strongly codistributed unseen targets for a prospective place-recurrence test without restricting the study to one taxonomic order.",
+  "outcome_firewall": {
+    "nucleotide_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "target_post_ibd_responses_opened": false,
+    "empirical_place_recurrence_statistic_opened": false
+  }
+}
