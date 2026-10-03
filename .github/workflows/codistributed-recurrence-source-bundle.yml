@@ -1,4 +1,5 @@
 name: codistributed recurrence source bundle
+# refresh bundle at current frozen head
 
 on:
   push:
