@@ -73,20 +73,22 @@ jobs:
           def rank(name,tag):
               return hashlib.sha256(f"{tag}|{SOURCE_SHA}|{name}".encode()).hexdigest()
           ordered=sorted((r["species"] for r in rows),key=lambda s:(rank(s,TAG),s))
-          dev=set(ordered[:381]); conf=set(ordered[381:])
+          dev=ordered[:381]; conf=ordered[381:]
           def roles(panel,label):
               o=sorted(panel,key=lambda s:(rank(s,f"{TAG}|{label}-role"),s))
-              return set(o[:190]),set(o[190:])
+              return o[:190],o[190:]
           ds,dt=roles(dev,"development"); cs,ct=roles(conf,"confirmatory")
-          def digest(names):
-              return hashlib.sha256(("\n".join(sorted(names))+"\n").encode()).hexdigest()
-          assert digest(ordered)==expected["domain"]["species_digest_sha256"]
-          assert digest(dev)==expected["selection"]["development_species_digest_sha256"]
-          assert digest(conf)==expected["selection"]["confirmatory_species_digest_sha256"]
-          assert digest(ds)==expected["selection"]["development"]["source_digest_sha256"]
-          assert digest(dt)==expected["selection"]["development"]["target_digest_sha256"]
-          assert digest(cs)==expected["selection"]["confirmatory"]["source_digest_sha256"]
-          assert digest(ct)==expected["selection"]["confirmatory"]["target_digest_sha256"]
+          def set_digest(names):
+              return hashlib.sha256("\n".join(sorted(names)).encode()).hexdigest()
+          def ranked_digest(names):
+              return hashlib.sha256("\n".join(names).encode()).hexdigest()
+          assert set_digest(ordered)==expected["domain"]["species_digest_sha256"]
+          assert ranked_digest(dev)==expected["selection"]["development_species_digest_sha256"]
+          assert ranked_digest(conf)==expected["selection"]["confirmatory_species_digest_sha256"]
+          assert ranked_digest(ds)==expected["selection"]["development"]["source_digest_sha256"]
+          assert ranked_digest(dt)==expected["selection"]["development"]["target_digest_sha256"]
+          assert ranked_digest(cs)==expected["selection"]["confirmatory"]["source_digest_sha256"]
+          assert ranked_digest(ct)==expected["selection"]["confirmatory"]["target_digest_sha256"]
 
           panel_by_species={}
           for s in ds: panel_by_species[s]=("development","source")
