@@ -18,11 +18,13 @@ from pathlib import Path
 import numpy as np
 
 from ttf.codistributed_geometry_null import (
+    GeometryNullCenter,
     center_dyad_scores,
-    fit_geometry_null_center,
     frozen_uint64_seed,
     least_favourable_beta_pvalues,
+    prepare_fixed_dyad_transfer_cache,
     simulate_fixed_dyad_tst_batch,
+    template_edges_from_geometries,
 )
 from ttf.genetic_geometry import GeneticSamplingGeometry, endpoint_disjoint_training_counts
 from ttf.relational_dyadic import (
@@ -175,23 +177,40 @@ def label_A(a):
     return "A"+str(a).replace(".","p").replace("p0","")
 
 
-def simulate(geometries,pairs,seed_list,shared_fraction,A,rule):
+def simulate_chunks(
+    geometries,pairs,seed_list,shared_fraction,A,rule,prepared_cache,
+    *,batch_size=25,
+):
     syn=rule["synthetic_parameters"]
     op=rule["actual_operator"]
-    return simulate_fixed_dyad_tst_batch(
-        geometries,pairs,seed_list,
-        shared_fraction=float(shared_fraction),
-        residual_amplitude=float(A),
-        ibd_strength=float(syn["ibd_strength"]),
-        noise_sd=float(syn["noise_sd"]),
-        transition_width=float(syn["transition_width"]),
-        noise_dimensions=int(syn["noise_dimensions"]),
-        min_training_edges=5,
-        bandwidth_km=float(op["bandwidth_km"]),
-        prior_strength=float(op["prior_strength"]),
-        prior_mean=float(op["prior_mean"]),
-        segment_points=int(op["segment_points"]),
-    )
+    all_seeds=tuple(int(x) for x in seed_list)
+    for start in range(0,len(all_seeds),int(batch_size)):
+        chunk=all_seeds[start:start+int(batch_size)]
+        yield simulate_fixed_dyad_tst_batch(
+            geometries,pairs,chunk,
+            shared_fraction=float(shared_fraction),
+            residual_amplitude=float(A),
+            ibd_strength=float(syn["ibd_strength"]),
+            noise_sd=float(syn["noise_sd"]),
+            transition_width=float(syn["transition_width"]),
+            noise_dimensions=int(syn["noise_dimensions"]),
+            min_training_edges=5,
+            bandwidth_km=float(op["bandwidth_km"]),
+            prior_strength=float(op["prior_strength"]),
+            prior_mean=float(op["prior_mean"]),
+            segment_points=int(op["segment_points"]),
+            prepared_cache=prepared_cache,
+        )
+
+
+def beta_for_chunks(prepared,center,chunks):
+    pieces=[]
+    for tst in chunks:
+        beta=batch_primary_test(prepared,center_dyad_scores(tst,center)).coefficient
+        pieces.append(np.asarray(beta,dtype=float))
+    if not pieces:
+        raise RuntimeError("synthetic batch produced no beta_G values")
+    return np.concatenate(pieces)
 
 
 def main():
@@ -244,6 +263,17 @@ def main():
     )
     if len(pairs)!=36290: raise RuntimeError("dyad count drift")
 
+    op=rule["actual_operator"]
+    fixed_cache=prepare_fixed_dyad_transfer_cache(
+        template_edges_from_geometries(geometries),
+        pairs,
+        bandwidth_km=float(op["bandwidth_km"]),
+        prior_strength=float(op["prior_strength"]),
+        prior_mean=float(op["prior_mean"]),
+        segment_points=int(op["segment_points"]),
+        min_training_edges=5,
+    )
+
     config=(
         rule["development_screen"]
         if args.stage=="screen"
@@ -252,26 +282,41 @@ def main():
     master=int(rule["synthetic_parameters"]["master_seed"])
     amplitudes=[float(a) for a in rule["geometry_null_center"]["private_amplitudes"]]
 
-    center_cells={}
+    cell_means=[]
+    center_counts=[]
     for A in amplitudes:
         cell=label_A(A)
-        center_cells[A]=simulate(
+        total=np.zeros(len(pairs),dtype=float)
+        count=0
+        for tst in simulate_chunks(
             geometries,pairs,
             seeds(master,config["namespaces"]["center"],cell,int(config["center_worlds_per_private_amplitude"])),
-            0.0,A,rule,
-        )
-    center=fit_geometry_null_center(center_cells)
+            0.0,A,rule,fixed_cache,
+        ):
+            total += np.sum(tst,axis=1)
+            count += int(tst.shape[1])
+        if count != int(config["center_worlds_per_private_amplitude"]):
+            raise RuntimeError("center world-count drift")
+        cell_means.append(total/count)
+        center_counts.append(count)
+    center=GeometryNullCenter(
+        mu0=np.mean(np.vstack(cell_means),axis=0),
+        amplitudes=tuple(amplitudes),
+        worlds_per_amplitude=tuple(center_counts),
+    )
 
     private_refs={}
     reference_summary={}
     for A in amplitudes:
         cell=label_A(A)
-        tst=simulate(
-            geometries,pairs,
-            seeds(master,config["namespaces"]["reference"],cell,int(config["private_reference_worlds_per_amplitude"])),
-            0.0,A,rule,
+        beta=beta_for_chunks(
+            prepared,center,
+            simulate_chunks(
+                geometries,pairs,
+                seeds(master,config["namespaces"]["reference"],cell,int(config["private_reference_worlds_per_amplitude"])),
+                0.0,A,rule,fixed_cache,
+            ),
         )
-        beta=batch_primary_test(prepared,center_dyad_scores(tst,center)).coefficient
         private_refs[cell]=np.asarray(beta,dtype=float)
         reference_summary[cell]={
             "worlds":int(len(beta)),
@@ -284,12 +329,14 @@ def main():
     all_private_pass=True
     for A in amplitudes:
         cell=label_A(A)
-        tst=simulate(
-            geometries,pairs,
-            seeds(master,config["namespaces"]["evaluation"],cell,int(config["private_evaluation_worlds_per_amplitude"])),
-            0.0,A,rule,
+        beta=beta_for_chunks(
+            prepared,center,
+            simulate_chunks(
+                geometries,pairs,
+                seeds(master,config["namespaces"]["evaluation"],cell,int(config["private_evaluation_worlds_per_amplitude"])),
+                0.0,A,rule,fixed_cache,
+            ),
         )
-        beta=batch_primary_test(prepared,center_dyad_scores(tst,center)).coefficient
         p,least=least_favourable_beta_pvalues(beta,private_refs)
         reject=int(np.count_nonzero(p<=float(rule["inference"]["alpha"])))
         n=len(beta); lo,hi=wilson_interval(reject,n)
@@ -306,12 +353,14 @@ def main():
         }
 
     pos=rule["synthetic_parameters"]["positive_world"]
-    pos_tst=simulate(
-        geometries,pairs,
-        seeds(master,config["namespaces"]["positive"],pos["name"],int(config["positive_evaluation_worlds"])),
-        float(pos["shared_fraction"]),float(pos["residual_amplitude"]),rule,
+    pos_beta=beta_for_chunks(
+        prepared,center,
+        simulate_chunks(
+            geometries,pairs,
+            seeds(master,config["namespaces"]["positive"],pos["name"],int(config["positive_evaluation_worlds"])),
+            float(pos["shared_fraction"]),float(pos["residual_amplitude"]),rule,fixed_cache,
+        ),
     )
-    pos_beta=batch_primary_test(prepared,center_dyad_scores(pos_tst,center)).coefficient
     pos_p,pos_least=least_favourable_beta_pvalues(pos_beta,private_refs)
     pos_reject=int(np.count_nonzero(pos_p<=float(rule["inference"]["alpha"])))
     pos_n=len(pos_beta); pos_lo,pos_hi=wilson_interval(pos_reject,pos_n)
