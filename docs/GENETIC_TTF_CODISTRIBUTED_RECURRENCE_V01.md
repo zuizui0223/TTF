@@ -104,6 +104,22 @@ A positive result would mean that lineages sharing more of the same landscape sh
 
 A calibrated null, together with qualified within-species structure, would show that lack of shared geographic opportunity is not sufficient to explain the broad 211-species non-transfer result.
 
+## Fixed-dyad geometry-null implementation status
+
+The next inferential layer is now frozen in `docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json` and implemented in `src/ttf/codistributed_geometry_null.py`.
+
+For each directed dyad, the geometry-null center is
+
+`mu0_st = mean_A mean_r T_st(private world A, replicate r)`,
+
+with equal weight assigned to each predeclared private amplitude `A in {0.5, 1, 2, 3}`. The primary response is then `E_st = T_st - mu0_st`.
+
+This subtraction is not used as a parametric null assumption. The final one-sided decision remains calibrated against independent private-world beta_G reference distributions at each amplitude, with the largest component Monte Carlo p-value taken as the primary p-value. Thus an incorrect guess about the empirical private amplitude cannot be selected after response opening.
+
+Screen, formal-reference, formal-evaluation and shared-positive worlds use disjoint seed namespaces fixed before any empirical T_st is opened. The actual source-to-target operator is the inherited endpoint-safe post-IBD, 500-km single-source Gaussian TTF operator; a batch implementation is tested against the prior scalar implementation.
+
+Execution is currently blocked only by absence of the exact 274,988,692-byte phylogatR archive (SHA-256 `5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5`). The retained compact midpoint geometry is sufficient for the response-blind G_st / TTF-Q audits but not for reconstructing endpoint-safe graph nodes required by the actual fixed-dyad T_st qualification. No genetic response has been opened.
+
 ## Required opening gates
 
 Before confirmatory nucleotide identity:
