@@ -1,0 +1,78 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_panel_provenance_correction_rule_v0.2",
+  "status": "FROZEN_RESPONSE_BLIND_BEFORE_CORRECTED_PANEL_INFORMATION_AUDIT",
+  "frozen_on": "2026-10-03",
+  "reason": "The v0.1 design records panel and role digests that cannot be regenerated from its own documented deterministic hash rule, while no development or confirmatory genetic response has been opened. The panel membership lists were not persisted. This correction therefore gives authority to the already-published pre-response selection rule rather than to irreproducible digest-only memberships.",
+  "superseded_membership_authority": "benchmarks/frozen/genetic_codistributed_recurrence_response_blind_design_v0.1.json#selection digests only",
+  "inherited_without_change": [
+    "biological question",
+    "freshness exclusions",
+    "Insecta restriction",
+    "381/381 panel sizes",
+    "190 source / 191 target role sizes",
+    "continuous symmetric 500-km G_st definition",
+    "nuisance controls",
+    "geometry-null/private-amplitude family",
+    "fixed-T_st operator",
+    "alpha and qualification thresholds",
+    "confirmatory one-shot firewall"
+  ],
+  "exact_inputs": {
+    "archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "fresh_candidate_csv_sha256": "08dca43252ea93d43f3095f17b0267ec7ff049f0ec8b3e9c412dd784319ab575",
+    "prior_exclusion_files": [
+      "benchmarks/frozen/relational_prior_S1_species_exclusion_v0.1.json",
+      "benchmarks/frozen/relational_prior_S2_species_exclusion_v0.1.json"
+    ],
+    "expected_after_additional_exclusion": 930,
+    "class_filter": "Insecta",
+    "expected_domain_species": 762
+  },
+  "canonical_selection": {
+    "panel_namespace": "place-recurrence-insecta-fresh-v0.1",
+    "panel_key": "SHA256(panel_namespace + '|' + archive_sha256 + '|' + species), hexadecimal ascending; species name ascending as tie-break",
+    "development": "first 381 species",
+    "confirmatory": "remaining 381 species",
+    "development_role_namespace": "place-recurrence-insecta-fresh-v0.1|development-role",
+    "confirmatory_role_namespace": "place-recurrence-insecta-fresh-v0.1|confirmatory-role",
+    "role_key": "SHA256(role_namespace + '|' + archive_sha256 + '|' + species), hexadecimal ascending; species name ascending as tie-break",
+    "source": "first 190 species within each panel",
+    "target": "remaining 191 species within each panel",
+    "digest_definition": "SHA256 of species names sorted lexicographically and joined by one LF byte, with no trailing LF",
+    "no_random_seed": true
+  },
+  "corrected_information_gate": {
+    "timing": "evaluate only after this rule is committed; uses geography/taxonomy/sampling only",
+    "controls": [
+      "exact source identity",
+      "exact target identity",
+      "z(abs log edge-count ratio)",
+      "z(abs log locality-count ratio)",
+      "z(same-order indicator)",
+      "z(log1p centroid distance / 500 km)"
+    ],
+    "total_unique_fraction_minimum": 0.15,
+    "maximum_source_signal_share_ceiling": 0.15,
+    "maximum_target_signal_share_ceiling": 0.15,
+    "predictor_condition_number_ceiling": 10000,
+    "failure": "NOT_EVALUABLE_CODISTRIBUTED_RECURRENCE_PANEL_CORRECTION",
+    "no_resplit_on_failure": true
+  },
+  "correction_result_policy": {
+    "if_pass": "freeze corrected species/role digests and response-blind G information as v0.2 and continue to the already-frozen fixed-T_st development screen",
+    "if_fail": "close this codistributed-recurrence study as not evaluable; do not recover the old irreproducible membership by search or optimize another split"
+  },
+  "forbidden": [
+    "inspect nucleotide identities, pairwise genetic distances, empirical T_st or empirical beta_G before corrected pre-response gates pass",
+    "choose among multiple panel hashes using G_st information",
+    "alter panel namespace, role namespaces, panel sizes or role sizes after the corrected information audit is computed",
+    "use the v0.1 TTF-Q values as evidence for the corrected membership",
+    "treat this provenance correction as a biological result"
+  ],
+  "response_firewall": {
+    "development_nucleotide_identity_opened": false,
+    "confirmatory_nucleotide_identity_opened": false,
+    "empirical_T_st_opened": false,
+    "empirical_beta_G_opened": false
+  }
+}
