@@ -1,6 +1,6 @@
 {
   "schema": "ttf_genetic_codistributed_recurrence_source_recovery_v0.1",
-  "status": "EXACT_SOURCE_IDENTIFIED_NOT_CURRENTLY_MATERIALIZED",
+  "status": "EXACT_SOURCE_RECOVERED_AND_VERIFIED",
   "recorded_on": "2026-10-03",
   "exact_archive": {
     "original_name": "phylogatr_results.zip",
@@ -16,7 +16,7 @@
     "note": "Historical provenance identifies the exact portal job and confirms that these bytes were uploaded and used. No reusable attachment file reference survives in current context."
   },
   "current_search": {
-    "personal_library_exact_zip": false,
+    "personal_library_exact_zip": true,
     "connected_google_drive_exact_zip": false,
     "google_drive_trash_exact_zip": false,
     "current_conversation_attachment_exact_zip": false,
@@ -60,9 +60,9 @@
     }
   },
   "required_external_transition": {
-    "action": "Access phylogatR Job 14574208 under authenticated OSC/phylogatR session and retrieve the result bytes.",
-    "acceptance": "Use only if byte length is 274,988,692 and SHA-256 exactly matches the frozen value.",
-    "after_acceptance": "Seed existing GitHub Actions exact-archive cache without repacking, then run the frozen response-blind PR #135 qualification chain."
+    "action": "COMPLETED",
+    "acceptance": "Exact byte length and SHA-256 matched the frozen source identity.",
+    "after_acceptance": "Response-blind full fresh-1000 locality/edge geometry was reconstructed from the exact archive; proceed only through the already-frozen development fixed-T_st screen/formal qualification chain."
   },
   "prohibited": [
     "repeat same-purpose public-source hunting",
@@ -75,5 +75,14 @@
     "confirmatory_nucleotide_identity_opened": false,
     "empirical_T_st_opened": false,
     "empirical_beta_G_opened": false
+  },
+  "recovered_on": "2026-10-03",
+  "recovery": {
+    "source": "persistent ChatGPT Library",
+    "library_path": "/TTF/source/phylogatr_results_exact_20260918.zip",
+    "size_bytes_verified": 274988692,
+    "sha256_verified": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "exact_match": true,
+    "note": "The archive had been preserved in /TTF/source on 2026-09-18; earlier searches concentrated on /TTF/relational and therefore missed the retained source directory."
   }
 }
