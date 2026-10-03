@@ -1,0 +1,137 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_geometry_null_rule_v0.3",
+  "status": "FROZEN_BEFORE_FIXED_DYAD_T_ST_SYNTHETIC_RESULTS",
+  "frozen_on": "2026-10-03",
+  "parent_design": "benchmarks/frozen/genetic_codistributed_recurrence_response_blind_design_v0.1.json",
+  "parent_dyadic_calibration": "benchmarks/frozen/genetic_codistributed_recurrence_private_envelope_result_v0.2.json",
+  "scientific_question": "Does continuous symmetric geographic co-opportunity predict excess post-IBD source-to-target spatial recurrence after dyad-specific recurrence expected from sampling geometry under lineage-private spatial worlds is removed?",
+  "fixed_dyads": {
+    "development": {
+      "sources": 190,
+      "targets": 191,
+      "directed_dyads": 36290
+    },
+    "confirmatory": {
+      "sources": 190,
+      "targets": 191,
+      "directed_dyads": 36290
+    },
+    "primary_relation": "continuous symmetric 500-km edge-midpoint co-opportunity G_st",
+    "primary_thresholding": false
+  },
+  "actual_operator": {
+    "source_response": "endpoint-safe post-IBD residual turnover, then inherited length-orthogonalized training response",
+    "target_response": "endpoint-safe post-IBD residual turnover",
+    "source_to_target_skill": "Spearman correlation between the 500-km single-source Gaussian field prediction and target post-IBD turnover",
+    "bandwidth_km": 500,
+    "prior_strength": 0.25,
+    "prior_mean": 0,
+    "segment_points": 5,
+    "graph_rule": "inherited frozen density-scaled graph; no rewiring"
+  },
+  "geometry_null_center": {
+    "private_amplitudes": [
+      0.5,
+      1,
+      2,
+      3
+    ],
+    "private_world_definition": "simulate_genetic_distance_world with shared_fraction=0, ibd_strength=1, noise_sd=0.10, transition_width=0.20, noise_dimensions=2 on exact frozen geometry",
+    "definition": "mu0_st = equal-weight mean across private-amplitude cells of the within-cell mean T_st",
+    "equal_amplitude_weight": true,
+    "scientific_role": "deterministic response-blind subtraction of dyad-specific recurrence induced by deployment geometry under the declared private family; it is not an estimate of the empirical private amplitude and does not itself provide Type-I control"
+  },
+  "centered_estimand": {
+    "dyad_response": "E_st = T_st - mu0_st",
+    "primary_model": "E_st = exact source FE + exact target FE + beta_G z(G_st) + frozen controls + error_st",
+    "controls": [
+      "z(log1p centroid distance / 500 km)",
+      "z(abs log edge-count ratio)",
+      "z(abs log locality-count ratio)",
+      "z(same-order indicator)"
+    ],
+    "primary": "beta_G",
+    "direction": "greater than zero"
+  },
+  "inference": {
+    "calibration": "least-favourable one-sided Monte Carlo envelope across private amplitudes after applying the same fixed mu0_st center to every observed/reference/evaluation T_st matrix",
+    "component_p_value": "(1 + count(reference_beta_A >= observed_beta_G))/(N_reference + 1)",
+    "envelope_p_value": "max_A component_p_value",
+    "alpha": 0.05,
+    "asymptotic_cluster_p_value_authority": false
+  },
+  "synthetic_parameters": {
+    "master_seed": 20261003,
+    "ibd_strength": 1,
+    "noise_sd": 0.1,
+    "transition_width": 0.2,
+    "noise_dimensions": 2,
+    "positive_world": {
+      "name": "globally_shared_place_A2",
+      "shared_fraction": 1,
+      "residual_amplitude": 2,
+      "rationale": "all lineages inherit the same continuous boundary field; higher geographic co-opportunity should make that shared place information more reusable"
+    }
+  },
+  "development_screen": {
+    "scientific_authority": false,
+    "center_worlds_per_private_amplitude": 49,
+    "private_reference_worlds_per_amplitude": 99,
+    "private_evaluation_worlds_per_amplitude": 50,
+    "positive_evaluation_worlds": 50,
+    "namespaces": {
+      "center": "codistributed-recurrence-fixed-tst-v0.3-screen-center",
+      "reference": "codistributed-recurrence-fixed-tst-v0.3-screen-reference",
+      "evaluation": "codistributed-recurrence-fixed-tst-v0.3-screen-evaluation",
+      "positive": "codistributed-recurrence-fixed-tst-v0.3-screen-positive"
+    },
+    "pass_rule": {
+      "private_cells": "each amplitude <=5 rejections among 50 evaluation worlds at envelope p<=0.05",
+      "positive_cell": "at least 35 rejections among 50 globally_shared_place_A2 worlds",
+      "if_fail": "close this v0.3 fixed-T_st centering estimator; do not tune radius, G definition, controls, centering weights, amplitudes, or seeds on these worlds",
+      "if_pass": "run the predeclared formal qualification below with disjoint namespaces; screen itself never authorizes empirical opening"
+    }
+  },
+  "formal_qualification": {
+    "center_worlds_per_private_amplitude": 199,
+    "private_reference_worlds_per_amplitude": 999,
+    "private_evaluation_worlds_per_amplitude": 500,
+    "positive_evaluation_worlds": 500,
+    "namespaces": {
+      "center": "codistributed-recurrence-fixed-tst-v0.3-formal-center",
+      "reference": "codistributed-recurrence-fixed-tst-v0.3-formal-reference",
+      "evaluation": "codistributed-recurrence-fixed-tst-v0.3-formal-evaluation",
+      "positive": "codistributed-recurrence-fixed-tst-v0.3-formal-positive"
+    },
+    "gates": {
+      "private_type1": "for every private amplitude, Wilson 95% upper bound of envelope-p<=0.05 rejection rate <=0.10",
+      "positive_power": "globally_shared_place_A2 Wilson 95% lower bound of envelope-p<=0.05 rejection rate >=0.80",
+      "failure": "NOT_EVALUABLE_CODISTRIBUTED_RECURRENCE_FIXED_TST"
+    }
+  },
+  "confirmatory_transition": [
+    "development formal qualification PASS",
+    "open confirmatory character-validity masks only",
+    "remove inadmissible species without replacement or graph repair",
+    "recompute G_st and declared controls on exact survivor geometry without genetic response",
+    "rerun TTF-Q information gate on survivor dyads",
+    "rerun this exact fixed-T_st formal qualification on survivor geometry with a separately frozen confirmatory-survivor seed namespace",
+    "only then authorize one-shot confirmatory nucleotide-identity opening"
+  ],
+  "forbidden": [
+    "opening development nucleotide identity",
+    "opening confirmatory nucleotide identity before survivor qualification",
+    "choosing a private amplitude after empirical response",
+    "weighting private amplitudes according to empirical fit",
+    "changing G_st radius or definition after any T_st response is opened",
+    "subgroup selection by empirical genetic score",
+    "using asymptotic two-way cluster p-values as the primary decision",
+    "reusing screen worlds as formal reference or evaluation worlds"
+  ],
+  "response_firewall": {
+    "development_nucleotide_identity_opened": false,
+    "confirmatory_nucleotide_identity_opened": false,
+    "empirical_T_st_opened": false,
+    "empirical_beta_G_opened": false
+  }
+}
