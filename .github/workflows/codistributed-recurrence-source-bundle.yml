@@ -1,0 +1,33 @@
+name: codistributed recurrence source bundle
+
+on:
+  push:
+    branches:
+      - prospective/codistributed-recurrence-insecta-v0-1
+    paths:
+      - ".github/workflows/codistributed-recurrence-source-bundle.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: prospective/codistributed-recurrence-insecta-v0-1
+      - name: Package exact branch source
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/codistributed-source
+          git rev-parse HEAD > /tmp/codistributed-source/HEAD.txt
+          git archive --format=tar.gz -o /tmp/codistributed-source/TTF-codistributed-recurrence.tar.gz HEAD
+          sha256sum /tmp/codistributed-source/TTF-codistributed-recurrence.tar.gz > /tmp/codistributed-source/TTF-codistributed-recurrence.tar.gz.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codistributed-recurrence-source-bundle
+          path: /tmp/codistributed-source/
+          retention-days: 30
+          compression-level: 0
+          if-no-files-found: error
