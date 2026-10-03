@@ -1,0 +1,107 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_response_blind_design_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_AWAITING_SYNTHETIC_QUALIFICATION",
+  "recorded_on": "2026-10-03",
+  "parent_branch": "paper/place-vs-lineage-phylogeography-v0-1",
+  "source": {
+    "archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "fresh_candidate_csv_sha256": "08dca43252ea93d43f3095f17b0267ec7ff049f0ec8b3e9c412dd784319ab575",
+    "compact_geometry_npz_sha256": "d0776b4b5646e999f0c09ad937e4050fafe6fec018f17f0d37cd2c5b5f12a79b",
+    "prior_original_and_conditional_species_already_excluded": 750,
+    "additional_S1_S2_overlap_excluded": 70
+  },
+  "domain": {
+    "fresh_after_additional_exclusions": 930,
+    "class": "Insecta",
+    "species": 762,
+    "species_digest_sha256": "16ad6576ec10fe4871dc1c1f79e794ec61dc4d6fd719809358b78e2099f9259a"
+  },
+  "selection": {
+    "panel_hash_namespace": "place-recurrence-insecta-fresh-v0.1",
+    "development_species": 381,
+    "confirmatory_species": 381,
+    "development_species_digest_sha256": "7227e069cd366a086d35eb1367aa50e73a2510f7724a1c734d9f6ae20b970b8a",
+    "confirmatory_species_digest_sha256": "fa14ce86faf04ce849fd15037764ca160edb4286e24d65104344a704cf75d5b2",
+    "development": {
+      "source": 190,
+      "target": 191,
+      "source_digest_sha256": "a6e50634a5bb3464160a96efec99113b1052aa3cdd15a1c4e9896446496ea667",
+      "target_digest_sha256": "98de2966dfebc7d2fb5bd6824ef894e77ac290e95161edd9392a370e6f00cb94"
+    },
+    "confirmatory": {
+      "source": 190,
+      "target": 191,
+      "source_digest_sha256": "10921d58a54e232aa20cc48c0fced7aae3cc55e7998eb3b434bde317527cfb75",
+      "target_digest_sha256": "0999c08a856fcfa98d29f5f647bae84c7f15ab20c87c05c386eebbe0377c73c2"
+    }
+  },
+  "focal_relation": {
+    "radius_km": 500,
+    "definition": "min(target_to_source_edge_midpoint_coverage, source_to_target_edge_midpoint_coverage)",
+    "primary_is_continuous": true,
+    "primary_thresholding": false,
+    "dyads_per_panel": 36290
+  },
+  "descriptive_high_codistribution_support": {
+    "threshold_G": 0.5,
+    "minimum_sources_per_target": 5,
+    "development": {
+      "eligible_targets": 162,
+      "targets": 191,
+      "median_sources_all_targets": 32,
+      "eligible_targets_digest_sha256": "b46aadc03bf3a05d422f0e92bd95e3dcb2d2d0da18af384b2ae1cbae86e1ef94",
+      "supported_pair_digest_sha256": "e03734566aafecf2b5b51a41c65d1030f1afb04235ace177507c958a987d0eec"
+    },
+    "confirmatory": {
+      "eligible_targets": 158,
+      "targets": 191,
+      "median_sources_all_targets": 25,
+      "eligible_targets_digest_sha256": "9fb2273b475f4a5dd7061ab4cd9ac2e41fc6aff75675e796a2743a7da680898b",
+      "supported_pair_digest_sha256": "d2981deab8c3577b8c368fd6bf78eb33e375393866a2a6326f8ed26b23a3c2f7"
+    }
+  },
+  "ttf_q_information_audit": {
+    "controls": [
+      "exact source identity",
+      "exact target identity",
+      "abs log edge-count ratio",
+      "abs log locality-count ratio",
+      "same-order indicator",
+      "log1p centroid distance / 500 km"
+    ],
+    "development": {
+      "endpoint_survival": 0.8635842907209497,
+      "sampling_lineage_conditional_survival": 0.9824588987779881,
+      "total_after_sampling_lineage": 0.8484360712636742,
+      "centroid_incremental_survival": 0.2532526019662259,
+      "final_total_unique_fraction": 0.21486864264952774,
+      "effective_dyads": 8489.107254460288,
+      "effective_sources": 168.05970628211728,
+      "effective_targets": 156.79698695028813,
+      "max_source_share": 0.0118926542516204,
+      "max_target_share": 0.019719810820292883,
+      "max_dyad_share": 0.0009533700253611021
+    },
+    "confirmatory": {
+      "endpoint_survival": 0.8584892261265599,
+      "sampling_lineage_conditional_survival": 0.9841526432480064,
+      "total_after_sampling_lineage": 0.8448844410923894,
+      "centroid_incremental_survival": 0.24310402738402723,
+      "final_total_unique_fraction": 0.20539481030366277,
+      "effective_dyads": 8094.416532158143,
+      "effective_sources": 162.85993925519622,
+      "effective_targets": 158.8789932009368,
+      "max_source_share": 0.014684454421178545,
+      "max_target_share": 0.017568324849546704,
+      "max_dyad_share": 0.0009373453222873975
+    }
+  },
+  "response_firewall": {
+    "development_nucleotide_identity_opened": false,
+    "confirmatory_nucleotide_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "T_st_opened": false,
+    "beta_G_opened": false
+  },
+  "next_gate": "development-only geometry-null centering + two-way dyadic calibration/detectability; confirmatory response remains closed"
+}
