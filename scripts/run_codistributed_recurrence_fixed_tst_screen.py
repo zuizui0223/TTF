@@ -306,7 +306,15 @@ def main():
     ap.add_argument("--output",type=Path,required=True)
     ap.add_argument("--stage",choices=("screen","formal"),default="screen")
     ap.add_argument("--screen-result",type=Path)
+    ap.add_argument(
+        "--world-batch-size",
+        type=int,
+        default=200,
+        help="Execution-only number of synthetic worlds scored per geometry pass; does not alter seeds or estimand.",
+    )
     args=ap.parse_args()
+    if args.world_batch_size < 1:
+        raise RuntimeError("--world-batch-size must be positive")
 
     design=json.loads(args.design.read_text())
     rule=json.loads(args.rule.read_text())
@@ -376,7 +384,7 @@ def main():
         for tst in simulate_chunks(
             geometries,pairs,
             seeds(master,config["namespaces"]["center"],cell,int(config["center_worlds_per_private_amplitude"])),
-            0.0,A,rule,fixed_cache,
+            0.0,A,rule,fixed_cache,batch_size=args.world_batch_size,
         ):
             total += np.sum(tst,axis=1)
             count += int(tst.shape[1])
@@ -399,7 +407,7 @@ def main():
             simulate_chunks(
                 geometries,pairs,
                 seeds(master,config["namespaces"]["reference"],cell,int(config["private_reference_worlds_per_amplitude"])),
-                0.0,A,rule,fixed_cache,
+                0.0,A,rule,fixed_cache,batch_size=args.world_batch_size,
             ),
         )
         private_refs[cell]=np.asarray(beta,dtype=float)
@@ -419,7 +427,7 @@ def main():
             simulate_chunks(
                 geometries,pairs,
                 seeds(master,config["namespaces"]["evaluation"],cell,int(config["private_evaluation_worlds_per_amplitude"])),
-                0.0,A,rule,fixed_cache,
+                0.0,A,rule,fixed_cache,batch_size=args.world_batch_size,
             ),
         )
         p,least=least_favourable_beta_pvalues(beta,private_refs)
@@ -443,7 +451,7 @@ def main():
         simulate_chunks(
             geometries,pairs,
             seeds(master,config["namespaces"]["positive"],pos["name"],int(config["positive_evaluation_worlds"])),
-            float(pos["shared_fraction"]),float(pos["residual_amplitude"]),rule,fixed_cache,
+            float(pos["shared_fraction"]),float(pos["residual_amplitude"]),rule,fixed_cache,batch_size=args.world_batch_size,
         ),
     )
     pos_p,pos_least=least_favourable_beta_pvalues(pos_beta,private_refs)
@@ -467,6 +475,7 @@ def main():
         "status":status,
         "stage":args.stage,
         "rule":str(args.rule),
+        "execution":{"world_batch_size":int(args.world_batch_size)},
         "development_geometry":{
             "species":len(geometries),"sources":len(sources),"targets":len(targets),"dyads":len(pairs),
             "predictor_condition_number":prepared.condition_number,
