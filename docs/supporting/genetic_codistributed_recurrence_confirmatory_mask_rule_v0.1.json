@@ -1,0 +1,113 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_confirmatory_mask_rule_v0.1",
+  "status": "FROZEN_BEFORE_CONFIRMATORY_CHARACTER_MASK_AND_BEFORE_ANY_CONFIRMATORY_GENETIC_RESPONSE",
+  "frozen_on": "2026-10-03",
+  "entry_condition": "Development fixed-dyad formal qualification v0.3 must have status PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION and all response-firewall values false.",
+  "parent_design": "benchmarks/frozen/genetic_codistributed_recurrence_response_blind_design_v0.1.json",
+  "parent_fixed_tst_rule": "docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json",
+  "confirmatory_panel": {
+    "original_species": 381,
+    "original_sources": 190,
+    "original_targets": 191,
+    "inherit_source_target_roles": true,
+    "backfill": false,
+    "replacement_species": false,
+    "resplitting": false,
+    "graph_repair": false,
+    "marker_switching": false
+  },
+  "allowed_character_view": {
+    "canonical_valid": "A/C/G/T -> 1",
+    "every_other_symbol": "0",
+    "persist_nucleotide_identity": false,
+    "persist_pairwise_genetic_distance": false
+  },
+  "inherited_parser_contract": {
+    "source": "docs/supporting/genetic_phylogatr_phase2_mask_rule_v0.1.json",
+    "duplicate_aligned_header": "species inadmissible",
+    "unequal_or_zero_aligned_sequence_length": "species inadmissible",
+    "minimum_comparable_fraction": 0.5
+  },
+  "edge_admissibility": {
+    "valid_sequence_pair": "jointly canonical columns >= ceil(0.50 * frozen alignment length)",
+    "valid_frozen_edge": "at least one valid cross-locality sequence pair exists between the two unchanged frozen graph endpoint localities",
+    "species_admissible": "every frozen edge is valid",
+    "failed_species": "drop species and every incident source-target dyad; do not replace, rewire, switch marker, delete selected sequences, or relax threshold"
+  },
+  "survivor_dyads": {
+    "definition": "Cartesian product of surviving original confirmatory source species and surviving original confirmatory target species",
+    "minimum_G_threshold": null,
+    "descriptive_G_ge_0p5_has_no_eligibility_role": true,
+    "controls": [
+      "exact source identity",
+      "exact target identity",
+      "abs log edge-count ratio",
+      "abs log locality-count ratio",
+      "same-order indicator",
+      "log1p centroid distance / 500 km"
+    ],
+    "focal_relation": "continuous symmetric 500-km edge-midpoint co-opportunity G_st, recomputed on unchanged survivor graphs"
+  },
+  "response_blind_survivor_information_gate": {
+    "total_unique_fraction_minimum": 0.15,
+    "maximum_source_signal_share_ceiling": 0.15,
+    "maximum_target_signal_share_ceiling": 0.15,
+    "exact_source_target_FE": true,
+    "same_controls": true,
+    "failure": "NOT_EVALUABLE_CODISTRIBUTED_RECURRENCE_SURVIVOR_INFORMATION",
+    "interpretation": "design/evaluability failure only; no biological null"
+  },
+  "exact_survivor_fixed_tst_requalification": {
+    "estimator": "same v0.3 dyad-specific geometry-null centering and least-favourable private-envelope beta_G test",
+    "private_amplitudes": [
+      0.5,
+      1,
+      2,
+      3
+    ],
+    "center_worlds_per_amplitude": 199,
+    "private_reference_worlds_per_amplitude": 999,
+    "private_evaluation_worlds_per_amplitude": 500,
+    "positive_worlds": 500,
+    "positive_world": "globally_shared_place_A2",
+    "type1_gate": "every private-amplitude Wilson 95% upper rejection bound <=0.10",
+    "power_gate": "globally_shared_place_A2 Wilson 95% lower rejection bound >=0.80",
+    "survivor_seed_namespaces": {
+      "center": "codistributed-recurrence-fixed-tst-v0.3-survivor-center",
+      "reference": "codistributed-recurrence-fixed-tst-v0.3-survivor-reference",
+      "evaluation": "codistributed-recurrence-fixed-tst-v0.3-survivor-evaluation",
+      "positive": "codistributed-recurrence-fixed-tst-v0.3-survivor-positive"
+    },
+    "failure": "NOT_EVALUABLE_CODISTRIBUTED_RECURRENCE_SURVIVOR_GEOMETRY"
+  },
+  "empirical_opening_authorized_only_if": [
+    "development formal fixed-Tst qualification PASS",
+    "confirmatory canonical-character mask completed under this rule",
+    "survivor information gate PASS",
+    "exact survivor fixed-Tst requalification PASS"
+  ],
+  "empirical_once_opened": {
+    "primary_response": "E_st = empirical T_st - survivor-geometry mu0_st",
+    "primary_estimand": "beta_G for z(G_st) in exact source FE + target FE + frozen controls model",
+    "primary_test": "one-sided least-favourable private-envelope Monte Carlo p-value",
+    "alpha": 0.05,
+    "one_shot": true,
+    "post_result_retuning": false
+  },
+  "forbidden": [
+    "open nucleotide identities before every pre-response gate passes",
+    "backfill or resplit mask-failed species",
+    "change 500-km G radius or symmetric coverage definition",
+    "threshold G for the primary analysis",
+    "change nuisance controls after mask opening",
+    "lower the 0.15 survivor information minimum or raise the 0.15 endpoint concentration ceilings",
+    "reuse development formal worlds for survivor requalification",
+    "select a taxonomic or geographic subgroup after genetic-response opening"
+  ],
+  "response_firewall": {
+    "confirmatory_nucleotide_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_T_st_opened": false,
+    "confirmatory_beta_G_opened": false
+  }
+}
