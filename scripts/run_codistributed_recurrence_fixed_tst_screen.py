@@ -202,6 +202,8 @@ def main():
     ap.add_argument("--design",type=Path,required=True)
     ap.add_argument("--rule",type=Path,required=True)
     ap.add_argument("--output",type=Path,required=True)
+    ap.add_argument("--stage",choices=("screen","formal"),default="screen")
+    ap.add_argument("--screen-result",type=Path)
     args=ap.parse_args()
 
     design=json.loads(args.design.read_text())
@@ -210,6 +212,17 @@ def main():
     if rule.get("schema")!=EXPECTED_RULE_SCHEMA: raise RuntimeError("unexpected rule schema")
     if rule.get("status")!="FROZEN_BEFORE_FIXED_DYAD_T_ST_SYNTHETIC_RESULTS":
         raise RuntimeError("fixed-T_st screen rule is not frozen")
+
+    if args.stage=="formal":
+        if args.screen_result is None:
+            raise RuntimeError("--screen-result is required for formal qualification")
+        prior_screen=json.loads(args.screen_result.read_text())
+        if prior_screen.get("schema")!="ttf_genetic_codistributed_recurrence_fixed_tst_screen_v0.3":
+            raise RuntimeError("unexpected screen-result schema")
+        if prior_screen.get("status")!="PASS_TO_FORMAL_FIXED_TST_QUALIFICATION":
+            raise RuntimeError("formal qualification is not authorized by the screen result")
+        if not bool(prior_screen.get("screen_gate",{}).get("overall_pass",False)):
+            raise RuntimeError("screen result does not record overall PASS")
 
     loc=read_csv(args.localities); ed=read_csv(args.edges); cand=read_csv(args.candidates)
     geometries,midpoint,role,meta=reconstruct_geometries(loc,ed,cand)
@@ -231,7 +244,11 @@ def main():
     )
     if len(pairs)!=36290: raise RuntimeError("dyad count drift")
 
-    screen=rule["development_screen"]
+    config=(
+        rule["development_screen"]
+        if args.stage=="screen"
+        else rule["formal_qualification"]
+    )
     master=int(rule["synthetic_parameters"]["master_seed"])
     amplitudes=[float(a) for a in rule["geometry_null_center"]["private_amplitudes"]]
 
@@ -240,7 +257,7 @@ def main():
         cell=label_A(A)
         center_cells[A]=simulate(
             geometries,pairs,
-            seeds(master,screen["namespaces"]["center"],cell,int(screen["center_worlds_per_private_amplitude"])),
+            seeds(master,config["namespaces"]["center"],cell,int(config["center_worlds_per_private_amplitude"])),
             0.0,A,rule,
         )
     center=fit_geometry_null_center(center_cells)
@@ -251,7 +268,7 @@ def main():
         cell=label_A(A)
         tst=simulate(
             geometries,pairs,
-            seeds(master,screen["namespaces"]["reference"],cell,int(screen["private_reference_worlds_per_amplitude"])),
+            seeds(master,config["namespaces"]["reference"],cell,int(config["private_reference_worlds_per_amplitude"])),
             0.0,A,rule,
         )
         beta=batch_primary_test(prepared,center_dyad_scores(tst,center)).coefficient
@@ -269,38 +286,52 @@ def main():
         cell=label_A(A)
         tst=simulate(
             geometries,pairs,
-            seeds(master,screen["namespaces"]["evaluation"],cell,int(screen["private_evaluation_worlds_per_amplitude"])),
+            seeds(master,config["namespaces"]["evaluation"],cell,int(config["private_evaluation_worlds_per_amplitude"])),
             0.0,A,rule,
         )
         beta=batch_primary_test(prepared,center_dyad_scores(tst,center)).coefficient
         p,least=least_favourable_beta_pvalues(beta,private_refs)
         reject=int(np.count_nonzero(p<=float(rule["inference"]["alpha"])))
         n=len(beta); lo,hi=wilson_interval(reject,n)
-        cell_pass=reject<=5
+        if args.stage=="screen":
+            cell_pass=reject<=5
+        else:
+            cell_pass=hi<=0.10
         all_private_pass &= cell_pass
         private_eval[cell]={
             "worlds":int(n),"rejections":reject,"rejection_rate":reject/n,
             "wilson95_low":lo,"wilson95_high":hi,
-            "screen_pass":bool(cell_pass),
+            "stage_pass":bool(cell_pass),
             "least_favourable_counts":dict(Counter(least)),
         }
 
     pos=rule["synthetic_parameters"]["positive_world"]
     pos_tst=simulate(
         geometries,pairs,
-        seeds(master,screen["namespaces"]["positive"],pos["name"],int(screen["positive_evaluation_worlds"])),
+        seeds(master,config["namespaces"]["positive"],pos["name"],int(config["positive_evaluation_worlds"])),
         float(pos["shared_fraction"]),float(pos["residual_amplitude"]),rule,
     )
     pos_beta=batch_primary_test(prepared,center_dyad_scores(pos_tst,center)).coefficient
     pos_p,pos_least=least_favourable_beta_pvalues(pos_beta,private_refs)
     pos_reject=int(np.count_nonzero(pos_p<=float(rule["inference"]["alpha"])))
     pos_n=len(pos_beta); pos_lo,pos_hi=wilson_interval(pos_reject,pos_n)
-    positive_pass=pos_reject>=35
+    positive_pass=(
+        pos_reject>=35
+        if args.stage=="screen"
+        else pos_lo>=0.80
+    )
 
     overall=bool(all_private_pass and positive_pass)
+    if args.stage=="screen":
+        schema="ttf_genetic_codistributed_recurrence_fixed_tst_screen_v0.3"
+        status="PASS_TO_FORMAL_FIXED_TST_QUALIFICATION" if overall else "STOP_FIXED_TST_V03_SCREEN"
+    else:
+        schema="ttf_genetic_codistributed_recurrence_fixed_tst_qualification_v0.3"
+        status="PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION" if overall else "NOT_EVALUABLE_CODISTRIBUTED_RECURRENCE_FIXED_TST"
     payload={
-        "schema":"ttf_genetic_codistributed_recurrence_fixed_tst_screen_v0.3",
-        "status":"PASS_TO_FORMAL_FIXED_TST_QUALIFICATION" if overall else "STOP_FIXED_TST_V03_SCREEN",
+        "schema":schema,
+        "status":status,
+        "stage":args.stage,
         "rule":str(args.rule),
         "development_geometry":{
             "species":len(geometries),"sources":len(sources),"targets":len(targets),"dyads":len(pairs),
@@ -325,16 +356,22 @@ def main():
         "positive_evaluation":{
             "cell":pos["name"],"worlds":pos_n,"rejections":pos_reject,
             "power":pos_reject/pos_n,"wilson95_low":pos_lo,"wilson95_high":pos_hi,
-            "screen_pass":bool(positive_pass),
+            "stage_pass":bool(positive_pass),
             "least_favourable_counts":dict(Counter(pos_least)),
             "mean_beta_G":float(np.mean(pos_beta)),
         },
-        "screen_gate":{
+        "gate":{
             "private_pass":bool(all_private_pass),
             "positive_pass":bool(positive_pass),
             "overall_pass":overall,
-            "scientific_authority":False,
-            "if_pass":"execute already-predeclared formal qualification with disjoint formal namespaces",
+            "scientific_authority":"development screen only" if args.stage=="screen" else "method qualification only; no empirical genetic conclusion",
+            "private_rule":"<=5/50 rejections" if args.stage=="screen" else "Wilson95 upper <=0.10 in every private cell",
+            "positive_rule":">=35/50 rejections" if args.stage=="screen" else "Wilson95 lower >=0.80 for globally_shared_place_A2",
+            "if_pass":(
+                "execute already-predeclared formal qualification with disjoint formal namespaces"
+                if args.stage=="screen"
+                else "proceed only to confirmatory character-mask preparation and survivor-geometry requalification"
+            ),
             "if_fail":"close v0.3 fixed-T_st centering estimator without tuning on these worlds",
         },
         "response_firewall":{
@@ -346,7 +383,7 @@ def main():
     }
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n")
-    print(json.dumps({"status":payload["status"],"private_pass":all_private_pass,"positive_pass":positive_pass},sort_keys=True))
+    print(json.dumps({"stage":args.stage,"status":payload["status"],"private_pass":all_private_pass,"positive_pass":positive_pass},sort_keys=True))
 
 
 if __name__=="__main__":
