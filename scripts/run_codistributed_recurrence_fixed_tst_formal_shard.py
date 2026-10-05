@@ -26,9 +26,9 @@ from run_codistributed_recurrence_fixed_tst_screen import (
     simulate_chunks,
     ranked_role_digest,
 )
+from ttf.codistributed_formal_shards import frozen_seed_range, validate_exact_ranges
 from ttf.codistributed_geometry_null import (
     GeometryNullCenter,
-    frozen_uint64_seed,
     least_favourable_beta_pvalues,
     prepare_fixed_dyad_transfer_cache,
     template_edges_from_geometries,
@@ -46,15 +46,6 @@ def sha256_path(path: Path) -> str:
         for chunk in iter(lambda:f.read(1<<20),b""):
             h.update(chunk)
     return h.hexdigest()
-
-
-def frozen_seed_range(master: int, namespace: str, cell: str, start: int, stop: int) -> list[int]:
-    if not 0 <= int(start) < int(stop):
-        raise ValueError("invalid replicate range")
-    return [
-        frozen_uint64_seed(int(master),str(namespace),str(cell),i)
-        for i in range(int(start),int(stop))
-    ]
 
 
 def expected_ranges(sharding: dict, component: str) -> list[tuple[int,int]]:
@@ -282,8 +273,7 @@ def read_shard_dir(path: Path,component: str,expected: list[tuple[int,int]],keys
                 raise RuntimeError(f"{component} shard {key} shape drift for {k}")
             data[k]=x
         found[key]=data
-    if set(found)!=set(expected):
-        raise RuntimeError(f"{component} shard set drift: got={sorted(found)} expected={expected}")
+    validate_exact_ranges(found.keys(), expected)
     return found
 
 
