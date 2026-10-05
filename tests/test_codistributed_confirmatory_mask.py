@@ -1,18 +1,20 @@
 import json
 from pathlib import Path
+import sys
 
 import pytest
 
-from scripts.freeze_codistributed_recurrence_confirmatory_mask import (
+
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/"scripts"))
+
+from freeze_codistributed_recurrence_confirmatory_mask import (
     authorize_formal,
     digest_labels,
     frozen_confirmatory_roles,
     read_candidates,
     read_excluded,
 )
-
-
-ROOT=Path(__file__).resolve().parents[1]
 
 
 def test_confirmatory_roles_reproduce_frozen_design_digests():
