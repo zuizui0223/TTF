@@ -15,7 +15,7 @@ from pathlib import Path
 
 import numpy as np
 
-from scripts.run_codistributed_recurrence_fixed_tst_screen import (
+from run_codistributed_recurrence_fixed_tst_screen import (
     EXPECTED_DESIGN_SCHEMA,
     EXPECTED_RULE_SCHEMA,
     beta_for_chunks,
@@ -48,7 +48,7 @@ def sha256_path(path: Path) -> str:
     return h.hexdigest()
 
 
-def seed_range(master: int, namespace: str, cell: str, start: int, stop: int) -> list[int]:
+def frozen_seed_range(master: int, namespace: str, cell: str, start: int, stop: int) -> list[int]:
     if not 0 <= int(start) < int(stop):
         raise ValueError("invalid replicate range")
     return [
@@ -167,7 +167,7 @@ def run_center(args,design,rule,sharding):
     means=[]; counts=[]
     for A in amplitudes:
         cell=label_A(A)
-        seed_list=seed_range(master,cfg["namespaces"]["center"],cell,0,n)
+        seed_list=frozen_seed_range(master,cfg["namespaces"]["center"],cell,0,n)
         chunks=list(simulate_chunks(
             geometries,pairs,seed_list,0.0,A,rule,fixed_cache,
             batch_size=int(sharding["invariants"]["world_batch_size"]),
@@ -231,7 +231,7 @@ def run_beta_shard(args,design,rule,sharding,component):
                 prepared,center,
                 simulate_chunks(
                     geometries,pairs,
-                    seed_range(master,namespace,cell,args.start,args.stop),
+                    frozen_seed_range(master,namespace,cell,args.start,args.stop),
                     0.0,A,rule,fixed_cache,
                     batch_size=int(sharding["invariants"]["world_batch_size"]),
                 ),
@@ -245,7 +245,7 @@ def run_beta_shard(args,design,rule,sharding,component):
             prepared,center,
             simulate_chunks(
                 geometries,pairs,
-                seed_range(master,cfg["namespaces"]["positive"],pos["name"],args.start,args.stop),
+                frozen_seed_range(master,cfg["namespaces"]["positive"],pos["name"],args.start,args.stop),
                 float(pos["shared_fraction"]),float(pos["residual_amplitude"]),
                 rule,fixed_cache,
                 batch_size=int(sharding["invariants"]["world_batch_size"]),
@@ -353,7 +353,7 @@ def run_aggregate(args,design,rule,sharding):
         "status":"PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION" if overall else "NOT_EVALUABLE_CODISTRIBUTED_RECURRENCE_FIXED_TST",
         "stage":"formal",
         "rule":"docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json",
-        "screen_result":"benchmarks/frozen/genetic_codistributed_recurrence_fixed_tst_screen_result_v0.3.json",
+        "screen_result":"benchmarks/frozen/genetic_codistributed_recurrence_fixed_tst_screen_v0.3.json",
         "screen_result_sha256":sha256_path(args.screen_result),
         "formal_sharding_contract":"docs/supporting/genetic_codistributed_recurrence_formal_sharding_v0.1.json",
         "formal_sharding_contract_sha256":sha256_path(args.sharding),
