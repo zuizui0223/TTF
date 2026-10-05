@@ -1,0 +1,62 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_interpretation_v0.1",
+  "status": "FROZEN_BEFORE_DEVELOPMENT_SCREEN_RESULT",
+  "frozen_on": "2026-10-05",
+  "parent_question": "Does sharing more of the same sampled landscape make post-IBD phylogeographic structure more recurrent across lineages?",
+  "scope": "Fresh response-blind Insecta panel; continuous symmetric 500-km geographic co-opportunity; source-target roles species-disjoint.",
+  "result_branches": {
+    "confirmatory_positive": {
+      "trigger": "Confirmatory survivor design passes information and actual-T_st qualification, then one-shot empirical beta_G > 0 with primary calibrated p <= 0.05.",
+      "headline": "Geographic recurrence is conditional on shared landscape opportunity.",
+      "biological_reading": "The weak all-species recurrence in the completed 211-species test is at least partly explained by whether lineages actually sample the same landscape. Among codistributed lineages, greater overlap in sampled geography predicts greater reuse of post-IBD spatial genetic information.",
+      "allowed_claims": [
+        "a reusable place component exists within the qualified codistributed insect domain",
+        "shared geographic opportunity is predictive of cross-lineage recurrence beyond source identity, target identity, sampling imbalance, same-order membership, centroid proximity, and the declared private-geometry null",
+        "comparative phylogeographic concordance becomes more predictable when exposure to the same landscape is explicitly represented"
+      ],
+      "prohibited_claims": [
+        "a named mountain, river, refugium, ecotone, or geological event caused the recurrence",
+        "geographic barriers are universal across insects or animals",
+        "G_st measures historical coexistence or temporal co-occurrence"
+      ]
+    },
+    "confirmatory_qualified_null": {
+      "trigger": "Confirmatory survivor design passes information and actual-T_st qualification, but the one-shot empirical beta_G is not positive at the calibrated alpha.",
+      "headline": "Sharing the same landscape is not sufficient to make phylogeographic structure reusable across lineages.",
+      "biological_reading": "The broad 211-species non-transfer result cannot be explained simply by species occupying different places. Even among insect lineages with greater mutual geographic sampling opportunity, post-IBD spatial structure remains predominantly lineage-conditioned at the tested scale.",
+      "allowed_claims": [
+        "simple geographic co-opportunity is insufficient to restore cross-lineage recurrence in the qualified domain",
+        "the same sampled landscape need not imply the same effective phylogeographic barrier structure",
+        "future mechanism tests should target lineage-by-place interactions such as dispersal, habitat dependence, and historical range dynamics rather than search for one universal barrier map"
+      ],
+      "prohibited_claims": [
+        "geography is unimportant",
+        "physical barriers do not matter",
+        "all phylogeographic structure is lineage-specific",
+        "no biologically coherent subset could ever share barriers"
+      ]
+    },
+    "not_evaluable": {
+      "trigger": "Any required response-blind information, private-null Type-I, shared-positive power, character-mask, or survivor-geometry gate fails.",
+      "headline": "No biological inference on codistribution-conditioned recurrence.",
+      "biological_reading": "The proposed relation cannot be adjudicated under the realized design and frozen estimator.",
+      "allowed_claims": [
+        "methodological non-evaluability only"
+      ],
+      "prohibited_claims": [
+        "positive or negative biological interpretation of beta_G"
+      ]
+    }
+  },
+  "relation_to_completed_211_species_result": {
+    "immutable": true,
+    "completed_result": "Within-species spatial structure detectable; broad post-IBD geographic field not detectably transferable across unseen species.",
+    "rule": "The successor can explain or refine the domain of the completed result but may not reclassify, retune, or replace it."
+  },
+  "response_firewall": {
+    "development_screen_result_seen": false,
+    "development_nucleotide_identity_opened": false,
+    "confirmatory_nucleotide_identity_opened": false,
+    "empirical_beta_G_opened": false
+  }
+}
