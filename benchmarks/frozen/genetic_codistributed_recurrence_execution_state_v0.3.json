@@ -1,0 +1,35 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_execution_state_v0.3",
+  "status": "DEVELOPMENT_FORMAL_PASS_CONFIRMATORY_MASK_AUTHORIZED",
+  "recorded_on": "2026-10-06",
+  "supersedes_state_record": "benchmarks/frozen/genetic_codistributed_recurrence_execution_state_v0.2.json",
+  "formal_qualification": {
+    "workflow_run_id": 37306420267,
+    "workflow_head_sha": "4209c902cdc7dee8463cedf3b4abe7b8b46540e2",
+    "artifact_id": 11355737697,
+    "artifact_json_sha256": "8af48eae5c6888ae41b67422e6068fb22aedfe05c0c8966546bafa3f53015578",
+    "status": "PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION",
+    "private_rejection_rates": {
+      "A0p5": 0.03,
+      "A1": 0.004,
+      "A2": 0.022,
+      "A3": 0.072
+    },
+    "private_wilson95_upper": {
+      "A0p5": 0.04890366683594573,
+      "A1": 0.014465715215177033,
+      "A2": 0.03896086121131637,
+      "A3": 0.09806840401696253
+    },
+    "positive_power": 0.998,
+    "positive_wilson95_lower": 0.9887592932948532
+  },
+  "next_authorized_transition": "Open confirmatory canonical/noncanonical character masks only under genetic_codistributed_recurrence_confirmatory_mask_rule_v0.1, then run survivor information and survivor fixed-Tst requalification gates.",
+  "response_firewall": {
+    "development_nucleotide_identity_opened": false,
+    "confirmatory_nucleotide_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "empirical_T_st_opened": false,
+    "empirical_beta_G_opened": false
+  }
+}
