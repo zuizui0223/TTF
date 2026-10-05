@@ -3,10 +3,8 @@ from pathlib import Path
 
 import numpy as np
 
-from scripts.run_codistributed_recurrence_fixed_tst_formal_shard import (
-    expected_ranges,
-    seed_range,
-)
+from scripts.run_codistributed_recurrence_fixed_tst_formal_shard import expected_ranges
+from ttf.codistributed_formal_shards import frozen_seed_range
 from ttf.codistributed_geometry_null import (
     frozen_uint64_seed,
     simulate_fixed_dyad_tst_batch,
@@ -40,8 +38,8 @@ def test_formal_seed_slice_preserves_original_replicate_indices():
         frozen_uint64_seed(master,namespace,cell,i)
         for i in range(9)
     ]
-    assert seed_range(master,namespace,cell,2,6)==full[2:6]
-    assert seed_range(master,namespace,cell,6,9)==full[6:9]
+    assert frozen_seed_range(master,namespace,cell,2,6)==full[2:6]
+    assert frozen_seed_range(master,namespace,cell,6,9)==full[6:9]
 
 
 def test_frozen_formal_ranges_match_contract():
@@ -62,7 +60,7 @@ def test_reduced_fixed_tst_shards_match_monolithic_world_order():
         "t1":_complete_geometry(0.5,-0.3),
     }
     pairs=[("s0","t0"),("s0","t1"),("s1","t0"),("s1","t1")]
-    seeds=seed_range(20261003,"reduced-shard-equivalence","A2",0,6)
+    seeds=frozen_seed_range(20261003,"reduced-shard-equivalence","A2",0,6)
     kwargs=dict(
         shared_fraction=0.0,
         residual_amplitude=2.0,
