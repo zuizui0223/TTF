@@ -11,6 +11,7 @@ sys.path.insert(0,str(ROOT/"scripts"))
 from freeze_codistributed_recurrence_confirmatory_mask import (
     authorize_formal,
     digest_labels,
+    ordered_digest,
     frozen_confirmatory_roles,
     read_candidates,
     read_excluded,
@@ -28,8 +29,8 @@ def test_confirmatory_roles_reproduce_frozen_design_digests():
     assert len(source)==190
     assert len(target)==191
     assert set(source).isdisjoint(target)
-    assert digest_labels(source)==design["selection"]["confirmatory"]["source_digest_sha256"]
-    assert digest_labels(target)==design["selection"]["confirmatory"]["target_digest_sha256"]
+    assert ordered_digest(source)==design["selection"]["confirmatory"]["source_digest_sha256"]
+    assert ordered_digest(target)==design["selection"]["confirmatory"]["target_digest_sha256"]
 
 
 def test_confirmatory_mask_requires_formal_pass(tmp_path):
