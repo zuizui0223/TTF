@@ -1,0 +1,85 @@
+name: codistributed recurrence preserved geometry screen only
+
+on:
+  push:
+    branches:
+      - prospective/codistributed-recurrence-insecta-v0-1
+    paths:
+      - ".github/workflows/codistributed-recurrence-screen-only.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+
+      - name: Restore exact development localities
+        run: |
+          mkdir -p results/codistribution-screen
+          base64 -d transport/codistributed_recurrence_development_localities_v0.1.xz.b64             | xz -d > results/codistribution-screen/development_localities.csv
+          echo "e17f4dfdf5f184443e087f5ddcd829aa1c3c03cacfbfac123502d05911f56a3a  results/codistribution-screen/development_localities.csv" | sha256sum -c -
+
+      - name: Rebuild and verify exact edge graph
+        run: |
+          python - <<'PY'
+          import csv, hashlib
+          from pathlib import Path
+          import numpy as np
+          from ttf.core import knn_edges
+          loc=Path("results/codistribution-screen/development_localities.csv")
+          cand=Path("benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv")
+          out=Path("results/codistribution-screen/development_edges.csv")
+          with cand.open(newline="",encoding="utf-8") as f:
+              meta={r["species"]:r for r in csv.DictReader(f)}
+          order=[]; loc_by={}; role={}; panel={}
+          with loc.open(newline="",encoding="utf-8") as f:
+              for r in csv.DictReader(f):
+                  n=r["species"]
+                  if n not in loc_by:
+                      order.append(n); loc_by[n]=[]
+                  loc_by[n].append(r); role[n]=r["role"]; panel[n]=r["panel"]
+          with out.open("w",newline="",encoding="utf-8") as f:
+              fields=["species","edge_index","node_left","node_right","mid_x_km","mid_y_km","mid_z_km","panel","role"]
+              w=csv.DictWriter(f,fieldnames=fields,lineterminator="\n"); w.writeheader()
+              for n in order:
+                  rows=sorted(loc_by[n],key=lambda r:int(r["locality_index"]))
+                  xyz=np.asarray([[float(r["x_km"]),float(r["y_km"]),float(r["z_km"])] for r in rows],dtype=float)
+                  nodes=knn_edges(xyz,k=int(meta[n]["graph_k"]))
+                  mids=0.5*(xyz[nodes[:,0]]+xyz[nodes[:,1]])
+                  for i,((a,b),m) in enumerate(zip(nodes,mids)):
+                      w.writerow({"species":n,"edge_index":i,"node_left":int(a),"node_right":int(b),
+                                  "mid_x_km":float(m[0]),"mid_y_km":float(m[1]),"mid_z_km":float(m[2]),
+                                  "panel":panel[n],"role":role[n]})
+          h=hashlib.sha256(out.read_bytes()).hexdigest()
+          assert h=="613aca949cf0b2e3fd233c0e7bb54e34ec8e627aeeb4ff54b1fb84e90bb9da6b",h
+          PY
+
+      - name: Run frozen screen only
+        run: |
+          python scripts/run_codistributed_recurrence_fixed_tst_screen.py             --stage screen             --localities results/codistribution-screen/development_localities.csv             --edges results/codistribution-screen/development_edges.csv             --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv             --design benchmarks/frozen/genetic_codistributed_recurrence_response_blind_design_v0.1.json             --rule docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json             --world-batch-size 200             --output results/codistribution-screen/fixed_tst_screen_v0.3.json
+
+      - name: Print frozen screen decision
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("results/codistribution-screen/fixed_tst_screen_v0.3.json").read_text())
+          print(json.dumps({"status":p["status"],"gate":p["gate"],"private":p["private_evaluation"],"positive":p["positive_evaluation"]},sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codistributed-recurrence-screen-v0.3
+          path: results/codistribution-screen/fixed_tst_screen_v0.3.json
+          retention-days: 30
+          if-no-files-found: error
