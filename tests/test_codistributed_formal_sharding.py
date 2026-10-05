@@ -3,8 +3,7 @@ from pathlib import Path
 
 import numpy as np
 
-from scripts.run_codistributed_recurrence_fixed_tst_formal_shard import expected_ranges
-from ttf.codistributed_formal_shards import frozen_seed_range
+from ttf.codistributed_formal_shards import frozen_seed_range, validate_exact_ranges
 from ttf.codistributed_geometry_null import (
     frozen_uint64_seed,
     simulate_fixed_dyad_tst_batch,
@@ -30,6 +29,16 @@ def _complete_geometry(dx: float, dy: float):
     )
 
 
+def _contract_ranges(contract: dict, component: str):
+    if component in {"center","reference","evaluation"}:
+        raw=contract["shards"][component]["per_amplitude"]
+    elif component=="positive":
+        raw=contract["shards"]["positive"]["ranges"]
+    else:
+        raise AssertionError(component)
+    return [(int(a),int(b)) for a,b in raw]
+
+
 def test_formal_seed_slice_preserves_original_replicate_indices():
     master=20261003
     namespace="formal-test"
@@ -38,18 +47,24 @@ def test_formal_seed_slice_preserves_original_replicate_indices():
         frozen_uint64_seed(master,namespace,cell,i)
         for i in range(9)
     ]
-    assert frozen_seed_range(master,namespace,cell,2,6)==full[2:6]
-    assert frozen_seed_range(master,namespace,cell,6,9)==full[6:9]
+    assert frozen_seed_range(master,namespace,cell,2,6)==tuple(full[2:6])
+    assert frozen_seed_range(master,namespace,cell,6,9)==tuple(full[6:9])
 
 
 def test_frozen_formal_ranges_match_contract():
     p=json.loads(
         (ROOT/"docs/supporting/genetic_codistributed_recurrence_formal_sharding_v0.1.json").read_text()
     )
-    assert expected_ranges(p,"center")==[(0,199)]
-    assert expected_ranges(p,"reference")==[(0,200),(200,400),(400,600),(600,800),(800,999)]
-    assert expected_ranges(p,"evaluation")==[(0,200),(200,400),(400,500)]
-    assert expected_ranges(p,"positive")==[(0,200),(200,400),(400,500)]
+    expected={
+        "center":[(0,199)],
+        "reference":[(0,200),(200,400),(400,600),(600,800),(800,999)],
+        "evaluation":[(0,200),(200,400),(400,500)],
+        "positive":[(0,200),(200,400),(400,500)],
+    }
+    for component,want in expected.items():
+        got=_contract_ranges(p,component)
+        assert got==want
+        assert list(validate_exact_ranges(got,want))==want
 
 
 def test_reduced_fixed_tst_shards_match_monolithic_world_order():
