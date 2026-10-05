@@ -1,0 +1,41 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_fixed_tst_screen_binding_v0.1",
+  "status": "FROZEN_DEVELOPMENT_SCREEN_PASS_AUTHORIZES_PREDECLARED_FORMAL_SHARDS",
+  "recorded_on": "2026-10-05",
+  "screen_result": "benchmarks/frozen/genetic_codistributed_recurrence_fixed_tst_screen_result_v0.3.json",
+  "screen_result_sha256": "ccf0b64689381da6229cf9da62736debf199bd5e2978c4e982864b3fd7575d41",
+  "independent_screen_workflow": {
+    "run_id": 37268420454,
+    "head_sha": "19befd0c43939181b2e4f4b9fa0388753036aa0c",
+    "artifact_id": 11331681724,
+    "artifact_name": "codistributed-recurrence-screen-v0.3",
+    "artifact_digest_sha256": "sha256:0fbcf14dd9788c33019b6f08d252cd1468cd6a79d8f0b2972f3c5b8a6aaa45b2",
+    "conclusion": "success"
+  },
+  "duplicate_screen_check": {
+    "prior_combined_run_id": 37267661617,
+    "prior_artifact_id": 11342351980,
+    "result_bytes_identical": true,
+    "result_sha256": "ccf0b64689381da6229cf9da62736debf199bd5e2978c4e982864b3fd7575d41"
+  },
+  "gate": {
+    "overall_pass": true,
+    "private_rejections": {
+      "A0p5": 0,
+      "A1": 0,
+      "A2": 0,
+      "A3": 3
+    },
+    "positive_rejections": 50,
+    "positive_worlds": 50
+  },
+  "formal_sharding_contract": "docs/supporting/genetic_codistributed_recurrence_formal_sharding_v0.1.json",
+  "formal_authorized": true,
+  "empirical_opening_authorized": false,
+  "response_firewall": {
+    "development_nucleotide_identity_opened": false,
+    "confirmatory_nucleotide_identity_opened": false,
+    "empirical_T_st_opened": false,
+    "empirical_beta_G_opened": false
+  }
+}
