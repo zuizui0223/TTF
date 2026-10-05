@@ -343,7 +343,7 @@ def run_aggregate(args,design,rule,sharding):
         "status":"PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION" if overall else "NOT_EVALUABLE_CODISTRIBUTED_RECURRENCE_FIXED_TST",
         "stage":"formal",
         "rule":"docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json",
-        "screen_result":"benchmarks/frozen/genetic_codistributed_recurrence_fixed_tst_screen_v0.3.json",
+        "screen_result":"benchmarks/frozen/genetic_codistributed_recurrence_fixed_tst_screen_result_v0.3.json",
         "screen_result_sha256":sha256_path(args.screen_result),
         "formal_sharding_contract":"docs/supporting/genetic_codistributed_recurrence_formal_sharding_v0.1.json",
         "formal_sharding_contract_sha256":sha256_path(args.sharding),
