@@ -50,6 +50,10 @@ def digest_labels(names) -> str:
     return hashlib.sha256("\n".join(sorted(map(str,names))).encode()).hexdigest()
 
 
+def ordered_digest(names) -> str:
+    return hashlib.sha256("\n".join(map(str,names)).encode()).hexdigest()
+
+
 def rank_species(name: str, tag: str) -> str:
     return hashlib.sha256(f"{tag}|{SOURCE_SHA}|{name}".encode()).hexdigest()
 
@@ -81,7 +85,7 @@ def frozen_confirmatory_roles(rows, s1: set[str], s2: set[str], design: dict):
     if digest_labels(ordered)!=design["domain"]["species_digest_sha256"]:
         raise RuntimeError("fresh Insecta domain digest drift")
     confirmatory=ordered[381:]
-    if digest_labels(confirmatory)!=design["selection"]["confirmatory_species_digest_sha256"]:
+    if ordered_digest(confirmatory)!=design["selection"]["confirmatory_species_digest_sha256"]:
         raise RuntimeError("confirmatory panel digest drift")
     role_order=sorted(
         confirmatory,
@@ -89,9 +93,9 @@ def frozen_confirmatory_roles(rows, s1: set[str], s2: set[str], design: dict):
     )
     source=tuple(role_order[:190])
     target=tuple(role_order[190:])
-    if digest_labels(source)!=design["selection"]["confirmatory"]["source_digest_sha256"]:
+    if ordered_digest(source)!=design["selection"]["confirmatory"]["source_digest_sha256"]:
         raise RuntimeError("confirmatory source digest drift")
-    if digest_labels(target)!=design["selection"]["confirmatory"]["target_digest_sha256"]:
+    if ordered_digest(target)!=design["selection"]["confirmatory"]["target_digest_sha256"]:
         raise RuntimeError("confirmatory target digest drift")
     return source,target
 
