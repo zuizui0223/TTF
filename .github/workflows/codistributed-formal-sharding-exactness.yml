@@ -6,6 +6,12 @@ on:
       - prospective/codistributed-recurrence-insecta-v0-1
     paths:
       - ".github/workflows/codistributed-formal-sharding-exactness.yml"
+      - "docs/supporting/genetic_codistributed_recurrence_formal_sharding_v0.1.json"
+      - "scripts/run_codistributed_recurrence_fixed_tst_formal_shard.py"
+      - "src/ttf/codistributed_formal_shards.py"
+      - "tests/test_codistributed_formal_shards.py"
+      - "tests/test_codistributed_formal_sharding.py"
+      - "tests/test_codistributed_formal_shard_runner.py"
   workflow_dispatch:
 
 permissions:
@@ -25,4 +31,9 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e ".[test]"
       - name: Verify frozen shard equivalence
-        run: pytest -q tests/test_codistributed_formal_shards.py tests/test_codistributed_geometry_null.py
+        run: |
+          pytest -q \
+            tests/test_codistributed_formal_shards.py \
+            tests/test_codistributed_formal_sharding.py \
+            tests/test_codistributed_formal_shard_runner.py \
+            tests/test_codistributed_geometry_null.py
