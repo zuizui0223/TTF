@@ -36,7 +36,7 @@ def sha256_path(path: Path) -> str:
 
 
 def digest_labels(names) -> str:
-    return hashlib.sha256(("\n".join(sorted(map(str,names)))+"\n").encode()).hexdigest()
+    return hashlib.sha256("\n".join(sorted(map(str,names))).encode()).hexdigest()
 
 
 def read_survivors(path: Path) -> dict[str,str]:
