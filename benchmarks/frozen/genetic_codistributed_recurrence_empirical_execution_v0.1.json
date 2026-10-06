@@ -1,0 +1,22 @@
+{
+  "empirical_execution_contract_sha256": "9dd83023693c7b9deaf6db250c3af5c01a65b191c3291c3aac2718e06b46c56e",
+  "empirical_result_observed_before_execution": false,
+  "identity_opening_authorization_sha256": "1a721072e8fcbd8c3fbc91088b60f1e1898d25185b793718b73244ffd1ce5dd7",
+  "one_shot": {
+    "github_event_required": "push",
+    "github_run_attempt_required": 1,
+    "post_result_retuning_allowed": false,
+    "rerun_for_result_selection_allowed": false
+  },
+  "response_firewall": {
+    "confirmatory_T_st_opened": false,
+    "confirmatory_beta_G_opened": false,
+    "confirmatory_nucleotide_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false
+  },
+  "schema": "ttf_genetic_codistributed_recurrence_empirical_execution_v0.1",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "status": "AUTHORIZE_ONE_SHOT_EMPIRICAL_EXECUTION",
+  "survivor_qualification_sha256": "12da3b4249536919de8063cc35acd03ace0d3156185390b702713ef0752fd1fa",
+  "survivor_qualification_workflow_run_id": 37406111501
+}
