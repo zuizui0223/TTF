@@ -38,8 +38,7 @@ def test_historical_host_panel_keeps_only_narrow_resolved_native_hosts():
     )
     assert summary["status"]=="PASS_TO_HOST_OCCURRENCE_FEASIBILITY"
     assert len(panel)==120
-    assert summary["development_species"]==40
-    assert summary["confirmatory_species"]==80
+    assert [row["host_panel_rank"] for row in panel]==list(range(1,121))
     assert summary["excluded_counts"]["host_breadth_gt_5"]==1
     assert summary["excluded_counts"]["no_wcvp_resolved_species_host"]==479
 
