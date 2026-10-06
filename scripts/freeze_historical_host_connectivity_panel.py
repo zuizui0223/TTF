@@ -93,19 +93,13 @@ def build_panel(
             "excluded_counts":dict(excluded_counts),
         }
 
-    n_dev=len(retained)//3
     for i,row in enumerate(retained):
-        row["panel"]="development" if i<n_dev else "confirmatory"
-        row["panel_rank"]=i+1
+        row["host_panel_rank"]=i+1
 
     summary={
         "status":"PASS_TO_HOST_OCCURRENCE_FEASIBILITY",
         "retained_species":len(retained),
-        "development_species":n_dev,
-        "confirmatory_species":len(retained)-n_dev,
         "species_digest_sha256":digest_names(sorted(str(r["species"]) for r in retained)),
-        "development_digest_sha256":digest_names(sorted(str(r["species"]) for r in retained if r["panel"]=="development")),
-        "confirmatory_digest_sha256":digest_names(sorted(str(r["species"]) for r in retained if r["panel"]=="confirmatory")),
         "host_breadth_counts":{
             str(k):sum(int(r["n_hosts"])==k for r in retained)
             for k in range(1,6)
@@ -146,9 +140,8 @@ def main() -> int:
             "host_breadth_min":1,
             "host_breadth_max":5,
             "all_hosts_require_primary_native_wgsrpd3":True,
-            "panel_namespace":PANEL_NAMESPACE,
-            "development_fraction":"floor(n/3)",
-            "confirmatory_fraction":"remainder",
+            "host_panel_namespace":PANEL_NAMESPACE,
+            "development_confirmatory_split_deferred_until_after_occurrence_gate":True,
             "no_backfill":True,
         },
         "response_firewall":{
@@ -160,7 +153,7 @@ def main() -> int:
     }
     args.output_csv.parent.mkdir(parents=True,exist_ok=True)
     with args.output_csv.open("w",newline="",encoding="utf-8") as f:
-        fields=["panel_rank","panel","species","n_hosts","accepted_host_ids","accepted_host_names"]
+        fields=["host_panel_rank","species","n_hosts","accepted_host_ids","accepted_host_names"]
         w=csv.DictWriter(f,fieldnames=fields)
         w.writeheader()
         for row in panel:
@@ -171,8 +164,7 @@ def main() -> int:
     print(json.dumps({
         "status":payload["status"],
         "retained_species":payload.get("retained_species"),
-        "development_species":payload.get("development_species"),
-        "confirmatory_species":payload.get("confirmatory_species"),
+        "species_digest_sha256":payload.get("species_digest_sha256"),
     },sort_keys=True))
     return 0
 
