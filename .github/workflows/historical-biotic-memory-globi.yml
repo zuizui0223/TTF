@@ -1,0 +1,66 @@
+name: historical biotic memory raw GloBI capture
+
+on:
+  push:
+    branches:
+      - prospective/historical-biotic-memory-v0-1
+    paths:
+      - ".github/workflows/historical-biotic-memory-globi.yml"
+      - "scripts/acquire_historical_biotic_memory_globi.py"
+      - "docs/supporting/historical_biotic_memory_globi_capture_rule_v0.1.json"
+      - "benchmarks/frozen/historical_biotic_memory_primary_species_v0.1.txt"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    name: GloBI raw capture ${{ matrix.label }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {label: "000_024", start: 0, stop: 24}
+          - {label: "024_048", start: 24, stop: 48}
+          - {label: "048_072", start: 48, stop: 72}
+          - {label: "072_096", start: 72, stop: 96}
+          - {label: "096_120", start: 96, stop: 120}
+          - {label: "120_144", start: 120, stop: 144}
+          - {label: "144_168", start: 144, stop: 168}
+          - {label: "168_192", start: 168, stop: 192}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verify frozen response firewall
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          rule=json.loads(Path("docs/supporting/historical_biotic_memory_globi_capture_rule_v0.1.json").read_text())
+          assert rule["status"]=="FROZEN_BEFORE_GLOBI_RAW_CAPTURE"
+          assert all(v is False for v in rule["response_firewall"].values())
+          p=Path("benchmarks/frozen/historical_biotic_memory_primary_species_v0.1.txt")
+          assert hashlib.sha256(p.read_bytes()).hexdigest()==rule["species"]["sha256"]
+          assert len([x for x in p.read_text().splitlines() if x.strip()])==192
+          PY
+
+      - name: Capture raw external interactions only
+        run: |
+          python scripts/acquire_historical_biotic_memory_globi.py \
+            --rule docs/supporting/historical_biotic_memory_globi_capture_rule_v0.1.json \
+            --species benchmarks/frozen/historical_biotic_memory_primary_species_v0.1.txt \
+            --start ${{ matrix.start }} --stop ${{ matrix.stop }} \
+            --output-dir "results/globi/${{ matrix.label }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: historical-biotic-memory-globi-${{ matrix.label }}
+          path: results/globi/${{ matrix.label }}/
+          retention-days: 30
+          if-no-files-found: error
