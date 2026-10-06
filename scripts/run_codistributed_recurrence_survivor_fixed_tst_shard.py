@@ -246,7 +246,15 @@ def read_parts(path,component,ranges,keys):
         if str(np.asarray(p["component"]).item())!=component:
             continue
         key=(int(np.asarray(p["start"]).item()),int(np.asarray(p["stop"]).item()))
-        found[key]={k:np.asarray(p[k],dtype=float) for k in keys}
+        if key in found:
+            raise RuntimeError(f"duplicate {component} shard {key}")
+        data={}
+        for k in keys:
+            x=np.asarray(p[k],dtype=float)
+            if x.shape!=(key[1]-key[0],) or not np.isfinite(x).all():
+                raise RuntimeError(f"{component} shard {key} payload drift for {k}")
+            data[k]=x
+        found[key]=data
     validate_exact_ranges(found.keys(),ranges)
     return found
 
@@ -262,6 +270,13 @@ def run_aggregate(args,mask,info,rule,mask_rule,sharding):
     refs={k:np.concatenate([rp[r][k] for r in rr]) for k in labels}
     evaluations={k:np.concatenate([ep[r][k] for r in er]) for k in labels}
     positive=np.concatenate([pp[r]["positive"] for r in pr])
+    q=mask_rule["exact_survivor_fixed_tst_requalification"]
+    if any(len(v)!=int(q["private_reference_worlds_per_amplitude"]) for v in refs.values()):
+        raise RuntimeError("survivor reference world-count drift")
+    if any(len(v)!=int(q["private_evaluation_worlds_per_amplitude"]) for v in evaluations.values()):
+        raise RuntimeError("survivor evaluation world-count drift")
+    if len(positive)!=int(q["positive_worlds"]):
+        raise RuntimeError("survivor positive world-count drift")
 
     alpha=float(rule["inference"]["alpha"])
     private={}
