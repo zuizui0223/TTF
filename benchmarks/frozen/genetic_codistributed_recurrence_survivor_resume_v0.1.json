@@ -1,0 +1,77 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_survivor_resume_v0.1",
+  "status": "FROZEN_BEFORE_RESUMED_AUTHORITATIVE_QUALIFICATION",
+  "recorded_on": "2026-10-06",
+  "parent_technical_retry": "benchmarks/frozen/genetic_codistributed_recurrence_survivor_technical_retry_v0.1.json",
+  "source_failed_run": {
+    "workflow_run_id": 37393777872,
+    "workflow_head_sha": "89301c6e7d55e3ce05b24e5e178d28b3c0e7d77b",
+    "failure_stage": "aggregate survivor center",
+    "reference_started": false,
+    "evaluation_started": false,
+    "positive_started": false,
+    "qualification_result_created": false
+  },
+  "reused_completed_artifacts": {
+    "geometry": {
+      "artifact_id": 11382168174,
+      "artifact_name": "codistributed-survivor-geometry-v0.1",
+      "artifact_digest": "sha256:4558a6af3c15c37925fa96556b594541d72b77a7af118c2b6cd61e1041e56ff8"
+    },
+    "center_cells": {
+      "A0p5": {
+        "artifact_id": 11383021160,
+        "artifact_name": "codistributed-survivor-center-cell-A0p5",
+        "artifact_digest": "sha256:6bb7abde40096eafe550ad67f731e30f9edc3d8c5981bda07192f2a0557bbe1e",
+        "npz_name": "center_A0p5.npz",
+        "npz_sha256": "4fa7a88cb43b7454f0bd903ae07bc331c20034dbfea2d1976edb66c6195afeb7"
+      },
+      "A1": {
+        "artifact_id": 11383335192,
+        "artifact_name": "codistributed-survivor-center-cell-A1",
+        "artifact_digest": "sha256:336320afa39ceb1a9bc4f8a6f09e2924c2569d9343abdfec2757486632d05c12",
+        "npz_name": "center_A1.npz",
+        "npz_sha256": "cda589aaaa24919c9b87febb78a439d86a2025cea29a5a59306f70e2b7fa8de5"
+      },
+      "A2": {
+        "artifact_id": 11383155086,
+        "artifact_name": "codistributed-survivor-center-cell-A2",
+        "artifact_digest": "sha256:2fc3f67b97308f477589c4da580fb71366c9ba6700b32da791e93efea22c1df6",
+        "npz_name": "center_A2.npz",
+        "npz_sha256": "5ecf26b53063c527e22856afde569fd8a356d2b2373f1b21e023ad21c3af9e3c"
+      },
+      "A3": {
+        "artifact_id": 11382636907,
+        "artifact_name": "codistributed-survivor-center-cell-A3",
+        "artifact_digest": "sha256:c828e8597b51158df8f76889c7e5d3455a117c92004a2ff90f3a4ff783cea141",
+        "npz_name": "center_A3.npz",
+        "npz_sha256": "5c915e02f43b35534ccee229c30af60e096684e4ee578a75f4f4a3569db406ed"
+      }
+    }
+  },
+  "resume_point": "center aggregation only; do not regenerate or replace completed center cells",
+  "technical_condition_check": {
+    "tolerance_atol": 1e-10,
+    "observed_condition_number_range": 2.9558577807620168e-12
+  },
+  "scientific_invariants": {
+    "survivor_species": 326,
+    "sources": 166,
+    "targets": 160,
+    "dyads": 26560,
+    "center_definition": "same four predeclared amplitude-cell means, equal weighted",
+    "private_reference_worlds_per_amplitude": 999,
+    "private_evaluation_worlds_per_amplitude": 500,
+    "positive_worlds": 500,
+    "seeds_unchanged": true,
+    "relation_and_controls_unchanged": true,
+    "least_favourable_envelope_unchanged": true,
+    "gates_unchanged": true
+  },
+  "response_firewall": {
+    "confirmatory_nucleotide_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_T_st_opened": false,
+    "confirmatory_beta_G_opened": false
+  }
+}
