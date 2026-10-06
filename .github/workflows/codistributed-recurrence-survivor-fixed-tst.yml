@@ -1,4 +1,4 @@
-name: codistributed survivor fixed-Tst requalification\n# execution retry after contract-key wiring fix
+name: codistributed survivor fixed-Tst requalification
 
 on:
   push:
@@ -21,10 +21,10 @@ env:
   SHARDING: docs/supporting/genetic_codistributed_recurrence_formal_sharding_v0.1.json
 
 jobs:
-  center:
-    name: survivor center
+  geometry:
+    name: survivor exact geometry
     runs-on: ubuntu-latest
-    timeout-minutes: 240
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -38,7 +38,7 @@ jobs:
 
       - name: Reconstruct exact survivor edge graph
         run: |
-          mkdir -p results/survivor-center
+          mkdir -p results/survivor-geometry
           python - <<'PY'
           import csv, hashlib
           from pathlib import Path
@@ -47,7 +47,7 @@ jobs:
 
           loc=Path("transport/codistributed_recurrence_confirmatory_survivor_localities_v0.1.csv")
           cand=Path("benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv")
-          out=Path("results/survivor-center/survivor_edges.csv")
+          out=Path("results/survivor-geometry/survivor_edges.csv")
           with cand.open(newline="",encoding="utf-8") as f:
               meta={r["species"]:r for r in csv.DictReader(f)}
           by={}
@@ -70,20 +70,85 @@ jobs:
                           "panel":rows[0]["panel"],"role":rows[0]["role"],
                       })
           h=hashlib.sha256(out.read_bytes()).hexdigest()
+          assert len(by)==326
           assert h=="b7864048347bea8393f6beaa7cb7dc4e4f3b87336700f748180d67b94af37f63",h
           print({"species":len(by),"edge_sha256":h,"bytes":out.stat().st_size})
           PY
 
-      - name: Compute survivor frozen geometry-null center
-        run: |
-          python scripts/run_codistributed_recurrence_survivor_fixed_tst_shard.py             --component center             --localities "$LOCALITIES"             --edges results/survivor-center/survivor_edges.csv             --candidates "$CANDIDATES"             --mask-result "$MASK_RESULT"             --survivor-info "$SURVIVOR_INFO"             --rule "$RULE"             --mask-rule "$MASK_RULE"             --sharding "$SHARDING"             --output-npz results/survivor-center/survivor_center_v0.1.npz             --output-json results/survivor-center/survivor_center_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codistributed-survivor-geometry-v0.1
+          path: |
+            transport/codistributed_recurrence_confirmatory_survivor_localities_v0.1.csv
+            results/survivor-geometry/survivor_edges.csv
+          retention-days: 30
+          if-no-files-found: error
 
+  center_cell:
+    name: survivor center ${{ matrix.label }}
+    needs: geometry
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include:
+          - { label: A0p5, amplitude: 0.5 }
+          - { label: A1, amplitude: 1 }
+          - { label: A2, amplitude: 2 }
+          - { label: A3, amplitude: 3 }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: codistributed-survivor-geometry-v0.1
+          path: results/survivor-geometry-artifact
+      - name: Compute exact frozen survivor center cell
+        run: |
+          mkdir -p results/survivor-center-cell
+          python scripts/run_codistributed_recurrence_survivor_fixed_tst_shard.py             --component center-cell             --amplitude ${{ matrix.amplitude }}             --localities results/survivor-geometry-artifact/transport/codistributed_recurrence_confirmatory_survivor_localities_v0.1.csv             --edges results/survivor-geometry-artifact/results/survivor-geometry/survivor_edges.csv             --candidates "$CANDIDATES"             --mask-result "$MASK_RESULT"             --survivor-info "$SURVIVOR_INFO"             --rule "$RULE"             --mask-rule "$MASK_RULE"             --sharding "$SHARDING"             --output-npz results/survivor-center-cell/center_${{ matrix.label }}.npz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codistributed-survivor-center-cell-${{ matrix.label }}
+          path: results/survivor-center-cell/center_${{ matrix.label }}.npz
+          retention-days: 30
+          if-no-files-found: error
+
+  center_aggregate:
+    name: aggregate survivor center
+    needs: [geometry, center_cell]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: codistributed-survivor-geometry-v0.1
+          path: results/survivor-center-artifact
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codistributed-survivor-center-cell-*
+          path: results/survivor-center-cells
+          merge-multiple: true
+      - name: Aggregate exact frozen survivor center
+        run: |
+          mkdir -p results/survivor-center
+          python scripts/run_codistributed_recurrence_survivor_fixed_tst_shard.py             --component center-aggregate             --mask-result "$MASK_RESULT"             --survivor-info "$SURVIVOR_INFO"             --rule "$RULE"             --mask-rule "$MASK_RULE"             --sharding "$SHARDING"             --center-dir results/survivor-center-cells             --output-npz results/survivor-center/survivor_center_v0.1.npz             --output-json results/survivor-center/survivor_center_v0.1.json
       - uses: actions/upload-artifact@v4
         with:
           name: codistributed-survivor-center-v0.1
           path: |
-            transport/codistributed_recurrence_confirmatory_survivor_localities_v0.1.csv
-            results/survivor-center/survivor_edges.csv
+            results/survivor-center-artifact/transport/codistributed_recurrence_confirmatory_survivor_localities_v0.1.csv
+            results/survivor-center-artifact/results/survivor-geometry/survivor_edges.csv
             results/survivor-center/survivor_center_v0.1.npz
             results/survivor-center/survivor_center_v0.1.json
           retention-days: 30
@@ -91,7 +156,7 @@ jobs:
 
   reference:
     name: survivor reference ${{ matrix.label }}
-    needs: center
+    needs: center_aggregate
     runs-on: ubuntu-latest
     timeout-minutes: 240
     strategy:
@@ -117,7 +182,7 @@ jobs:
       - name: Run survivor reference shard
         run: |
           mkdir -p results/survivor-reference
-          python scripts/run_codistributed_recurrence_survivor_fixed_tst_shard.py             --component reference --start ${{ matrix.start }} --stop ${{ matrix.stop }}             --localities results/survivor-center-artifact/transport/codistributed_recurrence_confirmatory_survivor_localities_v0.1.csv             --edges results/survivor-center-artifact/results/survivor-center/survivor_edges.csv             --candidates "$CANDIDATES" --mask-result "$MASK_RESULT" --survivor-info "$SURVIVOR_INFO"             --rule "$RULE" --mask-rule "$MASK_RULE" --sharding "$SHARDING"             --center-npz results/survivor-center-artifact/results/survivor-center/survivor_center_v0.1.npz             --output-npz results/survivor-reference/reference_${{ matrix.label }}.npz
+          python scripts/run_codistributed_recurrence_survivor_fixed_tst_shard.py             --component reference --start ${{ matrix.start }} --stop ${{ matrix.stop }}             --localities results/survivor-center-artifact/results/survivor-center-artifact/transport/codistributed_recurrence_confirmatory_survivor_localities_v0.1.csv             --edges results/survivor-center-artifact/results/survivor-center-artifact/results/survivor-geometry/survivor_edges.csv             --candidates "$CANDIDATES" --mask-result "$MASK_RESULT" --survivor-info "$SURVIVOR_INFO"             --rule "$RULE" --mask-rule "$MASK_RULE" --sharding "$SHARDING"             --center-npz results/survivor-center-artifact/results/survivor-center/survivor_center_v0.1.npz             --output-npz results/survivor-reference/reference_${{ matrix.label }}.npz
       - uses: actions/upload-artifact@v4
         with:
           name: codistributed-survivor-reference-${{ matrix.label }}
@@ -127,7 +192,7 @@ jobs:
 
   evaluation:
     name: survivor evaluation ${{ matrix.label }}
-    needs: center
+    needs: center_aggregate
     runs-on: ubuntu-latest
     timeout-minutes: 240
     strategy:
@@ -151,7 +216,7 @@ jobs:
       - name: Run survivor evaluation shard
         run: |
           mkdir -p results/survivor-evaluation
-          python scripts/run_codistributed_recurrence_survivor_fixed_tst_shard.py             --component evaluation --start ${{ matrix.start }} --stop ${{ matrix.stop }}             --localities results/survivor-center-artifact/transport/codistributed_recurrence_confirmatory_survivor_localities_v0.1.csv             --edges results/survivor-center-artifact/results/survivor-center/survivor_edges.csv             --candidates "$CANDIDATES" --mask-result "$MASK_RESULT" --survivor-info "$SURVIVOR_INFO"             --rule "$RULE" --mask-rule "$MASK_RULE" --sharding "$SHARDING"             --center-npz results/survivor-center-artifact/results/survivor-center/survivor_center_v0.1.npz             --output-npz results/survivor-evaluation/evaluation_${{ matrix.label }}.npz
+          python scripts/run_codistributed_recurrence_survivor_fixed_tst_shard.py             --component evaluation --start ${{ matrix.start }} --stop ${{ matrix.stop }}             --localities results/survivor-center-artifact/results/survivor-center-artifact/transport/codistributed_recurrence_confirmatory_survivor_localities_v0.1.csv             --edges results/survivor-center-artifact/results/survivor-center-artifact/results/survivor-geometry/survivor_edges.csv             --candidates "$CANDIDATES" --mask-result "$MASK_RESULT" --survivor-info "$SURVIVOR_INFO"             --rule "$RULE" --mask-rule "$MASK_RULE" --sharding "$SHARDING"             --center-npz results/survivor-center-artifact/results/survivor-center/survivor_center_v0.1.npz             --output-npz results/survivor-evaluation/evaluation_${{ matrix.label }}.npz
       - uses: actions/upload-artifact@v4
         with:
           name: codistributed-survivor-evaluation-${{ matrix.label }}
@@ -161,7 +226,7 @@ jobs:
 
   positive:
     name: survivor positive ${{ matrix.label }}
-    needs: center
+    needs: center_aggregate
     runs-on: ubuntu-latest
     timeout-minutes: 240
     strategy:
@@ -185,7 +250,7 @@ jobs:
       - name: Run survivor positive shard
         run: |
           mkdir -p results/survivor-positive
-          python scripts/run_codistributed_recurrence_survivor_fixed_tst_shard.py             --component positive --start ${{ matrix.start }} --stop ${{ matrix.stop }}             --localities results/survivor-center-artifact/transport/codistributed_recurrence_confirmatory_survivor_localities_v0.1.csv             --edges results/survivor-center-artifact/results/survivor-center/survivor_edges.csv             --candidates "$CANDIDATES" --mask-result "$MASK_RESULT" --survivor-info "$SURVIVOR_INFO"             --rule "$RULE" --mask-rule "$MASK_RULE" --sharding "$SHARDING"             --center-npz results/survivor-center-artifact/results/survivor-center/survivor_center_v0.1.npz             --output-npz results/survivor-positive/positive_${{ matrix.label }}.npz
+          python scripts/run_codistributed_recurrence_survivor_fixed_tst_shard.py             --component positive --start ${{ matrix.start }} --stop ${{ matrix.stop }}             --localities results/survivor-center-artifact/results/survivor-center-artifact/transport/codistributed_recurrence_confirmatory_survivor_localities_v0.1.csv             --edges results/survivor-center-artifact/results/survivor-center-artifact/results/survivor-geometry/survivor_edges.csv             --candidates "$CANDIDATES" --mask-result "$MASK_RESULT" --survivor-info "$SURVIVOR_INFO"             --rule "$RULE" --mask-rule "$MASK_RULE" --sharding "$SHARDING"             --center-npz results/survivor-center-artifact/results/survivor-center/survivor_center_v0.1.npz             --output-npz results/survivor-positive/positive_${{ matrix.label }}.npz
       - uses: actions/upload-artifact@v4
         with:
           name: codistributed-survivor-positive-${{ matrix.label }}
@@ -195,7 +260,7 @@ jobs:
 
   aggregate:
     name: aggregate survivor requalification
-    needs: [center, reference, evaluation, positive]
+    needs: [center_aggregate, reference, evaluation, positive]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
