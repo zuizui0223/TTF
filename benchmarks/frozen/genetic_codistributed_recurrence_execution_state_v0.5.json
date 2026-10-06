@@ -1,0 +1,111 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_execution_state_v0.5",
+  "status": "ONE_SHOT_CONFIRMATORY_EMPIRICAL_COMPLETE_QUALIFIED_NULL",
+  "recorded_on": "2026-10-06",
+  "supersedes_state_record": "benchmarks/frozen/genetic_codistributed_recurrence_execution_state_v0.4.json",
+  "authoritative_domain": {
+    "species": 326,
+    "sources": 166,
+    "targets": 160,
+    "directed_dyads": 26560,
+    "survivor_information_status": "PASS_TO_SURVIVOR_FIXED_TST_REQUALIFICATION",
+    "survivor_information_unique_fraction": 0.1981596737370178
+  },
+  "survivor_synthetic_qualification": {
+    "workflow_run_id": 37406111501,
+    "qualification_artifact_id": 11388159424,
+    "qualification_sha256": "050157c71a206021e8f911dfceff66242fd25340e1ad4648646d5953fa2d2ae1",
+    "status": "PASS_TO_ONE_SHOT_CONFIRMATORY_EMPIRICAL_OPENING",
+    "private_rejection_rates": {
+      "A0p5": 0.048,
+      "A1": 0.0,
+      "A2": 0.004,
+      "A3": 0.046
+    },
+    "private_wilson95_upper": {
+      "A0p5": 0.07042719683589006,
+      "A1": 0.007624340461552241,
+      "A2": 0.014465715215177033,
+      "A3": 0.06807779276827323
+    },
+    "shared_positive_power": 0.946,
+    "shared_positive_wilson95_lower": 0.9225734384893529
+  },
+  "preopening_provenance": {
+    "qualification_sha256": "050157c71a206021e8f911dfceff66242fd25340e1ad4648646d5953fa2d2ae1",
+    "identity_authorization_sha256": "97619379f9d4d086c3b21b94c6c36b688dfd9489c729fb1631a9cbd5d9456265",
+    "empirical_execution_receipt_sha256": "0ad66508cbdd367dfc92977f883e28e9532d50f069356cb11ee13d535b431237",
+    "local_exact_execution_rule": "benchmarks/frozen/genetic_codistributed_recurrence_local_exact_execution_rule_v0.1.json",
+    "local_exact_execution_receipt_commit": "9359359f",
+    "prior_github_empirical_runs": [
+      {
+        "workflow_run_id": 37424857802,
+        "job_id": 112142102812,
+        "identity_opening_step": "skipped"
+      },
+      {
+        "workflow_run_id": 37442760025,
+        "job_id": 112200229976,
+        "identity_opening_step": "skipped"
+      }
+    ]
+  },
+  "one_shot_empirical_result": {
+    "path": "benchmarks/frozen/genetic_codistributed_recurrence_empirical_result_v0.1.json",
+    "sha256": "d299c00485e5a31c433f87eb235315efc9a839465eb0169c043fde40109f9f0e",
+    "decision": "CONFIRMATORY_QUALIFIED_NULL_SHARED_GEOGRAPHIC_OPPORTUNITY_INSUFFICIENT",
+    "beta_G": -0.004447178457147497,
+    "component_monte_carlo_p": {
+      "A0p5": 0.969,
+      "A1": 0.777,
+      "A2": 0.705,
+      "A3": 0.734
+    },
+    "primary_envelope_p_value": 0.969,
+    "least_favourable_cell": "A0p5",
+    "two_way_cluster_standard_error_descriptive": 0.00415264916288301,
+    "two_way_cluster_z_descriptive": -1.0709256387216706,
+    "T_st_mean": 0.0017854697191396617,
+    "T_st_sd": 0.3129039250752362,
+    "T_st_min": -0.9235294117647059,
+    "T_st_max": 0.9411162046630908
+  },
+  "post_result_audit": {
+    "path": "benchmarks/frozen/genetic_codistributed_recurrence_post_result_audit_v0.1.json",
+    "commit": "1804e3a943d9a116b21b8c52756d8811bd0fe020",
+    "status": "PASS_FROZEN_ONE_SHOT_RESULT_AUDIT",
+    "headline": "Sharing the same landscape is not sufficient to make phylogeographic structure reusable across lineages."
+  },
+  "biological_conclusion": {
+    "supported": [
+      "simple geographic co-opportunity is insufficient to restore cross-lineage recurrence in the qualified codistributed insect domain",
+      "the broad 211-species non-transfer result cannot be explained simply by species occupying or sampling different places",
+      "the same sampled landscape need not imply the same effective phylogeographic barrier structure across lineages",
+      "the next mechanism question is lineage-by-place interaction rather than one universal barrier map"
+    ],
+    "not_supported": [
+      "geography is unimportant",
+      "physical barriers do not matter",
+      "all phylogeographic structure is lineage-specific",
+      "a negative causal effect of geographic co-opportunity",
+      "universal extrapolation beyond the qualified insect domain"
+    ]
+  },
+  "serialization_boundary": {
+    "nucleotide_identity_serialized": false,
+    "edge_genetic_distance_vectors_serialized": false,
+    "dyad_T_st_serialized": false,
+    "summary_result_only": true
+  },
+  "one_shot_boundary": {
+    "post_result_retuning_allowed": false,
+    "alternate_subgroup_result_allowed": false,
+    "result_selection_rerun_allowed": false
+  },
+  "response_state": {
+    "confirmatory_nucleotide_identity_opened": true,
+    "confirmatory_pairwise_genetic_distances_computed_in_memory": true,
+    "confirmatory_T_st_computed": true,
+    "confirmatory_beta_G_computed": true
+  }
+}
