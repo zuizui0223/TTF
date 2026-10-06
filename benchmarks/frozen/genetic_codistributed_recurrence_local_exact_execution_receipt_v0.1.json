@@ -1,0 +1,66 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_local_exact_execution_receipt_v0.1",
+  "status": "AUTHORIZE_SINGLE_LOCAL_EXACT_EMPIRICAL_OPENING",
+  "recorded_on": "2026-10-06",
+  "rule": "benchmarks/frozen/genetic_codistributed_recurrence_local_exact_execution_rule_v0.1.json",
+  "preopening_github_runs": [
+    {
+      "workflow_run_id": 37424857802,
+      "job_id": 112142102812,
+      "conclusion": "failure",
+      "failure_step": "Require exact source archive",
+      "empirical_identity_opening_step": "skipped"
+    },
+    {
+      "workflow_run_id": 37442760025,
+      "job_id": 112200229976,
+      "conclusion": "failure",
+      "failure_step": "Require exact source archive",
+      "empirical_identity_opening_step": "skipped"
+    }
+  ],
+  "exact_source_bundle": {
+    "workflow_run_id": 37442968679,
+    "artifact_id": 11401783044,
+    "artifact_name": "codistributed-recurrence-source-bundle",
+    "artifact_digest": "sha256:085d1c7c0cbfeee70d8a5224f41c80fbf59ae038eb5088436960779fd282ab30",
+    "head_sha": "6ab4c0e3040e420ac329578759ce2f9e1e282542",
+    "source_tar_gz_sha256": "b5f145f0cb511fef6b6fcef1b0953de359f2c735f3e084b1960277920cd50e43",
+    "authorized_code_hashes_verified": true
+  },
+  "exact_phylogatr_source": {
+    "library_path": "/TTF/source/phylogatr_results_exact_20260918.zip",
+    "bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "genes_txt_sha256": "e8470b6a9500ab5f79f47dc0dda3ad034f3107882ca150148d6d91ab98483ba6",
+    "cite_txt_sha256": "e257b2c12ce5e6fe33d40f7064ae4a64b0c9462ddd85f58b0ce0a672759e9eb6"
+  },
+  "authoritative_survivor_inputs": {
+    "workflow_run_id": 37406111501,
+    "qualification_artifact_id": 11388159424,
+    "qualification_sha256": "050157c71a206021e8f911dfceff66242fd25340e1ad4648646d5953fa2d2ae1",
+    "center_artifact_id": 11386604136,
+    "center_npz_sha256": "236ed9cfbb88b04b6338a685b70ef9d5b4c87a1da4ada093c57a919c18461637",
+    "reference_artifact_ids": [11388873248, 11387994336, 11388285902, 11388049113, 11387893905]
+  },
+  "preopening_bindings": {
+    "identity_authorization_sha256": "97619379f9d4d086c3b21b94c6c36b688dfd9489c729fb1631a9cbd5d9456265",
+    "empirical_execution_receipt_sha256": "0ad66508cbdd367dfc92977f883e28e9532d50f069356cb11ee13d535b431237",
+    "empirical_result_observed_before_execution": false
+  },
+  "execution": {
+    "environment": "isolated local runtime using exact GitHub source bundle plus exact Library source archive plus exact authoritative GitHub artifacts",
+    "runner": "scripts/run_codistributed_recurrence_confirmatory_empirical.py",
+    "attempt": 1,
+    "maximum_attempts": 1,
+    "must_reproduce_authorization_before_opening": true,
+    "post_result_retuning_allowed": false,
+    "result_selection_rerun_allowed": false
+  },
+  "response_firewall": {
+    "confirmatory_nucleotide_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_T_st_opened": false,
+    "confirmatory_beta_G_opened": false
+  }
+}

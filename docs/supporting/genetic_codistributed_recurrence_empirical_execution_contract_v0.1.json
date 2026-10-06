@@ -1,0 +1,51 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_empirical_execution_contract_v0.1",
+  "status": "FROZEN_BEFORE_AUTHORITATIVE_SURVIVOR_REQUALIFICATION_RESULT",
+  "frozen_on": "2026-10-06",
+  "authoritative_survivor_qualification": {
+    "workflow_run_id": 37406111501,
+    "workflow_name": "codistributed survivor authoritative resume",
+    "required_result_status": "PASS_TO_ONE_SHOT_CONFIRMATORY_EMPIRICAL_OPENING",
+    "qualification_artifact": "codistributed-survivor-resume-qualification-v0.1",
+    "center_artifact": "codistributed-survivor-resume-center-v0.1",
+    "reference_artifact_pattern": "codistributed-survivor-resume-reference-*"
+  },
+  "source": {
+    "archive_cache_key": "phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "archive_bytes": 274988692
+  },
+  "frozen_inputs": {
+    "full_mask_ledger": "benchmarks/frozen/genetic_codistributed_recurrence_confirmatory_mask_full_v0.1.json",
+    "full_mask_ledger_sha256": "0f3035fbc8a88a18ba274f4e97ada800b5688b8d40c26568063fbba68118e917",
+    "candidates": "benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv",
+    "geometry_rule": "docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json",
+    "sharding": "docs/supporting/genetic_codistributed_recurrence_formal_sharding_v0.1.json",
+    "opening_rule": "docs/supporting/genetic_codistributed_recurrence_empirical_opening_rule_v0.1.json"
+  },
+  "sequence": [
+    "authoritative survivor requalification must PASS",
+    "generate hash-bound identity-opening authorization without reading nucleotide identity",
+    "commit authorization and a separate execution receipt",
+    "execution receipt push launches one-shot empirical workflow",
+    "workflow restores only the exact bound survivor center/reference artifacts and exact phylogatR archive",
+    "empirical runner opens nucleotide identity once and serializes summary result only"
+  ],
+  "trigger": {
+    "path": "benchmarks/frozen/genetic_codistributed_recurrence_empirical_execution_v0.1.json",
+    "authorization_path": "benchmarks/frozen/genetic_codistributed_recurrence_identity_opening_authorization_v0.1.json"
+  },
+  "forbidden": [
+    "trigger empirical workflow without survivor PASS",
+    "substitute artifacts from any other run",
+    "change scientific runner or inference after authorization",
+    "serialize nucleotide identity, edge genetic-distance vectors, or dyad-level empirical T_st",
+    "rerun for result selection"
+  ],
+  "response_firewall": {
+    "confirmatory_nucleotide_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_T_st_opened": false,
+    "confirmatory_beta_G_opened": false
+  }
+}

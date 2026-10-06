@@ -1,0 +1,45 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_panel_provenance_correction_v0.2",
+  "status": "RESOLVED_RESPONSE_BLIND_NO_PANEL_MEMBERSHIP_CHANGE",
+  "resolved_on": "2026-10-03",
+  "parent_design": "benchmarks/frozen/genetic_codistributed_recurrence_response_blind_design_v0.1.json",
+  "issue": "Initial reproduction attempt incorrectly treated panel/role digests as order-invariant set digests. The v0.1 design digests are instead hashes of the deterministic hash-ranked sequence itself.",
+  "resolution": {
+    "domain_digest": "SHA256 of lexicographically sorted 762-species domain joined by LF, no trailing LF",
+    "panel_and_role_digest": "SHA256 of the deterministic hash-ranked species sequence joined by LF, no trailing LF",
+    "panel_key": "SHA256('place-recurrence-insecta-fresh-v0.1|' + archive_sha256 + '|' + species), hexadecimal ascending; species tie-break",
+    "development": "first 381 ranked species",
+    "confirmatory": "remaining 381 ranked species",
+    "development_role_key": "SHA256('place-recurrence-insecta-fresh-v0.1|development-role|' + archive_sha256 + '|' + species), hexadecimal ascending; species tie-break",
+    "confirmatory_role_key": "SHA256('place-recurrence-insecta-fresh-v0.1|confirmatory-role|' + archive_sha256 + '|' + species), hexadecimal ascending; species tie-break",
+    "source": "first 190 role-ranked species",
+    "target": "remaining 191 role-ranked species"
+  },
+  "exact_reproduction": {
+    "domain_species_digest_sha256": "16ad6576ec10fe4871dc1c1f79e794ec61dc4d6fd719809358b78e2099f9259a",
+    "development_species_digest_sha256": "7227e069cd366a086d35eb1367aa50e73a2510f7724a1c734d9f6ae20b970b8a",
+    "confirmatory_species_digest_sha256": "fa14ce86faf04ce849fd15037764ca160edb4286e24d65104344a704cf75d5b2",
+    "development_source_digest_sha256": "a6e50634a5bb3464160a96efec99113b1052aa3cdd15a1c4e9896446496ea667",
+    "development_target_digest_sha256": "98de2966dfebc7d2fb5bd6824ef894e77ac290e95161edd9392a370e6f00cb94",
+    "confirmatory_source_digest_sha256": "10921d58a54e232aa20cc48c0fced7aae3cc55e7998eb3b434bde317527cfb75",
+    "confirmatory_target_digest_sha256": "0999c08a856fcfa98d29f5f647bae84c7f15ab20c87c05c386eebbe0377c73c2"
+  },
+  "independent_response_blind_crosscheck": {
+    "development_final_total_unique_fraction": 0.2148686426495287,
+    "frozen_development": 0.21486864264952774,
+    "confirmatory_final_total_unique_fraction": 0.20539481030366152,
+    "frozen_confirmatory": 0.20539481030366277,
+    "development_predictor_condition_number": 218.36362388832296,
+    "frozen_dyadic_condition_number": 218.36362388831935,
+    "development_G_ge_0p5_targets_with_at_least_5_sources": 162,
+    "confirmatory_G_ge_0p5_targets_with_at_least_5_sources": 158,
+    "interpretation": "The reproduced memberships generate the frozen response-blind information diagnostics and descriptive target counts. This establishes identity of the intended v0.1 design without genetic response."
+  },
+  "correction_scope": "Workflow/provenance digest semantics only. The v0.1 panel membership, roles, predictor, controls, gates and scientific hypothesis remain unchanged.",
+  "response_firewall": {
+    "development_nucleotide_identity_opened": false,
+    "confirmatory_nucleotide_identity_opened": false,
+    "empirical_T_st_opened": false,
+    "empirical_beta_G_opened": false
+  }
+}

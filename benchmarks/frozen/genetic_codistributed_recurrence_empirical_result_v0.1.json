@@ -1,0 +1,1708 @@
+{
+  "T_st_distribution": {
+    "max": 0.9411162046630908,
+    "mean": 0.0017854697191396617,
+    "median": 0.0,
+    "min": -0.9235294117647059,
+    "q10": -0.401962334340851,
+    "q25": -0.20386297468926212,
+    "q75": 0.20588235294117646,
+    "q90": 0.40385976164018966,
+    "sd": 0.3129039250752362
+  },
+  "authorization_sha256": "97619379f9d4d086c3b21b94c6c36b688dfd9489c729fb1631a9cbd5d9456265",
+  "centered_E_distribution": {
+    "max": 1.231605302013683,
+    "mean": -0.000537163261186037,
+    "median": -0.0010781287040125837,
+    "min": -1.2592998999624676,
+    "q10": -0.4103704200430106,
+    "q25": -0.21432857860405297,
+    "q75": 0.21014785516468246,
+    "q90": 0.41167484683277517,
+    "sd": 0.32049959637254777
+  },
+  "decision": "CONFIRMATORY_QUALIFIED_NULL_SHARED_GEOGRAPHIC_OPPORTUNITY_INSUFFICIENT",
+  "empirical_domain": {
+    "directed_dyads": 26560,
+    "sources": 166,
+    "species": 326,
+    "targets": 160
+  },
+  "inputs_sha256": {
+    "candidates": "ecf61e04361acf61b30db62988270553ff6fef0c1c337d7db4b9cbdcfdaaf08c",
+    "center_npz": "236ed9cfbb88b04b6338a685b70ef9d5b4c87a1da4ada093c57a919c18461637",
+    "edges": "b7864048347bea8393f6beaa7cb7dc4e4f3b87336700f748180d67b94af37f63",
+    "full_mask_ledger": "0f3035fbc8a88a18ba274f4e97ada800b5688b8d40c26568063fbba68118e917",
+    "geometry_rule": "e5b7c310f29e5dbd2a1760972f7a5f40b458acbf47d2dc6e875813c0c996502e",
+    "localities": "bb6e7c6611522f2d1ef2983c8ad483b32e7144ba0e8272bdbc3d580e8a086342",
+    "opening_rule": "e1f98c30d490806c08e2cc872c476fc349026971b0c969562062ae5317e7a105",
+    "sharding": "94849fb292e3f263643467cbc75deb43ffcb0763e0f53b120f4bc714de635271",
+    "survivor_qualification": "050157c71a206021e8f911dfceff66242fd25340e1ad4648646d5953fa2d2ae1"
+  },
+  "one_shot": {
+    "alternate_subgroup_result_allowed": false,
+    "post_result_retuning_allowed": false,
+    "result_selection_rerun_allowed": false
+  },
+  "outcome_state": {
+    "confirmatory_T_st_computed": true,
+    "confirmatory_beta_G_computed": true,
+    "confirmatory_nucleotide_identity_opened": true,
+    "confirmatory_pairwise_genetic_distances_computed_in_memory": true,
+    "serialized_dyad_T_st": false,
+    "serialized_edge_genetic_distance_vectors": false,
+    "serialized_nucleotide_identity": false
+  },
+  "pair_count_summary_by_species": {
+    "Acentrella turbida": {
+      "edges": 20,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 71
+    },
+    "Acronicta grisea": {
+      "edges": 74,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 254
+    },
+    "Acronicta hasta": {
+      "edges": 163,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 561
+    },
+    "Admontia grandicornis": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 121
+    },
+    "Aedes increpitus": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 2,
+      "valid_sequence_pairs_total": 171
+    },
+    "Aedes japonicus": {
+      "edges": 185,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 478
+    },
+    "Aethalura punctulata": {
+      "edges": 69,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 91
+    },
+    "Aethes interruptofasciata": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 338
+    },
+    "Aethes rutilana": {
+      "edges": 70,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 128
+    },
+    "Agabus ajax": {
+      "edges": 63,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 314
+    },
+    "Agaraea inconspicua": {
+      "edges": 21,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 104
+    },
+    "Agonopterix ciliella": {
+      "edges": 201,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 586
+    },
+    "Agonopterix kaekeritziana": {
+      "edges": 79,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 87
+    },
+    "Agrius cingulata": {
+      "edges": 204,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1074
+    },
+    "Aidos perfusa": {
+      "edges": 43,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 85
+    },
+    "Allantus cinctus": {
+      "edges": 176,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 327
+    },
+    "Alliopsis fractiseta": {
+      "edges": 37,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 334
+    },
+    "Alysson spinosus": {
+      "edges": 21,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 50
+    },
+    "Amegilla calens": {
+      "edges": 40,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 139
+    },
+    "Ameletus inopinatus": {
+      "edges": 65,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 179
+    },
+    "Ampedus fusculus": {
+      "edges": 17,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 103
+    },
+    "Aneugmenus padi": {
+      "edges": 43,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 71
+    },
+    "Anopheles punctipennis": {
+      "edges": 1138,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 4734
+    },
+    "Antanartia dimorphica": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 148
+    },
+    "Antepione thisoaria": {
+      "edges": 23,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 47
+    },
+    "Anthela acuta": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 22
+    },
+    "Antherophagus pallens": {
+      "edges": 17,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 22
+    },
+    "Anthonomus pedicularius": {
+      "edges": 20,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 23
+    },
+    "Anthrenus fuscus": {
+      "edges": 34,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 43
+    },
+    "Antispila treitschkiella": {
+      "edges": 31,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 95
+    },
+    "Apamea crenata": {
+      "edges": 222,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 353
+    },
+    "Apamea ophiogramma": {
+      "edges": 34,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 242
+    },
+    "Aphelia paleana": {
+      "edges": 61,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 110
+    },
+    "Apis dorsata": {
+      "edges": 43,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 171
+    },
+    "Arctia parthenos": {
+      "edges": 40,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 75
+    },
+    "Arctornis intacta": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 403
+    },
+    "Arethusana arethusa": {
+      "edges": 364,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 588
+    },
+    "Arteurotia tractipennis": {
+      "edges": 15,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 36
+    },
+    "Asturodes bioalfae": {
+      "edges": 71,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 294
+    },
+    "Athalia lugens": {
+      "edges": 39,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 47
+    },
+    "Athripsodes cinereus": {
+      "edges": 62,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 229
+    },
+    "Aulonothroscus constrictor": {
+      "edges": 110,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1709
+    },
+    "Baetisca laurentina": {
+      "edges": 38,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 168
+    },
+    "Balclutha abdominalis": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 52
+    },
+    "Blastobasis phaedra": {
+      "edges": 45,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 5850
+    },
+    "Blepharomastix ianthealis": {
+      "edges": 33,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 270
+    },
+    "Boletina nitiduloides": {
+      "edges": 45,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 177
+    },
+    "Boloria dia": {
+      "edges": 76,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 80
+    },
+    "Bombus kirbiellus": {
+      "edges": 37,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 61
+    },
+    "Bombus lucorum": {
+      "edges": 431,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 712
+    },
+    "Bostrichus saxeseni": {
+      "edges": 107,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1611
+    },
+    "Brachycaudus cardui": {
+      "edges": 69,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 91
+    },
+    "Brachypalpus oarus": {
+      "edges": 106,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 487
+    },
+    "Bradysia trivittata": {
+      "edges": 3098,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 261483
+    },
+    "Brassicogethes aeneus": {
+      "edges": 105,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 146
+    },
+    "Calaphis flava": {
+      "edges": 153,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 17927
+    },
+    "Callidium violaceum": {
+      "edges": 31,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 58
+    },
+    "Callionima denticulata": {
+      "edges": 114,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 430
+    },
+    "Callopistria juventina": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 31
+    },
+    "Camponotus pennsylvanicus": {
+      "edges": 2814,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 54915
+    },
+    "Cantharis livida": {
+      "edges": 57,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 67
+    },
+    "Cantharis pellucida": {
+      "edges": 61,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 65
+    },
+    "Carales astur": {
+      "edges": 523,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1407
+    },
+    "Carcharodus lavatherae": {
+      "edges": 106,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 134
+    },
+    "Carteris lineata": {
+      "edges": 41,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 139
+    },
+    "Cassida rubiginosa": {
+      "edges": 79,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 112
+    },
+    "Catocala nymphagoga": {
+      "edges": 14,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 214
+    },
+    "Catocala semirelicta": {
+      "edges": 42,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 289
+    },
+    "Cecrita perplexa": {
+      "edges": 17,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 40
+    },
+    "Cerastis rubricosa": {
+      "edges": 151,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 166
+    },
+    "Ceratapion gibbirostre": {
+      "edges": 20,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 20
+    },
+    "Ceriagrion coromandelianum": {
+      "edges": 40,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 64
+    },
+    "Cerodontha longipennis": {
+      "edges": 372,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 644
+    },
+    "Cerura vinula": {
+      "edges": 69,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 74
+    },
+    "Chiasmia clathrata": {
+      "edges": 180,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 241
+    },
+    "Chironomus dilutus": {
+      "edges": 75,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 783
+    },
+    "Chlamydastis arenaria": {
+      "edges": 44,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 198
+    },
+    "Chlamydastis carlosviquezi": {
+      "edges": 39,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 159
+    },
+    "Chloroclystis insigillata": {
+      "edges": 151,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1765
+    },
+    "Chrysomela elongata": {
+      "edges": 44,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 50
+    },
+    "Chrysops furcatus": {
+      "edges": 217,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1416
+    },
+    "Citheronioides lamata": {
+      "edges": 35,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 72
+    },
+    "Coleophora flavipennella": {
+      "edges": 14,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 30
+    },
+    "Colobochyla interpuncta": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 30
+    },
+    "Colostygia aqueata": {
+      "edges": 61,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 114
+    },
+    "Conchylodes nolckenialis": {
+      "edges": 165,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1542
+    },
+    "Condica cupentia": {
+      "edges": 162,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 573
+    },
+    "Condica illecta": {
+      "edges": 141,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1397
+    },
+    "Condylostylus patibulatus": {
+      "edges": 100,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 4182
+    },
+    "Contacyphon coarctatus": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 22
+    },
+    "Coproica hirtula": {
+      "edges": 44,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 93
+    },
+    "Corticaria rubripes": {
+      "edges": 39,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 43
+    },
+    "Corticea lysias": {
+      "edges": 66,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 370
+    },
+    "Corynotricha antipodella": {
+      "edges": 22,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 37
+    },
+    "Cosmia pyralina": {
+      "edges": 45,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 54
+    },
+    "Crambidia casta": {
+      "edges": 41,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 109
+    },
+    "Crassa tinctella": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 18
+    },
+    "Cropia rivulosa": {
+      "edges": 198,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 831
+    },
+    "Crossocerus elongatulus": {
+      "edges": 21,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 31
+    },
+    "Cryptocephalus pusillus": {
+      "edges": 35,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 47
+    },
+    "Cryptophion guillermoiB": {
+      "edges": 138,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 257
+    },
+    "Ctenochira haemosterna": {
+      "edges": 109,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 283
+    },
+    "Culex annulirostris": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 52
+    },
+    "Culicoides orientalis": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 61
+    },
+    "Dasyphora canadiana": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 134
+    },
+    "Delphyre testacea": {
+      "edges": 72,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 210
+    },
+    "Denticucullus pygmina": {
+      "edges": 33,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 44
+    },
+    "Deporaus betulae": {
+      "edges": 64,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 82
+    },
+    "Diamesa hyperborea": {
+      "edges": 40,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 579
+    },
+    "Dichomeris flavocostella": {
+      "edges": 42,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 116
+    },
+    "Dioryctria pseudotsugella": {
+      "edges": 44,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 453
+    },
+    "Dolerus cothurnatus": {
+      "edges": 41,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 119
+    },
+    "Dryocampa rubicunda": {
+      "edges": 75,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 318
+    },
+    "Dyops cuprescens": {
+      "edges": 341,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 2133
+    },
+    "Eccoptogaster intricata": {
+      "edges": 20,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 28
+    },
+    "Ectoedemia rubivora": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 28
+    },
+    "Eilema griseola": {
+      "edges": 72,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 99
+    },
+    "Eiphosoma dolopon": {
+      "edges": 34,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 92
+    },
+    "Endothenia gentianaeana": {
+      "edges": 15,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 26
+    },
+    "Ephemerella subvaria": {
+      "edges": 20,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 107
+    },
+    "Epinotia mercuriana": {
+      "edges": 34,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 40
+    },
+    "Epiperola vaferella": {
+      "edges": 24,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 73
+    },
+    "Eratoneura certa": {
+      "edges": 46,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 208
+    },
+    "Erebia youngi": {
+      "edges": 37,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 126
+    },
+    "Ethmia baliostola": {
+      "edges": 158,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 2717
+    },
+    "Eucereon baleris": {
+      "edges": 39,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 842
+    },
+    "Euclea chiriquensis": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 262
+    },
+    "Euglyphis scaptia": {
+      "edges": 35,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 47
+    },
+    "Eugnosta sartana": {
+      "edges": 42,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 187
+    },
+    "Euodynerus notatus": {
+      "edges": 17,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 23
+    },
+    "Eupithecia nimbicolor": {
+      "edges": 17,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 44
+    },
+    "Eurois occulta": {
+      "edges": 775,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 4377
+    },
+    "Eutrichapion viciae": {
+      "edges": 41,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 56
+    },
+    "Euura brevivalvis": {
+      "edges": 15,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 33
+    },
+    "Euxesta notata": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 118
+    },
+    "Euxoa intrita": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 26
+    },
+    "Euxoa obelisca": {
+      "edges": 65,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 110
+    },
+    "Exocentrus adspersus": {
+      "edges": 24,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 64
+    },
+    "Fannia spathiophora": {
+      "edges": 154,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 158861
+    },
+    "Fisera hypoleuca": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 24
+    },
+    "Frankliniella occidentalis": {
+      "edges": 526,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 11994
+    },
+    "Garrha ocellifera": {
+      "edges": 17,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 27
+    },
+    "Gasteruption assectator": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 42
+    },
+    "Gonioctena quinquepunctata": {
+      "edges": 25,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 29
+    },
+    "Gretchena delicatana": {
+      "edges": 66,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 602
+    },
+    "Gryllus pennsylvanicus": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 20
+    },
+    "Gymnelia ethodaea": {
+      "edges": 33,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 45
+    },
+    "Hadena albimacula": {
+      "edges": 20,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 29
+    },
+    "Hamadryas saurites": {
+      "edges": 21,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 107
+    },
+    "Hedya salicella": {
+      "edges": 15,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 21
+    },
+    "Helicoverpa punctigera": {
+      "edges": 337,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 2252
+    },
+    "Helotropha leucostigma": {
+      "edges": 35,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 43
+    },
+    "Hemerobius pinidumus": {
+      "edges": 78,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 365
+    },
+    "Hemiceras alba": {
+      "edges": 118,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 346
+    },
+    "Hemiceras indistans": {
+      "edges": 223,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 4316
+    },
+    "Heorta pulchra": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 69
+    },
+    "Hercostomus unicolor": {
+      "edges": 155,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1479
+    },
+    "Herminia pedipilalis": {
+      "edges": 42,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 119
+    },
+    "Herpetogramma phaeopteralis": {
+      "edges": 374,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 5721
+    },
+    "Hydrelia albifera": {
+      "edges": 46,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 161
+    },
+    "Hydropsyche siltalai": {
+      "edges": 155,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 876
+    },
+    "Hydrotaea dentipes": {
+      "edges": 15,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 85
+    },
+    "Hylaeus laetus": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 23
+    },
+    "Hylaeus mesillae": {
+      "edges": 70,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 324
+    },
+    "Hylesia rufipes": {
+      "edges": 35,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 451
+    },
+    "Hypena edictalis": {
+      "edges": 40,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 109
+    },
+    "Hypomicrogaster rugosus": {
+      "edges": 67,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 127
+    },
+    "Idaea halmaea": {
+      "edges": 15,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 44
+    },
+    "Idaea ochrata": {
+      "edges": 41,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 64
+    },
+    "Idaea trigeminata": {
+      "edges": 32,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 44
+    },
+    "Isadelphus inimicus": {
+      "edges": 17,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 41
+    },
+    "Isoperla montana": {
+      "edges": 20,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 154
+    },
+    "Ixylasia schausi": {
+      "edges": 69,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 349
+    },
+    "Judolia montivagans": {
+      "edges": 36,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 89
+    },
+    "Lamprostola aglaope": {
+      "edges": 24,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 196
+    },
+    "Lasioglossum creberrimum": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 18
+    },
+    "Lesmone aemylia": {
+      "edges": 13,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 28
+    },
+    "Lesmone gentilis": {
+      "edges": 67,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1491
+    },
+    "Lesteva longoelytrata": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 38
+    },
+    "Lestica confluenta": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 24
+    },
+    "Lethe anthedon": {
+      "edges": 62,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 439
+    },
+    "Limnephilus ademus": {
+      "edges": 34,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 84
+    },
+    "Limnephilus extractus": {
+      "edges": 103,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 354
+    },
+    "Lirimiris lignitecta": {
+      "edges": 330,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 924
+    },
+    "Lobobunaea phaedusa": {
+      "edges": 20,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 79
+    },
+    "Lygropia cernalis": {
+      "edges": 15,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 51
+    },
+    "Macaria adonis": {
+      "edges": 20,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 60
+    },
+    "Marimatha nigrofimbria": {
+      "edges": 195,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 532
+    },
+    "Megaselia baileyae": {
+      "edges": 23,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1687
+    },
+    "Megaselia eccoptomera": {
+      "edges": 658,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 43970
+    },
+    "Megaselia ilca": {
+      "edges": 125,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 965
+    },
+    "Melanolophia imitata": {
+      "edges": 143,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1916
+    },
+    "Melanterius acaciae": {
+      "edges": 60,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 159
+    },
+    "Melittobia australica": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 506
+    },
+    "Memphis moruus": {
+      "edges": 108,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 330
+    },
+    "Metaphycus lounsburyi": {
+      "edges": 32,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 127
+    },
+    "Metarranthis angularia": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 42
+    },
+    "Microcephalothrips abdominalis": {
+      "edges": 17,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 180
+    },
+    "Micropsectra polita": {
+      "edges": 930,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 120113
+    },
+    "Micrurapteryx occulta": {
+      "edges": 216,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 653
+    },
+    "Mimumesa dahlbomi": {
+      "edges": 15,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 29
+    },
+    "Mocis alterna": {
+      "edges": 40,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 182
+    },
+    "Monochroa suffusella": {
+      "edges": 22,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 24
+    },
+    "Monostegia abdominalis": {
+      "edges": 145,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 197
+    },
+    "Mordellistena neuwaldeggiana": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 16
+    },
+    "Mulsantina picta": {
+      "edges": 20,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 49
+    },
+    "Mycetophila gemerensis": {
+      "edges": 17,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 22
+    },
+    "Mythimna ferrago": {
+      "edges": 211,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 380
+    },
+    "Mythimna impura": {
+      "edges": 129,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 205
+    },
+    "Myzodium modestum": {
+      "edges": 115,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 215
+    },
+    "Nematus incompletus": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 48
+    },
+    "Nemorimyza posticata": {
+      "edges": 306,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 725
+    },
+    "Neocrepidodera transversa": {
+      "edges": 20,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 22
+    },
+    "Neodactria luteolellus": {
+      "edges": 109,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 362
+    },
+    "Nicrophorus humator": {
+      "edges": 20,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 20
+    },
+    "Noctua fimbriata": {
+      "edges": 216,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 448
+    },
+    "Nudaria mundana": {
+      "edges": 40,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 46
+    },
+    "Ocypus brunnipes": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 20
+    },
+    "Odontomachus chelifer": {
+      "edges": 68,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 116
+    },
+    "Oecetis persimilis": {
+      "edges": 36,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 49
+    },
+    "Olibrus semistriatus": {
+      "edges": 118,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1584
+    },
+    "Ophonus melletii": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 56
+    },
+    "Orgyia definita": {
+      "edges": 65,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 710
+    },
+    "Orthocentrus winnertzii": {
+      "edges": 15,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 38
+    },
+    "Orthocladius dorenus": {
+      "edges": 3371,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 315886
+    },
+    "Orthocladius oblidens": {
+      "edges": 73,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 9897
+    },
+    "Orthocladius oliveri": {
+      "edges": 125,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 218205
+    },
+    "Osmia caerulescens": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 19
+    },
+    "Oxidercia thaumantis": {
+      "edges": 1051,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 8662
+    },
+    "Oxybelus haemorrhoidalis": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 23
+    },
+    "Pachynematus clitellatus": {
+      "edges": 48,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 168
+    },
+    "Paectes oculatrix": {
+      "edges": 36,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 53
+    },
+    "Panzeria sulcocarina": {
+      "edges": 17,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 39
+    },
+    "Paraleptophlebia submarginata": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 92
+    },
+    "Parancistrocerus pedestris": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 28
+    },
+    "Parides mylotes": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 135
+    },
+    "Pasiphila debiliata": {
+      "edges": 35,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 41
+    },
+    "Pasiphila rectangulata": {
+      "edges": 554,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 4654
+    },
+    "Passaloecus singularis": {
+      "edges": 71,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 315
+    },
+    "Pelochrista agricolana": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 139
+    },
+    "Pericyma atrifusa": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 128
+    },
+    "Perimede erransella": {
+      "edges": 37,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 297
+    },
+    "Periphyllus testudinaceus": {
+      "edges": 44,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1326
+    },
+    "Pero ancetaria": {
+      "edges": 22,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 547
+    },
+    "Perola clara": {
+      "edges": 22,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 84
+    },
+    "Phaonia fuscana": {
+      "edges": 121,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1010
+    },
+    "Phaonia soccata": {
+      "edges": 35,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 170
+    },
+    "Philometra metonalis": {
+      "edges": 146,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 783
+    },
+    "Philonthus flavibasis": {
+      "edges": 44,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 59
+    },
+    "Phocides metrodorus": {
+      "edges": 74,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 262
+    },
+    "Phyllobrotica quadrimaculata": {
+      "edges": 20,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 28
+    },
+    "Phyllodesma ilicifolia": {
+      "edges": 17,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 19
+    },
+    "Phyllotreta robusta": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 28
+    },
+    "Phytoliriomyza arctica": {
+      "edges": 21,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 38
+    },
+    "Pimelia subglobosa": {
+      "edges": 37,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 289
+    },
+    "Pimpla aequalis": {
+      "edges": 110,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 7651
+    },
+    "Platynota flavedana": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 45
+    },
+    "Platypalpus pulicarius": {
+      "edges": 65,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 2764
+    },
+    "Platysenta mobilis": {
+      "edges": 22,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 65
+    },
+    "Plebejus bellieri": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 38
+    },
+    "Pococera expandens": {
+      "edges": 162,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 673
+    },
+    "Pococera robustella": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 41
+    },
+    "Polia nugatis": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 161
+    },
+    "Polix coloradella": {
+      "edges": 77,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 786
+    },
+    "Prepona dexamenus": {
+      "edges": 21,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 49
+    },
+    "Prosimulium arvum": {
+      "edges": 106,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 9087
+    },
+    "Pseudolimnophila inornata": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 79
+    },
+    "Psychophasma erosa": {
+      "edges": 21,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 24
+    },
+    "Psylliodes affinis": {
+      "edges": 116,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 532
+    },
+    "Pyrgus cinarae": {
+      "edges": 75,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 512
+    },
+    "Pyrrhalta viburni": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 239
+    },
+    "Ravinia planifrons": {
+      "edges": 33,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 584
+    },
+    "Rhigognostis senilella": {
+      "edges": 37,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 45
+    },
+    "Rhionaeschna marchali": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 109
+    },
+    "Rhyacia quadrangula": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1014
+    },
+    "Rhyacophila dorsalis": {
+      "edges": 94,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 230
+    },
+    "Rothschildia aurota": {
+      "edges": 20,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 30
+    },
+    "Rymosia signatipes": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 36
+    },
+    "Sarsina festiva": {
+      "edges": 17,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 315
+    },
+    "Saurita tipulina": {
+      "edges": 15,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 97
+    },
+    "Scathophaga litorea": {
+      "edges": 220,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 57916
+    },
+    "Scoparia penumbralis": {
+      "edges": 259,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 295682
+    },
+    "Scopula incanata": {
+      "edges": 83,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 108
+    },
+    "Scopula luteolata": {
+      "edges": 33,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 92
+    },
+    "Scythropia crataegella": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 18
+    },
+    "Selagia spadicella": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 29
+    },
+    "Selatosomus pulcher": {
+      "edges": 17,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 434
+    },
+    "Simulium pseudequinum": {
+      "edges": 15,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 325
+    },
+    "Sitona lineellus": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 58
+    },
+    "Smaragdina aurita": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 18
+    },
+    "Sophista bifasciata": {
+      "edges": 115,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 511
+    },
+    "Speranza occiduaria": {
+      "edges": 34,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 82
+    },
+    "Spodoptera androgea": {
+      "edges": 361,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1052
+    },
+    "Stenoma baliandra": {
+      "edges": 36,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 392
+    },
+    "Stenoma completella": {
+      "edges": 113,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 712
+    },
+    "Strangalepta abbreviata": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 89
+    },
+    "Stygnocoris sabulosus": {
+      "edges": 19,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 23
+    },
+    "Suillia humilis": {
+      "edges": 14,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 73
+    },
+    "Symplecta pilipes": {
+      "edges": 66,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 473
+    },
+    "Symplecta stictica": {
+      "edges": 21,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 696
+    },
+    "Syneora lithina": {
+      "edges": 17,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 170
+    },
+    "Syngamilyta samarialis": {
+      "edges": 38,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 234
+    },
+    "Synopeas pennsylvanicum": {
+      "edges": 209,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 10188
+    },
+    "Tachinus rufipes": {
+      "edges": 44,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 74
+    },
+    "Tachyporus abdominalis": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 102
+    },
+    "Tachyporus chrysomelinus": {
+      "edges": 104,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 501
+    },
+    "Tachysphex unicolor": {
+      "edges": 44,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 58
+    },
+    "Tanytarsus anderseni": {
+      "edges": 32,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 41991
+    },
+    "Tasgius melanarius": {
+      "edges": 70,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 224
+    },
+    "Technomyrmex vitiensis": {
+      "edges": 35,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 127
+    },
+    "Tetanolita mynesalis": {
+      "edges": 67,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 176
+    },
+    "Tetragonisca angustula": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 24
+    },
+    "Themira minor": {
+      "edges": 38,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 64
+    },
+    "Therioaphis trifolii": {
+      "edges": 413,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 4796
+    },
+    "Thrips flavidulus": {
+      "edges": 17,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 77
+    },
+    "Trichareva fulvilaniata": {
+      "edges": 104,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 451
+    },
+    "Triphleba lugubris": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 69
+    },
+    "Udea rubigalis": {
+      "edges": 219,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 2158
+    },
+    "Vespula pensylvanica": {
+      "edges": 94,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 359
+    },
+    "Virbia ferruginosa": {
+      "edges": 278,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 1344
+    },
+    "Xylocopa sonorina": {
+      "edges": 40,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 438
+    },
+    "Xylophanes hannemanni": {
+      "edges": 16,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 27
+    },
+    "Xylosandrus germanus": {
+      "edges": 51,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 410
+    },
+    "Zelleria hepariella": {
+      "edges": 32,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 43
+    },
+    "Zenophleps alpinata": {
+      "edges": 35,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 72
+    },
+    "Zygonyx flavicosta": {
+      "edges": 18,
+      "valid_sequence_pairs_min_per_edge": 1,
+      "valid_sequence_pairs_total": 22
+    }
+  },
+  "predictor_condition_number": 180.1817730304549,
+  "primary": {
+    "alpha": 0.05,
+    "coefficient": -0.004447178457147497,
+    "component_monte_carlo_p": {
+      "A0p5": 0.969,
+      "A1": 0.777,
+      "A2": 0.705,
+      "A3": 0.734
+    },
+    "estimand": "beta_G for z(G_st) on centered E_st",
+    "least_favourable_cell": "A0p5",
+    "positive": false,
+    "primary_envelope_p_value": 0.969,
+    "two_way_cluster_standard_error_descriptive": 0.00415264916288301,
+    "two_way_cluster_z_descriptive": -1.0709256387216706
+  },
+  "schema": "ttf_genetic_codistributed_recurrence_empirical_result_v0.1",
+  "status": "ONE_SHOT_CONFIRMATORY_EMPIRICAL_RESULT_OPENED"
+}

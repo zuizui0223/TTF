@@ -1,0 +1,73 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_local_exact_execution_rule_v0.1",
+  "status": "FROZEN_BEFORE_ANY_LOCAL_NUCLEOTIDE_IDENTITY_OPENING",
+  "recorded_on": "2026-10-06",
+  "reason": "GitHub Actions execution is blocked only by exact-source transport: the required cache key is absent and the predeclared historical phylogatR URL returned 7685 bytes rather than the frozen 274988692-byte archive. No empirical identity-opening step has started.",
+  "supersedes_only": "the execution-environment requirement that the single technical continuation run inside GitHub Actions; no scientific estimand, domain, operator, null, reference distribution, alpha, decision rule, or interpretation is changed",
+  "required_preopening_state": {
+    "authoritative_survivor_run_id": 37406111501,
+    "qualification_status": "PASS_TO_ONE_SHOT_CONFIRMATORY_EMPIRICAL_OPENING",
+    "qualification_sha256": "050157c71a206021e8f911dfceff66242fd25340e1ad4648646d5953fa2d2ae1",
+    "identity_authorization_sha256": "97619379f9d4d086c3b21b94c6c36b688dfd9489c729fb1631a9cbd5d9456265",
+    "execution_receipt_sha256": "0ad66508cbdd367dfc92977f883e28e9532d50f069356cb11ee13d535b431237",
+    "all_prior_github_empirical_runs_must_be_terminal_before_local_opening": true,
+    "every_prior_github_empirical_run_must_have_identity_opening_step_skipped": true,
+    "empirical_result_must_not_exist": true
+  },
+  "exact_source": {
+    "library_path": "/TTF/source/phylogatr_results_exact_20260918.zip",
+    "bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "genes_txt_sha256": "e8470b6a9500ab5f79f47dc0dda3ad034f3107882ca150148d6d91ab98483ba6",
+    "cite_txt_sha256": "e257b2c12ce5e6fe33d40f7064ae4a64b0c9462ddd85f58b0ce0a672759e9eb6"
+  },
+  "authoritative_artifacts": {
+    "center_artifact_id": 11386604136,
+    "center_npz_sha256": "236ed9cfbb88b04b6338a685b70ef9d5b4c87a1da4ada093c57a919c18461637",
+    "reference_artifact_ids": [11388873248, 11387994336, 11388285902, 11388049113, 11387893905],
+    "reference_shards_sha256": {
+      "reference_r000_200.npz": "2977522b9986e8520822f67d95eab9077d334d8ae44ad43283758cdd02733bb5",
+      "reference_r200_400.npz": "9f49d78a3d604752bd2b6e8ebbbe9c2da15b9c2114ae1d6d913efad44f9bbc14",
+      "reference_r400_600.npz": "2dd5191def1398ea17c4e3e11136ff7c19bceabfc3056a22c342302439307c5d",
+      "reference_r600_800.npz": "a70f1ca2f0ca8522542566152ceca3ba4496302a4c17b83c772080305d95da22",
+      "reference_r800_999.npz": "6766c2548945f01ef923256f5f0371204f2b2224545bf1d5b464447e92bba02f"
+    }
+  },
+  "authorized_code_sha256": {
+    "scripts/run_codistributed_recurrence_confirmatory_empirical.py": "f08ed96fff89edbcb9e3d753d008275a8b5776da7ce111fa3f386f28021f39fa",
+    "src/ttf/codistributed_geometry_null.py": "cb456a838ef975eea3c89e686d013d77b9591a2b23f513f74a8afc1b696027cd",
+    "src/ttf/phylogatr_character_mask.py": "3eb6e44ae9a4dac5684528eb67d669d9a9cca4e6e295e7fea49e2a02dc779a60",
+    "src/ttf/phylogatr_empirical.py": "cf5f18c8f022e5b8eb398b2f4210d77aa1b8f692c5a3a71f663f07be0a6cccdb",
+    "src/ttf/relational_dyadic.py": "3ed3fb9965dac4a49ebdd6e607f9a979c533bcc01fd4ee09221d67403e68cb14",
+    "src/ttf/relational_genetic_empirical.py": "a17d42e84e29caa06922d80ebf9e0e3304f20e7cf34d52bf018cf858c335e532"
+  },
+  "local_execution": {
+    "maximum_attempts": 1,
+    "must_use_exact_github_source_bundle": true,
+    "must_verify_all_authorized_code_hashes_before_identity_opening": true,
+    "must_reproduce_identity_authorization_byte_for_byte_before_identity_opening": true,
+    "runner": "scripts/run_codistributed_recurrence_confirmatory_empirical.py",
+    "output": "summary JSON only under the existing serialization boundary",
+    "if_any_preopening_hash_or_invariant_fails": "STOP_WITHOUT_OPENING_IDENTITY",
+    "after_identity_opening_starts": "no GitHub or local rerun is authorized, regardless of result or technical outcome"
+  },
+  "scientific_invariants": {
+    "species": 326,
+    "sources": 166,
+    "targets": 160,
+    "directed_dyads": 26560,
+    "G_st": "continuous symmetric 500-km co-opportunity",
+    "response": "E_st = empirical T_st - qualified survivor mu0_st",
+    "controls": "frozen source FE + target FE + centroid distance + edge-count imbalance + locality-count imbalance + same-order",
+    "inference": "one-sided least-favourable max-envelope over the four frozen 999-world private reference distributions",
+    "alpha": 0.05,
+    "post_result_retuning": false,
+    "alternate_subgroup_rescue": false
+  },
+  "response_firewall": {
+    "confirmatory_nucleotide_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_T_st_opened": false,
+    "confirmatory_beta_G_opened": false
+  }
+}

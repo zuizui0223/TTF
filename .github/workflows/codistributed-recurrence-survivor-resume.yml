@@ -1,0 +1,239 @@
+name: codistributed survivor authoritative resume
+
+on:
+  push:
+    branches:
+      - prospective/codistributed-recurrence-insecta-v0-1
+    paths:
+      - ".github/workflows/codistributed-recurrence-survivor-resume.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  CANDIDATES: benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv
+  MASK_RESULT: benchmarks/frozen/genetic_codistributed_recurrence_confirmatory_mask_result_v0.1.json
+  SURVIVOR_INFO: benchmarks/frozen/genetic_codistributed_recurrence_survivor_information_result_v0.1.json
+  RULE: docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json
+  MASK_RULE: docs/supporting/genetic_codistributed_recurrence_confirmatory_mask_rule_v0.1.json
+  SHARDING: docs/supporting/genetic_codistributed_recurrence_formal_sharding_v0.1.json
+
+jobs:
+  center_resume:
+    name: resume survivor center
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+
+      - name: Restore authoritative survivor geometry artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: codistributed-survivor-geometry-v0.1
+          path: results/historical-geometry
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37393777872
+
+      - name: Restore authoritative completed center cells
+        uses: actions/download-artifact@v4
+        with:
+          pattern: codistributed-survivor-center-cell-*
+          path: results/historical-center-cells
+          merge-multiple: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37393777872
+
+      - name: Verify frozen resumed artifacts
+        run: |
+          echo "4fa7a88cb43b7454f0bd903ae07bc331c20034dbfea2d1976edb66c6195afeb7  results/historical-center-cells/center_A0p5.npz" | sha256sum -c -
+          echo "cda589aaaa24919c9b87febb78a439d86a2025cea29a5a59306f70e2b7fa8de5  results/historical-center-cells/center_A1.npz" | sha256sum -c -
+          echo "5ecf26b53063c527e22856afde569fd8a356d2b2373f1b21e023ad21c3af9e3c  results/historical-center-cells/center_A2.npz" | sha256sum -c -
+          echo "5c915e02f43b35534ccee229c30af60e096684e4ee578a75f4f4a3569db406ed  results/historical-center-cells/center_A3.npz" | sha256sum -c -
+          test -f results/historical-geometry/transport/codistributed_recurrence_confirmatory_survivor_localities_v0.1.csv
+          test -f results/historical-geometry/results/survivor-geometry/survivor_edges.csv
+          echo "bb6e7c6611522f2d1ef2983c8ad483b32e7144ba0e8272bdbc3d580e8a086342  results/historical-geometry/transport/codistributed_recurrence_confirmatory_survivor_localities_v0.1.csv" | sha256sum -c -
+          echo "b7864048347bea8393f6beaa7cb7dc4e4f3b87336700f748180d67b94af37f63  results/historical-geometry/results/survivor-geometry/survivor_edges.csv" | sha256sum -c -
+
+      - name: Aggregate exact frozen survivor center
+        run: |
+          mkdir -p results/resume-center
+          python scripts/run_codistributed_recurrence_survivor_fixed_tst_shard.py             --component center-aggregate             --mask-result "$MASK_RESULT"             --survivor-info "$SURVIVOR_INFO"             --rule "$RULE"             --mask-rule "$MASK_RULE"             --sharding "$SHARDING"             --center-dir results/historical-center-cells             --output-npz results/resume-center/survivor_center_v0.1.npz             --output-json results/resume-center/survivor_center_v0.1.json
+
+      - name: Build flat resumed center bundle
+        run: |
+          mkdir -p results/resume-center-bundle
+          cp results/historical-geometry/transport/codistributed_recurrence_confirmatory_survivor_localities_v0.1.csv results/resume-center-bundle/survivor_localities.csv
+          cp results/historical-geometry/results/survivor-geometry/survivor_edges.csv results/resume-center-bundle/survivor_edges.csv
+          cp results/resume-center/survivor_center_v0.1.npz results/resume-center-bundle/survivor_center_v0.1.npz
+          cp results/resume-center/survivor_center_v0.1.json results/resume-center-bundle/survivor_center_v0.1.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codistributed-survivor-resume-center-v0.1
+          path: results/resume-center-bundle/*
+          retention-days: 30
+          if-no-files-found: error
+
+  reference:
+    name: resume survivor reference ${{ matrix.label }}
+    needs: center_resume
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - { label: r000_200, start: 0, stop: 200 }
+          - { label: r200_400, start: 200, stop: 400 }
+          - { label: r400_600, start: 400, stop: 600 }
+          - { label: r600_800, start: 600, stop: 800 }
+          - { label: r800_999, start: 800, stop: 999 }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: codistributed-survivor-resume-center-v0.1
+          path: results/resume-center-artifact
+      - name: Run frozen reference shard
+        run: |
+          mkdir -p results/resume-reference
+          python scripts/run_codistributed_recurrence_survivor_fixed_tst_shard.py             --component reference --start ${{ matrix.start }} --stop ${{ matrix.stop }}             --localities results/resume-center-artifact/survivor_localities.csv             --edges results/resume-center-artifact/survivor_edges.csv             --candidates "$CANDIDATES" --mask-result "$MASK_RESULT" --survivor-info "$SURVIVOR_INFO"             --rule "$RULE" --mask-rule "$MASK_RULE" --sharding "$SHARDING"             --center-npz results/resume-center-artifact/survivor_center_v0.1.npz             --output-npz results/resume-reference/reference_${{ matrix.label }}.npz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codistributed-survivor-resume-reference-${{ matrix.label }}
+          path: results/resume-reference/reference_${{ matrix.label }}.npz
+          retention-days: 30
+          if-no-files-found: error
+
+  evaluation:
+    name: resume survivor evaluation ${{ matrix.label }}
+    needs: center_resume
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        include:
+          - { label: r000_200, start: 0, stop: 200 }
+          - { label: r200_400, start: 200, stop: 400 }
+          - { label: r400_500, start: 400, stop: 500 }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: codistributed-survivor-resume-center-v0.1
+          path: results/resume-center-artifact
+      - name: Run frozen evaluation shard
+        run: |
+          mkdir -p results/resume-evaluation
+          python scripts/run_codistributed_recurrence_survivor_fixed_tst_shard.py             --component evaluation --start ${{ matrix.start }} --stop ${{ matrix.stop }}             --localities results/resume-center-artifact/survivor_localities.csv             --edges results/resume-center-artifact/survivor_edges.csv             --candidates "$CANDIDATES" --mask-result "$MASK_RESULT" --survivor-info "$SURVIVOR_INFO"             --rule "$RULE" --mask-rule "$MASK_RULE" --sharding "$SHARDING"             --center-npz results/resume-center-artifact/survivor_center_v0.1.npz             --output-npz results/resume-evaluation/evaluation_${{ matrix.label }}.npz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codistributed-survivor-resume-evaluation-${{ matrix.label }}
+          path: results/resume-evaluation/evaluation_${{ matrix.label }}.npz
+          retention-days: 30
+          if-no-files-found: error
+
+  positive:
+    name: resume survivor positive ${{ matrix.label }}
+    needs: center_resume
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        include:
+          - { label: r000_200, start: 0, stop: 200 }
+          - { label: r200_400, start: 200, stop: 400 }
+          - { label: r400_500, start: 400, stop: 500 }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: codistributed-survivor-resume-center-v0.1
+          path: results/resume-center-artifact
+      - name: Run frozen positive shard
+        run: |
+          mkdir -p results/resume-positive
+          python scripts/run_codistributed_recurrence_survivor_fixed_tst_shard.py             --component positive --start ${{ matrix.start }} --stop ${{ matrix.stop }}             --localities results/resume-center-artifact/survivor_localities.csv             --edges results/resume-center-artifact/survivor_edges.csv             --candidates "$CANDIDATES" --mask-result "$MASK_RESULT" --survivor-info "$SURVIVOR_INFO"             --rule "$RULE" --mask-rule "$MASK_RULE" --sharding "$SHARDING"             --center-npz results/resume-center-artifact/survivor_center_v0.1.npz             --output-npz results/resume-positive/positive_${{ matrix.label }}.npz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codistributed-survivor-resume-positive-${{ matrix.label }}
+          path: results/resume-positive/positive_${{ matrix.label }}.npz
+          retention-days: 30
+          if-no-files-found: error
+
+  aggregate:
+    name: aggregate resumed survivor qualification
+    needs: [center_resume, reference, evaluation, positive]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: codistributed-survivor-resume-center-v0.1
+          path: results/resume-center-artifact
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codistributed-survivor-resume-reference-*
+          path: results/resume-aggregate/reference
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codistributed-survivor-resume-evaluation-*
+          path: results/resume-aggregate/evaluation
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codistributed-survivor-resume-positive-*
+          path: results/resume-aggregate/positive
+          merge-multiple: true
+      - name: Aggregate frozen survivor gate
+        run: |
+          mkdir -p results/resume-aggregate/final
+          python scripts/run_codistributed_recurrence_survivor_fixed_tst_shard.py             --component aggregate             --mask-result "$MASK_RESULT" --survivor-info "$SURVIVOR_INFO"             --rule "$RULE" --mask-rule "$MASK_RULE" --sharding "$SHARDING"             --center-npz results/resume-center-artifact/survivor_center_v0.1.npz             --reference-dir results/resume-aggregate/reference             --evaluation-dir results/resume-aggregate/evaluation             --positive-dir results/resume-aggregate/positive             --output results/resume-aggregate/final/survivor_fixed_tst_qualification_v0.1.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("results/resume-aggregate/final/survivor_fixed_tst_qualification_v0.1.json").read_text())
+          assert p["schema"]=="ttf_genetic_codistributed_recurrence_survivor_fixed_tst_qualification_v0.1"
+          assert p["status"] in {
+              "PASS_TO_ONE_SHOT_CONFIRMATORY_EMPIRICAL_OPENING",
+              "NOT_EVALUABLE_CODISTRIBUTED_RECURRENCE_SURVIVOR_GEOMETRY",
+          }
+          assert all(v is False for v in p["response_firewall"].values())
+          assert "artifact_binding" in p
+          print(json.dumps({"status":p["status"],"gate":p["gate"],"private":p["private_evaluation"],"positive":p["positive_evaluation"],"artifact_binding":p["artifact_binding"]},sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codistributed-survivor-resume-qualification-v0.1
+          path: results/resume-aggregate/final/survivor_fixed_tst_qualification_v0.1.json
+          retention-days: 30
+          if-no-files-found: error

@@ -1,0 +1,26 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_survivor_resume_execution_v0.1",
+  "status": "AUTHORITATIVE_RESUME_SUBMITTED_RESULT_UNOBSERVED",
+  "recorded_on": "2026-10-06",
+  "authoritative_run": {
+    "workflow_run_id": 37406111501,
+    "workflow_name": "codistributed survivor authoritative resume",
+    "submission_head_sha": "73d321283008a144d49d8f791fcf5bc21c6a6a3f",
+    "state_at_freeze": "queued",
+    "result_observed": false
+  },
+  "resume_contract": "benchmarks/frozen/genetic_codistributed_recurrence_survivor_resume_v0.1.json",
+  "decision_rule": {
+    "use_this_run_if_it_reaches_a_scientific_qualification_result": true,
+    "do_not_select_between_parallel_retry_runs_by_result": true,
+    "if_technical_failure_before_qualification": "document failure and permit only a predeclared technical continuation with unchanged frozen artifacts and scientific rules",
+    "if_scientific_gate_fails": "stop as NOT_EVALUABLE; do not open nucleotide identity",
+    "if_scientific_gate_passes": "create hash-bound one-shot identity-opening authorization, then execute frozen empirical runner once"
+  },
+  "response_firewall": {
+    "confirmatory_nucleotide_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_T_st_opened": false,
+    "confirmatory_beta_G_opened": false
+  }
+}

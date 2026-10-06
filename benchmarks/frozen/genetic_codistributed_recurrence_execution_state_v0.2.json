@@ -1,0 +1,48 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_execution_state_v0.2",
+  "status": "EXACT_SOURCE_AND_FULL_GEOMETRY_RECOVERED_DEVELOPMENT_SCREEN_SUBMITTED",
+  "recorded_on": "2026-10-05",
+  "supersedes_state_record": "benchmarks/frozen/genetic_codistributed_recurrence_execution_state_v0.1.json",
+  "source": {
+    "exact_archive_recovered": true,
+    "library_path": "/TTF/source/phylogatr_results_exact_20260918.zip",
+    "bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "phylogatr_job_id": 14574208
+  },
+  "full_geometry": {
+    "preserved": true,
+    "library_root": "/TTF/source/fresh1000_full_geometry_20260923/",
+    "development_localities_sha256": "e17f4dfdf5f184443e087f5ddcd829aa1c3c03cacfbfac123502d05911f56a3a",
+    "development_edges_sha256": "613aca949cf0b2e3fd233c0e7bb54e34ec8e627aeeb4ff54b1fb84e90bb9da6b",
+    "edge_reconstruction_from_locality_and_frozen_graph_k": "BYTE_IDENTICAL_FOR_ALL_381_DEVELOPMENT_SPECIES",
+    "repository_transport": "xz-compressed base64 locality snapshot only; edge CSV reconstructed deterministically and required to match frozen SHA-256 before qualification"
+  },
+  "screen": {
+    "rule": "docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json",
+    "workflow": ".github/workflows/codistributed-recurrence-preserved-geometry.yml",
+    "workflow_run_id": 37267661617,
+    "submission_head_sha": "abc1dbe064abf0ec7af2d08368c8c591c75cdc74",
+    "current_state": "QUEUED_AT_RECORD_TIME",
+    "response_blind": true,
+    "empirical_genetic_response_opened": false
+  },
+  "formal": {
+    "sharding_contract": "docs/supporting/genetic_codistributed_recurrence_formal_sharding_v0.1.json",
+    "frozen_before_screen_result": true,
+    "execution_authorized_only_if_screen_passes": true
+  },
+  "prior_failed_transport_attempt": {
+    "run_id": 37265828589,
+    "scientific_screen_started": false,
+    "reason": "temporary external geometry URL returned HTTP 403 before hash verification",
+    "scientific_failure": false,
+    "superseded_by": "repo-bound compressed locality transport"
+  },
+  "response_firewall": {
+    "development_nucleotide_identity_opened": false,
+    "confirmatory_nucleotide_identity_opened": false,
+    "empirical_T_st_opened": false,
+    "empirical_beta_G_opened": false
+  }
+}

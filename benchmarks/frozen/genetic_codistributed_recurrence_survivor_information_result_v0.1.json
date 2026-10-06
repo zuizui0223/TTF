@@ -1,0 +1,46 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_survivor_information_v0.1",
+  "status": "PASS_TO_SURVIVOR_FIXED_TST_REQUALIFICATION",
+  "surviving_species": 326,
+  "surviving_sources": 166,
+  "surviving_targets": 160,
+  "survivor_dyads": 26560,
+  "G_summary": {
+    "max": 1,
+    "mean": 0.14242095253913695,
+    "median": 0,
+    "q90": 0.6486486486486487
+  },
+  "information_gate": {
+    "control_rank_after_two_way_fe": 4,
+    "control_unique_variance_fraction_after_fe": 0.22774900813360707,
+    "dyads": 26560,
+    "endpoint_retained_variance_fraction": 0.8700791953428356,
+    "max_source_signal_share": 0.0168962028996145,
+    "max_target_signal_share": 0.018932771626700266,
+    "maximum_endpoint_signal_share_ceiling": 0.15,
+    "overall_pass": true,
+    "partial_sd_in_primary_sd_units": 0.4451512930869883,
+    "signal_effective_sources": 139.99752728639862,
+    "signal_effective_targets": 131.98399303651368,
+    "source_clusters": 166,
+    "source_concentration_pass": true,
+    "target_clusters": 160,
+    "target_concentration_pass": true,
+    "total_unique_fraction_minimum": 0.15,
+    "total_unique_variance_fraction": 0.1981596737370178,
+    "unique_fraction_pass": true
+  },
+  "mask_result_full_ledger_sha256": "0f3035fbc8a88a18ba274f4e97ada800b5688b8d40c26568063fbba68118e917",
+  "survivor_csv_sha256": "da2ef8ff762beee67ff2520ae3c9f1a73bba2ad177b2d450db0a9c004ad14847",
+  "confirmatory_geometry_sha256": {
+    "localities": "1128b7048df55ce1e4105088f207e7596f29e9b6bc1e6575a3e647c5a23eb621",
+    "edges": "910478390e518e35337380b5030928c76f7d671ebb1ac76caee31ecbc868bf12"
+  },
+  "response_firewall": {
+    "confirmatory_nucleotide_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_T_st_opened": false,
+    "confirmatory_beta_G_opened": false
+  }
+}

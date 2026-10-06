@@ -1,0 +1,58 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_dyadic_qualification_result_v0.1",
+  "status": "NOT_EVALUABLE_ASYMPTOTIC_DYADIC_INFERENCE",
+  "executed_on": "2026-10-03",
+  "rule": "docs/supporting/genetic_codistributed_recurrence_dyadic_qualification_rule_v0.1.json",
+  "geometry": {
+    "sources": 190,
+    "targets": 191,
+    "dyads": 36290,
+    "predictor_condition_number": 218.36362388831935
+  },
+  "private_null_cells": {
+    "A0p5": {
+      "worlds": 500,
+      "rejections": 42,
+      "rejection_rate": 0.084,
+      "wilson95_upper": 0.1115993144601811
+    },
+    "A1": {
+      "worlds": 500,
+      "rejections": 51,
+      "rejection_rate": 0.102,
+      "wilson95_upper": 0.13163462290422606
+    },
+    "A2": {
+      "worlds": 500,
+      "rejections": 73,
+      "rejection_rate": 0.146,
+      "wilson95_upper": 0.1796492662203097
+    },
+    "A3": {
+      "worlds": 500,
+      "rejections": 89,
+      "rejection_rate": 0.178,
+      "wilson95_upper": 0.21394518854990435
+    }
+  },
+  "gate": {
+    "required_wilson95_upper_max": 0.1,
+    "private_type1_pass": false,
+    "detectability_interpreted": false
+  },
+  "decision": "STOP_ASYMPTOTIC_TWO_WAY_CLUSTER_ROUTE",
+  "interpretation": "Inferential deployment failure only. No biological conclusion about geographic co-opportunity or phylogeographic recurrence.",
+  "forbidden": [
+    "do not open nucleotide identity",
+    "do not interpret positive-world power after calibration failure",
+    "do not relax the Type-I ceiling",
+    "do not reuse the same synthetic seeds to tune the failed estimator"
+  ],
+  "next_named_development": "private-null-envelope calibration of the same fixed beta_G statistic under fresh independent reference/evaluation seed namespaces",
+  "response_firewall": {
+    "development_nucleotide_identity_opened": false,
+    "confirmatory_nucleotide_identity_opened": false,
+    "T_st_opened": false,
+    "beta_G_empirical_opened": false
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_source_cache_reseed_v0.1",
+  "status": "FROZEN_BEFORE_EXTERNAL_RESEED_ATTEMPT",
+  "recorded_on": "2026-10-06",
+  "triggering_technical_failure": {
+    "workflow_run_id": 37424305264,
+    "job_id": 112140364598,
+    "stage": "restore exact frozen phylogatR archive",
+    "failure": "GitHub Actions cache miss before any nucleotide identity opening"
+  },
+  "candidate_source": {
+    "historical_phylogatr_job_id": 14574208,
+    "url": "https://phylogatr.osc.edu/searches/14574208?results_format=tgz"
+  },
+  "acceptance": {
+    "bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "rule": "accept and seed the Actions cache only if both exact byte length and SHA-256 match"
+  },
+  "cache": {
+    "path": "/tmp/phylogatr.zip",
+    "key": "phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+  },
+  "if_mismatch": "STOP_NO_SOURCE_CACHE_RESEED; do not accept a semantically equivalent or byte-different archive",
+  "scientific_invariants": {
+    "survivor_domain_unchanged": true,
+    "geometry_unchanged": true,
+    "synthetic_qualification_unchanged": true,
+    "empirical_runner_unchanged": true,
+    "identity_opening_authorization_unchanged": true,
+    "execution_receipt_unchanged": true
+  },
+  "response_firewall": {
+    "confirmatory_nucleotide_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_T_st_opened": false,
+    "confirmatory_beta_G_opened": false
+  }
+}

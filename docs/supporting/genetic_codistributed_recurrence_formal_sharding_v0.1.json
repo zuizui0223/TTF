@@ -1,0 +1,125 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_formal_sharding_v0.1",
+  "status": "FROZEN_BEFORE_DEVELOPMENT_SCREEN_RESULT",
+  "frozen_on": "2026-10-05",
+  "purpose": "Execution-only sharding of the already-frozen formal fixed-T_st qualification. It changes no species, geometry, seeds, synthetic worlds, estimand, null family, centering, thresholds, p-value rule, or biological interpretation.",
+  "authority": {
+    "screen_execution": "unchanged monolithic screen remains authoritative",
+    "formal_execution": "may use sharded execution only after a frozen screen result has status PASS_TO_FORMAL_FIXED_TST_QUALIFICATION",
+    "empirical_opening_authority": false
+  },
+  "invariants": {
+    "rule": "docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json",
+    "world_batch_size": 200,
+    "private_amplitudes": [
+      0.5,
+      1,
+      2,
+      3
+    ],
+    "center_worlds_per_amplitude": 199,
+    "private_reference_worlds_per_amplitude": 999,
+    "private_evaluation_worlds_per_amplitude": 500,
+    "positive_worlds": 500,
+    "seed_namespaces": "exactly those frozen in geometry_null_rule_v0.3",
+    "center_definition": "For each amplitude, use the same 199 worlds in replicate order 0..198 and the same np.sum(T_st, axis=1)/199 operation; then equal-weight the four amplitude means.",
+    "inference": "same least-favourable one-sided Monte Carlo max-p envelope",
+    "alpha": 0.05
+  },
+  "shards": {
+    "center": {
+      "per_amplitude": [
+        [
+          0,
+          199
+        ]
+      ],
+      "rationale": "199 < frozen execution batch size 200, therefore each center cell is computed as the same single matrix batch as the monolithic runner."
+    },
+    "reference": {
+      "per_amplitude": [
+        [
+          0,
+          200
+        ],
+        [
+          200,
+          400
+        ],
+        [
+          400,
+          600
+        ],
+        [
+          600,
+          800
+        ],
+        [
+          800,
+          999
+        ]
+      ],
+      "aggregation": "concatenate beta_G arrays in increasing replicate-index order"
+    },
+    "evaluation": {
+      "per_amplitude": [
+        [
+          0,
+          200
+        ],
+        [
+          200,
+          400
+        ],
+        [
+          400,
+          500
+        ]
+      ],
+      "aggregation": "concatenate beta_G arrays in increasing replicate-index order before envelope p-values"
+    },
+    "positive": {
+      "cell": "globally_shared_place_A2",
+      "ranges": [
+        [
+          0,
+          200
+        ],
+        [
+          200,
+          400
+        ],
+        [
+          400,
+          500
+        ]
+      ],
+      "aggregation": "concatenate beta_G arrays in increasing replicate-index order before envelope p-values"
+    }
+  },
+  "exactness_checks": [
+    "every shard derives seeds from the frozen master seed, namespace, cell label, and original replicate index",
+    "no shard renumbers replicate indices",
+    "center cell summation preserves the monolithic single-batch operation",
+    "reference/evaluation/positive beta arrays are concatenated in original replicate order",
+    "a reduced-world test fixture must compare sharded and monolithic outputs before the formal workflow is used"
+  ],
+  "gate": {
+    "private": "Wilson 95% upper rejection-rate bound <=0.10 in every A cell",
+    "positive": "Wilson 95% lower power bound >=0.80",
+    "failure": "NOT_EVALUABLE_CODISTRIBUTED_RECURRENCE_FIXED_TST"
+  },
+  "forbidden": [
+    "change shard boundaries after inspecting any formal synthetic result",
+    "drop or rerun a shard based on its beta distribution except for byte-identical technical retry",
+    "mix screen worlds into formal worlds",
+    "change world_batch_size as a scientific tuning parameter",
+    "open genetic response during sharded formal qualification"
+  ],
+  "response_firewall": {
+    "development_nucleotide_identity_opened": false,
+    "confirmatory_nucleotide_identity_opened": false,
+    "empirical_T_st_opened": false,
+    "empirical_beta_G_opened": false
+  }
+}

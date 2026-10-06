@@ -1,0 +1,85 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_execution_state_v0.1",
+  "status": "IMPLEMENTATION_COMPLETE_RESPONSE_CLOSED_BLOCKED_ONLY_ON_EXACT_SOURCE_BYTES",
+  "frozen_on": "2026-10-03",
+  "source_head_sha": "a257fc786e2139cefeb9c9fac629ee0c0cc40938",
+  "canonical_pr": 135,
+  "parent_manuscript_pr": 134,
+  "superseded_pr": 136,
+  "scientific_state": {
+    "question": "Does sharing more of the same sampled landscape make post-IBD phylogeographic structure more recurrent across unseen lineages?",
+    "domain": "762 fresh Insecta after excluding the prior 750-species universe plus 70 additional S1/S2 response-opening overlaps",
+    "development": "381 species = 190 source + 191 target",
+    "confirmatory": "381 species = 190 source + 191 target",
+    "dyads_per_panel": 36290,
+    "focal_predictor": "continuous symmetric 500-km edge-midpoint geographic co-opportunity G_st",
+    "development_unique_G_fraction": 0.21486864264952774,
+    "confirmatory_unique_G_fraction": 0.20539481030366277,
+    "empirical_genetic_response_opened": false
+  },
+  "qualification_state": {
+    "asymptotic_two_way_cluster_route": "CLOSED_AFTER_PRIVATE_NULL_TYPE1_FAILURE",
+    "private_null_envelope_layer": "PASS_CALIBRATED_DYADIC_ENVELOPE",
+    "fixed_T_st_geometry_null_rule": "FROZEN_IMPLEMENTED_NOT_EXECUTED",
+    "development_screen": "AWAITING_EXACT_FULL_GEOMETRY",
+    "formal_development_qualification": "NOT_RUN",
+    "confirmatory_character_mask": "NOT_OPENED",
+    "confirmatory_survivor_requalification": "NOT_RUN",
+    "confirmatory_nucleotide_identity": "CLOSED"
+  },
+  "implementation": {
+    "geometry_null_rule": "docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json",
+    "screen_runner": "scripts/run_codistributed_recurrence_fixed_tst_screen.py",
+    "implementation_module": "src/ttf/codistributed_geometry_null.py",
+    "confirmatory_mask_rule": "docs/supporting/genetic_codistributed_recurrence_confirmatory_mask_rule_v0.1.json",
+    "workflow": ".github/workflows/codistributed-recurrence-response-blind-geometry.yml",
+    "full_pytest": {
+      "run_id": 37109476955,
+      "job_id": 111164472457,
+      "conclusion": "success",
+      "result": "499 passed"
+    },
+    "methods_ci": {
+      "run_id": 37109476878,
+      "conclusion": "success"
+    }
+  },
+  "source_blocker": {
+    "required_archive_name": "phylogatr_results_exact_20260918.zip",
+    "original_archive_name": "phylogatr_results.zip",
+    "bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "why_required_now": "The retained fresh-1000 compact geometry contains edge midpoints and summary counts but not locality coordinates or edge-node identities. The actual fixed-dyad qualification includes endpoint-safe leave-two-localities-out IBD and therefore requires exact full graph geometry.",
+    "searched_and_absent": [
+      "personal Library",
+      "conversation/Project file search",
+      "connected Google Drive including trash",
+      "GitHub releases",
+      "GitHub Actions cache under the canonical exact-archive key",
+      "public static PhylogatR search"
+    ],
+    "retained_witnesses": [
+      "SHA-256 witness file in Drive/Library",
+      "response-blind fresh-1000 compact midpoint geometry SHA-256 d0776b4b5646e999f0c09ad937e4050fafe6fec018f17f0d37cd2c5b5f12a79b",
+      "candidate CSV SHA-256 08dca43252ea93d43f3095f17b0267ec7ff049f0ec8b3e9c412dd784319ab575"
+    ],
+    "issue": 137
+  },
+  "next_authorized_transition": [
+    "Recover a file whose byte length and SHA-256 exactly match the frozen archive.",
+    "Seed the existing exact-archive Actions cache without repacking.",
+    "Run response-blind exact geometry reconstruction.",
+    "Run the frozen development fixed-T_st screen.",
+    "If screen PASS, run the disjoint formal fixed-T_st qualification.",
+    "If formal PASS, open confirmatory character masks only and perform survivor requalification.",
+    "Only after survivor PASS may one confirmatory nucleotide-identity opening occur."
+  ],
+  "forbidden": [
+    "substitute a different archive hash under v0.1",
+    "redesign G_st, radius, controls, panel split, source/target roles or private amplitudes after these response-blind qualifications",
+    "open development nucleotide identity",
+    "open confirmatory nucleotide identity before survivor authorization",
+    "reopen the superseded PR 136 or the closed conditional-order routes",
+    "interpret the present source-byte blocker as biological evidence"
+  ]
+}

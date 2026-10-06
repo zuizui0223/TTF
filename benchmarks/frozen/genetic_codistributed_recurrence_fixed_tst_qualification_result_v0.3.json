@@ -1,0 +1,203 @@
+{
+  "development_geometry": {
+    "G_summary": {
+      "max": 1,
+      "mean": 0.14489382383439903,
+      "median": 0,
+      "q90": 0.6338028169014085
+    },
+    "dyads": 36290,
+    "predictor_condition_number": 218.363623888318,
+    "sources": 190,
+    "species": 381,
+    "targets": 191
+  },
+  "execution": {
+    "evaluation_ranges": [
+      [
+        0,
+        200
+      ],
+      [
+        200,
+        400
+      ],
+      [
+        400,
+        500
+      ]
+    ],
+    "mode": "predeclared_sharded_formal_v0.1",
+    "positive_ranges": [
+      [
+        0,
+        200
+      ],
+      [
+        200,
+        400
+      ],
+      [
+        400,
+        500
+      ]
+    ],
+    "reference_ranges": [
+      [
+        0,
+        200
+      ],
+      [
+        200,
+        400
+      ],
+      [
+        400,
+        600
+      ],
+      [
+        600,
+        800
+      ],
+      [
+        800,
+        999
+      ]
+    ],
+    "world_batch_size": 200
+  },
+  "formal_sharding_contract": "docs/supporting/genetic_codistributed_recurrence_formal_sharding_v0.1.json",
+  "formal_sharding_contract_sha256": "94849fb292e3f263643467cbc75deb43ffcb0763e0f53b120f4bc714de635271",
+  "gate": {
+    "if_fail": "close v0.3 fixed-T_st centering estimator without tuning on these worlds",
+    "if_pass": "proceed only to confirmatory character-mask preparation and survivor-geometry requalification",
+    "overall_pass": true,
+    "positive_pass": true,
+    "positive_rule": "Wilson95 lower >=0.80 for globally_shared_place_A2",
+    "private_pass": true,
+    "private_rule": "Wilson95 upper <=0.10 in every private cell",
+    "scientific_authority": "method qualification only; no empirical genetic conclusion"
+  },
+  "geometry_null_center": {
+    "amplitudes": [
+      0.5,
+      1,
+      2,
+      3
+    ],
+    "mu0_summary": {
+      "max": 0.44082759256739074,
+      "mean": 0.0023401919993793004,
+      "min": -0.47250240688490147,
+      "sd": 0.07760906886774195
+    },
+    "worlds_per_amplitude": [
+      199,
+      199,
+      199,
+      199
+    ]
+  },
+  "positive_evaluation": {
+    "cell": "globally_shared_place_A2",
+    "least_favourable_counts": {
+      "A0p5": 487,
+      "A3": 13
+    },
+    "mean_beta_G": 0.03812429967012634,
+    "power": 0.998,
+    "rejections": 499,
+    "stage_pass": true,
+    "wilson95_high": 0.9996468636054407,
+    "wilson95_low": 0.9887592932948532,
+    "worlds": 500
+  },
+  "private_evaluation": {
+    "A0p5": {
+      "least_favourable_counts": {
+        "A0p5": 411,
+        "A3": 89
+      },
+      "rejection_rate": 0.03,
+      "rejections": 15,
+      "stage_pass": true,
+      "wilson95_high": 0.04890366683594573,
+      "wilson95_low": 0.018263213197913384,
+      "worlds": 500
+    },
+    "A1": {
+      "least_favourable_counts": {
+        "A0p5": 470,
+        "A3": 30
+      },
+      "rejection_rate": 0.004,
+      "rejections": 2,
+      "stage_pass": true,
+      "wilson95_high": 0.014465715215177033,
+      "wilson95_low": 0.0010976305226827934,
+      "worlds": 500
+    },
+    "A2": {
+      "least_favourable_counts": {
+        "A0p5": 441,
+        "A3": 59
+      },
+      "rejection_rate": 0.022,
+      "rejections": 11,
+      "stage_pass": true,
+      "wilson95_high": 0.03896086121131637,
+      "wilson95_low": 0.012328008269927582,
+      "worlds": 500
+    },
+    "A3": {
+      "least_favourable_counts": {
+        "A0p5": 397,
+        "A3": 103
+      },
+      "rejection_rate": 0.072,
+      "rejections": 36,
+      "stage_pass": true,
+      "wilson95_high": 0.09806840401696253,
+      "wilson95_low": 0.0524580314181262,
+      "worlds": 500
+    }
+  },
+  "private_references": {
+    "A0p5": {
+      "mean_beta_G": 0.0016677992124750321,
+      "q95_beta_G": 0.00688978129394868,
+      "sd_beta_G": 0.003289686188928972,
+      "worlds": 999
+    },
+    "A1": {
+      "mean_beta_G": -0.0011838323789436405,
+      "q95_beta_G": 0.0049195732579013045,
+      "sd_beta_G": 0.003725465435466712,
+      "worlds": 999
+    },
+    "A2": {
+      "mean_beta_G": -0.0008308123268713667,
+      "q95_beta_G": 0.006167868362489413,
+      "sd_beta_G": 0.004299636976148598,
+      "worlds": 999
+    },
+    "A3": {
+      "mean_beta_G": 0.0004478317977477514,
+      "q95_beta_G": 0.008130467644719449,
+      "sd_beta_G": 0.004783036820467183,
+      "worlds": 999
+    }
+  },
+  "response_firewall": {
+    "confirmatory_nucleotide_identity_opened": false,
+    "development_nucleotide_identity_opened": false,
+    "empirical_T_st_opened": false,
+    "empirical_beta_G_opened": false
+  },
+  "rule": "docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json",
+  "schema": "ttf_genetic_codistributed_recurrence_fixed_tst_qualification_v0.3",
+  "screen_result": "benchmarks/frozen/genetic_codistributed_recurrence_fixed_tst_screen_result_v0.3.json",
+  "screen_result_sha256": "ccf0b64689381da6229cf9da62736debf199bd5e2978c4e982864b3fd7575d41",
+  "stage": "formal",
+  "status": "PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION"
+}

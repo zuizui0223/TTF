@@ -1,0 +1,97 @@
+{
+  "artifact_binding": {
+    "center_npz_sha256": "236ed9cfbb88b04b6338a685b70ef9d5b4c87a1da4ada093c57a919c18461637",
+    "evaluation_shards_sha256": {
+      "evaluation_r000_200.npz": "05fad5c0b331aff9ffa81e5fc85874d5e28b28386cac9ea7c314ff439d05314f",
+      "evaluation_r200_400.npz": "9320ba0eecbbe1f42ec1090a2d4684981a87739622590eef284d00455cc86e24",
+      "evaluation_r400_500.npz": "f8e3efea1d0edd87cddb9fb6e533780468737b5e5dc15769dc21ce09b34a7b90"
+    },
+    "mask_result_sha256": "0d644b3b5f8b1088c472e505c1de2ac0333d4b1f1f6ed5aa4f19e6bffdb1fd49",
+    "positive_shards_sha256": {
+      "positive_r000_200.npz": "1aecd68946a04a8a5b433efbb425cdfb07ada749620bc723668e9137df9dff86",
+      "positive_r200_400.npz": "0b599f285509ed5032b036051591a3be09af9068e454401b07093a450ef1a485",
+      "positive_r400_500.npz": "3b6b08ac6ae8ab755b447da7c5a1cc6de08c358659a5078e3e41d6c6f98e1f4f"
+    },
+    "reference_shards_sha256": {
+      "reference_r000_200.npz": "2977522b9986e8520822f67d95eab9077d334d8ae44ad43283758cdd02733bb5",
+      "reference_r200_400.npz": "9f49d78a3d604752bd2b6e8ebbbe9c2da15b9c2114ae1d6d913efad44f9bbc14",
+      "reference_r400_600.npz": "2dd5191def1398ea17c4e3e11136ff7c19bceabfc3056a22c342302439307c5d",
+      "reference_r600_800.npz": "a70f1ca2f0ca8522542566152ceca3ba4496302a4c17b83c772080305d95da22",
+      "reference_r800_999.npz": "6766c2548945f01ef923256f5f0371204f2b2224545bf1d5b464447e92bba02f"
+    },
+    "survivor_information_sha256": "8912486192640cf7885ccb70ec10f2414f493068a03d4d9f08dbf5780407c3b6"
+  },
+  "gate": {
+    "overall_pass": true,
+    "positive_pass": true,
+    "positive_rule": "Wilson95 lower >=0.80 for globally_shared_place_A2",
+    "private_pass": true,
+    "private_rule": "Wilson95 upper <=0.10 in every private cell"
+  },
+  "positive_evaluation": {
+    "least_favourable_counts": {
+      "A0p5": 500
+    },
+    "mean_beta_G": 0.028163271892259385,
+    "power": 0.946,
+    "rejections": 473,
+    "stage_pass": true,
+    "wilson95_high": 0.9626256498189425,
+    "wilson95_low": 0.9225734384893529,
+    "worlds": 500
+  },
+  "private_evaluation": {
+    "A0p5": {
+      "least_favourable_counts": {
+        "A0p5": 500
+      },
+      "rejection_rate": 0.048,
+      "rejections": 24,
+      "stage_pass": true,
+      "wilson95_high": 0.07042719683589006,
+      "wilson95_low": 0.03246520694135317,
+      "worlds": 500
+    },
+    "A1": {
+      "least_favourable_counts": {
+        "A0p5": 500
+      },
+      "rejection_rate": 0.0,
+      "rejections": 0,
+      "stage_pass": true,
+      "wilson95_high": 0.007624340461552241,
+      "wilson95_low": 4.336808689942018e-19,
+      "worlds": 500
+    },
+    "A2": {
+      "least_favourable_counts": {
+        "A0p5": 500
+      },
+      "rejection_rate": 0.004,
+      "rejections": 2,
+      "stage_pass": true,
+      "wilson95_high": 0.014465715215177033,
+      "wilson95_low": 0.0010976305226827934,
+      "worlds": 500
+    },
+    "A3": {
+      "least_favourable_counts": {
+        "A0p5": 500
+      },
+      "rejection_rate": 0.046,
+      "rejections": 23,
+      "stage_pass": true,
+      "wilson95_high": 0.06807779276827323,
+      "wilson95_low": 0.030845108370816204,
+      "worlds": 500
+    }
+  },
+  "response_firewall": {
+    "confirmatory_T_st_opened": false,
+    "confirmatory_beta_G_opened": false,
+    "confirmatory_nucleotide_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false
+  },
+  "schema": "ttf_genetic_codistributed_recurrence_survivor_fixed_tst_qualification_v0.1",
+  "status": "PASS_TO_ONE_SHOT_CONFIRMATORY_EMPIRICAL_OPENING"
+}

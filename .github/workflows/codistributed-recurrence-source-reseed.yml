@@ -1,0 +1,54 @@
+name: codistributed exact source cache reseed
+
+on:
+  push:
+    branches:
+      - prospective/codistributed-recurrence-insecta-v0-1
+    paths:
+      - ".github/workflows/codistributed-recurrence-source-reseed.yml"
+      - "benchmarks/frozen/genetic_codistributed_recurrence_source_cache_reseed_v0.1.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  reseed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify prospective reseed contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("benchmarks/frozen/genetic_codistributed_recurrence_source_cache_reseed_v0.1.json").read_text())
+          assert p["schema"]=="ttf_genetic_codistributed_recurrence_source_cache_reseed_v0.1"
+          assert p["status"]=="FROZEN_BEFORE_EXTERNAL_RESEED_ATTEMPT"
+          assert p["acceptance"]["bytes"]==274988692
+          assert p["acceptance"]["sha256"]=="5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+          assert all(v is False for v in p["response_firewall"].values())
+          PY
+
+      - name: Download only the frozen historical phylogatR job
+        run: |
+          rm -f /tmp/phylogatr.candidate /tmp/phylogatr.zip
+          curl --fail --location --retry 3 --retry-delay 2 \
+            --connect-timeout 30 --max-time 1200 \
+            "https://phylogatr.osc.edu/searches/14574208?results_format=tgz" \
+            --output /tmp/phylogatr.candidate
+
+      - name: Require exact original bytes before cache save
+        run: |
+          test "$(stat -c%s /tmp/phylogatr.candidate)" = "274988692"
+          echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5  /tmp/phylogatr.candidate" | sha256sum -c -
+          mv /tmp/phylogatr.candidate /tmp/phylogatr.zip
+
+      - name: Save exact source cache
+        uses: actions/cache/save@v4
+        with:
+          path: /tmp/phylogatr.zip
+          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5

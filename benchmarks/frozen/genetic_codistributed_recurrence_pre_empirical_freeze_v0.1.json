@@ -1,0 +1,44 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_pre_empirical_freeze_v0.1",
+  "status": "FROZEN_WHILE_SURVIVOR_SYNTHETIC_REQUALIFICATION_IN_PROGRESS",
+  "recorded_on": "2026-10-06",
+  "authoritative_survivor_run": {
+    "workflow_run_id": 37393777872,
+    "workflow_head_sha": "89301c6e7d55e3ce05b24e5e178d28b3c0e7d77b",
+    "observed_status_at_freeze": "in_progress",
+    "observed_conclusion_at_freeze": null,
+    "run_created_at": "2026-10-06T00:23:46Z",
+    "result_observed_at_freeze": false
+  },
+  "immutable_pre_result_blobs": {
+    "docs/supporting/genetic_codistributed_recurrence_empirical_opening_rule_v0.1.json": "30cc039a7e5c36304bcee7d581f67ebc3e5e298c",
+    "scripts/run_codistributed_recurrence_confirmatory_empirical.py": "3d460f83c046b92a206c343e24680268480182e5",
+    "scripts/authorize_codistributed_recurrence_identity_opening.py": "133dd8120fd76a64fe0a56c64e183301f1fbcbd6",
+    "scripts/run_codistributed_recurrence_survivor_fixed_tst_shard.py": "c1205c10bbf2423439b7cb81e06efa601df97284",
+    "src/ttf/codistributed_formal_shards.py": "4c8168fdbc09bde5be9820b39fcc404e7cdf3f73",
+    ".github/workflows/codistributed-recurrence-survivor-fixed-tst.yml": "d43269302bbf1b341aa13bf150983ed92c5b7197",
+    "benchmarks/frozen/genetic_codistributed_recurrence_confirmatory_mask_result_v0.1.json": "d1adbb1456cf2b587db59431d5324bf48ee41ff0",
+    "benchmarks/frozen/genetic_codistributed_recurrence_survivor_information_result_v0.1.json": "b78f193e17ef05c1d79bee9afff2566787eb4dc8"
+  },
+  "frozen_empirical_decision": {
+    "domain": "326 species; 166 source; 160 target; 26,560 directed dyads",
+    "response": "E_st = empirical T_st - qualified survivor mu0_st",
+    "predictor": "continuous symmetric 500-km G_st",
+    "nuisance": "exact source FE + exact target FE + frozen centroid/sampling/same-order controls",
+    "inference": "one-sided least-favourable max-envelope over four qualified survivor private-reference beta distributions",
+    "alpha": 0.05,
+    "positive": "beta_G > 0 and envelope p <= 0.05",
+    "alternate_subgroup_rescue": false,
+    "post_result_retuning": false
+  },
+  "transition_rule": {
+    "if_survivor_gate_passes": "create hash-bound one-shot identity authorization from exactly the qualified center/reference artifacts, then execute the already-frozen empirical runner once",
+    "if_survivor_gate_fails": "stop as NOT_EVALUABLE; do not open confirmatory nucleotide identity"
+  },
+  "response_firewall": {
+    "confirmatory_nucleotide_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_T_st_opened": false,
+    "confirmatory_beta_G_opened": false
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_dyadic_qualification_rule_v0.1",
+  "status": "FROZEN_BEFORE_SYNTHETIC_RESULTS",
+  "frozen_on": "2026-10-03",
+  "parent_design": "benchmarks/frozen/genetic_codistributed_recurrence_response_blind_design_v0.1.json",
+  "estimand": "beta_G for standardized continuous symmetric 500-km geographic co-opportunity after exact source/target FE and declared controls",
+  "development_geometry": {
+    "sources": 190,
+    "targets": 191,
+    "dyads": 36290
+  },
+  "predictors": {
+    "primary": "z(G_st)",
+    "controls": [
+      "z(log1p centroid distance / 500 km)",
+      "z(abs log edge-count ratio)",
+      "z(abs log locality-count ratio)",
+      "z(same-order indicator)"
+    ]
+  },
+  "inference": {
+    "procedure": "exact source/target FE plus two-way source/target cluster-robust covariance",
+    "alpha_one_sided": 0.05,
+    "condition_number_ceiling": 10000
+  },
+  "synthetic": {
+    "seed_namespace": "codistributed-recurrence-dyadic-v0.1",
+    "worlds_per_cell": 500,
+    "private_amplitudes": [
+      0.5,
+      1,
+      2,
+      3
+    ],
+    "beta_G_grid": [
+      0.01,
+      0.02,
+      0.03,
+      0.05,
+      0.08,
+      0.1,
+      0.15
+    ],
+    "source_intercept_sd": 0.18,
+    "target_intercept_sd": 0.18,
+    "source_G_slope_sd_multiplier": 0.12,
+    "target_G_slope_sd_multiplier": 0.12,
+    "dyad_noise_sd": 0.32,
+    "nuisance_coefficients": [
+      0.1,
+      -0.08,
+      0.05,
+      0.04
+    ],
+    "response_link": "tanh"
+  },
+  "gates": {
+    "private_null": "for every A, Wilson 95% upper bound of p<=0.05 rejection rate <=0.10",
+    "detectable_effect": "smallest beta_G grid point with Wilson 95% lower power bound >=0.80, reported only for calibration-qualified A"
+  },
+  "response_firewall": {
+    "development_nucleotide_identity_opened": false,
+    "confirmatory_nucleotide_identity_opened": false,
+    "T_st_opened": false,
+    "beta_G_empirical_opened": false
+  },
+  "note": "This qualifies the dyadic inferential layer only. It does not replace the later geometry-null T_st generation/calibration gate."
+}

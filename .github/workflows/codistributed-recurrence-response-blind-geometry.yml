@@ -1,0 +1,216 @@
+name: codistributed recurrence response-blind geometry
+
+on:
+  push:
+    branches:
+      - prospective/codistributed-recurrence-insecta-v0-1
+    paths:
+      - ".github/workflows/codistributed-recurrence-response-blind-geometry.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: python -m pip install -e .
+
+      - name: Restore exact frozen phylogatR archive cache
+        id: archive
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/phylogatr.zip
+          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5
+          restore-keys: |
+            phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5
+
+      - name: Require exact frozen archive
+        run: |
+          test -f /tmp/phylogatr.zip
+          test "$(stat -c%s /tmp/phylogatr.zip)" = "274988692"
+          echo "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5  /tmp/phylogatr.zip" | sha256sum -c -
+
+      - name: Extract archive
+        id: source
+        run: |
+          rm -rf /tmp/phylogatr-root
+          mkdir -p /tmp/phylogatr-root
+          unzip -q /tmp/phylogatr.zip -d /tmp/phylogatr-root
+          ROOT="$(dirname "$(find /tmp/phylogatr-root -type f -name genes.txt -print -quit)")"
+          test -f "$ROOT/genes.txt"
+          test -f "$ROOT/cite.txt"
+          echo "root=$ROOT" >> "$GITHUB_OUTPUT"
+
+      - name: Reconstruct fresh-1000 response-blind geometry
+        run: |
+          mkdir -p results/codistribution
+          python scripts/reconstruct_relational_environment_geometry.py             --root "${{ steps.source.outputs.root }}"             --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv             --source-archive-sha256 5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5             --contract docs/supporting/relational_environment_geometry_reconstruction_contract_v0.1.json             --neighbor-fraction 0.15             --output-localities results/codistribution/fresh1000_localities.csv             --output-edges results/codistribution/fresh1000_edges.csv             --output-receipt results/codistribution/fresh1000_geometry_receipt.json
+
+      - name: Freeze exact fresh Insecta panels
+        run: |
+          python - <<'PY'
+          import csv, hashlib, json
+          from pathlib import Path
+
+          TAG="place-recurrence-insecta-fresh-v0.1"
+          SOURCE_SHA="5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+          expected=json.loads(Path("benchmarks/frozen/genetic_codistributed_recurrence_response_blind_design_v0.1.json").read_text())
+          s1=set(json.loads(Path("benchmarks/frozen/relational_prior_S1_species_exclusion_v0.1.json").read_text())["species"])
+          s2=set(json.loads(Path("benchmarks/frozen/relational_prior_S2_species_exclusion_v0.1.json").read_text())["species"])
+          with Path("benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv").open(newline="",encoding="utf-8") as f:
+              candidates=list(csv.DictReader(f))
+          rows=[r for r in candidates if r["species"] not in s1|s2 and r["class"]=="Insecta"]
+          assert len(rows)==762
+          def rank(name,tag):
+              return hashlib.sha256(f"{tag}|{SOURCE_SHA}|{name}".encode()).hexdigest()
+          ordered=sorted((r["species"] for r in rows),key=lambda s:(rank(s,TAG),s))
+          dev=ordered[:381]; conf=ordered[381:]
+          def roles(panel,label):
+              o=sorted(panel,key=lambda s:(rank(s,f"{TAG}|{label}-role"),s))
+              return o[:190],o[190:]
+          ds,dt=roles(dev,"development"); cs,ct=roles(conf,"confirmatory")
+          def set_digest(names):
+              return hashlib.sha256("\n".join(sorted(names)).encode()).hexdigest()
+          def ranked_digest(names):
+              return hashlib.sha256("\n".join(names).encode()).hexdigest()
+          assert set_digest(ordered)==expected["domain"]["species_digest_sha256"]
+          assert ranked_digest(dev)==expected["selection"]["development_species_digest_sha256"]
+          assert ranked_digest(conf)==expected["selection"]["confirmatory_species_digest_sha256"]
+          assert ranked_digest(ds)==expected["selection"]["development"]["source_digest_sha256"]
+          assert ranked_digest(dt)==expected["selection"]["development"]["target_digest_sha256"]
+          assert ranked_digest(cs)==expected["selection"]["confirmatory"]["source_digest_sha256"]
+          assert ranked_digest(ct)==expected["selection"]["confirmatory"]["target_digest_sha256"]
+
+          panel_by_species={}
+          for s in ds: panel_by_species[s]=("development","source")
+          for s in dt: panel_by_species[s]=("development","target")
+          for s in cs: panel_by_species[s]=("confirmatory","source")
+          for s in ct: panel_by_species[s]=("confirmatory","target")
+
+          out=Path("results/codistribution")
+          for stem in ("localities","edges"):
+              inp=out/f"fresh1000_{stem}.csv"
+              with inp.open(newline="",encoding="utf-8") as f:
+                  rr=csv.DictReader(f); fieldnames=list(rr.fieldnames)+["panel","role"]
+                  handles={}
+                  writers={}
+                  try:
+                      for panel in ("development","confirmatory"):
+                          h=(out/f"{panel}_{stem}.csv").open("w",newline="",encoding="utf-8")
+                          handles[panel]=h
+                          w=csv.DictWriter(h,fieldnames=fieldnames,lineterminator="\n")
+                          w.writeheader(); writers[panel]=w
+                      for row in rr:
+                          if row["species"] not in panel_by_species: continue
+                          panel,role=panel_by_species[row["species"]]
+                          row["panel"]=panel; row["role"]=role
+                          writers[panel].writerow(row)
+                  finally:
+                      for h in handles.values(): h.close()
+          def sha(path):
+              h=hashlib.sha256()
+              with Path(path).open("rb") as f:
+                  for b in iter(lambda:f.read(1<<20),b""): h.update(b)
+              return h.hexdigest()
+          manifest={
+              "schema":"ttf_codistributed_recurrence_exact_geometry_v0.1",
+              "status":"PASS_RESPONSE_BLIND_EXACT_GEOMETRY",
+              "species":762,
+              "development":{"species":381,"sources":190,"targets":191},
+              "confirmatory":{"species":381,"sources":190,"targets":191},
+              "files_sha256":{
+                  p.name:sha(p) for p in [
+                      out/"development_localities.csv",out/"development_edges.csv",
+                      out/"confirmatory_localities.csv",out/"confirmatory_edges.csv"
+                  ]
+              },
+              "response_firewall":{
+                  "sequence_lines_decoded":False,
+                  "nucleotide_identity_opened":False,
+                  "pairwise_genetic_distances_opened":False,
+                  "T_st_opened":False,
+                  "beta_G_opened":False
+              }
+          }
+          (out/"codistributed_recurrence_exact_geometry_v0.1.json").write_text(json.dumps(manifest,indent=2,sort_keys=True)+"\n")
+          print(json.dumps(manifest,sort_keys=True))
+          PY
+
+      - name: Run development fixed-dyad T_st screen
+        run: |
+          python scripts/run_codistributed_recurrence_fixed_tst_screen.py \
+            --stage screen \
+            --localities results/codistribution/development_localities.csv \
+            --edges results/codistribution/development_edges.csv \
+            --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv \
+            --design benchmarks/frozen/genetic_codistributed_recurrence_response_blind_design_v0.1.json \
+            --rule docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json \
+            --output results/codistribution/fixed_tst_screen_v0.3.json
+
+      - name: Read fixed-dyad screen gate
+        id: fixed_tst_screen
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=json.loads(Path("results/codistribution/fixed_tst_screen_v0.3.json").read_text())
+          assert p["schema"]=="ttf_genetic_codistributed_recurrence_fixed_tst_screen_v0.3"
+          passed=p["status"]=="PASS_TO_FORMAL_FIXED_TST_QUALIFICATION"
+          assert bool(p["gate"]["overall_pass"]) == passed
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write(f"passed={'true' if passed else 'false'}\n")
+          print(json.dumps({"status":p["status"],"gate":p["gate"]},sort_keys=True))
+          PY
+
+      - name: Run formal fixed-dyad T_st qualification
+        if: steps.fixed_tst_screen.outputs.passed == 'true'
+        run: |
+          python scripts/run_codistributed_recurrence_fixed_tst_screen.py \
+            --stage formal \
+            --screen-result results/codistribution/fixed_tst_screen_v0.3.json \
+            --localities results/codistribution/development_localities.csv \
+            --edges results/codistribution/development_edges.csv \
+            --candidates benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv \
+            --design benchmarks/frozen/genetic_codistributed_recurrence_response_blind_design_v0.1.json \
+            --rule docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json \
+            --output results/codistribution/fixed_tst_qualification_v0.3.json
+
+      - name: Verify formal qualification transition
+        if: steps.fixed_tst_screen.outputs.passed == 'true'
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("results/codistribution/fixed_tst_qualification_v0.3.json").read_text())
+          assert p["schema"]=="ttf_genetic_codistributed_recurrence_fixed_tst_qualification_v0.3"
+          assert p["status"] in {
+              "PASS_TO_CONFIRMATORY_CHARACTER_MASK_PREPARATION",
+              "NOT_EVALUABLE_CODISTRIBUTED_RECURRENCE_FIXED_TST",
+          }
+          assert all(v is False for v in p["response_firewall"].values())
+          print(json.dumps({"status":p["status"],"gate":p["gate"]},sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codistributed-recurrence-exact-geometry-v0.1
+          path: |
+            results/codistribution/development_localities.csv
+            results/codistribution/development_edges.csv
+            results/codistribution/confirmatory_localities.csv
+            results/codistribution/confirmatory_edges.csv
+            results/codistribution/codistributed_recurrence_exact_geometry_v0.1.json
+            results/codistribution/fresh1000_geometry_receipt.json
+            results/codistribution/fixed_tst_screen_v0.3.json
+            results/codistribution/fixed_tst_qualification_v0.3.json
+          retention-days: 30
+          if-no-files-found: error
