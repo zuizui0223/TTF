@@ -1,12 +1,36 @@
 # Codistributed recurrence in fresh Insecta v0.1
 
-Status: **prospective response-blind design frozen before genetic response opening**
+Status: **one-shot confirmatory empirical result complete — qualified null**
 
 ## Question
 
 > Does sharing more of the same landscape make post-IBD phylogeographic structure more recurrent across lineages?
 
 This directly tests the strongest alternative explanation for the completed 211-species result: perhaps cross-lineage recurrence was weak simply because many lineages did not experience enough of the same places.
+
+## Observed one-shot confirmatory result
+
+All prospectively frozen opening gates passed before confirmatory nucleotide identity was opened.
+
+- character-validity mask: **326/381 species** survived (**166 source, 160 target; 26,560 directed dyads**);
+- survivor relation-information gate: unique G fraction **0.1982**, maximum source signal share **0.0169**, maximum target signal share **0.0189**;
+- survivor fixed-T_st requalification: private-null rejection rates **0.048, 0.000, 0.004, 0.046** for A = 0.5, 1, 2, 3, all with Wilson 95% upper bounds below 0.10;
+- frozen shared-place positive control: **473/500 = 0.946 power**, Wilson 95% lower **0.9226**.
+
+The single empirical opening then gave
+
+- **beta_G = -0.004447**;
+- private-reference component p-values: **0.969, 0.777, 0.705, 0.734**;
+- least-favourable primary envelope **p = 0.969**;
+- frozen decision: **CONFIRMATORY_QUALIFIED_NULL_SHARED_GEOGRAPHIC_OPPORTUNITY_INSUFFICIENT**.
+
+Raw source-to-target transfer itself remained highly heterogeneous (`T_st` SD **0.313**, range **-0.924 to 0.941**), but greater response-blind mutual geographic co-opportunity did not explain that heterogeneity in the predicted positive direction.
+
+The central biological conclusion is therefore:
+
+> **Sharing more of the same landscape is not sufficient to make post-IBD phylogeographic structure reusable across lineages.**
+
+The completed 211-species non-transfer result cannot be explained simply by lineages occupying or sampling different places. In this qualified insect domain, the same sampled landscape need not imply the same effective phylogeographic landscape. This does **not** imply that geography or physical barriers are unimportant; it shifts the mechanism question toward lineage-by-place interactions such as dispersal, habitat dependence and historical range dynamics.
 
 ## Fresh domain
 
@@ -29,7 +53,7 @@ First 381 = development; remaining 381 = confirmatory.
 
 Separate role hashes assign 190 source and 191 target species within each panel.
 
-Development nucleotide identity remains closed permanently. Confirmatory identity may be opened once only after all gates pass.
+Development nucleotide identity remains closed permanently. Confirmatory identity was opened exactly once after all gates passed; nucleotide identity, edge genetic-distance vectors and dyad-level T_st were not serialized.
 
 ## Primary relation
 
@@ -84,9 +108,9 @@ Nested controls:
 
 Thus geographic co-opportunity is not merely endpoint identity, sampling imbalance, same-order membership, or centroid proximity. About 20–21% of its total variation remains uniquely relational after all declared controls in both panels, with broad endpoint support.
 
-This is a predictor-information result only. No genetic association has been opened.
+This was the response-blind predictor-information result used to authorize the later one-shot empirical test; the observed genetic association result is reported above.
 
-## Future response and estimand
+## Frozen response and estimand
 
 For every fixed source-target dyad:
 
@@ -100,9 +124,7 @@ Primary model:
 
 Directional hypothesis: **beta_G > 0**.
 
-A positive result would mean that lineages sharing more of the same landscape show greater excess recurrence of spatial genetic structure than expected from lineage-private spatial worlds.
-
-A calibrated null, together with qualified within-species structure, would show that lack of shared geographic opportunity is not sufficient to explain the broad 211-species non-transfer result.
+A positive result would have meant that lineages sharing more of the same landscape show greater excess recurrence of spatial genetic structure than expected from lineage-private spatial worlds. The observed one-shot result instead followed the prospectively frozen calibrated-null branch: lack of shared geographic opportunity is insufficient to explain the broad 211-species non-transfer result.
 
 ## Fixed-dyad geometry-null implementation status
 
@@ -118,7 +140,7 @@ This subtraction is not used as a parametric null assumption. The final one-side
 
 Screen, formal-reference, formal-evaluation and shared-positive worlds use disjoint seed namespaces fixed before any empirical T_st is opened. The actual source-to-target operator is the inherited endpoint-safe post-IBD, 500-km single-source Gaussian TTF operator; a batch implementation is tested against the prior scalar implementation.
 
-Execution is currently blocked only by absence of the exact 274,988,692-byte phylogatR archive (SHA-256 `5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5`). The retained compact midpoint geometry is sufficient for the response-blind G_st / TTF-Q audits but not for reconstructing endpoint-safe graph nodes required by the actual fixed-dyad T_st qualification. No genetic response has been opened.
+Execution ultimately used the exact 274,988,692-byte phylogatR archive (SHA-256 `5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5`) after GitHub Actions source-cache transport failed before identity opening. Both GitHub empirical attempts stopped with the empirical opening step skipped. A prospectively frozen exact-local fallback then used the exact GitHub source bundle, the exact Library archive and the authoritative survivor center/reference artifacts for the single empirical opening. The resulting summary is frozen at `benchmarks/frozen/genetic_codistributed_recurrence_empirical_result_v0.1.json` and passes the frozen post-result audit.
 
 ## Comparative-phylogeographic novelty
 
@@ -139,7 +161,7 @@ This yields a sharper biological distinction:
 - **place component:** greater geographic co-opportunity raises excess source-to-target recurrence;
 - **lineage-conditioned component:** even when two lineages share sampled geography, their post-IBD spatial differentiation remains non-reusable.
 
-A positive `beta_G` would therefore support a reusable place component without claiming that a specific physical barrier caused it. A qualified null would show that simple lack of shared geographic opportunity is insufficient to explain the broad 211-species non-transfer result.
+The observed qualified null shows that simple lack of shared geographic opportunity is insufficient to explain the broad 211-species non-transfer result. It does not identify a universal barrier map and does not imply that physical geography is unimportant.
 
 ### References added for positioning
 
