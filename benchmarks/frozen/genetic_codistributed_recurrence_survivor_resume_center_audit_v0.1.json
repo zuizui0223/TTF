@@ -1,0 +1,44 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_survivor_resume_center_audit_v0.1",
+  "status": "PASS_EXACT_CENTER_REPRODUCTION",
+  "recorded_on": "2026-10-06",
+  "authoritative_resume_run_id": 37406111501,
+  "resume_center_artifact": {
+    "artifact_id": 11386604136,
+    "artifact_name": "codistributed-survivor-resume-center-v0.1",
+    "artifact_digest": "sha256:272482e1f04a873b1e59264f7bb195de14216fdd8fb5e0dd3036c9c04f5a784a",
+    "center_npz_sha256": "236ed9cfbb88b04b6338a685b70ef9d5b4c87a1da4ada093c57a919c18461637"
+  },
+  "frozen_cell_npz_sha256": {
+    "A0p5": "4fa7a88cb43b7454f0bd903ae07bc331c20034dbfea2d1976edb66c6195afeb7",
+    "A1": "cda589aaaa24919c9b87febb78a439d86a2025cea29a5a59306f70e2b7fa8de5",
+    "A2": "5ecf26b53063c527e22856afde569fd8a356d2b2373f1b21e023ad21c3af9e3c",
+    "A3": "5c915e02f43b35534ccee229c30af60e096684e4ee578a75f4f4a3569db406ed"
+  },
+  "comparison": {
+    "dyads": 26560,
+    "operation": "np.mean(np.vstack([cell_mean_A0p5, cell_mean_A1, cell_mean_A2, cell_mean_A3]), axis=0)",
+    "array_equal": true,
+    "unequal_dyads": 0,
+    "maximum_absolute_difference": 0.0,
+    "worlds_per_amplitude": [199, 199, 199, 199],
+    "amplitudes": [0.5, 1, 2, 3]
+  },
+  "center_summary": {
+    "mean": 0.0023226329803256985,
+    "sd": 0.07760997199528726,
+    "min": -0.4278796663747979,
+    "max": 0.44584898444342047
+  },
+  "condition_number_diagnostic": {
+    "reported": 180.18177303045786,
+    "cell_range": 2.9558577807620168e-12,
+    "scientific_gate": false
+  },
+  "response_firewall": {
+    "confirmatory_nucleotide_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_T_st_opened": false,
+    "confirmatory_beta_G_opened": false
+  }
+}
