@@ -412,6 +412,30 @@ def run_aggregate(args,mask,info,rule,mask_rule,sharding):
     lo,hi=wilson_interval(rejected,len(p))
     positive_pass=bool(lo>=0.80)
     overall=bool(private_pass and positive_pass)
+    artifact_binding={
+        "mask_result_sha256":sha256_path(args.mask_result),
+        "survivor_information_sha256":sha256_path(args.survivor_info),
+        "center_npz_sha256":sha256_path(args.center_npz),
+        "reference_shards_sha256":{
+            file.name:sha256_path(file)
+            for file in sorted(args.reference_dir.glob("*.npz"))
+        },
+        "evaluation_shards_sha256":{
+            file.name:sha256_path(file)
+            for file in sorted(args.evaluation_dir.glob("*.npz"))
+        },
+        "positive_shards_sha256":{
+            file.name:sha256_path(file)
+            for file in sorted(args.positive_dir.glob("*.npz"))
+        },
+    }
+    if (
+        len(artifact_binding["reference_shards_sha256"])!=len(rr)
+        or len(artifact_binding["evaluation_shards_sha256"])!=len(er)
+        or len(artifact_binding["positive_shards_sha256"])!=len(pr)
+    ):
+        raise RuntimeError("synthetic artifact binding count drift")
+
     payload={
         "schema":"ttf_genetic_codistributed_recurrence_survivor_fixed_tst_qualification_v0.1",
         "status":(
@@ -419,6 +443,7 @@ def run_aggregate(args,mask,info,rule,mask_rule,sharding):
             if overall else
             "NOT_EVALUABLE_CODISTRIBUTED_RECURRENCE_SURVIVOR_GEOMETRY"
         ),
+        "artifact_binding":artifact_binding,
         "private_evaluation":private,
         "positive_evaluation":{
             "worlds":int(len(p)),
