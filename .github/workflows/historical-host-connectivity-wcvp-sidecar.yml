@@ -1,0 +1,73 @@
+name: historical host connectivity WCVP sidecar
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-connectivity-v0-1
+    paths:
+      - ".github/workflows/historical-host-connectivity-wcvp-sidecar.yml"
+      - "docs/supporting/genetic_historical_host_connectivity_protocol_v0.1.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sidecar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify frozen pre-response protocol
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("docs/supporting/genetic_historical_host_connectivity_protocol_v0.1.json").read_text())
+          assert p["schema"]=="ttf_genetic_historical_host_connectivity_protocol_v0.1"
+          assert p["status"]=="FROZEN_BEFORE_HOST_NAME_RESOLUTION_PALAEO_MODELING_OR_FRESH_GENETIC_RESPONSE"
+          assert p["interaction_source"]["globi_mirror_commit"]=="808e0b869f9ec1adf8efff87cf6a395adda103e0"
+          assert p["host_taxonomy"]["commit"]=="65bed76bae9d644ccb6ad200c05f9f5071d89e05"
+          assert all(v is False for v in p["response_firewall"].values())
+          PY
+
+      - uses: actions/checkout@v4
+        with:
+          repository: matildabrown/rWCVPdata
+          ref: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
+          path: _wcvp
+
+      - uses: actions/checkout@v4
+        with:
+          repository: globalbioticinteractions/HOSTS
+          ref: 808e0b869f9ec1adf8efff87cf6a395adda103e0
+          path: _hosts
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+
+      - name: Build exact HOSTS x WCVP sidecar
+        run: |
+          mkdir -p results/historical_host_wcvp
+          Rscript scripts/build_wcvp_hosts_sidecar.R _wcvp _hosts results/historical_host_wcvp
+          cd results/historical_host_wcvp
+          sha256sum host_name_resolution.csv insect_host_accepted.csv native_extant_nondoubtful_wgsrpd3.csv counts.tsv > SHA256SUMS
+          cat > provenance.txt <<'EOF'
+          programme: historical-host-connectivity-v0.1
+          WCVP repository: matildabrown/rWCVPdata
+          WCVP commit: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
+          HOSTS repository: globalbioticinteractions/HOSTS
+          HOSTS commit: 808e0b869f9ec1adf8efff87cf6a395adda103e0
+          No genetic response used.
+          EOF
+          cat counts.tsv
+          cat SHA256SUMS
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: historical-host-connectivity-wcvp-sidecar-v0.1
+          path: results/historical_host_wcvp/
+          retention-days: 30
+          if-no-files-found: error
