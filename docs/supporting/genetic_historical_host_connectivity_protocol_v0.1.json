@@ -1,0 +1,158 @@
+{
+  "schema": "ttf_genetic_historical_host_connectivity_protocol_v0.1",
+  "status": "FROZEN_BEFORE_HOST_NAME_RESOLUTION_PALAEO_MODELING_OR_FRESH_GENETIC_RESPONSE",
+  "frozen_on": "2026-10-06",
+  "program_identity": {
+    "name": "historical host connectivity / biotic memory",
+    "separate_from_relational_program_v0_3": true,
+    "separate_from_codistributed_recurrence_program": true,
+    "parent_negative_result": "benchmarks/frozen/genetic_codistributed_recurrence_empirical_result_v0.1.json",
+    "scientific_question": "Do present-day post-IBD genetic discontinuities in narrow-host Lepidoptera retain the spatial imprint of Last Glacial Maximum fragmentation of their larval host plants, beyond the present-day host landscape?",
+    "directional_hypothesis": "Greater LGM host-mediated resistance predicts greater present-day post-IBD genetic turnover after current host-mediated resistance is controlled.",
+    "primary_alternative": "beta_host_LGM > 0"
+  },
+  "why_this_is_not_a_rescue_of_prior_host_tests": {
+    "prior_test": "Current larval host-resource footprint similarity between species did not explain cross-species T_st heterogeneity.",
+    "new_unit": "within-species genetic edges in a genetically fresh Lepidoptera panel",
+    "new_exposure": "historical host-mediated resistance along each insect edge, reconstructed from palaeoclimatic projections of the insect's own larval host species",
+    "new_response": "within-species post-IBD edge turnover rather than source-target transfer",
+    "new_claim": "biotic interaction history leaves a spatial genetic memory within dependent consumers"
+  },
+  "freshness": {
+    "exact_phylogatr_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "strict_exclusion_rule": "Exclude the complete opened 211-species Phase-4 survivor set, the complete S1 339-species design, the complete S2 500-species design, and every species in the response-blind fresh-1000 design universe. This is stricter than excluding response-opened species only.",
+    "strict_exclusion_union_species": 1980,
+    "fresh_rank_namespace": "historical-biotic-connectivity-v0.1",
+    "fresh_rank": "SHA256('historical-biotic-connectivity-v0.1|<archive_sha256>|<species>'), species tie-break",
+    "no_backfill_after_genetic_response": true
+  },
+  "phase1_geometry": {
+    "taxon": "Animalia / Insecta / Lepidoptera",
+    "marker": "mitochondrial COI/COX1 family under the existing TTF alias normalization",
+    "minimum_exact_unique_localities": 12,
+    "neighbor_fraction": 0.15,
+    "minimum_endpoint_disjoint_ibd_training_edges": 5,
+    "panel_rule": "Scan in fresh-rank order and freeze the first 600 geometry-eligible species before host filtering.",
+    "fasta_access": "headers only; nucleotide characters forbidden",
+    "occurrence_access": "phylogatR occurrence coordinates allowed"
+  },
+  "interaction_source": {
+    "dataset": "HOSTS - a Database of the World's Lepidopteran Hostplants",
+    "nhm_resource_id": "877f387a-36a3-486c-a0c1-b8d5fb69f85a",
+    "nhm_dataset_doi": "10.5519/havt50xw",
+    "globi_mirror_repository": "globalbioticinteractions/HOSTS",
+    "globi_mirror_commit": "808e0b869f9ec1adf8efff87cf6a395adda103e0",
+    "resource_git_blob_sha": "06749c04bd5b7a754d6f7717a31c01c51357cae8",
+    "resource_rows": 140485,
+    "accepted_records": "species-level larval host binomials only; genus-only and family-only host records cannot enter the primary host set",
+    "deduplication": "unique insect species x accepted host plant species"
+  },
+  "host_taxonomy": {
+    "resolver": "WCVP version 13 redistribution",
+    "repository": "matildabrown/rWCVPdata",
+    "commit": "65bed76bae9d644ccb6ad200c05f9f5071d89e05",
+    "rule": "retain only exact unambiguous species-rank WCVP resolution to one accepted plant_name_id",
+    "native_range": "introduced=0, extinct=0, location_doubtful=0 at WGSRPD level 3"
+  },
+  "narrow_host_domain": {
+    "definition": "1 to 5 distinct WCVP-accepted species-level larval host plants",
+    "rationale": "The historical resource surface must represent a biologically constraining interaction rather than a diffuse union across dozens of hosts.",
+    "host_breadth_threshold_selected_without_genetic_response": true,
+    "minimum_species_after_WCVP_resolution": 100,
+    "failure_state": "NOT_EVALUABLE_HISTORICAL_HOST_CONNECTIVITY_HOST_DOMAIN_TOO_SMALL"
+  },
+  "host_occurrence_preflight": {
+    "source": "GBIF",
+    "taxon_match": "exact accepted host plant species",
+    "native_range_clip": "frozen WCVP primary-native WGSRPD3 units",
+    "coordinate_deduplication": "exact latitude-longitude",
+    "thinning_km": 10,
+    "maximum_occurrences_per_host": 500,
+    "minimum_occurrences_per_host": 30,
+    "rule_before_genetics": "A separate response-blind occurrence feasibility receipt must freeze the exact supported host set and host-data completeness rule before any palaeo relation or nucleotide identity is opened.",
+    "no_host_substitution_after_genetics": true
+  },
+  "palaeo_host_model": {
+    "climate_variables": ["bio01", "bio07", "bio12", "bio15"],
+    "current_climate": "CHELSA V2.1",
+    "palaeoclimate": "CHELSA-TraCE21k V1.0",
+    "primary_time_slice": "21 ka BP",
+    "current_reference_time_slice": "0 BP diagnostic aligned to the existing TTF palaeoclimate contracts",
+    "host_niche_model": "pooled standardized four-variable climate space; species-specific Gaussian KDE climatic envelope; project unchanged current niche envelope to present and 21-ka climate",
+    "host_union": "For insect i with supported hosts h, U_i(x,t) = 1 - product_h(1 - S_h(x,t)); no abundance weighting and no result-dependent host weights.",
+    "edge_sampling": "five equally spaced interior/geodesic segment points under the inherited TTF segment convention",
+    "edge_resistance": "R_host_i,e,t = mean_q[-log(epsilon + U_i(x_q,t))], with epsilon frozen before palaeo-relation calculation",
+    "primary_predictor": "z(R_host_LGM) within species",
+    "mandatory_nuisance_predictor": "z(R_host_present) within species",
+    "historical_interpretation": "beta_host_LGM asks whether past host fragmentation explains current post-IBD genetic turnover beyond present host fragmentation."
+  },
+  "genetic_response": {
+    "opening": "confirmatory nucleotide identity remains closed until host-domain, occurrence, predictor-information, character-mask and synthetic qualification gates all pass",
+    "sequence_pair_distance": "uncorrected p-distance over jointly canonical A/C/G/T alignment columns",
+    "minimum_comparable_fraction": 0.5,
+    "locality_pair_distance": "arithmetic mean over valid cross-locality sequence pairs on unchanged frozen graph edges",
+    "ibd_adjustment": "endpoint-safe leave-two-localities-out rank IBD",
+    "response": "within-species rank-standardized post-IBD edge turnover",
+    "serialization": {
+      "nucleotide_identity": false,
+      "edge_genetic_distance_vectors": false,
+      "raw_dyad_or_edge_sequence_data": false,
+      "species_level_effect_summaries": true
+    }
+  },
+  "primary_inference": {
+    "replication_unit": "species",
+    "within_species_model": "post-IBD edge turnover ~ z(R_host_LGM) + z(R_host_present)",
+    "species_effect": "beta_host_LGM_i",
+    "primary_statistic": "equal-weight mean beta_host_LGM across confirmatory species",
+    "alternative": "mean_beta_host_LGM > 0",
+    "alpha": 0.05,
+    "edge_iid_p_values_forbidden": true,
+    "species_weighting_by_edge_count_forbidden": true,
+    "required_calibration": "exact realized confirmatory geometry must pass frozen private-null Type-I and declared historical-host positive-control power before nucleotide identity opening"
+  },
+  "development_confirmatory_separation": {
+    "split_time": "after exact WCVP/host-occurrence admissibility and before any genetic identity",
+    "split_rule": "deterministic SHA256 split under namespace historical-host-connectivity-panel-v0.1",
+    "development_fraction": "1/3",
+    "confirmatory_fraction": "2/3",
+    "development_genetic_identity": "remains closed; development is for response-blind implementation diagnostics and synthetic qualification only",
+    "confirmatory_genetic_identity": "one-shot opening only after all frozen gates pass"
+  },
+  "predictor_information_gate": {
+    "timing": "before character-mask or nucleotide identity opening",
+    "required": true,
+    "primary_question": "Does LGM host resistance retain identifiable variation after current host resistance within species?",
+    "minimum_total_unique_fraction": 0.15,
+    "maximum_single_species_signal_share": 0.15,
+    "failure_state": "NOT_EVALUABLE_HISTORICAL_HOST_CONNECTIVITY_PREDICTOR_REDUNDANT"
+  },
+  "direct_palaeo_validation": {
+    "dataset": "Neotoma Paleoecology Database",
+    "role": "secondary response-blind validation of host-genus palaeo occurrence where taxonomic and geographic coverage permits",
+    "primary_decision_authority": false,
+    "reason": "Neotoma contains dated pollen and plant-macrofossil observations but taxonomic resolution and spatial coverage vary strongly among host plants."
+  },
+  "interpretation": {
+    "positive": "Past fragmentation of larval host resources left a detectable spatial genetic memory in narrow-host Lepidoptera beyond the present-day host landscape.",
+    "qualified_null": "Under qualified information and power, LGM host-mediated resistance did not explain current post-IBD genetic turnover beyond present host resistance in the tested fresh Lepidoptera domain.",
+    "gate_failure": "NOT_EVALUABLE; no biological null claim.",
+    "claim_ceiling": "A positive result supports historical biotic constraint, not proof of a particular realized host population, refugium, or direct fossil interaction at every locality."
+  },
+  "prohibited": [
+    "reuse the previously opened S2/S3 host-resource genetic response",
+    "choose host breadth after seeing genetic response",
+    "replace species-level hosts with genus/family-only records after seeing genetic response",
+    "choose a favourable palaeoclimate time slice after seeing genetic response",
+    "drop a host or insect because its empirical genetic effect is unfavourable",
+    "promote Neotoma validation coverage into a post-result subgroup rescue",
+    "mine the opened 326-species codistributed response to select this predictor"
+  ],
+  "response_firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  },
+  "next_step": "Rebuild the exact HOSTS x WCVP sidecar, freeze the 1-5 accepted-host fresh insect domain, and run host occurrence feasibility before any palaeo host-resistance relation or genetic response."
+}
