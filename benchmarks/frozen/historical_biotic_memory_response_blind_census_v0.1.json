@@ -1,0 +1,69 @@
+{
+  "schema": "ttf_historical_biotic_memory_response_blind_census_receipt_v0.1",
+  "status": "PASS_TO_EXTERNAL_HOST_IDENTITY_CENSUS",
+  "recorded_on": "2026-10-07",
+  "scientific_question": "Did historical fragmentation of larval host resources leave a detectable legacy in present-day post-IBD spatial genetic structure of herbivorous Lepidoptera?",
+  "source": {
+    "phylogatr_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "phylogatr_archive_bytes": 274988692,
+    "leptraits_path": "data/external/leptraits_consensus_v1.0.csv",
+    "leptraits_sha256": "6ec35b8a31e96c971aeaa228a48aae9f107c40c33695f0d470aa4382ca6d635b"
+  },
+  "freshness": {
+    "original_phylogatr_phase1_250": {
+      "species": 250,
+      "species_digest_sha256": "a35a3430728a191aaeed8953b6990dd3fa70b6d44ec49bce7155d56a916a2d64"
+    },
+    "conditional_two_panel_500": {
+      "species": 500,
+      "species_digest_sha256": "2933dc6cd50de7c155db86aa7dba05fa41bd89cb8a7986cb43f86b8c6a4c4d16"
+    },
+    "relational_fresh_1000": {
+      "species": 1000,
+      "species_digest_sha256": "41a81325b399d46c5056b72cbf5144158acf92d085cd75bf14d28716ce8e12ab"
+    },
+    "prior_S1_trait_gradient_339": {
+      "species": 339,
+      "species_digest_sha256": "02bcb6867b94d1aaafd2daf762a6f38e05bb35c6cd646dca347ed528dc0935f0"
+    },
+    "prior_S2_host_resource_500": {
+      "species": 500,
+      "species_digest_sha256": "96683c92eb7e00fc065a6187d260e1e684999c18d0413e58ecb100f3329117ef"
+    },
+    "exact_union_species": 2492,
+    "exact_union_species_digest_sha256": "97c8daa0bfa76a05eeb057adff03d63294dc224ff9cd6e4df4c1facfa5959695",
+    "lepidoptera_in_exact_union": 1518,
+    "selected_overlap_with_exclusion_union": 0
+  },
+  "census": {
+    "unused_lepidoptera_coi_species_after_exclusions": 25505,
+    "unused_with_aligned_records_ge_12": 8922,
+    "unused_with_leptraits_valid_host_family_and_aligned_records_ge_12": 475,
+    "geometry_eligible_with_valid_host_family": 220,
+    "single_host_family_primary_panel": 192,
+    "two_host_family_secondary_candidates": 28,
+    "minimum_unique_localities": 12,
+    "neighbor_fraction": 0.15,
+    "minimum_endpoint_disjoint_training_edges": 5,
+    "localities_median": 26,
+    "localities_q10": 13,
+    "localities_q90": 84,
+    "edges_median": 67.5,
+    "panel_species_digest_sha256": "cb1ff63738f58db7b82f7af38c7a5415844f9bc7495463053072f1f608b9e8fd",
+    "single_host_family_species_digest_sha256": "aa7fe424eee50582fe8cb4c5890bcb4b898d45d5db7b48ce9cf1d8a53d920c3b"
+  },
+  "frozen_artifacts": {
+    "candidate_csv_library_path": "/TTF/historical-biotic-memory/historical_biotic_memory_fresh_lepidoptera_v0.1.csv",
+    "candidate_csv_sha256": "9c2985bacd6d8fdba0eb369e0a35813264114cf3d724af10c2c0291552232e1b",
+    "full_census_library_path": "/TTF/historical-biotic-memory/historical_biotic_memory_response_blind_census_v0.1.json",
+    "full_census_sha256": "c7241557afec1eb6f9eb776dc7877432eb16ed6f6bd63199011d60e815c2358b"
+  },
+  "primary_panel_rule": "Use the 192 geometry-eligible species with exactly one valid LepTraits larval host family for the first external host-identity census. No genetic response may be used to alter membership.",
+  "next_gate": "Resolve species-level larval host identities from a frozen GloBI capture, then quantify palaeo-host feasibility before freezing the genetic estimand.",
+  "response_firewall": {
+    "candidate_nucleotide_identity_opened": false,
+    "candidate_pairwise_genetic_distances_opened": false,
+    "candidate_post_ibd_response_opened": false,
+    "historical_host_genetic_association_computed": false
+  }
+}
