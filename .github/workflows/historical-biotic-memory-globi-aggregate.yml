@@ -1,0 +1,128 @@
+name: historical biotic memory GloBI host aggregation
+
+on:
+  push:
+    branches:
+      - prospective/historical-biotic-memory-v0-1
+    paths:
+      - "benchmarks/frozen/historical_biotic_memory_globi_capture_binding_v0.1.json"
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  CAPTURE_RUN_ID: "37546879674"
+  BINDING: benchmarks/frozen/historical_biotic_memory_globi_capture_binding_v0.1.json
+  PARSER_RULE: docs/supporting/historical_biotic_memory_globi_host_parser_rule_v0.1.json
+  SPECIES: benchmarks/frozen/historical_biotic_memory_primary_species_v0.1.txt
+  HOST_FAMILIES: benchmarks/frozen/historical_biotic_memory_primary_host_family_v0.1.csv
+
+jobs:
+  aggregate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verify bound raw capture artifacts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request
+          from pathlib import Path
+
+          binding=json.loads(Path(os.environ["BINDING"]).read_text())
+          assert binding["schema"]=="ttf_historical_biotic_memory_globi_capture_binding_v0.1"
+          assert binding["status"]=="FROZEN_AFTER_RAW_CAPTURE_BEFORE_SEMANTIC_AGGREGATION"
+          assert binding["capture_run_id"]==int(os.environ["CAPTURE_RUN_ID"])
+          assert all(v is False for v in binding["response_firewall"].values())
+
+          repo="zuizui0223/TTF"
+          run_id=binding["capture_run_id"]
+          headers={
+              "Authorization":f"Bearer {os.environ['GH_TOKEN']}",
+              "Accept":"application/vnd.github+json",
+              "X-GitHub-Api-Version":"2022-11-28",
+          }
+          req=urllib.request.Request(
+              f"https://api.github.com/repos/{repo}/actions/runs/{run_id}",
+              headers=headers,
+          )
+          with urllib.request.urlopen(req) as r:
+              run=json.load(r)
+          assert run["conclusion"]=="success"
+          assert run["head_sha"]==binding["capture_head_sha"]
+
+          req=urllib.request.Request(
+              f"https://api.github.com/repos/{repo}/actions/runs/{run_id}/artifacts?per_page=100",
+              headers=headers,
+          )
+          with urllib.request.urlopen(req) as r:
+              payload=json.load(r)
+          actual={
+              a["name"]:{
+                  "id":int(a["id"]),
+                  "digest":a.get("digest"),
+                  "size_in_bytes":int(a["size_in_bytes"]),
+                  "expired":bool(a["expired"]),
+              }
+              for a in payload["artifacts"]
+              if a["name"].startswith("historical-biotic-memory-globi-")
+          }
+          expected=binding["artifacts"]
+          assert set(actual)==set(expected)
+          for name, spec in expected.items():
+              got=actual[name]
+              assert got["id"]==int(spec["id"])
+              assert got["digest"]==spec["digest"]
+              assert got["size_in_bytes"]==int(spec["size_in_bytes"])
+              assert got["expired"] is False
+          print({"run":run_id,"artifacts":len(actual),"status":"BOUND_RAW_CAPTURE_VERIFIED"})
+          PY
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: historical-biotic-memory-globi-*
+          path: results/globi-raw
+          merge-multiple: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37546879674
+
+      - name: Summarize host candidates under frozen semantics
+        run: |
+          mkdir -p results/host-census
+          python scripts/summarize_historical_biotic_memory_globi.py \
+            --rule "$PARSER_RULE" \
+            --species "$SPECIES" \
+            --host-families "$HOST_FAMILIES" \
+            --raw-root results/globi-raw/raw \
+            --output results/host-census/historical_biotic_memory_globi_host_candidate_census_v0.1.json
+
+      - name: Verify external-only result boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("results/host-census/historical_biotic_memory_globi_host_candidate_census_v0.1.json").read_text())
+          assert p["schema"]=="ttf_historical_biotic_memory_globi_host_candidate_census_v0.1"
+          assert p["status"]=="EXTERNAL_HOST_CANDIDATE_CENSUS_COMPLETE"
+          assert p["captured_focal_species"]==192
+          assert all(v is False for v in p["response_firewall"].values())
+          print({
+              "captured":p["captured_focal_species"],
+              "with_species_level_host":p["focal_species_with_species_level_host"],
+              "host_pairs":p["unique_focal_host_pairs"],
+          })
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: historical-biotic-memory-globi-host-census-v0.1
+          path: results/host-census/historical_biotic_memory_globi_host_candidate_census_v0.1.json
+          retention-days: 30
+          if-no-files-found: error
