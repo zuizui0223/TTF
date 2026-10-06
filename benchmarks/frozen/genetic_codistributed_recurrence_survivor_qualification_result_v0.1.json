@@ -56,7 +56,7 @@
       "least_favourable_counts": {
         "A0p5": 500
       },
-      "rejection_rate": 0,
+      "rejection_rate": 0.0,
       "rejections": 0,
       "stage_pass": true,
       "wilson95_high": 0.007624340461552241,
