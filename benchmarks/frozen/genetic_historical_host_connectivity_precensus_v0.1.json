@@ -1,0 +1,79 @@
+{
+  "schema": "ttf_genetic_historical_host_connectivity_precensus_v0.1",
+  "status": "RESPONSE_BLIND_FEASIBLE_TO_HOST_RESOLUTION",
+  "recorded_on": "2026-10-06",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "freshness": {
+    "strict_exclusion_union_species": 1980,
+    "excluded_sets": {
+      "opened_phase4_survivors": 211,
+      "prior_S1_design": 339,
+      "prior_S2_design": 500,
+      "entire_relational_fresh1000_design": 1000
+    },
+    "rule": "set union; counts above are source-set sizes and may overlap"
+  },
+  "geometry_precensus": {
+    "metadata_candidates_after_strict_exclusion": 9131,
+    "ranked_candidates_checked_to_obtain_600": 1084,
+    "geometry_eligible_selected": 600,
+    "geometry_failure_counts_before_selection_complete": {
+      "below_min_localities": 484
+    },
+    "families": 50,
+    "localities_q10": 13,
+    "localities_median": 21,
+    "localities_q90": 46,
+    "localities_max": 137,
+    "edges_q10": 17,
+    "edges_median": 42,
+    "edges_q90": 209.1,
+    "top_families": {
+      "Noctuidae": 105,
+      "Geometridae": 82,
+      "Tortricidae": 47,
+      "Erebidae": 41,
+      "Arctiidae": 33,
+      "Sphingidae": 32,
+      "Crambidae": 30,
+      "Gelechiidae": 27,
+      "Notodontidae": 23,
+      "Nymphalidae": 21,
+      "Hesperiidae": 20,
+      "Pyralidae": 16
+    },
+    "candidate_csv_library_path": "/TTF/historical_host_connectivity/historical_biotic_lep600_precensus_v0.1.csv",
+    "candidate_csv_sha256": "1c8b35a7a005af639bbabc4d730fbe723df134c8371d04019a564740b095dbef"
+  },
+  "HOSTS_exact_match_precensus": {
+    "mirror_commit": "808e0b869f9ec1adf8efff87cf6a395adda103e0",
+    "resource_git_blob_sha": "06749c04bd5b7a754d6f7717a31c01c51357cae8",
+    "candidate_species": 600,
+    "species_with_any_HOSTS_record": 294,
+    "species_with_species_level_host": 230,
+    "species_with_at_least_2_species_level_hosts": 170,
+    "species_with_at_least_5_species_level_hosts": 94,
+    "species_with_1_to_5_species_level_hosts": 146,
+    "species_with_1_to_3_species_level_hosts": 126,
+    "matched_HOSTS_records": 3980,
+    "species_level_host_records": 2314,
+    "genus_only_host_records": 1441,
+    "family_only_host_records": 225,
+    "species_level_host_count_quantiles_among_HOSTS_matched_species": {
+      "min": 0,
+      "q25": 1,
+      "median": 2,
+      "q75": 7,
+      "q90": 15,
+      "max": 101
+    }
+  },
+  "interpretation": "A genetically fresh narrow-host Lepidoptera panel of order 100+ species is feasible before WCVP and host-occurrence filtering. No host palaeodistribution, genetic distance, post-IBD response, or ecology-genetics association has been opened.",
+  "response_firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  },
+  "next_step": "Build exact WCVP-resolved species-level HOSTS sidecar and freeze the 1-5 accepted-host insect domain."
+}
