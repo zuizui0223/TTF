@@ -84,13 +84,14 @@ def load_contracts(args):
         raise RuntimeError("survivor information response firewall open")
     q=mask_rule["exact_survivor_fixed_tst_requalification"]
     cfg=rule["formal_qualification"]
-    for key in (
-        "center_worlds_per_amplitude",
-        "private_reference_worlds_per_amplitude",
-        "private_evaluation_worlds_per_amplitude",
-    ):
-        if int(q[key])!=int(cfg[key]):
-            raise RuntimeError(f"survivor world-count drift: {key}")
+    key_pairs=(
+        ("center_worlds_per_amplitude","center_worlds_per_private_amplitude"),
+        ("private_reference_worlds_per_amplitude","private_reference_worlds_per_amplitude"),
+        ("private_evaluation_worlds_per_amplitude","private_evaluation_worlds_per_amplitude"),
+    )
+    for survivor_key,formal_key in key_pairs:
+        if int(q[survivor_key])!=int(cfg[formal_key]):
+            raise RuntimeError(f"survivor world-count drift: {survivor_key}")
     if int(q["positive_worlds"])!=int(cfg["positive_evaluation_worlds"]):
         raise RuntimeError("survivor positive world-count drift")
     return mask,info,rule,mask_rule,sharding
