@@ -43,3 +43,42 @@ def test_one_shot_empirical_cli_imports_without_opening_response():
     assert "--authorization" in out
     assert "--center-npz" in out
     assert "--reference-dir" in out
+
+
+def test_full_confirmatory_mask_ledger_is_exactly_frozen_and_response_blind():
+    import hashlib
+    path=ROOT/"benchmarks/frozen/genetic_codistributed_recurrence_confirmatory_mask_full_v0.1.json"
+    raw=path.read_bytes()
+    assert hashlib.sha256(raw).hexdigest()=="0f3035fbc8a88a18ba274f4e97ada800b5688b8d40c26568063fbba68118e917"
+    p=json.loads(raw)
+    assert p["schema"]=="ttf_genetic_codistributed_recurrence_confirmatory_mask_result_v0.1"
+    assert p["status"]=="PASS_TO_SURVIVOR_INFORMATION_GATE"
+    assert len(p["species"])==381
+    assert p["surviving_species"]==326
+    assert all(row.get("nucleotide_identity_persisted") is False for row in p["species"])
+    assert all(v is False for v in p["response_firewall"].values())
+
+
+def test_empirical_execution_contract_binds_authoritative_resume_before_result():
+    p=json.loads(
+        (ROOT/"docs/supporting/genetic_codistributed_recurrence_empirical_execution_contract_v0.1.json").read_text()
+    )
+    assert p["schema"]=="ttf_genetic_codistributed_recurrence_empirical_execution_contract_v0.1"
+    assert p["status"]=="FROZEN_BEFORE_AUTHORITATIVE_SURVIVOR_REQUALIFICATION_RESULT"
+    q=p["authoritative_survivor_qualification"]
+    assert q["workflow_run_id"]==37406111501
+    assert q["qualification_artifact"]=="codistributed-survivor-resume-qualification-v0.1"
+    assert q["center_artifact"]=="codistributed-survivor-resume-center-v0.1"
+    assert p["frozen_inputs"]["full_mask_ledger_sha256"]=="0f3035fbc8a88a18ba274f4e97ada800b5688b8d40c26568063fbba68118e917"
+    assert all(v is False for v in p["response_firewall"].values())
+
+
+def test_empirical_workflow_is_push_only_and_blocks_reruns():
+    path=ROOT/".github/workflows/codistributed-recurrence-confirmatory-empirical.yml"
+    text=path.read_text()
+    assert "workflow_dispatch" not in text
+    assert "genetic_codistributed_recurrence_empirical_execution_v0.1.json" in text
+    assert 'test "$GITHUB_EVENT_NAME" = "push"' in text
+    assert 'test "$GITHUB_RUN_ATTEMPT" = "1"' in text
+    assert 'run-id: 37406111501' in text
+    assert "cmp \"$AUTHORIZATION\" results/pre-opening/reproduced_authorization.json" in text
