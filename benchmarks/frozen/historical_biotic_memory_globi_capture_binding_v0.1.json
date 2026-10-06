@@ -1,0 +1,69 @@
+{
+  "schema": "ttf_historical_biotic_memory_globi_capture_binding_v0.1",
+  "status": "FROZEN_AFTER_RAW_CAPTURE_BEFORE_SEMANTIC_AGGREGATION",
+  "recorded_on": "2026-10-07",
+  "capture_run_id": 37546879674,
+  "capture_head_sha": "7aaf8f7b5abb4d20c82619e81dfaf81959abd273",
+  "capture_conclusion": "success",
+  "artifacts": {
+    "historical-biotic-memory-globi-000_024": {
+      "id": 11451153710,
+      "size_in_bytes": 298256,
+      "digest": "sha256:fd14e2188059d1dd89e1f1318e975e18cac4be101c3781128f5e2d6a99e76107"
+    },
+    "historical-biotic-memory-globi-024_048": {
+      "id": 11451630079,
+      "size_in_bytes": 179045,
+      "digest": "sha256:6a952ea6254d8cd03d328fc87940c120e203e8cb31ee02626dd31f58928ab117"
+    },
+    "historical-biotic-memory-globi-048_072": {
+      "id": 11450479067,
+      "size_in_bytes": 426346,
+      "digest": "sha256:99da520eb6c96a6cf4d4e560d2e00976ebb79186254cf850b78923d5efb6dddb"
+    },
+    "historical-biotic-memory-globi-072_096": {
+      "id": 11450658383,
+      "size_in_bytes": 347301,
+      "digest": "sha256:1cdc7ba027dc1c265ddc861dbff58d5ae672fd571eb3df6ef9900dad68859a97"
+    },
+    "historical-biotic-memory-globi-096_120": {
+      "id": 11451218394,
+      "size_in_bytes": 324363,
+      "digest": "sha256:f37307669a843c06e37b6cbac91ff8c2b599522870b396867234f90d87d72825"
+    },
+    "historical-biotic-memory-globi-120_144": {
+      "id": 11450913428,
+      "size_in_bytes": 316715,
+      "digest": "sha256:84007d0d50e8929bb8df5241940102bcd2d6488f2478274124c42caf76713bf2"
+    },
+    "historical-biotic-memory-globi-144_168": {
+      "id": 11450423858,
+      "size_in_bytes": 290900,
+      "digest": "sha256:c871a4ad6f993098c24d251324ba3c22f159e8141ef4c0eb25a908f99fe4d215"
+    },
+    "historical-biotic-memory-globi-168_192": {
+      "id": 11451296560,
+      "size_in_bytes": 312006,
+      "digest": "sha256:a0ee502b29768ba30ca876e24fb0b3258f0c20da2c856f415ed22d64d734d9eb"
+    }
+  },
+  "aggregation_binding": {
+    "summarizer_path": "scripts/summarize_historical_biotic_memory_globi.py",
+    "summarizer_git_blob_sha": "ba52755009f0e1f03e93dfec2238553ec4fb7c3c",
+    "parser_rule_path": "docs/supporting/historical_biotic_memory_globi_host_parser_rule_v0.1.json",
+    "parser_rule_git_blob_sha": "8d95c50e689dd6b3a3c6b10c92015e2b53d1fcaa",
+    "semantics_rule_path": "docs/supporting/historical_biotic_memory_host_semantics_rule_v0.1.json",
+    "semantics_rule_git_blob_sha": "d1f1588a51591a851844fbae5f93b40f85840024",
+    "host_family_path": "benchmarks/frozen/historical_biotic_memory_primary_host_family_v0.1.csv",
+    "host_family_git_blob_sha": "0a63e529a75b17376708845dc30c5901ee7929eb",
+    "species_path": "benchmarks/frozen/historical_biotic_memory_primary_species_v0.1.txt",
+    "species_git_blob_sha": "724f60332cb3fe8ec6f76f793bfccdc90ddcf46e"
+  },
+  "interpretation": "This binding freezes raw external interaction bytes before the full 192-species semantic aggregation. It has no genetic inferential role.",
+  "response_firewall": {
+    "candidate_nucleotide_identity_opened": false,
+    "candidate_pairwise_genetic_distances_opened": false,
+    "candidate_post_ibd_response_opened": false,
+    "historical_host_genetic_association_computed": false
+  }
+}
