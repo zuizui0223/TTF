@@ -1,0 +1,206 @@
+name: codistributed one-shot empirical technical continuation
+
+on:
+  push:
+    branches:
+      - prospective/codistributed-recurrence-insecta-v0-1
+    paths:
+      - "benchmarks/frozen/genetic_codistributed_recurrence_empirical_technical_retry_execution_v0.1.json"
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  RETRY: benchmarks/frozen/genetic_codistributed_recurrence_empirical_technical_retry_execution_v0.1.json
+  RETRY_RULE: benchmarks/frozen/genetic_codistributed_recurrence_empirical_technical_retry_rule_v0.1.json
+  EXECUTION: benchmarks/frozen/genetic_codistributed_recurrence_empirical_execution_v0.1.json
+  CONTRACT: docs/supporting/genetic_codistributed_recurrence_empirical_execution_contract_v0.1.json
+  AUTHORIZATION: benchmarks/frozen/genetic_codistributed_recurrence_identity_opening_authorization_v0.1.json
+  FULL_MASK: benchmarks/frozen/genetic_codistributed_recurrence_confirmatory_mask_full_v0.1.json
+  CANDIDATES: benchmarks/frozen/relational_fresh_candidate_1000_v0.1.csv
+  GEOMETRY_RULE: docs/supporting/genetic_codistributed_recurrence_geometry_null_rule_v0.3.json
+  SHARDING: docs/supporting/genetic_codistributed_recurrence_formal_sharding_v0.1.json
+  OPENING_RULE: docs/supporting/genetic_codistributed_recurrence_empirical_opening_rule_v0.1.json
+  SURVIVOR_RUN_ID: "37406111501"
+  FIRST_EMPIRICAL_RUN_ID: "37424857802"
+  FIRST_EMPIRICAL_JOB_ID: "112142102812"
+  SOURCE_SHA256: 5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5
+
+jobs:
+  empirical_retry:
+    name: one-shot confirmatory empirical technical continuation
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+
+      - name: Enforce first attempt of the single technical continuation
+        run: |
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+
+      - name: Verify frozen technical continuation receipt
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          rule=json.loads(Path(os.environ["RETRY_RULE"]).read_text())
+          retry=json.loads(Path(os.environ["RETRY"]).read_text())
+          execution=json.loads(Path(os.environ["EXECUTION"]).read_text())
+          assert rule["schema"]=="ttf_genetic_codistributed_recurrence_empirical_technical_retry_rule_v0.1"
+          assert rule["status"]=="FROZEN_BEFORE_FIRST_EMPIRICAL_RUN_START"
+          assert retry["schema"]=="ttf_genetic_codistributed_recurrence_empirical_technical_retry_execution_v0.1"
+          assert retry["status"]=="AUTHORIZE_SINGLE_PREOPENING_TECHNICAL_CONTINUATION"
+          assert retry["first_empirical_run_id"]==int(os.environ["FIRST_EMPIRICAL_RUN_ID"])
+          assert retry["first_empirical_job_id"]==int(os.environ["FIRST_EMPIRICAL_JOB_ID"])
+          assert retry["identity_opening_step_started"] is False
+          assert retry["empirical_result_observed"] is False
+          assert retry["source_cache_reseed_exact_pass"] is True
+          assert retry["identity_opening_authorization_sha256"]==execution["identity_opening_authorization_sha256"]
+          assert retry["survivor_qualification_sha256"]==execution["survivor_qualification_sha256"]
+          assert all(v is False for v in retry["response_firewall"].values())
+          PY
+
+      - name: Verify first empirical run failed before identity opening step
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request
+          repo="zuizui0223/TTF"
+          run_id=os.environ["FIRST_EMPIRICAL_RUN_ID"]
+          job_id=int(os.environ["FIRST_EMPIRICAL_JOB_ID"])
+          url=f"https://api.github.com/repos/{repo}/actions/runs/{run_id}/jobs?filter=all&per_page=100"
+          req=urllib.request.Request(
+              url,
+              headers={
+                  "Authorization":f"Bearer {os.environ['GH_TOKEN']}",
+                  "Accept":"application/vnd.github+json",
+                  "X-GitHub-Api-Version":"2022-11-28",
+              },
+          )
+          with urllib.request.urlopen(req) as r:
+              data=json.load(r)
+          jobs=[j for j in data["jobs"] if int(j["id"])==job_id]
+          assert len(jobs)==1
+          job=jobs[0]
+          assert job["conclusion"]=="failure"
+          steps={s["name"]:s for s in job["steps"]}
+          empirical=steps["Execute one-shot confirmatory empirical opening"]
+          assert empirical["conclusion"]=="skipped"
+          verify=steps["Reproduce and verify identity-opening authorization"]
+          assert verify["conclusion"] in {"skipped","success"}
+          print({"first_run_conclusion":job["conclusion"],"empirical_step":empirical["conclusion"]})
+          PY
+
+      - name: Restore exact reseeded phylogatR archive
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/phylogatr.zip
+          key: phylogatr-5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5
+          fail-on-cache-miss: true
+
+      - name: Require exact source archive
+        run: |
+          test "$(stat -c%s /tmp/phylogatr.zip)" = "274988692"
+          echo "$SOURCE_SHA256  /tmp/phylogatr.zip" | sha256sum -c -
+          rm -rf /tmp/phylogatr-root
+          mkdir -p /tmp/phylogatr-root
+          unzip -q /tmp/phylogatr.zip -d /tmp/phylogatr-root
+          ROOT="$(dirname "$(find /tmp/phylogatr-root -type f -name genes.txt -print -quit)")"
+          test -f "$ROOT/genes.txt"
+          test -f "$ROOT/cite.txt"
+          echo "ROOT=$ROOT" >> "$GITHUB_ENV"
+
+      - name: Restore qualified survivor center
+        uses: actions/download-artifact@v4
+        with:
+          name: codistributed-survivor-resume-center-v0.1
+          path: results/qualified-center
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37406111501
+
+      - name: Restore qualified private references
+        uses: actions/download-artifact@v4
+        with:
+          pattern: codistributed-survivor-resume-reference-*
+          path: results/qualified-reference
+          merge-multiple: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37406111501
+
+      - name: Restore survivor qualification result
+        uses: actions/download-artifact@v4
+        with:
+          name: codistributed-survivor-resume-qualification-v0.1
+          path: results/qualified-result
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37406111501
+
+      - name: Reproduce and verify the same identity-opening authorization
+        run: |
+          mkdir -p results/pre-opening
+          python scripts/authorize_codistributed_recurrence_identity_opening.py \
+            --root "$ROOT" \
+            --source-archive-sha256 "$SOURCE_SHA256" \
+            --candidates "$CANDIDATES" \
+            --localities results/qualified-center/survivor_localities.csv \
+            --edges results/qualified-center/survivor_edges.csv \
+            --full-mask-ledger "$FULL_MASK" \
+            --survivor-qualification results/qualified-result/survivor_fixed_tst_qualification_v0.1.json \
+            --center-npz results/qualified-center/survivor_center_v0.1.npz \
+            --reference-dir results/qualified-reference \
+            --geometry-rule "$GEOMETRY_RULE" \
+            --sharding "$SHARDING" \
+            --opening-rule "$OPENING_RULE" \
+            --output results/pre-opening/reproduced_authorization.json
+          cmp "$AUTHORIZATION" results/pre-opening/reproduced_authorization.json
+
+      - name: Execute unchanged one-shot confirmatory empirical opening
+        run: |
+          mkdir -p results/empirical
+          python scripts/run_codistributed_recurrence_confirmatory_empirical.py \
+            --root "$ROOT" \
+            --source-archive-sha256 "$SOURCE_SHA256" \
+            --candidates "$CANDIDATES" \
+            --localities results/qualified-center/survivor_localities.csv \
+            --edges results/qualified-center/survivor_edges.csv \
+            --full-mask-ledger "$FULL_MASK" \
+            --survivor-qualification results/qualified-result/survivor_fixed_tst_qualification_v0.1.json \
+            --center-npz results/qualified-center/survivor_center_v0.1.npz \
+            --reference-dir results/qualified-reference \
+            --geometry-rule "$GEOMETRY_RULE" \
+            --sharding "$SHARDING" \
+            --opening-rule "$OPENING_RULE" \
+            --authorization "$AUTHORIZATION" \
+            --output results/empirical/codistributed_recurrence_empirical_result_v0.1.json
+
+      - name: Verify result serialization boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("results/empirical/codistributed_recurrence_empirical_result_v0.1.json").read_text())
+          assert p["schema"]=="ttf_genetic_codistributed_recurrence_empirical_result_v0.1"
+          assert p["status"]=="ONE_SHOT_CONFIRMATORY_EMPIRICAL_RESULT_OPENED"
+          assert p["outcome_state"]["serialized_nucleotide_identity"] is False
+          assert p["outcome_state"]["serialized_edge_genetic_distance_vectors"] is False
+          assert p["outcome_state"]["serialized_dyad_T_st"] is False
+          assert p["one_shot"]["post_result_retuning_allowed"] is False
+          print({"decision":p["decision"],"primary":p["primary"],"domain":p["empirical_domain"]})
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codistributed-recurrence-one-shot-empirical-technical-continuation-v0.1
+          path: |
+            results/empirical/codistributed_recurrence_empirical_result_v0.1.json
+            results/pre-opening/reproduced_authorization.json
+          retention-days: 30
+          if-no-files-found: warn
