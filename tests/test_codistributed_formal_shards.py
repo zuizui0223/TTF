@@ -2,7 +2,11 @@ import itertools
 
 import numpy as np
 
-from ttf.codistributed_formal_shards import frozen_seed_range, validate_exact_ranges
+from ttf.codistributed_formal_shards import (
+    aggregate_equal_amplitude_center,
+    frozen_seed_range,
+    validate_exact_ranges,
+)
 from ttf.codistributed_geometry_null import (
     GeometryNullCenter,
     center_dyad_scores,
@@ -149,3 +153,31 @@ def test_reduced_world_shards_reproduce_monolithic_fixed_tst_and_beta():
         ]
     )
     np.testing.assert_allclose(shard_beta, mono_beta, rtol=0, atol=1e-14)
+
+
+def test_equal_amplitude_center_aggregation_matches_monolithic_operation_order():
+    rng=np.random.default_rng(20261006)
+    amplitudes=(0.5,1.0,2.0,3.0)
+    worlds={
+        a:rng.normal(size=(17,199))
+        for a in amplitudes
+    }
+    # Frozen monolithic operation: per-cell sum/199, then vstack in amplitude
+    # order, then equal-weight np.mean across the four cell means.
+    monolithic=np.mean(
+        np.vstack([
+            np.sum(worlds[a],axis=1)/199
+            for a in amplitudes
+        ]),
+        axis=0,
+    )
+    split_means={
+        a:np.sum(worlds[a],axis=1)/199
+        for a in amplitudes
+    }
+    center=aggregate_equal_amplitude_center(
+        split_means,amplitudes,worlds_per_amplitude=199
+    )
+    np.testing.assert_array_equal(center.mu0,monolithic)
+    assert center.amplitudes==amplitudes
+    assert center.worlds_per_amplitude==(199,199,199,199)
