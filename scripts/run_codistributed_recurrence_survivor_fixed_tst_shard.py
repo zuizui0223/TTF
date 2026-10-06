@@ -18,7 +18,11 @@ from run_codistributed_recurrence_fixed_tst_screen import (
     simulate_chunks,
     zscore,
 )
-from ttf.codistributed_formal_shards import frozen_seed_range, validate_exact_ranges
+from ttf.codistributed_formal_shards import (
+    aggregate_equal_amplitude_center,
+    frozen_seed_range,
+    validate_exact_ranges,
+)
 from ttf.codistributed_geometry_null import (
     GeometryNullCenter,
     least_favourable_beta_pvalues,
@@ -202,6 +206,111 @@ def run_center(args,mask,info,rule,mask_rule,sharding):
     },indent=2,sort_keys=True)+"\n")
 
 
+def run_center_cell(args,mask,info,rule,mask_rule,sharding):
+    q=mask_rule["exact_survivor_fixed_tst_requalification"]
+    n=int(q["center_worlds_per_amplitude"])
+    require_range(sharding,"center",0,n)
+    amplitudes=tuple(float(a) for a in rule["geometry_null_center"]["private_amplitudes"])
+    A=float(args.amplitude)
+    if A not in amplitudes:
+        raise RuntimeError("center amplitude is not frozen")
+    geometries,pairs,prepared,cache=load_context(args,mask,info,rule)
+    cell=label_A(A)
+    seeds=frozen_seed_range(
+        int(rule["synthetic_parameters"]["master_seed"]),
+        q["survivor_seed_namespaces"]["center"],
+        cell,0,n,
+    )
+    chunks=list(simulate_chunks(
+        geometries,pairs,seeds,0.0,A,rule,cache,batch_size=200
+    ))
+    if len(chunks)!=1 or chunks[0].shape!=(len(pairs),n):
+        raise RuntimeError("survivor center cell no longer matches frozen single-batch operation")
+    mean=np.sum(chunks[0],axis=1)/n
+    args.output_npz.parent.mkdir(parents=True,exist_ok=True)
+    np.savez_compressed(
+        args.output_npz,
+        component=np.asarray("center-cell"),
+        amplitude=np.asarray(A,dtype=float),
+        cell=np.asarray(cell),
+        worlds=np.asarray(n,dtype=np.int64),
+        mean=np.asarray(mean,dtype=float),
+        predictor_condition_number=np.asarray(prepared.condition_number,dtype=float),
+    )
+    print(json.dumps({
+        "component":"center-cell","amplitude":A,"cell":cell,
+        "worlds":n,"dyads":len(pairs),
+        "mean_summary":{
+            "mean":float(np.mean(mean)),
+            "sd":float(np.std(mean,ddof=0)),
+            "min":float(np.min(mean)),
+            "max":float(np.max(mean)),
+        },
+    },sort_keys=True))
+
+
+def run_center_aggregate(args,mask,info,rule,mask_rule,sharding):
+    q=mask_rule["exact_survivor_fixed_tst_requalification"]
+    n=int(q["center_worlds_per_amplitude"])
+    amplitudes=tuple(float(a) for a in rule["geometry_null_center"]["private_amplitudes"])
+    expected_cells={label_A(a):a for a in amplitudes}
+    found={}
+    conditions=[]
+    for file in sorted(args.center_dir.glob("*.npz")):
+        p=np.load(file,allow_pickle=False)
+        if str(np.asarray(p["component"]).item())!="center-cell":
+            continue
+        A=float(np.asarray(p["amplitude"]).item())
+        cell=str(np.asarray(p["cell"]).item())
+        worlds=int(np.asarray(p["worlds"]).item())
+        if cell not in expected_cells or A!=expected_cells[cell] or worlds!=n:
+            raise RuntimeError(f"center cell metadata drift in {file}")
+        if A in found:
+            raise RuntimeError(f"duplicate center amplitude {A:g}")
+        mean=np.asarray(p["mean"],dtype=float)
+        if mean.shape!=(26560,) or not np.isfinite(mean).all():
+            raise RuntimeError(f"center cell dyad payload drift for A={A:g}")
+        found[A]=mean
+        conditions.append(float(np.asarray(p["predictor_condition_number"]).item()))
+    if set(found)!=set(amplitudes):
+        raise RuntimeError("center amplitude shard set incomplete")
+    if not np.allclose(conditions,conditions[0],rtol=0,atol=1e-12):
+        raise RuntimeError("center cell predictor condition-number drift")
+    center=aggregate_equal_amplitude_center(
+        found,amplitudes,worlds_per_amplitude=n
+    )
+    args.output_npz.parent.mkdir(parents=True,exist_ok=True)
+    np.savez_compressed(
+        args.output_npz,mu0=center.mu0,
+        amplitudes=np.asarray(center.amplitudes,dtype=float),
+        worlds_per_amplitude=np.asarray(center.worlds_per_amplitude,dtype=np.int64),
+    )
+    args.output_json.write_text(json.dumps({
+        "schema":"ttf_genetic_codistributed_recurrence_survivor_formal_center_v0.1",
+        "status":"PASS_SURVIVOR_CENTER",
+        "execution_mode":"predeclared_parallel_amplitude_cells",
+        "dyads":26560,
+        "predictor_condition_number":conditions[0],
+        "mu0_summary":{
+            "mean":float(np.mean(center.mu0)),
+            "sd":float(np.std(center.mu0,ddof=0)),
+            "min":float(np.min(center.mu0)),
+            "max":float(np.max(center.mu0)),
+        },
+        "response_firewall":info["response_firewall"],
+    },indent=2,sort_keys=True)+"\n")
+    print(json.dumps({
+        "status":"PASS_SURVIVOR_CENTER",
+        "execution_mode":"predeclared_parallel_amplitude_cells",
+        "mu0_summary":{
+            "mean":float(np.mean(center.mu0)),
+            "sd":float(np.std(center.mu0,ddof=0)),
+            "min":float(np.min(center.mu0)),
+            "max":float(np.max(center.mu0)),
+        },
+    },sort_keys=True))
+
+
 def run_beta(args,mask,info,rule,mask_rule,sharding,component):
     require_range(sharding,component,args.start,args.stop)
     geometries,pairs,prepared,cache=load_context(args,mask,info,rule)
@@ -337,19 +446,28 @@ def run_aggregate(args,mask,info,rule,mask_rule,sharding):
 
 def main():
     ap=argparse.ArgumentParser()
-    ap.add_argument("--component",choices=("center","reference","evaluation","positive","aggregate"),required=True)
+    ap.add_argument("--component",choices=("center","center-cell","center-aggregate","reference","evaluation","positive","aggregate"),required=True)
     for name in (
         "localities","edges","candidates","mask-result","survivor-info",
-        "rule","mask-rule","sharding","center-npz","reference-dir",
+        "rule","mask-rule","sharding","center-npz","center-dir","reference-dir",
         "evaluation-dir","positive-dir","output-npz","output-json","output",
     ):
         ap.add_argument("--"+name,type=Path)
     ap.add_argument("--start",type=int)
     ap.add_argument("--stop",type=int)
+    ap.add_argument("--amplitude",type=float)
     args=ap.parse_args()
     mask,info,rule,mask_rule,sharding=load_contracts(args)
     if args.component=="center":
         run_center(args,mask,info,rule,mask_rule,sharding)
+    elif args.component=="center-cell":
+        if args.amplitude is None or not all((args.localities,args.edges,args.candidates,args.output_npz)):
+            raise RuntimeError("center-cell component missing required inputs")
+        run_center_cell(args,mask,info,rule,mask_rule,sharding)
+    elif args.component=="center-aggregate":
+        if not all((args.center_dir,args.output_npz,args.output_json)):
+            raise RuntimeError("center-aggregate component missing required inputs")
+        run_center_aggregate(args,mask,info,rule,mask_rule,sharding)
     elif args.component in {"reference","evaluation","positive"}:
         run_beta(args,mask,info,rule,mask_rule,sharding,args.component)
     else:
