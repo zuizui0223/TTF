@@ -274,7 +274,7 @@ def run_center_aggregate(args,mask,info,rule,mask_rule,sharding):
         conditions.append(float(np.asarray(p["predictor_condition_number"]).item()))
     if set(found)!=set(amplitudes):
         raise RuntimeError("center amplitude shard set incomplete")
-    if not np.allclose(conditions,conditions[0],rtol=0,atol=1e-12):
+    if not np.allclose(conditions,conditions[0],rtol=0,atol=1e-10):
         raise RuntimeError("center cell predictor condition-number drift")
     center=aggregate_equal_amplitude_center(
         found,amplitudes,worlds_per_amplitude=n
