@@ -1,0 +1,61 @@
+{
+  "schema": "ttf_historical_biotic_memory_globi_host_parser_rule_v0.1",
+  "status": "FROZEN_AFTER_FIRST_EXTERNAL_SHARD_BEFORE_FULL_CAPTURE_AND_BEFORE_GENETICS",
+  "recorded_on": "2026-10-07",
+  "parent_semantics_rule": "docs/supporting/historical_biotic_memory_host_semantics_rule_v0.1.json",
+  "evidence_seen_when_frozen": {
+    "globi_capture_run_id": 37546879674,
+    "inspected_shard": "072_096",
+    "inspected_species": 24,
+    "genetic_response_seen": false,
+    "purpose": "operationalize already-frozen semantic criteria against the observed GloBI column schema; not choose criteria from genetics"
+  },
+  "frozen_inputs": {
+    "species_path": "benchmarks/frozen/historical_biotic_memory_primary_species_v0.1.txt",
+    "species_count": 192,
+    "species_sha256": "aa7fe424eee50582fe8cb4c5890bcb4b898d45d5db7b48ce9cf1d8a53d920c3b",
+    "host_family_path": "benchmarks/frozen/historical_biotic_memory_primary_host_family_v0.1.csv",
+    "host_family_rows": 192,
+    "host_family_sha256": "0948820a4a1057e346b61c91b347ece6667c810e65aebe3c68c5fc3f58c36e78"
+  },
+  "accepted_orientations": {
+    "focal_as_source": {
+      "plant_as": "target",
+      "interaction_types": [
+        "hasHost",
+        "eats"
+      ]
+    },
+    "focal_as_target": {
+      "plant_as": "source",
+      "interaction_types": [
+        "hostOf",
+        "eatenBy"
+      ]
+    }
+  },
+  "plant_requirement": {
+    "family_rule": "The plant-side taxon path must contain the focal species' exact frozen LepTraits host-family token.",
+    "species_level_name_rule": "Require at least two whitespace-delimited taxon-name tokens; reject names whose second token is sp., sp, spp., spp, cf., or aff.; family-only and genus-only names remain audit-only.",
+    "later_taxonomic_resolution": "Preserve raw plant names now. Resolve accepted names against one frozen external plant taxonomy only after the full raw capture is frozen."
+  },
+  "deduplication": {
+    "primary_host_identity_unit": "unique raw species-level plant taxon name within focal Lepidoptera species",
+    "inverse_relation_duplicates": "collapse",
+    "repeated_studies": "collapse for host identity; retain study titles only as provenance",
+    "observation_count_weighting": false
+  },
+  "output_boundary": {
+    "output_is_host_candidate_ledger_not_final_palaeo_predictor": true,
+    "serialize_rejected_reason_counts": true,
+    "serialize_accepted_raw_host_names": true,
+    "serialize_study_titles_for_accepted_hosts": true,
+    "no_genetic_data": true
+  },
+  "response_firewall": {
+    "candidate_nucleotide_identity_opened": false,
+    "candidate_pairwise_genetic_distances_opened": false,
+    "candidate_post_ibd_response_opened": false,
+    "historical_host_genetic_association_computed": false
+  }
+}
