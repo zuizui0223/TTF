@@ -1,0 +1,49 @@
+{
+  "schema": "ttf_historical_biotic_memory_globi_capture_rule_v0.1",
+  "status": "FROZEN_BEFORE_GLOBI_RAW_CAPTURE",
+  "recorded_on": "2026-10-07",
+  "purpose": "Capture external biotic-interaction records for the fresh 192-species historical-biotic-memory panel before any genetic response is opened.",
+  "species": {
+    "path": "benchmarks/frozen/historical_biotic_memory_primary_species_v0.1.txt",
+    "count": 192,
+    "sha256": "aa7fe424eee50582fe8cb4c5890bcb4b898d45d5db7b48ce9cf1d8a53d920c3b"
+  },
+  "source": {
+    "provider": "Global Biotic Interactions (GloBI)",
+    "api_base": "https://api.globalbioticinteractions.org/interaction.csv",
+    "documentation": "https://www.globalbioticinteractions.org/data",
+    "stable_data_doi": "10.5281/zenodo.3950589",
+    "query_parameter_includeObservations": "true"
+  },
+  "capture": {
+    "directions": [
+      "sourceTaxon",
+      "targetTaxon"
+    ],
+    "interaction_type_filter_at_capture": null,
+    "other_taxon_kingdom_filter_at_capture": null,
+    "raw_body_must_be_serialized": true,
+    "raw_body_sha256_must_be_recorded": true,
+    "response_headers_union_must_be_recorded": true,
+    "row_count_must_be_recorded": true,
+    "empty_result_allowed": true,
+    "retries_per_request": 4,
+    "timeout_seconds": 90
+  },
+  "interpretation_boundary": {
+    "capture_is_not_host_assignment": true,
+    "capture_is_not_evidence_that_every_record_is_larval_feeding": true,
+    "next_stage": "Inspect only external interaction semantics and plant taxonomy; freeze a direction-normalized larval-herbivory allowlist before genetic response.",
+    "forbidden": [
+      "filter interaction types using genetic outcomes",
+      "choose host records because they improve a genetic association",
+      "open candidate nucleotide identity before the external interaction and historical-host feasibility stages are frozen"
+    ]
+  },
+  "response_firewall": {
+    "candidate_nucleotide_identity_opened": false,
+    "candidate_pairwise_genetic_distances_opened": false,
+    "candidate_post_ibd_response_opened": false,
+    "historical_host_genetic_association_computed": false
+  }
+}
