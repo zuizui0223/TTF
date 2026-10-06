@@ -60,6 +60,13 @@ def digest_labels(names) -> str:
     return hashlib.sha256("\n".join(sorted(map(str,names))).encode()).hexdigest()
 
 
+def npz_hashes(path: Path) -> dict[str,str]:
+    files=sorted(path.glob("*.npz"))
+    if not files:
+        raise RuntimeError("no NPZ artifacts found")
+    return {file.name:sha256_path(file) for file in files}
+
+
 def read_metadata(path: Path) -> dict[str,dict[str,str]]:
     rows=list(csv.DictReader(path.open(newline="",encoding="utf-8")))
     out={str(r["species"]):r for r in rows}
@@ -156,6 +163,14 @@ def main() -> int:
         raise RuntimeError("survivor synthetic gate lacks overall PASS")
     if any(bool(v) for v in qual["response_firewall"].values()):
         raise RuntimeError("survivor qualification response firewall open")
+    binding=qual.get("artifact_binding")
+    if not isinstance(binding,dict):
+        raise RuntimeError("survivor qualification lacks synthetic artifact binding")
+    current_reference_hashes=npz_hashes(args.reference_dir)
+    if sha256_path(args.center_npz)!=binding.get("center_npz_sha256"):
+        raise RuntimeError("survivor center differs from qualification artifact")
+    if current_reference_hashes!=binding.get("reference_shards_sha256"):
+        raise RuntimeError("survivor private references differ from qualification artifacts")
 
     actual_inputs={
         "candidates":sha256_path(args.candidates),
@@ -170,6 +185,8 @@ def main() -> int:
     }
     if actual_inputs!=auth["inputs_sha256"]:
         raise RuntimeError("authorized empirical input hash drift")
+    if current_reference_hashes!=auth.get("reference_shards_sha256"):
+        raise RuntimeError("authorized private-reference artifact hash drift")
     for path,expected in auth.get("code_sha256",{}).items():
         p=Path(path)
         if not p.is_file() or sha256_path(p)!=expected:
