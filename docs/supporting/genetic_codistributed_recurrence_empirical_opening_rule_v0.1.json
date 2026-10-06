@@ -1,0 +1,89 @@
+{
+  "schema": "ttf_genetic_codistributed_recurrence_empirical_opening_rule_v0.1",
+  "status": "FROZEN_BEFORE_SURVIVOR_FIXED_TST_REQUALIFICATION_RESULT",
+  "frozen_on": "2026-10-06",
+  "scientific_question": "Among character-qualified codistributed insect lineages, does greater mutual geographic co-opportunity predict greater excess reuse of post-IBD spatial genetic structure?",
+  "prerequisites": {
+    "survivor_mask_result": "benchmarks/frozen/genetic_codistributed_recurrence_confirmatory_mask_result_v0.1.json",
+    "survivor_information_result": "benchmarks/frozen/genetic_codistributed_recurrence_survivor_information_result_v0.1.json",
+    "survivor_fixed_tst_required_status": "PASS_TO_ONE_SHOT_CONFIRMATORY_EMPIRICAL_OPENING",
+    "all_pre_empirical_response_firewalls_must_be_false": true
+  },
+  "frozen_empirical_domain": {
+    "species": 326,
+    "sources": 166,
+    "targets": 160,
+    "directed_dyads": 26560,
+    "survivor_csv": "benchmarks/frozen/genetic_codistributed_recurrence_confirmatory_survivors_v0.1.csv",
+    "survivor_csv_sha256": "da2ef8ff762beee67ff2520ae3c9f1a73bba2ad177b2d450db0a9c004ad14847",
+    "source_digest_sha256": "e9f1af286c16f73e6fddf13c8cfb0679387087109a85aceb0ed6d38bed259169",
+    "target_digest_sha256": "f88515d6a7fd46f3df0db046fe172946195f84397018d7df090caa374dd494d8",
+    "full_mask_ledger_sha256": "0f3035fbc8a88a18ba274f4e97ada800b5688b8d40c26568063fbba68118e917"
+  },
+  "source_binding": {
+    "archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "geometry_localities_sha256": "bb6e7c6611522f2d1ef2983c8ad483b32e7144ba0e8272bdbc3d580e8a086342",
+    "geometry_edges_sha256": "b7864048347bea8393f6beaa7cb7dc4e4f3b87336700f748180d67b94af37f63"
+  },
+  "identity_opening": {
+    "allowed_only_once": true,
+    "aligned_fasta_identity_may_be_read_only_after_all_prerequisites_pass": true,
+    "each_species_canonical_mask_sha256_must_match_frozen_full_mask_ledger": true,
+    "edge_genetic_distance": "mean p-distance across all cross-locality sequence pairs with >=50% jointly canonical columns on each unchanged frozen edge",
+    "failed_edge_after_opening": "hard invariant failure; no species dropping, backfill, graph repair, marker switching, or threshold relaxation",
+    "serialize_nucleotide_identity": false,
+    "serialize_edge_genetic_distance_vectors": false
+  },
+  "response_operator": {
+    "source_response": "endpoint-safe post-IBD residual turnover followed by frozen length orthogonalization",
+    "target_response": "endpoint-safe post-IBD residual turnover",
+    "min_endpoint_disjoint_training_edges": 5,
+    "source_to_target_skill": "Spearman correlation between 500-km single-source Gaussian field prediction and target post-IBD turnover",
+    "bandwidth_km": 500,
+    "prior_strength": 0.25,
+    "prior_mean": 0,
+    "segment_points": 5
+  },
+  "geometry_null_center": {
+    "use_exact_survivor_center_from_qualified_synthetic_run": true,
+    "empirical_response": "E_st = empirical T_st - survivor mu0_st",
+    "do_not_refit_or_reweight_private_amplitudes": true
+  },
+  "primary_model": {
+    "response": "E_st",
+    "primary_predictor": "z(G_st)",
+    "exact_source_FE": true,
+    "exact_target_FE": true,
+    "controls": [
+      "z(log1p centroid distance / 500 km)",
+      "z(abs log edge-count ratio)",
+      "z(abs log locality-count ratio)",
+      "z(same-order indicator)"
+    ],
+    "estimand": "beta_G",
+    "direction": "greater than zero"
+  },
+  "primary_inference": {
+    "reference_distributions": "exact four survivor private-reference beta_G arrays from the qualified synthetic run",
+    "component_p_value": "(1 + count(reference_beta_A >= empirical_beta_G))/(999 + 1)",
+    "primary_p_value": "maximum component p-value across A in {0.5,1,2,3}",
+    "alpha": 0.05,
+    "asymptotic_two_way_cluster_p_value_authority": false,
+    "confirmatory_positive": "beta_G > 0 and primary_p_value <= 0.05"
+  },
+  "interpretation_contract": "docs/supporting/genetic_codistributed_recurrence_interpretation_v0.1.json",
+  "forbidden": [
+    "change the 500-km G definition or threshold G after opening",
+    "drop species or dyads after opening based on empirical genetic response",
+    "select taxonomic or geographic subgroups after opening",
+    "change nuisance controls, center weights, private amplitudes, or reference distributions after opening",
+    "rerun the one-shot opening under alternate genetic distance, kernel, IBD, or p-value definitions",
+    "reinterpret a calibrated null as evidence that geography is unimportant"
+  ],
+  "response_firewall": {
+    "confirmatory_nucleotide_identity_opened": false,
+    "confirmatory_pairwise_genetic_distances_opened": false,
+    "confirmatory_T_st_opened": false,
+    "confirmatory_beta_G_opened": false
+  }
+}
