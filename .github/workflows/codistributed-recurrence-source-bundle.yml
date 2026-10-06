@@ -1,5 +1,5 @@
 name: codistributed recurrence source bundle
-# refresh bundle at current frozen head
+# refresh bundle at exact preopening local-fallback head
 
 on:
   push:
