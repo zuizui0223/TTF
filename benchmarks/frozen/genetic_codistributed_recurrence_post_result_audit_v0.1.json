@@ -1,0 +1,31 @@
+{
+  "allowed_claims": [
+    "simple geographic co-opportunity is insufficient to restore cross-lineage recurrence in the qualified domain",
+    "the same sampled landscape need not imply the same effective phylogeographic barrier structure",
+    "future mechanism tests should target lineage-by-place interactions such as dispersal, habitat dependence, and historical range dynamics rather than search for one universal barrier map"
+  ],
+  "audit": {
+    "alpha": 0.05,
+    "beta_G": -0.004447178457147497,
+    "decision": "CONFIRMATORY_QUALIFIED_NULL_SHARED_GEOGRAPHIC_OPPORTUNITY_INSUFFICIENT",
+    "domain_pass": true,
+    "least_favourable_cell": "A0p5",
+    "one_shot_boundary_pass": true,
+    "positive": false,
+    "primary_p_value": 0.969,
+    "serialization_boundary_pass": true
+  },
+  "authorization_sha256": "97619379f9d4d086c3b21b94c6c36b688dfd9489c729fb1631a9cbd5d9456265",
+  "empirical_result_sha256": "d299c00485e5a31c433f87eb235315efc9a839465eb0169c043fde40109f9f0e",
+  "frozen_biological_reading": "The broad 211-species non-transfer result cannot be explained simply by species occupying different places. Even among insect lineages with greater mutual geographic sampling opportunity, post-IBD spatial structure remains predominantly lineage-conditioned at the tested scale.",
+  "frozen_headline": "Sharing the same landscape is not sufficient to make phylogeographic structure reusable across lineages.",
+  "interpretation_contract_sha256": "be294b76b4babd0a2081cec6b616e3ed39209ada2eee51af4f0e32fba9555223",
+  "prohibited_claims": [
+    "geography is unimportant",
+    "physical barriers do not matter",
+    "all phylogeographic structure is lineage-specific",
+    "no biologically coherent subset could ever share barriers"
+  ],
+  "schema": "ttf_genetic_codistributed_recurrence_post_result_audit_v0.1",
+  "status": "PASS_FROZEN_ONE_SHOT_RESULT_AUDIT"
+}
