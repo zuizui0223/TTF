@@ -37,6 +37,11 @@ jobs:
 
       - run: python -m pip install -e .
 
+      - name: Enforce first-attempt one-shot execution
+        run: |
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+
       - name: Verify pre-opening execution receipt
         run: |
           python - <<'PY'
