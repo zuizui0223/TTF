@@ -58,6 +58,13 @@ jobs:
               raise SystemExit("unexpected empirical execution receipt")
           if execution.get("status")!="AUTHORIZE_ONE_SHOT_EMPIRICAL_EXECUTION":
               raise SystemExit("one-shot empirical execution is not authorized")
+          contract_hash=hashlib.sha256(Path(os.environ["CONTRACT"]).read_bytes()).hexdigest()
+          if contract_hash!=execution.get("empirical_execution_contract_sha256"):
+              raise SystemExit("empirical execution contract hash drift")
+          if execution.get("source_archive_sha256")!=os.environ["SOURCE_SHA256"]:
+              raise SystemExit("execution receipt source archive drift")
+          if any(bool(v) for v in execution.get("response_firewall",{}).values()):
+              raise SystemExit("execution receipt response firewall is open")
           if int(execution.get("survivor_qualification_workflow_run_id",-1))!=int(os.environ["SURVIVOR_RUN_ID"]):
               raise SystemExit("survivor qualification run drift")
           if not auth_path.is_file():
@@ -124,6 +131,16 @@ jobs:
           test -f results/qualified-center/survivor_edges.csv
           test -f results/qualified-center/survivor_center_v0.1.npz
           test -f results/qualified-result/survivor_fixed_tst_qualification_v0.1.json
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          execution=json.loads(Path(os.environ["EXECUTION"]).read_text())
+          q=Path("results/qualified-result/survivor_fixed_tst_qualification_v0.1.json")
+          h=hashlib.sha256(q.read_bytes()).hexdigest()
+          if h!=execution.get("survivor_qualification_sha256"):
+              raise SystemExit("survivor qualification hash drift")
+          print({"qualification_sha256":h})
+          PY
 
       - name: Reproduce and verify identity-opening authorization
         run: |
