@@ -82,3 +82,6 @@ def test_empirical_workflow_is_push_only_and_blocks_reruns():
     assert 'test "$GITHUB_RUN_ATTEMPT" = "1"' in text
     assert 'run-id: 37406111501' in text
     assert "cmp \"$AUTHORIZATION\" results/pre-opening/reproduced_authorization.json" in text
+    assert "empirical execution contract hash drift" in text
+    assert "survivor qualification hash drift" in text
+    assert "execution receipt response firewall is open" in text
