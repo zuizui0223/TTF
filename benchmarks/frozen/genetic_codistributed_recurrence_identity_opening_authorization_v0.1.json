@@ -23,12 +23,12 @@
     "localities": "bb6e7c6611522f2d1ef2983c8ad483b32e7144ba0e8272bdbc3d580e8a086342",
     "opening_rule": "e1f98c30d490806c08e2cc872c476fc349026971b0c969562062ae5317e7a105",
     "sharding": "94849fb292e3f263643467cbc75deb43ffcb0763e0f53b120f4bc714de635271",
-    "survivor_qualification": "12da3b4249536919de8063cc35acd03ace0d3156185390b702713ef0752fd1fa"
+    "survivor_qualification": "050157c71a206021e8f911dfceff66242fd25340e1ad4648646d5953fa2d2ae1"
   },
   "opening_rule_sha256": "e1f98c30d490806c08e2cc872c476fc349026971b0c969562062ae5317e7a105",
   "qualification": {
     "overall_pass": true,
-    "sha256": "12da3b4249536919de8063cc35acd03ace0d3156185390b702713ef0752fd1fa",
+    "sha256": "050157c71a206021e8f911dfceff66242fd25340e1ad4648646d5953fa2d2ae1",
     "status": "PASS_TO_ONE_SHOT_CONFIRMATORY_EMPIRICAL_OPENING"
   },
   "reference_shards_sha256": {
