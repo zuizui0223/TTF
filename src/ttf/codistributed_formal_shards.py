@@ -1,8 +1,10 @@
 from __future__ import annotations
 
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping, Sequence
 
-from .codistributed_geometry_null import frozen_uint64_seed
+import numpy as np
+
+from .codistributed_geometry_null import GeometryNullCenter, frozen_uint64_seed
 
 
 def frozen_seed_range(
@@ -44,4 +46,46 @@ def validate_exact_ranges(
     return want
 
 
-__all__ = ["frozen_seed_range", "validate_exact_ranges"]
+def aggregate_equal_amplitude_center(
+    cell_means: Mapping[float, np.ndarray],
+    amplitudes: Sequence[float],
+    *,
+    worlds_per_amplitude: int,
+) -> GeometryNullCenter:
+    """Aggregate already-computed per-amplitude means in frozen amplitude order.
+
+    Each input vector must itself be the exact single-batch mean for that
+    amplitude. This helper only performs the final equal-amplitude vstack/mean
+    used by the monolithic runner.
+    """
+    ordered=tuple(float(a) for a in amplitudes)
+    if not ordered or len(set(ordered))!=len(ordered):
+        raise ValueError("amplitudes must be unique and non-empty")
+    if set(map(float,cell_means))!=set(ordered):
+        raise ValueError("center amplitude cells do not match frozen amplitudes")
+    n=int(worlds_per_amplitude)
+    if n<1:
+        raise ValueError("worlds_per_amplitude must be positive")
+    vectors=[]
+    width=None
+    for amplitude in ordered:
+        x=np.asarray(cell_means[amplitude],dtype=float)
+        if x.ndim!=1 or len(x)==0 or not np.isfinite(x).all():
+            raise ValueError(f"invalid center mean for amplitude {amplitude:g}")
+        if width is None:
+            width=len(x)
+        elif len(x)!=width:
+            raise ValueError("center amplitude dyad-count drift")
+        vectors.append(x)
+    return GeometryNullCenter(
+        mu0=np.mean(np.vstack(vectors),axis=0),
+        amplitudes=ordered,
+        worlds_per_amplitude=tuple([n]*len(ordered)),
+    )
+
+
+__all__ = [
+    "aggregate_equal_amplitude_center",
+    "frozen_seed_range",
+    "validate_exact_ranges",
+]
