@@ -1,0 +1,70 @@
+{
+  "schema": "ttf_genetic_historical_host_occurrence_rule_v0.1",
+  "status": "FROZEN_BEFORE_WCVP_PANEL_RESULT_OR_ANY_HOST_GBIF_RESULT",
+  "frozen_on": "2026-10-06",
+  "parent_protocol": "docs/supporting/genetic_historical_host_connectivity_protocol_v0.1.json",
+  "panel_input": {
+    "expected_schema": "ttf_genetic_historical_host_connectivity_panel_v0.1",
+    "required_status": "PASS_TO_HOST_OCCURRENCE_FEASIBILITY",
+    "host_breadth": "1-5 exact WCVP-accepted species-level hosts"
+  },
+  "native_range_geometry": {
+    "repository": "matildabrown/rWCVPdata",
+    "commit": "65bed76bae9d644ccb6ad200c05f9f5071d89e05",
+    "distribution_table": "data/wcvp_distributions.rda",
+    "spatial_asset": "data/wgsrpd3.rda",
+    "spatial_code_field": "LEVEL3_COD",
+    "distribution_code_field": "area_code_l3",
+    "primary_native_filter": {
+      "introduced": 0,
+      "extinct": 0,
+      "location_doubtful": 0
+    },
+    "point_rule": "retain a GBIF occurrence only if its coordinate intersects at least one primary-native WGSRPD3 polygon for that accepted host species"
+  },
+  "gbif": {
+    "taxon_match": "strict exact accepted species match",
+    "occurrence_filters": {
+      "hasCoordinate": true,
+      "hasGeospatialIssue": false,
+      "occurrenceStatus": "PRESENT",
+      "year": "1981,2026"
+    },
+    "page_size": 300,
+    "maximum_pages": 20,
+    "page_selection": "deterministic offsets from total count under the inherited relational-environment implementation; no extra pages after underperformance",
+    "coordinate_deduplication": "exact latitude-longitude",
+    "minimum_distance_km": 10,
+    "maximum_retained_per_host": 500,
+    "minimum_retained_per_host": 30
+  },
+  "insect_host_completeness": {
+    "supported_host": "host species passes exact taxon match and retains >=30 native-range occurrences after exact deduplication and 10-km thinning",
+    "required_fraction": 0.8,
+    "required_count": "ceil(0.8 * n_accepted_hosts)",
+    "examples": {
+      "1_host": 1,
+      "2_hosts": 2,
+      "3_hosts": 3,
+      "4_hosts": 4,
+      "5_hosts": 4
+    },
+    "supported_host_union_only": true,
+    "no_substitute_host": true,
+    "no_backfill_from_broad_host_insects": true,
+    "minimum_insects_after_occurrence_gate": 90,
+    "failure_state": "NOT_EVALUABLE_HISTORICAL_HOST_CONNECTIVITY_OCCURRENCE_COVERAGE"
+  },
+  "selection_boundary": {
+    "all_occurrence filtering and insect removal occur before palaeo host-resistance calculation and before any genetic nucleotide identity",
+    "host or insect retention cannot depend on a genetic response",
+    "request errors are technical incompleteness and must be resolved or the affected host remains unsupported; they cannot be relabelled ecological absence"
+  },
+  "response_firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  },
+  "next_step": "After the exact WCVP narrow-host panel exists, acquire host occurrences under this rule and freeze the supported-host/insect ledger before any palaeo host model."
+}
