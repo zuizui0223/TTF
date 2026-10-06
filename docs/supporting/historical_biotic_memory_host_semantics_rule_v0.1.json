@@ -1,0 +1,37 @@
+{
+  "schema": "ttf_historical_biotic_memory_host_semantics_rule_v0.1",
+  "status": "FROZEN_BEFORE_GLOBI_RAW_RESULT_INSPECTION",
+  "recorded_on": "2026-10-07",
+  "parent_capture_rule": "docs/supporting/historical_biotic_memory_globi_capture_rule_v0.1.json",
+  "purpose": "Define outcome-independent semantic criteria for turning raw external interaction records into larval host candidates.",
+  "admissible_interaction_semantics": [
+    "The record must explicitly encode trophic use, feeding, or a host relationship consistent with the Lepidoptera taxon using the plant taxon.",
+    "The non-Lepidoptera partner must resolve to a land-plant taxon.",
+    "Provider orientation may be reversed only when the interaction verb makes consumer-host direction unambiguous."
+  ],
+  "excluded_semantics": [
+    "visits or pollinates without larval host evidence",
+    "co-occurs-with or generic ecologically-related-to",
+    "the Lepidoptera taxon acting as prey or host of a predator, parasitoid, pathogen, or symbiont",
+    "records lacking a resolvable plant partner",
+    "records whose interaction meaning cannot be oriented unambiguously"
+  ],
+  "cross_check": {
+    "frozen_reference": "LepTraits single larval host family from the primary 192-species panel",
+    "rule": "A species-level plant host may enter the historical-host set only if its resolved plant family matches the frozen LepTraits host family. Mismatches remain in the audit ledger but do not enter the primary host set.",
+    "record_count_weighting": false,
+    "accepted_host_species_weighting": "equal host-species weight; publication or observation count may not weight a host more heavily"
+  },
+  "feasibility_only": {
+    "minimum_host_coverage_threshold_set_before_raw_capture": false,
+    "sparse_coverage_may_close_route_as_not_evaluable": true,
+    "genetic_response_may_set_feasibility_threshold": false,
+    "genetic_response_may_choose_interaction_verbs": false
+  },
+  "response_firewall": {
+    "candidate_nucleotide_identity_opened": false,
+    "candidate_pairwise_genetic_distances_opened": false,
+    "candidate_post_ibd_response_opened": false,
+    "historical_host_genetic_association_computed": false
+  }
+}
