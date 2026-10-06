@@ -1,6 +1,6 @@
 # Codistributed recurrence — literature positioning v0.1
 
-Status: **interpretive positioning only; no change to estimand, thresholds, panels, response firewall, or opening authority**
+Status: **post-result positioning; frozen estimand and interpretation branch preserved**
 
 ## The field-level problem
 
@@ -96,6 +96,20 @@ The frozen v0.3 fixed-dyad design addresses this explicitly:
 
 Therefore a confirmatory positive result requires more than "overlap makes the kernel estimable." It requires a G_st slope exceeding what the same sampling geometry produces when every lineage has private spatial structure.
 
+## Observed result in the comparative-phylogeographic context
+
+The one-shot confirmatory test followed the prospectively frozen qualified-null branch.
+
+- empirical `beta_G = -0.004447`;
+- least-favourable Monte Carlo envelope `p = 0.969`;
+- survivor synthetic qualification had already shown calibrated private-null Type-I control and **0.946** power for the frozen shared-place positive control.
+
+Thus the completed broad non-transfer result is not rescued by explicitly conditioning on how much sampled geography two insect lineages share. The important point is not merely another failure to find concordance. The study prospectively tested the most direct geographic-opportunity explanation for discordance and rejected it under a design that had sufficient response-blind relation information and calibrated power.
+
+This sharpens the classical comparative-phylogeographic problem. Shared geography can matter strongly within individual lineages while still failing to define a portable spatial genetic field across lineages. The same place can therefore have different effective phylogeographic meaning for different organisms.
+
+The next mechanistic level is not a search for a single hidden universal barrier map. It is the interaction between place and lineage: dispersal, habitat dependence, historical occupancy, demographic response, and other processes that change how a geographic feature is translated into genetic structure.
+
 ## Claim hierarchy
 
 ### A positive result would support
@@ -104,11 +118,11 @@ Therefore a confirmatory positive result requires more than "overlap makes the k
 
 This would provide a predictive bridge between classical codistribution and phylogeographic concordance.
 
-### A qualified null would support
+### The observed qualified null supports
 
-> Even among lineages with varying and often substantial shared geographic opportunity, greater co-distribution does not generate detectable excess recurrence at the tested scale.
+> Even among lineages with varying and often substantial shared geographic opportunity, greater co-distribution did not generate detectable excess recurrence at the tested scale.
 
-Combined with the completed 211-species result, this would argue that simple failure to occupy or sample the same geography is insufficient to explain the weak cross-lineage transfer.
+Combined with the completed 211-species result, this shows that simple failure to occupy or sample the same geography is insufficient to explain the weak cross-lineage transfer in the qualified insect domain.
 
 ### Neither result directly establishes
 
@@ -123,6 +137,6 @@ The paper should not sell the contribution as "the first study of concordance am
 
 The defensible novelty is:
 
-> **a prospective, out-of-lineage test of whether the degree of shared geographic opportunity predicts the reusability of phylogeographic structure, with the measurement opportunity itself calibrated by lineage-private spatial null worlds.**
+> **a prospective, out-of-lineage test showing that greater shared geographic opportunity is not sufficient to make phylogeographic structure reusable across lineages, after calibrating the measurement opportunity itself with lineage-private spatial null worlds.**
 
-This is the conceptual gap between classical concordance mapping and the present TTF design.
+This moves the comparative-phylogeographic problem from asking only whether breaks are concordant to asking why the same landscape is translated into different genetic structure by different lineages.
