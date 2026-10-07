@@ -7,6 +7,8 @@ on:
     paths:
       - ".github/workflows/historical-host-occurrence-gate.yml"
       - "scripts/export_historical_host_native_ranges.R"
+      - "scripts/export_historical_host_native_ranges_from_sidecar.R"
+      - "benchmarks/frozen/genetic_historical_host_sidecar_replay_repair_v0.1.json"
       - "scripts/acquire_historical_host_occurrences.py"
       - "scripts/aggregate_historical_host_occurrences.py"
       - "docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json"
@@ -16,6 +18,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   native-ranges:
@@ -23,6 +26,18 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+      - name: Download exact frozen WCVP/HOSTS sidecar
+        uses: actions/download-artifact@v4
+        with:
+          name: wcvp-v13-hosts-sidecar
+          path: _host_sidecar
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35548477097
+      - name: Verify exact sidecar bytes
+        run: |
+          echo "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9  _host_sidecar/insect_host_accepted.csv" | sha256sum -c -
+          echo "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558  _host_sidecar/native_extant_nondoubtful_wgsrpd3.csv" | sha256sum -c -
       - name: Checkout exact WCVP v13 redistribution
         uses: actions/checkout@v4
         with:
@@ -39,8 +54,9 @@ jobs:
           Rscript -e 'install.packages("sf", repos="https://cloud.r-project.org")'
       - name: Export frozen primary-native host ranges
         run: |
-          Rscript scripts/export_historical_host_native_ranges.R \
+          Rscript scripts/export_historical_host_native_ranges_from_sidecar.R \
             benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.1.csv \
+            _host_sidecar/native_extant_nondoubtful_wgsrpd3.csv \
             _wcvp \
             results/native/host_native_ranges.geojson
       - uses: actions/upload-artifact@v4
