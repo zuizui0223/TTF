@@ -136,6 +136,8 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--panel", type=Path, required=True)
     ap.add_argument("--rule", type=Path, required=True)
+    ap.add_argument("--identity-correction", type=Path, required=True)
+    ap.add_argument("--wcvp-names", type=Path, required=True)
     ap.add_argument("--output-dir", type=Path, required=True)
     ap.add_argument("--workers", type=int, default=6)
     args = ap.parse_args()
@@ -148,19 +150,46 @@ def main() -> int:
 
     with args.panel.open(newline="", encoding="utf-8") as f:
         panel = list(csv.DictReader(f))
+    correction = json.loads(args.identity_correction.read_text())
+    if correction.get("schema") != "ttf_genetic_historical_host_panel_identity_correction_v0.1":
+        raise RuntimeError("unexpected panel identity correction")
     expected = rule["primary_panel"]
-    if sha256_path(args.panel) != expected["sha256"]:
-        raise RuntimeError("frozen panel SHA-256 drift")
-    if len(panel) != int(expected["species"]):
+    ident = correction["scientific_identity"]
+    if len(panel) != int(expected["species"]) or len(panel) != int(ident["insects"]):
         raise RuntimeError("frozen panel species count drift")
+
+    species = sorted(norm_name(row["species"]) for row in panel)
+    species_digest = hashlib.sha256(("\n".join(species)+"\n").encode()).hexdigest()
+    if species_digest != ident["species_digest_sha256"]:
+        raise RuntimeError("frozen panel species identity drift")
+
+    logical = []
+    panel_ids: dict[str, list[str]] = {}
+    for row in panel:
+        insect = norm_name(row["species"])
+        ids = sorted(x.strip() for x in row["accepted_host_ids"].split(";") if x.strip())
+        if int(row["n_hosts"]) != len(ids):
+            raise RuntimeError(f"host ID count drift for {insect}")
+        panel_ids[insect] = ids
+        logical.append(f"{insect}|{';'.join(ids)}")
+    logical_digest = hashlib.sha256(("\n".join(sorted(logical))+"\n").encode()).hexdigest()
+    if logical_digest != ident["logical_identity_digest_sha256"]:
+        raise RuntimeError("frozen insect x host-ID identity drift")
+
+    with args.wcvp_names.open(newline="", encoding="utf-8") as f:
+        name_rows = list(csv.DictReader(f))
+    id_to_name = {
+        str(row["accepted_host_id"]).strip(): norm_name(row["accepted_host_name"])
+        for row in name_rows
+    }
+    all_ids = {hid for ids in panel_ids.values() for hid in ids}
+    if set(id_to_name) != all_ids:
+        raise RuntimeError("WCVP accepted-name map differs from frozen host ID set")
 
     host_species: dict[str, set[str]] = {}
     insect_hosts: dict[str, list[str]] = {}
-    for row in panel:
-        insect = norm_name(row["species"])
-        names = [norm_name(x) for x in row["accepted_host_names"].split(";") if norm_name(x)]
-        if int(row["n_hosts"]) != len(names):
-            raise RuntimeError(f"host count drift for {insect}")
+    for insect in sorted(panel_ids):
+        names = [id_to_name[hid] for hid in panel_ids[insect]]
         insect_hosts[insect] = names
         for host in names:
             genus = host.split()[0]
@@ -272,7 +301,10 @@ def main() -> int:
             else "TECHNICALLY_INCOMPLETE_NEOTOMA_COVERAGE_CENSUS"
         ),
         "rule_sha256": sha256_path(args.rule),
-        "panel_sha256": sha256_path(args.panel),
+        "panel_git_bytes_sha256_descriptive": sha256_path(args.panel),
+        "identity_correction_sha256": sha256_path(args.identity_correction),
+        "wcvp_names_sha256": sha256_path(args.wcvp_names),
+        "logical_identity_digest_sha256": logical_digest,
         "primary_window_cal_yr_bp": [age_young, age_old],
         "dataset_types_api": dataset_types,
         "query": {
