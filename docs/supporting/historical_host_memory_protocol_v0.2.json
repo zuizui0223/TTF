@@ -1,0 +1,30 @@
+{
+  "schema": "ttf_historical_host_memory_protocol_v0.2",
+  "status": "FROZEN_BEFORE_HISTORICAL_HOST_PREDICTOR_CHARACTERIZATION",
+  "frozen_on": "2026-10-07",
+  "supersedes": "historical_host_memory_protocol_v0.1.json",
+  "scientific_change": "No biological hypothesis, candidate species, climate variables, time slices, response, alpha, or host rule changed. v0.2 corrects the response-blind edge quadrature definition before any predictor value was computed: the historical predictor now inherits the exact five interior TTF fractions rather than including endpoints.",
+  "biological_question": "Does climatic loss of larval host-resource opportunity during the Last Glacial Maximum leave a detectable legacy in present Lepidoptera spatial genetic differentiation beyond ordinary IBD and the insect's own abiotic climate history?",
+  "edge_quadrature": {
+    "segment_points": 5,
+    "fractions": [0.1, 0.3, 0.5, 0.7, 0.9],
+    "geographic_interpolation": "great-circle interpolation between frozen locality endpoints",
+    "reason": "match the inherited five-point TTF edge integration positions while sampling geographic climate rasters"
+  },
+  "primary_predictor": {
+    "D_host_t": "mean nearest-climate-analog distance across the five frozen edge quadrature positions at time t",
+    "M_host": "D_host_LGM - D_host_0BP",
+    "current_host_nuisance": "D_host_0BP",
+    "self_history_control": "M_self built with the identical climate-analog and edge-quadrature operator using the insect's own 0-BP locality climate cloud",
+    "alternative": "larger M_host predicts larger endpoint-safe post-IBD edge turnover"
+  },
+  "all_other_authority": "inherit historical_host_memory_protocol_v0.1.json and historical_host_memory_qualification_rule_v0.1.json unchanged",
+  "response_firewall": {
+    "historical_host_predictor_values_computed_before_this_freeze": false,
+    "character_masks_opened": false,
+    "nucleotide_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "post_IBD_turnover_opened": false,
+    "beta_host_opened": false
+  }
+}
