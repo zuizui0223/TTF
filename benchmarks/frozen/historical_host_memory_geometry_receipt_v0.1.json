@@ -1,0 +1,29 @@
+{
+  "schema": "ttf_historical_host_memory_geometry_receipt_v0.1",
+  "status": "PASS_RESPONSE_BLIND_FRESH_642_GEOMETRY_RECONSTRUCTION",
+  "frozen_on": "2026-10-07",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "candidate_csv_sha256": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+  "neighbor_fraction": 0.15,
+  "species": 642,
+  "locality_rows": 17202,
+  "edge_rows": 71728,
+  "locality_csv": {
+    "library_path": "/TTF/historical_host_memory/historical_host_memory_localities_v0.1.csv",
+    "sha256": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9"
+  },
+  "edge_csv": {
+    "library_path": "/TTF/historical_host_memory/historical_host_memory_edges_v0.1.csv",
+    "sha256": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9"
+  },
+  "verification": "Every species exactly reproduced the frozen candidate n_localities, graph_k, edge count, and minimum endpoint-disjoint training-edge count.",
+  "allowed_information": "aligned FASTA header identifiers plus occurrence coordinates and frozen graph geometry only",
+  "response_firewall": {
+    "sequence_lines_decoded": false,
+    "character_masks_opened": false,
+    "nucleotide_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "post_IBD_turnover_opened": false,
+    "beta_host_opened": false
+  }
+}
