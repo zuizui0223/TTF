@@ -1,0 +1,38 @@
+{
+  "schema": "ttf_genetic_historical_host_character_mask_rule_v0.1",
+  "status": "FROZEN_BEFORE_HOST_OCCURRENCE_RESULT_PREDICTOR_INFORMATION_RESULT_OR_ANY_FRESH_CHARACTER_MASK",
+  "frozen_on": "2026-10-07",
+  "parent_protocol": "docs/supporting/genetic_historical_host_connectivity_protocol_v0.1.json",
+  "opening_sequence": [
+    "host occurrence gate PASS",
+    "palaeo exposure construction",
+    "predictor-information gate PASS",
+    "deterministic development/confirmatory split",
+    "confirmatory canonical/noncanonical character-mask opening only",
+    "survivor synthetic qualification",
+    "one-shot confirmatory nucleotide identity only after synthetic PASS"
+  ],
+  "allowed_surface": "For confirmatory species only, aligned FASTA characters may be reduced to canonical A/C/G/T versus noncanonical masks. Nucleotide identity remains forbidden.",
+  "edge_support": {
+    "graph": "unchanged frozen response-blind insect graph",
+    "valid_sequence_pair": "cross-locality sequence pair with jointly canonical columns >=50% of frozen alignment length",
+    "species_survival": "every unchanged frozen graph edge has at least one valid cross-locality sequence pair",
+    "failed_species": "drop the species and all of its edges; no graph repair or edge deletion",
+    "marker_switching": false,
+    "rewiring": false,
+    "backfill": false,
+    "resplitting": false
+  },
+  "minimum_confirmatory_survivors": 60,
+  "failure_state": "NOT_EVALUABLE_HISTORICAL_HOST_CONNECTIVITY_CHARACTER_SUPPORT",
+  "post_mask_requirements": [
+    "rerun predictor-information gate on exact confirmatory survivor geometry",
+    "rerun frozen synthetic Type-I/power qualification on exact confirmatory survivor geometry"
+  ],
+  "response_firewall": {
+    "fresh_nucleotide_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  }
+}
