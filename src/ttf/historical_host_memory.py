@@ -132,3 +132,60 @@ __all__ = [
     "partial_host_memory_beta",
     "equal_species_mean",
 ]
+
+
+def great_circle_quadrature_latlon(
+    start_latlon: np.ndarray,
+    end_latlon: np.ndarray,
+    *,
+    segment_points: int = 5,
+) -> np.ndarray:
+    """Interior great-circle quadrature at inherited TTF midpoint fractions.
+
+    Input latitude/longitude arrays have shape ``(n_edges, 2)`` in degrees.
+    Output has shape ``(n_edges, segment_points, 2)``.  Fractions are
+    ``(i + 0.5) / segment_points``, matching the inherited TTF operator.
+    """
+    if segment_points < 1:
+        raise ValueError("segment_points must be positive")
+    a = np.asarray(start_latlon, dtype=float)
+    b = np.asarray(end_latlon, dtype=float)
+    if a.ndim != 2 or b.shape != a.shape or a.shape[1] != 2:
+        raise ValueError("start/end must have shape (n_edges, 2)")
+    if np.any(~np.isfinite(a)) or np.any(~np.isfinite(b)):
+        raise ValueError("start/end must be finite")
+
+    def unit(x: np.ndarray) -> np.ndarray:
+        lat = np.deg2rad(x[:, 0])
+        lon = np.deg2rad(x[:, 1])
+        clat = np.cos(lat)
+        return np.column_stack([clat * np.cos(lon), clat * np.sin(lon), np.sin(lat)])
+
+    u = unit(a)
+    v = unit(b)
+    dot = np.clip(np.sum(u * v, axis=1), -1.0, 1.0)
+    omega = np.arccos(dot)
+    if np.any(np.isclose(dot, -1.0, atol=1e-12)):
+        raise ValueError("antipodal edge has no unique great-circle interpolation")
+    t = (np.arange(segment_points, dtype=float) + 0.5) / segment_points
+    out = np.empty((len(a), segment_points, 3), dtype=float)
+    for j, frac in enumerate(t):
+        small = omega < 1e-12
+        point = np.empty_like(u)
+        if np.any(~small):
+            om = omega[~small]
+            denom = np.sin(om)
+            point[~small] = (
+                (np.sin((1.0 - frac) * om) / denom)[:, None] * u[~small]
+                + (np.sin(frac * om) / denom)[:, None] * v[~small]
+            )
+        if np.any(small):
+            point[small] = (1.0 - frac) * u[small] + frac * v[small]
+        point /= np.linalg.norm(point, axis=1)[:, None]
+        out[:, j, :] = point
+    lat = np.rad2deg(np.arcsin(np.clip(out[:, :, 2], -1.0, 1.0)))
+    lon = np.rad2deg(np.arctan2(out[:, :, 1], out[:, :, 0]))
+    return np.stack([lat, lon], axis=2)
+
+
+__all__.append("great_circle_quadrature_latlon")
