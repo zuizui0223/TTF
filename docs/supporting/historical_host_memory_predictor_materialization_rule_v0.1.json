@@ -1,0 +1,58 @@
+{
+  "schema": "ttf_historical_host_memory_predictor_materialization_rule_v0.1",
+  "status": "FROZEN_BEFORE_HISTORICAL_HOST_PREDICTOR_CHARACTERIZATION",
+  "frozen_on": "2026-10-07",
+  "protocol": "historical_host_memory_protocol_v0.2.json",
+  "candidate_species": 642,
+  "geometry_receipt": "historical_host_memory_geometry_receipt_v0.1.json",
+  "WGSRPD3_sampling": {
+    "geometry_source": "exact rWCVPdata wgsrpd3 object at commit 65bed76bae9d644ccb6ad200c05f9f5071d89e05",
+    "geometry_blob_sha1": "f005f28d1ca51b818b1071e13741b905a8cacaa9",
+    "global_lattice": "0.5-degree cell centers: longitude=-179.75+0.5*k, latitude=-89.75+0.5*j",
+    "membership": "retain lattice centers covered by each repaired WGSRPD3 geometry",
+    "maximum_points_per_WGSRPD3_unit": 25,
+    "cap_selection": "if >25 points, retain the 25 smallest SHA256('hhm-wgsrpd3-sample-v0.1|<area_code_l3>|<latitude>|<longitude>') values, exact decimal strings from the fixed lattice",
+    "small_unit_fallback": "if a unit covers no 0.5-degree lattice center, use exactly one sf point-on-surface/representative point generated from the exact frozen geometry",
+    "unit_weighting": "sampling is an envelope support set only; climate-cloud nearest distance does not density-weight points or botanical units"
+  },
+  "climate": {
+    "dataset": "CHELSA-TraCE21k-centennial-bioclim V1.0",
+    "variables": ["bio01", "bio07", "bio12", "bio15"],
+    "LGM_time_index": -190,
+    "present_time_index": 20,
+    "historical_artifact_id": 10791389409,
+    "historical_artifact_digest": "sha256:0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2",
+    "raster_interpolation": "nearest raster cell through rasterio sample; no interpolation across nodata",
+    "standardization_reference": "all finite 0-BP climate vectors at the frozen WGSRPD3 support points, pooled once before species-specific host clouds",
+    "standardization_sd": "population SD",
+    "missing": "a support or edge position is invalid if any of the four variables is nonfinite/nodata at a required time"
+  },
+  "host_cloud": {
+    "native_units": "union of native, extant, nondoubtful WGSRPD3 units of the 1-3 exact WCVP-resolved recorded host species frozen in the candidate table",
+    "Q_host": "all finite standardized 0-BP climate vectors at frozen support points in those units",
+    "minimum_Q_host_points": 10,
+    "failure": "species predictor uncomputable; drop before panel split with no backfill"
+  },
+  "insect_self_cloud": {
+    "Q_self": "finite standardized 0-BP climate vectors at the insect's exact response-blind frozen genetic localities",
+    "minimum_Q_self_points": 12,
+    "failure": "species predictor uncomputable; drop before panel split with no backfill"
+  },
+  "edge_positions": {
+    "fractions": [0.1, 0.3, 0.5, 0.7, 0.9],
+    "interpolation": "unique shortest great-circle arc between frozen endpoints; an exactly antipodal edge is uncomputable",
+    "required_finite_positions": 5
+  },
+  "outputs": {
+    "serialized_allowed": ["species", "edge_index", "M_host", "D_host_0BP", "D_host_LGM", "M_self", "D_self_0BP", "D_self_LGM"],
+    "genetic_response_fields_forbidden": true,
+    "candidate_nucleotide_identity_forbidden": true
+  },
+  "response_firewall": {
+    "predictor_values_seen_when_rule_frozen": false,
+    "character_masks_opened": false,
+    "nucleotide_identity_opened": false,
+    "post_IBD_turnover_opened": false,
+    "beta_host_opened": false
+  }
+}
