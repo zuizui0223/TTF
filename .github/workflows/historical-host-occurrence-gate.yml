@@ -1,0 +1,116 @@
+name: historical host native-range GBIF occurrence gate
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-connectivity-v0-1
+    paths:
+      - ".github/workflows/historical-host-occurrence-gate.yml"
+      - "scripts/export_historical_host_native_ranges.R"
+      - "scripts/acquire_historical_host_occurrences.py"
+      - "scripts/aggregate_historical_host_occurrences.py"
+      - "docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json"
+      - "benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.1.csv"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-ranges:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout exact WCVP v13 redistribution
+        uses: actions/checkout@v4
+        with:
+          repository: matildabrown/rWCVPdata
+          ref: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
+          path: _wcvp
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+      - name: Install sf
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libudunits2-dev libgdal-dev libgeos-dev libproj-dev
+          Rscript -e 'install.packages("sf", repos="https://cloud.r-project.org")'
+      - name: Export frozen primary-native host ranges
+        run: |
+          Rscript scripts/export_historical_host_native_ranges.R \
+            benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.1.csv \
+            _wcvp \
+            results/native/host_native_ranges.geojson
+      - uses: actions/upload-artifact@v4
+        with:
+          name: historical-host-native-ranges-v0.1
+          path: results/native/host_native_ranges.geojson
+          retention-days: 30
+          if-no-files-found: error
+
+  acquire:
+    needs: native-ranges
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0,1,2,3,4,5,6,7]
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e . shapely
+      - uses: actions/download-artifact@v4
+        with:
+          name: historical-host-native-ranges-v0.1
+          path: results/native
+      - name: Acquire frozen host occurrence shard
+        run: |
+          mkdir -p results/shard
+          python scripts/acquire_historical_host_occurrences.py \
+            --panel benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.1.csv \
+            --rule docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json \
+            --native-ranges results/native/host_native_ranges.geojson \
+            --output-csv results/shard/occurrences_${{ matrix.shard }}.csv \
+            --output-ledger results/shard/ledger_${{ matrix.shard }}.json \
+            --shard-index ${{ matrix.shard }} \
+            --shards 8
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: historical-host-occurrence-shard-${{ matrix.shard }}
+          path: results/shard/
+          retention-days: 30
+          if-no-files-found: error
+
+  aggregate:
+    needs: acquire
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: historical-host-occurrence-shard-*
+          path: results/shards
+      - name: Aggregate frozen host occurrence gate
+        run: |
+          python scripts/aggregate_historical_host_occurrences.py \
+            --panel benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.1.csv \
+            --rule docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json \
+            --shard-dir results/shards \
+            --output-dir results/aggregate
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: historical-host-occurrence-gate-v0.1
+          path: results/aggregate/
+          retention-days: 30
+          if-no-files-found: error
