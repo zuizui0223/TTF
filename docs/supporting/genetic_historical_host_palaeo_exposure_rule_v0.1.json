@@ -1,0 +1,93 @@
+{
+  "schema": "ttf_genetic_historical_host_palaeo_exposure_rule_v0.1",
+  "status": "FROZEN_BEFORE_HOST_OCCURRENCE_RESULT_NEOTOMA_RESULT_OR_ANY_PALAEO_HOST_EXPOSURE",
+  "frozen_on": "2026-10-07",
+  "parent_protocol": "docs/supporting/genetic_historical_host_connectivity_protocol_v0.1.json",
+  "host_occurrence_rule": "docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json",
+  "scientific_estimand": "Does LGM fragmentation of an insect's larval host-resource climate envelope predict present post-IBD genetic turnover beyond the present host-resource landscape?",
+  "climate_assets": {
+    "variables": ["bio1", "bio7", "bio12", "bio15"],
+    "current": "CHELSA V2.1 1981-2010",
+    "lgm": "CHELSA-TraCE21k V1.0 at 21 ka BP / index -190",
+    "trace0_diagnostic_only": "CHELSA-TraCE21k V1.0 index 20",
+    "reuse_exact_asset_binding": "benchmarks/frozen/genetic_palearctic_lgm_v03_climate_asset_binding_v0.1.json",
+    "reuse_reason": "These global raster bytes and their byte-level bio01 semantics were frozen and audited before this historical-host program and before any fresh historical-host genetic response.",
+    "raster_sampling": "containing raster cell; apply GDAL scale/offset only; no interpolation across nodata",
+    "asset_substitution_after_external_result": false
+  },
+  "climate_space": {
+    "training_rows": "all frozen supported-host GBIF occurrences that pass current-climate finite values, pooled across hosts",
+    "standardization": "pooled mean and population SD of current bio1,bio7,bio12,bio15",
+    "pca": "canonical-sign PCA on pooled standardized current environment",
+    "retained_axes": 4,
+    "whitening": "divide PC scores by sqrt pooled eigenvalues",
+    "same_space_for_current_and_lgm": true
+  },
+  "host_suitability": {
+    "model": "isotropic Gaussian kernel climatic envelope in the frozen four-axis whitened current-climate space",
+    "bandwidth": "Scott factor n_host^(-1/8)",
+    "training": "current native-range GBIF occurrences only",
+    "S_h_definition": "mean exp(-0.5 * squared_whitened_distance / h^2) over the host's current occurrence points",
+    "range": "[0,1]",
+    "normalization": "none; do not renormalize over a geographic grid",
+    "reason": "The insect host-union operator requires a common bounded affinity scale. The same trained kernel is evaluated at current and 21-ka climate so the scale is temporally invariant."
+  },
+  "insect_host_union": {
+    "definition": "U_i(x,t) = 1 - product_h(1 - S_h(x,t)) over only the occurrence-supported accepted hosts frozen for insect i",
+    "host_weights": "equal through the union operator; no abundance, interaction-frequency, fossil-coverage or post-result weighting",
+    "unsupported_hosts": "An insect enters this stage only if it passed the prospectively frozen >=80% occurrence-host completeness gate; only occurrence-supported hosts enter U_i, exactly as frozen before palaeo exposure.",
+    "renormalization": false
+  },
+  "edge_exposure": {
+    "graph": "unchanged response-blind phylogatR density-scaled insect graph",
+    "segment_points": 5,
+    "segment_rule": "five equally spaced interior/geodesic points under the inherited TTF convention",
+    "resistance_floor_epsilon": 0.000001,
+    "epsilon_selected_before_host_occurrence_neotoma_or_palaeo_exposure_result": true,
+    "point_resistance": "-log(1e-6 + U_i(x,t))",
+    "edge_resistance": "arithmetic mean point resistance over the five frozen segment points",
+    "current_predictor": "R_host_present",
+    "historical_predictor": "R_host_LGM"
+  },
+  "within_species_standardization": {
+    "R_host_present": "population-mean centered and population-SD scaled over all frozen edges of species i",
+    "R_host_LGM": "population-mean centered and population-SD scaled over all frozen edges of species i",
+    "zero_variance": "species is response-blind predictor-inadmissible and removed before panel hashing; no backfill after genetics"
+  },
+  "predictor_information_gate": {
+    "timing": "after occurrence-supported host union and current/LGM edge exposures, before character masks or nucleotide identity",
+    "per_species_unique_fraction": "q_i = mean residual^2 from z(R_host_LGM) ~ 1 + z(R_host_present); because z(R_host_LGM) has population variance 1, q_i = 1-r_i^2 up to numerical tolerance",
+    "total_unique_fraction": "equal-weight mean q_i across predictor-admissible insects",
+    "minimum_total_unique_fraction": 0.15,
+    "species_signal_share": "q_i / sum_j q_j; edge count does not weight species",
+    "maximum_single_species_signal_share": 0.15,
+    "minimum_species_after_predictor_gate": 90,
+    "failure_state": "NOT_EVALUABLE_HISTORICAL_HOST_CONNECTIVITY_PREDICTOR_REDUNDANT",
+    "development_confirmatory_split": "performed only after this response-blind predictor gate passes, using the already frozen historical-host-connectivity-panel-v0.1 namespace and 1/3 vs 2/3 rule"
+  },
+  "primary_genetic_model_if_later_authorized": {
+    "response": "within-species rank-standardized endpoint-safe post-IBD edge turnover",
+    "within_species_model": "turnover_i,e = a_i + beta_LGM_i*z(R_host_LGM_i,e) + beta_now_i*z(R_host_present_i,e) + error_i,e",
+    "species_effect": "beta_LGM_i",
+    "primary_statistic": "equal-weight mean beta_LGM_i across confirmatory species",
+    "alternative": "mean beta_LGM > 0",
+    "alpha": 0.05,
+    "edge_iid_inference": false,
+    "genetic_opening_requires_separate_synthetic_qualification": true
+  },
+  "neotoma_boundary": {
+    "role": "secondary direct palaeoecological validation only",
+    "cannot_change_host_weights": true,
+    "cannot_change_panel_membership": true,
+    "cannot_change_primary_exposure": true
+  },
+  "response_firewall": {
+    "host_occurrence_result_seen_at_freeze": false,
+    "neotoma_coverage_result_seen_at_freeze": false,
+    "primary_palaeo_host_resistance_computed": false,
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  }
+}
