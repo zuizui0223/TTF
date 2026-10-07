@@ -31,12 +31,13 @@ def load_native_ranges(path: Path):
     for feat in payload.get("features") or []:
         props=feat.get("properties") or {}
         host_id=str(props.get("accepted_host_id") or "").strip()
-        if not host_id:
-            raise RuntimeError("native range feature lacks accepted_host_id")
+        canonical_name=str(props.get("accepted_host_name") or "").strip()
+        if not host_id or not canonical_name:
+            raise RuntimeError("native range feature lacks frozen host ID/name")
         geom=shape(feat["geometry"])
         if geom.is_empty:
             raise RuntimeError(f"empty native range geometry: {host_id}")
-        out[host_id]=prep(geom)
+        out[host_id]={"geometry":prep(geom),"accepted_host_name":canonical_name}
     return out
 
 
@@ -157,12 +158,15 @@ def main():
     if set(hosts)!=set(ranges):
         raise RuntimeError("native range asset host set differs from frozen panel host set")
 
-    items=sorted(hosts.items(),key=lambda x:(x[1],x[0]))
+    items=sorted(
+        [(host_id,ranges[host_id]["accepted_host_name"]) for host_id in ranges],
+        key=lambda x:(x[1],x[0]),
+    )
     shard=list(shard_items(items,shard_index=args.shard_index,shards=args.shards))
     output=[]; ledger=[]
     for i,(host_id,name) in enumerate(shard,start=1):
         try:
-            rows,meta=fetch_host(name,host_id,ranges[host_id],rule)
+            rows,meta=fetch_host(name,host_id,ranges[host_id]["geometry"],rule)
         except Exception as exc:
             rows=[]; meta={
                 "accepted_host_id":host_id,"accepted_host_name":name,
