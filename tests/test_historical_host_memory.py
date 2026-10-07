@@ -61,3 +61,22 @@ def test_unique_fraction_drops_when_primary_is_explained_by_controls():
 
 def test_equal_species_mean_does_not_weight_dense_species():
     assert equal_species_mean([1.0, -1.0, 0.5]) == pytest.approx(1.0 / 6.0)
+
+
+def test_great_circle_quadrature_uses_inherited_midpoint_fractions():
+    from ttf.historical_host_memory import great_circle_quadrature_latlon
+    points = great_circle_quadrature_latlon(
+        np.array([[0.0, 0.0]]), np.array([[0.0, 100.0]]), segment_points=5
+    )
+    assert np.allclose(points[0, :, 0], 0.0, atol=1e-10)
+    assert np.allclose(points[0, :, 1], [10.0, 30.0, 50.0, 70.0, 90.0], atol=1e-10)
+
+
+def test_great_circle_quadrature_handles_dateline_short_path():
+    from ttf.historical_host_memory import great_circle_quadrature_latlon
+    points = great_circle_quadrature_latlon(
+        np.array([[0.0, 170.0]]), np.array([[0.0, -170.0]]), segment_points=5
+    )
+    lon = points[0, :, 1]
+    assert np.allclose(lon[[0,1,3,4]], [172.0,176.0,-176.0,-172.0], atol=1e-10)
+    assert abs(abs(lon[2])-180.0) < 1e-10
