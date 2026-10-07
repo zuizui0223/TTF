@@ -11,6 +11,7 @@ on:
       - "scripts/aggregate_historical_host_occurrences.py"
       - "docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json"
       - "benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.1.csv"
+      - "benchmarks/frozen/genetic_historical_host_panel_identity_correction_v0.1.json"
   workflow_dispatch:
 
 permissions:
