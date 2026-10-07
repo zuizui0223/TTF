@@ -1,4 +1,10 @@
-from scripts.census_historical_host_neotoma import api_dataset_type, norm_name, parse_records
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+
+from census_historical_host_neotoma import api_dataset_type, norm_name, parse_records
 
 
 def test_api_dataset_type_normalizes_frozen_label():
