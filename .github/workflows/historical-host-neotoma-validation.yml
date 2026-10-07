@@ -11,10 +11,13 @@ on:
       - "benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.1.csv"
       - "benchmarks/frozen/genetic_historical_host_panel_identity_correction_v0.1.json"
       - "scripts/export_historical_host_wcvp_names.R"
+      - "scripts/export_historical_host_names_from_sidecar.py"
+      - "benchmarks/frozen/genetic_historical_host_sidecar_replay_repair_v0.1.json"
   workflow_dispatch:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   census:
@@ -22,21 +25,23 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
-      - name: Checkout exact WCVP v13 redistribution
-        uses: actions/checkout@v4
+      - name: Download exact frozen WCVP/HOSTS sidecar
+        uses: actions/download-artifact@v4
         with:
-          repository: matildabrown/rWCVPdata
-          ref: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
-          path: _wcvp
-      - uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: "release"
-      - name: Export canonical accepted host names from frozen IDs
+          name: wcvp-v13-hosts-sidecar
+          path: _host_sidecar
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35548477097
+      - name: Verify exact sidecar bytes
         run: |
-          Rscript scripts/export_historical_host_wcvp_names.R \
-            benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.1.csv \
-            _wcvp \
-            results/wcvp/accepted_host_names.csv
+          echo "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558  _host_sidecar/native_extant_nondoubtful_wgsrpd3.csv" | sha256sum -c -
+      - name: Export canonical accepted host names from exact sidecar
+        run: |
+          python scripts/export_historical_host_names_from_sidecar.py \
+            --panel benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.1.csv \
+            --native-sidecar _host_sidecar/native_extant_nondoubtful_wgsrpd3.csv \
+            --output results/wcvp/accepted_host_names.csv
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
