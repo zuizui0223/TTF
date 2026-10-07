@@ -80,3 +80,22 @@ def test_great_circle_quadrature_handles_dateline_short_path():
     lon = points[0, :, 1]
     assert np.allclose(lon[[0,1,3,4]], [172.0,176.0,-176.0,-172.0], atol=1e-10)
     assert abs(abs(lon[2])-180.0) < 1e-10
+
+
+def test_predictor_design_diagnostics_reports_unique_host_information():
+    from ttf.historical_host_memory import predictor_design_diagnostics
+    rng = np.random.default_rng(11)
+    self_memory = rng.normal(size=300)
+    current = rng.normal(size=300)
+    host = 0.3 * self_memory + 0.2 * current + rng.normal(size=300)
+    unique, condition = predictor_design_diagnostics(host, self_memory, current)
+    assert 0.5 < unique <= 1.0
+    assert 1.0 <= condition < 5.0
+
+
+def test_studentized_species_mean_is_equal_species():
+    from ttf.historical_host_memory import studentized_species_mean
+    mean, se, stat = studentized_species_mean([0.1, 0.2, 0.3, 0.4])
+    assert mean == pytest.approx(0.25)
+    assert se > 0
+    assert stat == pytest.approx(mean / se)
