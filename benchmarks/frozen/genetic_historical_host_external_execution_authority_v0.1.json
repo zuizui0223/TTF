@@ -1,0 +1,68 @@
+{
+  "schema": "ttf_genetic_historical_host_external_execution_authority_v0.1",
+  "status": "FROZEN_BEFORE_AUTHORITATIVE_NEOTOMA_OR_HOST_GBIF_RESULT",
+  "frozen_on": "2026-10-07",
+  "panel_identity_correction": "benchmarks/frozen/genetic_historical_host_panel_identity_correction_v0.1.json",
+  "authoritative_runs": {
+    "neotoma_lgm_validation": {
+      "workflow_run_id": 37616664446,
+      "head_sha": "cfae8fff7c0e14cd88b0b31133c37b2b3232d6b5",
+      "required_workflow": ".github/workflows/historical-host-neotoma-validation.yml",
+      "scientific_role": "secondary direct palaeoecological validation only"
+    },
+    "native_range_host_gbif": {
+      "workflow_run_id": 37616730590,
+      "head_sha": "1fcf7f6c7a4bdf7ab27eb94a87f7798d7d2eed2f",
+      "required_workflow": ".github/workflows/historical-host-occurrence-gate.yml",
+      "scientific_role": "primary host occurrence admissibility gate"
+    }
+  },
+  "superseded_runs": {
+    "neotoma": [
+      {
+        "workflow_run_id": 37614873797,
+        "reason": "failed before any API query at stale raw CSV SHA preflight"
+      },
+      {
+        "workflow_run_id": 37616656828,
+        "reason": "enqueued before workflow added exact WCVP ID-to-name materialization"
+      }
+    ],
+    "host_gbif": [
+      {
+        "workflow_run_id": 37615290359,
+        "reason": "enqueued before WCVP ID-bound accepted-name correction"
+      },
+      {
+        "workflow_run_id": 37616716022,
+        "reason": "enqueued before acquisition code consumed the ID-bound accepted name"
+      },
+      {
+        "workflow_run_id": 37616723115,
+        "reason": "enqueued before final workflow authority commit"
+      }
+    ]
+  },
+  "selection_rule": "Only the exact authoritative run IDs above may define the response-blind external-data state. A success, failure, sparse Neotoma result or host-occurrence gate failure cannot be replaced by an earlier or later run unless a purely technical correction is frozen before the replacement result is inspected.",
+  "scientific_rules_unchanged": {
+    "insect_panel": 140,
+    "host_ids": "frozen WCVP accepted_plant_name_id values",
+    "gbif_minimum_occurrences": 30,
+    "gbif_thinning_km": 10,
+    "insect_host_completeness": 0.8,
+    "minimum_insects_after_occurrence_gate": 90,
+    "neotoma_window_cal_yr_bp": [19000,26500],
+    "neotoma_exact_species_sites": 3,
+    "neotoma_genus_sites": 5,
+    "primary_lgm_time_slice": "21 ka BP"
+  },
+  "response_firewall": {
+    "authoritative_neotoma_result_seen": false,
+    "authoritative_host_gbif_result_seen": false,
+    "primary_palaeo_host_resistance_computed": false,
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  }
+}
