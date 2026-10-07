@@ -1,0 +1,73 @@
+{
+  "schema": "ttf_genetic_historical_host_synthetic_qualification_rule_v0.1",
+  "status": "FROZEN_BEFORE_HOST_OCCURRENCE_RESULT_PREDICTOR_INFORMATION_RESULT_CHARACTER_MASK_OR_ANY_FRESH_GENETIC_RESPONSE",
+  "frozen_on": "2026-10-07",
+  "parent_protocol": "docs/supporting/genetic_historical_host_connectivity_protocol_v0.1.json",
+  "palaeo_exposure_rule": "docs/supporting/genetic_historical_host_palaeo_exposure_rule_v0.1.json",
+  "character_mask_rule": "docs/supporting/genetic_historical_host_character_mask_rule_v0.1.json",
+  "primary_estimand": {
+    "within_species_model": "rank-standardized endpoint-safe post-IBD turnover ~ 1 + z(R_host_LGM) + z(R_host_present)",
+    "species_effect": "beta_LGM_i",
+    "primary_statistic": "equal-weight mean beta_LGM_i across confirmatory species",
+    "alternative": "mean_beta_LGM > 0",
+    "alpha": 0.05,
+    "species_is_replication_unit": true,
+    "edge_count_weighting": false,
+    "edge_iid_p_values": false
+  },
+  "synthetic_worlds": {
+    "geometry": "exact confirmatory survivor graph geometry and exact frozen present/LGM host predictors",
+    "endpoint_dependence": "simulate at locality level and derive edge turnover so edges sharing a locality remain dependent",
+    "ibd": "apply the identical endpoint-safe leave-two-localities-out rank-IBD response construction used by the later empirical analysis",
+    "private_amplitudes": [0.5,1.0,2.0,3.0],
+    "private_mean_structure": "lineage-private spatial structure with no shared historical-host effect",
+    "null_species_slope": "mean zero; no positive host-history effect",
+    "positive_control": {
+      "mean_beta_LGM": 0.10,
+      "species_slope_sd": 0.05,
+      "present_host_term": "included under the frozen realized predictor covariance rather than removed from the design",
+      "interpretation": "a modest standardized historical-host effect that must be detectable after present-host control"
+    }
+  },
+  "monte_carlo": {
+    "reference_worlds_per_private_amplitude": 999,
+    "evaluation_worlds_per_private_amplitude": 500,
+    "positive_worlds": 500,
+    "seed_namespaces": {
+      "reference": "historical-host-connectivity-v0.1-private-reference",
+      "evaluation": "historical-host-connectivity-v0.1-private-evaluation",
+      "positive": "historical-host-connectivity-v0.1-positive-A2"
+    },
+    "component_p": "(1 + count(reference_statistic >= observed_statistic)) / 1000",
+    "primary_p": "maximum component p-value across A=0.5,1,2,3",
+    "no_amplitude_selection_after_response": true
+  },
+  "qualification_gates": {
+    "private_type1": "For every private amplitude, Wilson 95% upper bound of rejection rate across 500 evaluation worlds <=0.10.",
+    "positive_power": "Wilson 95% lower bound of rejection rate across 500 positive worlds >=0.80.",
+    "all_required": true,
+    "failure_state": "NOT_EVALUABLE_HISTORICAL_HOST_CONNECTIVITY_SYNTHETIC_QUALIFICATION"
+  },
+  "empirical_decision_if_later_authorized": {
+    "positive": "observed mean_beta_LGM > 0 and least-favourable primary Monte Carlo p <=0.05",
+    "otherwise": "QUALIFIED_NULL_HISTORICAL_HOST_MEMORY_NOT_DETECTED",
+    "no_post_result_subgroup_rescue": true,
+    "no_alternate_time_slice": true,
+    "no_alternate_host_weighting": true,
+    "no_alternate_resistance_transform": true
+  },
+  "interpretation": {
+    "positive": "Past fragmentation of larval host resources left a detectable spatial genetic memory beyond the present host landscape in the qualified fresh narrow-host Lepidoptera domain.",
+    "qualified_null": "With adequate unique predictor information and calibrated power, the frozen 21-ka host-resistance predictor did not explain present post-IBD turnover beyond present host resistance.",
+    "gate_failure": "NOT_EVALUABLE; never a biological null."
+  },
+  "response_firewall": {
+    "host_occurrence_result_seen_at_freeze": false,
+    "predictor_information_result_seen_at_freeze": false,
+    "confirmatory_character_mask_seen_at_freeze": false,
+    "fresh_nucleotide_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  }
+}
