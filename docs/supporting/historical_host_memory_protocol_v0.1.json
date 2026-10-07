@@ -1,0 +1,85 @@
+{
+  "schema": "ttf_historical_host_memory_protocol_v0.1",
+  "status": "FROZEN_BEFORE_ANY_CANDIDATE_GENETIC_RESPONSE",
+  "frozen_on": "2026-10-07",
+  "candidate_census": "historical_host_memory_candidate_census_v0.1.json",
+  "biological_question": "Does climatic loss of larval host-resource opportunity during the Last Glacial Maximum leave a detectable legacy in present Lepidoptera spatial genetic differentiation beyond ordinary IBD and the insect's own abiotic climate history?",
+  "directional_hypothesis": "Edges compatible with a species' recorded host-resource climate today but less compatible at 21 ka BP have greater present post-IBD genetic differentiation.",
+  "distinction_from_prior_host_tests": {
+    "prior": "present-day source-target host-resource footprint similarity predicting cross-lineage T_st; qualified null",
+    "current": "within-species historical host-resource opportunity predicting that species' own edge turnover",
+    "unit": "genetic graph edge",
+    "time_axis": "21 ka BP versus 0 BP",
+    "claim": "interaction-mediated ecological memory, not cross-lineage host similarity"
+  },
+  "frozen_external_assets": {
+    "host_interactions": {
+      "WCVP_commit": "65bed76bae9d644ccb6ad200c05f9f5071d89e05",
+      "HOSTS_commit": "808e0b869f9ec1adf8efff87cf6a395adda103e0",
+      "sidecar_artifact_id": 10617946932
+    },
+    "WGSRPD3_geometry": {
+      "repository": "matildabrown/rWCVPdata",
+      "commit": "65bed76bae9d644ccb6ad200c05f9f5071d89e05",
+      "path": "data/wgsrpd3.rda",
+      "git_blob_sha1": "f005f28d1ca51b818b1071e13741b905a8cacaa9"
+    },
+    "CHELSA_TraCE21k": {
+      "dataset": "CHELSA-TraCE21k-centennial-bioclim",
+      "version": "1.0",
+      "variables": ["bio01", "bio07", "bio12", "bio15"],
+      "time_indices": {"LGM_21ka_BP": -190, "present_0_BP": 20},
+      "historical_artifact_id": 10791389409,
+      "historical_artifact_digest": "sha256:0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2",
+      "asset_substitution_after_predictor_characterization": false
+    }
+  },
+  "historical_host_predictor": {
+    "host_climate_cloud": "Q_host_s is the set of standardized 0-BP climate vectors for native WGSRPD3 units of the species' 1-3 frozen accepted host species.",
+    "climate_standardization": "use mean and population SD across all 0-BP WGSRPD3 unit climate vectors",
+    "edge_positions": "five deterministic great-circle positions per frozen genetic edge including endpoints",
+    "D_host_t": "mean over edge positions of Euclidean distance from time-t climate to the nearest vector in Q_host_s",
+    "M_host": "D_host_LGM - D_host_0BP; larger means the edge geography became more climatically compatible with present host-resource climate after the LGM",
+    "current_host_nuisance": "D_host_0BP",
+    "self_history_control": "Build Q_self_s from 0-BP climate at the insect's own response-blind genetic localities and compute M_self with the identical analog-distance operator.",
+    "thresholding": false
+  },
+  "future_response_if_authorized": {
+    "response": "endpoint-safe post-IBD within-species edge turnover under inherited p-distance and leave-two-localities-out IBD",
+    "within_species_model": "z(turnover) ~ z(M_host) + z(M_self) + z(D_host_0BP)",
+    "per_species_estimand": "coefficient of z(M_host), beta_host_s",
+    "primary_statistic": "equal-species mean beta_host_s over the confirmatory survivor panel",
+    "alternative": "mean_beta_host > 0",
+    "alpha": 0.05,
+    "edge_count_weighting": "no primary weighting of species by edge count"
+  },
+  "opening_sequence": [
+    "build the historical host predictor response-blind for all 642 candidates",
+    "drop only species with uncomputable frozen external predictor; no backfill; require >=500",
+    "split admissible species deterministically 50/50; development genetic response remains permanently closed",
+    "qualify predictor information against M_self and D_host_0BP",
+    "qualify Type-I and power on synthetic genetic worlds using exact geometry",
+    "open confirmatory canonical/noncanonical masks only; drop unsupported species without backfill and repeat information/synthetic gates",
+    "only a survivor PASS authorizes one confirmatory nucleotide-identity opening"
+  ],
+  "interpretation": {
+    "positive": "historical larval host-resource opportunity predicts present mitochondrial spatial differentiation beyond ordinary IBD, current host-climate mismatch, and the insect geometry's own abiotic climate memory",
+    "qualified_null": "no general host-memory effect in the qualified recorded-narrow-host Lepidoptera domain",
+    "gate_failure": "NOT_EVALUABLE, never a biological null"
+  },
+  "prohibited_claims": [
+    "exact host occupancy at every modeled LGM location",
+    "direct fossil proof of each insect-host interaction",
+    "host causation of every genetic break",
+    "coevolution or cospeciation",
+    "automatic generalization from mitochondrial COI to nuclear genomic structure",
+    "reuse of the opened 326-species codistributed panel as confirmatory evidence"
+  ],
+  "response_firewall": {
+    "character_masks_opened": false,
+    "nucleotide_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "post_IBD_turnover_opened": false,
+    "beta_host_opened": false
+  }
+}
