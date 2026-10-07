@@ -1,0 +1,51 @@
+{
+  "schema": "ttf_historical_host_memory_qualification_rule_v0.1",
+  "status": "FROZEN_BEFORE_HISTORICAL_HOST_PREDICTOR_CHARACTERIZATION",
+  "frozen_on": "2026-10-07",
+  "external_admissibility": {
+    "minimum_species_with_complete_frozen_predictor": 500,
+    "no_backfill": true,
+    "species_with_nonfinite_edge_predictor": "drop species before split and record reason",
+    "species_with_rank_deficient_predictor_matrix": "drop species before split and record reason"
+  },
+  "predictor_information": {
+    "controls": ["M_self", "D_host_0BP"],
+    "per_species_unique_fraction": "variance fraction of z(M_host) remaining after intercept + z(M_self) + z(D_host_0BP)",
+    "minimum_species_fraction_with_unique_fraction_at_least_0.05": 0.70,
+    "minimum_panel_median_unique_fraction": 0.10,
+    "maximum_standardized_predictor_condition_number": 30.0,
+    "minimum_species_fraction_passing_condition_number": 0.90,
+    "failure": "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_PREDICTOR_INFORMATION"
+  },
+  "panel_split": {
+    "ranking": "SHA256('historical-host-memory-split-v0.1|<source_sha256>|<species>'), species tie-break",
+    "development_fraction": 0.5,
+    "development_genetic_response": "permanently closed",
+    "confirmatory_response": "one-shot only after survivor requalification"
+  },
+  "synthetic_qualification": {
+    "primary_test": "one-sample one-sided t statistic on equal-species beta_host_s estimates",
+    "alpha": 0.05,
+    "null_worlds": 1000,
+    "positive_worlds": 500,
+    "null_structure": "preserve exact graph geometry and frozen predictors; simulate endpoint-dependent within-species responses with ordinary IBD, private spatial structure, and nuisance effects of M_self and D_host_0BP but zero mean host-memory effect",
+    "positive_structure": "same worlds plus species host-memory effects with mean standardized beta_host=0.10 and between-species SD=0.10",
+    "private_type1_gate": "Wilson 95% upper bound of rejection rate <=0.10",
+    "positive_power_gate": "Wilson 95% lower bound of rejection rate >=0.80",
+    "all_worlds_finite": true,
+    "failure": "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_SYNTHETIC_QUALIFICATION"
+  },
+  "post_mask_requalification": {
+    "same_information_thresholds": true,
+    "same_synthetic_world_definition": true,
+    "no_backfill": true,
+    "minimum_confirmatory_survivor_species": 200
+  },
+  "retuning": {
+    "host_count_rule_after_predictor_result": false,
+    "host_family_filter_after_predictor_result": false,
+    "climate_variables_or_time_slice_after_predictor_result": false,
+    "alternate_memory_metric_after_predictor_result": false,
+    "subgroup_rescue_after_genetic_opening": false
+  }
+}
