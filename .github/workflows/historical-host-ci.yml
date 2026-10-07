@@ -1,0 +1,36 @@
+name: historical host connectivity CI
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-connectivity-v0-1
+    paths:
+      - "src/ttf/historical_host_connectivity.py"
+      - "scripts/census_historical_host_neotoma.py"
+      - "scripts/acquire_historical_host_occurrences.py"
+      - "scripts/aggregate_historical_host_occurrences.py"
+      - "scripts/freeze_historical_host_connectivity_panel.py"
+      - "tests/test_historical_host_*.py"
+      - ".github/workflows/historical-host-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e . pytest requests shapely
+      - name: Run historical-host unit tests
+        run: |
+          python -m pytest -q \
+            tests/test_historical_host_connectivity.py \
+            tests/test_historical_host_connectivity_panel.py \
+            tests/test_historical_host_neotoma.py \
+            tests/test_historical_host_occurrences.py
