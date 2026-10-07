@@ -57,16 +57,32 @@ A stronger causal claim about an exact refugium or fossil population would requi
 
 ## Current evidence state
 
-Everything reported so far is response-blind feasibility:
+Everything reported so far remains response-blind.
 
-- fresh insect taxonomy;
-- FASTA headers only;
-- genetic locality geometry;
-- HOSTS interaction records;
-- no sequence identity;
-- no pairwise genetic distance;
-- no post-IBD turnover;
-- no historical host-resistance surface yet;
-- no ecology-genetics association.
+The strict fresh precensus excludes the complete opened 211-species Phase-4 survivor set, the full S1 and S2 design universes, and the entire fresh-1000 universe. From the remaining archive, 600 geometry-qualified Lepidoptera were frozen. Exact HOSTS × WCVP resolution then produced a **140-species narrow-host panel** with 1-5 accepted species-level larval hosts per insect.
 
-The next legitimate step is WCVP host-name resolution and host-plant occurrence feasibility.
+The primary panel contains **230 distinct frozen accepted host IDs**. Panel membership, host breadth and host IDs are fixed; there is no backfill.
+
+The first external-data workflows exposed a transport/identity inconsistency before any Neotoma or GBIF query: downstream workflows attempted to reconstruct the frozen host IDs from WCVP tables rather than replay the exact WCVP/HOSTS sidecar bytes that defined the panel. The scientific panel did not fail. A response-blind sidecar-replay repair is now frozen and binds the exact original sidecar artifact and SHA-256 values. Replacement Neotoma and GBIF runs were designated before their results were inspected.
+
+The remaining opening sequence is now frozen:
+
+1. exact native-range host occurrence gate;
+2. current/LGM host-resistance construction;
+3. predictor-information gate;
+4. deterministic development/confirmatory split;
+5. confirmatory canonical/noncanonical character-mask gate;
+6. exact survivor synthetic Type-I/power qualification;
+7. one-shot confirmatory nucleotide-identity opening only after every prior gate passes.
+
+The exact response-blind geometry materialization rule for the 140-species panel is also frozen so that locality and edge geometry can be extracted once from the authenticated phylogatR archive without serializing sequence identity.
+
+Still unopened:
+
+- fresh nucleotide identity;
+- fresh pairwise genetic distance;
+- fresh post-IBD turnover;
+- fresh historical-host coefficient;
+- any host-history/genetics association.
+
+Thus no biological result yet exists for historical biotic memory. A later gate failure is `NOT_EVALUABLE`, not a biological null.
