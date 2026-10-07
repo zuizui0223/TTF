@@ -1,0 +1,72 @@
+{
+  "schema": "ttf_genetic_historical_host_neotoma_validation_rule_v0.1",
+  "status": "FROZEN_BEFORE_ANY_NEOTOMA_HOST_COVERAGE_RESULT_OR_PALAEO_HOST_RESISTANCE_RESULT",
+  "frozen_on": "2026-10-07",
+  "parent_protocol": "docs/supporting/genetic_historical_host_connectivity_protocol_v0.1.json",
+  "primary_panel": {
+    "path": "benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.1.csv",
+    "sha256": "67e8d6ad838a6464e8557818af5324f107605050348ead8fb26d20e0f8afd0f4",
+    "species": 140,
+    "rule": "Neotoma coverage can never add, remove, backfill, reweight or split primary-panel insects or hosts."
+  },
+  "dataset": {
+    "source": "Neotoma Paleoecology Database public API",
+    "api_version": "v2.0",
+    "dataset_types": [
+      "pollen",
+      "plant macrofossils"
+    ],
+    "rationale": "These are the two Neotoma proxy types that can directly document past host-plant occurrence; other proxies cannot enter this validation."
+  },
+  "time": {
+    "primary_window_cal_yr_bp": [
+      19000,
+      26500
+    ],
+    "label": "Last Glacial Maximum broad window",
+    "no_alternate_window_after_result": true
+  },
+  "taxonomy": {
+    "exact_species_evidence": "accepted WCVP host species name matched to a Neotoma taxon at species rank; strongest direct validation tier",
+    "genus_evidence": "accepted WCVP host genus matched to Neotoma genus-level or unresolved-within-genus plant taxon; secondary validation tier",
+    "family_only_forbidden": true,
+    "no_synonym_or_rank_relaxation_after_result": true
+  },
+  "coverage_census": {
+    "unit": "distinct Neotoma sites with at least one taxon occurrence inside the frozen LGM window",
+    "deduplication": "one presence per taxon x site regardless of sample count",
+    "exact_species_support_site_threshold": 3,
+    "genus_support_site_threshold": 5,
+    "labels": {
+      "exact_species_supported": ">=3 distinct LGM sites for exact accepted host species",
+      "genus_supported": ">=5 distinct LGM sites for accepted host genus",
+      "sparse": "positive records below the applicable support threshold",
+      "absent": "zero matched LGM sites"
+    },
+    "role": "coverage characterization only; thresholds do not gate or subset the primary genetic analysis"
+  },
+  "direct_validation": {
+    "authority": false,
+    "primary_model_unchanged": "CHELSA-current niche envelope projected unchanged to CHELSA-TraCE21k 21 ka remains the primary host-history exposure.",
+    "permitted_outputs": [
+      "counts of exact-species and genus-level LGM records/sites",
+      "maps overlaying fixed LGM host-suitability surfaces and independent Neotoma sites",
+      "predeclared descriptive suitability values at Neotoma sites"
+    ],
+    "forbidden": [
+      "select a favourable host species, insect subgroup, fossil-rich region or alternative LGM window",
+      "replace the primary CHELSA-derived exposure with Neotoma only after seeing genetic results",
+      "use Neotoma coverage to remove insects from the 140-species primary panel",
+      "treat genus-level fossil evidence as proof that the exact accepted host species occupied that site"
+    ]
+  },
+  "response_firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false,
+    "primary_palaeo_host_resistance_computed": false,
+    "neotoma_host_coverage_seen": false
+  },
+  "next_step": "Run response-blind Neotoma coverage census on the frozen host list, while independently starting the frozen native-range GBIF host occurrence gate."
+}
