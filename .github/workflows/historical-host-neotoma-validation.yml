@@ -9,6 +9,8 @@ on:
       - "scripts/census_historical_host_neotoma.py"
       - "docs/supporting/genetic_historical_host_neotoma_validation_rule_v0.1.json"
       - "benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.1.csv"
+      - "benchmarks/frozen/genetic_historical_host_panel_identity_correction_v0.1.json"
+      - "scripts/export_historical_host_wcvp_names.R"
   workflow_dispatch:
 
 permissions:
@@ -20,6 +22,21 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout exact WCVP v13 redistribution
+        uses: actions/checkout@v4
+        with:
+          repository: matildabrown/rWCVPdata
+          ref: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
+          path: _wcvp
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+      - name: Export canonical accepted host names from frozen IDs
+        run: |
+          Rscript scripts/export_historical_host_wcvp_names.R \
+            benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.1.csv \
+            _wcvp \
+            results/wcvp/accepted_host_names.csv
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -30,6 +47,8 @@ jobs:
           python scripts/census_historical_host_neotoma.py \
             --panel benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.1.csv \
             --rule docs/supporting/genetic_historical_host_neotoma_validation_rule_v0.1.json \
+            --identity-correction benchmarks/frozen/genetic_historical_host_panel_identity_correction_v0.1.json \
+            --wcvp-names results/wcvp/accepted_host_names.csv \
             --output-dir results/historical_host_neotoma \
             --workers 6
       - uses: actions/upload-artifact@v4
