@@ -189,3 +189,36 @@ def great_circle_quadrature_latlon(
 
 
 __all__.append("great_circle_quadrature_latlon")
+
+
+def predictor_design_diagnostics(
+    host_memory: np.ndarray,
+    self_memory: np.ndarray,
+    current_host_distance: np.ndarray,
+) -> tuple[float, float]:
+    """Return host-memory unique fraction and standardized predictor condition number."""
+    host = zscore(host_memory)
+    self_hist = zscore(self_memory)
+    current = zscore(current_host_distance)
+    x = np.column_stack([host, self_hist, current])
+    unique = residualized_unique_fraction(host, np.column_stack([self_hist, current]))
+    condition = float(np.linalg.cond(x))
+    if not np.isfinite(condition):
+        raise ValueError("non-finite predictor condition number")
+    return unique, condition
+
+
+def studentized_species_mean(betas) -> tuple[float, float, float]:
+    """Equal-species mean, its across-species SE, and studentized statistic."""
+    x = np.asarray(list(betas), dtype=float)
+    if x.ndim != 1 or len(x) < 2 or np.any(~np.isfinite(x)):
+        raise ValueError("at least two finite species betas are required")
+    mean = float(np.mean(x))
+    sd = float(np.std(x, ddof=1))
+    if sd <= 0 or not np.isfinite(sd):
+        raise ValueError("species betas have no finite between-species variation")
+    se = sd / np.sqrt(len(x))
+    return mean, float(se), float(mean / se)
+
+
+__all__.extend(["predictor_design_diagnostics", "studentized_species_mean"])
