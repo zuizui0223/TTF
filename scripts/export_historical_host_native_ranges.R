@@ -17,10 +17,14 @@ ids <- ids[nzchar(ids)]
 
 e <- new.env(parent=emptyenv())
 load(file.path(wcvp_repo, "data", "wcvp_distributions.rda"), envir=e)
+load(file.path(wcvp_repo, "data", "wcvp_names.rda"), envir=e)
 load(file.path(wcvp_repo, "data", "wgsrpd3.rda"), envir=e)
-stopifnot(exists("wcvp_distributions", envir=e), exists("wgsrpd3", envir=e))
+stopifnot(exists("wcvp_distributions", envir=e), exists("wcvp_names", envir=e), exists("wgsrpd3", envir=e))
 dist <- get("wcvp_distributions", envir=e)
+names_df <- get("wcvp_names", envir=e)
 areas <- get("wgsrpd3", envir=e)
+names_df$plant_name_id <- as.character(names_df$plant_name_id)
+id_to_name <- setNames(as.character(names_df$taxon_name), names_df$plant_name_id)
 
 required_dist <- c("plant_name_id","area_code_l3","introduced","extinct","location_doubtful")
 stopifnot(all(required_dist %in% names(dist)))
