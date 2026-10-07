@@ -1,0 +1,71 @@
+{
+  "schema": "ttf_genetic_historical_host_sidecar_replay_repair_v0.1",
+  "status": "FROZEN_AFTER_PREQUERY_ID_RECONSTRUCTION_FAILURE_BEFORE_ANY_AUTHORITATIVE_EXTERNAL_DATA_RESULT",
+  "frozen_on": "2026-10-07",
+  "reason": "The authoritative Neotoma and native-range GBIF workflows both stopped before any external-data query because they attempted to reconstruct frozen WCVP host identity/range rows from the redistribution tables instead of replaying the exact WCVP/HOSTS sidecar bytes that defined the 140-species panel. The panel freezer required every accepted host ID to occur in the exact frozen native-distribution sidecar, so host removal or substitution is not authorized.",
+  "failed_authoritative_runs": {
+    "neotoma": {
+      "workflow_run_id": 37616664446,
+      "failure_stage": "WCVP host-ID/name materialization",
+      "external_api_query_started": false,
+      "external_result_seen": false
+    },
+    "host_gbif": {
+      "workflow_run_id": 37616730590,
+      "failure_stage": "native-range materialization",
+      "external_api_query_started": false,
+      "external_result_seen": false
+    }
+  },
+  "exact_sidecar_authority": {
+    "workflow_run_id": 35548477097,
+    "artifact_id": 10617946932,
+    "artifact_name": "wcvp-v13-hosts-sidecar",
+    "artifact_digest": "sha256:3e709b87668778c7d0c7328689bc5cab067382c17a08f108fad404699c15d106",
+    "wcvp_repository": "matildabrown/rWCVPdata",
+    "wcvp_commit": "65bed76bae9d644ccb6ad200c05f9f5071d89e05",
+    "hosts_repository": "globalbioticinteractions/HOSTS",
+    "hosts_commit": "808e0b869f9ec1adf8efff87cf6a395adda103e0",
+    "insect_host_accepted_sha256": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "native_extant_nondoubtful_wgsrpd3_sha256": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558"
+  },
+  "permitted_repair": {
+    "canonical_host_name": "Read accepted_name bound to the frozen accepted_plant_name_id from the exact sidecar instead of re-resolving names from wcvp_names.rda.",
+    "native_range_codes": "Read area_code_l3 rows bound to the frozen accepted_plant_name_id from the exact sidecar instead of re-filtering wcvp_distributions.rda.",
+    "native_range_geometry": "Join those exact frozen WGSRPD3 level-3 codes to wgsrpd3.rda from the same frozen WCVP commit.",
+    "external_queries": "After exact sidecar replay succeeds, run the unchanged frozen Neotoma and GBIF query rules."
+  },
+  "scientific_invariants": {
+    "insect_species": 140,
+    "species_digest_sha256": "6bec34a07c98c19a7b8c90bb89333fa7dde4212f899573fae95639d72163f558",
+    "logical_host_identity_digest_sha256": "1f9b0679485b9ea0ff0dc92b4b6cb2b141df9df55d9aa35344f940c516b40c44",
+    "host_ids_changed": false,
+    "insect_membership_changed": false,
+    "panel_order_changed": false,
+    "host_breadth_changed": false,
+    "gbif_minimum_occurrences": 30,
+    "gbif_thinning_km": 10,
+    "insect_host_completeness": 0.8,
+    "minimum_insects_after_occurrence_gate": 90,
+    "neotoma_window_cal_yr_bp": [19000,26500],
+    "primary_lgm_time_slice": "21 ka BP",
+    "palaeo_exposure_rule_changed": false,
+    "genetic_model_changed": false
+  },
+  "forbidden": [
+    "drop any of the three host IDs that failed later WCVP table reconstruction",
+    "substitute a synonym, congener, genus-level or family-level host",
+    "change panel membership or host breadth",
+    "change GBIF or Neotoma thresholds",
+    "inspect or use fresh genetic response"
+  ],
+  "response_firewall": {
+    "authoritative_neotoma_result_seen": false,
+    "authoritative_host_gbif_result_seen": false,
+    "primary_palaeo_host_resistance_computed": false,
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  }
+}
