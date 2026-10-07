@@ -1,0 +1,76 @@
+{
+  "schema": "ttf_historical_host_memory_candidate_census_v0.1",
+  "status": "PASS_TO_RESPONSE_BLIND_HISTORICAL_HOST_PREDICTOR_FEASIBILITY",
+  "frozen_on": "2026-10-07",
+  "question": "Do present post-IBD genetic discontinuities in fresh Lepidoptera retain a signal of larval host-resource opportunity that was climatically less compatible at 21 ka BP than at 0 BP?",
+  "source_archive": {
+    "bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+  },
+  "freshness": {
+    "policy": "exclude every previously response-opened or prospectively design-exposed TTF species universe before candidate selection",
+    "prior_union_species": 3421,
+    "prior_union_species_digest_sha256": "54f3dab93b4334509eac6f2fc59846bf87235745c44b44d7e09b3f647e81989e",
+    "prior_union_library_path": "/TTF/historical_host_memory/historical_host_memory_prior_species_exclusion_v0.1.csv",
+    "prior_union_csv_sha256": "a1ef42cf0ffe699b3bb986d34d75b4f161332cb6fe8f816bbd2b4b2147d643b7",
+    "original_phase1_250": {
+      "species": 250,
+      "dataset_digest_sha256": "088274dafdcd1e82d7688db07f7734172887972f3e72bfac394df6b0bb3fab59",
+      "species_digest_sha256": "a35a3430728a191aaeed8953b6990dd3fa70b6d44ec49bce7155d56a916a2d64",
+      "library_path": "/TTF/historical_host_memory/phase1_original250_species_v0.1.csv",
+      "csv_sha256": "0a68533fbde8d4df50ba7e5cefce7407066417f966e64dc63804d345793c0d48",
+      "validation": {
+        "known_phase2_survivors_contained": "211/211",
+        "known_train_roles_reproduced": "103/103",
+        "known_eval_roles_reproduced": "108/108",
+        "mask_failed_species_recovered": 39
+      }
+    },
+    "candidate_overlap_with_prior_union": 0
+  },
+  "host_sidecar": {
+    "workflow_run_id": 35548477097,
+    "artifact_id": 10617946932,
+    "artifact_digest": "sha256:3e709b87668778c7d0c7328689bc5cab067382c17a08f108fad404699c15d106",
+    "WCVP_commit": "65bed76bae9d644ccb6ad200c05f9f5071d89e05",
+    "HOSTS_commit": "808e0b869f9ec1adf8efff87cf6a395adda103e0",
+    "insect_host_accepted_sha256": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "native_extant_nondoubtful_wgsrpd3_sha256": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558"
+  },
+  "candidate_rule": {
+    "taxon": "Lepidoptera",
+    "marker": "COI family under inherited aliases",
+    "minimum_unique_localities": 12,
+    "neighbor_fraction": 0.15,
+    "minimum_endpoint_disjoint_IBD_training_edges": 5,
+    "recorded_host_species_min": 1,
+    "recorded_host_species_max": 3,
+    "recorded_host_family_count": 1,
+    "minimum_native_WGSRPD3_units": 20,
+    "interpretation": "recorded narrow-host operational domain only; database record count is not equated with true diet breadth",
+    "backfill_after_predictor_or_genetic_result": false
+  },
+  "response_blind_census": {
+    "fresh_Lepidoptera_COI_metadata_species": 8565,
+    "with_WCVP_resolved_HOSTS_pairs": 2658,
+    "with_frozen_genetic_geometry_support": 1706,
+    "final_candidate_species": 642,
+    "recorded_host_species_counts": {"1": 355, "2": 178, "3": 109},
+    "insect_families": 49,
+    "host_families": 85,
+    "genetic_localities_median": 21,
+    "genetic_edges_median": 43
+  },
+  "candidate_table": {
+    "library_path": "/TTF/historical_host_memory/historical_host_memory_candidate_642_v0.1.csv",
+    "sha256": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "species_order_digest_sha256": "ff3f43718c042d854797c8d27a6bbe4f337fc671660ec9f83392bad749b2bcb8"
+  },
+  "response_firewall": {
+    "character_masks_opened": false,
+    "nucleotide_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "post_IBD_turnover_opened": false,
+    "host_memory_association_opened": false
+  }
+}
