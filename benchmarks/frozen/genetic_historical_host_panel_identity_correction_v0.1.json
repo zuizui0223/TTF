@@ -1,0 +1,44 @@
+{
+  "schema": "ttf_genetic_historical_host_panel_identity_correction_v0.1",
+  "status": "FROZEN_AFTER_PREQUERY_BYTE_CHECK_FAILURE_BEFORE_ANY_NEOTOMA_OR_GBIF_HOST_RESULT",
+  "frozen_on": "2026-10-07",
+  "reason": "The first Neotoma workflow stopped before any API query because the committed CSV raw-byte SHA did not equal the locally generated panel SHA recorded in the receipt. Scientific panel membership and WCVP accepted host IDs were already frozen; accepted_host_names are lookup labels and must not define biological identity.",
+  "failed_prequery_run": {
+    "workflow_run_id": 37614873797,
+    "job_id": 112770681024,
+    "failure_stage": "panel SHA-256 preflight",
+    "neotoma_query_started": false,
+    "neotoma_coverage_seen": false,
+    "genetic_response_opened": false
+  },
+  "scientific_identity": {
+    "insects": 140,
+    "species_digest_sha256": "6bec34a07c98c19a7b8c90bb89333fa7dde4212f899573fae95639d72163f558",
+    "logical_row_definition": "species + sorted accepted_plant_name_id list; accepted host display names excluded",
+    "logical_identity_digest_sha256": "1f9b0679485b9ea0ff0dc92b4b6cb2b141df9df55d9aa35344f940c516b40c44",
+    "ordered_logical_identity_digest_sha256": "af0c09a51e0fa8419a51363562226f0a66e1d693769acd7e821865c2076cd3db",
+    "distinct_accepted_host_ids": 230,
+    "host_breadth_range": [1,5],
+    "host_ids_unchanged": true,
+    "insect_membership_unchanged": true,
+    "panel_order_unchanged": true
+  },
+  "canonical_host_name_binding": {
+    "authority": "WCVP version 13 redistribution",
+    "repository": "matildabrown/rWCVPdata",
+    "commit": "65bed76bae9d644ccb6ad200c05f9f5071d89e05",
+    "rule": "At every external-data execution, resolve each frozen accepted_plant_name_id to its exact WCVP accepted taxon_name. The committed CSV accepted_host_names column is descriptive and cannot override the ID.",
+    "no_synonym_relaxation": true,
+    "no_host_id_substitution": true
+  },
+  "authority_change": "Only transport/identity verification changes from raw CSV SHA to logical host-ID binding. Panel membership, host breadth, WCVP IDs, occurrence thresholds, LGM window, climate assets, exposure model, genetic model and all decision gates are unchanged.",
+  "response_firewall": {
+    "neotoma_coverage_seen": false,
+    "gbif_host_occurrence_result_seen": false,
+    "primary_palaeo_host_resistance_computed": false,
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  }
+}
