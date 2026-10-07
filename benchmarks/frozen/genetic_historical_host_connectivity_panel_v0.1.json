@@ -1,0 +1,37 @@
+{
+  "excluded_counts": {
+    "host_breadth_gt_5": 74,
+    "no_wcvp_resolved_species_host": 386
+  },
+  "host_breadth_counts": {
+    "1": 68,
+    "2": 32,
+    "3": 19,
+    "4": 10,
+    "5": 11
+  },
+  "inputs_sha256": {
+    "candidates": "1c8b35a7a005af639bbabc4d730fbe723df134c8371d04019a564740b095dbef",
+    "interactions": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "native_distributions": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558"
+  },
+  "panel_csv_sha256": "67e8d6ad838a6464e8557818af5324f107605050348ead8fb26d20e0f8afd0f4",
+  "response_firewall": {
+    "fresh_beta_host_LGM_computed": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_sequence_identity_opened": false
+  },
+  "retained_species": 140,
+  "schema": "ttf_genetic_historical_host_connectivity_panel_v0.1",
+  "selection": {
+    "all_hosts_require_primary_native_wgsrpd3": true,
+    "development_confirmatory_split_deferred_until_after_occurrence_gate": true,
+    "host_breadth_max": 5,
+    "host_breadth_min": 1,
+    "host_panel_namespace": "historical-host-connectivity-panel-v0.1",
+    "no_backfill": true
+  },
+  "species_digest_sha256": "6bec34a07c98c19a7b8c90bb89333fa7dde4212f899573fae95639d72163f558",
+  "status": "PASS_TO_HOST_OCCURRENCE_FEASIBILITY"
+}
