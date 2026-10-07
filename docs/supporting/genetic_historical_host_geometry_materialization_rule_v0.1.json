@@ -1,0 +1,42 @@
+{
+  "schema": "ttf_genetic_historical_host_geometry_materialization_rule_v0.1",
+  "status": "FROZEN_BEFORE_HOST_OCCURRENCE_RESULT_PALAEO_EXPOSURE_OR_ANY_FRESH_GENETIC_RESPONSE",
+  "frozen_on": "2026-10-07",
+  "source_archive": {
+    "library_path": "/TTF/source/phylogatr_results_exact_20260918.zip",
+    "bytes": 274988692,
+    "sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+  },
+  "precensus_candidates": {
+    "library_path": "/TTF/historical_host_connectivity/historical_biotic_lep600_precensus_v0.1.csv",
+    "sha256": "1c8b35a7a005af639bbabc4d730fbe723df134c8371d04019a564740b095dbef",
+    "species": 600
+  },
+  "panel": {
+    "path": "benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.1.csv",
+    "species": 140,
+    "species_digest_sha256": "6bec34a07c98c19a7b8c90bb89333fa7dde4212f899573fae95639d72163f558"
+  },
+  "reconstruction": {
+    "implementation": "scripts/reconstruct_historical_host_geometry.py",
+    "neighbor_fraction": 0.15,
+    "allowed_input_surface": "genes metadata, FASTA headers, occurrence coordinates and frozen graph geometry only",
+    "sequence_lines_decoded": false,
+    "verify_per_species": [
+      "n_localities",
+      "edges",
+      "min_endpoint_disjoint_training_edges"
+    ],
+    "output_localities": "species, locality_index, latitude, longitude, x_km, y_km, z_km",
+    "output_edges": "species, edge_index, node_left, node_right, mid_x_km, mid_y_km, mid_z_km",
+    "no_geometry_repair": true
+  },
+  "authority": "A future materialized geometry is admissible only if the receipt binds the exact source archive SHA, exact precensus candidate SHA, frozen 140-species digest and reports zero per-species verification failures.",
+  "response_firewall": {
+    "sequence_lines_decoded": false,
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  }
+}
