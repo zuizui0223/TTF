@@ -1,0 +1,61 @@
+{
+  "schema": "ttf_historical_host_memory_qualification_rule_v0.2",
+  "status": "FROZEN_BEFORE_HISTORICAL_HOST_PREDICTOR_CHARACTERIZATION",
+  "frozen_on": "2026-10-07",
+  "supersedes": "historical_host_memory_qualification_rule_v0.1.json",
+  "change": "replace the uncalibrated theoretical one-sample t decision with a studentized equal-species mean statistic whose final p-value is Monte Carlo calibrated against independent synthetic null worlds; all information thresholds, alpha and effect floor are unchanged",
+  "external_admissibility": {
+    "minimum_species_with_complete_frozen_predictor": 500,
+    "no_backfill": true,
+    "drop_before_split_only": ["nonfinite frozen predictor", "rank-deficient standardized predictor matrix"]
+  },
+  "predictor_information": {
+    "controls": ["M_self", "D_host_0BP"],
+    "per_species_unique_fraction": "variance fraction of z(M_host) remaining after intercept + z(M_self) + z(D_host_0BP)",
+    "minimum_species_fraction_with_unique_fraction_at_least_0.05": 0.70,
+    "minimum_panel_median_unique_fraction": 0.10,
+    "maximum_standardized_predictor_condition_number": 30.0,
+    "minimum_species_fraction_passing_condition_number": 0.90,
+    "failure": "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_PREDICTOR_INFORMATION"
+  },
+  "panel_split": {
+    "ranking": "SHA256('historical-host-memory-split-v0.1|<source_sha256>|<species>'), species tie-break",
+    "development_fraction": 0.5,
+    "development_genetic_response": "permanently closed",
+    "confirmatory_response": "one-shot only after survivor requalification"
+  },
+  "primary_statistic": {
+    "per_species": "standardized partial beta_host_s from z(turnover) ~ z(M_host) + z(M_self) + z(D_host_0BP)",
+    "aggregate": "studentized equal-species mean beta_host_s = mean(beta)/(sample_sd(beta)/sqrt(n_species))",
+    "edge_count_weighting": false,
+    "alternative": "larger positive aggregate statistic",
+    "alpha": 0.05,
+    "theoretical_normal_or_t_p_value_has_decision_authority": false
+  },
+  "synthetic_qualification": {
+    "null_reference_worlds": 1999,
+    "evaluation_null_worlds": 500,
+    "positive_worlds": 500,
+    "null_structure": "preserve exact graph geometry and frozen predictors; simulate endpoint-dependent within-species responses with ordinary IBD, private spatial structure, nuisance effects of M_self and D_host_0BP, and zero mean host-memory effect",
+    "positive_structure": "same world family plus species host-memory effects with mean standardized beta_host=0.10 and between-species SD=0.10",
+    "primary_p_value": "(1 + number of independent null-reference aggregate statistics >= observed aggregate statistic)/(1 + null_reference_worlds)",
+    "private_type1_gate": "Wilson 95% upper bound of p<=0.05 rejection rate <=0.10 over evaluation null worlds",
+    "positive_power_gate": "Wilson 95% lower bound of p<=0.05 rejection rate >=0.80 over positive worlds",
+    "all_worlds_finite": true,
+    "failure": "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_SYNTHETIC_QUALIFICATION"
+  },
+  "post_mask_requalification": {
+    "same_information_thresholds": true,
+    "same_synthetic_world_definition_and_effect_floor": true,
+    "fresh_disjoint_seed_namespace": "historical-host-memory-survivor-v0.1",
+    "no_backfill": true,
+    "minimum_confirmatory_survivor_species": 200
+  },
+  "retuning": {
+    "host_count_rule_after_predictor_result": false,
+    "host_family_filter_after_predictor_result": false,
+    "climate_variables_or_time_slice_after_predictor_result": false,
+    "alternate_memory_metric_after_predictor_result": false,
+    "subgroup_rescue_after_genetic_opening": false
+  }
+}
