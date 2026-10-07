@@ -1,0 +1,64 @@
+{
+  "schema": "ttf_genetic_historical_host_external_execution_authority_v0.2",
+  "status": "FROZEN_BEFORE_SIDECAR_REPLAY_REPLACEMENT_RESULTS",
+  "frozen_on": "2026-10-07",
+  "supersedes": "benchmarks/frozen/genetic_historical_host_external_execution_authority_v0.1.json",
+  "repair_rule": "benchmarks/frozen/genetic_historical_host_sidecar_replay_repair_v0.1.json",
+  "replacement_authoritative_runs": {
+    "native_range_host_gbif": {
+      "workflow_run_id": 37644277020,
+      "head_sha": "88219118443b23bbba81c3b56818b7476a095bdd",
+      "required_workflow": ".github/workflows/historical-host-occurrence-gate.yml",
+      "scientific_role": "primary host occurrence admissibility gate",
+      "result_seen_at_freeze": false
+    },
+    "neotoma_lgm_validation": {
+      "workflow_run_id": 37644319101,
+      "head_sha": "ea71b777a817bd54ead5eb9ab374c78ff42fe283",
+      "required_workflow": ".github/workflows/historical-host-neotoma-validation.yml",
+      "scientific_role": "secondary direct palaeoecological validation only",
+      "result_seen_at_freeze": false
+    }
+  },
+  "why_replacement_is_technical": {
+    "prior_host_gbif_run": 37616730590,
+    "prior_neotoma_run": 37616664446,
+    "prior_runs_started_external_queries": false,
+    "panel_membership_changed": false,
+    "host_ids_changed": false,
+    "host_breadth_changed": false,
+    "external_thresholds_changed": false,
+    "palaeo_exposure_changed": false,
+    "genetic_response_seen": false,
+    "only_change": "Replay the exact frozen WCVP/HOSTS sidecar bytes that defined the panel instead of reconstructing host identity and WGSRPD3 codes from downstream WCVP tables."
+  },
+  "exact_sidecar": {
+    "workflow_run_id": 35548477097,
+    "artifact_id": 10617946932,
+    "artifact_digest": "sha256:3e709b87668778c7d0c7328689bc5cab067382c17a08f108fad404699c15d106",
+    "insect_host_accepted_sha256": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "native_extant_nondoubtful_wgsrpd3_sha256": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558"
+  },
+  "scientific_rules_unchanged": {
+    "insect_panel": 140,
+    "species_digest_sha256": "6bec34a07c98c19a7b8c90bb89333fa7dde4212f899573fae95639d72163f558",
+    "gbif_minimum_occurrences": 30,
+    "gbif_thinning_km": 10,
+    "insect_host_completeness": 0.8,
+    "minimum_insects_after_occurrence_gate": 90,
+    "neotoma_window_cal_yr_bp": [19000,26500],
+    "neotoma_exact_species_sites": 3,
+    "neotoma_genus_sites": 5,
+    "primary_lgm_time_slice": "21 ka BP"
+  },
+  "selection_rule": "Only the exact replacement workflow run IDs above have authority after the sidecar-replay repair. No later rerun may replace them unless another purely technical correction is frozen before that later result is inspected.",
+  "response_firewall": {
+    "replacement_neotoma_result_seen": false,
+    "replacement_host_gbif_result_seen": false,
+    "primary_palaeo_host_resistance_computed": false,
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  }
+}
