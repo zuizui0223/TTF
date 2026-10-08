@@ -1,0 +1,61 @@
+{
+  "schema": "ttf_historical_host_memory_information_qualification_result_v0.2",
+  "observed_on": "2026-10-08",
+  "status": "PASS_TO_SYNTHETIC_QUALIFICATION",
+  "authority": "Exact frozen v0.2 predictor-information qualification, not genetic effect test and not final synthetic detectability certification.",
+  "workflow_run": 37792968201,
+  "workflow_job": 113364928341,
+  "artifact": {
+    "id": 11557532357,
+    "name": "historical-host-memory-full-predictor-v0.1",
+    "retention_days": 30
+  },
+  "sources": {
+    "frozen_642_candidates": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "localities": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "edges": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+    "hosts": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "native_units": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558",
+    "support": "d0fc12f635ec56a442dd37dec06cf3aa06684a00b14f1bb1f2db2f6fe3c4a21f",
+    "frozen_qualification_rule": "2ec2594510021da653598e22a3d0f4b9e4cb226398aadbf342967ee532909415"
+  },
+  "outputs": {
+    "edge_predictors": "70b748d588d9ab10309ace080f85b8053c6e14aa96d7a84288724c1000272a5b",
+    "species_diagnostics": "9a8a40b48fbe8ed3b50d1d35c008d3a200dd93b923e8eec931450a2c3ec3f72c",
+    "response_blind_assignments": "4168e7572d3378e7f1595ae562d53c81bb2ef165cbe50eb2ed8ec4e7406fc6ae"
+  },
+  "counts": {
+    "candidate_species": 642,
+    "complete_species": 641,
+    "excluded_species": [
+      {
+        "species": "Polyommatus coridon",
+        "reason": "nonfinite_edge_climate",
+        "edges": 208
+      }
+    ],
+    "complete_edge_predictors": 71520,
+    "split_development": 320,
+    "split_confirmatory": 321
+  },
+  "predictor_information": {
+    "fraction_unique_at_least_0_05": 0.9469578783151326,
+    "minimum_fraction_required": 0.7,
+    "fraction_condition_at_most_30": 0.9984399375975039,
+    "minimum_condition_fraction_required": 0.9,
+    "median_unique_development": 0.23495115233183844,
+    "median_unique_confirmatory": 0.24057371924986587,
+    "minimum_panel_median_required": 0.1,
+    "qualification_failures": []
+  },
+  "scientific_boundary": {
+    "these_are_predictor_information_not_genetic_results": true,
+    "synthetic_type1_power_gate_passed": false,
+    "character_masks_opened": false,
+    "nucleotide_identity_opened": false,
+    "pairwise_genetic_distances_opened": false,
+    "post_ibd_turnover_opened": false,
+    "beta_host_opened": false,
+    "next_authorized_transition": "Run exact predeclared private-null/power synthetic qualification; if PASS, only then permit confirmatory character mask validity and exact survivor requalification. No genotype opening yet."
+  }
+}
