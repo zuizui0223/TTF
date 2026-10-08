@@ -143,20 +143,23 @@ def main() -> int:
     args = ap.parse_args()
 
     rule = json.loads(args.rule.read_text())
-    if rule.get("schema") != "ttf_genetic_historical_host_neotoma_validation_rule_v0.1":
+    if rule.get("schema") not in {"ttf_genetic_historical_host_neotoma_validation_rule_v0.1", "ttf_genetic_historical_host_neotoma_validation_rule_v0.2"}:
         raise RuntimeError("unexpected Neotoma validation rule")
-    if rule.get("status") != "FROZEN_BEFORE_ANY_NEOTOMA_HOST_COVERAGE_RESULT_OR_PALAEO_HOST_RESISTANCE_RESULT":
+    if rule.get("status") not in {"FROZEN_BEFORE_ANY_NEOTOMA_HOST_COVERAGE_RESULT_OR_PALAEO_HOST_RESISTANCE_RESULT", "FROZEN_BEFORE_V0_2_NEOTOMA_EXTERNAL_QUERY"}:
         raise RuntimeError("Neotoma rule is not prospectively frozen")
 
     with args.panel.open(newline="", encoding="utf-8") as f:
         panel = list(csv.DictReader(f))
     correction = json.loads(args.identity_correction.read_text())
-    if correction.get("schema") != "ttf_genetic_historical_host_panel_identity_correction_v0.1":
+    if correction.get("schema") not in {"ttf_genetic_historical_host_panel_identity_correction_v0.1", "ttf_genetic_historical_host_panel_identity_binding_v0.2"}:
         raise RuntimeError("unexpected panel identity correction")
     expected = rule["primary_panel"]
     ident = correction["scientific_identity"]
     if len(panel) != int(expected["species"]) or len(panel) != int(ident["insects"]):
         raise RuntimeError("frozen panel species count drift")
+
+    if rule.get("schema", "").endswith("v0.2") and sha256_path(args.panel) != expected["sha256"]:
+        raise RuntimeError("v0.2 panel byte SHA drift")
 
     species = sorted(norm_name(row["species"]) for row in panel)
     species_digest = hashlib.sha256(("\n".join(species)+"\n").encode()).hexdigest()
@@ -185,6 +188,9 @@ def main() -> int:
     all_ids = {hid for ids in panel_ids.values() for hid in ids}
     if set(id_to_name) != all_ids:
         raise RuntimeError("WCVP accepted-name map differs from frozen host ID set")
+
+    if correction.get("schema", "").endswith("v0.2") and len(all_ids) != int(ident["accepted_host_ids"]):
+        raise RuntimeError("v0.2 accepted-host ID breadth drift")
 
     host_species: dict[str, set[str]] = {}
     insect_hosts: dict[str, list[str]] = {}
