@@ -1,0 +1,53 @@
+{
+  "schema": "ttf_genetic_historical_host_external_execution_authority_v0.3",
+  "status": "FROZEN_BEFORE_CORRECTED_V0_2_NEOTOMA_FOSSIL_QUERY_RESULT",
+  "recorded_on": "2026-10-08",
+  "prequery_integrity_audit": "benchmarks/frozen/genetic_historical_host_prequery_integrity_audit_v0.2.json",
+  "correct_panel": {
+    "path": "benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv",
+    "species": 135,
+    "accepted_host_ids": 222,
+    "sha256": "a402483497bc7bdf9b7427bfc859ce9dcc9183eebf5964d4591f352847130484",
+    "species_digest_sha256": "d0280d17c7fbe66ee194924d9f150833cb29ac3cb49737f56079dc659bd3abef"
+  },
+  "one_authoritative_neotoma_attempt": {
+    "workflow_run_id": 37706447829,
+    "head_sha": "5a3af11141e2d115e2a1c06be1a9497fdfb4eea3",
+    "workflow": ".github/workflows/historical-host-neotoma-validation-v02.yml",
+    "job_id": 113081843961,
+    "job_state_at_freeze": "queued",
+    "external_result_seen_at_freeze": false
+  },
+  "obsolete_prior_attempts": {
+    "run_37616664446": "stopped before query",
+    "run_37616730590": "stopped before query",
+    "run_37644277020": "failed before external query",
+    "run_37644319101": "failed before external query",
+    "old_140_species_workflows": "not authoritative for 135-species design"
+  },
+  "data": {
+    "source": "Neotoma Paleoecology Database v2 API",
+    "dataset_types": [
+      "pollen",
+      "plant macrofossils"
+    ],
+    "age_window_cal_yr_bp": [
+      19000,
+      26500
+    ],
+    "minimum_exact_species_sites": 3,
+    "minimum_genus_sites": 5
+  },
+  "inference_boundary": {
+    "neotoma_coverage_directly_observes_ancient_insect_host_interactions": false,
+    "genus_level_fossil_presence_proves_species_identity": false,
+    "primary_genetic_test_authorized": false,
+    "retune_after_palaeo_coverage": false
+  },
+  "response_firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  }
+}
