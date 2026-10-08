@@ -1,0 +1,136 @@
+host_panel_rank,species,n_hosts,accepted_host_ids,accepted_host_names
+1,Horisme vitalbata,2,2544208;2726964,Pulsatilla pratensis;Clematis vitalba
+2,Catocala crataegi,1,2950597,Malus domestica
+3,Perizoma flavofasciata,2,2488209;2488692,Silene dioica;Silene latifolia subsp. alba
+4,Heterogramma circumflexalis,1,450362,Zea mays
+5,Rhodophaea formosa,1,3258625,Ulmus minor subsp. minor
+6,Hypoxystis pluviaria,1,2943891,Comarum palustre
+7,Pyropteron chrysidiformis,2,2424198;2424805,Rumex acetosa;Rumex scutatus
+8,Endotricha puncticostalis,1,426698,Oryza sativa
+9,Gonepteryx farinosa,1,2998161,Rhamnus grubovii
+10,Agapeta zoegana,5,2334543;2593679;3045878;3049088;3049580,Knautia arvensis;Scabiosa columbaria;Jurinea multiflora;Centaurea diffusa;Centaurea jacea
+11,Antaeotricha renselariana,1,2696172,Canavalia ensiformis
+12,Lithophane disposita,2,2450019;2962364,Ulmus americana;Prunus virginiana
+13,Phyprosopus callitrichoides,1,288926,Smilax rotundifolia
+14,Lacinipolia pensilis,2,2916959;2962482,Taraxacum sect. Taraxacum;Purshia tridentata
+15,Enyo lugubris,4,176132;2457006;2548124;2723104,Randia aculeata;Vitis vinifera;Parthenocissus quinquefolia;Cissus verticillata
+16,Nystalea marona,1,2816731,Garcinia buchneri
+17,Ligdia adustata,1,2803293,Euonymus europaeus
+18,Cocytius antaeus,1,2640944,Annona muricata
+19,Depressaria pimpinellae,1,2402811,Pimpinella saxifraga
+20,Tholera decimalis,1,411505,Elymus repens
+21,Lophocampa citrina,3,178867;2703260;2831088,Ricinus communis;Cassia grandis;Gossypium herbaceum
+22,Macrochilo litophora,1,436906,Poa pratensis
+23,Stigmella rhamnicola,1,2524969,Rhamnus lanceolata
+24,Glena cribrataria,1,2917451,Populus tremuloides
+25,Leucania inconspicua,2,439977;449511,Saccharum officinarum;Urochloa mutica
+26,Hedya nubiferana,4,2942327;2945635;2950597;2963115,Aronia melanocarpa;Crataegus germanica;Malus domestica;Pyrus communis
+27,Olethreutes bipartitana,1,2440043,Trifolium pratense
+28,Erygia apicalis,2,2388434;2813413,Ougeinia oojeinensis;Flemingia strobilifera
+29,Gnophos obfuscata,1,2857008,Hylotelephium telephium
+30,Mompha eloisella,2,2398993;2399189,Oenothera macrocarpa;Oenothera biennis
+31,Phryxus caicus,2,177619;2700919,Rhabdadenia biflora;Carica papaya
+32,Asota plana,1,2809581,Ficus auriculata
+33,Erebia epiphron,4,391043;407579;415853;425445,Aira praecox;Deschampsia cespitosa;Festuca ovina;Nardus stricta
+34,Hyperaeschra georgica,1,171499,Quercus alba
+35,Ancylis burgessiana,3,174902;35028;35042,Quercus rubra;Castanea pumila;Castanea sativa
+36,Satyrus ferula,3,407579;415853;468424,Deschampsia cespitosa;Festuca ovina;Helictochloa pratensis
+37,Catocala fraxini,2,2917379;369664,Populus tremula;Fraxinus excelsior
+38,Acleris flavivittana,1,2961130,Prunus pensylvanica
+39,Endotricha mesenterialis,5,2372320;2772146;2772149;3295221;3295313,Mesua ferrea;Dipterocarpus cornutus;Dipterocarpus crinitus;Rubroshorea macroptera;Rubroshorea ovalis
+40,Elachista albifrontella,3,398171;402396;407579,Avenella flexuosa;Calamagrostis arundinacea;Deschampsia cespitosa
+41,Stenoptilia bipunctidactyla,1,2950597,Malus domestica
+42,Dasypolia templi,5,2341672;2623499;2638995;2639281;2846164,Levisticum officinale;Aegopodium podagraria;Angelica archangelica;Angelica sylvestris;Heracleum sphondylium
+43,Catocala cara,1,2919837,Salix nigra
+44,Eucosma fulvana,1,3049312,Centaurea scabiosa
+45,Euchlaena madusaria,3,2592736;379633;380544,Shepherdia canadensis;Pseudotsuga menziesii;Pinus banksiana
+46,Erebia neoridas,2,409361;415853,Digitaria sanguinalis;Festuca ovina
+47,Agrotis clavis,4,2483900;2682457;2912742;450362,Spinacia oleracea;Brassica oleracea;Lactuca sativa;Zea mays
+48,Hypena crassalis,2,2457648;2457998,Vaccinium myrtillus;Vaccinium uliginosum
+49,Cerastis leucographa,1,2457648,Vaccinium myrtillus
+50,Pyronia tithonus,4,399988;406640;411505;437547,Brachypodium phoenicoides;Dactylis glomerata;Elymus repens;Poa trivialis
+51,Macalla thyrsisalis,1,2601504,Swietenia macrophylla
+52,Hypoprepia miniata,2,379633;380544,Pseudotsuga menziesii;Pinus banksiana
+53,Pyrausta tyralis,1,2925686,Bidens pilosa
+54,Zaleops umbrina,1,2590657,Senegalia greggii
+55,Acleris implexana,1,2917451,Populus tremuloides
+56,Parapoynx stratiotata,1,2366673,Myriophyllum spicatum
+57,Epirrhoe galiata,1,87863,Galium verum
+58,Abagrotis nefascia,1,2426191,Ribes aureum
+59,Phyllonorycter rajella,1,6364,Alnus glutinosa
+60,Catocala micronympha,2,175243;175726,Quercus stellata;Quercus virginiana
+61,Catocala andromedae,1,2458789,Vaccinium corymbosum
+62,Catocala gracilis,1,2457276,Vaccinium pallidum
+63,Brachionycha nubeculosa,5,173983;2814031;2917379;2950597;83806,Quercus mongolica;Frangula alnus;Populus tremula;Malus domestica;Fagus crenata
+64,Apotomis funerea,1,21557,Betula papyrifera
+65,Pempeliella ornatella,1,205262,Thymus praecox
+66,Actias sinensis,2,500205;500221,Liquidambar formosana;Liquidambar styraciflua
+67,Ancylis unguicella,1,2792920,Erica cinerea
+68,Caloptilia populetorum,1,21582,Betula pendula
+69,Eumorpha satellitia,4,2457006;2548124;2723104;2831088,Vitis vinifera;Parthenocissus quinquefolia;Cissus verticillata;Gossypium herbaceum
+70,Hypena californica,1,2976642,Rubus allegheniensis
+71,Caloptilia hypericella,1,515229,Hypericum cistifolium
+72,Cepphis advenaria,2,2426658;2457648,Ribes rubrum;Vaccinium myrtillus
+73,Eupithecia lachrymosa,1,21557,Betula papyrifera
+74,Rhyacionia duplana,1,379843,Pinus contorta
+75,Phyllonorycter apparella,2,2917451;2917577,Populus tremuloides;Populus grandidentata
+76,Charaxes etheocles,3,2599944;2833546;3308845,Scutia myrtina;Griffonia simplicifolia;Sparrea gomphophylla
+77,Exaeretia ciniflonella,2,21557;2917451,Betula papyrifera;Populus tremuloides
+78,Palpita unionalis,3,351433;351647;355112,Jasminum officinale;Jasminum sambac;Olea europaea
+79,Dichrorampha montanana,2,2908230;2929189,Achillea millefolium;Tanacetum vulgare
+80,Erebia aethiops,2,406640;424761,Dactylis glomerata;Molinia caerulea
+81,Marathyssa basalis,3,2435031;2435203;379363,Toxicodendron pubescens;Toxicodendron radicans;Tsuga canadensis
+82,Hippotion roseipennis,1,2722833,Cissus quadrangularis
+83,Aellopos fadus,2,6016;89085,Alibertia edulis;Genipa americana
+84,Enarmonia formosana,2,2901279;2950597,Prunus persica;Malus domestica
+85,Acleris sparsana,4,2616276;2950597;34291;83891,Acer pseudoplatanus;Malus domestica;Carpinus betulus;Fagus sylvatica
+86,Hippia mandela,5,2520479;2543041;2582558;2582575;2768456,Thouinidium decandrum;Paullinia cururu;Serjania schiedeana;Serjania atrolineata;Dilodendron costaricense
+87,Thyatira batis,4,2977703;2980303;2982071;2984798,Rubus brasiliensis;Rubus fruticosus;Rubus idaeus;Rubus odoratus
+88,Phyllonorycter lantanella,3,2455932;2458547;2458668,Viburnum lantana;Viburnum opulus;Viburnum tinus
+89,Haematopis grataria,4,2572559;2573889;2574669;2710370,Persicaria hydropiper;Polygonum raii;Polygonum aviculare;Cerastium glomeratum
+90,Strophocerus thermesia,1,536982,Microdesmia arborea
+91,Paracolax tristalis,2,174750;6364,Quercus robur;Alnus glutinosa
+92,Hypagyrtis esther,1,380091,Pinus virginiana
+93,Gypsonoma sociana,1,2917379,Populus tremula
+94,Actinotia polyodon,1,516286,Hypericum perforatum
+95,Marumba gaschkewitschii,1,2901279,Prunus persica
+96,Oenochroma vinaria,1,2832700,Grevillea robusta
+97,Fabriciana niobe,3,2459647;2461201;2463879,Viola riviniana;Viola tricolor;Viola canina
+98,Capua vulgana,3,34291;47841;6364,Carpinus betulus;Corylus avellana;Alnus glutinosa
+99,Idaea muricata,1,2943891,Comarum palustre
+100,Teleiopsis diffinis,1,2424185,Rumex acetosella
+101,Lomographa bimaculata,2,2959959;2961630,Prunus incisa;Prunus serrulata
+102,Nephele aequivalens,2,107659;84896,Landolphia buchananii;Funtumia elastica
+103,Smerinthus cerisyi,5,2486129;2917451;2918866;2959531;2963115,Symphoricarpos albus;Populus tremuloides;Salix bebbiana;Prunus domestica;Pyrus communis
+104,Lithophane baileyi,5,21557;2917212;2950597;2962364;380544,Betula papyrifera;Populus deltoides;Malus domestica;Prunus virginiana;Pinus banksiana
+105,Chersotis cuprea,1,2457648,Vaccinium myrtillus
+106,Caloptilia bimaculatella,1,2616329,Acer rubrum
+107,Diloba caeruleocephala,5,2901279;2950597;2959193;2991554;3237455,Prunus persica;Malus domestica;Prunus cerasus;Sorbus aucuparia;Scandosorbus intermedia
+108,Chionodes continuella,1,381078,Picea laxa
+109,Scopula inductata,1,3119556,Ambrosia trifida
+110,Dysstroma truncata,3,2948665;379072;380589,Fragaria chiloensis;Larix laricina;Picea mariana
+111,Eupithecia actaeata,1,2620577,Actaea spicata
+112,Hypena laceratalis,1,107934,Lantana camara
+113,Craniophora ligustri,3,353907;369664;6364,Ligustrum vulgare;Fraxinus excelsior;Alnus glutinosa
+114,Agriphila ruricolellus,1,450362,Zea mays
+115,Spargaloma sexpunctata,1,12804,Apocynum androsaemifolium
+116,Aroga velocella,1,2424185,Rumex acetosella
+117,Coleophora trifolii,2,2439455;2439997,Trifolium fragiferum;Trifolium repens
+118,Spargania magnoliata,2,2399189;2790112,Oenothera biennis;Epilobium angustifolium
+119,Holomelina aurantiaca,2,2916959;450362,Taraxacum sect. Taraxacum;Zea mays
+120,Bungalotis erythus,3,539386;61582;61597,Didymopanax decaphyllus;Didymopanax glaziovii;Didymopanax morototoni
+121,Agathodes monstralis,1,166741,Psidium guajava
+122,Coptodisca lucifluella,1,2701784,Carya illinoinensis
+123,Ochlodes sylvanoides,5,406339;411703;422583;433437;433496,Cynodon dactylon;Elymus violaceus;Leymus cinereus;Phalaris californica;Phalaris lemmonii
+124,Phycita roborella,2,174374;174750,Quercus petraea;Quercus robur
+125,Hippotion velox,3,129789;480756;6775,Morinda citrifolia;Ipomoea batatas;Alocasia macrorrhizos
+126,Fishia yosemitae,1,379633,Pseudotsuga menziesii
+127,Micrurapteryx salicifoliella,3,2918086;2918514;2921604,Salix exigua;Salix integra;Salix babylonica
+128,Acrolepiopsis assectella,3,295261;296499;296525,Allium cepa;Allium sativum;Allium schoenoprasum
+129,Leuconycta diphteroides,1,3103510,Symphyotrichum lateriflorum
+130,Phyllonorycter strigulatella,2,6410;6417,Alnus hirsuta;Alnus incana
+131,Asota ficus,5,128792;178867;2809652;2809827;2810307,Mitragyna diversifolia;Ricinus communis;Ficus benghalensis;Ficus carica;Ficus elastica
+132,Aphelia unitana,1,2639281,Angelica sylvestris
+133,Eucosma aspidiscana,3,3100186;3101995;3103597,Galatella linosyris;Solidago virgaurea subsp. virgaurea;Symphyotrichum novi-belgii
+134,Selepa discigera,5,2434316;2435232;2703160;2760898;2768547,Terminalia elliptica;Toxicodendron succedaneum;Cassia fistula;Dendrophthoe glabrescens;Dimocarpus longan
+135,Epinotia tedella,3,380406;380737;380741,Picea abies;Picea smithiana;Picea sitchensis
