@@ -1,0 +1,32 @@
+name: Historical host-memory response-blind identity CI
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-memory-v0-1
+    paths:
+      - "scripts/build_historical_host_memory_predictor.py"
+      - "src/ttf/historical_host_memory.py"
+      - "tests/test_historical_host_memory.py"
+      - "tests/test_historical_host_memory_source_identity.py"
+      - ".github/workflows/historical-host-memory-identity-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-identity-and-predictor-core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      - name: Assert frozen host-pair and geometry identity without genetic response
+        run: |
+          python -m pytest -q \
+            tests/test_historical_host_memory.py \
+            tests/test_historical_host_memory_source_identity.py
