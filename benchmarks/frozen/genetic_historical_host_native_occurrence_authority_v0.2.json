@@ -1,0 +1,39 @@
+{
+  "schema": "ttf_genetic_historical_host_native_occurrence_authority_v0.2",
+  "status": "FROZEN_BEFORE_CORRECTED_V0_2_GBIF_OCCURRENCE_RESULT",
+  "recorded_on": "2026-10-08",
+  "response_blind_panel_sha256": "a402483497bc7bdf9b7427bfc859ce9dcc9183eebf5964d4591f352847130484",
+  "panel_species": 135,
+  "accepted_host_ids": 222,
+  "authoritative_native_host_workflow": {
+    "run_id": 37706636524,
+    "head_sha": "04704e3d40cba247209a1ea85696796048144532",
+    "job_id": 113082450439,
+    "workflow": ".github/workflows/historical-host-occurrence-gate-v02.yml",
+    "state_at_freeze": "queued",
+    "result_seen_at_freeze": false
+  },
+  "frozen_science": {
+    "rule": "docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json",
+    "minimum_native_range_occurrences": 30,
+    "thinning_km": 10,
+    "minimum_complete_insects": 90,
+    "insect_host_completeness_fraction": 0.8,
+    "source_host_sidecar_run_id": 35548477097,
+    "host_source_sha256": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558"
+  },
+  "status_boundary": {
+    "no_backfill": true,
+    "no_resplitting_after_genetic_response": true,
+    "responses_not_read": true,
+    "failed_external_requests_are_technical_not_ecological_absence": true,
+    "old_140_species_runs_cannot_satisfy_this_gate": true,
+    "palaeo_model_and_genetic_opening_not_authorized": true
+  },
+  "response_firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  }
+}
