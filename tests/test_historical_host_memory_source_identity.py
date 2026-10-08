@@ -48,16 +48,16 @@ def test_exact_input_sha_gate_detects_same_shape_file_mutation(tmp_path, monkeyp
 
     original = {}
     paths = {}
-    for name in ("candidates", "localities", "edges"):
+    for name in ("candidates", "localities", "edges", "host_pairs", "native_units", "wgsrpd_support"):
         p = tmp_path / (name + ".csv")
         p.write_text("species,edge_index\\nA b,1\\n", encoding="utf-8")
         paths[name] = p
         original[name] = hashlib.sha256(p.read_bytes()).hexdigest()
     monkeypatch.setattr(builder, "FROZEN_INPUT_SHA256", original)
-    verify_frozen_input_hashes(paths["candidates"], paths["localities"], paths["edges"])
+    verify_frozen_input_hashes(*(paths[name] for name in ("candidates", "localities", "edges", "host_pairs", "native_units", "wgsrpd_support")))
     paths["edges"].write_text("species,edge_index\\nA b,2\\n", encoding="utf-8")
     with pytest.raises(RuntimeError, match="edges SHA256 mismatch"):
-        verify_frozen_input_hashes(paths["candidates"], paths["localities"], paths["edges"])
+        verify_frozen_input_hashes(*(paths[name] for name in ("candidates", "localities", "edges", "host_pairs", "native_units", "wgsrpd_support")))
 
 
 def test_pinned_hashes_match_preexisting_frozen_census_and_geometry_receipts():
@@ -68,4 +68,7 @@ def test_pinned_hashes_match_preexisting_frozen_census_and_geometry_receipts():
         "candidates": census["candidate_table"]["sha256"],
         "localities": geometry["locality_csv"]["sha256"],
         "edges": geometry["edge_csv"]["sha256"],
+        "host_pairs": census["host_sidecar"]["insect_host_accepted_sha256"],
+        "native_units": census["host_sidecar"]["native_extant_nondoubtful_wgsrpd3_sha256"],
+        "wgsrpd_support": "d0fc12f635ec56a442dd37dec06cf3aa06684a00b14f1bb1f2db2f6fe3c4a21f",
     }
