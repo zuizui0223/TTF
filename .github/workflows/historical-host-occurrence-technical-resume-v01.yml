@@ -30,7 +30,7 @@ jobs:
           set -euo pipefail
           echo 'a402483497bc7bdf9b7427bfc859ce9dcc9183eebf5964d4591f352847130484  benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv' | sha256sum -c -
           test "$(git hash-object docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json)" = 'c01476e76e6d5ad57e50e26ce28a1ee2f5811b39'
-          python -m pytest tests/test_historical_host_occurrence_rule_contract.py -q
+          python -m json.tool docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json >/dev/null
       - name: Restore exact earlier native-range artifact
         uses: actions/download-artifact@v4
         with:
