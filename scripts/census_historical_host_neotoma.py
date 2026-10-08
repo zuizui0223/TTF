@@ -12,6 +12,7 @@ import csv
 import hashlib
 import json
 import math
+import os
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -21,6 +22,60 @@ import requests
 
 API = "https://api.neotomadb.org/v2.0/data/occurrences"
 PAGE_LIMIT = 10000
+
+
+def checkpoint_name(genus: str, dataset_type: str) -> str:
+    """Content-independent deterministic key for an exact frozen query."""
+    key=json.dumps([str(genus),str(dataset_type)],separators=(",",":"))
+    return hashlib.sha256(key.encode("utf-8")).hexdigest()+".json"
+
+
+def read_completed_checkpoint(
+    checkpoint_dir: Path, genus: str, dataset_type: str, age_young: int, age_old: int
+) -> dict[str, Any] | None:
+    path=Path(checkpoint_dir)/checkpoint_name(genus,dataset_type)
+    if not path.exists():
+        return None
+    rec=json.loads(path.read_text(encoding="utf-8"))
+    expected={
+        "schema":"ttf_historical_host_neotoma_query_checkpoint_v0.1",
+        "genus":genus,
+        "dataset_type":dataset_type,
+        "age_young":int(age_young),
+        "age_old":int(age_old),
+    }
+    for key,val in expected.items():
+        if rec.get(key)!=val:
+            raise RuntimeError(f"Neotoma checkpoint source query drift: {path.name} {key}")
+    data=rec.get("result")
+    if not isinstance(data,dict) or data.get("genus")!=genus or data.get("dataset_type")!=dataset_type:
+        raise RuntimeError("Neotoma checkpoint result identity drift")
+    if not isinstance(data.get("pairs"),list):
+        raise RuntimeError("Neotoma checkpoint pairs must be a list")
+    return data
+
+
+def write_completed_checkpoint(
+    checkpoint_dir: Path, genus: str, dataset_type: str,
+    age_young: int, age_old: int, result: dict[str,Any]
+) -> Path:
+    if result.get("genus")!=genus or result.get("dataset_type")!=dataset_type:
+        raise RuntimeError("Neotoma checkpoint result does not match requested source query")
+    checkpoint_dir=Path(checkpoint_dir)
+    checkpoint_dir.mkdir(parents=True,exist_ok=True)
+    path=checkpoint_dir/checkpoint_name(genus,dataset_type)
+    payload={
+        "schema":"ttf_historical_host_neotoma_query_checkpoint_v0.1",
+        "genus":genus,
+        "dataset_type":dataset_type,
+        "age_young":int(age_young),
+        "age_old":int(age_old),
+        "result":result,
+    }
+    temp=path.with_suffix(".tmp")
+    temp.write_text(json.dumps(payload,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+    os.replace(temp,path)
+    return path
 
 
 def sha256_path(path: Path) -> str:
@@ -140,6 +195,7 @@ def main() -> int:
     ap.add_argument("--wcvp-names", type=Path, required=True)
     ap.add_argument("--output-dir", type=Path, required=True)
     ap.add_argument("--workers", type=int, default=6)
+    ap.add_argument("--checkpoint-dir", type=Path, default=None)
     args = ap.parse_args()
 
     rule = json.loads(args.rule.read_text())
@@ -207,17 +263,43 @@ def main() -> int:
 
     fetched: list[dict[str, Any]] = []
     failures: list[dict[str, str]] = []
+    checkpoint_dir=(args.checkpoint_dir if args.checkpoint_dir is not None
+                    else args.output_dir / "checkpoints")
+    checkpoint_dir.mkdir(parents=True,exist_ok=True)
+    missing_jobs=[]
+    for genus,dtype in jobs:
+        completed=read_completed_checkpoint(
+            checkpoint_dir,genus,dtype,age_young,age_old
+        )
+        if completed is None:
+            missing_jobs.append((genus,dtype))
+        else:
+            fetched.append(completed)
+    print(json.dumps({
+        "neotoma_frozen_queries":len(jobs),
+        "reused_completed_queries":len(fetched),
+        "remaining_queries":len(missing_jobs)
+    }),flush=True)
     with ThreadPoolExecutor(max_workers=max(1, int(args.workers))) as pool:
         future_map = {
             pool.submit(fetch_genus, genus, dtype, age_young, age_old): (genus, dtype)
-            for genus, dtype in jobs
+            for genus, dtype in missing_jobs
         }
         for fut in as_completed(future_map):
             genus, dtype = future_map[fut]
             try:
-                fetched.append(fut.result())
+                result=fut.result()
+                write_completed_checkpoint(
+                    checkpoint_dir,genus,dtype,age_young,age_old,result
+                )
+                fetched.append(result)
             except Exception as exc:  # technical incompleteness, never absence
                 failures.append({"genus": genus, "dataset_type": dtype, "error": str(exc)})
+            print(json.dumps({
+                "completed_unique_queries":len(fetched),
+                "failed_queries":len(failures),
+                "frozen_queries":len(jobs)
+            }),flush=True)
 
     by_genus: dict[str, set[int]] = {g: set() for g in host_species}
     by_species: dict[str, set[int]] = {
