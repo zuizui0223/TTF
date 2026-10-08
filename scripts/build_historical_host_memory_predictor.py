@@ -31,6 +31,9 @@ FROZEN_INPUT_SHA256 = {
     "candidates": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
     "localities": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
     "edges": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+    "host_pairs": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "native_units": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558",
+    "wgsrpd_support": "d0fc12f635ec56a442dd37dec06cf3aa06684a00b14f1bb1f2db2f6fe3c4a21f",
 }
 
 
@@ -58,9 +61,15 @@ def norm_id(x: str) -> str:
 
 
 
-def verify_frozen_input_hashes(candidates: Path, localities: Path, edges: Path) -> None:
-    """Refuse unbound geometry even if candidate and edge counts happen to match."""
-    for key, path in (("candidates", candidates), ("localities", localities), ("edges", edges)):
+def verify_frozen_input_hashes(
+    candidates: Path, localities: Path, edges: Path, host_pairs: Path,
+    native_units: Path, wgsrpd_support: Path,
+) -> None:
+    """Refuse any unbound original source before reading biological predictors."""
+    paths = (("candidates", candidates), ("localities", localities), ("edges", edges),
+             ("host_pairs", host_pairs), ("native_units", native_units),
+             ("wgsrpd_support", wgsrpd_support))
+    for key, path in paths:
         if sha256_path(path) != FROZEN_INPUT_SHA256[key]:
             raise RuntimeError(f"frozen historical-host-memory {key} SHA256 mismatch")
 
@@ -156,7 +165,8 @@ def main() -> int:
     if any(bool(v) for v in rule["response_firewall"].values()):
         raise RuntimeError("host-memory response firewall is open")
 
-    verify_frozen_input_hashes(args.candidates, args.localities, args.edges)
+    verify_frozen_input_hashes(args.candidates, args.localities, args.edges,
+                               args.host_pairs, args.native_units, args.wgsrpd_support)
     candidates=list(csv.DictReader(args.candidates.open(newline="",encoding="utf-8")))
     if len(candidates)!=int(rule["candidate_species"]):
         raise RuntimeError("candidate count drift")
@@ -200,8 +210,10 @@ def main() -> int:
     species_fields=["species","edges","host_cloud_points","self_cloud_points","unique_fraction_M_host","predictor_condition_number","status"]
     args.output_edges.parent.mkdir(parents=True,exist_ok=True)
     args.output_species.parent.mkdir(parents=True,exist_ok=True)
-    ew=csv.DictWriter(args.output_edges.open("w",newline="",encoding="utf-8"),fieldnames=edge_fields,lineterminator="\n")
-    sw=csv.DictWriter(args.output_species.open("w",newline="",encoding="utf-8"),fieldnames=species_fields,lineterminator="\n")
+    edges_handle=args.output_edges.open("w",newline="",encoding="utf-8")
+    species_handle=args.output_species.open("w",newline="",encoding="utf-8")
+    ew=csv.DictWriter(edges_handle,fieldnames=edge_fields,lineterminator="\n")
+    sw=csv.DictWriter(species_handle,fieldnames=species_fields,lineterminator="\n")
     ew.writeheader(); sw.writeheader()
 
     complete=0
@@ -265,12 +277,9 @@ def main() -> int:
         if (idx+1)%50==0:
             print(json.dumps({"processed":idx+1,"complete":complete},sort_keys=True),flush=True)
 
-    for handle in (ew.writer, sw.writer) if False else ():
-        pass
-    # DictWriter owns externally opened file handles; force close through GC is not enough.
-    # Re-opened SHA calculation below occurs only after CPython closes them at function-scope exit,
-    # so explicitly flush through the underlying file objects is avoided by using Path outputs in a
-    # separate process in the authoritative workflow.
+    edges_handle.close()
+    species_handle.close()
+    # Output hashes must be calculated only after both CSV handles are closed.
     payload={
       "schema":"ttf_historical_host_memory_predictor_result_v0.1",
       "status":"RESPONSE_BLIND_PREDICTOR_MATERIALIZED" if complete>=500 else "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_EXTERNAL_DATA",
@@ -281,6 +290,8 @@ def main() -> int:
         "candidates":sha256_path(args.candidates),"localities":sha256_path(args.localities),"edges":sha256_path(args.edges),"host_pairs":sha256_path(args.host_pairs),"native_units":sha256_path(args.native_units),"wgsrpd_support":sha256_path(args.wgsrpd_support),"rule":sha256_path(args.rule)
       },
       "climate_assets_sha256":{path.name:sha256_path(path) for path in args.historical_asset},
+      "outputs_sha256":{"edge_predictors":sha256_path(args.output_edges),
+                        "species_diagnostics":sha256_path(args.output_species)},
       "response_firewall":{"sequence_identity_opened":False,"pairwise_genetic_distances_opened":False,"post_IBD_turnover_opened":False,"beta_host_opened":False}
     }
     args.output_receipt.parent.mkdir(parents=True,exist_ok=True)
