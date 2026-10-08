@@ -1,5 +1,14 @@
 # Historical-host parallel panels: source identity and overlap firewall (2026-10-08)
 
+## Candidate transport resolution (later on 2026-10-08)
+
+**EXACT CANDIDATE SOURCE RESTORED.** The prior 642-species GitHub transport copy is no longer the active input. Commit [`5096707`](https://github.com/zuizui0223/TTF/commit/5096707937bde7302053ebd012daaefa6ab36581) restored the canonical Library original `211238` bytes; its Git blob `d154264b87edb8e74944baee98f2124a428cb730` is exactly the SHA-1 of the canonical `c36cbb...` SHA-256 original. No expected scientific hash was retuned. The previous HOLD paragraph below is retained as a **historical failure record**, not a current candidate-CSV blocker.
+
+The response-blind 642 × 135 exact-source replay now checks both source digests, 73 exact shared species, and **73/73 identical recorded accepted-host ID sets**. The operational source guard additionally requires exact original HOSTS/WCVP host-pairs, native-range units, and WGSRPD3 support hashes before the predictor can run. New code and tests do not open mitochondrial characters, distance vectors, turnover or any ecological-genetic effect. Full predictor-information and synthetic qualification remain **not yet executed/passed**, and all genetic opening gates remain closed.
+
+Authoritative repair receipt: `benchmarks/frozen/historical_host_memory_exact_candidate_source_repair_v0.1.json`. Overlap audit: `benchmarks/frozen/historical_host_parallel_panel_input_overlap_audit_v0.1.json`.
+
+
 ## What was measured — not a genetic outcome
 
 Two **response-blind, frozen** candidate universes were compared using original, persistent Library CSV bytes, not a GitHub spreadsheet/text-preview reconstruction:
