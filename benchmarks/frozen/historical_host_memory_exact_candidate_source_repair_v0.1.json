@@ -1,0 +1,45 @@
+{
+  "schema": "ttf_historical_host_memory_exact_candidate_source_repair_v0.1",
+  "recorded_on": "2026-10-08",
+  "status": "PASS_EXACT_ORIGINAL_CANDIDATE_BYTES_RESTORED",
+  "branch": "prospective/historical-host-memory-v0-1",
+  "source": {
+    "description": "Persistent Library original 642-species frozen candidate CSV",
+    "sha256": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "size_bytes": 211238,
+    "candidate_species": 642,
+    "original_ascii_lf_records": 643
+  },
+  "repair": {
+    "github_file": "benchmarks/frozen/historical_host_memory_candidate_642_v0.1.csv",
+    "prior_github_transport_sha256": "81fe699448774ebd9a31de0076dfc5d9b2970dc8c09ab40efa62554bdb83e1b1",
+    "restored_git_commit": "5096707937bde7302053ebd012daaefa6ab36581",
+    "restored_git_blob_sha1": "d154264b87edb8e74944baee98f2124a428cb730",
+    "recomputed_canonical_git_blob_sha1": "d154264b87edb8e74944baee98f2124a428cb730",
+    "canonical_sha256_unchanged": true,
+    "original_frozen_scientific_protocol_unchanged": true
+  },
+  "cross_program": {
+    "connectivity_species": 135,
+    "exact_species_overlap": 73,
+    "shared_species_with_same_recorded_accepted_host_ids": 73,
+    "explanatory_note": "Source identity agreement is not evidence for ancient host use, and overlapping species are not independent genetic replications."
+  },
+  "next_gate": {
+    "required_external_assets": [
+      "642-species localities",
+      "642-species edges",
+      "HOSTS accepted pairs",
+      "WCVP native units",
+      "WGSRPD3 lattice points",
+      "eight frozen CHELSA layers"
+    ],
+    "requires_full_exact_source_hash_match": true,
+    "historical_predictor_values_computed": false,
+    "predictor_information_gate_passed": false,
+    "genetic_character_masks_opened": false,
+    "nucleotide_identity_opened": false,
+    "post_ibd_turnover_opened": false,
+    "beta_host_opened": false
+  }
+}
