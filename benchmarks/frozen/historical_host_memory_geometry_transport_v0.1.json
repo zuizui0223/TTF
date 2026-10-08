@@ -1,0 +1,41 @@
+{
+  "schema": "ttf_historical_host_memory_geometry_transport_v0.1",
+  "date": "2026-10-08",
+  "status": "EXACT_RESPONSE_BLIND_GEOMETRY_TRANSPORT_STAGED",
+  "branch": "prospective/historical-host-memory-v0-1",
+  "source": "Frozen original persistent Library geometry CSVs; no FASTA sequence characters were accessed during packet construction",
+  "transport": {
+    "path": "provenance/data/historical_host_memory_geometry_642_canonical_v01.tar.xz",
+    "compression": "xz (LZMA2) on deterministic USTAR tar, all uid/gid/mtime zero, two named members",
+    "archive_bytes": 2038128,
+    "archive_sha256": "92e19da615ffc2003a90569afd4089eb24871f1fc0df69cc3aface4263b96dc4",
+    "git_blob_sha1": "2fed0ed5de26eeb008b815151562af2ee352c7e2",
+    "transport_commit": "c50c51c56fd8c167921d9e558943849066fe23de"
+  },
+  "extracted": {
+    "historical_host_memory_localities_v0.1.csv": {
+      "size_bytes": 1574800,
+      "sha256": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+      "locality_rows": 17202
+    },
+    "historical_host_memory_edges_v0.1.csv": {
+      "size_bytes": 6027813,
+      "sha256": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+      "edge_rows": 71728
+    }
+  },
+  "external": {
+    "wgsrpd3_support_sha256": "d0fc12f635ec56a442dd37dec06cf3aa06684a00b14f1bb1f2db2f6fe3c4a21f",
+    "hosts_sidecar_sha256": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "native_units_sha256": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558",
+    "historical_chelsa_artifact": 10791389409,
+    "historical_chelsa_archive_sha256": "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2"
+  },
+  "assertions": [
+    "Strictly verify all source digests in runner before predictor builds",
+    "Do not read nucleotide sequence characters, genetic distances, post-IBD responses or genetic response coefficients",
+    "No frozen hypothesis, stop rule, source domain or qualifying threshold changed"
+  ],
+  "predictor_computed": false,
+  "genetic_response_opened": false
+}
