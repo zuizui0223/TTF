@@ -1,0 +1,29 @@
+{
+  "schema": "ttf_genetic_historical_host_panel_identity_binding_v0.2",
+  "status": "FROZEN_BEFORE_V0_2_NEOTOMA_OR_GBIF_RESULTS",
+  "frozen_on": "2026-10-08",
+  "audit": "benchmarks/frozen/genetic_historical_host_prequery_integrity_audit_v0.2.json",
+  "prior_identity_correction": "benchmarks/frozen/genetic_historical_host_panel_identity_correction_v0.1.json",
+  "scientific_identity": {
+    "insects": 135,
+    "species_digest_sha256": "d0280d17c7fbe66ee194924d9f150833cb29ac3cb49737f56079dc659bd3abef",
+    "logical_identity_digest_sha256": "948294a39e13c445551179b99e1858fa538ee7d582d78822437caef9f6907f95",
+    "ordered_logical_identity_digest_sha256": "b4c8a4a8faa4bda4189c767a4eb4109dd9a68fb30a3d6a066d97d12b061e6ed4",
+    "accepted_host_ids": 222,
+    "panel_csv_sha256": "a402483497bc7bdf9b7427bfc859ce9dcc9183eebf5964d4591f352847130484"
+  },
+  "no_species_backfill": true,
+  "unchanged_external_science": [
+    "LGM time window [19000,26500] cal yr BP",
+    "pollen and plant macrofossil dataset types",
+    "Neotoma exact species support >=3 distinct sites",
+    "genus support >=5 distinct sites",
+    "Neotoma coverage is descriptive only"
+  ],
+  "response_firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  }
+}
