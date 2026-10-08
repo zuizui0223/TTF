@@ -1,0 +1,41 @@
+{
+  "schema": "ttf_genetic_historical_host_occurrence_json_repair_v0.1",
+  "status": "TECHNICAL_PRE_QUERY_SCHEMA_REPAIR_NO_SCIENTIFIC_CHANGE",
+  "recorded_on": "2026-10-08",
+  "target_path": "docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json",
+  "source_git_blob_sha": "cff6a3cc9763d00965489d68fea898835f18be35",
+  "repaired_git_blob_sha": "c01476e76e6d5ad57e50e26ce28a1ee2f5811b39",
+  "source_commit": "a92ac69e4c07baf5f9895352bd85d2a24d8245a2",
+  "repair_commit": "e037cd166944f3d79c371a3b31807cb6e53f900f",
+  "defect": "selection_boundary contained three plain string entries in JSON object syntax with no key-value separators, so json.loads failed before the first host request",
+  "repair": "change only selection_boundary bracket type from an unparseable object to an ordered 3-string array, preserving all three strings verbatim",
+  "frozen_scientific_invariants": {
+    "panel_csv_sha256": "a402483497bc7bdf9b7427bfc859ce9dcc9183eebf5964d4591f352847130484",
+    "panel_species": 135,
+    "host_species": 222,
+    "gbif_page_size": 300,
+    "gbif_maximum_pages": 20,
+    "native_occurrence_distance_km": 10,
+    "minimum_retained_native_occurrences_per_host": 30,
+    "insect_host_completeness_fraction": 0.8,
+    "minimum_insects_after_gate": 90,
+    "role_of_request_errors": "technical incomplete; not ecological absence",
+    "alpha_or_genetic_response_affected": false
+  },
+  "first_prequery_failure": {
+    "workflow_run_id": 37706636524,
+    "acquisition_jobs_failed": 8,
+    "failed_stage": "JSONDecodeError while loading occurrence-rule file",
+    "gbif_species_match_query_started": false,
+    "gbif_occurrence_query_started": false,
+    "native_range_artifact_id": 11519874583,
+    "native_range_artifact_digest": "sha256:09fae82e449f33bc914d2aac2d37a47d699492151c6c26e290c1350a9b8cfec2"
+  },
+  "authorization_boundary": "A new response-blind technical continuation may reuse the exact native-range artifact only under the fixed original panel, revised syntactically valid unchanged science and no genetic opening. Never treat network failure or request errors as biological zero.",
+  "response_firewall": {
+    "fresh_nucleotide_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  }
+}
