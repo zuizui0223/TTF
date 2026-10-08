@@ -165,9 +165,14 @@ def fetch_genus(
         }
         payload = get_json(session, params)
         page = parse_records(payload)
+        raw_data = payload.get("data", [])
+        # A provider schema change must never masquerade as fossil absence.
+        if isinstance(raw_data,list) and raw_data and not page:
+            raise RuntimeError(
+                f"Neotoma nonempty response could not be parsed for {genus} / {dataset_type}"
+            )
         records.extend(page)
         pages += 1
-        raw_data = payload.get("data", [])
         if not isinstance(raw_data, list) or len(raw_data) < PAGE_LIMIT:
             break
         offset += PAGE_LIMIT
