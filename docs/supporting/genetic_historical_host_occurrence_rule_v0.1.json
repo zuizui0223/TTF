@@ -55,11 +55,11 @@
     "minimum_insects_after_occurrence_gate": 90,
     "failure_state": "NOT_EVALUABLE_HISTORICAL_HOST_CONNECTIVITY_OCCURRENCE_COVERAGE"
   },
-  "selection_boundary": {
+  "selection_boundary": [
     "all_occurrence filtering and insect removal occur before palaeo host-resistance calculation and before any genetic nucleotide identity",
     "host or insect retention cannot depend on a genetic response",
     "request errors are technical incompleteness and must be resolved or the affected host remains unsupported; they cannot be relabelled ecological absence"
-  },
+  ],
   "response_firewall": {
     "fresh_sequence_identity_opened": false,
     "fresh_pairwise_genetic_distances_opened": false,
