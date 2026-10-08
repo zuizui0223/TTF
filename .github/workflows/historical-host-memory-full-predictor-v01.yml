@@ -1,0 +1,146 @@
+name: Historical host-memory full CHELSA predictor and information gate
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-memory-v0-1
+    paths:
+      - ".github/workflows/historical-host-memory-full-predictor-v01.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  full-external-predictor-response-blind:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install exact scientific compute dependencies and test the frozen operator
+        run: |
+          set -euo pipefail
+          python -m pip install -e ".[test]" "rasterio>=1.4,<2" "scipy>=1.13,<2"
+          python -m pytest -q \
+            tests/test_historical_host_memory.py \
+            tests/test_historical_host_memory_source_identity.py \
+            tests/test_historical_host_memory_information_qualification.py \
+            tests/test_historical_host_memory_finite_climate.py \
+            tests/test_historical_host_parallel_panels.py
+
+      - name: Unpack exact response-blind 642 species genetic geography only
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p input/geometry
+          echo "92e19da615ffc2003a90569afd4089eb24871f1fc0df69cc3aface4263b96dc4  provenance/data/historical_host_memory_geometry_642_canonical_v01.tar.xz" | sha256sum -c -
+          tar -xJf provenance/data/historical_host_memory_geometry_642_canonical_v01.tar.xz -C input/geometry
+          echo "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9  input/geometry/historical_host_memory_localities_v0.1.csv" | sha256sum -c -
+          echo "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9  input/geometry/historical_host_memory_edges_v0.1.csv" | sha256sum -c -
+          echo "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b  benchmarks/frozen/historical_host_memory_candidate_642_v0.1.csv" | sha256sum -c -
+
+      - name: Download and verify original HOSTS WCVP native distribution sidecar
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p input/hosts
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10617946932/zip" > /tmp/hosts.zip
+          unzip -q /tmp/hosts.zip -d input/hosts
+          rm -f /tmp/hosts.zip
+          echo "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9  input/hosts/insect_host_accepted.csv" | sha256sum -c -
+          echo "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558  input/hosts/native_extant_nondoubtful_wgsrpd3.csv" | sha256sum -c -
+
+      - name: Download and verify original WGSRPD3 response-blind support
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p input/support
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/11495066386/zip" > /tmp/support.zip
+          unzip -q /tmp/support.zip -d input/support
+          rm -f /tmp/support.zip
+          echo "d0fc12f635ec56a442dd37dec06cf3aa06684a00b14f1bb1f2db2f6fe3c4a21f  input/support/wgsrpd3_support_points_v0.1.csv" | sha256sum -c -
+
+      - name: Download exact 8-layer historical CHELSA climate archive on runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p input/chelsa
+          df -h .
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10791389409/zip" > /tmp/historical.zip
+          echo "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2  /tmp/historical.zip" | sha256sum -c -
+          unzip -q /tmp/historical.zip -d input/chelsa
+          rm -f /tmp/historical.zip
+          echo "7d82833996006fc1e99b86acb4ea7e80cd e29c7f500df739ef48cb9ce145d450" >/dev/null
+          echo "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450  input/chelsa/manifest.json" | sha256sum -c -
+          for v in bio01 bio07 bio12 bio15; do
+            for t in -190 20; do
+              test -s "input/chelsa/historical/CHELSA_TraCE21K_${v}_${t}_V1.0.tif"
+            done
+          done
+          df -h .
+
+      - name: Materialize exact historical host memory and two declared controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results/historical_host_memory_full
+          python -u scripts/build_historical_host_memory_predictor.py \
+            --candidates benchmarks/frozen/historical_host_memory_candidate_642_v0.1.csv \
+            --localities input/geometry/historical_host_memory_localities_v0.1.csv \
+            --edges input/geometry/historical_host_memory_edges_v0.1.csv \
+            --host-pairs input/hosts/insect_host_accepted.csv \
+            --native-units input/hosts/native_extant_nondoubtful_wgsrpd3.csv \
+            --wgsrpd-support input/support/wgsrpd3_support_points_v0.1.csv \
+            --rule docs/supporting/historical_host_memory_predictor_materialization_rule_v0.1.json \
+            --historical-asset input/chelsa/historical/CHELSA_TraCE21K_bio01_-190_V1.0.tif \
+            --historical-asset input/chelsa/historical/CHELSA_TraCE21K_bio07_-190_V1.0.tif \
+            --historical-asset input/chelsa/historical/CHELSA_TraCE21K_bio12_-190_V1.0.tif \
+            --historical-asset input/chelsa/historical/CHELSA_TraCE21K_bio15_-190_V1.0.tif \
+            --historical-asset input/chelsa/historical/CHELSA_TraCE21K_bio01_20_V1.0.tif \
+            --historical-asset input/chelsa/historical/CHELSA_TraCE21K_bio07_20_V1.0.tif \
+            --historical-asset input/chelsa/historical/CHELSA_TraCE21K_bio12_20_V1.0.tif \
+            --historical-asset input/chelsa/historical/CHELSA_TraCE21K_bio15_20_V1.0.tif \
+            --output-edges results/historical_host_memory_full/edge_predictors_v0.1.csv \
+            --output-species results/historical_host_memory_full/species_diagnostics_v0.1.csv \
+            --output-receipt results/historical_host_memory_full/predictor_receipt_v0.1.json
+
+      - name: Apply unchanged v0.2 predictor-information gate before genetic data
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/qualify_historical_host_memory_predictor.py \
+            --candidates benchmarks/frozen/historical_host_memory_candidate_642_v0.1.csv \
+            --species results/historical_host_memory_full/species_diagnostics_v0.1.csv \
+            --predictor-receipt results/historical_host_memory_full/predictor_receipt_v0.1.json \
+            --rule docs/supporting/historical_host_memory_qualification_rule_v0.2.json \
+            --qualification results/historical_host_memory_full/information_qualification_v0.2.json \
+            --assignments results/historical_host_memory_full/response_blind_panel_roles_v0.1.csv
+          cat results/historical_host_memory_full/information_qualification_v0.2.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          v=json.loads(Path("results/historical_host_memory_full/information_qualification_v0.2.json").read_text())
+          if v["decision"] != "PASS_TO_SYNTHETIC_QUALIFICATION":
+              raise SystemExit("Frozen information gate did not qualify. Do not open genetics; no retuning.")
+          if v["genetic_response_opened"] or v["synthetic_type1_power_qualified"]:
+              raise SystemExit("Historical genetic/synthetic qualification authority drift")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: historical-host-memory-full-predictor-v0.1
+          path: results/historical_host_memory_full/
+          retention-days: 30
+          if-no-files-found: warn
