@@ -1,0 +1,50 @@
+{
+  "schema": "ttf_genetic_historical_host_native_range_artifact_audit_v0.1",
+  "status": "PASS_EXACT_RESPONSE_BLIND_NATIVE_RANGE_INPUT_IDENTITY_ONLY",
+  "recorded_on": "2026-10-08",
+  "panel": {
+    "path": "benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv",
+    "sha256": "a402483497bc7bdf9b7427bfc859ce9dcc9183eebf5964d4591f352847130484",
+    "insects": 135,
+    "distinct_host_ids": 222
+  },
+  "frozen_transport": {
+    "workflow_run_id": 37706636524,
+    "successful_job": "native-ranges",
+    "artifact_id": 11519874583,
+    "artifact_name": "historical-host-native-ranges-v0.2",
+    "artifact_sha256": "09fae82e449f33bc914d2aac2d37a47d699492151c6c26e290c1350a9b8cfec2",
+    "provenance": "The overall workflow failed after this upstream artifact was created; the native-ranges job itself passed. The technical continuation is already frozen to this exact artifact."
+  },
+  "audit": {
+    "feature_count": 222,
+    "distinct_geojson_accepted_host_ids": 222,
+    "host_id_list_sha256": "f406deee9e881bbf4bb77b93672a569487db9956156298cda392aa1ff218ad80",
+    "panel_host_id_list_sha256": "f406deee9e881bbf4bb77b93672a569487db9956156298cda392aa1ff218ad80",
+    "empty_geometry_count": 0,
+    "geometry_type_counts": {
+      "MultiPolygon": 220,
+      "Polygon": 2
+    },
+    "minimum_native_WGSRPD3_units": 1,
+    "maximum_native_WGSRPD3_units": 160,
+    "geom_topology_validated": false,
+    "region_level_historical_presence_validated": false
+  },
+  "obsolete_artifact_warning": {
+    "source_run_id": 37724754492,
+    "artifact_id": 11527012847,
+    "artifact_name": "historical-host-native-ranges-v0.1",
+    "accepted_host_ids": 230,
+    "status": "OBSOLETE_140_SPECIES_PANEL; MUST_NOT_BE_USED_AS_V0_2_INPUT"
+  },
+  "interpretation": "This is a byte- and host-identity check of present-day WCVP native-range geometry, not independent Neotoma fossil evidence, proof of LGM host range, proof of the historical insect-host interaction, or authorization for genetic response opening.",
+  "can_change_frozen_panel": false,
+  "can_authorize_nucleotide_opening": false,
+  "response_firewall": {
+    "fresh_nucleotide_identity_opened": false,
+    "fresh_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_opened": false,
+    "fresh_beta_host_LGM_opened": false
+  }
+}
