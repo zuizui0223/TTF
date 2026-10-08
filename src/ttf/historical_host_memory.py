@@ -36,8 +36,24 @@ def nearest_cloud_distance(points: np.ndarray, cloud: np.ndarray) -> np.ndarray:
         raise ValueError("points/cloud must be nonempty 2D arrays with equal dimensions")
     if np.any(~np.isfinite(p)) or np.any(~np.isfinite(q)):
         raise ValueError("points/cloud must be finite")
-    d2 = np.sum((p[:, None, :] - q[None, :, :]) ** 2, axis=2)
-    return np.sqrt(np.min(d2, axis=1))
+    # The estimand is exact Euclidean nearest analogue distance.  A KD tree
+    # avoids materializing the full n_edge_points x n_host_points tensor,
+    # which can exceed runner memory for the frozen 642-species panel.
+    try:
+        from scipy.spatial import cKDTree
+    except ImportError:
+        # Bounded-memory exact fallback for small/non-SciPy installations.
+        out = np.empty(len(p), dtype=float)
+        # Bound intermediate squared distance arrays to <= 200000 elements.
+        block = max(1, 200000 // max(1, len(q)))
+        for start in range(0, len(p), block):
+            end = min(start + block, len(p))
+            d2 = np.sum((p[start:end, None, :] - q[None, :, :]) ** 2, axis=2)
+            out[start:end] = np.sqrt(np.min(d2, axis=1))
+        return out
+    tree = cKDTree(q)
+    distances, _ = tree.query(p, k=1, workers=1)
+    return np.asarray(distances, dtype=float)
 
 
 def historical_analog_memory(
