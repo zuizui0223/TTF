@@ -1,0 +1,96 @@
+{
+  "schema": "ttf_historical_host_memory_temporal_plausibility_flags_v0.1",
+  "status": "RESPONSE_BLIND_DESCRIPTIVE_TEMPORAL_REVIEW_ONLY",
+  "source_candidate_sha256": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+  "source_panel_species": 642,
+  "previously_frozen_concern_names": [
+    "Brassica oleracea",
+    "Malus domestica",
+    "Prunus domestica",
+    "Prunus persica",
+    "Zea mays"
+  ],
+  "flagged_insects": 12,
+  "unflagged_insects": 630,
+  "flagged_species": [
+    {
+      "species": "Acleris nivisellana",
+      "concern_host_names": [
+        "Malus domestica"
+      ]
+    },
+    {
+      "species": "Apamea lateritia",
+      "concern_host_names": [
+        "Zea mays"
+      ]
+    },
+    {
+      "species": "Argyrostrotis anilis",
+      "concern_host_names": [
+        "Prunus domestica"
+      ]
+    },
+    {
+      "species": "Bondia comonana",
+      "concern_host_names": [
+        "Prunus domestica",
+        "Prunus persica"
+      ]
+    },
+    {
+      "species": "Callisto denticulella",
+      "concern_host_names": [
+        "Malus domestica"
+      ]
+    },
+    {
+      "species": "Catocala grynea",
+      "concern_host_names": [
+        "Malus domestica",
+        "Prunus domestica"
+      ]
+    },
+    {
+      "species": "Chilo orichalcociliella",
+      "concern_host_names": [
+        "Zea mays"
+      ]
+    },
+    {
+      "species": "Gelechia rhombella",
+      "concern_host_names": [
+        "Malus domestica"
+      ]
+    },
+    {
+      "species": "Luperina testacea",
+      "concern_host_names": [
+        "Zea mays"
+      ]
+    },
+    {
+      "species": "Pediasia trisecta",
+      "concern_host_names": [
+        "Zea mays"
+      ]
+    },
+    {
+      "species": "Phyllonorycter cerasicolella",
+      "concern_host_names": [
+        "Prunus persica"
+      ]
+    },
+    {
+      "species": "Xestia dolosa",
+      "concern_host_names": [
+        "Zea mays"
+      ]
+    }
+  ],
+  "interpretation": "Present HOSTS/WCVP interaction labels do not prove the same consumer-host interaction or domestic taxon existed at 21 ka; this is not an automated exclusion.",
+  "frozen_panel_modified": false,
+  "candidate_species_removed": 0,
+  "backfill": false,
+  "genetic_response_opened": false
+}
