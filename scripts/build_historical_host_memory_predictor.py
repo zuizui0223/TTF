@@ -26,6 +26,14 @@ from ttf.historical_host_memory import (
 ASSET_RE = re.compile(r"CHELSA_TraCE21K_(bio0?1|bio0?7|bio12|bio15)_(-?\d+)_V1\.0\.tif$", re.I)
 VARIABLE_ORDER=("bio01","bio07","bio12","bio15")
 
+# Exact response-blind sources, frozen before host/climate predictor values.
+FROZEN_INPUT_SHA256 = {
+    "candidates": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "localities": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "edges": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+}
+
+
 
 def sha256_path(path: Path) -> str:
     h=hashlib.sha256()
@@ -47,6 +55,38 @@ def norm_id(x: str) -> str:
     if s.endswith(".0") and s[:-2].isdigit():
         s=s[:-2]
     return s
+
+
+
+def verify_frozen_input_hashes(candidates: Path, localities: Path, edges: Path) -> None:
+    """Refuse unbound geometry even if candidate and edge counts happen to match."""
+    for key, path in (("candidates", candidates), ("localities", localities), ("edges", edges)):
+        if sha256_path(path) != FROZEN_INPUT_SHA256[key]:
+            raise RuntimeError(f"frozen historical-host-memory {key} SHA256 mismatch")
+
+
+def verify_host_pair_identity(
+    candidates: list[dict[str, str]], pair_rows: list[dict[str, str]]
+) -> None:
+    """Require the exact candidate insect x accepted-host mapping in HOSTS/WCVP.
+
+    The full sidecar can contain other insects; only candidate associations are
+    compared. All IDs are normalized using the same WCVP numeric-ID rule.
+    """
+    mapping: dict[str, set[str]] = defaultdict(set)
+    for row in pair_rows:
+        species = str(row["insect_species"]).strip()
+        host_id = norm_id(row["accepted_plant_name_id"])
+        if not species or not host_id:
+            raise RuntimeError("empty insect or accepted-host ID in frozen sidecar")
+        mapping[species].add(host_id)
+    for cand in candidates:
+        species = str(cand["species"]).strip()
+        frozen_ids = [norm_id(part) for part in cand["accepted_host_ids"].split(";")]
+        if not frozen_ids or not all(frozen_ids) or len(set(frozen_ids)) != len(frozen_ids):
+            raise RuntimeError(f"invalid frozen host IDs for {species}")
+        if mapping.get(species, set()) != set(frozen_ids):
+            raise RuntimeError(f"HOSTS/WCVP accepted-host mapping drift for {species}")
 
 
 def load_assets(paths: list[Path]) -> dict[tuple[str,int],Path]:
@@ -116,12 +156,17 @@ def main() -> int:
     if any(bool(v) for v in rule["response_firewall"].values()):
         raise RuntimeError("host-memory response firewall is open")
 
+    verify_frozen_input_hashes(args.candidates, args.localities, args.edges)
     candidates=list(csv.DictReader(args.candidates.open(newline="",encoding="utf-8")))
     if len(candidates)!=int(rule["candidate_species"]):
         raise RuntimeError("candidate count drift")
     names=[r["species"] for r in candidates]
     if len(set(names))!=len(names):
         raise RuntimeError("duplicate candidate species")
+
+    with args.host_pairs.open(newline="", encoding="utf-8") as f:
+        host_pairs = list(csv.DictReader(f))
+    verify_host_pair_identity(candidates, host_pairs)
 
     assets=load_assets(args.historical_asset)
     present_paths=[assets[(v,20)] for v in VARIABLE_ORDER]
