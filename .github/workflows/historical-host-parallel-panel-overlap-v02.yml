@@ -44,6 +44,7 @@ jobs:
                   raise SystemExit(f"SHA256 mismatch for {path}: {actual}")
               with path.open(encoding="utf-8", newline="") as f:
                   rows = list(csv.DictReader(f))
+              print(json.dumps({"input_file": str(path), "header_fields": list(rows[0]) if rows else [], "row_count": len(rows), "expected_count": n}, sort_keys=True), flush=True)
               names = [row["species"].strip() for row in rows]
               if len(names) != n or len(set(names)) != n:
                   raise SystemExit(f"species count or uniqueness mismatch for {path}")
