@@ -19,6 +19,14 @@ The two previous authoritative v0.1 replacement workflows stopped before Neotoma
 
 The licensed scientific question remains historical **host-resource opportunity**, not a directly observed ancient interaction network. Neotoma pollen at genus level can indicate past host-lineage occurrence but cannot alone establish the exact host species or its use by the insect.
 
+## Independent cross-design freshness audit (2026-10-08)
+
+The corrected 135-species panel was checked against the previously **response-blind, genetically unopened** Study C historical-design list (1,000 species). Four insects are shared: *Erebia aethiops*, *Glena cribrataria*, *Hypena laceratalis*, and *Teleiopsis diffinis*.
+
+These are **design-only overlaps**, not genetic-response reuse: Study C closed as `NOT_EVALUABLE` before nucleotide identity or source-target genetic transfer was opened. The present study remains genetically fresh, but it is not disjoint from every historical response-blind design universe. The four species remain in the frozen 135-species panel; none may be removed, substituted or backfilled based on paleo-coverage or future genetics. Machine-readable audit: `benchmarks/frozen/genetic_historical_host_cross_program_overlap_audit_v0.1.json`.
+
+The host-genetic positive prediction also requires the independent **insect-abiotic LGM** counterfactual frozen in `docs/supporting/genetic_historical_host_biotic_abiotic_contrast_v0.2.json`. A host effect without that control cannot establish biotic historical memory. Existing Neotoma runs are external, descriptive fossil-evidence censuses, not empirical genetic results.
+
 ## Question
 
 > Do present-day genetic discontinuities in narrow-host Lepidoptera remember where their larval host plants were fragmented during the Last Glacial Maximum?
