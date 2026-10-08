@@ -7,6 +7,7 @@ import pytest
 
 from scripts.build_historical_host_memory_predictor import (
     FROZEN_INPUT_SHA256,
+    norm_id,
     verify_frozen_input_hashes,
     verify_host_pair_identity,
 )
@@ -72,3 +73,19 @@ def test_pinned_hashes_match_preexisting_frozen_census_and_geometry_receipts():
         "native_units": census["host_sidecar"]["native_extant_nondoubtful_wgsrpd3_sha256"],
         "wgsrpd_support": "d0fc12f635ec56a442dd37dec06cf3aa06684a00b14f1bb1f2db2f6fe3c4a21f",
     }
+
+
+def test_wcvp_scientific_notation_is_same_exact_integer_taxon():
+    assert norm_id("400000.0") == "400000"
+    assert norm_id("4e+05") == "400000"
+    assert norm_id("400000") == "400000"
+    verify_host_pair_identity(
+        [{"species": "Thymelicus acteon", "accepted_host_ids": "400000.0"}],
+        [{"insect_species": "Thymelicus acteon", "accepted_plant_name_id": "4e+05"}],
+    )
+
+
+@pytest.mark.parametrize("invalid", ["", "None", "4e+04.5", "NaN", "Infinity", "-2", "1.5", "0"])
+def test_wcvp_id_rejects_non_integral_or_non_numeric_form(invalid):
+    with pytest.raises(ValueError, match="WCVP accepted-host ID"):
+        norm_id(invalid)
