@@ -1,0 +1,40 @@
+{
+  "schema": "ttf_genetic_historical_host_cross_program_overlap_audit_v0.1",
+  "status": "FROZEN_RESPONSE_BLIND_CROSS_DESIGN_OVERLAP_DISCLOSURE",
+  "recorded_on": "2026-10-08",
+  "source_head_before_audit": "c979654239af115977b5a1f41aec1166b827cdab",
+  "fixed_primary_panel": {
+    "path": "benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv",
+    "sha256": "a402483497bc7bdf9b7427bfc859ce9dcc9183eebf5964d4591f352847130484",
+    "species": 135,
+    "species_changed": false,
+    "backfill": false
+  },
+  "historical_C_geometry_design": {
+    "path": "benchmarks/frozen/relational_historical_candidates_v0.1.csv",
+    "git_blob_sha": "4dd1211754e2b7c6550a91c20f547a3f1b4c0411",
+    "species": 1000,
+    "final_state": "CLOSED_NO_EVALUABLE_TEST",
+    "genetic_response_opened": false
+  },
+  "intersecting_species": [
+    "Erebia aethiops",
+    "Glena cribrataria",
+    "Hypena laceratalis",
+    "Teleiopsis diffinis"
+  ],
+  "intersection_count": 4,
+  "interpretation": "The new panel is genetically response-fresh. Four lineages appeared in the prior response-blind Study C design, so it is not literally disjoint from every prior response-blind design universe. The prior C programme stopped as NOT_EVALUABLE before genetic response. This disclosure has no eligibility or result-selection authority.",
+  "forbidden": [
+    "drop overlapping insects after external or genetic results",
+    "replace or backfill the frozen panel",
+    "claim zero overlap with every prior design",
+    "treat a response-blind geometry overlap as shared genetic-response evidence"
+  ],
+  "response_firewall": {
+    "fresh_nucleotide_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  }
+}
