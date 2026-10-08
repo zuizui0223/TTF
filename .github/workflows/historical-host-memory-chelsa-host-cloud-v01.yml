@@ -69,7 +69,12 @@ jobs:
           df -h .
           gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10791389409/zip" > /tmp/historical.zip
           echo "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2  /tmp/historical.zip" | sha256sum -c -
-          unzip -q /tmp/historical.zip -d input/chelsa
+          # Partial external-data gate requires ONLY the four frozen 0-BP rasters.
+          # Do not decompress the other four LGM rasters in this first stage.
+          unzip -q /tmp/historical.zip \
+            'manifest.json' \
+            'historical/CHELSA_TraCE21K_*_20_V1.0.tif' \
+            -d input/chelsa
           rm -f /tmp/historical.zip
           echo "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450  input/chelsa/manifest.json" | sha256sum -c -
           df -h .
