@@ -1,0 +1,53 @@
+{
+  "schema": "ttf_historical_host_memory_preclimate_support_audit_v0.1",
+  "recorded_on": "2026-10-08",
+  "status": "PASS_EXACT_SIDECAR_AND_RAW_RESOURCE_SUPPORT_ONLY",
+  "prospective_boundary": "Run after source and host-rule freeze, before any climate predictor or genetic response. Does not modify candidate set, thresholds, or opening authority.",
+  "sources": {
+    "candidate_642_sha256": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "locality_geometry_sha256": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "edge_geometry_sha256": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+    "insect_host_accepted_sha256": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "native_extant_units_sha256": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558",
+    "wgsrpd3_points_sha256": "d0fc12f635ec56a442dd37dec06cf3aa06684a00b14f1bb1f2db2f6fe3c4a21f",
+    "wgsrpd3_workflow_run": 37644144669,
+    "wgsrpd3_artifact_id": 11495066386
+  },
+  "count_integrity": {
+    "candidate_species": 642,
+    "genetic_geometry_localities": 17202,
+    "genetic_geometry_edges": 71728,
+    "all_642_graphs_reference_existing_unique_localities": true,
+    "no_duplicate_undirected_edges": true,
+    "no_self_edges": true,
+    "edge_midpoint_arithmetic_xyz_error_max_km": 0
+  },
+  "resources": {
+    "raw_insect_host_sidecar_rows": 53449,
+    "raw_wcvp_native_unit_rows": 148254,
+    "wgsrpd3_sample_points": 6373,
+    "candidate_species_exact_host_id_match": 642,
+    "candidate_species_with_native_climate_support_points_ge10_before_raster_nodata": 642,
+    "candidate_species_with_genetic_localities_ge12_before_raster_nodata": 642,
+    "host_raw_support_min": 251,
+    "host_raw_support_median": 1061,
+    "host_raw_support_max": 5222,
+    "support_census_excludes_climate_nodata": true
+  },
+  "numeric_transport": {
+    "wcvp_exact_id_400000_formatted_as": "4e+05",
+    "affected_insect": "Thymelicus acteon",
+    "correct_accepted_plant_id": "400000",
+    "preserved_candidate_accepted_host_name": "Brachypodium pinnatum",
+    "sidecar_repair": "Decimal exact integer ID normalization; same source and native 62 botanical units; no botanical reclassification"
+  },
+  "unresolved": {
+    "full_eight_chelsa_rasters_loaded": false,
+    "climatic_reference_standardization_performed": false,
+    "finite_all_five_positions_tested": false,
+    "predictor_information_gate_qualified": false,
+    "synthetic_type1_power_gates_qualified": false,
+    "species_excluded_from_frozen_panel": 0,
+    "genetic_response_opened": false
+  }
+}
