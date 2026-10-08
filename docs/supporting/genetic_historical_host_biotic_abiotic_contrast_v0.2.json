@@ -1,0 +1,71 @@
+{
+  "schema": "ttf_genetic_historical_host_biotic_abiotic_contrast_v0.2",
+  "status": "SCIENTIFIC_SUCCESSOR_FROZEN_BEFORE_ANY_LGM_EXPOSURE_OR_GENETIC_RESPONSE",
+  "frozen_on": "2026-10-08",
+  "successor_reason": "The earlier host-LGM predictor controlled only present host resistance. A historical host signal could be a proxy for the consumer's own LGM abiotic niche or shared glacial landscape. A biotic-specific mechanism requires an independent abiotic counterfactual.",
+  "prior_program": "docs/supporting/genetic_historical_host_connectivity_protocol_v0.1.json",
+  "panel": {
+    "path": "benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv",
+    "sha256": "a402483497bc7bdf9b7427bfc859ce9dcc9183eebf5964d4591f352847130484",
+    "candidate_species": 135,
+    "genetic_response_opened": false
+  },
+  "biological_question": "Did fragmentation of larval host-resource opportunity at the LGM leave genetic discontinuities in insects beyond what can be explained by the insects' own LGM abiotic connectivity and the present-day landscapes of both consumer and host?",
+  "prediction": "For a frozen within-insect graph edge with comparable insect-climate suitability history and distance, larger LGM host-resource resistance predicts greater present post-IBD genetic turnover.",
+  "competitor": {
+    "abiotic_only": "Historic insect abiotic climatic resistance fully explains post-IBD turnover once geography and current opportunities are controlled; historical host effect is zero.",
+    "biotic_memory": "Historical host resistance predicts excess post-IBD turnover even conditional on historical insect abiotic resistance and present insect/host suitability.",
+    "caution": "Even a positive association identifies a host-resource opportunity association, not direct observation that the same insect used the same host at 21 ka."
+  },
+  "response": "Endpoint-safe post-IBD genetic edge turnover in species-disjoint fresh confirmatory Lepidoptera; no genetic identity before all frozen gates",
+  "exposure": {
+    "primary": "LGM host-mediated edge resistance from exact frozen accepted host plants and their 21-ka palaeoclimate affinities",
+    "mandatory_controls": [
+      "present host edge resistance",
+      "LGM insect abiotic edge resistance",
+      "present insect abiotic edge resistance",
+      "frozen edge geographic distance/land-ice opportunity where externally justified"
+    ],
+    "matched_source": "Both host and insect climatic affinity maps must be trained only on frozen response-blind present-day occurrences and projected through the same frozen CHELSA present/TraCE21k climate assets.",
+    "time_slices": [
+      "21 ka BP",
+      "present reference"
+    ],
+    "no_new_time_slice_after_any_palaeo_exposure": true
+  },
+  "primary_model": "Within each insect: post-IBD edge turnover ~ z(host_LGM_resistance) + z(host_present_resistance) + z(insect_LGM_abiotic_resistance) + z(insect_present_abiotic_resistance) + frozen geographic controls",
+  "primary_statistic": "Equal-weight mean partial host_LGM coefficient across untouched confirmatory species",
+  "alternative": "mean_partial_beta_host_LGM > 0",
+  "alpha": 0.05,
+  "statistical_dependency": "Edges sharing insect locality are dependent; inference must be calibrated on exact frozen geometry, with species as units of independent contribution; no edge-iid p-values.",
+  "pre_response_requirements": {
+    "host_native_occurrence_gate": "FROZEN_SOURCE_RUN_37706636524",
+    "neotoma_pollen_macrofossil_coverage": "DESCRIPTIVE_SOURCE_RUN_37706447829",
+    "temporal_taxon_admissibility": "docs/supporting/genetic_historical_host_temporal_admissibility_rule_v0.1.json",
+    "minimum_species_after_all_response_blind_gates": 90,
+    "primary_predictor_unique_variance_fraction_min": 0.15,
+    "max_single_species_relation_signal_share": 0.15,
+    "private_null_type1_wilson95_upper_max": 0.1,
+    "positive_control_power_wilson95_lower_min": 0.8,
+    "must_rerun_synthetic_qualification_for_this_new_multivariable_estimand": true,
+    "v0_1_synthetic_qualification_not_transferable": true,
+    "no_interaction_specific_positive_claim_without_all_controls": true
+  },
+  "freshness_rule": "Excludes reconstructed entire Phase-1 250 (including 39 mask failures), conditional development+confirmatory 500, S1 and S2 complete design universes and the entire relational fresh1000; five overlapped insects removed from old 140; no backfill.",
+  "neotoma_boundary": "Species-level dated plant remains support host taxon presence, genus-level pollen supports only genus or lineage presence. Neither is direct evidence of ancient insect usage. Coverage must not be used to post-select favorable insects.",
+  "crop_boundary": "Any exact accepted host species without plausible pre-LGM existence/interaction persistence cannot be treated as a verified historic partner. Apply the separately frozen temporal-admissibility rule before effect interpretation.",
+  "prior_result_boundary": "Do not reopen 326-species codistributed or 399-species current-HOSTS genetic responses, and do not tune based on their effect signs.",
+  "phase_status": "DESIGN_ONLY; no abiotic counterfactual relation built, no predictor-information result, no synthetic PASS, no genetic opening authorization",
+  "possible_stops": [
+    "NOT_EVALUABLE_ABIOTIC_COUNTERFACTUAL_MISSING",
+    "NOT_EVALUABLE_HISTORICAL_HOST_INFORMATION",
+    "NOT_EVALUABLE_HISTORICAL_HOST_SYNTHETIC_POWER_OR_TYPE1",
+    "NOT_EVALUABLE_TEMPORAL_HOST_MEANING"
+  ],
+  "response_firewall": {
+    "fresh_nucleotide_identity_opened": false,
+    "fresh_pairwise_genetic_distance_opened": false,
+    "fresh_post_ibd_turnover_opened": false,
+    "fresh_partial_beta_host_LGM_opened": false
+  }
+}
