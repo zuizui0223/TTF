@@ -1,0 +1,38 @@
+{
+  "schema": "ttf_historical_host_memory_numerical_replay_audit_v0.1",
+  "recorded_on": "2026-10-08",
+  "status": "PASS_SCIENTIFIC_DECISION_WITH_FLOAT_SERIALIZATION_DRIFT_REPAIR",
+  "source_frozen_rule": "docs/supporting/historical_host_memory_qualification_rule_v0.2.json",
+  "comparison": {
+    "first_run": 37792968201,
+    "second_run": 37792933570,
+    "edge_predictors_sha256_both": "70b748d588d9ab10309ace080f85b8053c6e14aa96d7a84288724c1000272a5b",
+    "deterministic_assignments_sha256_both": "4168e7572d3378e7f1595ae562d53c81bb2ef165cbe50eb2ed8ec4e7406fc6ae",
+    "diagnostic_csv_sha256_first": "9a8a40b48fbe8ed3b50d1d35c008d3a200dd93b923e8eec931450a2c3ec3f72c",
+    "diagnostic_csv_sha256_second": "6ecf90bda84fda547df8d45bb6d7d840001f0bed800e51084c0a3e014fbec6e4",
+    "differing_species_csv_lines": 389,
+    "max_abs_diff_unique_fraction": 2.220446049250313e-16,
+    "max_abs_diff_condition_number": 1.9539925233402755e-14,
+    "minimum_abs_distance_to_unique_fraction_0_05_threshold": 0.00029714075491828196,
+    "minimum_abs_distance_to_condition_number_30_threshold": 0.8045119748326428,
+    "same_final_decision": "PASS_TO_SYNTHETIC_QUALIFICATION",
+    "same_complete_species": 641,
+    "same_panel_counts": {
+      "development": 320,
+      "confirmatory": 321
+    }
+  },
+  "repair": {
+    "issue": "BLAS-scale floating precision differences in species-level information metrics; not genetic data or estimator retuning",
+    "output_serialization": "12 significant decimal digits for finite information fraction and condition number only",
+    "single_thread_environment_variables": [
+      "OPENBLAS_NUM_THREADS=1",
+      "OMP_NUM_THREADS=1",
+      "MKL_NUM_THREADS=1"
+    ],
+    "predictor_edge_csv_unchanged": true,
+    "frozen_scientific_thresholds_unchanged": true,
+    "required_next_check": "Re-run exact-source workflow after formatting repair, verify information qualification and hashes. Do not replace first immutable receipt retroactively."
+  },
+  "genetic_response_opened": false
+}
