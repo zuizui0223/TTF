@@ -1,0 +1,41 @@
+name: Historical host-memory temporal plausibility audit
+
+on:
+  push:
+    branches: [prospective/historical-host-memory-v0-1]
+    paths:
+      - ".github/workflows/historical-host-memory-temporal-audit-v01.yml"
+      - "scripts/audit_historical_host_memory_temporal_plausibility.py"
+      - "benchmarks/frozen/historical_host_memory_temporal_plausibility_flags_v0.1.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  response-blind-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Recompute independent pre-response temporal flags without filtering
+        run: |
+          set -euo pipefail
+          python scripts/audit_historical_host_memory_temporal_plausibility.py \
+            --candidate benchmarks/frozen/historical_host_memory_candidate_642_v0.1.csv \
+            --output /tmp/actual_temporal_flags.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path("/tmp/actual_temporal_flags.json").read_text())
+          e=json.loads(Path("benchmarks/frozen/historical_host_memory_temporal_plausibility_flags_v0.1.json").read_text())
+          assert a==e, "frozen taxon concern audit drift"
+          assert a["flagged_insects"]==12
+          assert a["unflagged_insects"]==630
+          assert a["candidate_species_removed"]==0
+          assert a["genetic_response_opened"] is False
+          print("PASS: frozen 642 species; 12 descriptive temporal concern flags; no exclusions")
+          PY
