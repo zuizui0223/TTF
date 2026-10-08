@@ -1,0 +1,57 @@
+{
+  "schema": "ttf_genetic_historical_host_neotoma_checkpoint_technical_authority_v0.1",
+  "status": "FROZEN_BEFORE_CHECKPOINT_REEXECUTION",
+  "recorded_on": "2026-10-08",
+  "failed_prior_execution": {
+    "workflow_run_id": 37706447829,
+    "job_id": 113081843961,
+    "outcome": "CANCELLED_AT_60_MINUTE_LIMIT",
+    "full_neotoma_coverage_result_observed": false,
+    "fossil_presence_or_absence_decision_authorized": false,
+    "output_artifact_available": false
+  },
+  "frozen_science": {
+    "panel_path": "benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv",
+    "panel_sha256": "a402483497bc7bdf9b7427bfc859ce9dcc9183eebf5964d4591f352847130484",
+    "insects": 135,
+    "accepted_host_ids": 222,
+    "fossil_rule": "docs/supporting/genetic_historical_host_neotoma_validation_rule_v0.2.json",
+    "api": "https://api.neotomadb.org/v2.0/data/occurrences",
+    "time_range_bp": [
+      19000,
+      26500
+    ],
+    "dataset_types": [
+      "pollen",
+      "plant macrofossils"
+    ],
+    "workers": 6,
+    "query_taxon": "exact accepted host genus prefix",
+    "max_per_page": 10000,
+    "max_pages": 25,
+    "exact_host_species_sites_min": 3,
+    "host_genus_sites_min": 5,
+    "coverage_result_role": "DESCRIPTIVE_ONLY_NOT_PRIMARY_GENETIC_PANEL_SELECTION"
+  },
+  "execution_only_change": {
+    "operation": "Atomically checkpoint successfully completed (genus,dataset_type,age-range) API queries immediately, reject mismatched replay and malformed nonempty provider responses, and preserve artifacts if the job terminates before every query completes.",
+    "scientific_thresholds_changed": false,
+    "host_species_changed": false,
+    "age_window_changed": false,
+    "genetically_opened": false,
+    "partial_checkpoint_interpretation": "TECHNICALLY_INCOMPLETE; unqueried genera and failed requests cannot be counted as fossil absence",
+    "checkpoint_path": "results/historical_host_neotoma_v02/checkpoints/"
+  },
+  "stop_rules": {
+    "until_all_fixed_queries_complete": "NO_FOSSIL_COVERAGE_DECISION",
+    "after_all_queries_complete": "ONLY_DESCRIPTIVE_NEOTOMA_COVERAGE",
+    "one_shot_genetic_opening_authorized": false,
+    "post_result_exposure_tuning_forbidden": true
+  },
+  "response_firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  }
+}
