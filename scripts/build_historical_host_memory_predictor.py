@@ -12,6 +12,7 @@ import hashlib
 import json
 import re
 from collections import defaultdict
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
 import numpy as np
@@ -54,10 +55,22 @@ def norm_var(x: str) -> str:
 
 
 def norm_id(x: str) -> str:
-    s=str(x).strip()
-    if s.endswith(".0") and s[:-2].isdigit():
-        s=s[:-2]
-    return s
+    """Exact WCVP integer ID; source CSV may write 400000 as '4e+05'.
+
+    Never use binary float conversion or accept a non-integral, missing, or
+    non-finite identifier. Scientific-notation spelling is formatting, not an
+    alternate accepted taxon.
+    """
+    s = str(x).strip()
+    if not s or len(s) > 32:
+        raise ValueError("invalid or missing WCVP accepted-host ID")
+    try:
+        d = Decimal(s)
+    except InvalidOperation as exc:
+        raise ValueError(f"non-numeric WCVP accepted-host ID: {s}") from exc
+    if not d.is_finite() or d <= 0 or d != d.to_integral_value() or d.adjusted() > 12:
+        raise ValueError(f"non-integral or out-of-range WCVP accepted-host ID: {s}")
+    return str(int(d))
 
 
 
