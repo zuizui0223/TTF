@@ -98,9 +98,10 @@ def verify_host_pair_identity(
     mapping: dict[str, set[str]] = defaultdict(set)
     for row in pair_rows:
         species = str(row["insect_species"]).strip()
-        host_id = norm_id(row["accepted_plant_name_id"])
-        if not species or not host_id:
+        raw_id = str(row["accepted_plant_name_id"]).strip()
+        if not species or not raw_id:
             raise RuntimeError("empty insect or accepted-host ID in frozen sidecar")
+        host_id = norm_id(raw_id)
         mapping[species].add(host_id)
     for cand in candidates:
         species = str(cand["species"]).strip()
