@@ -1,0 +1,126 @@
+name: historical host native-range GBIF occurrence gate v0.2
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-connectivity-v0-1
+    paths:
+      - ".github/workflows/historical-host-occurrence-gate-v02.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  native-ranges:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify corrected panel is byte-exact
+        run: echo "a402483497bc7bdf9b7427bfc859ce9dcc9183eebf5964d4591f352847130484  benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv" | sha256sum -c -
+      - name: Download exact frozen WCVP/HOSTS sidecar
+        uses: actions/download-artifact@v4
+        with:
+          name: wcvp-v13-hosts-sidecar
+          path: _host_sidecar
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35548477097
+      - name: Verify exact sidecar bytes
+        run: |
+          echo "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9  _host_sidecar/insect_host_accepted.csv" | sha256sum -c -
+          echo "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558  _host_sidecar/native_extant_nondoubtful_wgsrpd3.csv" | sha256sum -c -
+      - name: Checkout exact WCVP v13 redistribution
+        uses: actions/checkout@v4
+        with:
+          repository: matildabrown/rWCVPdata
+          ref: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
+          path: _wcvp
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+      - name: Install sf
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libudunits2-dev libgdal-dev libgeos-dev libproj-dev
+          Rscript -e 'install.packages("sf", repos="https://cloud.r-project.org")'
+      - name: Export frozen primary-native host ranges
+        run: |
+          Rscript scripts/export_historical_host_native_ranges_from_sidecar.R \
+            benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv \
+            _host_sidecar/native_extant_nondoubtful_wgsrpd3.csv \
+            _wcvp \
+            results/native/host_native_ranges.geojson
+      - uses: actions/upload-artifact@v4
+        with:
+          name: historical-host-native-ranges-v0.2
+          path: results/native/host_native_ranges.geojson
+          retention-days: 30
+          if-no-files-found: error
+
+  acquire:
+    needs: native-ranges
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0,1,2,3,4,5,6,7]
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e . shapely
+      - uses: actions/download-artifact@v4
+        with:
+          name: historical-host-native-ranges-v0.2
+          path: results/native
+      - name: Acquire frozen host occurrence shard
+        run: |
+          mkdir -p results/shard
+          python scripts/acquire_historical_host_occurrences.py \
+            --panel benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv \
+            --rule docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json \
+            --native-ranges results/native/host_native_ranges.geojson \
+            --output-csv results/shard/occurrences_${{ matrix.shard }}.csv \
+            --output-ledger results/shard/ledger_${{ matrix.shard }}.json \
+            --shard-index ${{ matrix.shard }} \
+            --shards 8
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: historical-host-occurrence-v02-shard-${{ matrix.shard }}
+          path: results/shard/
+          retention-days: 30
+          if-no-files-found: error
+
+  aggregate:
+    needs: acquire
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: historical-host-occurrence-v02-shard-*
+          path: results/shards
+      - name: Aggregate frozen host occurrence gate
+        run: |
+          python scripts/aggregate_historical_host_occurrences.py \
+            --panel benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv \
+            --rule docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json \
+            --shard-dir results/shards \
+            --output-dir results/aggregate
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: historical-host-occurrence-gate-v0.2
+          path: results/aggregate/
+          retention-days: 30
+          if-no-files-found: error
