@@ -99,3 +99,15 @@ def test_studentized_species_mean_is_equal_species():
     assert mean == pytest.approx(0.25)
     assert se > 0
     assert stat == pytest.approx(mean / se)
+
+def test_nearest_analogue_large_block_matches_brute_force():
+    rng = np.random.default_rng(11027)
+    cloud = rng.normal(size=(1003, 4))
+    points = rng.normal(size=(571, 4))
+    brute = np.sqrt(np.min(
+        np.sum((points[:, None, :] - cloud[None, :, :]) ** 2, axis=2),
+        axis=1,
+    ))
+    fast = nearest_cloud_distance(points, cloud)
+    assert np.allclose(fast, brute, rtol=1e-12, atol=1e-12)
+    assert np.all(np.isfinite(fast))
