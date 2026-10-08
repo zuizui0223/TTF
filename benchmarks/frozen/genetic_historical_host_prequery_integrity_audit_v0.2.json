@@ -1,0 +1,92 @@
+{
+  "schema": "ttf_genetic_historical_host_prequery_integrity_audit_v0.2",
+  "status": "RESPONSE_BLIND_PREQUERY_PANEL_CORRECTED_HOLD_EXTERNAL_EXECUTION",
+  "recorded_on": "2026-10-08",
+  "source_archive_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+  "exact_host_sidecar": {
+    "run_id": 35548477097,
+    "artifact_id": 10617946932,
+    "interaction_sha256": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "native_distribution_sha256": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558"
+  },
+  "prior_panel_integrity": {
+    "path": "benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.1.csv",
+    "originally_frozen_receipt_sha256": "67e8d6ad838a6464e8557818af5324f107605050348ead8fb26d20e0f8afd0f4",
+    "restored_csv_sha256": "67e8d6ad838a6464e8557818af5324f107605050348ead8fb26d20e0f8afd0f4",
+    "issue": "The committed v0.1 CSV had changed one Fraxinus excelsior WCVP accepted host ID from 369664 to 36964 while the frozen receipt still bound the original correct bytes.",
+    "affected_insect": "Craniophora ligustri",
+    "correct_host": "Fraxinus excelsior",
+    "correct_id": "369664",
+    "corrupted_id": "36964",
+    "reexecuted_original_panel_freezer_species_digest": "6bec34a07c98c19a7b8c90bb89333fa7dde4212f899573fae95639d72163f558",
+    "replay_reproduces_original_frozen_receipt_sha256": true
+  },
+  "full_design_freshness": {
+    "original_phase1_species": 250,
+    "original_phase1_reconstruction_species_digest_sha256": "a35a3430728a191aaeed8953b6990dd3fa70b6d44ec49bce7155d56a916a2d64",
+    "original_211_survivors_all_in_reconstructed_250": true,
+    "conditional_development_plus_confirmatory": 500,
+    "S1_design": 339,
+    "S2_design": 500,
+    "entire_fresh1000_design": 1000,
+    "complete_exclusion_union_species": 2492,
+    "previous_panel_140_overlap_with_conditional_design": [
+      "Apoda y-inversum",
+      "Chionodes electella",
+      "Herpetogramma aeglealis",
+      "Nisoniades rubescens",
+      "Stigmella hybnerella"
+    ],
+    "previous_v0_1_excluded_only_opened_211_not_full_original_250_and_conditional_500": true
+  },
+  "replacement_panel": {
+    "path": "benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv",
+    "status": "FRESHNESS_CORRECTED_FROM_EXACT_RESTORED_V0_1_BEFORE_EXTERNAL_QUERIES",
+    "input_original_v0_1_csv_sha256": "67e8d6ad838a6464e8557818af5324f107605050348ead8fb26d20e0f8afd0f4",
+    "csv_sha256": "a402483497bc7bdf9b7427bfc859ce9dcc9183eebf5964d4591f352847130484",
+    "species": 135,
+    "species_digest_sha256": "d0280d17c7fbe66ee194924d9f150833cb29ac3cb49737f56079dc659bd3abef",
+    "distinct_host_ids": 222,
+    "host_breadth_counts": {
+      "1": 66,
+      "2": 30,
+      "3": 19,
+      "4": 9,
+      "5": 11
+    },
+    "host_id_and_host_name_mappings_of_retained_species_unchanged": true,
+    "source_order_of_retained_species_unchanged": true,
+    "no_species_added_or_backfilled": true,
+    "genetic_response_used_for_selection": false,
+    "requires_fresh_external_execution_authority": true
+  },
+  "external_runs_invalidated_for_new_panel": {
+    "old_authoritative_native_range_host_gbif_run": 37644277020,
+    "old_authoritative_neotoma_run": 37644319101,
+    "both_stopped_before_any_external_data_query": true,
+    "previous_authority_for_old_panel_cannot_be_reused": true
+  },
+  "historical_biology_caution": {
+    "present_host_association_does_not_prove_21ka_interaction": true,
+    "primary_LGM_projection_of_post_LGM_domesticated_hosts_not_authorized_without_independent_temporal_evidence": true,
+    "examples_of_temporal_eligibility_review": [
+      "Zea mays",
+      "Malus domestica",
+      "Prunus domestica",
+      "Brassica oleracea"
+    ],
+    "next_required_gate": "Freeze host taxon temporal admissibility and palaeo-occurrence coverage without reading mitochondrial identities; ensure host partner presence and interaction persistence are distinguished."
+  },
+  "outcome_firewall": {
+    "fresh_sequence_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  },
+  "prohibitions": [
+    "Do not reinterpret old failed prequery runs as biological evidence",
+    "Do not use old 140-species run authority for the new 135-species panel",
+    "Do not replace excluded species",
+    "Do not impute ancient interaction existence from extant HOSTS record alone"
+  ]
+}
