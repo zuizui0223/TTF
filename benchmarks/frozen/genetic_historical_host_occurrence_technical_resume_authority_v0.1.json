@@ -1,0 +1,53 @@
+{
+  "schema": "ttf_genetic_historical_host_occurrence_technical_resume_authority_v0.1",
+  "status": "FROZEN_BEFORE_ANY_CORRECTED_HOST_GBIF_QUERY",
+  "recorded_on": "2026-10-08",
+  "reason": "The already-frozen 135-insect/222-host occurrence workflow failed before external GBIF access because occurrence-rule JSON could not parse; reuse the successful response-blind native-range artifact and perform only the original occurrence query stage.",
+  "previous_run": {
+    "workflow_run_id": 37706636524,
+    "state": "FAILED_BEFORE_ANY_HOST_GBIF_QUERY",
+    "native_range_artifact_id": 11519874583,
+    "native_range_artifact_digest": "sha256:09fae82e449f33bc914d2aac2d37a47d699492151c6c26e290c1350a9b8cfec2",
+    "acquisition_shards": 8,
+    "acquisition_failure_stage": "json.loads(rule) before taxon-match"
+  },
+  "fixed_inputs": {
+    "primary_panel_path": "benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv",
+    "primary_panel_sha256": "a402483497bc7bdf9b7427bfc859ce9dcc9183eebf5964d4591f352847130484",
+    "species": 135,
+    "accepted_host_ids": 222,
+    "rule_path": "docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json",
+    "rule_repaired_git_blob_sha": "c01476e76e6d5ad57e50e26ce28a1ee2f5811b39",
+    "repair_receipt": "benchmarks/frozen/genetic_historical_host_occurrence_json_repair_v0.1.json",
+    "native_range_artifact_id": 11519874583,
+    "native_range_artifact_digest": "sha256:09fae82e449f33bc914d2aac2d37a47d699492151c6c26e290c1350a9b8cfec2"
+  },
+  "unchanged_science": {
+    "shards": 8,
+    "gbif_strict_accepted_taxon_match": true,
+    "year": "1981,2026",
+    "page_size": 300,
+    "maximum_pages": 20,
+    "primary_native_range_only": true,
+    "minimum_distance_km": 10,
+    "maximum_retained_per_host": 500,
+    "minimum_retained_per_host": 30,
+    "host_coverage_required_fraction": 0.8,
+    "minimum_surviving_insect_species": 90,
+    "no_backfill": true,
+    "response_before_palaeo_qualification": false
+  },
+  "technical_policy": {
+    "do_not_reinterpret_REQUEST_ERROR_as_absence": true,
+    "results_before_query_seen": false,
+    "no_rerun_for_scientific_result_selection": true,
+    "technical_failures_require_separate_receipt": true,
+    "after_aggregation": "evaluate response-blind host coverage only; no genetic response authorization"
+  },
+  "response_firewall": {
+    "fresh_nucleotide_identity_opened": false,
+    "fresh_pairwise_genetic_distances_opened": false,
+    "fresh_post_ibd_turnover_computed": false,
+    "fresh_beta_host_LGM_computed": false
+  }
+}
