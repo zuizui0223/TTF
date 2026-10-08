@@ -1,0 +1,88 @@
+name: historical host GBIF exact technical continuation v0.1
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-connectivity-v0-1
+    paths:
+      - .github/workflows/historical-host-occurrence-technical-resume-v01.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  acquire:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . shapely
+      - name: Verify prequery frozen panel and parse-only rule repair
+        run: |
+          set -euo pipefail
+          echo 'a402483497bc7bdf9b7427bfc859ce9dcc9183eebf5964d4591f352847130484  benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv' | sha256sum -c -
+          test "$(git hash-object docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json)" = 'c01476e76e6d5ad57e50e26ce28a1ee2f5811b39'
+          python -m pytest tests/test_historical_host_occurrence_rule_contract.py -q
+      - name: Restore exact earlier native-range artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: historical-host-native-ranges-v0.2
+          path: results/native
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 37706636524
+      - name: Acquire original fixed host occurrence shard
+        run: |
+          mkdir -p results/shard
+          python scripts/acquire_historical_host_occurrences.py \
+            --panel benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv \
+            --rule docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json \
+            --native-ranges results/native/host_native_ranges.geojson \
+            --output-csv results/shard/occurrences_${{ matrix.shard }}.csv \
+            --output-ledger results/shard/ledger_${{ matrix.shard }}.json \
+            --shard-index ${{ matrix.shard }} \
+            --shards 8
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: historical-host-technical-resume-shard-${{ matrix.shard }}
+          path: results/shard/
+          retention-days: 30
+          if-no-files-found: warn
+
+  aggregate:
+    needs: acquire
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: historical-host-technical-resume-shard-*
+          path: results/shards
+      - name: Aggregate without biological reclassification of failed requests
+        run: |
+          python scripts/aggregate_historical_host_occurrences.py \
+            --panel benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv \
+            --rule docs/supporting/genetic_historical_host_occurrence_rule_v0.1.json \
+            --shard-dir results/shards \
+            --output-dir results/aggregate
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: historical-host-technical-resume-aggregate-v0.1
+          path: results/aggregate/
+          retention-days: 30
+          if-no-files-found: warn
