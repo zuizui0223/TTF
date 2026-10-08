@@ -286,7 +286,11 @@ def main() -> int:
             continue
         for (edge_index,_,_),vals in zip(edges[sp],zip(m_host,d_host_cur,d_host_lgm,m_self,d_self_cur,d_self_lgm)):
             ew.writerow(dict(zip(edge_fields,[sp,edge_index,*[repr(float(v)) for v in vals]])))
-        sw.writerow({"species":sp,"edges":len(edges[sp]),"host_cloud_points":len(host_cloud),"self_cloud_points":len(self_cloud),"unique_fraction_M_host":repr(float(unique)),"predictor_condition_number":repr(float(condition)),"status":"complete"})
+        # Numerical BLAS roundoff can vary around the 15th-17th digit even
+        # when the exact predictor CSV and gate decision are identical.
+        # Only output serialization is fixed; the frozen 0.05/0.10/30
+        # thresholds and all unrounded internal calculations are unchanged.
+        sw.writerow({"species":sp,"edges":len(edges[sp]),"host_cloud_points":len(host_cloud),"self_cloud_points":len(self_cloud),"unique_fraction_M_host":format(float(unique),".12g"),"predictor_condition_number":format(float(condition),".12g"),"status":"complete"})
         status_counts["complete"]+=1; complete+=1
         if (idx+1)%50==0:
             print(json.dumps({"processed":idx+1,"complete":complete},sort_keys=True),flush=True)
