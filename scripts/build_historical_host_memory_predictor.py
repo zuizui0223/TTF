@@ -10,6 +10,7 @@ import argparse
 import csv
 import hashlib
 import json
+import math
 import re
 from collections import defaultdict
 from decimal import Decimal, InvalidOperation
@@ -110,6 +111,15 @@ def verify_host_pair_identity(
             raise RuntimeError(f"invalid frozen host IDs for {species}")
         if mapping.get(species, set()) != set(frozen_ids):
             raise RuntimeError(f"HOSTS/WCVP accepted-host mapping drift for {species}")
+
+
+
+def format_information_diagnostic(value: float) -> str:
+    """Reproducible serialization without changing frozen scientific thresholds."""
+    x = float(value)
+    if not math.isfinite(x):
+        raise ValueError("nonfinite predictor information diagnostic")
+    return format(x, ".12g")
 
 
 def load_assets(paths: list[Path]) -> dict[tuple[str,int],Path]:
@@ -290,7 +300,7 @@ def main() -> int:
         # when the exact predictor CSV and gate decision are identical.
         # Only output serialization is fixed; the frozen 0.05/0.10/30
         # thresholds and all unrounded internal calculations are unchanged.
-        sw.writerow({"species":sp,"edges":len(edges[sp]),"host_cloud_points":len(host_cloud),"self_cloud_points":len(self_cloud),"unique_fraction_M_host":format(float(unique),".12g"),"predictor_condition_number":format(float(condition),".12g"),"status":"complete"})
+        sw.writerow({"species":sp,"edges":len(edges[sp]),"host_cloud_points":len(host_cloud),"self_cloud_points":len(self_cloud),"unique_fraction_M_host":format_information_diagnostic(unique),"predictor_condition_number":format_information_diagnostic(condition),"status":"complete"})
         status_counts["complete"]+=1; complete+=1
         if (idx+1)%50==0:
             print(json.dumps({"processed":idx+1,"complete":complete},sort_keys=True),flush=True)
