@@ -1,0 +1,53 @@
+{
+  "schema": "ttf_genetic_historical_host_temporal_admissibility_rule_v0.1",
+  "status": "FROZEN_BEFORE_GENETIC_RESPONSE_AND_BEFORE_NEOTOMA_OUTPUT_INSPECTION",
+  "recorded_on": "2026-10-08",
+  "focal_panel": {
+    "path": "benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv",
+    "sha256": "a402483497bc7bdf9b7427bfc859ce9dcc9183eebf5964d4591f352847130484",
+    "species": 135
+  },
+  "provisional_concern_list": [
+    "Brassica oleracea",
+    "Malus domestica",
+    "Prunus domestica",
+    "Prunus persica",
+    "Zea mays"
+  ],
+  "flagged_insect_species": [
+    "Catocala crataegi",
+    "Heterogramma circumflexalis",
+    "Hedya nubiferana",
+    "Stenoptilia bipunctidactyla",
+    "Agrotis clavis",
+    "Brachionycha nubeculosa",
+    "Enarmonia formosana",
+    "Acleris sparsana",
+    "Marumba gaschkewitschii",
+    "Smerinthus cerisyi",
+    "Lithophane baileyi",
+    "Diloba caeruleocephala",
+    "Agriphila ruricolellus",
+    "Holomelina aurantiaca"
+  ],
+  "flagged_insects": 14,
+  "unflagged_insects": 121,
+  "scientific_boundary": {
+    "extant_host_associations_do_not_establish_lgm_interactions": true,
+    "historical_host_projection_is_potential_resource_opportunity_not_direct_interaction_history": true,
+    "no_palaeodistribution_model_may_assume_a_post_lgm_domesticate_existed_as_the_named_taxon_at_21ka": true,
+    "a_genus_pollen_record_does_not_establish_an_exact_modern_host_species": true,
+    "crop_flag_is_a_review_requirement_not_an_automated_species_deletion": true,
+    "list_is_not_an_exhaustive_domestication_taxonomy": true,
+    "any_temporal_exclusion_or_replacement_requires_separate_response_blind_rule_before_genetic_opening": true,
+    "no_backfill": true
+  },
+  "admissibility_next_gate": "Validate temporal plausibility of accepted host taxa from dated palaeoecological evidence or independently sourced taxonomic history, with category and uncertainty preserved. Until then direct past interaction network inference is NOT AUTHORIZED.",
+  "neotoma_role": "Independent descriptive fossil coverage, not proof of past insect-host association and not a mechanism for post-outcome subgroup selection.",
+  "response_firewall": {
+    "fresh_nucleotide_identity_opened": false,
+    "fresh_pairwise_genetic_distance_opened": false,
+    "fresh_post_ibd_turnover_opened": false,
+    "fresh_beta_host_LGM_opened": false
+  }
+}
