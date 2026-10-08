@@ -81,7 +81,6 @@ jobs:
           echo "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2  /tmp/historical.zip" | sha256sum -c -
           unzip -q /tmp/historical.zip -d input/chelsa
           rm -f /tmp/historical.zip
-          echo "7d82833996006fc1e99b86acb4ea7e80cd e29c7f500df739ef48cb9ce145d450" >/dev/null
           echo "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450  input/chelsa/manifest.json" | sha256sum -c -
           for v in bio01 bio07 bio12 bio15; do
             for t in -190 20; do
