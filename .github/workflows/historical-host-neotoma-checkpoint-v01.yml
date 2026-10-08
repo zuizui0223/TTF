@@ -1,0 +1,61 @@
+name: historical host Neotoma checkpoint technical continuation v0.1
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-connectivity-v0-1
+    paths:
+      - .github/workflows/historical-host-neotoma-checkpoint-v01.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  fossil-coverage-response-blind:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: wcvp-v13-hosts-sidecar
+          path: _host_sidecar
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35548477097
+      - name: Verify frozen external data and checkpoint-only code
+        run: |
+          set -euo pipefail
+          echo 'c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558  _host_sidecar/native_extant_nondoubtful_wgsrpd3.csv' | sha256sum -c -
+          echo 'a402483497bc7bdf9b7427bfc859ce9dcc9183eebf5964d4591f352847130484  benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv' | sha256sum -c -
+          test "$(git hash-object scripts/census_historical_host_neotoma.py)" = '4564f7ae5d658885fe3a95ff11cd9af8f8fe53d1'
+      - name: Export exact accepted host IDs to WCVP names
+        run: |
+          python scripts/export_historical_host_names_from_sidecar.py \
+            --panel benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv \
+            --native-sidecar _host_sidecar/native_extant_nondoubtful_wgsrpd3.csv \
+            --output results/wcvp/accepted_host_names.csv
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . requests
+      - name: Resume identical fossil queries with durable per-genus checkpoints
+        run: |
+          mkdir -p results/historical_host_neotoma_v02/checkpoints
+          timeout 55m python -u scripts/census_historical_host_neotoma.py \
+            --panel benchmarks/frozen/genetic_historical_host_connectivity_panel_v0.2.csv \
+            --rule docs/supporting/genetic_historical_host_neotoma_validation_rule_v0.2.json \
+            --identity-correction benchmarks/frozen/genetic_historical_host_panel_identity_binding_v0.2.json \
+            --wcvp-names results/wcvp/accepted_host_names.csv \
+            --output-dir results/historical_host_neotoma_v02 \
+            --checkpoint-dir results/historical_host_neotoma_v02/checkpoints \
+            --workers 6
+      - name: Archive completed checkpoint records, not a partial fossil-absence claim
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: historical-host-neotoma-checkpoint-v0.1
+          path: results/historical_host_neotoma_v02/
+          retention-days: 30
+          if-no-files-found: warn
