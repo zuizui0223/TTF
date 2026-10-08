@@ -57,7 +57,7 @@ jobs:
               fieldnames = [name for name in reader.fieldnames if name != "index"]
               original_rows = list(reader)
           buf = io.StringIO(newline="")
-          writer = csv.DictWriter(buf, fieldnames=fieldnames, lineterminator="\\n")
+          writer = csv.DictWriter(buf, fieldnames=fieldnames, lineterminator=chr(10))
           writer.writeheader()
           for row in original_rows:
               writer.writerow({name: row[name] for name in fieldnames})
