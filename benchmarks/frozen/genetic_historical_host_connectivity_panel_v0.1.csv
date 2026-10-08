@@ -70,7 +70,7 @@ host_panel_rank,species,n_hosts,accepted_host_ids,accepted_host_names
 69,Actias sinensis,2,500205;500221,Liquidambar formosana;Liquidambar styraciflua
 70,Ancylis unguicella,1,2792920,Erica cinerea
 71,Caloptilia populetorum,1,21582,Betula pendula
-72,Eumorpha satellitia,4,2457006;2548124;2723104;2831088,Vitis Vinifera;Parthenocissus quinquefolia;Cissus verticillata;Gossypium herbaceum
+72,Eumorpha satellitia,4,2457006;2548124;2723104;2831088,Vitis vinifera;Parthenocissus quinquefolia;Cissus verticillata;Gossypium herbaceum
 73,Hypena californica,1,2976642,Rubus allegheniensis
 74,Caloptilia hypericella,1,515229,Hypericum cistifolium
 75,Cepphis advenaria,2,2426658;2457648,Ribes rubrum;Vaccinium myrtillus
@@ -116,7 +116,7 @@ host_panel_rank,species,n_hosts,accepted_host_ids,accepted_host_names
 115,Dysstroma truncata,3,2948665;379072;380589,Fragaria chiloensis;Larix laricina;Picea mariana
 116,Eupithecia actaeata,1,2620577,Actaea spicata
 117,Hypena laceratalis,1,107934,Lantana camara
-118,Craniophora ligustri,3,353907;36964;6364,Ligustrum vulgare;Fraxinus excelsior;Alnus glutinosa
+118,Craniophora ligustri,3,353907;369664;6364,Ligustrum vulgare;Fraxinus excelsior;Alnus glutinosa
 119,Agriphila ruricolellus,1,450362,Zea mays
 120,Spargaloma sexpunctata,1,12804,Apocynum androsaemifolium
 121,Aroga velocella,1,2424185,Rumex acetosella
@@ -128,7 +128,7 @@ host_panel_rank,species,n_hosts,accepted_host_ids,accepted_host_names
 127,Coptodisca lucifluella,1,2701784,Carya illinoinensis
 128,Ochlodes sylvanoides,5,406339;411703;422583;433437;433496,Cynodon dactylon;Elymus violaceus;Leymus cinereus;Phalaris californica;Phalaris lemmonii
 129,Phycita roborella,2,174374;174750,Quercus petraea;Quercus robur
-130,Hippiotion velox,3,129789;480756;6775,Morinda citrifolia;Ipomoea batatas;Alocasia macrorrhizos
+130,Hippotion velox,3,129789;480756;6775,Morinda citrifolia;Ipomoea batatas;Alocasia macrorrhizos
 131,Fishia yosemitae,1,379633,Pseudotsuga menziesii
 132,Micrurapteryx salicifoliella,3,2918086;2918514;2921604,Salix exigua;Salix integra;Salix babylonica
 133,Acrolepiopsis assectella,3,295261;296499;296525,Allium cepa;Allium sativum;Allium schoenoprasum
