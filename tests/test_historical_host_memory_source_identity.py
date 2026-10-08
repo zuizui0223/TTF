@@ -7,6 +7,7 @@ import pytest
 
 from scripts.build_historical_host_memory_predictor import (
     FROZEN_INPUT_SHA256,
+    format_information_diagnostic,
     norm_id,
     verify_frozen_input_hashes,
     verify_host_pair_identity,
@@ -89,3 +90,14 @@ def test_wcvp_scientific_notation_is_same_exact_integer_taxon():
 def test_wcvp_id_rejects_non_integral_or_non_numeric_form(invalid):
     with pytest.raises(ValueError, match="WCVP accepted-host ID"):
         norm_id(invalid)
+
+
+def test_output_information_precision_suppresses_blas_ulp_variation_only():
+    # Two independent exact-CHELSA runs differed at <=2e-14 in diagnostic
+    # floats while their edge predictors and frozen PASS decision matched.
+    assert format_information_diagnostic(0.8813939936178531) == format_information_diagnostic(0.8813939936178533)
+    assert format_information_diagnostic(10.412601219844571) == format_information_diagnostic(10.412601219844573)
+    assert format_information_diagnostic(0.05) == "0.05"
+    assert format_information_diagnostic(30.0) == "30"
+    with pytest.raises(ValueError, match="nonfinite"):
+        format_information_diagnostic(float("nan"))
