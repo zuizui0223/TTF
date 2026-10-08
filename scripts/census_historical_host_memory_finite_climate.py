@@ -16,10 +16,16 @@ from pathlib import Path
 
 import numpy as np
 
-from scripts.build_historical_host_memory_predictor import (
-    FROZEN_INPUT_SHA256, norm_id, sample_matrix, sha256_path,
-    verify_host_pair_identity,
-)
+try:
+    from scripts.build_historical_host_memory_predictor import (
+        FROZEN_INPUT_SHA256, norm_id, sample_matrix, sha256_path,
+        verify_host_pair_identity,
+    )
+except ModuleNotFoundError:
+    from build_historical_host_memory_predictor import (
+        FROZEN_INPUT_SHA256, norm_id, sample_matrix, sha256_path,
+        verify_host_pair_identity,
+    )
 
 
 VARIABLE_ORDER = ("bio01", "bio07", "bio12", "bio15")
