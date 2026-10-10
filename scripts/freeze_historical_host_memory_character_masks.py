@@ -27,6 +27,8 @@ LOC_SHA="037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9"
 EDGE_SHA="ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9"
 ARCH_SHA="5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5"
 SYNTHETIC_RECEIPT_SHA="0498f71d636274a7f2e654f42591545cf26cbd0b97e603902377ea2ef702495e"
+MASK_RULE_BLOB_SHA1="1d5bec837157955cd2f989b2dd127d502d57318c"
+SYNTHETIC_WORLD_SHA256="2aa61a0fd3e0fbf9fdf44f1ef7c4cffe4a6137cc91543d9971902d1349ebbf71"
 
 
 def sha256(path: Path) -> str:
@@ -35,6 +37,25 @@ def sha256(path: Path) -> str:
         for chunk in iter(lambda:f.read(1<<20),b""):
             h.update(chunk)
     return h.hexdigest()
+
+
+def git_blob_sha1(path: Path) -> str:
+    """Pin even the mask-only rule bytes, not merely its JSON schema name."""
+    raw = path.read_bytes()
+    return hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\\0" + raw).hexdigest()
+
+
+def mask_source_bindings(mask_rule_sha256: str) -> dict[str, str]:
+    """Immutable provenance passed forward to both survivor gates."""
+    return {
+        "candidate_table_sha256": CAN_SHA,
+        "panel_roles_sha256": ROLE_SHA,
+        "locality_geometry_sha256": LOC_SHA,
+        "edge_geometry_sha256": EDGE_SHA,
+        "synthetic_pass_receipt_sha256": SYNTHETIC_RECEIPT_SHA,
+        "mask_rule_git_blob_sha1": MASK_RULE_BLOB_SHA1,
+        "mask_rule_sha256": mask_rule_sha256,
+    }
 
 
 def safe_raw_path(root: Path, raw_dir: str, filename: str) -> Path:
@@ -139,6 +160,13 @@ def main():
     synth=json.loads(args.synthetic_receipt.read_text())
     if rule.get("schema")!="ttf_historical_host_memory_character_mask_rule_v0.1":
         raise RuntimeError("mask opening rule not frozen")
+    if git_blob_sha1(args.rule)!=MASK_RULE_BLOB_SHA1:
+        raise RuntimeError("exact frozen mask-rule byte identity mismatch")
+    if (synth.get("schema")!="ttf_historical_host_memory_synthetic_qualification_v0.1"
+            or synth.get("contract_sha256")!=SYNTHETIC_WORLD_SHA256
+            or synth.get("confirmatory_species")!=321
+            or synth.get("no_empirical_genetic_response_read") is not True):
+        raise RuntimeError("wrong original synthetic authorization source")
     if synth["calibration"]["decision"]!="PASS_TO_CONFIRMATORY_CHARACTER_MASK_ONLY":
         raise RuntimeError("synthetic result does not authorize mask exposure")
     if synth["nucleotide_identity_opened"] or rule["firewall"]["confirmatory_nucleotide_identity_opened"]:
@@ -166,6 +194,7 @@ def main():
                   if len(survivors)>=minimum else
                   "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_CHARACTER_SUPPORT"),
         "source_archive_sha256":ARCH_SHA,
+        "source_bindings":mask_source_bindings(sha256(args.rule)),
         "confirmatory_before_mask":321,
         "surviving_species":len(survivors),
         "minimum_survivors":minimum,
