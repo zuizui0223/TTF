@@ -57,7 +57,8 @@ def make_roles(n=231):
               for i in range(321)]
     original += [{"species":f"Dev{i:03d}","panel":"development","split_key_sha256":f"d{i}"}
                  for i in range(320)]
-    survivors=original[:n]
+    # Fixture must preserve the frozen original role set independently of a mutated survivor input.
+    survivors=[dict(r) for r in original[:n]]
     mask={"schema":"ttf_historical_host_memory_confirmatory_mask_result_v0.1",
           "survivor_names":[r["species"] for r in survivors]}
     summary={"schema":"ttf_historical_host_memory_survivor_information_v0.1",
