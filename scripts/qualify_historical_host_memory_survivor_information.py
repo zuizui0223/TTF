@@ -18,6 +18,15 @@ ROLE_SHA="4168e7572d3378e7f1595ae562d53c81bb2ef165cbe50eb2ed8ec4e7406fc6ae"
 DIAG_SHA="bee840bf6ae207cab5aef8da4154eae7743f5ec3bbbaf23d7fe5a3dedc50a3e6"
 ARCH_SHA="5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5"
 RULE_SHA="2ec2594510021da653598e22a3d0f4b9e4cb226398aadbf342967ee532909415"
+EXPECTED_MASK_BINDINGS={
+    "candidate_table_sha256":"c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "panel_roles_sha256":ROLE_SHA,
+    "locality_geometry_sha256":"037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "edge_geometry_sha256":"ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+    "synthetic_pass_receipt_sha256":"0498f71d636274a7f2e654f42591545cf26cbd0b97e603902377ea2ef702495e",
+    "mask_rule_git_blob_sha1":"1d5bec837157955cd2f989b2dd127d502d57318c",
+}
+
 
 def file_sha(p):
     h=hashlib.sha256()
@@ -34,6 +43,12 @@ def qualify_survivors(mask: dict, role: list[dict], diagnostic: list[dict], rule
         raise RuntimeError("unexpected confirmatory mask result schema")
     if mask.get("confirmatory_before_mask")!=321 or mask.get("source_archive_sha256")!=ARCH_SHA:
         raise RuntimeError("mask provenance or exact confirmatory sample differs")
+    bindings=mask.get("source_bindings")
+    if (not isinstance(bindings,dict)
+            or any(bindings.get(k)!=v for k,v in EXPECTED_MASK_BINDINGS.items())
+            or not isinstance(bindings.get("mask_rule_sha256"),str)
+            or len(bindings["mask_rule_sha256"])!=64):
+        raise RuntimeError("frozen mask rule or original provenance bindings drift")
     if (mask.get("nucleotide_identity_persisted") is not False
             or mask.get("genetic_distances_opened") is not False
             or mask.get("empirical_beta_host_opened") is not False
