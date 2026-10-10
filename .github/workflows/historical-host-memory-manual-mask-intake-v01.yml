@@ -1,0 +1,179 @@
+name: Historical host-memory confirmatory MASK-ONLY intake (manual exact source)
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_artifact_id:
+        description: "GitHub Actions artifact ID containing exactly one original phylogatR ZIP (no rebuilt/recompressed source)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  mask-only-and-survivor-qualification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify mask, source intake, and survivor synthetic operator on fixtures
+        run: |
+          set -euo pipefail
+          python -m pip install -e ".[test]" "scipy>=1.13,<2"
+          python -m pytest -q \
+            tests/test_historical_host_memory_archive_intake.py \
+            tests/test_historical_host_memory_character_masks.py \
+            tests/test_historical_host_memory_survivor_information.py \
+            tests/test_historical_host_memory_survivor_synthetic.py
+
+      - name: Restore exact response-blind frozen locality and edge geography
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p input/geometry
+          echo "92e19da615ffc2003a90569afd4089eb24871f1fc0df69cc3aface4263b96dc4  provenance/data/historical_host_memory_geometry_642_canonical_v01.tar.xz" | sha256sum -c -
+          tar -xJf provenance/data/historical_host_memory_geometry_642_canonical_v01.tar.xz -C input/geometry
+          echo "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9  input/geometry/historical_host_memory_localities_v0.1.csv" | sha256sum -c -
+          echo "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9  input/geometry/historical_host_memory_edges_v0.1.csv" | sha256sum -c -
+          echo "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b  benchmarks/frozen/historical_host_memory_candidate_642_v0.1.csv" | sha256sum -c -
+
+      - name: Restore exact frozen predictor information and 321-species split
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p input/predictors
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/11559015421/zip" > /tmp/frozen_predictors.zip
+          unzip -q /tmp/frozen_predictors.zip -d input/predictors
+          rm -f /tmp/frozen_predictors.zip
+          echo "70b748d588d9ab10309ace080f85b8053c6e14aa96d7a84288724c1000272a5b  input/predictors/edge_predictors_v0.1.csv" | sha256sum -c -
+          echo "4168e7572d3378e7f1595ae562d53c81bb2ef165cbe50eb2ed8ec4e7406fc6ae  input/predictors/response_blind_panel_roles_v0.1.csv" | sha256sum -c -
+          echo "bee840bf6ae207cab5aef8da4154eae7743f5ec3bbbaf23d7fe5a3dedc50a3e6  input/predictors/species_diagnostics_v0.1.csv" | sha256sum -c -
+
+      - name: Restore authoritative frozen synthetic PASS before character masks
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p input/synthetic
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/11672710505/zip" > /tmp/synthetic.zip
+          unzip -q /tmp/synthetic.zip -d input/synthetic
+          rm -f /tmp/synthetic.zip
+          echo "0498f71d636274a7f2e654f42591545cf26cbd0b97e603902377ea2ef702495e  input/synthetic/synthetic_qualification_v0.1.json" | sha256sum -c -
+          python - <<'PY'
+          import json
+          p=json.load(open("input/synthetic/synthetic_qualification_v0.1.json"))
+          assert p["calibration"]["decision"]=="PASS_TO_CONFIRMATORY_CHARACTER_MASK_ONLY"
+          assert p["nucleotide_identity_opened"] is False
+          PY
+
+      - name: Verify and unpack the one original exact-source archive (never use substitute bytes)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_ARTIFACT: ${{ inputs.source_artifact_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_ARTIFACT" =~ ^[0-9]+$ ]] || { echo "Source artifact ID must be digits"; exit 1; }
+          mkdir -p input/source-artifact input/raw
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$SOURCE_ARTIFACT/zip" > /tmp/source_transport.zip
+          unzip -q /tmp/source_transport.zip -d input/source-artifact
+          mapfile -t ARCHIVES < <(find input/source-artifact -type f -name '*.zip' -print)
+          test "${#ARCHIVES[@]}" -eq 1 || { echo "Expected one untouched phylogatR ZIP"; exit 1; }
+          cp "${ARCHIVES[0]}" /tmp/exact_phylogatr_source.zip
+          python scripts/verify_and_extract_historical_host_mask_source.py \
+            --source-archive /tmp/exact_phylogatr_source.zip \
+            --output-dir input/raw \
+            --root-receipt input/raw_root_receipt.json
+          echo "Exact original phylogatR raw archive verified for mask-only access"
+
+      - name: Compute canonical character validity only for frozen confirmatory 321 species
+        shell: bash
+        run: |
+          set -euo pipefail
+          RAW_ROOT=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("input/raw_root_receipt.json").read_text())
+          assert p["status"]=="PASS_EXACT_ARCHIVE_ROOT_FOR_MASK_ONLY"
+          print(str(Path("input/raw")/p["relative_root"]))
+          PY
+          )
+          mkdir -p results/mask
+          python scripts/freeze_historical_host_memory_character_masks.py \
+            --source-archive /tmp/exact_phylogatr_source.zip \
+            --extracted-root "$RAW_ROOT" \
+            --candidates benchmarks/frozen/historical_host_memory_candidate_642_v0.1.csv \
+            --roles input/predictors/response_blind_panel_roles_v0.1.csv \
+            --localities input/geometry/historical_host_memory_localities_v0.1.csv \
+            --edges input/geometry/historical_host_memory_edges_v0.1.csv \
+            --synthetic-receipt input/synthetic/synthetic_qualification_v0.1.json \
+            --rule docs/supporting/historical_host_memory_character_mask_rule_v0.1.json \
+            --output results/mask/confirmatory_masks_v0.1.json
+          rm -rf input/raw /tmp/exact_phylogatr_source.zip /tmp/source_transport.zip input/source-artifact
+
+      - name: Requalify exact surviving predictor information without modifying any species
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results/survivors
+          python scripts/qualify_historical_host_memory_survivor_information.py \
+            --mask-result results/mask/confirmatory_masks_v0.1.json \
+            --roles input/predictors/response_blind_panel_roles_v0.1.csv \
+            --diagnostics input/predictors/species_diagnostics_v0.1.csv \
+            --predictors input/predictors/edge_predictors_v0.1.csv \
+            --qualification-rule docs/supporting/historical_host_memory_qualification_rule_v0.2.json \
+            --output-summary results/survivors/information_v0.1.json \
+            --output-survivor-predictors results/survivors/survivor_edges_v0.1.csv \
+            --output-survivor-roles results/survivors/survivor_roles_v0.1.csv
+
+      - name: Run independent frozen survivor-only synthetic worlds if admissible
+        shell: bash
+        run: |
+          set -euo pipefail
+          decision=$(python - <<'PY'
+          import json
+          print(json.load(open("results/survivors/information_v0.1.json"))["decision"])
+          PY
+          )
+          if [[ "$decision" != "PASS_TO_EXACT_SURVIVOR_SYNTHETIC_REQUALIFICATION" ]]; then
+            echo "Frozen mask/survivor decision is $decision: stop without retuning or opening identity"
+            exit 0
+          fi
+          python -u scripts/qualify_historical_host_memory_survivor_synthetic.py \
+            --localities input/geometry/historical_host_memory_localities_v0.1.csv \
+            --edges input/geometry/historical_host_memory_edges_v0.1.csv \
+            --original-roles input/predictors/response_blind_panel_roles_v0.1.csv \
+            --original-predictors input/predictors/edge_predictors_v0.1.csv \
+            --mask-receipt results/mask/confirmatory_masks_v0.1.json \
+            --survivor-summary results/survivors/information_v0.1.json \
+            --survivor-roles results/survivors/survivor_roles_v0.1.csv \
+            --survivor-predictors results/survivors/survivor_edges_v0.1.csv \
+            --qualification-rule docs/supporting/historical_host_memory_qualification_rule_v0.2.json \
+            --original-world docs/supporting/historical_host_memory_synthetic_world_contract_v0.1.json \
+            --survivor-world docs/supporting/historical_host_memory_survivor_synthetic_contract_v0.1.json \
+            --output results/survivors/survivor_synthetic_v0.1.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: historical-host-memory-mask-and-survivor-requalification-v0.1
+          path: |
+            results/mask/confirmatory_masks_v0.1.json
+            results/survivors/information_v0.1.json
+            results/survivors/survivor_synthetic_v0.1.json
+            results/survivors/survivor_edges_v0.1.csv
+            results/survivors/survivor_roles_v0.1.csv
+            input/raw_root_receipt.json
+          retention-days: 30
+          if-no-files-found: warn
