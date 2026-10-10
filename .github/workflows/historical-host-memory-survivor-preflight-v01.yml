@@ -8,6 +8,9 @@ on:
       - ".github/workflows/historical-host-memory-survivor-preflight-v01.yml"
       - "scripts/qualify_historical_host_memory_survivor_synthetic.py"
       - "tests/test_historical_host_memory_survivor_synthetic.py"
+      - "scripts/verify_and_extract_historical_host_mask_source.py"
+      - "tests/test_historical_host_memory_archive_intake.py"
+      - ".github/workflows/historical-host-memory-manual-mask-intake-v01.yml"
       - "docs/supporting/historical_host_memory_survivor_synthetic_contract_v0.1.json"
   workflow_dispatch:
 
@@ -35,7 +38,8 @@ jobs:
             tests/test_historical_host_memory_synthetic.py \
             tests/test_historical_host_memory_survivor_synthetic.py \
             tests/test_historical_host_memory_survivor_information.py \
-            tests/test_historical_host_memory_character_masks.py
+            tests/test_historical_host_memory_character_masks.py \
+            tests/test_historical_host_memory_archive_intake.py
       - name: Confirm this is not an empirical genetic opening
         run: |
           python - <<'PY'
