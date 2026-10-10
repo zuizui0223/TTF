@@ -1,0 +1,55 @@
+{
+  "schema": "ttf_historical_host_memory_survivor_synthetic_requalification_contract_v0.1",
+  "status": "FROZEN_BEFORE_ANY_REAL_CONFIRMATORY_MASK_RESULT",
+  "frozen_on": "2026-10-10",
+  "authority": "Operational implementation of existing frozen post_mask_requalification, not a new hypothesis or an additional confirmatory test.",
+  "parent_rule": "docs/supporting/historical_host_memory_qualification_rule_v0.2.json",
+  "parent_world": "docs/supporting/historical_host_memory_synthetic_world_contract_v0.1.json",
+  "pre_mask_result": "benchmarks/frozen/historical_host_memory_synthetic_qualification_result_v0.1.json",
+  "unmodified_science": {
+    "effect_floor_mean_standardized_beta_host": 0.1,
+    "effect_between_species_sd": 0.1,
+    "world_family": "Identical private-field/IBD/self-history/current-host/edge-noise mechanisms, coefficients, estimator, Monte Carlo p-values and Wilson gates as pre-mask v0.1; only exact surviving species and independent seed namespace change.",
+    "null_reference_worlds": 1999,
+    "independent_null_evaluation_worlds": 500,
+    "positive_worlds": 500,
+    "alpha": 0.05,
+    "maximum_type1_wilson_95_upper": 0.1,
+    "minimum_power_wilson_95_lower": 0.8
+  },
+  "identity": {
+    "original_predictor_sha256": "70b748d588d9ab10309ace080f85b8053c6e14aa96d7a84288724c1000272a5b",
+    "original_roles_sha256": "4168e7572d3378e7f1595ae562d53c81bb2ef165cbe50eb2ed8ec4e7406fc6ae",
+    "exact_localities_sha256": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "exact_edges_sha256": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+    "confirmatory_pre_mask_species": 321,
+    "minimum_mask_survivors": 200,
+    "forbid_graph_rewiring": true,
+    "forbid_resplitting": true,
+    "forbid_backfill": true
+  },
+  "randomization": {
+    "independent_seed_namespace": "historical-host-memory-survivor-v0.1",
+    "key": "SHA256('<seed namespace>|<world-group>|<original phylogatR source SHA256>|<species>') first 16 hex digits as integer",
+    "spatial_basis_key": "SHA256('<seed namespace>|spatial-basis|<original phylogatR source SHA256>|<species>') first 16 hex digits as integer",
+    "world_draw_block_size": 64,
+    "fixed_world_group_labels": [
+      "reference",
+      "evaluation",
+      "positive"
+    ],
+    "disjoint_from_pre_mask_seed_namespaces": true
+  },
+  "decision": {
+    "pass": "PASS_TO_SEPARATE_CONFIRMATORY_IDENTITY_AUTHORIZATION_REVIEW",
+    "fail": "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_SURVIVOR_SYNTHETIC_QUALIFICATION",
+    "no_authorization_to_read_nucleotide_identity_from_this_result_alone": true,
+    "persist_only_aggregate_statistics_and_exact_input_provenance": true
+  },
+  "firewall": {
+    "confirmation_mask_not_yet_opened": true,
+    "nucleotide_identity_not_opened": true,
+    "genetic_distances_not_opened": true,
+    "empirical_host_effect_not_opened": true
+  }
+}
