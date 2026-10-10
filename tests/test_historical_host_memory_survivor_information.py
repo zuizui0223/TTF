@@ -1,6 +1,6 @@
 import pytest
 
-from scripts.qualify_historical_host_memory_survivor_information import qualify_survivors
+from scripts.qualify_historical_host_memory_survivor_information import qualify_survivors, EXPECTED_MASK_BINDINGS
 
 
 def fixture(n_survivors=250, unique=0.25):
@@ -20,6 +20,7 @@ def fixture(n_survivors=250, unique=0.25):
                     if n_survivors>=200 else
                     "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_CHARACTER_SUPPORT"),
           "source_archive_sha256":"5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5",
+          "source_bindings":{**EXPECTED_MASK_BINDINGS,"mask_rule_sha256":"0"*64},
           "confirmatory_before_mask":321,
           "survivor_names":confirm[:n_survivors],
           "surviving_species":n_survivors,
@@ -79,3 +80,14 @@ def test_mask_status_must_match_exact_survivor_count():
     mask["status"] = "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_CHARACTER_SUPPORT"
     with pytest.raises(RuntimeError, match="mask decision/count mismatch"):
         qualify_survivors(mask, roles, diagnostics, rule)
+
+
+def test_exact_mask_provenance_cannot_be_substituted():
+    mask, roles, diagnostic, rule = fixture()
+    mask["source_bindings"]["panel_roles_sha256"] = "0" * 64
+    with pytest.raises(RuntimeError, match="provenance bindings"):
+        qualify_survivors(mask, roles, diagnostic, rule)
+    mask, roles, diagnostic, rule = fixture()
+    del mask["source_bindings"]["mask_rule_git_blob_sha1"]
+    with pytest.raises(RuntimeError, match="provenance bindings"):
+        qualify_survivors(mask, roles, diagnostic, rule)
