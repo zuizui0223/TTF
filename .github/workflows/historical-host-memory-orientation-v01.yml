@@ -1,0 +1,56 @@
+name: Historical host-memory response-blind ecological orientation audit
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-memory-v0-1
+    paths:
+      - ".github/workflows/historical-host-memory-orientation-v01.yml"
+      - "scripts/describe_historical_host_memory_orientation.py"
+      - "tests/test_historical_host_memory_orientation.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  predictor-orientation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test source-bound descriptive orientation rules
+        run: |
+          set -euo pipefail
+          python -m pip install -e ".[test]"
+          python -m pytest -q tests/test_historical_host_memory_orientation.py
+      - name: Restore original frozen predictor and split (no genetic outcome)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/11559015421/zip" > /tmp/orientation.zip
+          unzip -q /tmp/orientation.zip -d input
+          rm -f /tmp/orientation.zip
+          echo "70b748d588d9ab10309ace080f85b8053c6e14aa96d7a84288724c1000272a5b  input/edge_predictors_v0.1.csv" | sha256sum -c -
+          echo "4168e7572d3378e7f1595ae562d53c81bb2ef165cbe50eb2ed8ec4e7406fc6ae  input/response_blind_panel_roles_v0.1.csv" | sha256sum -c -
+      - name: Describe LGM vs current source-locked ecological opportunity only
+        run: |
+          python scripts/describe_historical_host_memory_orientation.py \
+            --edge-predictors input/edge_predictors_v0.1.csv \
+            --roles input/response_blind_panel_roles_v0.1.csv \
+            --output results/historical_host_memory_orientation_v0.1.json
+          cat results/historical_host_memory_orientation_v0.1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: historical-host-memory-orientation-v0.1
+          path: results/historical_host_memory_orientation_v0.1.json
+          retention-days: 30
+          if-no-files-found: error
