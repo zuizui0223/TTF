@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 
 from scripts.freeze_historical_host_memory_character_masks import (
+    git_blob_sha1, mask_source_bindings, MASK_RULE_BLOB_SHA1,
     read_frozen_geo, safe_raw_path, score_species
 )
 
@@ -74,3 +75,14 @@ def test_unfrozen_geo_structure_is_rejected(tmp_path):
         score_species(row,tmp_path,{2:(0.,1.),3:(2.,3.)},edges)
     with pytest.raises(RuntimeError,match="graph geometry changed"):
         score_species(row,tmp_path,ll,{0:(0,1)})
+
+
+def test_mask_rule_bytes_and_provenance_bound_before_identity_opening():
+    rule=Path(__file__).resolve().parents[1] / "docs/supporting/historical_host_memory_character_mask_rule_v0.1.json"
+    assert git_blob_sha1(rule)==MASK_RULE_BLOB_SHA1
+    import hashlib
+    expected=hashlib.sha256(rule.read_bytes()).hexdigest()
+    bindings=mask_source_bindings(expected)
+    assert bindings["mask_rule_sha256"]==expected
+    assert bindings["mask_rule_git_blob_sha1"]==MASK_RULE_BLOB_SHA1
+    assert bindings["synthetic_pass_receipt_sha256"]=="0498f71d636274a7f2e654f42591545cf26cbd0b97e603902377ea2ef702495e"
