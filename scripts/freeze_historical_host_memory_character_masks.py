@@ -42,7 +42,7 @@ def sha256(path: Path) -> str:
 def git_blob_sha1(path: Path) -> str:
     """Pin even the mask-only rule bytes, not merely its JSON schema name."""
     raw = path.read_bytes()
-    return hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\\0" + raw).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + bytes([0]) + raw).hexdigest()
 
 
 def mask_source_bindings(mask_rule_sha256: str) -> dict[str, str]:
