@@ -1,0 +1,54 @@
+{
+  "schema": "ttf_historical_host_memory_synthetic_world_contract_v0.1",
+  "status": "DESIGN_FROZEN_BEFORE_ANY_SYNTHETIC_QUALIFICATION_OUTCOME",
+  "recorded_on": "2026-10-10",
+  "parent_qualification_rule": "docs/supporting/historical_host_memory_qualification_rule_v0.2.json",
+  "parent_scientific_scope": "No genetic character masks, nucleotide identity, genetic distance, post-IBD turnover or empirical beta_host opened. Historical host predictor information was exposed on 2026-10-08; this is an explicit pre-genetic methodological completion, not a pre-predictor preregistration.",
+  "inputs": {
+    "panel": "confirmatory-only 321 species from exact deterministic prior assignment; development genetic response permanently closed",
+    "edges": "exact 71,520 rows of frozen 641-species predictor CSV, subset to confirmatory species",
+    "graph": "exact 642-species locality + edge geometry from SHA256-bound archive, with 1 candidate ineligible",
+    "predictor_sha256": "70b748d588d9ab10309ace080f85b8053c6e14aa96d7a84288724c1000272a5b",
+    "roles_sha256": "4168e7572d3378e7f1595ae562d53c81bb2ef165cbe50eb2ed8ec4e7406fc6ae",
+    "localities_sha256": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "edges_sha256": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+    "frozen_qualification_rule_sha256": "2ec2594510021da653598e22a3d0f4b9e4cb226398aadbf342967ee532909415"
+  },
+  "null_reference_worlds": 1999,
+  "null_evaluation_worlds": 500,
+  "positive_worlds": 500,
+  "alpha": 0.05,
+  "randomization": {
+    "rng": "numpy default_rng (PCG64); SHA256(namespace|exact source SHA256|world class|species) truncated to first 16 hex digits as integer",
+    "reference": "hhm-synthetic-null-reference-v0.1",
+    "evaluation": "hhm-synthetic-null-evaluation-v0.1",
+    "positive": "hhm-synthetic-positive-v0.1",
+    "spatial_basis": "8 independent 3D Gaussian random-frequency vectors, each coordinate N(0,1)/200 km, held fixed for a species, sin/cos features (16); independent Gaussian coefficients in each world",
+    "worlds_independent": true
+  },
+  "response_world": {
+    "genetic_response_observed": false,
+    "edge_ibd": "0.60 times z(log1p(chord endpoint distance in km))",
+    "host_beta_null": "independent species effect N(0,0.10^2) per synthetic world",
+    "host_beta_positive": "independent species effect N(0.10,0.10^2) per synthetic world",
+    "self_history_nuisance": "0.22 times z(M_self) per edge",
+    "current_host_nuisance": "-0.18 times z(D_host_0BP) per edge",
+    "lineage_private_spatial": "0.45 times z(abs(U(node_left)-U(node_right))) per edge, where U comes from frozen species-private random Fourier basis in 3D km",
+    "iid_edge_noise": "0.65 times independent standard normal per edge",
+    "no_response_dependent_parameter_fitting": true,
+    "endpoint_safe_ibd": "For each held-out graph edge, fit raw response versus log1p(chord-distance) on edges touching neither held-out endpoint (exact leave-two-localities-out); subtract held-out linear prediction. Minimum 5 disjoint edges; singular design is a fail-closed synthetic geometry violation.",
+    "final_estimator": "Per species z(post-IBD residual) ~ z(M_host)+z(M_self)+z(D_host_0BP); ordinary least squares standardized host beta, then studentized equal-species mean across confirmatory species",
+    "null_reference_p": "(1+sum(null_reference_studentized_stat >= observed_stat)) / (1+1999)",
+    "calibration": "Use one fixed independent 1999-world reference for evaluation and positive decisions; no leave-one-in-reference"
+  },
+  "gates": {
+    "type1": "Wilson 95% upper bound for null-evaluation p<=0.05 rate <=0.10",
+    "positive_power": "Wilson 95% lower bound for positive-world p<=0.05 rate >=0.80",
+    "all_finite": true,
+    "confirmatory_species": 321,
+    "fail_state": "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_SYNTHETIC_QUALIFICATION",
+    "pass_state": "PASS_TO_CONFIRMATORY_CHARACTER_MASK_ONLY",
+    "forbidden": "No alterations after any synthetic world is inspected; no adaptive effect strength, nuisance, panel, seed, or estimator changes to rescue a failure"
+  },
+  "caution": "This synthetic family evaluates the declared conditional model's behavior, not the truth of the ecological mechanism or ancient insect-host occurrence."
+}
