@@ -8,6 +8,8 @@ on:
       - ".github/workflows/historical-host-memory-survivor-preflight-v01.yml"
       - "scripts/qualify_historical_host_memory_survivor_synthetic.py"
       - "tests/test_historical_host_memory_survivor_synthetic.py"
+      - "scripts/qualify_historical_host_memory_survivor_information.py"
+      - "tests/test_historical_host_memory_survivor_information.py"
       - "scripts/verify_and_extract_historical_host_mask_source.py"
       - "tests/test_historical_host_memory_archive_intake.py"
       - ".github/workflows/historical-host-memory-manual-mask-intake-v01.yml"
