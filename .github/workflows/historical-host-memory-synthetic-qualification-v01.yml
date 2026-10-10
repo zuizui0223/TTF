@@ -1,0 +1,87 @@
+name: Historical host-memory frozen synthetic Type-I and power qualification
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-memory-v0-1
+    paths:
+      - ".github/workflows/historical-host-memory-synthetic-qualification-v01.yml"
+      - "scripts/qualify_historical_host_memory_synthetic.py"
+      - "tests/test_historical_host_memory_synthetic.py"
+      - "docs/supporting/historical_host_memory_synthetic_world_contract_v0.1.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  exact-private-worlds:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install and verify exact synthetic operator
+        run: |
+          set -euo pipefail
+          python -m pip install -e ".[test]" "scipy>=1.13,<2"
+          python -m pytest -q tests/test_historical_host_memory_synthetic.py
+      - name: Restore only the frozen response-blind geometry
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p input/geometry
+          echo "92e19da615ffc2003a90569afd4089eb24871f1fc0df69cc3aface4263b96dc4  provenance/data/historical_host_memory_geometry_642_canonical_v01.tar.xz" | sha256sum -c -
+          tar -xJf provenance/data/historical_host_memory_geometry_642_canonical_v01.tar.xz -C input/geometry
+          echo "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9  input/geometry/historical_host_memory_localities_v0.1.csv" | sha256sum -c -
+          echo "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9  input/geometry/historical_host_memory_edges_v0.1.csv" | sha256sum -c -
+      - name: Restore exact previously qualified predictor without re-fitting
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p input/predictors
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/11559015421/zip" > /tmp/exact_predictors.zip
+          unzip -q /tmp/exact_predictors.zip -d input/predictors
+          rm -f /tmp/exact_predictors.zip
+          echo "70b748d588d9ab10309ace080f85b8053c6e14aa96d7a84288724c1000272a5b  input/predictors/edge_predictors_v0.1.csv" | sha256sum -c -
+          echo "4168e7572d3378e7f1595ae562d53c81bb2ef165cbe50eb2ed8ec4e7406fc6ae  input/predictors/response_blind_panel_roles_v0.1.csv" | sha256sum -c -
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          q=json.loads(Path("input/predictors/information_qualification_v0.2.json").read_text())
+          assert q["decision"]=="PASS_TO_SYNTHETIC_QUALIFICATION"
+          assert q["complete_species"]==641
+          assert q["split_counts"]=={"development":320,"confirmatory":321}
+          assert q["genetic_response_opened"] is False
+          assert q["synthetic_type1_power_qualified"] is False
+          PY
+      - name: Run all predeclared independent null and positive worlds
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results/historical_host_memory_synthetic
+          python -u scripts/qualify_historical_host_memory_synthetic.py \
+            --edges input/geometry/historical_host_memory_edges_v0.1.csv \
+            --localities input/geometry/historical_host_memory_localities_v0.1.csv \
+            --predictors input/predictors/edge_predictors_v0.1.csv \
+            --roles input/predictors/response_blind_panel_roles_v0.1.csv \
+            --qualification-rule docs/supporting/historical_host_memory_qualification_rule_v0.2.json \
+            --world-contract docs/supporting/historical_host_memory_synthetic_world_contract_v0.1.json \
+            --output results/historical_host_memory_synthetic/synthetic_qualification_v0.1.json
+          cat results/historical_host_memory_synthetic/synthetic_qualification_v0.1.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: historical-host-memory-synthetic-qualification-v0.1
+          path: results/historical_host_memory_synthetic/
+          retention-days: 30
+          if-no-files-found: warn
