@@ -24,7 +24,12 @@
     "evaluation": "hhm-synthetic-null-evaluation-v0.1",
     "positive": "hhm-synthetic-positive-v0.1",
     "spatial_basis": "8 independent 3D Gaussian random-frequency vectors, each coordinate N(0,1)/200 km, held fixed for a species, sin/cos features (16); independent Gaussian coefficients in each world",
-    "worlds_independent": true
+    "worlds_independent": true,
+    "spatial_basis_seed_namespace": "hhm-synthetic-spatial-basis-v0.1",
+    "world_block_size": 64,
+    "spatial_basis_features": 16,
+    "spatial_frequency_scale_km": 200,
+    "noise_coefficients_and_seed_order": "For each species and class, draw in blocks of world-index order: species effects (B), Fourier field coefficients (16 by B), and edge iid residuals (edge count by B); the fixed basis is generated once for each species with a separate seed."
   },
   "response_world": {
     "genetic_response_observed": false,
