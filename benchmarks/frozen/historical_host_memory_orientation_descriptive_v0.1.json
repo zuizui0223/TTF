@@ -17,7 +17,7 @@
       "species_mean_host_memory_positive": 318
     },
     "development": {
-      "median_fraction_positive_edges_per_species": 1,
+      "median_fraction_positive_edges_per_species": 1.0,
       "median_species_mean_M_host": 0.376923554172013,
       "median_within_species_correlation_M_host_M_self": 0.8394284402710532,
       "species": 320,
