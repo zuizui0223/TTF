@@ -8,6 +8,8 @@ on:
       - ".github/workflows/historical-host-memory-mask-readiness-v01.yml"
       - "scripts/freeze_historical_host_memory_character_masks.py"
       - "tests/test_historical_host_memory_character_masks.py"
+      - "scripts/qualify_historical_host_memory_survivor_information.py"
+      - "tests/test_historical_host_memory_survivor_information.py"
       - "docs/supporting/historical_host_memory_character_mask_rule_v0.1.json"
   workflow_dispatch:
 
@@ -26,7 +28,7 @@ jobs:
       - name: Test canonical-mask-only operator against synthetic FASTA fixtures
         run: |
           python -m pip install -e ".[test]"
-          python -m pytest -q tests/test_historical_host_memory_character_masks.py
+          python -m pytest -q tests/test_historical_host_memory_character_masks.py tests/test_historical_host_memory_survivor_information.py
       - name: Audit authorized mask domain without reading sequence characters
         shell: bash
         run: |
