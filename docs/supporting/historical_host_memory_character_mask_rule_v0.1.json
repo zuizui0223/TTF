@@ -1,0 +1,54 @@
+{
+  "schema": "ttf_historical_host_memory_character_mask_rule_v0.1",
+  "status": "FROZEN_AFTER_SYNTHETIC_PASS_BEFORE_ANY_CONFIRMATORY_CHARACTER_MASK_OPENING",
+  "frozen_on": "2026-10-10",
+  "panel_source": "benchmarks/frozen/historical_host_memory_candidate_642_v0.1.csv",
+  "exact_candidate_sha256": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+  "exact_assignments_sha256": "4168e7572d3378e7f1595ae562d53c81bb2ef165cbe50eb2ed8ec4e7406fc6ae",
+  "exact_localities_sha256": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+  "exact_edges_sha256": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+  "source_archive": {
+    "required_exact_zip_size_bytes": 274988692,
+    "required_exact_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5",
+    "file_path": "user-provided exact authenticated phylogatR archive; not currently available in accessible Library files"
+  },
+  "synthetic_authorization": {
+    "frozen_receipt": "benchmarks/frozen/historical_host_memory_synthetic_qualification_result_v0.1.json",
+    "exact_result_sha256": "0498f71d636274a7f2e654f42591545cf26cbd0b97e603902377ea2ef702495e",
+    "permitted_next_step": "open canonical/noncanonical boolean masks of 321 confirmatory species only",
+    "genetic_sequence_identity_authorized": false
+  },
+  "mask_parser": "reuse ttf.phylogatr_character_mask.read_canonical_mask_alignment + masks_by_frozen_locality + edge_mask_support",
+  "expected_species": 321,
+  "minimum_fraction_comparable": 0.5,
+  "minimum_comparable_columns": "ceil(0.5 * alignment length)",
+  "pass_species": "all original frozen graph edges each have >=1 cross-locality pair with jointly canonical mask >=threshold",
+  "fail_species": "drop entire species with no backfill, no graph repair, no marker switching, no role reassignment",
+  "other_cases": [
+    "duplicate FASTA aligned header fails species",
+    "zero/unequal lengths fail species",
+    "unmatched or external locality fails closed",
+    "missing raw FASTA/occurrence files fail entire source intake"
+  ],
+  "minimum_confirmatory_survivors": 200,
+  "post_mask": {
+    "require_exact_survivor_information_qualification": true,
+    "require_exact_survivor_synthetic_requalification": true,
+    "survivor_seed_namespace": "historical-host-memory-survivor-v0.1",
+    "do_not_reuse_pre_mask_power_as_survivor_power": true,
+    "future_nucleotide_identity_opening_requires_independent_explicit_authorization": true
+  },
+  "forbidden": [
+    "persist canonical nucleotide identities",
+    "compute genetic distances",
+    "compute post-IBD empirical turnover",
+    "estimate historical beta_host",
+    "alter frozen threshold or host predictor",
+    "reintroduce excluded Polyommatus coridon"
+  ],
+  "firewall": {
+    "development_genetic_response_opened": false,
+    "confirmatory_nucleotide_identity_opened": false,
+    "empirical_beta_host_opened": false
+  }
+}
