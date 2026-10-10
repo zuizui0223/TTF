@@ -5,6 +5,8 @@ import numpy as np
 import pytest
 
 from scripts.qualify_historical_host_memory_synthetic import prepare_species
+from scripts.qualify_historical_host_memory_survivor_information import EXPECTED_MASK_BINDINGS
+
 from scripts.qualify_historical_host_memory_survivor_synthetic import (
     GROUPS, survivor_beta_worlds, survivor_seed, validate_source_set,
 )
@@ -60,6 +62,7 @@ def make_roles(n=231):
     # Fixture must preserve the frozen original role set independently of a mutated survivor input.
     survivors=[dict(r) for r in original[:n]]
     mask={"schema":"ttf_historical_host_memory_confirmatory_mask_result_v0.1",
+          "source_bindings":{**EXPECTED_MASK_BINDINGS,"mask_rule_sha256":"0"*64},
           "status":("PASS_TO_EXACT_SURVIVOR_INFORMATION_AND_SYNTHETIC_REQUALIFICATION"
                     if n>=200 else "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_CHARACTER_SUPPORT"),
           "survivor_names":[r["species"] for r in survivors]}
@@ -105,3 +108,10 @@ def test_survivor_below_floor_and_unqualified_information_stop():
     summary["decision"]="NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_SURVIVOR_INFORMATION"
     with pytest.raises(RuntimeError,match="did not qualify"):
         validate_source_set(summary,roles,pred,orig,mask)
+
+
+def test_survivor_simulation_rejects_forged_mask_provenance():
+    summary, roles, predictors, original, mask = make_roles()
+    mask["source_bindings"]["edge_geometry_sha256"] = "f" * 64
+    with pytest.raises(RuntimeError, match="provenance binding mismatch"):
+        validate_source_set(summary, roles, predictors, original, mask)
