@@ -1,0 +1,39 @@
+{
+  "data": {
+    "all": {
+      "median_fraction_positive_edges_per_species": 0.9832635983263598,
+      "median_species_mean_M_host": 0.36239054690999023,
+      "median_within_species_correlation_M_host_M_self": 0.8440034891305721,
+      "species": 641,
+      "species_mean_host_memory_negative": 8,
+      "species_mean_host_memory_positive": 633
+    },
+    "confirmatory": {
+      "median_fraction_positive_edges_per_species": 0.9743589743589743,
+      "median_species_mean_M_host": 0.3558020597548722,
+      "median_within_species_correlation_M_host_M_self": 0.845209590873839,
+      "species": 321,
+      "species_mean_host_memory_negative": 3,
+      "species_mean_host_memory_positive": 318
+    },
+    "development": {
+      "median_fraction_positive_edges_per_species": 1,
+      "median_species_mean_M_host": 0.376923554172013,
+      "median_within_species_correlation_M_host_M_self": 0.8394284402710532,
+      "species": 320,
+      "species_mean_host_memory_negative": 5,
+      "species_mean_host_memory_positive": 315
+    }
+  },
+  "genetic_response_opened": false,
+  "n_genetic_edges": 71520,
+  "no_change_to_frozen_hypothesis": true,
+  "schema": "ttf_historical_host_memory_response_blind_orientation_v0.1",
+  "scope_note": "Within-species correlation here is ecological predictor co-alignment only. The median of species correlations is not a partial regression beta and is not evidence of genetic memory.",
+  "semantic_note": "Positive M_host means LGM geography is less climatically compatible with the *present* host-resource climate cloud than 0-BP geography. This does not prove ancient occupancy or host use.",
+  "source_sha256": {
+    "edge_predictors": "70b748d588d9ab10309ace080f85b8053c6e14aa96d7a84288724c1000272a5b",
+    "roles": "4168e7572d3378e7f1595ae562d53c81bb2ef165cbe50eb2ed8ec4e7406fc6ae"
+  },
+  "status": "EXPLORATORY_DESCRIPTIVE_PREDICTOR_ONLY"
+}
