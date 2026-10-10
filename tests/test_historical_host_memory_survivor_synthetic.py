@@ -95,6 +95,10 @@ def test_survivor_resplitting_or_species_backfill_fails_closed():
 
 def test_survivor_below_floor_and_unqualified_information_stop():
     summary,roles,pred,orig,mask=make_roles(199)
+    with pytest.raises(RuntimeError,match="character-mask decision is not PASS"):
+        validate_source_set(summary,roles,pred,orig,mask)
+    # Even a forged PASS status cannot bypass the predeclared 200-species floor.
+    mask["status"]="PASS_TO_EXACT_SURVIVOR_INFORMATION_AND_SYNTHETIC_REQUALIFICATION"
     with pytest.raises(RuntimeError,match="200-species"):
         validate_source_set(summary,roles,pred,orig,mask)
     summary,roles,pred,orig,mask=make_roles()
