@@ -49,6 +49,13 @@ def qualify_survivors(mask: dict, role: list[dict], diagnostic: list[dict], rule
     if (kept!={r["species"] for r in ledger if r["survives"]}
             or len(kept)!=int(mask.get("surviving_species",-1))):
         raise RuntimeError("mask survivor identities/counts inconsistent")
+    expected_mask_state = (
+        "PASS_TO_EXACT_SURVIVOR_INFORMATION_AND_SYNTHETIC_REQUALIFICATION"
+        if len(kept) >= 200 else
+        "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_CHARACTER_SUPPORT"
+    )
+    if mask.get("status") != expected_mask_state:
+        raise RuntimeError("frozen mask decision/count mismatch")
     for r in ledger:
         if r["status"] != ("PASS_MASK" if r["survives"] else "NOT_EVALUABLE_CHARACTER_SUPPORT"):
             raise RuntimeError("illegal masked species survival state")
