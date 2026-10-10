@@ -60,6 +60,8 @@ def make_roles(n=231):
     # Fixture must preserve the frozen original role set independently of a mutated survivor input.
     survivors=[dict(r) for r in original[:n]]
     mask={"schema":"ttf_historical_host_memory_confirmatory_mask_result_v0.1",
+          "status":("PASS_TO_EXACT_SURVIVOR_INFORMATION_AND_SYNTHETIC_REQUALIFICATION"
+                    if n>=200 else "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_CHARACTER_SUPPORT"),
           "survivor_names":[r["species"] for r in survivors]}
     summary={"schema":"ttf_historical_host_memory_survivor_information_v0.1",
              "decision":"PASS_TO_EXACT_SURVIVOR_SYNTHETIC_REQUALIFICATION",
