@@ -1,0 +1,47 @@
+name: Historical host-memory character-mask readiness (no empirical opening)
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-memory-v0-1
+    paths:
+      - ".github/workflows/historical-host-memory-mask-readiness-v01.yml"
+      - "scripts/freeze_historical_host_memory_character_masks.py"
+      - "tests/test_historical_host_memory_character_masks.py"
+      - "docs/supporting/historical_host_memory_character_mask_rule_v0.1.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mask-readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test canonical-mask-only operator against synthetic FASTA fixtures
+        run: |
+          python -m pip install -e ".[test]"
+          python -m pytest -q tests/test_historical_host_memory_character_masks.py
+      - name: Audit authorized mask domain without reading sequence characters
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          rule=json.loads(Path("docs/supporting/historical_host_memory_character_mask_rule_v0.1.json").read_text())
+          synthetic=json.loads(Path("benchmarks/frozen/historical_host_memory_synthetic_qualification_result_v0.1.json").read_text())
+          assert rule["expected_species"]==321
+          assert rule["minimum_confirmatory_survivors"]==200
+          assert rule["minimum_fraction_comparable"]==0.5
+          assert synthetic["status"]=="PASS_TO_CONFIRMATORY_CHARACTER_MASK_ONLY"
+          assert synthetic["frozen_decision"]["type1_pass"] is True
+          assert synthetic["frozen_decision"]["power_pass"] is True
+          assert synthetic["science_boundary"]["genetic_host_memory_effect_observed"] is False
+          print("PASS_MASK_READINESS_ONLY__SOURCE_ARCHIVE_NOT_ACCESSED")
+          PY
