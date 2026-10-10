@@ -17,10 +17,16 @@ from pathlib import Path
 
 import numpy as np
 
-from scripts.qualify_historical_host_memory_synthetic import (
-    SOURCE_SHA, GEOMETRY_EDGE_SHA, GEOMETRY_LOCAL_SHA, ROLE_SHA,
-    assess, file_sha, load_geometry, prepare_species, statistic, z,
-)
+try:
+    from scripts.qualify_historical_host_memory_synthetic import (
+        SOURCE_SHA, GEOMETRY_EDGE_SHA, GEOMETRY_LOCAL_SHA, ROLE_SHA,
+        assess, endpoint_safe_ibd, file_sha, load_geometry, prepare_species, statistic, z,
+    )
+except ModuleNotFoundError:
+    from qualify_historical_host_memory_synthetic import (
+        SOURCE_SHA, GEOMETRY_EDGE_SHA, GEOMETRY_LOCAL_SHA, ROLE_SHA,
+        assess, endpoint_safe_ibd, file_sha, load_geometry, prepare_species, statistic, z,
+    )
 
 ORIGINAL_PREDICTOR_SHA = "70b748d588d9ab10309ace080f85b8053c6e14aa96d7a84288724c1000272a5b"
 PARENT_WORLD_SHA = "2aa61a0fd3e0fbf9fdf44f1ef7c4cffe4a6137cc91543d9971902d1349ebbf71"
@@ -64,7 +70,6 @@ def survivor_beta_worlds(pre: dict, group: str, worlds: int, block_size: int = 6
             0.45 * private + 0.65 * noise
         )
         # Inherited exact leave-two-locality-out IBD correction.
-        from scripts.qualify_historical_host_memory_synthetic import endpoint_safe_ibd
         post = endpoint_safe_ibd(response, pre)
         sd = post.std(axis=0, ddof=0)
         if np.any(~np.isfinite(sd)) or np.any(sd <= 1e-12):
@@ -147,7 +152,12 @@ def main() -> int:
             or spec["unmodified_science"]["null_reference_worlds"] != 1999
             or spec["unmodified_science"]["independent_null_evaluation_worlds"] != 500
             or spec["unmodified_science"]["positive_worlds"] != 500
-            or spec["unmodified_science"]["alpha"] != frozen["primary_p_value"].count("not-a-value") + 0.05
+            or spec["unmodified_science"]["alpha"] != 0.05
+            or float(spec["unmodified_science"]["maximum_type1_wilson_95_upper"]) != 0.10
+            or float(spec["unmodified_science"]["minimum_power_wilson_95_lower"]) != 0.80
+            or int(frozen["null_reference_worlds"]) != 1999
+            or int(frozen["evaluation_null_worlds"]) != 500
+            or int(frozen["positive_worlds"]) != 500
             or original["response_world"]["iid_edge_noise"] != "0.65 times independent standard normal per edge"):
         raise RuntimeError("frozen simulation parameters drift")
     with a.original_roles.open(newline="", encoding="utf-8") as f:
