@@ -1,5 +1,41 @@
 # Historical-host memory: exact mask-only source handoff (2026-10-10)
 
+## 2026-10-11 response-blind attrition robustness and provenance update
+
+The post-mask information gate was **not weakened or waived**. Instead, a
+separate, source-locked, deterministic extremal audit established that for
+**every possible subset of 200–321** species from the original 321-species
+confirmatory panel, the original information criteria already pass if every
+retained species keeps all its frozen graph edges. At the maximally adverse
+200-species subset, the minimum possible median host-specific unique fraction
+is **0.147075945318** (required >=0.10), the minimum fraction with unique
+fraction >=0.05 is **0.92** (required >=0.70), and the minimum fraction
+satisfying condition number <=30 is **1.00** (required >=0.90).
+
+Reason: only **16/321** original confirmatory species have host-specific
+unique fraction <0.05 and **0/321** fail the condition-number limit. Taking
+the lowest 200 species is the exact worst-case median for a 200-species
+subset. The bounds improve as the subset cardinality increases.
+
+The sharp combinatorial result is fully reproducible using
+`scripts/audit_historical_host_memory_information_attrition_bound.py` and
+`benchmarks/frozen/historical_host_memory_attrition_robustness_result_v0.1.json`.
+CI run [#38062731257](https://github.com/zuizui0223/TTF/actions/runs/38062731257)
+passed five unit tests and the exact frozen input audit.
+
+The canonical-mask source receipt now cryptographically carries forward the
+frozen candidate, original roles, localities, edges, pre-mask synthetic PASS,
+and exact frozen mask-rule Git blob. Both downstream survivor qualification
+scripts reject substituted source bindings (CI mask #38062525294 13 tests;
+survivor #38062510294 29 tests).
+
+**Still unresolved:** at least 200 masks must actually pass, with every
+original edge; the new independent post-mask synthetic test must also PASS.
+This proof certifies **no empirical mask survival rate** and **no empirical
+genetic host-memory effect**. The exact untouched phylogatR archive remains
+absent from accessible connected sources.
+
+
 ## Completed and frozen
 
 The original 642-species historical host-memory predictor has 641 externally complete
