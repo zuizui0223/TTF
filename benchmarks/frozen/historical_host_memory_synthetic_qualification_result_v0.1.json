@@ -1,0 +1,52 @@
+{
+  "schema": "ttf_historical_host_memory_synthetic_frozen_result_v0.1",
+  "status": "PASS_TO_CONFIRMATORY_CHARACTER_MASK_ONLY",
+  "frozen_on": "2026-10-10",
+  "source_run": {
+    "github_run_id": 38058627903,
+    "github_job_id": 114232138370,
+    "workflow": ".github/workflows/historical-host-memory-synthetic-qualification-v01.yml",
+    "artifact_id": 11672710505,
+    "artifact_name": "historical-host-memory-synthetic-qualification-v0.1",
+    "artifact_zip_sha256": "0ce8c4e147a6c4eb27cfebd97facff622f229dc72205d593bb43fb1827ad9776",
+    "exact_inner_receipt_sha256": "0498f71d636274a7f2e654f42591545cf26cbd0b97e603902377ea2ef702495e"
+  },
+  "design": {
+    "source_contract": "docs/supporting/historical_host_memory_synthetic_world_contract_v0.1.json",
+    "source_contract_sha256": "2aa61a0fd3e0fbf9fdf44f1ef7c4cffe4a6137cc91543d9971902d1349ebbf71",
+    "pre_response_contract_commit": "fb6e88e63c5b11210f15d44b5377bc05d957a71f",
+    "predictor_sha256": "70b748d588d9ab10309ace080f85b8053c6e14aa96d7a84288724c1000272a5b",
+    "assignments_sha256": "4168e7572d3378e7f1595ae562d53c81bb2ef165cbe50eb2ed8ec4e7406fc6ae",
+    "confirmatory_species": 321,
+    "reference_worlds": 1999,
+    "null_evaluation_worlds": 500,
+    "positive_worlds": 500
+  },
+  "frozen_decision": {
+    "null_rejections": 26,
+    "null_rejection_rate": 0.052,
+    "null_wilson_95_upper": 0.07510114393784553,
+    "first_type_error_bound": 0.1,
+    "type1_pass": true,
+    "positive_rejections": 500,
+    "positive_power": 1,
+    "positive_wilson_95_lower": 0.9923756595384479,
+    "power_floor": 0.8,
+    "power_pass": true
+  },
+  "science_boundary": {
+    "applicable": "one explicitly parameterized endpoint-safe IBD + private spatial synthetic family at frozen mean standardized host beta 0.10",
+    "genetic_host_memory_effect_observed": false,
+    "confirms_actual_LGM_host_interaction": false,
+    "inferred_causation": false,
+    "authorizes": "character validity mask processing for 321 confirmatory species only; survivor information/synthetic requalification still required",
+    "forbids": [
+      "nucleotide base identities",
+      "pairwise genetic distances",
+      "post-IBD empirical turnover",
+      "beta_host",
+      "post-simulation retuning or different effect floor"
+    ]
+  },
+  "next_blocker": "Obtain exact untouched phylogatR archive 274,988,692 bytes SHA256 5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5; it was not available among accessible Library documents at freeze."
+}
