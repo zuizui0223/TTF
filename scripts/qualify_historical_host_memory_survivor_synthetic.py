@@ -95,6 +95,8 @@ def validate_source_set(
         raise RuntimeError("survivor information response firewall is open")
     if mask.get("schema") != "ttf_historical_host_memory_confirmatory_mask_result_v0.1":
         raise RuntimeError("wrong confirmatory character-mask receipt")
+    if mask.get("status") != "PASS_TO_EXACT_SURVIVOR_INFORMATION_AND_SYNTHETIC_REQUALIFICATION":
+        raise RuntimeError("frozen character-mask decision is not PASS")
     if summary.get("mask_result_sha256") is None:
         raise RuntimeError("mask source not bound")
     allowed = {r["species"] for r in original_roles if r["panel"] == "confirmatory"}
