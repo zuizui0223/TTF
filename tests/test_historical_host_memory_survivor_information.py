@@ -16,6 +16,9 @@ def fixture(n_survivors=250, unique=0.25):
              "valid_edges":10 if i<n_survivors else 9,"frozen_edges":10}
              for i,sp in enumerate(confirm)]
     mask={"schema":"ttf_historical_host_memory_confirmatory_mask_result_v0.1",
+          "status":("PASS_TO_EXACT_SURVIVOR_INFORMATION_AND_SYNTHETIC_REQUALIFICATION"
+                    if n_survivors>=200 else
+                    "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_CHARACTER_SUPPORT"),
           "source_archive_sha256":"5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5",
           "confirmatory_before_mask":321,
           "survivor_names":confirm[:n_survivors],
@@ -69,3 +72,10 @@ def test_reject_stealth_graph_repair_and_rewiring():
     mask["ledger"][0]["invalid_edges"]=1
     with pytest.raises(RuntimeError,match="invalid frozen edge"):
         qualify_survivors(mask,roles,diag,rule)
+
+
+def test_mask_status_must_match_exact_survivor_count():
+    mask, roles, diagnostics, rule = fixture(250)
+    mask["status"] = "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_CHARACTER_SUPPORT"
+    with pytest.raises(RuntimeError, match="mask decision/count mismatch"):
+        qualify_survivors(mask, roles, diagnostics, rule)
