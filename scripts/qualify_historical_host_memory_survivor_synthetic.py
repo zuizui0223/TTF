@@ -95,6 +95,16 @@ def validate_source_set(
         raise RuntimeError("survivor information response firewall is open")
     if mask.get("schema") != "ttf_historical_host_memory_confirmatory_mask_result_v0.1":
         raise RuntimeError("wrong confirmatory character-mask receipt")
+    if (mask.get("source_bindings",{}).get("candidate_table_sha256")
+            != "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b"
+            or mask.get("source_bindings",{}).get("panel_roles_sha256") != ROLE_SHA
+            or mask.get("source_bindings",{}).get("locality_geometry_sha256") != GEOMETRY_LOCAL_SHA
+            or mask.get("source_bindings",{}).get("edge_geometry_sha256") != GEOMETRY_EDGE_SHA
+            or mask.get("source_bindings",{}).get("synthetic_pass_receipt_sha256")
+                != "0498f71d636274a7f2e654f42591545cf26cbd0b97e603902377ea2ef702495e"
+            or mask.get("source_bindings",{}).get("mask_rule_git_blob_sha1")
+                != "1d5bec837157955cd2f989b2dd127d502d57318c"):
+        raise RuntimeError("original mask decision provenance binding mismatch")
     if mask.get("status") != "PASS_TO_EXACT_SURVIVOR_INFORMATION_AND_SYNTHETIC_REQUALIFICATION":
         raise RuntimeError("frozen character-mask decision is not PASS")
     if summary.get("mask_result_sha256") is None:
