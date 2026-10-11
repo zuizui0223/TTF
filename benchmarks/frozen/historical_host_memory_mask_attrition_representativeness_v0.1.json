@@ -1,0 +1,150 @@
+{
+  "confirmatory_species": 321,
+  "failed_species_original_edge_count": 21230,
+  "families_total_original": 38,
+  "families_with_at_least_10_original_species": [
+    {
+      "family": "Noctuidae",
+      "mask_fail_species": 2,
+      "mask_survival_rate": 0.9622641509433962,
+      "mask_survivor_species": 51,
+      "original_species": 53
+    },
+    {
+      "family": "Gracillariidae",
+      "mask_fail_species": 20,
+      "mask_survival_rate": 0.48717948717948717,
+      "mask_survivor_species": 19,
+      "original_species": 39
+    },
+    {
+      "family": "Geometridae",
+      "mask_fail_species": 8,
+      "mask_survival_rate": 0.7777777777777778,
+      "mask_survivor_species": 28,
+      "original_species": 36
+    },
+    {
+      "family": "Tortricidae",
+      "mask_fail_species": 3,
+      "mask_survival_rate": 0.9166666666666666,
+      "mask_survivor_species": 33,
+      "original_species": 36
+    },
+    {
+      "family": "Crambidae",
+      "mask_fail_species": 6,
+      "mask_survival_rate": 0.6842105263157895,
+      "mask_survivor_species": 13,
+      "original_species": 19
+    },
+    {
+      "family": "Gelechiidae",
+      "mask_fail_species": 3,
+      "mask_survival_rate": 0.8421052631578947,
+      "mask_survivor_species": 16,
+      "original_species": 19
+    },
+    {
+      "family": "Nymphalidae",
+      "mask_fail_species": 1,
+      "mask_survival_rate": 0.9333333333333333,
+      "mask_survivor_species": 14,
+      "original_species": 15
+    },
+    {
+      "family": "Erebidae",
+      "mask_fail_species": 0,
+      "mask_survival_rate": 1.0,
+      "mask_survivor_species": 12,
+      "original_species": 12
+    },
+    {
+      "family": "Nepticulidae",
+      "mask_fail_species": 2,
+      "mask_survival_rate": 0.8,
+      "mask_survivor_species": 8,
+      "original_species": 10
+    }
+  ],
+  "group_medians": {
+    "fail": {
+      "frozen_edge_count": 78.5,
+      "frozen_locality_count": 28.5,
+      "host_history_unique_fraction": 0.2397096132915,
+      "predictor_condition_number": 4.1094752451800005
+    },
+    "pass": {
+      "frozen_edge_count": 43.0,
+      "frozen_locality_count": 21.0,
+      "host_history_unique_fraction": 0.240586632194,
+      "predictor_condition_number": 4.15506656508
+    }
+  },
+  "interpretation": {
+    "families_are_not_an_authorized_subgroup_analysis": true,
+    "mask_failure_is_not_an_ecological_absence": true,
+    "no_extra_exclusions_or_backfill": true,
+    "null_significance_or_comparative_genetic_effect_computed": false,
+    "observed_genetic_distance_or_effect_unopened": true,
+    "original_confirmatory_genetic_estimand_is_frozen_to_259_survivors": true,
+    "post_mask_descriptive_only": true,
+    "warning": "Longer denser original graphs require all edges to have joint canonical support. Surviving species and edges are not an exchangeable random sample of the original 321-species panel."
+  },
+  "invalid_original_edges_with_finite_masks": 521,
+  "mask_fail_reasons": {
+    "malformed_or_duplicate_frozen_alignment": 1,
+    "one_or_more_frozen_edges_have_no_valid_cross_locality_pair": 61
+  },
+  "mask_fail_species": 62,
+  "mask_pass_species": 259,
+  "mask_pass_species_fraction": 0.8068535825545171,
+  "original_confirmatory_edges": 41592,
+  "original_graph_edge_count_bins": [
+    {
+      "mask_survival_rate": 0.875,
+      "mask_survivor_species": 154,
+      "maximum_edges_exclusive": 50,
+      "minimum_edges_inclusive": 0,
+      "original_species": 176
+    },
+    {
+      "mask_survival_rate": 0.7966101694915254,
+      "mask_survivor_species": 47,
+      "maximum_edges_exclusive": 100,
+      "minimum_edges_inclusive": 50,
+      "original_species": 59
+    },
+    {
+      "mask_survival_rate": 0.7307692307692307,
+      "mask_survivor_species": 38,
+      "maximum_edges_exclusive": 200,
+      "minimum_edges_inclusive": 100,
+      "original_species": 52
+    },
+    {
+      "mask_survival_rate": 0.7272727272727273,
+      "mask_survivor_species": 16,
+      "maximum_edges_exclusive": 500,
+      "minimum_edges_inclusive": 200,
+      "original_species": 22
+    },
+    {
+      "mask_survival_rate": 0.3333333333333333,
+      "mask_survivor_species": 4,
+      "maximum_edges_exclusive": null,
+      "minimum_edges_inclusive": 500,
+      "original_species": 12
+    }
+  ],
+  "schema": "ttf_historical_host_memory_mask_attrition_representativeness_v0.1",
+  "source_sha256": {
+    "candidate_table": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "mask_ledger": "b8b80e3edeae07d0a61606ec800d4a0c61296ebb06b379df3a1140ca3ecfa3d5",
+    "roles": "4168e7572d3378e7f1595ae562d53c81bb2ef165cbe50eb2ed8ec4e7406fc6ae",
+    "species_diagnostics": "bee840bf6ae207cab5aef8da4154eae7743f5ec3bbbaf23d7fe5a3dedc50a3e6"
+  },
+  "status": "EXPLORATORY_POST_MASK_REPRESENTATIVENESS_AUDIT",
+  "surviving_original_edge_fraction": 0.4895653010194268,
+  "survivor_confirmatory_edges": 20362
+}
