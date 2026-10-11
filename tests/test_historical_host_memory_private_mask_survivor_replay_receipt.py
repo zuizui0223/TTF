@@ -39,7 +39,7 @@ def test_exact_259_survivors_original_edge_subset_and_information_gates():
     assert m["failed_mask_species"] == 62
     assert sum(m["fail_species_reason_counts"].values()) == 62
     assert m["failed_edges_lacking_jointly_canonical_sites"] == 521
-    assert i["original_edges_surviving_exactly"] == i["exact_surviving_frozen_edges"] if "exact_surviving_frozen_edges" in i else i["original_edges_surviving_exactly"] == 20362
+    assert i["original_edges_surviving_exactly"] == 20362
     assert i["removed_species_aggregate_edges"] + i["original_edges_surviving_exactly"] == m["original_edges_in_confirmatory"] == 41592
     assert i["species_unique_fraction_at_least_0_05"] == 244
     assert i["species_unique_fraction_at_least_0_05_fraction"] == 244/259
