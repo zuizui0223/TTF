@@ -1,5 +1,35 @@
 # Historical-host memory: exact mask-only source handoff (2026-10-10)
 
+## 2026-10-11 ORIGINAL SOURCE FOUND AND VERIFIED
+
+**Recovered in personal Library**: `/TTF/source/phylogatr_results_exact_20260918.zip`
+(exact **274,988,692 bytes**). The original independently computes SHA-256
+`5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5`
+(**64 hexadecimal characters**), identical to
+`/TTF/source/phylogatr_results_exact_20260918.sha256.txt`. The ZIP has
+**270,692 members**, exactly one `phylogatr-results/genes.txt` and
+`phylogatr-results/cite.txt`, and **all 270,692 member CRC32 checks passed**.
+It unpacks to 3,149,323,059 bytes; this is a locally recovered private source,
+**not a GitHub-public archive**.
+
+The mask-only scripts previously contained an accidentally truncated **59-character**
+source hash ending `...b36e40eebce61a5` rather than the true
+`...b36e40eebce7bece61a5`. The legacy frozen character-mask rule was **not
+rewritten**; its clerical error is tracked in
+`benchmarks/frozen/historical_host_memory_original_archive_provenance_correction_v0.1.json`.
+Source verifiers now require the independently confirmed full SHA-256 and
+size. The ZIP transport safety cap was corrected from 250,000 to 300,000
+members, since the exact source itself has 270,692; all prior ZIP safety
+checks remain enforced. No genetic responses, nucleotide identities or even
+confirmatory sequence-validity masks were opened in this source-recovery step.
+
+The older archive-availability statements elsewhere in this document describe
+**historical state before 2026-10-11** and must not be used as current status.
+The next step can run privately against the recovered bytes without uploading
+this archive to public GitHub Actions. Do not alter frozen scientific,
+random-seed, or post-mask survivor qualification rules.
+
+
 ## 2026-10-11 response-blind attrition robustness and provenance update
 
 The post-mask information gate was **not weakened or waived**. Instead, a
