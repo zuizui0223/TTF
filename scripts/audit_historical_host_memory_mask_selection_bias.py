@@ -74,7 +74,9 @@ def aggregate(mask, candidates, diagnostics, roles):
     n_fail=len(failed)
     original_edges=sum(int(by_candidates[sp]["edges"]) for sp in confirm)
     retained_edges=sum(int(by_candidates[sp]["edges"]) for sp in passed)
-    invalid_edges=sum(int(m.get("invalid_edges",0)) for m in by_mask.values())
+    # A malformed alignment has no computable per-edge mask tally (null), not zero observed failures.
+    # This aggregate counts only edges whose canonical validity masks could be computed.
+    invalid_edges=sum(int(m["invalid_edges"]) for m in by_mask.values() if m.get("invalid_edges") is not None)
     if (n_pass,n_fail,original_edges,retained_edges,invalid_edges)!=(259,62,41592,20362,521):
         raise RuntimeError("mask population or frozen graph-edge accounting drift")
 
