@@ -1,0 +1,48 @@
+{
+  "schema": "ttf_historical_host_memory_original_archive_provenance_correction_v0.1",
+  "recorded_on": "2026-10-11",
+  "status": "SOURCE_RECOVERED_EXACT_BYTES_CRC_VERIFIED_METADATA_CORRECTION_ONLY",
+  "original_source": {
+    "personal_library_path": "/TTF/source/phylogatr_results_exact_20260918.zip",
+    "byte_length": 274988692,
+    "canonical_sha256": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "source_manifest": "/TTF/source/phylogatr_results_exact_20260918.sha256.txt",
+    "sha256_sidecar_matches": true,
+    "archive_root": "phylogatr-results",
+    "zip_member_count": 270692,
+    "zip_uncompressed_bytes": 3149323059,
+    "all_member_crc32_verified": true,
+    "raw_fasta_or_nucleotide_identity_inspected": false
+  },
+  "prior_protocol_record": {
+    "malformed_truncated_source_sha_literal": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5",
+    "truncated_hex_length": 59,
+    "correct_hex_length": 64,
+    "affected_entry_points": [
+      "scripts/verify_and_extract_historical_host_mask_source.py",
+      "scripts/freeze_historical_host_memory_character_masks.py",
+      "scripts/qualify_historical_host_memory_survivor_information.py"
+    ],
+    "related_preexisting_canonical_sha_authority": "benchmarks/frozen/relational_historical_archive_hash_provenance_correction_v0.1.json",
+    "immutable_frozen_rule": "docs/supporting/historical_host_memory_character_mask_rule_v0.1.json",
+    "immutable_frozen_rule_rewritten": false,
+    "mask_rule_literal_is_legacy_truncated_metadata": true,
+    "source_validation_uses_correct_canonical_sha256": true,
+    "synthetic_random_seed_source_namespace_not_changed": true
+  },
+  "extraction_safety": {
+    "existing_max_zip_members": 250000,
+    "exact_source_members": 270692,
+    "correction": "Raise archive-member safety limit to 300000 and retain independent exact SHA-256/size check; reject directory escapes and symlinks",
+    "do_not_upload_original_to_public_github": true
+  },
+  "firewalls": {
+    "empirical_character_validity_mask_opened": false,
+    "nucleotide_identity_opened": false,
+    "genetic_distances_opened": false,
+    "empirical_beta_host_opened": false,
+    "no_predictor_retuning": true,
+    "no_hypothesis_change": true,
+    "no_seed_change": true
+  }
+}
