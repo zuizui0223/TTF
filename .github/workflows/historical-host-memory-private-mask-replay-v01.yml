@@ -1,0 +1,44 @@
+name: Historical host-memory private-source mask and survivor replay receipt audit
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-memory-v0-1
+    paths:
+      - ".github/workflows/historical-host-memory-private-mask-replay-v01.yml"
+      - "benchmarks/frozen/historical_host_memory_private_confirmatory_mask_259_survivor_replay_v0.1.json"
+      - "tests/test_historical_host_memory_private_mask_survivor_replay_receipt.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  private-source-provenance-without-raw-archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate frozen mask subset, hashes and exact Monte Carlo gate claims
+        run: |
+          set -euo pipefail
+          python -m pip install -e ".[test]"
+          python -m pytest -q tests/test_historical_host_memory_private_mask_survivor_replay_receipt.py
+      - name: Assert private raw source has not entered Git history or receipt artifacts
+        run: |
+          set -euo pipefail
+          test ! -e phylogatr_results_exact_20260918.zip
+          test ! -e provenance/data/phylogatr_results_exact_20260918.zip
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path("benchmarks/frozen/historical_host_memory_private_confirmatory_mask_259_survivor_replay_v0.1.json").read_text())
+          assert r["status"]=="PASS_TO_SEPARATE_CONFIRMATORY_IDENTITY_AUTHORIZATION_REVIEW"
+          assert r["reproduction_and_firewall"]["nucleotide_identity_saved"] is False
+          assert r["reproduction_and_firewall"]["empirical_host_history_coefficient_computed"] is False
+          assert r["source"]["original_archive_private_library_path"].startswith("/TTF/source/")
+          print("PASS_PRIVATE_SOURCE_MASK_REPLAY_RECEIPT__NO_GENETIC_RESPONSE")
+          PY
