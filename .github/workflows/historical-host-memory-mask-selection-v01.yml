@@ -1,0 +1,39 @@
+name: Historical host-memory post-mask representativeness preflight (no raw data)
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-memory-v0-1
+    paths:
+      - ".github/workflows/historical-host-memory-mask-selection-v01.yml"
+      - "scripts/audit_historical_host_memory_mask_selection_bias.py"
+      - "tests/test_historical_host_memory_mask_selection_bias.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  response-blind-selection-audit-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test only aggregate post-mask selection accounting, no identity
+        run: |
+          set -euo pipefail
+          python -m pip install -e ".[test]"
+          python -m pytest -q tests/test_historical_host_memory_mask_selection_bias.py
+      - name: Verify no private ledger or sequence mask is required in public CI
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s=Path("scripts/audit_historical_host_memory_mask_selection_bias.py").read_text()
+          assert "genetic_distance_not_computed" in s
+          assert "original_graph_edge_count_bins" in s
+          assert "no_extra_exclusions_or_backfill" in s
+          print("PASS_POST_MASK_EXPLORATORY_SELECTION_AUDIT_ONLY")
+          PY
