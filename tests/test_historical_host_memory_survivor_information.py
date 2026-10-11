@@ -19,7 +19,7 @@ def fixture(n_survivors=250, unique=0.25):
           "status":("PASS_TO_EXACT_SURVIVOR_INFORMATION_AND_SYNTHETIC_REQUALIFICATION"
                     if n_survivors>=200 else
                     "NOT_EVALUABLE_HISTORICAL_HOST_MEMORY_CHARACTER_SUPPORT"),
-          "source_archive_sha256":"5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5",
+          "source_archive_sha256":"5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
           "source_bindings":{**EXPECTED_MASK_BINDINGS,"mask_rule_sha256":"0"*64},
           "confirmatory_before_mask":321,
           "survivor_names":confirm[:n_survivors],
