@@ -41,6 +41,8 @@ def synthetic_sources():
     # 60 edge-support failures with 8 invalid edges each; one with 41;
     # one malformed record with 0: 480 + 41 = 521.
     rows[319]["invalid_edges"]=41
+    # Original malformed alignment has no measurable edge-validity tally.
+    rows[320]["invalid_edges"]=None
     mask={"schema":"ttf_historical_host_memory_independent_mask_replay_v0.1",
           "source_archive_sha256":"5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
           "genetic_response_not_opened":True,
