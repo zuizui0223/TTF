@@ -5,7 +5,7 @@ import zipfile
 
 import pytest
 
-from scripts.verify_and_extract_historical_host_mask_source import extract_verified_archive
+from scripts.verify_and_extract_historical_host_mask_source import ARCHIVE_SHA, ARCHIVE_BYTES, extract_verified_archive
 
 
 def make_zip(tmp_path, members):
@@ -62,3 +62,9 @@ def test_multiple_phylogatr_roots_fail_closed(tmp_path):
                                "b/genes.txt":"b","b/cite.txt":"b"})
     with pytest.raises(RuntimeError,match="one phylogatR root"):
         extract_verified_archive(a,tmp_path/"dst",expected_sha=sha,expected_size=n)
+
+
+def test_canonical_exact_source_identity_is_full_sha256():
+    assert len(ARCHIVE_SHA)==64
+    assert ARCHIVE_SHA=="5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
+    assert ARCHIVE_BYTES==274_988_692
