@@ -8,6 +8,8 @@ on:
       - ".github/workflows/historical-host-memory-mask-selection-v01.yml"
       - "scripts/audit_historical_host_memory_mask_selection_bias.py"
       - "tests/test_historical_host_memory_mask_selection_bias.py"
+      - "tests/test_historical_host_memory_mask_selection_receipt.py"
+      - "benchmarks/frozen/historical_host_memory_mask_attrition_representativeness_v0.1.json"
   workflow_dispatch:
 
 permissions:
@@ -26,7 +28,7 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install -e ".[test]"
-          python -m pytest -q tests/test_historical_host_memory_mask_selection_bias.py
+          python -m pytest -q tests/test_historical_host_memory_mask_selection_bias.py tests/test_historical_host_memory_mask_selection_receipt.py
       - name: Verify no private ledger or sequence mask is required in public CI
         run: |
           python - <<'PY'
