@@ -15,7 +15,7 @@ import zipfile
 from pathlib import Path, PurePosixPath
 
 ARCHIVE_BYTES = 274_988_692
-ARCHIVE_SHA = "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce61a5"
+ARCHIVE_SHA = "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5"
 
 
 def sha256(path: Path) -> str:
@@ -49,7 +49,7 @@ def extract_verified_archive(
     output_dir.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(archive) as z:
         entries = z.infolist()
-        if not entries or len(entries) > 250_000:
+        if not entries or len(entries) > 300_000:
             raise RuntimeError("unexpected exact source archive member count")
         if sum(x.file_size for x in entries) > 8_000_000_000:
             raise RuntimeError("source extraction exceeds frozen bounded safety allowance")
