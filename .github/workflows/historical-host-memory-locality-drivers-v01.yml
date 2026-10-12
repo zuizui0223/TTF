@@ -1,0 +1,49 @@
+name: TTF historical host-memory locality sign stability drivers (synthetic only)
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-memory-v0-1
+    paths:
+      - ".github/workflows/historical-host-memory-locality-drivers-v01.yml"
+      - "scripts/audit_locality_stability_drivers.py"
+      - "tests/test_audit_drivers.py"
+      - "benchmarks/frozen/historical_host_memory_postoutcome_locality_drivers_v0.1.json"
+      - "benchmarks/frozen/historical_host_memory_postoutcome_locality_drivers_independent_v0.1.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  descriptive-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test strict sign reversals and original-locality accounting on artificial data
+        run: |
+          set -euo pipefail
+          python -m pip install -e ".[test]"
+          python -m pytest -q tests/test_audit_drivers.py
+      - name: Check aggregate source identities and protect the consumed primary test
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          q=json.loads(Path("benchmarks/frozen/historical_host_memory_postoutcome_locality_drivers_v0.1.json").read_text())
+          o=json.loads(Path("benchmarks/frozen/historical_host_memory_259_one_shot_empirical_result_v0.1.json").read_text())
+          assert o["status"] == q["original_confirmatory_status"] == "NOT_EVALUABLE_EMPIRICAL_RESPONSE"
+          assert o["monte_carlo_p"] is None and o["primary_statistic"] is None
+          assert q["input_sha256"]["species_stability"] == "b447b360edc3d73ae62fe4c668f2cadf9c13f94a0292d8aee5e96828c6724f23"
+          assert q["input_sha256"]["site_deletions"] == "ba6f0f5f1ec9b9da4e697a0a271f0156ac2ad80d385da0a793bba8e200f97686"
+          assert q["species_count"] == 259 and q["nonzero_baseline_species"] == 255
+          assert q["attempted_site_deletions"] == 6374 and q["defined_site_deletions"] == 6373
+          assert q["strict_flip_attempts"] == 420
+          assert q["exploratory_no_p_values"] is True
+          assert q["interpretation_limits"]["no_alternative_confirmatory_statistic"] is True
+          print("PASS_POSTOUTCOME_DESCRIPTIVE_ONLY; ORIGINAL_CONFIRMATORY_NOT_EVALUABLE")
+          PY
