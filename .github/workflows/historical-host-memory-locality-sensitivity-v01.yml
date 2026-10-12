@@ -1,0 +1,31 @@
+name: TTF host-memory locality-deletion checks (synthetic only)
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-memory-v0-1
+    paths:
+      - .github/workflows/historical-host-memory-locality-sensitivity-v01.yml
+      - scripts/historical_host_memory_locality_sensitivity.py
+      - tests/test_historical_host_memory_locality_sensitivity_v01.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-locality-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test dependencies
+        run: python -m pip install -e '.[test]'
+      - name: Test exploratory locality operator without private data
+        run: python -m pytest -q tests/test_historical_host_memory_locality_sensitivity_v01.py
