@@ -1,0 +1,35 @@
+{
+  "data_source": "private site deletion sensitivity and SHA-locked response-blind ECEF geometry",
+  "method": "Independent pandas.read_csv(float_precision=round_trip) + scipy.stats.rankdata; original CSV parsing matches Python float, avoids NN distance tie changes",
+  "metrics": {
+    "centroid_chord_km": {
+      "flip_rank_mean": 0.5395446760468898,
+      "other_rank_mean": 0.5188758892765466,
+      "paired_difference_median": 0.06250000000000006,
+      "paired_species": 129
+    },
+    "frozen_edge_degree": {
+      "flip_rank_mean": 0.520188833783151,
+      "other_rank_mean": 0.5201433463220806,
+      "paired_difference_median": -0.011904761904761862,
+      "paired_species": 129
+    },
+    "median_to_other_chord_km": {
+      "flip_rank_mean": 0.5583981613650681,
+      "other_rank_mean": 0.5174531995403088,
+      "paired_difference_median": 0.06666666666666665,
+      "paired_species": 129
+    },
+    "nearest_neighbor_chord_km": {
+      "flip_rank_mean": 0.5722075791028662,
+      "other_rank_mean": 0.5164893823783056,
+      "paired_difference_median": 0.10620915032679734,
+      "paired_species": 129
+    }
+  },
+  "n_baseline_nonzero": 255,
+  "n_site_defined_nonzero": 6308,
+  "n_species_original": 259,
+  "new_p_values": false,
+  "strict_flip_sites": 420
+}
