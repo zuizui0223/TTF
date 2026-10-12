@@ -1,0 +1,89 @@
+{
+  "boundaries": {
+    "concentration_fractions_use_signed_net_total_unless_explicitly_positive_total": true,
+    "counts_are_estimated_coefficient_signs_not_true_species_effects": true,
+    "development_identity_unopened": true,
+    "new_hypothesis_tests": 0,
+    "new_p_values": 0,
+    "no_new_sequence_or_edge_distance_access": true,
+    "no_private_species_coefficients_in_public_receipt": true,
+    "old_empirical_result_unchanged": true,
+    "tail_sensitivity_does_not_prove_top_species_invalid": true
+  },
+  "largest_post_ibd_response_sd_rank_group": {
+    "contribution_to_all_species_mean": 0.0012425413485387658,
+    "group_defined_after_outcome_for_description": true,
+    "n": 63,
+    "n_negative": 31,
+    "n_positive": 32,
+    "raw_sum": 0.3218182092715403,
+    "response_sd_max": 0.2009305377176983,
+    "response_sd_min": 0.01100637729957934,
+    "response_sd_rank_group": 4,
+    "sd_is_of_post_ibd_residual_not_raw_coi_divergence": true,
+    "share_of_all259_signed_raw_total": 0.9858082133271349,
+    "standardized_beta_mean": 0.09713345758795396,
+    "unscaled_slope_mean": 0.005108225543992703
+  },
+  "original_primary_p": null,
+  "original_primary_status": "NOT_EVALUABLE_EMPIRICAL_RESPONSE",
+  "panel": {
+    "all_species": 259,
+    "finite_standardized": 255,
+    "frozen_edges": 20362,
+    "raw_slope_negative": 116,
+    "raw_slope_positive": 139,
+    "raw_slope_zero": 4,
+    "standardized_undefined": 4
+  },
+  "response_scale_algebra": {
+    "arithmetic_identity_error": 2.168404344971009e-19,
+    "common_scale_component_all_n": 0.0008672141844041216,
+    "covariance_beta_sd_correlation": 0.03273256991231184,
+    "covariance_component_all_n": 0.0003932149048861253,
+    "covariance_share_of_reconstructed_mean": 0.3119690811861113,
+    "direct_product_mean_all_n": 0.0012604290892902466,
+    "mean_beta_finite": 0.08224532599115378,
+    "mean_response_sd_finite": 0.01070963648747918,
+    "n_nonconstant": 255,
+    "n_total": 259,
+    "not_a_causal_decomposition": true,
+    "population_cov_beta_sd": 0.0003993829818255155,
+    "reconstructed_mean_all_n": 0.0012604290892902468
+  },
+  "schema": "ttf_hhm259_post_outcome_mean_influence_public_v0.1",
+  "source_sha256": {
+    "analysis_scope": "8d29a6f978abf7b47038b400fb3d1dc7bba9377055bf37cb61d68ec6f35aa713",
+    "full_influence_result": "5e357f72f3cde22c7566e24a6b40c028dd318c74b3dd9fdc6919bff9c52087ce",
+    "influence_core.py": "ef11c5b721d883253f0b3aa1e583a3b1e1f38b73b1ce412333e44dd553b7ee65",
+    "original_terminal_result": "5d994a76f7f20a778f0394f545c08a729182ce32298503c128d95c00da29f965",
+    "owner_coefficient_csv": "a102adacf4532eacb35d45360e8b4515d5049622c4c6e36c9bc05a5eb5d0f1f2",
+    "run_influence.py": "1847bcc8c9b3dd25dd4e7a6f51045859604389c0ea6ffd151dda410478cd8406",
+    "source_exploratory_bundle": "78a36959da645a060347b2074daabd7afd2d62d3d66aaccd7a62a4fefa400c05"
+  },
+  "standardized_finite_descriptions": {
+    "mean": 0.08224532599115376,
+    "median": 0.04364003456691655,
+    "symmetric_trim_10pct_mean": 0.062225217172631804,
+    "symmetric_trim_20pct_mean": 0.04925430731972048
+  },
+  "status": "EXPLORATORY_DESCRIPTIVE_AFTER_EMPIRICAL_OUTCOME",
+  "unscaled_response_descriptions": {
+    "largest_positive_omissions_needed_for_nonpositive_mean": 6,
+    "mean": 0.0012604290892902466,
+    "mean_after_diagnostic_top5_omission": 0.0001231212570543276,
+    "median": 0.00010795228030220996,
+    "one_sided_omission_is_not_an_exclusion_recommendation": true,
+    "symmetric_trim_10pct_mean": 0.00018451585427288163,
+    "symmetric_trim_10pct_removed_per_tail": 25,
+    "symmetric_trim_20pct_mean": 0.00012691958058542294,
+    "symmetric_trim_20pct_removed_per_tail": 51,
+    "top5_share_of_positive_total": 0.41862079575446504,
+    "top5_share_of_signed_net_total": 0.9042037351914598
+  },
+  "verification": {
+    "raw_mean_algebra_error": 2.168404344971009e-19,
+    "source_bundle_files_sha_verified": 38,
+    "unit_and_result_tests_passed": 17
+  }
+}
