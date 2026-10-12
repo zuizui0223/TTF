@@ -1,0 +1,194 @@
+{
+  "absolute_semipartial_quartiles": [
+    {
+      "defined_locality_deletions": 1843,
+      "locality_deletion_reversal_fraction": 0.16440586001085186,
+      "median_abs_signal": 0.03624865555798795,
+      "n": 64,
+      "n_with_any_reversal": 56,
+      "quartile": 1,
+      "reversal_events": 303,
+      "signal_type": "absolute_host_history_semipartial_correlation",
+      "species_any_reversal_fraction": 0.875
+    },
+    {
+      "defined_locality_deletions": 1577,
+      "locality_deletion_reversal_fraction": 0.05009511731135067,
+      "median_abs_signal": 0.10840272202294235,
+      "n": 64,
+      "n_with_any_reversal": 44,
+      "quartile": 2,
+      "reversal_events": 79,
+      "signal_type": "absolute_host_history_semipartial_correlation",
+      "species_any_reversal_fraction": 0.6875
+    },
+    {
+      "defined_locality_deletions": 1586,
+      "locality_deletion_reversal_fraction": 0.018915510718789406,
+      "median_abs_signal": 0.1983704445356422,
+      "n": 63,
+      "n_with_any_reversal": 21,
+      "quartile": 3,
+      "reversal_events": 30,
+      "signal_type": "absolute_host_history_semipartial_correlation",
+      "species_any_reversal_fraction": 0.3333333333333333
+    },
+    {
+      "defined_locality_deletions": 1302,
+      "locality_deletion_reversal_fraction": 0.006144393241167435,
+      "median_abs_signal": 0.379479445272448,
+      "n": 64,
+      "n_with_any_reversal": 8,
+      "quartile": 4,
+      "reversal_events": 8,
+      "signal_type": "absolute_host_history_semipartial_correlation",
+      "species_any_reversal_fraction": 0.125
+    }
+  ],
+  "absolute_standardized_beta_quartiles": [
+    {
+      "defined_locality_deletions": 1823,
+      "locality_deletion_reversal_fraction": 0.15743280307185958,
+      "median_abs_signal": 0.06995417971378376,
+      "n": 64,
+      "n_with_any_reversal": 57,
+      "quartile": 1,
+      "reversal_events": 287,
+      "signal_type": "absolute_standardized_beta",
+      "species_any_reversal_fraction": 0.890625
+    },
+    {
+      "defined_locality_deletions": 1585,
+      "locality_deletion_reversal_fraction": 0.05615141955835962,
+      "median_abs_signal": 0.22915438477141303,
+      "n": 64,
+      "n_with_any_reversal": 40,
+      "quartile": 2,
+      "reversal_events": 89,
+      "signal_type": "absolute_standardized_beta",
+      "species_any_reversal_fraction": 0.625
+    },
+    {
+      "defined_locality_deletions": 1601,
+      "locality_deletion_reversal_fraction": 0.016864459712679577,
+      "median_abs_signal": 0.4408298177352294,
+      "n": 63,
+      "n_with_any_reversal": 19,
+      "quartile": 3,
+      "reversal_events": 27,
+      "signal_type": "absolute_standardized_beta",
+      "species_any_reversal_fraction": 0.30158730158730157
+    },
+    {
+      "defined_locality_deletions": 1299,
+      "locality_deletion_reversal_fraction": 0.01308698999230177,
+      "median_abs_signal": 0.8431161283824993,
+      "n": 64,
+      "n_with_any_reversal": 13,
+      "quartile": 4,
+      "reversal_events": 17,
+      "signal_type": "absolute_standardized_beta",
+      "species_any_reversal_fraction": 0.203125
+    }
+  ],
+  "family_held_out_internal_prediction": {
+    "cv": "five_fold_family_held_out_GroupKFold",
+    "models": {
+      "absolute_semipartial_and_locality_count": {
+        "brier_score": 0.12095828557633533,
+        "n_species": 255,
+        "roc_auc": 0.906423034330011
+      },
+      "absolute_standardized_beta_and_locality_count": {
+        "brier_score": 0.14013189180762675,
+        "n_species": 255,
+        "roc_auc": 0.8776916451335056
+      },
+      "constant_prevalence": {
+        "brier_score": 0.25596885813148784,
+        "n_species": 255,
+        "roc_auc": 0.38390550018457
+      },
+      "semipartial_plus_recorded_host_count": {
+        "brier_score": 0.12275110700017003,
+        "n_species": 255,
+        "roc_auc": 0.9024855420204257
+      }
+    },
+    "no_hyperparameter_search": true,
+    "output_not_a_genetic_effect_p_value": true,
+    "species_weighting": "one species = one binary event (at least one flip)"
+  },
+  "identity_verification": {
+    "r_semi_equals_beta_times_sqrt_unique_fraction_max_absolute_error": 4.996003610813204e-16
+  },
+  "limitations": {
+    "CV_score_is_not_out_of_sample_validation_of_an_ecological_host_memory_mechanism": true,
+    "host_species_is_recorded_subset_not_total_diet_breadth": true,
+    "no_new_confirmatory_panel": true,
+    "no_p_values_or_confidence_intervals": true,
+    "no_public_species_names_or_coefficients": true,
+    "no_raw_nucleotide_sequences_or_edge_p_distances_read_by_this_script": true,
+    "original_primary_estimate_still_undefined": true,
+    "the_absolute_coefficient_and_semi_partial_are_calculated_from_the_same_opened_COI_response": true
+  },
+  "new_p_values": 0,
+  "original_confirmatory_statistic_status": "NOT_EVALUABLE_EMPIRICAL_RESPONSE",
+  "panel": {
+    "fraction_nonzero_species_deletions_reversing": 0.06658211794546608,
+    "fraction_species_with_any_reversal": 0.5058823529411764,
+    "n_all": 259,
+    "n_baseline_invariant": 4,
+    "n_defined_deletions_among_nonzero_species": 6308,
+    "n_deletions_attempted": 6374,
+    "n_deletions_defined": 6373,
+    "n_deletions_undefined": 1,
+    "n_nonzero_defined": 255,
+    "n_reversal_events": 420,
+    "n_with_any_sign_reversal": 129
+  },
+  "recorded_host_metadata_by_count": [
+    {
+      "finite_standardized_species": 141,
+      "median_host_history_unique_fraction": 0.2281007671775702,
+      "negative_standardized_coefficients": 63,
+      "number_of_frozen_recorded_host_species": 1,
+      "positive_standardized_coefficients": 78,
+      "species_any_locality_flip": 70,
+      "total_species": 143
+    },
+    {
+      "finite_standardized_species": 69,
+      "median_host_history_unique_fraction": 0.2008904880596048,
+      "negative_standardized_coefficients": 34,
+      "number_of_frozen_recorded_host_species": 2,
+      "positive_standardized_coefficients": 35,
+      "species_any_locality_flip": 36,
+      "total_species": 70
+    },
+    {
+      "finite_standardized_species": 45,
+      "median_host_history_unique_fraction": 0.26670863747290396,
+      "negative_standardized_coefficients": 19,
+      "number_of_frozen_recorded_host_species": 3,
+      "positive_standardized_coefficients": 26,
+      "species_any_locality_flip": 23,
+      "total_species": 46
+    }
+  ],
+  "schema": "ttf_hhm259_post_outcome_fragility_driver_aggregates_v0.1",
+  "source_sha256": {
+    "frozen_candidates": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "locality_deletions": "ba6f0f5f1ec9b9da4e697a0a271f0156ac2ad80d385da0a793bba8e200f97686",
+    "primary_result": "5d994a76f7f20a778f0394f545c08a729182ce32298503c128d95c00da29f965",
+    "species_stability": "b447b360edc3d73ae62fe4c668f2cadf9c13f94a0292d8aee5e96828c6724f23"
+  },
+  "spearman_descriptive_against_species_locality_flip_fraction": {
+    "abs_semipartial": -0.6777305103653971,
+    "abs_standardized_beta": -0.6137593183322647,
+    "host_history_unique_fraction": 0.031023959769180844,
+    "max_ibd_prediction_leverage": 0.3140008611361365,
+    "original_edges": -0.34048702880152687
+  },
+  "status": "EXPLORATORY_AFTER_EMPIRICAL_OUTCOME_EXPOSURE"
+}
