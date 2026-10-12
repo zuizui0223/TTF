@@ -1,0 +1,52 @@
+name: Historical host-memory post-outcome fragility driver audit (synthetic only)
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-memory-v0-1
+    paths:
+      - '.github/workflows/historical-host-memory-fragility-drivers-v01.yml'
+      - 'scripts/audit_historical_host_memory_fragility_drivers.py'
+      - 'tests/test_historical_host_memory_fragility_drivers.py'
+      - 'tests/test_historical_host_memory_fragility_public_receipt.py'
+      - 'benchmarks/exploratory/historical_host_memory_259_fragility_drivers_v0.1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-aggregates-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install scientific QA dependencies
+        run: |
+          python -m pip install -e '.[test]' 'pandas>=2.2,<3' 'scipy>=1.13,<2' 'scikit-learn>=1.5,<2'
+      - name: Test synthetic fixtures and public aggregate source boundaries
+        run: |
+          set -euo pipefail
+          python -m pytest -q \
+            tests/test_historical_host_memory_fragility_drivers.py \
+            tests/test_historical_host_memory_fragility_public_receipt.py
+      - name: Assert no private species coefficients or genetic responses are included
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('benchmarks/exploratory/historical_host_memory_259_fragility_drivers_v0.1.json')
+          x=json.loads(p.read_text())
+          assert x['status']=='EXPLORATORY_AFTER_EMPIRICAL_OUTCOME_EXPOSURE'
+          assert x['original_confirmatory_statistic_status']=='NOT_EVALUABLE_EMPIRICAL_RESPONSE'
+          assert x['new_p_values']==0
+          assert x['limitations']['no_public_species_names_or_coefficients'] is True
+          print('PASS_EXPLORATORY_FRAGILITY_ONLY__NO_NEW_GENETIC_RESULT')
+          PY
