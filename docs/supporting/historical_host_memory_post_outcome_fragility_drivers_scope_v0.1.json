@@ -1,0 +1,51 @@
+{
+  "schema": "ttf_hhm259_post_outcome_fragility_drivers_scope_v0.1",
+  "status": "EXPLORATORY_AFTER_EMPIRICAL_IDENTITY_AND_LOCALITY_SENSITIVITY_EXPOSURE",
+  "recorded_on": "2026-10-12",
+  "explanation": "All original confirmatory outcomes and 259-species locality deletions were previously observed. This is not preregistration, cannot update the one-shot null/power reference, and may not establish new confirmatory host-memory evidence.",
+  "question": "Do original coefficient magnitude, host-history-specific semipartial association, sampling opportunities and recorded host-resource breadth describe which COI species show sign reversals after withholding one locality?",
+  "source_sha256": {
+    "species_stability": "b447b360edc3d73ae62fe4c668f2cadf9c13f94a0292d8aee5e96828c6724f23",
+    "locality_deletion_sensitivity": "ba6f0f5f1ec9b9da4e697a0a271f0156ac2ad80d385da0a793bba8e200f97686",
+    "candidate_642": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "original_terminal_empirical_result": "5d994a76f7f20a778f0394f545c08a729182ce32298503c128d95c00da29f965",
+    "locality_deletion_bundle_manifest_file": "b447b360edc3d73ae62fe4c668f2cadf9c13f94a0292d8aee5e96828c6724f23"
+  },
+  "eligibility": {
+    "original_confirmatory_species": 259,
+    "frozen_edges": 20362,
+    "defined_baseline_sign_species": 255,
+    "invariant_species": 4,
+    "locality_deletion_attempts": 6374,
+    "invalid_deletion_attempts": 1,
+    "no_post_response_exclusion_from_original_test": true
+  },
+  "exploratory_statistics": {
+    "primary_description": "Species-weighted fraction with at least one locality deletion sign reversal; secondary rate is reversed among defined locality deletions. Neither is a false-positive probability.",
+    "absolute_beta_quartiles": "Fixed from the previously computed standardized response beta among 255 defined species; 4 zero-response species have undefined standardized beta and remain in the original 259-species panel.",
+    "semipartial_identity": "r_semi = beta_standardized * sqrt(host_history_unique_fraction). Algebraic identity from the Frisch-Waugh projection, not independent biological evidence.",
+    "semipartial_quartiles": "Absolute r_semi quartiles among the same 255 defined species.",
+    "host_breadth": "Exact recorded host_species count 1/2/3 and number of native WGSRPD3 regions from frozen candidate. These are incomplete recorded-host metadata, NOT a validated complete diet breadth.",
+    "blocked_internal_comparison": "Five-fold GroupKFold by taxonomic family; per-species any-flip outcome; fixed regularized logistic C=1 and fold-wise scaling. Compare [log10(abs(beta)), log(localities)] against [log10(abs(r_semi)), log(localities)], then add host record count. No hyperparameter search or p-value.",
+    "metrics": [
+      "Brier loss",
+      "ROC AUC",
+      "species-level any-flip fraction",
+      "within-species deletion flip fraction",
+      "quartile count and denominator"
+    ],
+    "model_family_is_post_outcome_descriptive": true
+  },
+  "constraints": {
+    "original_primary_result": "NOT_EVALUABLE_EMPIRICAL_RESPONSE",
+    "new_null_distribution_generated": false,
+    "p_values_computed": false,
+    "effect_confirmed": false,
+    "confidence_intervals_computed": false,
+    "empirical_nucleotide_sequences_or_edge_genetic_distances_persisted": false,
+    "no_new_genetic_response_opening": true,
+    "no_filtering_to_stable_species_as_new_confirmatory_panel": true,
+    "no_public_per_species_coefficients": true,
+    "no_reinterpretation_of_collinearity_as_ecological_causation": true
+  }
+}
