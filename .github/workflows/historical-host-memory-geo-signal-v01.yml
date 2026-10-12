@@ -1,0 +1,51 @@
+name: HHM 259 post-outcome geographic sampling isolation by signal (synthetic only)
+
+on:
+  push:
+    branches:
+      - prospective/historical-host-memory-v0-1
+    paths:
+      - '.github/workflows/historical-host-memory-geo-signal-v01.yml'
+      - 'scripts/audit_historical_host_memory_geo_isolation_by_signal.py'
+      - 'tests/test_historical_host_memory_geo_isolation_by_signal.py'
+      - 'tests/test_historical_host_memory_geo_isolation_receipt.py'
+      - 'benchmarks/exploratory/historical_host_memory_259_geo_isolation_by_signal_v0.1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-fixtures-and-aggregate-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install fixture-check dependencies
+        run: |
+          python -m pip install -e '.[test]' 'pandas>=2.2,<3' 'scipy>=1.13,<2'
+      - name: Test frozen-coordinate and site-reversal invariants on synthetic fixtures
+        run: |
+          set -euo pipefail
+          python -m pytest -q \
+            tests/test_historical_host_memory_geo_isolation_by_signal.py \
+            tests/test_historical_host_memory_geo_isolation_receipt.py
+      - name: Reassert original consumed genetic result and aggregate-only disclosure
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('benchmarks/exploratory/historical_host_memory_259_geo_isolation_by_signal_v0.1.json')
+          x=json.loads(p.read_text())
+          assert x['status']=='EXPLORATORY_POST_OUTCOME_SAMPLING_GEOGRAPHY'
+          assert x['original_confirmatory_status']=='NOT_EVALUABLE_EMPIRICAL_RESPONSE'
+          assert x['new_p_values']==0 and x['genetic_identity_reopened'] is False
+          assert x['no_public_species_names_or_per_site_results'] is True
+          print('PASS_EXPLORATORY_GEO_SIGNAL_ONLY__NO_NEW_GENETIC_TEST')
+          PY
