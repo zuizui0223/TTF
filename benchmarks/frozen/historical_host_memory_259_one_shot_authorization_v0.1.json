@@ -1,0 +1,52 @@
+{
+  "schema": "ttf_historical_host_memory_259_one_shot_authorization_v0.1",
+  "status": "AUTHORIZE_ONE_SHOT_EMPIRICAL_IDENTITY_259",
+  "authorized_at_utc": "2026-10-12T02:53:26.346268+00:00",
+  "user_instruction": "進めて",
+  "scope": "Continuation of the stated one-shot empirical next step after completed qualification; only the exact 259 confirmatory survivors and 20362 original edges.",
+  "parent_issue": 140,
+  "preopening_branch_commit": "48f4058ba3d5d591e0d486e35ab4bd7bbc70665a",
+  "local_authorization_sha256": "c741869cd64f1160d48b317ee5adc1bde6e105680d6d6145d24f4b3ce6ee645a",
+  "n_species": 259,
+  "n_edges": 20362,
+  "alpha": 0.05,
+  "alternative": "greater",
+  "input_sha256": {
+    "original_archive": "5a0fd9ac25893c749d14186fbcce4a46b99163c9d810b36e40eebce7bece61a5",
+    "candidates": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "localities": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "edges": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+    "survivor_predictors": "91b59ca469bcf80bb2e5e63d609eabd6dfaacc1643bde82b1455c62cfeafeabf",
+    "survivor_roles": "fbeee8baa0529e162c0331a65717ec313e625e057e33ecafc48e99fa2e3c2535",
+    "mask_ledger": "b8b80e3edeae07d0a61606ec800d4a0c61296ebb06b379df3a1140ca3ecfa3d5",
+    "survivor_synthetic_receipt": "ba5bb37514feae9a2031fd2d3d5af00bbcc8f51308d97a8314722eb7b1dc4482",
+    "saved_private_survivor_simulator": "9c7c2cbe3d56f442215e72887a62ba5019185aff8546c1792f2bfe3230872cc9",
+    "fixed_1999_null_reference_npy": "cbc07fc3d16a601f536acb0b80a922510f82a45f9e2c5f2d243959346f596dab"
+  },
+  "code_sha256": {
+    "one_shot_core.py": "0e940a1eeabea75862f0225e270755419e933b3c316789e9512d7384b5bfa56c",
+    "run_hhm_one_shot.py": "da2427b0362d2664368e35bde60442b2fba10570e3895b102715c144fe30632d"
+  },
+  "preopening_verification": {
+    "unit_tests_passed": 13,
+    "saved_survivor_simulation_reproduced": true,
+    "null_evaluation_rejections": 30,
+    "positive_world_rejections": 485,
+    "empirical_nucleotide_identity_opened": false
+  },
+  "estimator": "Mean valid cross-locality sequence-pair uncorrected p-distance, with >=ceil(0.5*alignment_length) jointly canonical columns; endpoint-disjoint OLS on log1p(chord distance km); z(post-IBD residual) on z(M_host), z(M_self), z(D_host_0BP); studentized equal-species mean beta_host.",
+  "p_value": "(1 + number of fixed 1999 survivor null-reference statistics >= observed statistic)/2000",
+  "reference_provenance": "The saved private survivor simulator uses the canonical 64-hex original source ID and reproduces the previously reported 30/500 and 485/500 outcomes. The public prototype retained an earlier truncated source-ID seed. This authorization binds the actually assessed private simulator and its exact reference series, not an interchangeable seed variant.",
+  "undefined_response_policy": "Terminal NOT_EVALUABLE for the whole frozen panel if any species has an undefined standardized empirical response; no post-outcome species drop, replacement, or invented coefficient.",
+  "independent_numerical_checks": "Full OLS verification of every partial beta and explicit endpoint-disjoint fits on the predetermined first/middle/last edge of every species, absolute tolerance 1e-9.",
+  "constraints": {
+    "development_identity_permanently_closed": true,
+    "raw_sequences_or_archive_not_uploaded": true,
+    "nucleotide_sequences_not_persisted": true,
+    "edge_genetic_distances_not_persisted": true,
+    "no_backfill_or_rewiring": true,
+    "no_subgroup_or_alternative_model_tests": true,
+    "no_threshold_or_hypothesis_retuning": true,
+    "report_outcome_regardless_of_significance": true
+  }
+}
