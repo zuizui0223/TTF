@@ -63,3 +63,16 @@ def test_family_held_out_prediction_is_exploratory_and_not_mechanism_proof():
     assert host>=semi
     assert m['output_not_a_genetic_effect_p_value'] is True
     assert a['limitations']['CV_score_is_not_out_of_sample_validation_of_an_ecological_host_memory_mechanism'] is True
+
+def test_original_259_confirmatory_terminal_receipt_is_byte_pinned_and_undefined():
+    import hashlib
+    report=load()
+    original=HERE/'benchmarks'/'frozen'/'historical_host_memory_259_one_shot_empirical_result_v0.1.json'
+    digest=hashlib.sha256(original.read_bytes()).hexdigest()
+    assert digest==report['source_sha256']['primary_result']
+    original_data=json.loads(original.read_text())
+    assert original_data['status']=='NOT_EVALUABLE_EMPIRICAL_RESPONSE'
+    assert original_data['n_species_frozen']==259
+    assert original_data['undefined_species']==4
+    assert original_data['primary_statistic'] is None
+    assert original_data['monte_carlo_p'] is None
