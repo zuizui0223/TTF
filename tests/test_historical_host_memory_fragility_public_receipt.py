@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 
 HERE=Path(__file__).resolve().parents[1]
-RESULT=HERE / 'results' / 'fragility_drivers_v0.1.json'
+RESULT=HERE / 'benchmarks' / 'exploratory' / 'historical_host_memory_259_fragility_drivers_v0.1.json'
 
 
 def load():
