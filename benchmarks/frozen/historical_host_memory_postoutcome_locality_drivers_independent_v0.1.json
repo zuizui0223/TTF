@@ -1,0 +1,59 @@
+{
+  "all_recalculated_aggregate_cross_checks": true,
+  "baseline_mean": 0.0012604290892902455,
+  "median_split_groups": [
+    {
+      "effect": "low",
+      "flip_count": 166,
+      "leverage": "low",
+      "n": 69,
+      "n_defined": 2353,
+      "species_flip_any": 44
+    },
+    {
+      "effect": "low",
+      "flip_count": 210,
+      "leverage": "high",
+      "n": 58,
+      "n_defined": 1025,
+      "species_flip_any": 53
+    },
+    {
+      "effect": "high",
+      "flip_count": 10,
+      "leverage": "low",
+      "n": 58,
+      "n_defined": 1746,
+      "species_flip_any": 9
+    },
+    {
+      "effect": "high",
+      "flip_count": 34,
+      "leverage": "high",
+      "n": 70,
+      "n_defined": 1184,
+      "species_flip_any": 23
+    }
+  ],
+  "method": "independent pandas/scipy from SHA-frozen private rows; no original sequences opened",
+  "n_nonzero": 255,
+  "n_original_zero": 4,
+  "n_species": 259,
+  "new_hypothesis_tests": false,
+  "rank_correlations": {
+    "baseline_abs_standardized_beta": -0.6137593183322646,
+    "frozen_localities": -0.3506622869799665,
+    "host_history_unique_fraction": 0.031023959769180844,
+    "max_host_residual_leverage": 0.2714372663983306,
+    "max_ibd_prediction_leverage": 0.31400086113613657
+  },
+  "single_location_replace_mean_range": [
+    0.0007452613126101664,
+    0.0020177052527677853
+  ],
+  "site_attempts": 6374,
+  "site_defined": 6373,
+  "strict_flip_species": 129,
+  "strict_flip_total": 420,
+  "zero_deletions_of_nonzero_baseline": 3
+}
