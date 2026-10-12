@@ -1,0 +1,27 @@
+# TTF historical host memory: exploratory synthesis after the consumed one-shot test (2026-10-12)
+
+**The frozen 259-species confirmatory statistic remains `NOT_EVALUABLE_EMPIRICAL_RESPONSE`.** Four mask-qualified COI species had zero genetic response variance, so the original statistic and p-value were undefined. The exploratory results below do not replace or rescue that test and provide **no empirical confirmation of LGM host memory**.
+
+## Three distinct things the existing data can show
+
+**1. Effect signs are often near the stability boundary.** The previously fixed locality-withholding records cover 6,374 attempted exclusions, 6,373 defined variants. Among the 255 species with defined original standardized genetic coefficients, 129 had at least one one-locality sign reversal. Yet there were only 420 reversed signs among 6,308 defined exclusions for those species (6.66%). A per-species “ever flipped” outcome must not be interpreted as a typical locality deletion risk or a false-positive rate. The other four species have zero COI variability, not standardized zero coefficients.
+
+**2. Predictor-specific association strength describes the numerical stability more clearly than standardized beta alone.** Original partial-slope beta and original host-history unique-fraction u satisfy `r_semipartial=beta*sqrt(u)` exactly for the 255 defined species. From the lowest to highest quartile of `abs(r_semipartial)`, species with >=1 sign reversal number 56/64 (87.5%), 44/64 (68.8%), 21/63 (33.3%), 8/64 (12.5%). In a post-outcome, family-held-out, five-fold diagnostic (not a new ecological test), predicting any flip using `abs(beta)` plus locality count gave Brier loss 0.1401, compared with 0.1210 for `abs(r_semipartial)` plus locality count; recorded 1–3 host-species count worsened that score slightly to 0.1228. This improvement is compatible with the algebraic dependence of beta and the unique information fraction; it must **not** be construed as independent evidence that hosts caused genetic differentiation. Recorded host counts in the frozen HOSTS table are only a partial inventory, not species-wide realized diet breadth.
+
+**3. Some geometrically isolated sampled sites affect the coefficients more.** A separate SHA-bound geometry-only audit placed each removed locality by within-species rank of nearest-neighbor chord distance to other sampled sites. Sites whose removal reversed the coefficient averaged rank 0.5722 versus 0.5165 for other removed sites. Among the 129 species with any reversal, 82 had a higher mean nearest-neighbor-distance rank at flipping versus nonflipping sites, 47 lower. This is a **modest descriptive sampling-isolation pattern**; the rank is of sampled localities, not inferred LGM connectivity. It does not identify refugia, mountain barriers or ancient host dispersal corridors. The metric of frozen edge degree showed no comparable simple shift (flip vs other rank 0.52019 vs 0.52014).
+
+These components do not form one causal chain. Both the effect estimates and locality-deletion outcomes were computed from the **same already opened COI data**. There is no independent held-out genetic effect test in this synthesis, and no p-values or new null references were calculated.
+
+## Scope for a distinct future biological study, NOT a retrofit
+
+An independently assembled and **genetically unopened** Lepidoptera panel would be needed to test whether climate-proxy host resource opportunities have phylogeographic effects independent of neutral climate history, geographical sampling isolation, COI response variance and host-range recording completeness. Before any response is opened, such a study would have to declare a source-provenanced response-definability gate, stratified sampling coverage, independent non-mitochondrial validation when feasible, taxon/host coverage and a finite testing family. It must not silently pool the original 259 exposed species as fresh confirmatory replicates, reopen the permanently closed original development responses or retrospectively reinterpret the failed 259-species primary test as p>0.05.
+
+## Reproducible provenance
+
+- Original terminal receipt: `benchmarks/frozen/historical_host_memory_259_one_shot_empirical_result_v0.1.json`.
+- Aggregate-only effect/semipartial/CV audit: `benchmarks/exploratory/historical_host_memory_259_fragility_drivers_v0.1.json` and `scripts/audit_historical_host_memory_fragility_drivers.py` (source SHA-bound; no original sequences).
+- Independent sampling geography audit: `benchmarks/frozen/historical_host_memory_postoutcome_geographic_locality_drivers_v0.1.json` and its independent numeric check `benchmarks/frozen/historical_host_memory_postoutcome_geographic_locality_drivers_independent_v0.1.json`.
+- CI for semipartial/recorded-host-only exploratory logic: [#38221871009](https://github.com/zuizui0223/TTF/actions/runs/38221871009), **13 tests PASS**, no private genetic source in CI.
+- CI for geometry-only synthetic checks: [#38221298230](https://github.com/zuizui0223/TTF/actions/runs/38221298230), PASS.
+
+**Defensible statement:** The 259 COI panel yielded a non-evaluable primary genetic association, while post-outcome coefficient stability is strongly structured by response-derived semipartial magnitude and, more weakly, the isolation of sample locations. **Not defensible:** the present data prove or reject a general evolutionary legacy of LGM host resources.
