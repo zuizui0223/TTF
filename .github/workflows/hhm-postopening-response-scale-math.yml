@@ -1,0 +1,33 @@
+name: HHM post-opening response-scale mathematics only
+
+on:
+  push:
+    branches:
+      - exploratory/hhm-postopening-response-scale-20261012
+    paths:
+      - .github/workflows/hhm-postopening-response-scale-math.yml
+      - tests/test_hhm_postopening_response_scale_math.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-mathematics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical test dependency
+        run: python -m pip install numpy
+      - name: Check scale identity, zero variance, and unchanged frozen result
+        run: python -m unittest discover -s tests -p test_hhm_postopening_response_scale_math.py -v
+      - name: State the scope of this run
+        run: |
+          echo 'SYNTHETIC_MATH_ONLY: no private species coefficients, no genetic identity opening, no new empirical p-value.'
