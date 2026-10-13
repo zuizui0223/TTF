@@ -1,0 +1,48 @@
+{
+  "schema": "ttf_historical_host_lcp_etopo_static_mask_contract_v0.1",
+  "status": "FROZEN_BEFORE_FIRST_ETOPO_MASK_OBSERVATION_POST_CLIMATE_LCP_EXPOSURE_NOT_GENETIC_PREREGISTRATION",
+  "frozen_on": "2026-10-13",
+  "scientific_question": "Does the prior 26-locality native-CHELSA climate-only pilot ROI include modern submerged topography, and how would an illustrative uniform -120 m sea-level shift alter land availability in the static present-elevation grid?",
+  "source": {
+    "dataset": "NOAA ETOPO 2022, 15 arc-second surface elevation GeoTIFF",
+    "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N00W090_surface.tif",
+    "tile": "N00W090, fixed 0-15 N and 90-75 W tile",
+    "expected_source_sha256": "NOT_PREAVAILABLE; RECORD_REAL_DOWNLOAD_SHA256_AND_BYTES; NO_SUBSTITUTE_FILE_OR_ADAPTIVE_THRESHOLD",
+    "source_metadata": "https://www.ncei.noaa.gov/products/etopo-global-relief-model",
+    "citation": "NOAA National Centers for Environmental Information, 2022, ETOPO 2022 15 Arc-Second Global Relief Model, https://doi.org/10.25921/fd45-gt74"
+  },
+  "original_geometry": {
+    "species": "Bungalotis erythus",
+    "loc_csv_sha256": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "original_n_localities": 26,
+    "longitude_min": -85.51,
+    "longitude_max": -85.2804,
+    "latitude_min": 10.455,
+    "latitude_max": 11.05,
+    "fixed_bbox_buffer_each_side_deg": 0.12,
+    "elevation_native_crs": "EPSG:4326",
+    "use_native_etopo_15s_grid_no_reprojection": true
+  },
+  "comparison": {
+    "modern_land": "present ETOPO surface elevation > 0 m, equivalent coastal zeros classified as not dry land",
+    "static_eustatic_sensitivity": "present ETOPO surface elevation > -120 m, with a UNIFORM sea level lowering and no local glacio-isostatic adjustment, sedimentation or tectonics",
+    "fixed_sensitivity_sea_level_m": -120,
+    "null_and_nodata": "nodata and invalid ETOPO pixels are excluded, not interpreted as submerged",
+    "report": ["modern land cells", "modern submerged cells", "emergent cells under illustrative -120m", "fraction per valid original-source pixel", "sample point elevations"],
+    "no_new_hypothesis_test": true
+  },
+  "hard_boundaries": {
+    "not_a_true_21ka_paleoshoreline": true,
+    "no_ice_sheet_or_GIA_reconstruction": true,
+    "not_a_source_matched_CHELSA_pixel_mask": true,
+    "no_recomputed_host_LCP_without_an_explicit_separate_sensitivity_protocol": true,
+    "no_adaptive_sea_level_cutoffs_or_bounding_region_changes": true,
+    "no_phenological_host_occupancy_claim": true,
+    "no_COI_sequences_distances_or_genetic_p_values": true,
+    "original_259_confirmatory_state_unchanged": "NOT_EVALUABLE_EMPIRICAL_RESPONSE"
+  },
+  "references": [
+    "Lambeck et al. 2014 PNAS https://doi.org/10.1073/pnas.1411762111 (global sea-level history, NOT a local Costa Rica 21ka sea-level curve)",
+    "NOAA ETOPO 2022 15 arc-second https://doi.org/10.25921/fd45-gt74 (current relief and bathymetry, NOT ancient topography)"
+  ]
+}
