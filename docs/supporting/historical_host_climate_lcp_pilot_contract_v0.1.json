@@ -1,0 +1,61 @@
+{
+  "schema": "ttf_exploratory_host_climate_lcp_pilot_contract_v0.1",
+  "status": "FIXED_PILOT_RULES_BEFORE_NEW_CORRIDOR_OUTCOME_NOT_GENETIC_PREREGISTRATION",
+  "date": "2026-10-13",
+  "scope": "Exploratory CHELSA 21ka vs 0BP climate-only least-cost habitat analogue connectivity pilot; NO new nucleotide identity, genetic distance or genetic effect.",
+  "one_fixed_pilot_species": "Bungalotis erythus",
+  "reason_for_selection": "26 frozen original sample localities within 10.455-11.05N, 85.51-85.2804W; a compact native-CHELSA ROI and three recorded accepted host plants. Original species COI status has previously been exposed, so this is NOT independent genetic validation.",
+  "original_species_sample_geometry": {"n_localities": 26, "n_edges": 64},
+  "source_sha256": {
+    "candidates": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "localities": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "edges": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+    "host_pairs": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "native_units": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558",
+    "wgsrpd_support": "d0fc12f635ec56a442dd37dec06cf3aa06684a00b14f1bb1f2db2f6fe3c4a21f",
+    "frozen_edge_predictors": "70b748d588d9ab10309ace080f85b8053c6e14aa96d7a84288724c1000272a5b",
+    "original_eight_raster_staged_zip": "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2",
+    "raster_manifest": "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450"
+  },
+  "raster": {
+    "provider": "CHELSA-TraCE21k-centennial-bioclim v1.0",
+    "variables_order": ["bio01", "bio07", "bio12", "bio15"],
+    "time_indices": [-190, 20],
+    "native_crs": "EPSG:4326",
+    "grid": "use unchanged raster native geotransform and grid resolution; crop to bounding rectangle of frozen 26 sample coordinates plus 0.12 degrees on every side; window snapped OUTWARD to the source grid",
+    "padding_degree_each_side": 0.12,
+    "maximum_window_cells": 15000,
+    "require_same_pixel_alignment_across_eight_tiffs": true,
+    "nodata": "An invalid value in any of the four time-specific bioclim layers yields an impassable cell; no extrapolation or nearest-valid-cell snapping. Both endpoint cells must be finite in BOTH periods.",
+    "historical_terrestrial_and_ice_mask": "NOT_AVAILABLE_FOR_PILOT; raster climate validity is NOT evidence of a true paleocoastline, ice-free land, or a traversable physical landscape"
+  },
+  "analogues": {
+    "normalization": "mean and population SD across all finite original 0BP WGSRPD3 support climates across four variables, frozen from old materialization algorithm",
+    "host_reference": "3 fixed original accepted host species, native WGSRPD3 unit-union 0BP point cloud; exact nearest-neighbor Euclidean distance in standardized four-var climate space",
+    "self_reference": "0BP standardized climates of the 26 original insect sample localities, finite only; no genetic data",
+    "cell_cost": "1 + nearest-neighbor 4D Euclidean standardized climate distance to host or self reference cloud, positive dimensionless penalty"
+  },
+  "connectivity": {
+    "algorithm": "undirected Dijkstra on raster nodes with N/S/E/W 4-neighbor edges only",
+    "edge_weight": "haversine great-circle center-to-center length in km times arithmetic mean endpoint cell costs",
+    "original_edges": "exact 64 frozen species locality pairs; no backfill or repaired edges",
+    "endpoint_mapping": "source native raster cell containing exact original (lon,lat); if either cell invalid, pilot is NOT_EVALUABLE; do not snap elsewhere",
+    "zero_same_grid_cell_edges": "keep exact zero raster path as discretization note, never impute a positive path; do not silently log-transform zero",
+    "computed_scenarios": ["host_0BP", "host_LGM", "self_0BP", "self_LGM"],
+    "derived": "delta_host=R_host_LGM-R_host_0BP; delta_self=R_self_LGM-R_self_0BP; unique=delta_host-delta_self in pixel-center cost-km",
+    "boundary_sensitivity": "Pilot fixed ROI only; NO inference on geographic pathways outside bounding box. Future ROI/grid/paleomask sensitivity needs separately disclosed fresh protocol."
+  },
+  "verification": {
+    "frozen_old_five_point_predictor_replay": "Recompute existing M_host, D_host_0BP and M_self on all 64 frozen edges by sampling original eight rasters at original great-circle interior fractions; compare to untouched frozen predictor CSV within absolute 1e-8",
+    "algorithmic_tests": "independent 4-neighbor graph explicit shortest path on toy lattices, off-axis route improvement, invariance to additive scale baseline for uniform grid, ocean/invalid endpoint stop, native window bounds",
+    "terminal_failure": "NOT_EVALUABLE_CLIMATE_CORRIDOR_PILOT; no threshold/grid/domain adjustments after inspecting outcome"
+  },
+  "firewall": {
+    "original_259_one_shot_status": "NOT_EVALUABLE_EMPIRICAL_RESPONSE",
+    "new_genetic_response_access": false,
+    "genetic_effect_claim": false,
+    "historical_host_occupancy_claim": false,
+    "true_land_or_ice_barrier_claim": false,
+    "hypothesis_confirmed": false
+  }
+}
