@@ -33,6 +33,13 @@ The small-graph tendency must be explicitly shown instead of calling raw partial
 
 The previous `M_host` sampled nearest **modern recorded host-climate analogs** at five points on the **straight great-circle** between current insect sampling localities. The current cloud was projected against the CHELSA-TraCE21k LGM and present climate. This is a **mean climatic mismatch**. It does **not** show (i) actual larval host plants at the LGM, (ii) a connected spatial corridor, (iii) temporal persistence of host associations, (iv) realized movement, or (v) a population genetic causal barrier.
 
+
+### Constructive proof that the archived five-point mean cannot identify connectivity
+
+A **synthetic, non-biological** 9×9-grid counterexample gives two landscapes with the **same cost of 20.0** at all five straight-line interior sample positions, and thus the same five-point mean, but different off-axis routes. A four-neighbor Dijkstra scan yields a least-cost distance of **10.0** when an alternative route exists, versus **141.0** otherwise. These are arbitrary grid units, not CHELSA values or reconstructed ancient migration costs. The deterministic demonstration is `scripts/probe_host_corridor_nonidentifiability.py`, its fixture tests are `tests/test_host_corridor_counterexample.py`, and its public result is `benchmarks/exploratory/synthetic_host_corridor_nonidentifiability_v0.1.json`.
+
+**This proves a structural non-identifiability of the existing *summary measurement*.** No significance tests, host occupancy claims or new genetic data are implied by the toy.
+
 ## Separate fresh biological question (NOT a retrospective rescue)
 
 > When present sample spacing, intrinsic insect climate opportunity and geometric distance are accounted for, do **independently inferred LGM host-climate corridor bottlenecks** predict subsequent genetic turnover in a **new, response-unopened and taxon-disjoint genetic panel**?
