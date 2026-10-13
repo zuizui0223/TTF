@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 
 ROOT=Path(__file__).resolve().parents[1]
-REPORT=ROOT/'benchmarks/host_memory_sampling_overlap_v0.1.json'
+REPORT=ROOT/'benchmarks/exploratory/host_memory_sampling_overlap_v0.1.json'
 
 
 def test_public_641_external_predictor_geography_domain_and_consumed_original():
