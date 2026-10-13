@@ -36,6 +36,33 @@ TIMES={'0BP':20,'LGM':-190}
 VARS=('bio01','bio07','bio12','bio15')
 
 
+def verify_pilot_source_bindings(rule):
+    """Validate exact bytes through their *published* field names.
+
+    This function repairs only a 2026-10-13 field-name mapping error,
+    not the pilot's scientific parameters, frozen sources, or estimand.
+    """
+    declared=rule.get('source_sha256')
+    if not isinstance(declared,dict):
+        raise RuntimeError('frozen source binding dictionary missing')
+    mapping={
+        'candidates':'candidates',
+        'localities':'localities',
+        'edges':'edges',
+        'host_pairs':'host_pairs',
+        'native_units':'native_units',
+        'wgsrpd_support':'wgsrpd_support',
+        'frozen_predictors':'frozen_edge_predictors',
+        'manifest':'raster_manifest',
+    }
+    if any(declared.get(public_key)!=BASE_SOURCE_SHA[internal_key]
+           for internal_key,public_key in mapping.items()):
+        raise RuntimeError('frozen pilot source binding drift')
+    if declared.get('original_eight_raster_staged_zip')!='0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2':
+        raise RuntimeError('frozen pilot external CHELSA source binding drift')
+    return True
+
+
 class ClimateCorridorNotEvaluable(RuntimeError):
     """Terminal failure for this fixed exploratory climate-only pilot."""
 
@@ -213,8 +240,7 @@ def main():
         raise RuntimeError('exploratory fixed pilot contract status/species drift')
     if sha256_file(a.contract)!='a46e8c61bbc07e3b093c4664b12825c7b193455be99d457d8d96343a358d5ef7':
         raise RuntimeError('frozen pilot cost/ROI/algorithm contract bytes changed')
-    if any(rule['source_sha256'].get(k)!=v for k,v in BASE_SOURCE_SHA.items() if k!='manifest') or rule['source_sha256']['raster_manifest']!=BASE_SOURCE_SHA['manifest']:
-        raise RuntimeError('pilot contract source binding drift')
+    verify_pilot_source_bindings(rule)
     for name,expected in BASE_SOURCE_SHA.items():
         pth=getattr(a,name)
         if sha256_file(pth)!=expected:
