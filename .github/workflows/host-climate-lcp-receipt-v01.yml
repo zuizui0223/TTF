@@ -1,0 +1,58 @@
+name: Historical host-memory CHELSA native LCP archived result QA (no genetic responses)
+
+on:
+  push:
+    branches:
+      - exploratory/host-climate-corridor-chelsa-pilot-v0-1
+    paths:
+      - '.github/workflows/host-climate-lcp-receipt-v01.yml'
+      - 'scripts/audit_historical_host_climate_lcp_geometry.py'
+      - 'tests/test_historical_host_climate_lcp_pilot_receipt_v01.py'
+      - 'tests/test_historical_host_climate_lcp_geometry_audit_v01.py'
+      - 'benchmarks/exploratory/historical_host_climate_lcp_bungalotis_64edges_v0.1.csv'
+      - 'benchmarks/exploratory/historical_host_climate_lcp_bungalotis_summary_v0.1.json'
+      - 'benchmarks/exploratory/historical_host_climate_lcp_bungalotis_geometry_audit_v0.1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  archived-climate-result-and-distance-scale-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install native TTF test dependencies
+        run: python -m pip install -e '.[test]'
+      - name: Verify immutable 64-edge external climate result and geometry-only diagnostic
+        run: |
+          set -euo pipefail
+          python -m pytest -q \
+            tests/test_historical_host_climate_lcp_pilot_receipt_v01.py \
+            tests/test_historical_host_climate_lcp_geometry_audit_v01.py
+          python scripts/audit_historical_host_climate_lcp_geometry.py \
+            --pilot-summary benchmarks/exploratory/historical_host_climate_lcp_bungalotis_summary_v0.1.json \
+            --pilot-edges benchmarks/exploratory/historical_host_climate_lcp_bungalotis_64edges_v0.1.csv \
+            --output /tmp/historical_host_climate_lcp_geometry_audit_v0.1.json
+          cmp /tmp/historical_host_climate_lcp_geometry_audit_v0.1.json \
+            benchmarks/exploratory/historical_host_climate_lcp_bungalotis_geometry_audit_v0.1.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          summary=json.loads(Path('benchmarks/exploratory/historical_host_climate_lcp_bungalotis_summary_v0.1.json').read_text())
+          audit=json.loads(Path('benchmarks/exploratory/historical_host_climate_lcp_bungalotis_geometry_audit_v0.1.json').read_text())
+          assert summary['ecological_boundary']['COI_genetic_response_used'] is False
+          assert audit['diagnostics']['no_genetic_effect_or_p_value'] is True
+          assert audit['counts']['host_LGM_cost_higher']==63
+          assert audit['counts']['host_minus_self_negative']==63
+          assert audit['host_0bp_climate_cloud_points']==665
+          assert audit['self_0bp_climate_cloud_points']==26
+          print('PASS_CLIMATE_ONLY_NATIVE_LCP_SOURCE_ARCHIVE__NO_GENETIC_RESULT')
+          PY
