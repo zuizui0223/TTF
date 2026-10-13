@@ -1,0 +1,17 @@
+{
+  "class": "SYNTHETIC_NONIDENTIFIABILITY_EXAMPLE",
+  "conclusion": "Equal five-site straight-line mean resistance does not identify connectivity when off-axis routes differ.",
+  "five_point_straight_line_cost": {
+    "with_alternative_corridor": 20.0,
+    "without_alternative_corridor": 20.0
+  },
+  "illustrative_four_neighbor_only": true,
+  "least_cost_distance": {
+    "with_alternative_corridor": 10.0,
+    "without_alternative_corridor": 141.0
+  },
+  "not_a_new_genetic_test": true,
+  "not_an_ancient_host_occurrence_model": true,
+  "not_an_empirical_LGM_result": true,
+  "units": "arbitrary artificial grid resistance per cardinal step"
+}
