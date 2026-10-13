@@ -158,3 +158,14 @@ def test_native_chelsa_patch_rejects_misaligned_variable_or_time(tmp_path):
         ds.write(np.full((200,200),10,dtype='float32'),1)
     with pytest.raises(m.ClimateCorridorNotEvaluable,match='different native grid'):
         m.check_assets_and_read_native_window(assets,lo,la)
+
+
+def test_original_source_bindings_use_frozen_contract_field_names():
+    m=load()
+    import json
+    rule=json.loads((SCRIPT.parents[1]/'docs/corridor_climate_pilot_contract_v0.1.json').read_text())
+    assert m.verify_pilot_source_bindings(rule) is True
+    damaged=json.loads(json.dumps(rule))
+    damaged['source_sha256']['frozen_edge_predictors']='0'*64
+    with pytest.raises(RuntimeError,match='source binding'):
+        m.verify_pilot_source_bindings(damaged)
