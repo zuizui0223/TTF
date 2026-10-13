@@ -1,0 +1,51 @@
+{
+  "counts": {
+    "host_LGM_cost_equal": 1,
+    "host_LGM_cost_higher": 63,
+    "host_minus_self_equal": 1,
+    "host_minus_self_negative": 63,
+    "same_cell_zero_path_edges": 1,
+    "self_LGM_cost_equal": 1,
+    "self_LGM_cost_higher": 63
+  },
+  "diagnostics": {
+    "all_64_edges_share_26_locations_not_independent": true,
+    "cloud_support_size_asymmetry_makes_cross_reference_resistance_not_directly_comparable": true,
+    "distance_normalization_is_descriptive_not_an_alternative_hypothesis_test": true,
+    "modern_host_niche_is_not_proven_LGM_plant_occupancy": true,
+    "no_genetic_effect_or_p_value": true,
+    "no_new_genetic_response_read": true,
+    "no_paleo_land_ice_mask": true,
+    "one_same_raster_cell_path_zero_is_resolution_artifact": true,
+    "original_259_confirmatory_status": "NOT_EVALUABLE_EMPIRICAL_RESPONSE",
+    "original_climate_cost_metric_not_retuned": true
+  },
+  "geometry_association": {
+    "pearson_original_chord_vs_host_delta": 0.9130325701482908,
+    "pearson_original_chord_vs_host_minus_self_delta": -0.9531870978312158,
+    "pearson_original_chord_vs_self_delta": 0.9522569431733867
+  },
+  "host_0bp_climate_cloud_points": 665,
+  "input_sha256": {
+    "original_artifact_zip": "0a955188675f98e1597e6b2f59b7ba31e09aa6b640f745a0459976cb06c50aa3",
+    "pilot_edges": "7d255b208a485e7bc6d02e4e5748781c5e10170ed8bf161542dce3135c897b3b",
+    "pilot_summary": "6969f482a1967db2db159cbc5fd62b722268a0fc45d7dcd1b979f1973b9a3493"
+  },
+  "n_original_edges": 64,
+  "original_aggregate_mean_delta_host": 1.665783407966145,
+  "original_aggregate_mean_delta_self": 17.794186622317866,
+  "pairwise_km_normalized": {
+    "host_mean_delta_per_original_chord_km": 0.23429109506988732,
+    "host_median_delta_per_original_chord_km": 0.23082467005225535,
+    "host_minus_self_mean_delta_per_original_chord_km": -2.4459112461424386,
+    "self_mean_delta_per_original_chord_km": 2.6802023412123255,
+    "self_median_delta_per_original_chord_km": 2.7435627698375207
+  },
+  "same_cell_original_edge_ids": [
+    39
+  ],
+  "schema": "ttf_historical_host_climate_native_LCP_geometry_diagnostic_v0.1",
+  "self_0bp_climate_cloud_points": 26,
+  "species": "Bungalotis erythus",
+  "status": "EXPLORATORY_CLIMATE_ONLY_GEO_NORMALIZATION"
+}
