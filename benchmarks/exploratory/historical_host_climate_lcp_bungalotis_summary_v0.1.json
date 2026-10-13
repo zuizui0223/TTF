@@ -1,0 +1,104 @@
+{
+  "change_LGM_minus_present_cost_km": {
+    "host": {
+      "max": 12.488923175102087,
+      "mean": 1.665783407966145,
+      "median": 1.104363982657191,
+      "min": 0.0
+    },
+    "host_minus_insect_self": {
+      "max": 0.0,
+      "mean": -16.12840321435172,
+      "median": -11.77154605929287,
+      "min": -82.44351266099761
+    },
+    "insect_self": {
+      "max": 94.9324358360997,
+      "mean": 17.794186622317866,
+      "median": 12.90530609575731,
+      "min": 0.0
+    }
+  },
+  "contract_sha256": "a46e8c61bbc07e3b093c4664b12825c7b193455be99d457d8d96343a358d5ef7",
+  "cost_distance_km": {
+    "host_0BP": {
+      "max": 64.78230327712812,
+      "mean": 10.386319734545099,
+      "median": 6.41490903371906,
+      "min": 0.0
+    },
+    "host_LGM": {
+      "max": 73.07703181317004,
+      "mean": 12.052103142511244,
+      "median": 7.823011580338402,
+      "min": 0.0
+    },
+    "self_0BP": {
+      "max": 62.79831719850949,
+      "mean": 9.550572673133976,
+      "median": 5.627283772804378,
+      "min": 0.0
+    },
+    "self_LGM": {
+      "max": 154.20814263565458,
+      "mean": 27.344759295451844,
+      "median": 18.753769356644447,
+      "min": 0.0
+    }
+  },
+  "ecological_boundary": {
+    "COI_genetic_response_used": false,
+    "ROI_boundary_can_artificially_limit_detours": true,
+    "finite_climate_pixels_not_verified_land": true,
+    "fivepoint_straight_climate_average_is_not_two_dimensional_connectivity": true,
+    "modern_host_climate_analogue_is_not_ancient_host_occupancy": true,
+    "no_genetic_effect_p_value": true,
+    "no_paleo_land_or_ice_mask_accepted": true,
+    "original_259_empirical_result": "NOT_EVALUABLE_EMPIRICAL_RESPONSE",
+    "pilot_not_confirmatory_or_source_disjoint": true
+  },
+  "fraction_host_change_positive": 0.984375,
+  "fraction_unique_change_positive": 0.0,
+  "frozen_5point_predictor_max_abs_error": {
+    "D_host_0BP": 0.0,
+    "D_host_LGM": 0.0,
+    "D_self_0BP": 0.0,
+    "D_self_LGM": 0.0,
+    "M_host": 0.0,
+    "M_self": 0.0
+  },
+  "host_0bp_climate_cloud_points": 665,
+  "host_accepted_ids": [
+    "539386",
+    "61582",
+    "61597"
+  ],
+  "joint_valid_cells": 5757,
+  "localities": 26,
+  "native_raster": {
+    "col_offset": 11324,
+    "cols": 57,
+    "native_pixel_lat_degrees": 0.0083333333,
+    "native_pixel_lon_degrees": 0.0083333333,
+    "row_offset": 8739,
+    "rows": 101
+  },
+  "original_edges": 64,
+  "output_edges_sha256": "7d255b208a485e7bc6d02e4e5748781c5e10170ed8bf161542dce3135c897b3b",
+  "reference_climate_points": 6343,
+  "same_cell_original_edges": 1,
+  "schema": "ttf_bungalotis_host_climate_corridor_pilot_v0.1",
+  "self_0bp_climate_cloud_points": 26,
+  "source_sha256": {
+    "candidates": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "edges": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+    "frozen_predictors": "70b748d588d9ab10309ace080f85b8053c6e14aa96d7a84288724c1000272a5b",
+    "host_pairs": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "localities": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "manifest": "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450",
+    "native_units": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558",
+    "wgsrpd_support": "d0fc12f635ec56a442dd37dec06cf3aa06684a00b14f1bb1f2db2f6fe3c4a21f"
+  },
+  "species": "Bungalotis erythus",
+  "status": "PASS_CHELSA_CLIMATE_ONLY_PILOT_NO_LAND_ICE_MASK"
+}
