@@ -51,6 +51,12 @@ jobs:
             --output input/etopo/ETOPO_2022_v1_15s_N00W090_surface.tif
           test -s input/etopo/ETOPO_2022_v1_15s_N00W090_surface.tif
           sha256sum input/etopo/ETOPO_2022_v1_15s_N00W090_surface.tif
+          echo '2ccc323904068cf42d36be32d19cd68f8d47579dc4d502b8ed7955af8ffb5fd4  input/etopo/ETOPO_2022_v1_15s_N00W090_surface.tif' | sha256sum -c -
+          python - <<'PYMETA'
+          import rasterio
+          with rasterio.open('input/etopo/ETOPO_2022_v1_15s_N00W090_surface.tif') as ds:
+              print('ETOPO_FIXED_SOURCE_METADATA',dict(driver=ds.driver,crs=str(ds.crs),epsg=ds.crs.to_epsg() if ds.crs else None,bands=ds.count,shape=ds.shape,bounds=tuple(ds.bounds),transform=tuple(ds.transform),nodata=ds.nodata))
+          PYMETA
       - name: Quantify CURRENT land and illustrative static -120m differences, NOT palaeo coastlines
         shell: bash
         run: |
