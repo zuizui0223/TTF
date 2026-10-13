@@ -9,6 +9,9 @@ on:
       - 'scripts/audit_host_memory_sampling_geometry.py'
       - 'tests/test_host_sampling_confound.py'
       - 'tests/test_host_sampling_receipt.py'
+      - 'scripts/probe_host_corridor_nonidentifiability.py'
+      - 'tests/test_host_corridor_counterexample.py'
+      - 'benchmarks/exploratory/synthetic_host_corridor_nonidentifiability_v0.1.json'
       - 'benchmarks/exploratory/host_memory_sampling_overlap_v0.1.json'
   workflow_dispatch:
 
@@ -32,7 +35,7 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install -e '.[test]'
-          python -m pytest -q tests/test_host_sampling_confound.py tests/test_host_sampling_receipt.py
+          python -m pytest -q tests/test_host_sampling_confound.py tests/test_host_sampling_receipt.py tests/test_host_corridor_counterexample.py
       - name: Restore frozen 642-species external geography only
         run: |
           set -euo pipefail
@@ -79,9 +82,26 @@ jobs:
           assert a['interpretation']['original_259_empirical_status']=='NOT_EVALUABLE_EMPIRICAL_RESPONSE'
           print('PASS_PREVIOUSLY_FROZEN_641_SPECIES_EXTERNAL_ONLY__NO_NEW_GENETIC_TEST')
           PY
+      - name: Verify same five-point cost can hide different illustrative 2D corridors
+        run: |
+          set -euo pipefail
+          python scripts/probe_host_corridor_nonidentifiability.py \
+            --output results/synthetic_host_corridor_nonidentifiability_v0.1.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('results/synthetic_host_corridor_nonidentifiability_v0.1.json')
+          q=Path('benchmarks/exploratory/synthetic_host_corridor_nonidentifiability_v0.1.json')
+          assert json.loads(p.read_text())==json.loads(q.read_text())
+          d=json.loads(q.read_text())
+          assert d['five_point_straight_line_cost']=={'with_alternative_corridor':20.0,'without_alternative_corridor':20.0}
+          assert d['least_cost_distance']=={'with_alternative_corridor':10.0,'without_alternative_corridor':141.0}
+          assert d['not_an_empirical_LGM_result'] is True
+          print('PASS_SYNTHETIC_FIVE_POINT_VERSUS_CORRIDOR_NONIDENTIFIABILITY_ONLY')
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: host-memory-sampling-geometry-only-v0.1
-          path: results/host_memory_sampling_overlap_v0.1.json
+          path: results/*.json
           retention-days: 30
           if-no-files-found: error
