@@ -1,0 +1,41 @@
+{
+  "schema": "ttf_etopo_N15W090_source_pin_v0.2",
+  "source_stage": "SOURCE_BYTES_AND_HEADER_ONLY_NO_ELEVATION_VALUES",
+  "provenance_observed_on": "2026-10-15",
+  "metadata_workflow_run_id": 38673983044,
+  "metadata_workflow_artifact_id": 11944988218,
+  "metadata_workflow_artifact_name": "etopo2022-N15W090-metadata-and-exact-public-tif-v0.2",
+  "frozen_contract_path": "docs/supporting/historical_host_lcp_etopo_static_mask_contract_v0.2.json",
+  "frozen_contract_sha256": "af9a7c3aa0b6c9708d9fc26e13a1ca52ac8181f3254a4d4d92618792dd9431a6",
+  "canonical_file_name": "ETOPO_2022_v1_15s_N15W090_surface.tif",
+  "download_url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N15W090_surface.tif",
+  "exact_bytes": 23311599,
+  "exact_sha256": "2e0f33efebcbe6cc50f3a6dc7c13c78f46e04f648b5f6f3a5ca180c8a5c2f35c",
+  "header": {
+    "driver": "GTiff",
+    "compound_crs": "EPSG:9518",
+    "horizontal_crs": "EPSG:4326",
+    "vertical_crs": "EPSG:3855",
+    "count": 1,
+    "shape": [
+      3600,
+      3600
+    ],
+    "bounds": [
+      -90,
+      0,
+      -75,
+      15
+    ],
+    "pixel_scale": [
+      0.004166666666666667,
+      -0.004166666666666667
+    ],
+    "nodata": -99999
+  },
+  "no_elevation_read_before_pin": true,
+  "no_genetic_response_used": true,
+  "no_historical_shoreline_reconstruction": true,
+  "original_259_confirmatory_status": "NOT_EVALUABLE_EMPIRICAL_RESPONSE",
+  "correction_from_v01": "Only source tile correction N00W090 to N15W090 and compound CRS recognition; v0.1 record retained as failed, v0.2 land threshold unchanged."
+}
