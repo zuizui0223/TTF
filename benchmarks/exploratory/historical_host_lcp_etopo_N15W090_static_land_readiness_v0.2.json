@@ -1,0 +1,71 @@
+{
+  "endpoint_sampling": {
+    "maximum_elevation_m": 1008.37451171875,
+    "minimum_elevation_m": 147.65382385253906,
+    "n_finite_elevations": 26,
+    "n_land_above_present_sea_level": 26,
+    "n_land_under_static_minus120m_sensitivity": 26,
+    "n_original_localities": 26
+  },
+  "frozen_contract_sha256": "af9a7c3aa0b6c9708d9fc26e13a1ca52ac8181f3254a4d4d92618792dd9431a6",
+  "native_etopo_window": {
+    "cells": 22914,
+    "col_offset": 1048,
+    "cols": 114,
+    "current_submerged_cells": 0,
+    "modern_land_cells": 22914,
+    "modern_land_fraction_of_valid": 1.0,
+    "newly_emerged_under_static_minus120m_cells": 0,
+    "row_offset": 919,
+    "rows": 201,
+    "static_minus120m_land_cells": 22914,
+    "static_minus120m_land_fraction_of_valid": 1.0,
+    "valid_elevation_cells": 22914
+  },
+  "native_source_crs": "EPSG:9518",
+  "native_source_epsg": 9518,
+  "original_bbox": [
+    -85.51,
+    10.455,
+    -85.2804,
+    11.05
+  ],
+  "original_locality_geometry_sha256": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+  "original_source_metadata": {
+    "bounds": [
+      -90.0,
+      0.0,
+      -75.0,
+      15.0
+    ],
+    "crs": "EPSG:9518",
+    "driver": "GTiff",
+    "epsg": 9518,
+    "nodata": -99999.0,
+    "pixel_size": [
+      0.004166666666666667,
+      -0.004166666666666667
+    ],
+    "shape": [
+      3600,
+      3600
+    ]
+  },
+  "schema": "ttf_hhm_etopo_N15W090_static_topographic_mask_v0.2",
+  "scientific_boundary": {
+    "COI_genetic_effect_used": false,
+    "ETOPO_present_topography_not_LGM_reconstruction": true,
+    "ignores_GIA_tectonics_eustatic_history_ice": true,
+    "no_new_p_value_or_genetic_retest": true,
+    "not_a_verified_paleo_coastline": true,
+    "not_resampled_to_original_CHELSA_grid": true,
+    "original_259_primary": "NOT_EVALUABLE_EMPIRICAL_RESPONSE",
+    "original_climate_lcp_unchanged": true,
+    "source_not_connected_to_original_Dijkstra_raster_yet": true
+  },
+  "source_file_bytes": 23311599,
+  "source_file_sha256": "2e0f33efebcbe6cc50f3a6dc7c13c78f46e04f648b5f6f3a5ca180c8a5c2f35c",
+  "source_metadata_verified_before_topography_read": true,
+  "source_pin_sha256": "fbbf3a9a9078eca0a9cbf95cc6dd402e1403c600851f89403cb97505863e2c48",
+  "status": "EXPLORATORY_ETOPO_PRESENT_LAND_AND_ILLUSTRATIVE_MINUS120M_ONLY"
+}
