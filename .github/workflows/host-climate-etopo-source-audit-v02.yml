@@ -1,0 +1,75 @@
+name: TTF NOAA ETOPO corrected N15W090 source metadata (no elevation read)
+on:
+  push:
+    branches:
+      - exploratory/host-climate-corridor-chelsa-pilot-v0-1
+    paths:
+      - '.github/workflows/host-climate-etopo-source-audit-v02.yml'
+      - 'docs/supporting/historical_host_lcp_etopo_static_mask_contract_v0.2.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  correct-tile-metadata-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install raster metadata reader
+        run: python -m pip install 'rasterio>=1.4,<2'
+      - name: Download ONLY the named N15W090 surface tile; validate header without sample values
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p input/source results/metadata
+          curl --fail --location --silent --show-error --retry 3 --retry-delay 3 \
+            --connect-timeout 30 --max-time 200 \
+            'https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N15W090_surface.tif' \
+            --output input/source/ETOPO_2022_v1_15s_N15W090_surface.tif
+          test -s input/source/ETOPO_2022_v1_15s_N15W090_surface.tif
+          sha256sum input/source/ETOPO_2022_v1_15s_N15W090_surface.tif
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          import rasterio
+          p=Path('input/source/ETOPO_2022_v1_15s_N15W090_surface.tif')
+          contract=Path('docs/supporting/historical_host_lcp_etopo_static_mask_contract_v0.2.json')
+          x=json.loads(contract.read_text())
+          assert x['status']=='POST_FAILED_SOURCE_TRANSPORT_CORRECTION_FROZEN_BEFORE_FIRST_VALID_ROI_TOPOGRAPHY_READ'
+          assert x['source']['basename']==p.name
+          assert x['source']['mandatory_horizontal_crs']=='EPSG:4326'
+          with rasterio.open(p) as ds:
+              md=dict(driver=ds.driver,epsg=ds.crs.to_epsg() if ds.crs else None,
+                      crs=str(ds.crs),count=ds.count,
+                      bounds=[float(v) for v in ds.bounds],
+                      height=int(ds.height),width=int(ds.width),
+                      pixel_size=[float(ds.transform.a),float(ds.transform.e)],
+                      nodata=ds.nodata)
+          assert md['driver']=='GTiff'
+          assert md['epsg']==9518, md
+          assert md['count']==1
+          assert [md['height'],md['width']]==[3600,3600]
+          assert all(abs(a-b)<1e-8 for a,b in zip(md['bounds'],[-90.0,0.0,-75.0,15.0]))
+          assert abs(md['pixel_size'][0]-1/240)<1e-10
+          assert abs(md['pixel_size'][1]+1/240)<1e-10
+          h=hashlib.sha256(p.read_bytes()).hexdigest()
+          out=dict(schema='ttf_etopo_N15W090_correct_tile_metadata_v0.2',
+                   stage='SOURCE_BYTES_AND_HEADER_ONLY_NO_ELEVATION_VALUES',
+                   contract_sha256=hashlib.sha256(contract.read_bytes()).hexdigest(),
+                   file_sha256=h,file_bytes=p.stat().st_size,metadata=md,
+                   no_land_counts_or_endpoint_elevations_observed=True,
+                   no_genetics_or_ancient_coastline_inferred=True)
+          Path('results/metadata/source_metadata_v0.2.json').write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
+          print('CORRECT_N15W090_SOURCE_METADATA_NO_DATA_READ',json.dumps(out,sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: etopo2022-N15W090-metadata-and-exact-public-tif-v0.2
+          path: |
+            input/source/ETOPO_2022_v1_15s_N15W090_surface.tif
+            results/metadata/source_metadata_v0.2.json
+          retention-days: 30
+          if-no-files-found: error
