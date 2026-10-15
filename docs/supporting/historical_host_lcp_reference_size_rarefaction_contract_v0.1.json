@@ -1,0 +1,77 @@
+{
+  "schema": "ttf_hhm_bungalotis_host_cloud_rarefaction_v0.1",
+  "status": "POST_LCP_OUTCOME_EXPLORATORY_FIXED_BEFORE_FIRST_HOST_RAREFACTION_RESULT",
+  "frozen_on": "2026-10-15",
+  "parent_climate_lcp_contract_sha256": "a46e8c61bbc07e3b093c4664b12825c7b193455be99d457d8d96343a358d5ef7",
+  "parent_etopo_land_result_sha256": "9b793cf4d249f3447a66b20193a443553570fdb6d46e1086501060ba9ce2a8f3",
+  "question": "How much of the host-vs-insect self LGM-to-present climate corridor contrast depends on the different numbers of contemporary climate reference support points, 665 vs 26?",
+  "species": "Bungalotis erythus",
+  "original_localities": 26,
+  "original_edges": 64,
+  "original_native_chelsa_roi": [
+    101,
+    57
+  ],
+  "original_climate_reference_n": 6343,
+  "original_host_cloud_n": 665,
+  "original_self_cloud_n": 26,
+  "source_sha256": {
+    "candidates": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "localities": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "edges": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+    "accepted_host_pairs": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "native_units": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558",
+    "wgsrpd_support": "d0fc12f635ec56a442dd37dec06cf3aa06684a00b14f1bb1f2db2f6fe3c4a21f",
+    "original_pilot_edges": "7d255b208a485e7bc6d02e4e5748781c5e10170ed8bf161542dce3135c897b3b",
+    "original_pilot_summary": "6969f482a1967db2db159cbc5fd62b722268a0fc45d7dcd1b979f1973b9a3493",
+    "eight_raster_archive": "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2",
+    "raster_manifest": "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450"
+  },
+  "rarefaction": {
+    "sample_size": 26,
+    "draws": 50,
+    "replace_within_draw": false,
+    "replace_across_draws": true,
+    "sampling_frame": "all exact 665 finite modern WGSRPD3 climate support vectors of the three frozen accepted host plants, uniformly over rows; no changes to taxon identities or host mapping",
+    "seed_namespace": "ttf-hhm-host-reference-26-of-665-50draws-v0.1",
+    "seed_material": "SHA256(namespace|'Bungalotis erythus'|original 64-edge pilot CSV SHA256) first 16 hex digits as integer",
+    "iterator_order": "numpy.default_rng sequential choice(665,size=26,replace=False) for draws 0..49; no adaptive repicking"
+  },
+  "unchanged_cost_operator": {
+    "climate_vars": [
+      "bio01",
+      "bio07",
+      "bio12",
+      "bio15"
+    ],
+    "periods": [
+      "-190",
+      "20"
+    ],
+    "climate_standardization": "same original 6343 finite WGSRPD3 present reference points and population SD",
+    "climate_cost": "1+nearest 4-dimensional standardized Euclidean analogue distance",
+    "geographic_sampling": "exact 26 locality and 64 edges, same 101x57 CHELSA native ROI and 4-neighbor geodetic-km graph",
+    "same_cell_path_zero_kept": true,
+    "self_reference_unchanged_26_climate_points": true,
+    "original_665_reference_baseline_must_match_exact_64_edge_csv": true
+  },
+  "reported_quantities": [
+    "original host full-665 reference LGM-minus-present mean corridor cost km",
+    "fixed insect self-26 LGM-minus-present mean corridor cost km",
+    "50 rarefied host-26 mean corridor-cost changes",
+    "minimum/median/maximum and 10th/90th quantiles across 50 draws, explicitly descriptive and NOT a confidence interval",
+    "fraction of 50 draws with host change minus self change >0 (descriptive only)"
+  ],
+  "failure": "If original sources or exact original 64-edge baseline mismatch, fail closed and report no rarefaction result; no adaptive parameter revision",
+  "guardrails": {
+    "original_259_empirical_primary": "NOT_EVALUABLE_EMPIRICAL_RESPONSE",
+    "post_hoc_exploratory": true,
+    "no_new_genetic_distance_or_beta_test": true,
+    "no_p_values_or_CI": true,
+    "same_prior_LCP_results_unchanged": true,
+    "no_historical_plant_occupancy_inferred": true,
+    "equal_n_not_equal_ecological_niche_sampling_or_coverage": true,
+    "taxonomic_and_area_support_bias_not_eliminated": true,
+    "no_true_LGM_coastline_or_ice_sheet_applied": true
+  }
+}
