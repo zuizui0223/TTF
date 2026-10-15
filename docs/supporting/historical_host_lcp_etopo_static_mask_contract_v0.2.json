@@ -1,0 +1,76 @@
+{
+  "schema": "ttf_historical_host_lcp_etopo_static_mask_contract_v0.2",
+  "status": "POST_FAILED_SOURCE_TRANSPORT_CORRECTION_FROZEN_BEFORE_FIRST_VALID_ROI_TOPOGRAPHY_READ",
+  "recorded_on": "2026-10-15",
+  "supersedes_source_only": "docs/supporting/historical_host_lcp_etopo_static_mask_contract_v0.1.json",
+  "failures_prior": [
+    {
+      "run_id": 38407040635,
+      "reason": "N00W090 tile does not cover 10.455-11.05 degrees north; source compound EPSG:9518 rejected by EPSG:4326-only code"
+    },
+    {
+      "run_id": 38407334076,
+      "reason": "confirmed EPSG:9518 and bounds (-90,-15,-75,0) using erroneous N00W090"
+    }
+  ],
+  "scientific_question": "Does the original 26-site native-CHELSA climate-only ROI contain modern submerged ETOPO terrain; how many cells would be exposed in a purely illustrative uniform static -120m change in sea-level threshold?",
+  "source": {
+    "dataset": "NOAA ETOPO 2022 v1 15-arcsecond surface elevation GeoTIFF",
+    "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N15W090_surface.tif",
+    "basename": "ETOPO_2022_v1_15s_N15W090_surface.tif",
+    "required_tile_latitude_max": 15,
+    "required_tile_latitude_min": 0,
+    "required_tile_longitude_min": -90,
+    "required_tile_longitude_max": -75,
+    "required_shape": [
+      3600,
+      3600
+    ],
+    "native_pixel_size_degrees": 0.004166666666666667,
+    "mandatory_horizontal_crs": "EPSG:4326",
+    "expected_compound_crs": "EPSG:9518 (WGS 84 + EGM2008 height)",
+    "expected_source_sha256": "TO_BE_LOCKED_AFTER_FIRST_SOURCE_DOWNLOAD_BEFORE_MASK_COMPUTATION",
+    "source_citation": "https://doi.org/10.25921/fd45-gt74",
+    "CRSs": "ETOPO stores the horizontal WGS84 with EGM2008 vertical reference as compound EPSG:9518. No coordinate or vertical elevation datum conversion is applied for this threshold-only sensitivity."
+  },
+  "original_geometry": {
+    "species": "Bungalotis erythus",
+    "localities_source_sha256": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "original_n_localities": 26,
+    "latitude_min": 10.455,
+    "latitude_max": 11.05,
+    "longitude_min": -85.51,
+    "longitude_max": -85.2804,
+    "fixed_bbox_buffer_each_side_deg": 0.12,
+    "same_original_geometry": true
+  },
+  "comparison": {
+    "modern_land": "Finite ETOPO surface elevation strictly greater than 0 meters above EGM2008 geoid",
+    "illustrative_static_minus_120m": "Finite ETOPO surface elevation strictly greater than -120 meters",
+    "newly_exposed": "Elevations in the interval (-120, 0] m, using unchanged present elevation model",
+    "fixed_threshold_m": -120,
+    "forbid_threshold_grid_search": true,
+    "report": [
+      "native pixels and finite pixels",
+      "present land pixels",
+      "present nonland pixels",
+      "additional cells at -120m",
+      "all 26 original endpoint elevations",
+      "native ROI bbox and pixel scale"
+    ],
+    "no_explicit_climate_LCP_recomputation": true
+  },
+  "scientific_firewall": {
+    "geographical_correction_not_a_scientific_threshold_change": true,
+    "original_v01_contract_unchanged": true,
+    "no_paleo_coastline_reconstruction": true,
+    "no_glacio_isostatic_or_tectonic_deformation": true,
+    "no_reproject_or_downsample_native_etopo": true,
+    "no_matching_to_CHELSA_raster_without_another_predeclared_protocol": true,
+    "no_contemporary_nor_ancient_actual_host_occupancy_inferred": true,
+    "source_mismatch_fails_closed": true,
+    "no_genetic_response_opened": true,
+    "original_confirmatory_result": "NOT_EVALUABLE_EMPIRICAL_RESPONSE",
+    "no_new_statistical_p_value": true
+  }
+}
