@@ -1,0 +1,66 @@
+{
+  "schema": "ttf_hhm_bungalotis_climate_host_cloud_26point_rarefaction_v0.1",
+  "status": "POST_OUTCOME_EXPLORATORY_TRANSPORT_AND_METHOD_FREEZE_BEFORE_RAREFACTION_RESULTS",
+  "recorded_on": "2026-10-17",
+  "study_unit": {
+    "species": "Bungalotis erythus",
+    "original_localities": 26,
+    "original_edges": 64,
+    "grid": "original CHELSA 101x57 native 0.0083333333 degree",
+    "same_cell_original_edges": 1,
+    "study_role": "EXPLORATORY_PILOT_ONLY__SOURCE_OUTCOME_EXPOSED"
+  },
+  "question": "How much of the observed host-minus-insect climate LCP differential arises from the unmatched number of available present-day climate analogue reference points (host 665 versus insect self 26)?",
+  "external_sources": {
+    "pilot_contract_sha256": "a46e8c61bbc07e3b093c4664b12825c7b193455be99d457d8d96343a358d5ef7",
+    "original_pilot_edges_sha256": "7d255b208a485e7bc6d02e4e5748781c5e10170ed8bf161542dce3135c897b3b",
+    "original_pilot_summary_sha256": "6969f482a1967db2db159cbc5fd62b722268a0fc45d7dcd1b979f1973b9a3493",
+    "candidate_sha256": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "localities_sha256": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "edges_sha256": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+    "host_pairs_sha256": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "native_units_sha256": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558",
+    "wgsrpd_support_sha256": "d0fc12f635ec56a442dd37dec06cf3aa06684a00b14f1bb1f2db2f6fe3c4a21f",
+    "climate_manifest_sha256": "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450",
+    "chelsa_eight_tif_archive_sha256": "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2"
+  },
+  "method": {
+    "fixed_climate_variables": [
+      "bio01",
+      "bio07",
+      "bio12",
+      "bio15"
+    ],
+    "time_indices": {
+      "LGM": -190,
+      "present": 20
+    },
+    "global_reference_n": 6343,
+    "host_reference_original_n": 665,
+    "insect_reference_original_n": 26,
+    "host_rarefied_n": 26,
+    "replicates": 64,
+    "randomization": "numpy.default_rng PCG64; seed = SHA256('hhm-host-26-rarefaction-v0.1|Bungalotis erythus|7d255b208a485e7bc6d02e4e5748781c5e10170ed8bf161542dce3135c897b3b') first 16 hexadecimal digits as integer",
+    "sampling": "64 independent draws without replacement of 26 vectors from the frozen 665-point unweighted WGSRPD3-unit UNION host climate cloud, by original support-row order; independent between draws",
+    "no_reweighting_host_species": true,
+    "scale": "exact frozen mean/SD of all 6343 global current WGSRPD3 reference vectors for all 4 climate variables",
+    "cell_cost": "1 + Euclidean distance to nearest of sampled 26 original modern host climate cloud vectors",
+    "movement": "original fixed 4-neighbor positively weighted native CHELSA kilometer Dijkstra, 26 frozen endpoints and 64 unchanged frozen edges; same climate-only mask and 0.12 degree ROI",
+    "self_reference": "keep the ORIGINAL 26 modern sampled insect cloud vectors fixed (no resampling), and replay its 64 original current/LGM LCP edge costs byte-comparable",
+    "baseline_replay": "require exact within 1e-8 absolute LCP for both original FULL 665 host cloud and 26 insect self reference on every original frozen edge at 0BP and LGM before any rarefaction",
+    "summary": "for each draw compute the arithmetic 64-edge mean host LGM minus present climate cost; host-minus-fixed-self mean; report mean, min/max and fixed quantiles 0.05,0.25,0.5,0.75,0.95 over 64 draws",
+    "inference": "sample-size sensitivity over the existing host cloud only, not confidence intervals, significance tests, historical occupancy or causal effect"
+  },
+  "guardrails": {
+    "no_new_genetic_response_opening": true,
+    "no_genetic_distance_or_phenotype_inputs": true,
+    "no_new_p_values": true,
+    "original_259_empirical_result": "NOT_EVALUABLE_EMPIRICAL_RESPONSE",
+    "not_source_disjoint_genetic_validation": true,
+    "no_post_outcome_retuning": true,
+    "no_new_host_exclusions": true,
+    "no_dynamic_changes_to_roi_or_grid": true,
+    "not_a_verified_LGM_coastline_or_ice_mask": true,
+    "no_claim_equal_biological_niche_scope_because_point_counts_match": true
+  }
+}
