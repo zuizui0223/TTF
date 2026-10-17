@@ -1,0 +1,43 @@
+name: TTF exploratory 26point host cloud result public receipt verification
+
+on:
+  push:
+    branches:
+      - exploratory/host-cloud-26point-rarefaction-v0-1
+    paths:
+      - '.github/workflows/host-cloud-26point-rarefaction-receipt-v01.yml'
+      - 'tests/test_host_cloud_rarefaction_receipt_v01.py'
+      - 'benchmarks/exploratory/historical_host_memory_bungalotis_26point_host_rarefaction_v0.1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fixed-sample-aggregate-verification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test original artifact byte digest, 64 deterministic draws, LGM summaries, and no genetic openings
+        run: |
+          set -euo pipefail
+          python -m pip install 'numpy>=1.26' 'pytest>=8'
+          python -m pytest -q tests/test_host_cloud_rarefaction_receipt_v01.py
+      - name: Keep original 259-species terminal result and scientific boundary intact
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base=Path('benchmarks')
+          original=json.loads((base/'frozen/historical_host_memory_259_one_shot_empirical_result_v0.1.json').read_text())
+          sensitivity=json.loads((base/'exploratory/historical_host_memory_bungalotis_26point_host_rarefaction_v0.1.json').read_text())
+          assert original['status']=='NOT_EVALUABLE_EMPIRICAL_RESPONSE'
+          assert original['monte_carlo_p'] is None
+          assert sensitivity['boundary']['gene_distance_or_p_value_computed'] is False
+          assert sensitivity['boundary']['not_a_new_confirmatory_hypothesis'] is True
+          print('PASS_HOST_REFERENCE_SENSITIVITY_ONLY__ORIGINAL_GENETIC_TEST_UNCHANGED')
+          PY
