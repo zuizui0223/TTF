@@ -1,0 +1,87 @@
+{
+  "schema": "ttf_lgm_yearstrat_398_matched_climate_v0.3",
+  "status": "EXPLORATORY_SPECIFICATION_BEFORE_NEW_398_SPECIES_CHELSA_VALUES",
+  "date": "2026-10-19",
+  "branch_parent": "3b80cdb38362756abe0e8e29b1a2cc0611742439",
+  "research_question": "Does historical host-climate information persist once host and insect observational reference points are spatially independent, same-count, and measured against insect climate history, current host/self climate and geographic distance?",
+  "prior_results_exposed": "Previously observed 90-species incomplete-host v0.1 and v0.2 climate comparisons (medians 0.03775 and 0.04015); this is a nonconfirmatory all-available v0.2 plant-observation extension, not fresh genetic confirmation.",
+  "source": {
+    "original_insect_641": "benchmarks/exploratory/lgm_external_reference_v01",
+    "original_insect_source_panel_sha256": "b70f7189c022ad0123073d8c650be795c4197c0acdbb62c6a15c701130fb4db2",
+    "modern_host_v02": "benchmarks/exploratory/lgm_host_reference_yearstrat_v02",
+    "modern_host_v02_summary_sha256": "cffb1144a61151c9da78737b1c7a84034398fb50d03ea5ecb46642b317d93634",
+    "modern_host_v02_taxa_attempted": 518,
+    "modern_host_v02_exact": 506,
+    "modern_host_v02_nonzero": 498,
+    "modern_host_v02_quality_observations": 296697,
+    "insect_host_associations": 1037,
+    "manifest_sha256": "a28fba9efa8a9dc79c162336f62c883059c5dddbfabec2861f554d038dd98044",
+    "original_localities_sha256": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "original_edges_sha256": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+    "chelsa_eight_asset_archive_sha256": "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2",
+    "chelsa_manifest_sha256": "7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9cce145d450",
+    "global_reference_support_sha256": "d0fc12f635ec56a442dd37dec06cf3aa06684a00b14f1bb1f2db2f6fe3c4a21f"
+  },
+  "eligibility": {
+    "all_original_insects": 641,
+    "observed_insect_external_ge30": 414,
+    "host_ge30_from_new_v02": 608,
+    "both_paired_ge30": 398,
+    "paired_all_known_host_ids_exact": 387,
+    "paired_all_known_host_ids_positive_observations": 381,
+    "exact_sampling_geometry": "original localities + five interior great circle positions along each original edge",
+    "exclusion_km": 50,
+    "subtract_coordinate_uncertainty": true,
+    "within_insect_host_thin_km": 10,
+    "max_cloud_n": 200,
+    "reference_equal_count": true,
+    "rule": "No response-driven additions or replacement of ineligible taxa; report all 641 disposition rows, 398 potential source-complete analysis candidates, and conservative 381 taxa subset.",
+    "insufficient_reason": "Do not misclassify taxonomic mismatches or 0 returned modern observations as plant ecological absence."
+  },
+  "climate": {
+    "geography": "point-based five original internal edge positions, NOT navigable 2D LGM corridors",
+    "variables": [
+      "bio01",
+      "bio07",
+      "bio12",
+      "bio15"
+    ],
+    "time_index": {
+      "present": 20,
+      "LGM": -190
+    },
+    "global_reference_finite": 6343,
+    "standardization": "0BP full 6343 modern geographic reference climate support mean+SD, same for LGM",
+    "distance_metric": "mean nearest current host or insect climate analogue at five interpolated edge positions",
+    "historical_delta": "D_LGM - D_0BP",
+    "matched_draws_per_species": 32,
+    "draw_seed": "ttf-climate-match-v0.1|species|draw",
+    "geometry_control": "log1p great-circle endpoint distance in km",
+    "predictor": "M_host",
+    "mandatory_controls": [
+      "M_self",
+      "D_host_0BP",
+      "D_self_0BP"
+    ],
+    "tier2_controls": [
+      "M_self",
+      "D_host_0BP",
+      "D_self_0BP",
+      "log1p(endpoint distance km)"
+    ],
+    "result_metrics": [
+      "species-level median unique host information fraction before and after geographic control",
+      "fraction of species above descriptive 0.1 of unique variance",
+      "source N range and fraction host LGM change exceeds insect"
+    ],
+    "response_used": false
+  },
+  "guardrails": [
+    "Ecological predictor variance fractions are not variance in genotypes or genetic differentiation",
+    "Modern occurrence records do not establish native ranges or LGM occupied host habitat; original downloaded host records have establishmentMeans missing",
+    "v0.2 host observations are 3 nonrandom shallow year pages and are NOT identical to v0.1 deep-offset samples",
+    "No genetic sequence or genetic spatial response opened; NOT_EVALUABLE_EMPIRICAL_RESPONSE stays frozen",
+    "Correlated reference point draws are not independent biological replications or confidence intervals",
+    "If source SHA/identity/paired N differs, fail closed, not retune; if climate missingness occurs, report no backfill"
+  ]
+}

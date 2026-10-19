@@ -1,0 +1,13 @@
+{
+  "LGM_plant_occupancy_inferred": false,
+  "genetic_response_used": false,
+  "host_sampling_scheme": "v0.2_three_shallow_year_bins_nonrandom",
+  "result_sha256": {
+    "all_641_eligibility_v0.3.csv": "ae1ea4743c78595d04892a29d905fe6bb7e5029a6106cdb72e414cc5876b630c",
+    "species_matched_history_v0.3.csv": "c5a82a2c7adadf7e86ae5a6647e952931c63ec3d0bcd66ea6d46f568df8463f7",
+    "summary.json": "493f87960952eaf01dbf212428aeba6d8dfc2ff91da1800a338c5c4033c33f86"
+  },
+  "run_id": "39220785808",
+  "schema": "ttf_lgm_yearstrat_398_v03_execution_receipt",
+  "source_commit": "22c0af799597b90bed671cdc4b26e242a176c6d1"
+}
