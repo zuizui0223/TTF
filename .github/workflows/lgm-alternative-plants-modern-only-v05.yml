@@ -1,0 +1,118 @@
+name: TTF v05 modern-only alternative-plant climate match plan
+on:
+  push:
+    branches: [exploratory/lgm-matched-alternative-plants-v05]
+    paths:
+      - .github/workflows/lgm-alternative-plants-modern-only-v05.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: ttf-alternative-plants-0bp-plan-v05
+  cancel-in-progress: false
+jobs:
+  only-modern-climate-matching:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test frozen 518-taxon host source and equal-count climate estimator
+        run: |
+          set -euo pipefail
+          python -m pip install -e '.[test]' 'rasterio>=1.4,<2' 'scipy>=1.13,<2' 'requests>=2.31,<3'
+          python -m pytest -q tests/test_alternative_plant_match_v05.py tests/test_matched_climate_yearstrat_v03.py tests/test_matched_lgm_climate_exploratory.py
+          echo 'cffb1144a61151c9da78737b1c7a84034398fb50d03ea5ecb46642b317d93634  benchmarks/exploratory/lgm_host_reference_yearstrat_v02/summary.json' | sha256sum -c -
+          echo 'a28fba9efa8a9dc79c162336f62c883059c5dddbfabec2861f554d038dd98044  benchmarks/exploratory/lgm_external_reference_v01/host_reference_request_manifest.csv' | sha256sum -c -
+          python - <<'PY'
+          import json
+          q=json.load(open('docs/supporting/lgm_matched_alternative_plants_v05_contract.json'))
+          assert q['status']=='EXPLORATORY_PRE_LGM_SCORE_CONTROL_SPEC'
+          assert q['source']['chelsa_eight_archive_sha256']=='0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2'
+          assert q['design']['stage1'].startswith('Match alternate plant taxon identities using 0 BP CHELSA ONLY')
+          assert q['design']['min_requirements'].startswith('In source-qualified 348')
+          print('PASS_PRE_LGM_MODERN_ONLY_NONLISTED_PLANT_DESIGN')
+          PY
+      - name: Unpack original response-free genetic sampling geometry only
+        run: |
+          set -euo pipefail
+          mkdir -p input/v03/geography
+          echo '92e19da615ffc2003a90569afd4089eb24871f1fc0df69cc3aface4263b96dc4  provenance/data/historical_host_memory_geometry_642_canonical_v01.tar.xz' | sha256sum -c -
+          tar -xJf provenance/data/historical_host_memory_geometry_642_canonical_v01.tar.xz -C input/v03/geography
+          echo '037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9  input/v03/geography/historical_host_memory_localities_v0.1.csv' | sha256sum -c -
+          echo 'ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9  input/v03/geography/historical_host_memory_edges_v0.1.csv' | sha256sum -c -
+      - name: Restore exact 6343 global climate support and original eight CHELSA rasters
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p input/v03/support input/v03/chelsa
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/11495066386/zip" > /tmp/support.zip
+          unzip -q /tmp/support.zip -d input/v03/support
+          echo 'd0fc12f635ec56a442dd37dec06cf3aa06684a00b14f1bb1f2db2f6fe3c4a21f  input/v03/support/wgsrpd3_support_points_v0.1.csv' | sha256sum -c -
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/10791389409/zip" > /tmp/chelsa.zip
+          echo '0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2  /tmp/chelsa.zip' | sha256sum -c -
+          unzip -q /tmp/chelsa.zip -d input/v03/chelsa
+          rm /tmp/chelsa.zip
+          echo '7d82833996006fc1e99b86acb4ea7e80cde29c7f500df739ef48cb9ce145d450  input/v03/chelsa/manifest.json' | sha256sum -c -
+          for v in bio01 bio07 bio12 bio15; do
+            for t in -190 20; do
+              test -s "input/v03/chelsa/historical/CHELSA_TraCE21K_${v}_${t}_V1.0.tif"
+            done
+          done
+          df -h .
+      - name: Select unrelated plant IDs using present climate alone, without reading LGM or genotypes
+        run: |
+          set -euo pipefail
+          python -u scripts/plan_matched_alternative_plants_v05.py \
+            --host-manifest benchmarks/exploratory/lgm_external_reference_v01/host_reference_request_manifest.csv \
+            --original-v04-eligibility benchmarks/exploratory/lgm_same_niche_split_null_v04/all_641_split_eligibility_v0.4.csv \
+            --host-snapshot benchmarks/exploratory/lgm_host_reference_yearstrat_v02 \
+            --insect-summary benchmarks/exploratory/lgm_external_reference_v01/all_641_species_external_reference.csv \
+            --insect-points benchmarks/exploratory/lgm_external_reference_v01/external_insect_points_50km.csv.gz \
+            --localities input/v03/geography/historical_host_memory_localities_v0.1.csv \
+            --edges input/v03/geography/historical_host_memory_edges_v0.1.csv \
+            --global-support input/v03/support/wgsrpd3_support_points_v0.1.csv \
+            --asset-root input/v03/chelsa/historical \
+            --out results/lgm_alternative_plant_v05_plan
+      - name: Verify response-blind plant IDs, grouped donors, and preserve receipt
+        run: |
+          set -euo pipefail
+          python - <<'PYTHON'
+          import csv,json,hashlib,os
+          from pathlib import Path
+          p=Path('results/lgm_alternative_plant_v05_plan')
+          plan=json.loads((p/'source_bound_0bp_alternatives.json').read_text())
+          allrows=list(csv.DictReader((p/'all_641_current_matching_eligibility.csv').open()))
+          assert len(allrows)==641
+          assert plan['stage']=='CURRENT_0BP_SELECTION_ONLY_NO_LGM_CLIMATE_OPENED'
+          assert plan['source_348_reference_split_cohort']==348
+          assert plan['source_336_with_all_known_hosts_observed']==336
+          assert plan['eligible_alternative_control_n']>0
+          assert plan['eligible_alternative_control_n']<=336
+          assert plan['no_lgm_raster_or_genetic_data_used'] is True
+          assert all(4<=len(x['alternative_groups'])<=8
+                     for x in plan['matched_species'].values())
+          receipt={'schema':'ttf_v05_actual_vs_nonlisted_plant_pre_LGM_selector',
+             'run_id':os.environ['GITHUB_RUN_ID'],'code_commit':os.environ['GITHUB_SHA'],
+             'plan_sha256':hashlib.sha256((p/'source_bound_0bp_alternatives.json').read_bytes()).hexdigest(),
+             'genetic_and_LGM_outcomes_unopened':True}
+          (p/'source_receipt.json').write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          print(json.dumps({k:v for k,v in plan.items() if k not in ('matched_species','source_sha256')},sort_keys=True))
+          PYTHON
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ttf-v05-modernonly-matched-alternative-plant-identities
+          path: results/lgm_alternative_plant_v05_plan/
+          retention-days: 30
+          if-no-files-found: warn
