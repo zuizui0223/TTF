@@ -1,0 +1,62 @@
+name: TTF archive source-bound LGM v05 actual versus climate-matched plants
+on:
+  push:
+    branches: [exploratory/lgm-matched-alternative-plants-v05]
+    paths: [.github/workflows/lgm-v05-archive-altplant-LGM-result.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: ttf-lgm-v05-altplant-result-exact-archive
+  cancel-in-progress: false
+jobs:
+  archive-immutable-scientific-result:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Verify exact source artifact and all four frozen outputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          out=benchmarks/exploratory/lgm_modern_matched_alternative_plant_v05
+          mkdir -p "$out"
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12177303560/zip" > /tmp/v05-LGM-original.zip
+          echo '92a78cc7fab6590817ca3f38dd883f25cd00c8ec49e5b90ff9b23fb3061902df  /tmp/v05-LGM-original.zip' | sha256sum -c -
+          unzip -q /tmp/v05-LGM-original.zip -d "$out"
+          echo '236931f93d2efcfebb6988d87291ed6628e63a6ce0ae2cb227cc0825d637cf73  benchmarks/exploratory/lgm_modern_matched_alternative_plant_v05/plant_group_v05.csv' | sha256sum -c -
+          echo '591a1383b739d73c8ffc2cbae5c220dae4b7730629e6d447be80542b88124446  benchmarks/exploratory/lgm_modern_matched_alternative_plant_v05/species_v05.csv' | sha256sum -c -
+          echo '27c432f54918589e6a4e1a373ce0b1c8271486a0ca94552659528a489e60a5f5  benchmarks/exploratory/lgm_modern_matched_alternative_plant_v05/summary.json' | sha256sum -c -
+          echo '545d8cf69d1b0115376d6a22df248c3ca3e7ff68c2cbd78e6d90cf62fffc96e9  benchmarks/exploratory/lgm_modern_matched_alternative_plant_v05/execution_receipt.json' | sha256sum -c -
+          python - <<'PYTHON'
+          import json,csv
+          from pathlib import Path
+          p=Path('benchmarks/exploratory/lgm_modern_matched_alternative_plant_v05')
+          a=json.loads((p/'summary.json').read_text())
+          rows=list(csv.DictReader((p/'species_v05.csv').open()))
+          groups=list(csv.DictReader((p/'plant_group_v05.csv').open()))
+          assert a['source_matched_species']==335 and a['climate_completed_species']==333
+          assert a['statuses']=={'COMPLETE_MODERN_MATCHED_PLANT_CONTROL':333,'NONFINITE_CLIMATE':2}
+          assert len(rows)==335 and len(groups)==2664
+          assert a['species_actual_unique_greater']==147 and a['species_actual_raw_greater']==142
+          assert abs(a['median_real_minus_alt_fraction']-(-0.0016850394827899644))<1e-13
+          assert abs(a['median_actual_unique_fraction']-0.039391364933656435)<1e-13
+          assert abs(a['median_altplant_unique_fraction']-0.03801661831726337)<1e-13
+          assert a['source_plan_sha256']=='c8099e516a42850c8ab946c4cdc23e71afe1e8eb5360a90fcd848365b3cb8075'
+          assert a['no_genetic_response_opened'] and a['not_historical_plant_occupancy']
+          print('PASS_ORIGINAL_V05_333_SPECIES_NO_REAL_HOST_ADVANTAGE_UNDER_NONLISTED_PLANTS')
+          PYTHON
+      - name: Preserve no-genetic exploratory result on draft branch only
+        run: |
+          set -euo pipefail
+          git fetch origin "${{ github.ref_name }}"
+          test "$(git rev-parse FETCH_HEAD)" = "${{ github.sha }}"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add benchmarks/exploratory/lgm_modern_matched_alternative_plant_v05/
+          git commit -m 'Archive exact matched-alternative-plant LGM null outcome for 333 species'
+          git push origin "HEAD:${{ github.ref_name }}"

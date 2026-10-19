@@ -1,0 +1,51 @@
+{
+  "schema": "ttf_lgm_mismatched_plant_control_v0.5",
+  "status": "EXPLORATORY_PRE_LGM_SCORE_CONTROL_SPEC",
+  "date": "2026-10-19",
+  "parent_analysis": "exploratory/lgm-host-vs-same-niche-null-v04",
+  "goal": "Distinguish an actual known larval host plant signal from historical climate variation found in currently climate-matched plants not recorded as hosts for that insect.",
+  "source": {
+    "plant_checkpoint": "benchmarks/exploratory/lgm_host_reference_yearstrat_v02",
+    "plant_summary_sha256": "cffb1144a61151c9da78737b1c7a84034398fb50d03ea5ecb46642b317d93634",
+    "insect_summary": "benchmarks/exploratory/lgm_external_reference_v01",
+    "manifest_sha256": "a28fba9efa8a9dc79c162336f62c883059c5dddbfabec2861f554d038dd98044",
+    "original_localities_sha256": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "original_edges_sha256": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+    "chelsa_eight_archive_sha256": "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2",
+    "climate_variables": [
+      "bio01",
+      "bio07",
+      "bio12",
+      "bio15"
+    ],
+    "time_indices": {
+      "modern": 20,
+      "lgm": -190
+    },
+    "global_standardization_n": 6343,
+    "cohort": "All 348 prior reference-split-eligible insects, including 336 with all known accepted host taxa having observations (one of the 336 previously has nonfinite LGM climate); no outcome-selected additions."
+  },
+  "design": {
+    "stage1": "Match alternate plant taxon identities using 0 BP CHELSA ONLY, freeze source-bound matched ID sets and modern mismatch before computing any LGM score.",
+    "actual_host": "Use each insect's actual v0.2 WCVP accepted host identities and modern source observations, 50-km uncertainty-buffer from insect original localities and five internal edge evaluation points, within-species 10-km thinning, cap200.",
+    "alternate_pool": "Other successfully sampled WCVP accepted plant taxa, excluding any taxon recorded as a host for that insect AND every plant with the same genus as any actual known host; non-listed does not prove not a real host.",
+    "preselection": "Deterministic SHA256 priority restrict max64 observations per alternate plant for 0 BP four-var climate signatures; require >=30 raw modern observations and >=30 after per-insect 50km exclusion and 10km thinning.",
+    "moment_match": "For each insect compare candidate plant centroid + per-var SD standardized present (0 BP) climate with actual selected modern host cloud. Rank by Euclidean four-var mean distance plus 0.5 times SD distance. No LGM, genetics, evolutionary source metadata or host null effect used.",
+    "selection": "For each target, rank all source-eligible alternative plant taxa by modern climate moment score. Keep the first 24 distinct, viable taxa whose observations also pass the insect-specific 50km/10km filter. Form up to eight disjoint alternative taxon-ID groups, each of size min(number known host taxa,3), by consecutive rank positions. Use every viable group; if fewer than four groups, not evaluable. No post-LGM substitution.",
+    "min_requirements": "In source-qualified 348, 336 host-complete observations. Require at least four alternate plant groups with >=30 independent points per group and >=60 insect points; otherwise label not evaluable. Previous nonfinite species remains explicitly nonfinite, not replaced.",
+    "replicates": "Eight deterministic random cloud splits per alternative group, up to eight disjoint alternative plant groups per species; all cloud counts equal min(100, floor(n_insect/2), n_actual_host, n_alt_group), k >= 30.",
+    "metric": "For each pair calculate historical host-minus-modern nearest climate distance per original edge. Residualize to self LGM change, both present-mismatch distances and log1p endpoint geographic distance, as in v0.4. Report actual-minus-alternate *fraction* and *raw residual variance* plus modern fit gap.",
+    "output": "source-qualified 348 taxa and 641 disposition rows, matched plant IDs, number viable controls, 0 BP climatic match scores, v0.5 actual/alternate LGM comparison, sensitivity for those with close modern mismatches.",
+    "analysis_unit": "Each insect species; preserve species/genus dependencies. Eight repeated alternative sets and eight reference splits are technical perturbations not biological replicates."
+  },
+  "limitations": [
+    "Pre-registered only within already exploratory post-v0.4 study; not a fresh confirmatory genetic test",
+    "Not listed as a HOSTS/WCVP host does not establish biological nonhost status or absence of other interactions",
+    "Modern GBIF plant observations are nonrandom and nativity is missing; current climate matching does not prove true ancestral natural niche or ancient distributions",
+    "Matching by 0 BP climate mean and SD leaves spatial range shape, geographic history and observational effort possibly unmatched",
+    "Different host plant combinations may have different niche breadth even after moment matching",
+    "Null and actual historical metrics describe predictor variance, not genetic variation",
+    "Original genetic phase NOT_EVALUABLE_EMPIRICAL_RESPONSE remains terminal",
+    "Do not report one-sided significance or change thresholds in response to v0.5 scores"
+  ]
+}

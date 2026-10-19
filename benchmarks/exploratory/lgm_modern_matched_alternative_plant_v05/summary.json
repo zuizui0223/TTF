@@ -1,0 +1,27 @@
+{
+  "caveats": [
+    "Nonlisted plant taxa are not known true nonhosts",
+    "Current climate moment matching may leave modern fit or spatial/habitat discrepancies",
+    "Source host plant observations are 3 nonrandom shallow pages per year-bin and nativity is unknown",
+    "Repeated plant groups/draws are not independent organismal replicates",
+    "Original NOT_EVALUABLE_EMPIRICAL_RESPONSE unchanged"
+  ],
+  "climate_completed_species": 333,
+  "median_actual_unique_fraction": 0.039391364933656435,
+  "median_altplant_unique_fraction": 0.03801661831726337,
+  "median_modern_mismatch_gap": -0.014680036985962097,
+  "median_raw_residual_diff": -0.0003511139667624827,
+  "median_real_minus_alt_fraction": -0.0016850394827899644,
+  "no_genetic_response_opened": true,
+  "not_historical_plant_occupancy": true,
+  "schema": "ttf_lgm_modern_climate_matched_unlisted_plant_control_v0.5",
+  "source_matched_species": 335,
+  "source_plan_sha256": "c8099e516a42850c8ab946c4cdc23e71afe1e8eb5360a90fcd848365b3cb8075",
+  "species_actual_raw_greater": 142,
+  "species_actual_unique_greater": 147,
+  "status": "EXPLORATORY_PLANT_NEGATIVE_CONTROL_NOT_GENETIC_OR_OCCUPANCY",
+  "statuses": {
+    "COMPLETE_MODERN_MATCHED_PLANT_CONTROL": 333,
+    "NONFINITE_CLIMATE": 2
+  }
+}

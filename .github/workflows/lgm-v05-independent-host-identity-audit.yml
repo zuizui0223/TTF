@@ -1,0 +1,78 @@
+name: TTF independent v04-v05 host identity control audit
+on:
+  push:
+    branches: [exploratory/lgm-matched-alternative-plants-v05]
+    paths:
+      - .github/workflows/lgm-v05-independent-host-identity-audit.yml
+      - scripts/audit_lgm_host_identity_v05.py
+      - tests/test_lgm_host_identity_v05_audit.py
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: ttf-v05-independent-host-identity-audit
+  cancel-in-progress: false
+jobs:
+  independently-recompute-frozen-controls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate source-bound species and genus audit
+        run: |
+          set -euo pipefail
+          python -m pip install 'numpy>=1.26,<3' 'pytest>=8,<9'
+          python -m pytest -q tests/test_lgm_host_identity_v05_audit.py
+      - name: Independently audit all frozen 333 species and eight groups per species
+        run: |
+          set -euo pipefail
+          out=benchmarks/exploratory/lgm_host_identity_audit_v05
+          mkdir -p "$out"
+          python scripts/audit_lgm_host_identity_v05.py \
+            --old benchmarks/exploratory/lgm_same_niche_split_null_v04 \
+            --new benchmarks/exploratory/lgm_modern_matched_alternative_plant_v05 \
+            --out "$out/result.json"
+          python - <<'PYTHON'
+          import json,hashlib,os
+          from pathlib import Path
+          d=Path('benchmarks/exploratory/lgm_host_identity_audit_v05')
+          x=json.loads((d/'result.json').read_text())
+          assert x['species_compared']==333 and x['group_rows']==2664
+          assert x['v04_actual_positive_on_shared_species']==269
+          assert x['v05_actual_positive_on_shared_species']==147
+          assert x['v05_raw_positive_on_shared_species']==142
+          assert x['transition_counts']['positive_to_negative']==132
+          assert x['transition_counts']['negative_to_positive']==10
+          assert x['genus_cluster_descriptive_interval']['genus_clusters']==247
+          assert x['paired_metrics']['species_median_fraction_difference']<0
+          assert x['status']=='EXPLORATORY_HOST_IDENTITY_ADVANTAGE_NOT_SUPPORTED_BY_UNLISTED_PLANTS'
+          receipt={'schema':'ttf_v05_host_identity_audit_source_receipt_v0.1',
+              'run_id':os.environ['GITHUB_RUN_ID'],'code_commit':os.environ['GITHUB_SHA'],
+              'result_sha256':hashlib.sha256((d/'result.json').read_bytes()).hexdigest(),
+              'genetic_response_used':False,
+              'historical_occupancy_inferred':False}
+          (d/'receipt.json').write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          print('PASS_SOURCE_LOCKED_NEGATIVE_ALTERNATIVE_PLANT_CONTROL_AUDIT')
+          PYTHON
+      - name: Preserve result without changing original LGM data
+        run: |
+          set -euo pipefail
+          git fetch origin "${{ github.ref_name }}"
+          test "$(git rev-parse FETCH_HEAD)" = "${{ github.sha }}"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add benchmarks/exploratory/lgm_host_identity_audit_v05
+          git commit -m 'Archive exact v04-v05 matched-species negative host identity control audit'
+          git push origin "HEAD:${{ github.ref_name }}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ttf-v05-independent-host-identity-audit
+          path: benchmarks/exploratory/lgm_host_identity_audit_v05/
+          retention-days: 30
+          if-no-files-found: warn
