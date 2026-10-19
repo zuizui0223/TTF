@@ -1,0 +1,84 @@
+name: TTF saved external reference independent geometry audit
+on:
+  push:
+    branches: [exploratory/lgm-external-insect-reference-20261019-v01]
+    paths:
+      - scripts/audit_lgm_external_snapshot.py
+      - tests/test_external_snapshot_audit.py
+      - .github/workflows/lgm-external-snapshot-audit-v01.yml
+permissions:
+  contents: write
+concurrency:
+  group: lgm-external-reference-independent-audit-v01
+  cancel-in-progress: false
+jobs:
+  audit-saved-observations:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test independent geometry checker and unchanged acquisition helpers
+        run: |
+          set -euo pipefail
+          python -m pip install 'numpy>=1.26,<3' 'scipy>=1.13,<2' 'requests>=2.31,<3' 'pytest>=8,<9'
+          python -m pytest -q tests/test_lgm_external_references.py tests/test_reference_checkpoint.py tests/test_external_snapshot_audit.py
+      - name: Verify exact saved snapshot and restore original geometry
+        run: |
+          set -euo pipefail
+          test "$(git hash-object benchmarks/exploratory/lgm_external_reference_v01/summary.json)" = '1ed4ab8c60f3e7dc7c7afbf19440294515935589'
+          echo '92e19da615ffc2003a90569afd4089eb24871f1fc0df69cc3aface4263b96dc4  provenance/data/historical_host_memory_geometry_642_canonical_v01.tar.xz' | sha256sum -c -
+          mkdir -p input/external_reference_geo
+          tar -xJf provenance/data/historical_host_memory_geometry_642_canonical_v01.tar.xz -C input/external_reference_geo
+      - name: Independently check actual observations without climate or genetic data
+        run: |
+          set -euo pipefail
+          python scripts/audit_lgm_external_snapshot.py \
+            --snapshot benchmarks/exploratory/lgm_external_reference_v01 \
+            --localities input/external_reference_geo/historical_host_memory_localities_v0.1.csv \
+            --edges input/external_reference_geo/historical_host_memory_edges_v0.1.csv \
+            --quadrature-module src/ttf/historical_host_memory.py \
+            --output benchmarks/exploratory/lgm_external_reference_audit_v01/result.json
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          source=Path('benchmarks/exploratory/lgm_external_reference_v01')
+          out=Path('benchmarks/exploratory/lgm_external_reference_audit_v01')
+          q=json.loads((out/'result.json').read_text())
+          assert q['status']=='PASS_SAVED_SNAPSHOT_GEOMETRY_ONLY'
+          assert q['attempted_species']==177 and q['pending_species']==464
+          assert q['retained_points']==16696 and not q['genetic_response_used']
+          receipt={'schema':'ttf_external_reference_independent_audit_receipt_v0.1',
+            'run_id':os.environ['GITHUB_RUN_ID'],'audit_code_commit':os.environ['GITHUB_SHA'],
+            'acquisition_result_commit':'3ac0b1587a014275b4ead660e58c5f45613522f3',
+            'acquisition_run_id':39193877861,
+            'audit_script_sha256':hashlib.sha256(Path('scripts/audit_lgm_external_snapshot.py').read_bytes()).hexdigest(),
+            'result_sha256':hashlib.sha256((out/'result.json').read_bytes()).hexdigest(),
+            'input_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(source.iterdir()) if p.is_file()},
+            'climate_or_genetic_result':False}
+          (out/'receipt.json').write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          PY
+      - name: Preserve audit on the same exploratory branch without overwriting concurrent work
+        run: |
+          set -euo pipefail
+          git fetch origin "${{ github.ref_name }}"
+          test "$(git rev-parse FETCH_HEAD)" = "${{ github.sha }}"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add benchmarks/exploratory/lgm_external_reference_audit_v01/
+          git commit -m 'Independently verify saved external reference separation and thinning; 177-species partial snapshot'
+          git push origin "HEAD:${{ github.ref_name }}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lgm-external-reference-independent-audit-v01
+          path: benchmarks/exploratory/lgm_external_reference_audit_v01/
+          retention-days: 30
+          if-no-files-found: warn

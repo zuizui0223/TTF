@@ -1,0 +1,57 @@
+{
+  "api_index_changed_species": 0,
+  "attempted_species": 641,
+  "checkpoint_binding": {
+    "acquisition_code_sha256": "d1e8267eed607db98549844bfa426850f95b64e0053415e9cd1b0038d0e2e531",
+    "contract_sha256": "af999f9c2981ce9fd04063842dd661b6ac60289e1894a84132fcefb1e7cb2812",
+    "original_quadrature_module_sha256": "f4698e2157359e1ec52747a6f1857ca0c7a5755181c07af4844ef979c1555cc3",
+    "source_hashes": {
+      "candidates": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+      "edges": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+      "localities": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9"
+    },
+    "species_sha256": "b70f7189c022ad0123073d8c650be795c4197c0acdbb62c6a15c701130fb4db2"
+  },
+  "completed_at": "2026-10-19T04:16:04.323141+00:00",
+  "contract_sha256": "af999f9c2981ce9fd04063842dd661b6ac60289e1894a84132fcefb1e7cb2812",
+  "dataset_key": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+  "fetched_records": 234081,
+  "genetic_response_used": false,
+  "genetic_source_disjointness_proven": false,
+  "host_reference_acquisition_executed": false,
+  "host_reference_manifest_rows": 1037,
+  "interpretation": "New external observation references, spatially separated from original localities and five evaluated internal positions. Not full-route spatial separation, source-disjoint genetic validation, matched host niche coverage, historical occupancy, or a genetic effect.",
+  "original_candidate_species": 642,
+  "original_quadrature_module_sha256": "f4698e2157359e1ec52747a6f1857ca0c7a5755181c07af4844ef979c1555cc3",
+  "pending_species": 0,
+  "pending_species_names": [],
+  "previous_nonfinite_species_excluded": "Polyommatus coridon",
+  "quality_unique_records": 233438,
+  "real_climate_recalculation_executed": false,
+  "retained_reference_points_50km": 62588,
+  "retrieval_modes": {
+    "bounded_3_windows": 148,
+    "complete_query": 483,
+    "unresolved": 10
+  },
+  "schema": "ttf_external_insect_reference_result_v0.1",
+  "shared_accepted_taxon_keys": {},
+  "source_hashes": {
+    "candidates": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "edges": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+    "localities": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9"
+  },
+  "species_ge30_by_buffer": {
+    "0": 438,
+    "100": 399,
+    "25": 427,
+    "50": 414
+  },
+  "species_sha256": "b70f7189c022ad0123073d8c650be795c4197c0acdbb62c6a15c701130fb4db2",
+  "status": "ACQUISITION_COMPLETE_WITH_EXPLICIT_FAILURE_STATES",
+  "status_counts": {
+    "GEOMETRY_REFERENCE_GE30": 414,
+    "INSUFFICIENT_IN_RETRIEVED_REFERENCE": 217,
+    "TAXONOMY_NOT_EXACT": 10
+  }
+}

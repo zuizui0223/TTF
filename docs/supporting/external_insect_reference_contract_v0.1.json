@@ -1,0 +1,44 @@
+{
+  "schema": "ttf_external_insect_reference_v0.1",
+  "status": "EXPLORATORY_SPECIFICATION_BEFORE_NEW_EXTERNAL_REFERENCE_ACQUISITION_NOT_CONFIRMATORY",
+  "date": "2026-10-19",
+  "base_commit": "7319fc9b555aabb2bd6e543dec90ee632588e33c",
+  "question": "Can the full previously climate-complete domain obtain external insect references separated from the localities and internal query points used to evaluate historical climate?",
+  "641_species_sha256": "b70f7189c022ad0123073d8c650be795c4197c0acdbb62c6a15c701130fb4db2",
+  "panel_species": 641,
+  "previous_nonfinite_species_excluded": "Polyommatus coridon",
+  "dataset_key": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+  "basis_of_record": "HUMAN_OBSERVATION",
+  "taxonomy": "strict EXACT SPECIES match, Insecta, canonical name equals requested name, confidence >=95; accepted usage keys retained and alias groups reported",
+  "date_window": [
+    "2010-01-01",
+    "2026-10-18"
+  ],
+  "maximum_coordinate_uncertainty_m": 1000,
+  "missing_uncertainty": "exclude",
+  "page_limit": 300,
+  "maximum_pages_per_species": 3,
+  "window_rule": "complete if count <=900; else offsets 0, floor((min(count,100000)-300)/2), min(count,100000)-300; no claim of representative sampling",
+  "worker_count": 4,
+  "retry_attempts": 3,
+  "buffers_km": [
+    0,
+    25,
+    50,
+    100
+  ],
+  "primary_buffer_km": 50,
+  "separation_rule": "nearest original locality OR any of the original five internal great-circle query positions, minus occurrence uncertainty, >= buffer; not continuous-route buffering",
+  "spatial_thinning_km": 10,
+  "deterministic_thinning_priority": "SHA256(ttf-external-reference-v01|gbif_id)",
+  "maximum_reference_n": 200,
+  "minimum_descriptive_reference_n": 30,
+  "claim_limits": [
+    "descriptive reference support only, no genetic response or climate outcome",
+    "absence of sufficient retrieved points is not species absence or proof no external data exist",
+    "host observations not rebuilt in this stage",
+    "no proof of genetic-source disjointness",
+    "partial/bounded retrieval and API index shifts are explicitly retained"
+  ],
+  "no_changes_to_frozen_results": true
+}

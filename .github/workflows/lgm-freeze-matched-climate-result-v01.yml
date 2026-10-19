@@ -1,0 +1,76 @@
+name: TTF freeze verified exploratory 90-species CHELSA climate result
+on:
+  push:
+    branches: [exploratory/lgm-external-insect-reference-20261019-v01]
+    paths: [.github/workflows/lgm-freeze-matched-climate-result-v01.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: freeze-lower-scope-lgm-climate-result-v01
+  cancel-in-progress: false
+jobs:
+  bind-and-freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Restore exact successful climate run output, no genetic results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          out=benchmarks/exploratory/lgm_matched_climate_partial_host_v01
+          mkdir -p "$out"
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12167222323/zip" > /tmp/90species-climate.zip
+          echo '3176bbf7e6499c8632374ec6ab5a8e473b42af004a25a344f18cd780a5a4a8a7  /tmp/90species-climate.zip' | sha256sum -c -
+          unzip -q /tmp/90species-climate.zip -d "$out"
+          python - <<'PYTHON'
+          import csv,hashlib,json,os
+          from pathlib import Path
+          out=Path('benchmarks/exploratory/lgm_matched_climate_partial_host_v01')
+          summary=json.loads((out/'summary.json').read_text())
+          assert summary['schema']=='ttf_partial_host_matched_climate_diagnostic_v0.1'
+          assert summary['status']=='EXPLORATORY_ECOLOGICAL_INFORMATION_NOT_GENETIC_RESPONSE'
+          assert summary['insect_panel']==641 and summary['matched_geometry_species']==90
+          assert summary['source_host_taxa']==12 and summary['host_pending_taxa']==505
+          assert summary['climate_success']==90 and summary['draws_per_species']==32
+          assert summary['climate_status_counts']=={'COMPLETE_DESCRIPTIVE':90}
+          with (out/'species_matched_history_v0.1.csv').open(newline='',encoding='utf-8') as f:
+            rows=list(csv.DictReader(f))
+          assert len(rows)==90 and len({r['species'] for r in rows})==90
+          assert all(r['status']=='COMPLETE_DESCRIPTIVE' for r in rows)
+          receipt={'schema':'ttf_matched_climate_exploratory_source_receipt_v0.1',
+            'source_workflow_run':39209339670,
+            'source_climate_artifact_id':12167222323,
+            'source_archive_digest_sha256':'3176bbf7e6499c8632374ec6ab5a8e473b42af004a25a344f18cd780a5a4a8a7',
+            'response_family':'ECOLOGICAL_PREDICTOR_INFORMATION_ONLY',
+            'genetic_response_opened':False,
+            'historical_host_occupancy_reconstructed':False,
+            'source_files_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(out.iterdir()) if p.is_file()},
+            'decision':'EXPLORATORY_REPORT_NO_GENETIC_INFERENCE',
+            'code_commit':'289f775ec6202ca9b48b31a26e50931cd28d8719'}
+          (out/'execution_receipt.json').write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          print(json.dumps({'species':len(rows),'median_unique_frac':summary['median_unique_history_fraction'],
+                            'fraction_host_delta_exceeds_insect':summary['fraction_host_delta_exceeds_insect']}))
+          PYTHON
+      - name: Preserve exact result in the exploratory PR with branch race guard
+        run: |
+          set -euo pipefail
+          git fetch origin "${{ github.ref_name }}"
+          test "$(git rev-parse FETCH_HEAD)" = "${{ github.sha }}"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add benchmarks/exploratory/lgm_matched_climate_partial_host_v01/
+          git commit -m 'Freeze exploratory equal-reference CHELSA climate information for 90 insects; no genetics'
+          git push origin "HEAD:${{ github.ref_name }}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: matched-climate-90-frozen-source-receipt-v01
+          path: benchmarks/exploratory/lgm_matched_climate_partial_host_v01/
+          retention-days: 30
+          if-no-files-found: warn

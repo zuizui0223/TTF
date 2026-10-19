@@ -1,0 +1,97 @@
+name: TTF external larval-host observations 518 taxa
+on:
+  push:
+    branches: [exploratory/lgm-external-insect-reference-20261019-v01]
+    paths:
+      - .github/workflows/lgm-external-host-reference-v01.yml
+      - scripts/acquire_lgm_host_references.py
+      - tests/test_host_reference_continuation.py
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: lgm-external-host-reference-v01
+  cancel-in-progress: false
+jobs:
+  acquire-518-accepted-host-taxa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify plant taxonomy, observation quality, source binding and checkpoint tests
+        run: |
+          set -euo pipefail
+          python -m pip install 'numpy>=1.26,<3' 'scipy>=1.13,<2' 'requests>=2.31,<3' 'pytest>=8,<9'
+          python -m pytest -q tests/test_host_reference_continuation.py tests/test_lgm_external_references.py tests/test_reference_checkpoint.py
+      - name: Verify frozen association manifest and build 518-taxon acquisition plan
+        run: |
+          set -euo pipefail
+          echo 'a28fba9efa8a9dc79c162336f62c883059c5dddbfabec2861f554d038dd98044  benchmarks/exploratory/lgm_external_reference_v01/host_reference_request_manifest.csv' | sha256sum -c -
+          python scripts/acquire_lgm_host_references.py \
+            --manifest benchmarks/exploratory/lgm_external_reference_v01/host_reference_request_manifest.csv \
+            --output benchmarks/exploratory/lgm_host_reference_v01
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          p=json.loads(Path('benchmarks/exploratory/lgm_host_reference_v01/host_acquisition_plan.json').read_text())
+          assert len(p['taxa'])==518
+          assert sum(q['linked_insect_count'] for q in p['taxa'])==1037
+          assert len({s for q in p['taxa'] for s in q['insect_species']})==641
+          assert len({q['wcvp_id'] for q in p['taxa']})==518
+          print('PASS_FULL_518_HOST_TAXA_REQUEST_PLAN')
+          PYTHON
+      - name: Fetch source-bound modern host observations without opening climate or genetic response
+        run: |
+          set -euo pipefail
+          python -u scripts/acquire_lgm_host_references.py \
+            --manifest benchmarks/exploratory/lgm_external_reference_v01/host_reference_request_manifest.csv \
+            --output benchmarks/exploratory/lgm_host_reference_v01 \
+            --max-seconds 1700 --execute
+      - name: Check source-bound outcome and record immutable execution receipt
+        run: |
+          set -euo pipefail
+          python - <<'PYTHON'
+          import hashlib,json,os
+          from pathlib import Path
+          out=Path('benchmarks/exploratory/lgm_host_reference_v01')
+          q=json.loads((out/'summary.json').read_text())
+          assert q['attempted_taxa']+q['pending_taxa']==518
+          assert q['spatial_filter_applied'] is False
+          assert q['native_range_filter_applied'] is False
+          assert q['climate_or_genetic_response_used'] is False
+          assert sum(q['status_counts'].values())==518
+          receipt={'schema':'ttf_host_observation_acquisition_receipt_v0.1',
+            'run_id':os.environ['GITHUB_RUN_ID'],
+            'code_sha':os.environ['GITHUB_SHA'],
+            'attempted_taxa':q['attempted_taxa'],'pending_taxa':q['pending_taxa'],
+            'manifest_sha256':q['binding']['manifest_sha256'],
+            'summary_sha256':hashlib.sha256((out/'summary.json').read_bytes()).hexdigest(),
+            'genetic_or_climate_result':False}
+          (out/('execution_receipt_'+os.environ['GITHUB_RUN_ID']+'.json')).write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          print(json.dumps({k:v for k,v in q.items() if k!='pending_ids' and k!='binding'},sort_keys=True))
+          PYTHON
+      - name: Commit results to branch with race guard
+        run: |
+          set -euo pipefail
+          git fetch origin "${{ github.ref_name }}"
+          test "$(git rev-parse FETCH_HEAD)" = "${{ github.sha }}"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add benchmarks/exploratory/lgm_host_reference_v01/
+          git commit -m 'Preserve raw modern host observations and provenance for all attempted plant taxa'
+          git push origin "HEAD:${{ github.ref_name }}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lgm-host-observation-518-taxa-v01
+          path: benchmarks/exploratory/lgm_host_reference_v01/
+          retention-days: 30
+          if-no-files-found: warn

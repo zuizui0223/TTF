@@ -1,0 +1,55 @@
+{
+  "schema": "ttf_host_observation_shallow_timebins_v0.2",
+  "status": "EXPLORATORY_SAMPLING_SPECIFICATION_FROZEN_BEFORE_V02_NEW_HOST_OBSERVATION_RESULT",
+  "frozen_date": "2026-10-19",
+  "scientific_purpose": "Collect as many modern accepted host plant observations as possible without GBIF deep offset latency, while preserving original WCVP accepted IDs and separating from legacy v0.1 sample. Later diagnostic of reference completeness, not a new genetic confirmation.",
+  "original_manifest_sha256": "a28fba9efa8a9dc79c162336f62c883059c5dddbfabec2861f554d038dd98044",
+  "host_taxon_count": 518,
+  "insect_host_associations": 1037,
+  "insect_species": 641,
+  "old_contract": "scripts/acquire_lgm_host_references.py and benchmarks/exploratory/lgm_host_reference_v01/",
+  "new_contract": "scripts/acquire_hosts_yearstrat_v02.py",
+  "new_output_directory": "benchmarks/exploratory/lgm_host_reference_yearstrat_v02/",
+  "source": {
+    "dataset_key": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+    "basis_of_record": "HUMAN_OBSERVATION",
+    "status": "PRESENT",
+    "coordinates": "hasCoordinate=true; hasGeospatialIssue=false",
+    "coordinate_uncertainty_m_max": 1000,
+    "missing_uncertainty_excluded": true,
+    "years": [
+      [
+        2010,
+        2015
+      ],
+      [
+        2016,
+        2020
+      ],
+      [
+        2021,
+        2026
+      ]
+    ],
+    "event_date_end": "2026-10-18",
+    "offset": 0,
+    "limit_per_bin": 300,
+    "max_pages_per_host": 3,
+    "maximum_retrieved_observations_per_host": 900,
+    "sampling_limitation": "Page 0 in each year bin is not an independent random sample, a complete census or equivalent to original deep offset sampling. Exact returned ordering may change with GBIF index."
+  },
+  "taxonomy": "Strict EXACT match; accepted WCVP taxon rank preserved; species/subspecies never broadened, section names reviewed without classification substitution",
+  "deduplication": "GBIF observation identifier within accepted host taxon, retain modern establishment status if present but do not assume native/introduced when missing",
+  "execution": "At most four concurrent workers; each taxon atomically source-bound and checkpointed; request errors and non-exact taxonomy preserved separately; incomplete is not ecological absence; resume only not-attempted taxa",
+  "required_science_firewall": {
+    "genetic_response_used": false,
+    "climate_response_used": false,
+    "ancient_host_occupancy_reconstructed": false,
+    "biological_LGM_effect_inferred": false,
+    "legacy_v01_sample_replaced": false,
+    "v01_v02_observations_automatically_combined": false,
+    "posthoc_subset_rescue_allowed": false
+  },
+  "qualification": "Transport and taxonomic census only. Do not interpret >0 residual variance or apparent host/self historical contrast as evidence of host-specific mechanism without geometry-matched null and independent genetics.",
+  "stop_rule": "Do not modify the original v0.1 query or frozen genetic decision to make v0.2 pass."
+}

@@ -1,0 +1,642 @@
+accepted_species_key,api_count_changed,api_count_initial,canonical_name,eligible_before_thinning_0km,eligible_before_thinning_100km,eligible_before_thinning_25km,eligible_before_thinning_50km,external_reference_points_50km,fetched_records,match_confidence,page_offsets,quality_unique_records,rejection_counts,retrieval_mode,species,status,taxonomy_match,thinned_capped_0km,thinned_capped_100km,thinned_capped_25km,thinned_capped_50km
+4301264,False,22,Abagrotis nefascia,20,7,18,18,8,22,99,0,20,{'observation_identity': 2},complete_query,Abagrotis nefascia,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,10,5,8,8
+1767608,False,139,Abrostola asclepiadis,139,83,106,97,63,139,98,0,139,{},complete_query,Abrostola asclepiadis,GEOMETRY_REFERENCE_GE30,EXACT,82,57,69,63
+1968205,False,480,Acasis viridata,477,203,460,366,125,480,99,0;300,477,{'observation_identity': 3},complete_query,Acasis viridata,GEOMETRY_REFERENCE_GE30,EXACT,163,85,153,125
+1945462,False,304,Achlyodes busirus,303,254,281,276,167,304,99,0;300,303,{'observation_identity': 1},complete_query,Achlyodes busirus,GEOMETRY_REFERENCE_GE30,EXACT,178,151,170,167
+1945477,False,3075,Achlyodes thraso,887,839,862,851,200,900,99,0;1387;2775,887,{'observation_identity': 13},bounded_3_windows,Achlyodes thraso,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1739727,False,640,Acleris curvalana,640,235,578,524,163,640,99,0;300;600,640,{},complete_query,Acleris curvalana,GEOMETRY_REFERENCE_GE30,EXACT,200,101,194,163
+1740003,False,226,Acleris flavivittana,222,150,209,182,72,226,99,0,222,{'observation_identity': 4},complete_query,Acleris flavivittana,GEOMETRY_REFERENCE_GE30,EXACT,96,54,87,72
+1739895,False,12,Acleris implexana,12,10,10,10,6,12,99,0,12,{},complete_query,Acleris implexana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,8,6,6,6
+1740185,False,363,Acleris laterana,363,236,317,269,135,363,99,0;300,363,{},complete_query,Acleris laterana,GEOMETRY_REFERENCE_GE30,EXACT,188,117,156,135
+1740148,False,458,Acleris macdunnoughi,456,272,429,349,91,458,99,0;300,456,{'observation_identity': 2},complete_query,Acleris macdunnoughi,GEOMETRY_REFERENCE_GE30,EXACT,127,68,112,91
+1739781,False,17,Acleris negundana,17,5,12,9,7,17,99,0,17,{},complete_query,Acleris negundana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,13,4,10,7
+1740389,False,1157,Acleris nivisellana,894,481,743,621,186,900,99,0;428;857,894,{'observation_identity': 6},bounded_3_windows,Acleris nivisellana,GEOMETRY_REFERENCE_GE30,EXACT,200,133,200,186
+1739897,False,19,Acleris semiannula,19,19,19,19,14,19,99,0,19,{},complete_query,Acleris semiannula,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,14,14,14,14
+1739867,False,1362,Acleris semipurpurana,897,604,815,753,200,900,99,0;531;1062,897,{'observation_identity': 3},bounded_3_windows,Acleris semipurpurana,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1861933,False,91,Acosmeryx shervillii,91,63,85,73,34,91,99,0,91,{},complete_query,Acosmeryx shervillii,GEOMETRY_REFERENCE_GE30,EXACT,44,27,39,34
+1874176,False,0,Acrobasis carpinivorella,0,0,0,0,0,0,99,,0,{},complete_query,Acrobasis carpinivorella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1874211,False,841,Acrobasis tumidana,841,775,821,811,200,841,98,0;300;600,841,{},complete_query,Acrobasis tumidana,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1750924,False,200,Acrocercops astericola,200,86,142,126,77,200,99,0,200,{},complete_query,Acrocercops astericola,GEOMETRY_REFERENCE_GE30,EXACT,121,59,91,77
+1751051,False,549,Acrocercops brongniardella,548,361,478,450,200,549,99,0;300,549,{},complete_query,Acrocercops brongniardella,GEOMETRY_REFERENCE_GE30,EXACT,200,178,200,200
+1829533,False,234,Acrolepiopsis assectella,233,168,198,193,74,234,99,0,233,{'observation_identity': 1},complete_query,Acrolepiopsis assectella,GEOMETRY_REFERENCE_GE30,EXACT,93,60,78,74
+1782723,False,0,Acronicta haesitata,0,0,0,0,0,0,99,,0,{},complete_query,Acronicta haesitata,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1782744,False,714,Acronicta retardata,713,296,597,464,200,714,99,0;300;600,713,{'observation_identity': 1},complete_query,Acronicta retardata,GEOMETRY_REFERENCE_GE30,EXACT,200,194,200,200
+1782878,False,84,Acronicta tristis,84,62,79,75,39,84,99,0,84,{},complete_query,Acronicta tristis,GEOMETRY_REFERENCE_GE30,EXACT,46,30,42,39
+1782837,False,1235,Acronicta vinnula,896,281,698,427,165,900,99,0;467;935,896,{'observation_identity': 4},bounded_3_windows,Acronicta vinnula,GEOMETRY_REFERENCE_GE30,EXACT,200,123,200,165
+9972403,False,457,Actias sinensis,456,112,327,197,68,457,99,0;300,457,{},complete_query,Actias sinensis,GEOMETRY_REFERENCE_GE30,EXACT,138,45,95,68
+1792292,False,905,Actinotia polyodon,900,490,749,651,200,900,99,0;302;605,900,{},bounded_3_windows,Actinotia polyodon,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5132446,False,128,Adelpha melanthe,125,92,109,106,64,128,99,0,125,{'observation_identity': 3},complete_query,Adelpha melanthe,GEOMETRY_REFERENCE_GE30,EXACT,73,55,66,64
+5124443,False,145,Aellopos fadus,145,137,144,141,104,145,98,0,145,{},complete_query,Aellopos fadus,GEOMETRY_REFERENCE_GE30,EXACT,106,100,105,104
+5124450,False,420,Aellopos titan,418,398,418,412,200,420,98,0;300,418,{'observation_identity': 2},complete_query,Aellopos titan,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+8869900,False,59,Aethes cnicana,59,18,49,33,29,59,99,0,59,{},complete_query,Aethes cnicana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,45,17,36,29
+1738514,False,310,Aethes hartmanniana,310,269,286,281,124,310,99,0;300,310,{},complete_query,Aethes hartmanniana,GEOMETRY_REFERENCE_GE30,EXACT,147,116,128,124
+1738317,False,90,Aethes rubigana,90,87,89,87,53,90,99,0,90,{},complete_query,Aethes rubigana,GEOMETRY_REFERENCE_GE30,EXACT,56,53,55,53
+1738429,False,267,Aethes tesserana,267,241,250,247,162,267,99,0,267,{},complete_query,Aethes tesserana,GEOMETRY_REFERENCE_GE30,EXACT,172,156,165,162
+1840345,False,45,Agonopterix angelicella,45,27,40,29,17,45,99,0,45,{},complete_query,Agonopterix angelicella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,26,15,21,17
+1840301,False,142,Agonopterix propinquella,142,108,130,121,84,142,99,0,142,{},complete_query,Agonopterix propinquella,GEOMETRY_REFERENCE_GE30,EXACT,98,73,92,84
+1878895,False,3324,Agriphila inquinatella,900,538,705,626,200,900,99,0;1512;3024,900,{},bounded_3_windows,Agriphila inquinatella,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1878939,False,671,Agriphila selasella,671,622,644,636,200,671,99,0;300;600,671,{},complete_query,Agriphila selasella,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1790160,False,0,Agrochola circellaris,0,0,0,0,0,0,99,,0,{},complete_query,Agrochola circellaris,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1939964,False,849,Albuna pyramidalis,849,489,649,584,200,849,99,0;300;600,849,{},complete_query,Albuna pyramidalis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+4527972,False,69,Altenia scriptella,67,46,60,52,37,69,99,0,69,{},complete_query,Altenia scriptella,GEOMETRY_REFERENCE_GE30,EXACT,46,33,43,37
+1859285,False,1263,Amblyptilia acanthadactyla,900,288,633,402,200,900,99,0;481;963,900,{},bounded_3_windows,Amblyptilia acanthadactyla,GEOMETRY_REFERENCE_GE30,EXACT,200,167,200,200
+1959637,False,103,Ametris nitocris,103,90,100,98,61,103,99,0,103,{},complete_query,Ametris nitocris,GEOMETRY_REFERENCE_GE30,EXACT,66,55,63,61
+1814182,False,299,Ammalo helops,296,226,273,256,143,299,99,0,297,{'observation_identity': 2},complete_query,Ammalo helops,GEOMETRY_REFERENCE_GE30,EXACT,162,125,151,143
+1907153,False,1927,Anaea aidea,872,438,571,540,200,900,99,0;813;1627,872,{'observation_identity': 28},bounded_3_windows,Anaea aidea,GEOMETRY_REFERENCE_GE30,EXACT,200,189,200,200
+1789580,False,675,Anarta myrtilli,675,463,627,559,200,675,99,0;300;600,675,{},complete_query,Anarta myrtilli,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1793369,False,389,Anathix puta,388,128,352,283,88,389,99,0;300,388,{'observation_identity': 1},complete_query,Anathix puta,GEOMETRY_REFERENCE_GE30,EXACT,125,65,111,88
+1838228,False,12,Anchinia daphnella,12,6,9,9,8,12,99,0,12,{},complete_query,Anchinia daphnella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,11,5,8,8
+5771259,False,196,Ancylis apicella,196,160,187,177,120,196,99,0,196,{},complete_query,Ancylis apicella,GEOMETRY_REFERENCE_GE30,EXACT,136,109,128,120
+5103201,False,734,Ancylis burgessiana,734,286,647,448,200,734,99,0;300;600,734,{},complete_query,Ancylis burgessiana,GEOMETRY_REFERENCE_GE30,EXACT,200,135,200,200
+5103121,False,272,Ancylis laetana,272,249,267,261,151,272,99,0,272,{},complete_query,Ancylis laetana,GEOMETRY_REFERENCE_GE30,EXACT,160,146,156,151
+5771239,False,116,Ancylis myrtillana,116,39,69,51,45,116,99,0,116,{},complete_query,Ancylis myrtillana,GEOMETRY_REFERENCE_GE30,EXACT,70,34,59,45
+10501190,False,53,Ancylis spiraeifoliana,53,35,41,36,21,53,99,0,53,{},complete_query,Ancylis spiraeifoliana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,32,20,25,21
+5103229,False,136,Ancylis subaequana,136,88,120,108,61,136,99,0,136,{},complete_query,Ancylis subaequana,GEOMETRY_REFERENCE_GE30,EXACT,77,52,70,61
+5771243,False,185,Ancylis unculana,185,160,175,167,103,185,99,0,185,{},complete_query,Ancylis unculana,GEOMETRY_REFERENCE_GE30,EXACT,117,98,107,103
+1862905,False,5,Andriasa contraria,5,5,5,5,3,5,99,0,5,{},complete_query,Andriasa contraria,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,3,3,3,3
+1838422,False,23,Antaeotricha renselariana,23,22,23,23,19,23,99,0,23,{},complete_query,Antaeotricha renselariana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,19,18,19,19
+8007222,False,358,Apamea anceps,358,88,282,170,70,358,99,0;300,358,{},complete_query,Apamea anceps,GEOMETRY_REFERENCE_GE30,EXACT,115,41,92,70
+4534485,False,95,Apamea illyria,95,52,78,60,43,95,99,0,95,{},complete_query,Apamea illyria,GEOMETRY_REFERENCE_GE30,EXACT,62,36,53,43
+1795854,False,455,Apamea lateritia,455,223,341,284,155,455,99,0;300,455,{},complete_query,Apamea lateritia,GEOMETRY_REFERENCE_GE30,EXACT,200,137,186,155
+1796145,False,10463,Apamea monoglypha,900,180,417,268,156,900,99,0;5081;10163,900,{},bounded_3_windows,Apamea monoglypha,GEOMETRY_REFERENCE_GE30,EXACT,200,104,200,156
+7438067,False,329,Apamea remissa,329,180,251,224,141,329,99,0;300,329,{},complete_query,Apamea remissa,GEOMETRY_REFERENCE_GE30,EXACT,200,110,159,141
+1796188,False,414,Apamea unanimis,411,188,286,244,120,414,99,0;300,411,{'observation_identity': 3},complete_query,Apamea unanimis,GEOMETRY_REFERENCE_GE30,EXACT,166,93,139,120
+1796032,False,102,Apamea zeta,102,37,61,45,12,102,99,0,102,{},complete_query,Apamea zeta,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,47,7,21,12
+1804969,False,295,Apantesis vittata,295,228,271,258,161,295,99,0,295,{},complete_query,Apantesis vittata,GEOMETRY_REFERENCE_GE30,EXACT,179,142,170,161
+5131910,False,3871,Apatura iris,900,586,803,706,200,900,99,0;1785;3571,900,{},bounded_3_windows,Apatura iris,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+7588222,False,13,Aphelia unitana,13,9,10,10,10,13,99,0,13,{},complete_query,Aphelia unitana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,12,9,10,10
+1984942,False,2240,Aplocera plagiata,897,489,692,597,200,900,99,0;970;1940,897,{'observation_identity': 3},bounded_3_windows,Aplocera plagiata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1984949,False,925,Aplocera praeformata,900,548,782,729,200,900,99,0;312;625,900,{},bounded_3_windows,Aplocera praeformata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1744724,False,380,Apotomis albeolana,370,210,344,262,78,380,99,0;300,370,{'observation_identity': 10},complete_query,Apotomis albeolana,GEOMETRY_REFERENCE_GE30,EXACT,108,61,96,78
+1744695,False,47,Apotomis funerea,46,35,45,45,26,47,99,0,46,{'observation_identity': 1},complete_query,Apotomis funerea,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,27,22,26,26
+1744709,False,51,Apotomis infida,51,46,51,47,30,51,99,0,51,{},complete_query,Apotomis infida,GEOMETRY_REFERENCE_GE30,EXACT,32,29,32,30
+1744699,False,19,Apotomis inundana,19,13,17,14,10,19,99,0,19,{},complete_query,Apotomis inundana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,15,9,13,10
+1744748,False,5,Apotomis sauciana,5,2,3,2,2,5,99,0,5,{},complete_query,Apotomis sauciana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,2,3,2
+1848219,False,212,Aproaerema anthyllidella,211,68,149,102,66,212,99,0,212,{},complete_query,Aproaerema anthyllidella,GEOMETRY_REFERENCE_GE30,EXACT,132,39,86,66
+1789849,False,96,Archanara dissoluta,96,71,92,81,45,96,99,0,96,{},complete_query,Archanara dissoluta,GEOMETRY_REFERENCE_GE30,EXACT,57,36,53,45
+1850522,False,197,Argolamprotes micella,197,94,166,140,100,197,99,0,197,{},complete_query,Argolamprotes micella,GEOMETRY_REFERENCE_GE30,EXACT,136,67,118,100
+1830152,False,265,Argyresthia brockeella,265,183,234,203,127,265,99,0,265,{},complete_query,Argyresthia brockeella,GEOMETRY_REFERENCE_GE30,EXACT,169,114,146,127
+1830125,False,1373,Argyresthia goedartella,900,347,678,516,200,900,99,0;536;1073,900,{},bounded_3_windows,Argyresthia goedartella,GEOMETRY_REFERENCE_GE30,EXACT,200,185,200,200
+1830206,False,8,Argyresthia semifusca,8,8,8,8,4,8,99,0,8,{},complete_query,Argyresthia semifusca,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,4,4,4
+1830262,False,6,Argyresthia sorbiella,6,3,5,5,4,6,99,0,6,{},complete_query,Argyresthia sorbiella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,3,4,4
+1830284,False,320,Argyresthia thuiella,319,95,179,129,62,320,99,0;300,319,{'observation_identity': 1},complete_query,Argyresthia thuiella,GEOMETRY_REFERENCE_GE30,EXACT,120,47,85,62
+1778555,False,515,Argyrostrotis anilis,515,368,497,457,200,515,99,0;300,515,{},complete_query,Argyrostrotis anilis,GEOMETRY_REFERENCE_GE30,EXACT,200,190,200,200
+1747147,False,988,Argyrotaenia alisellana,896,695,829,795,200,900,99,0;344;688,896,{'observation_identity': 4},bounded_3_windows,Argyrotaenia alisellana,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1979781,False,586,Arichanna melanaria,586,349,540,452,200,586,99,0;300,586,{},complete_query,Arichanna melanaria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1933095,False,11612,Aricia agestis,900,35,110,66,52,900,99,0;5656;11312,900,{},bounded_3_windows,Aricia agestis,GEOMETRY_REFERENCE_GE30,EXACT,200,28,81,52
+5122121,False,199,Aristotelia corallina,199,82,187,139,71,199,99,0,199,{},complete_query,Aristotelia corallina,GEOMETRY_REFERENCE_GE30,EXACT,91,44,83,71
+5122095,False,43,Aristotelia fungivorella,43,38,43,39,32,43,99,0,43,{},complete_query,Aristotelia fungivorella,GEOMETRY_REFERENCE_GE30,EXACT,35,31,35,32
+1851220,False,170,Aroga velocella,170,93,123,115,77,170,98,0,170,{},complete_query,Aroga velocella,GEOMETRY_REFERENCE_GE30,EXACT,97,63,84,77
+1748890,False,136,Aspilapteryx tringipennella,136,53,90,73,46,136,99,0,136,{},complete_query,Aspilapteryx tringipennella,GEOMETRY_REFERENCE_GE30,EXACT,74,33,54,46
+1876854,False,313,Assara terebrella,313,190,269,237,118,313,99,0;300,313,{},complete_query,Assara terebrella,GEOMETRY_REFERENCE_GE30,EXACT,162,101,135,118
+1987744,False,837,Asthena albulata,837,436,755,683,200,837,99,0;300;600,837,{},complete_query,Asthena albulata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1943824,False,157,Astraptes alardus,156,93,147,109,70,157,99,0,156,{'observation_identity': 1},complete_query,Astraptes alardus,GEOMETRY_REFERENCE_GE30,EXACT,85,61,81,70
+7628188,False,259,Ategumia ebulealis,259,251,259,258,144,259,99,0,259,{},complete_query,Ategumia ebulealis,GEOMETRY_REFERENCE_GE30,EXACT,145,141,145,144
+5122230,False,3,Athrips pruinosella,3,3,3,3,3,3,99,0,3,{},complete_query,Athrips pruinosella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,3,3,3,3
+1761865,False,351,Auchmis detersa,351,180,273,203,80,351,99,0;300,351,{},complete_query,Auchmis detersa,GEOMETRY_REFERENCE_GE30,EXACT,134,64,103,80
+1792414,False,481,Autographa bractea,481,366,441,409,200,481,98,0;300,481,{},complete_query,Autographa bractea,GEOMETRY_REFERENCE_GE30,EXACT,200,185,200,200
+1792426,False,518,Autographa jota,518,221,449,377,200,518,99,0;300,518,{},complete_query,Autographa jota,GEOMETRY_REFERENCE_GE30,EXACT,200,126,200,200
+5108417,False,1692,Balsa tristrigella,891,544,800,733,200,900,99,0;696;1392,891,{'observation_identity': 9},bounded_3_windows,Balsa tristrigella,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1852978,False,22,Batrachedra pinicolella,22,22,22,22,10,22,99,0,22,{},complete_query,Batrachedra pinicolella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,10,10,10,10
+1852956,False,207,Batrachedra praeangusta,207,135,183,161,75,207,99,0,207,{},complete_query,Batrachedra praeangusta,GEOMETRY_REFERENCE_GE30,EXACT,105,58,91,75
+1835819,False,745,Bibarrambla allenella,729,369,525,422,137,745,99,0;300;600,729,{'observation_identity': 16},complete_query,Bibarrambla allenella,GEOMETRY_REFERENCE_GE30,EXACT,200,111,174,137
+9473121,False,861,Blastobasis glandulella,861,272,543,398,174,861,99,0;300;600,861,{},complete_query,Blastobasis glandulella,GEOMETRY_REFERENCE_GE30,EXACT,200,126,200,174
+1894268,False,3522,Boloria euphrosyne,899,140,392,291,156,900,99,0;1611;3222,900,{},bounded_3_windows,Boloria euphrosyne,GEOMETRY_REFERENCE_GE30,EXACT,200,67,200,156
+10597291,False,96,Bondia comonana,96,81,88,86,44,96,99,0,96,{},complete_query,Bondia comonana,GEOMETRY_REFERENCE_GE30,EXACT,52,39,46,44
+10014166,False,59,Bucculatrix canadensisella,59,28,42,39,12,59,99,0,59,{},complete_query,Bucculatrix canadensisella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,23,8,15,12
+4535904,False,186,Bucculatrix frangutella,186,114,171,148,104,186,99,0,186,{},complete_query,Bucculatrix frangutella,GEOMETRY_REFERENCE_GE30,EXACT,124,79,116,104
+1751298,False,39,Bucculatrix nigricomella,39,14,38,33,17,39,99,0,39,{},complete_query,Bucculatrix nigricomella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,21,11,20,17
+1751389,False,2,Bucculatrix trifasciella,2,2,2,2,2,2,99,0,2,{},complete_query,Bucculatrix trifasciella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,2,2,2,2
+1947616,False,19,Bungalotis erythus,19,19,19,19,17,19,99,0,19,{},complete_query,Bungalotis erythus,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,17,17,17,17
+1789191,False,2402,Caenurgina crassiuscula,892,637,785,751,200,900,99,0;1051;2102,892,{'observation_identity': 8},bounded_3_windows,Caenurgina crassiuscula,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1890187,False,1218,Calamotropha paludella,900,774,867,812,200,900,99,0;459;918,900,{},bounded_3_windows,Calamotropha paludella,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1749050,False,91,Callisto denticulella,91,64,78,73,62,91,99,0,91,{},complete_query,Callisto denticulella,GEOMETRY_REFERENCE_GE30,EXACT,76,54,66,62
+9053308,False,1259,Callizzia amorata,896,335,609,444,200,900,98,0;479;959,897,{'observation_identity': 3},bounded_3_windows,Callizzia amorata,GEOMETRY_REFERENCE_GE30,EXACT,200,151,200,200
+5108660,False,482,Callopistria latreillei,482,373,480,463,200,482,99,0;300,482,{},complete_query,Callopistria latreillei,GEOMETRY_REFERENCE_GE30,EXACT,200,189,200,200
+5105120,False,627,Caloptilia bimaculatella,627,410,571,509,200,627,99,0;300;600,627,{},complete_query,Caloptilia bimaculatella,GEOMETRY_REFERENCE_GE30,EXACT,200,158,200,200
+5104950,False,27,Caloptilia cornusella,27,20,23,23,15,27,99,0,27,{},complete_query,Caloptilia cornusella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,16,13,15,15
+5105106,False,59,Caloptilia cuculipennella,59,15,50,35,26,59,99,0,59,{},complete_query,Caloptilia cuculipennella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,46,9,38,26
+5105158,False,27,Caloptilia elongella,27,8,22,15,11,27,99,0,27,{},complete_query,Caloptilia elongella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,21,5,16,11
+5104829,False,15,Caloptilia falconipennella,15,10,13,10,9,15,99,0,15,{},complete_query,Caloptilia falconipennella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,14,9,12,9
+5105031,False,226,Caloptilia fraxinella,225,114,137,125,71,226,99,0,226,{},complete_query,Caloptilia fraxinella,GEOMETRY_REFERENCE_GE30,EXACT,101,61,79,71
+5105000,False,2,Caloptilia fribergensis,2,0,0,0,0,2,99,0,2,{},complete_query,Caloptilia fribergensis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,1,0,0,0
+5105124,False,208,Caloptilia packardella,207,169,191,185,103,208,99,0,207,{'observation_identity': 1},complete_query,Caloptilia packardella,GEOMETRY_REFERENCE_GE30,EXACT,116,91,106,103
+5105088,False,64,Caloptilia populetorum,64,52,54,54,40,64,99,0,64,{},complete_query,Caloptilia populetorum,GEOMETRY_REFERENCE_GE30,EXACT,48,38,40,40
+5104781,False,41,Caloptilia rufipennella,41,28,38,35,16,41,99,0,41,{},complete_query,Caloptilia rufipennella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,22,9,19,16
+5104927,False,18,Caloptilia semifascia,18,8,14,10,7,18,99,0,18,{},complete_query,Caloptilia semifascia,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,14,5,11,7
+1748456,False,119,Capua vulgana,119,83,112,96,61,119,99,0,119,{},complete_query,Capua vulgana,GEOMETRY_REFERENCE_GE30,EXACT,76,50,70,61
+4535386,False,0,Carcharodus baeticus,0,0,0,0,0,0,99,,0,{},complete_query,Carcharodus baeticus,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1850026,False,0,Caryocolum amaurella,0,0,0,0,0,0,99,,0,{},complete_query,Caryocolum amaurella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1850045,False,4,Caryocolum cassella,4,4,4,4,4,4,99,0,4,{},complete_query,Caryocolum cassella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,4,4,4
+1850062,False,0,Caryocolum schleichi,0,0,0,0,0,0,99,,0,{},complete_query,Caryocolum schleichi,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1850028,False,11,Caryocolum tischeriella,11,9,11,10,6,11,99,0,11,{},complete_query,Caryocolum tischeriella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,7,5,7,6
+1964195,False,1400,Catarhoe cuculata,900,537,733,659,200,900,99,0;550;1100,900,{},bounded_3_windows,Catarhoe cuculata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1797198,False,360,Catocala andromedae,360,87,308,226,85,360,99,0;300,360,{},complete_query,Catocala andromedae,GEOMETRY_REFERENCE_GE30,EXACT,127,49,109,85
+1797365,False,169,Catocala californica,169,92,147,104,61,169,99,0,169,{},complete_query,Catocala californica,GEOMETRY_REFERENCE_GE30,EXACT,83,51,70,61
+1797285,False,1386,Catocala cara,899,453,690,553,200,900,99,0;543;1086,899,{'observation_identity': 1},bounded_3_windows,Catocala cara,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1797137,False,466,Catocala coccinata,466,330,450,420,191,466,99,0;300,466,{},complete_query,Catocala coccinata,GEOMETRY_REFERENCE_GE30,EXACT,200,147,200,191
+1797556,False,1094,Catocala concumbens,899,496,774,660,200,900,99,0;397;794,899,{'observation_identity': 1},bounded_3_windows,Catocala concumbens,GEOMETRY_REFERENCE_GE30,EXACT,200,184,200,200
+1797210,False,243,Catocala gracilis,243,221,238,232,95,243,99,0,243,{},complete_query,Catocala gracilis,GEOMETRY_REFERENCE_GE30,EXACT,105,87,101,95
+1797122,False,1044,Catocala grynea,899,429,715,598,200,900,99,0;372;744,899,{'observation_identity': 1},bounded_3_windows,Catocala grynea,GEOMETRY_REFERENCE_GE30,EXACT,200,192,200,200
+8874140,False,408,Catocala lacrymosa,408,202,358,295,155,408,99,0;300,408,{},complete_query,Catocala lacrymosa,GEOMETRY_REFERENCE_GE30,EXACT,197,118,180,155
+1797111,False,1767,Catocala micronympha,900,417,731,564,200,900,99,0;733;1467,900,{},bounded_3_windows,Catocala micronympha,GEOMETRY_REFERENCE_GE30,EXACT,200,179,200,200
+1797206,False,317,Catocala praeclara,316,171,289,220,89,317,99,0;300,316,{'observation_identity': 1},complete_query,Catocala praeclara,GEOMETRY_REFERENCE_GE30,EXACT,125,66,113,89
+1797367,False,581,Catocala sponsa,581,419,529,488,200,581,98,0;300,581,{},complete_query,Catocala sponsa,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1862923,False,83,Cautethia spuria,83,48,81,71,18,83,99,0,83,{},complete_query,Cautethia spuria,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,25,12,23,18
+1864201,False,6,Centroctena rutherfordi,6,4,6,5,5,6,99,0,6,{},complete_query,Centroctena rutherfordi,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,6,4,6,5
+1952730,False,38,Ceranemota fasciata,38,18,36,32,16,38,99,0,38,{},complete_query,Ceranemota fasciata,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,21,8,20,16
+5110871,False,170,Cerastis leucographa,170,125,151,142,77,170,99,0,170,{},complete_query,Cerastis leucographa,GEOMETRY_REFERENCE_GE30,EXACT,99,62,84,77
+1941437,False,239,Chamaesphecia empiformis,239,220,236,231,158,239,99,0,239,{},complete_query,Chamaesphecia empiformis,GEOMETRY_REFERENCE_GE30,EXACT,164,149,161,158
+5128764,False,0,Charaxes anticlea,0,0,0,0,0,0,99,,0,{},complete_query,Charaxes anticlea,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+5129216,False,0,Charaxes virilis,0,0,0,0,0,0,99,,0,{},complete_query,Charaxes virilis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1758839,False,60,Chasmina tibialis,60,21,26,22,19,60,99,0,60,{},complete_query,Chasmina tibialis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,28,18,21,19
+1766741,False,546,Chersotis cuprea,546,202,416,328,150,546,99,0;300,546,{},complete_query,Chersotis cuprea,GEOMETRY_REFERENCE_GE30,EXACT,200,103,196,150
+1962990,False,503,Chesias legatella,503,400,491,475,200,503,99,0;300,503,{},complete_query,Chesias legatella,GEOMETRY_REFERENCE_GE30,EXACT,200,185,200,200
+1883145,False,7,Chilo orichalcociliella,7,3,7,7,7,7,99,0,7,{},complete_query,Chilo orichalcociliella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,7,3,7,7
+1851000,False,11,Chionodes continuella,11,10,11,11,10,11,99,0,11,{},complete_query,Chionodes continuella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,10,9,10,10
+1850923,False,138,Chionodes thoraceochrella,138,90,125,108,59,138,99,0,138,{},complete_query,Chionodes thoraceochrella,GEOMETRY_REFERENCE_GE30,EXACT,78,51,68,59
+5772309,False,931,Chloantha hyperici,900,707,868,787,200,900,99,0;315;631,900,{},bounded_3_windows,Chloantha hyperici,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5123394,False,283,Choreutis diana,283,245,274,269,137,283,99,0,283,{},complete_query,Choreutis diana,GEOMETRY_REFERENCE_GE30,EXACT,148,121,142,137
+11873825,False,4720,Chytolita morbidalis,885,409,651,482,200,900,99,0;2210;4420,887,{'observation_identity': 13},bounded_3_windows,Chytolita morbidalis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5768880,False,1285,Cidaria fulvata,894,412,805,654,200,900,99,0;492;985,900,{},bounded_3_windows,Cidaria fulvata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1986998,False,1309,Cladara atroliturata,895,609,859,760,200,900,99,0;504;1009,895,{'observation_identity': 5},bounded_3_windows,Cladara atroliturata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1858637,False,1267,Cnaemidophorus rhododactyla,897,637,806,698,200,900,99,0;483;967,897,{'observation_identity': 3},bounded_3_windows,Cnaemidophorus rhododactyla,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1739072,False,14,Cnephasia genitalana,14,14,14,14,2,14,99,0,14,{},complete_query,Cnephasia genitalana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,2,2,2,2
+1739471,False,58,Cochylidia heydeniana,58,58,58,58,28,58,99,0,58,{},complete_query,Cochylidia heydeniana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,28,28,28,28
+1739449,False,13,Cochylidia rupicola,13,8,11,11,11,13,99,0,13,{},complete_query,Cochylidia rupicola,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,12,8,11,11
+8396242,False,868,Coenonympha dorus,867,56,450,200,83,868,99,0;300;600,868,{},complete_query,Coenonympha dorus,GEOMETRY_REFERENCE_GE30,EXACT,200,30,156,83
+1911168,False,491,Coenonympha hero,491,398,453,445,167,491,99,0;300,491,{},complete_query,Coenonympha hero,GEOMETRY_REFERENCE_GE30,EXACT,185,151,173,167
+5120751,False,5,Coleophora alnifoliae,5,5,5,5,5,5,99,0,5,{},complete_query,Coleophora alnifoliae,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,5,5,5
+5120668,False,4,Coleophora alticolella,4,4,4,4,4,4,99,0,4,{},complete_query,Coleophora alticolella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,4,4,4
+5121634,False,0,Coleophora glitzella,0,0,0,0,0,0,99,,0,{},complete_query,Coleophora glitzella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+5120675,False,366,Coleophora mayrella,361,335,360,357,200,366,99,0;300,361,{'observation_identity': 5},complete_query,Coleophora mayrella,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5120577,False,206,Coleophora trifolii,205,130,166,146,95,206,99,0,205,{'observation_identity': 1},complete_query,Coleophora trifolii,GEOMETRY_REFERENCE_GE30,EXACT,125,86,103,95
+1851426,False,2,Coleotechnites blastovora,2,0,2,1,1,2,99,0,2,{},complete_query,Coleotechnites blastovora,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,2,0,2,1
+1851407,False,4,Coleotechnites thujaella,4,1,2,1,1,4,99,0,4,{},complete_query,Coleotechnites thujaella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,1,2,1
+8203812,False,782,Colias alfacariensis,776,30,149,73,55,782,98,0;300;600,782,{},complete_query,Colias alfacariensis,GEOMETRY_REFERENCE_GE30,EXACT,200,22,95,55
+,,,Colias croceus,,,,,0,,96,,,,,Colias crocea,TAXONOMY_NOT_EXACT,FUZZY,,,,
+5137700,False,136,Colias gigantea,136,84,124,112,27,136,99,0,136,{},complete_query,Colias gigantea,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,37,20,30,27
+1920348,False,301,Colotis eris,301,280,296,287,139,301,99,0;300,301,{},complete_query,Colotis eris,GEOMETRY_REFERENCE_GE30,EXACT,147,134,143,139
+1882812,False,2146,Conchylodes ovulalis,895,799,879,868,200,900,99,0;923;1846,895,{'observation_identity': 5},bounded_3_windows,Conchylodes ovulalis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+4301036,False,312,Cosmopterix pulchrimella,310,269,289,284,167,312,99,0;300,310,{'observation_identity': 2},complete_query,Cosmopterix pulchrimella,GEOMETRY_REFERENCE_GE30,EXACT,183,154,171,167
+1970213,False,2711,Cosmorhoe ocellata,900,511,761,642,200,900,99,0;1205;2411,900,{},bounded_3_windows,Cosmorhoe ocellata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1733258,False,53,Cosmotriche lobulina,53,43,48,48,34,53,99,0,53,{},complete_query,Cosmotriche lobulina,GEOMETRY_REFERENCE_GE30,EXACT,38,30,34,34
+1824179,False,43,Crinodes besckei,43,29,33,30,22,43,99,0,43,{},complete_query,Crinodes besckei,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,28,21,25,22
+5139156,False,5143,Cyaniris semiargus,900,192,479,347,173,900,98,0;2421;4843,900,{},bounded_3_windows,Cyaniris semiargus,GEOMETRY_REFERENCE_GE30,EXACT,200,90,200,173
+5149746,False,777,Cyclophora albipunctata,777,550,736,677,200,777,99,0;300;600,777,{},complete_query,Cyclophora albipunctata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5149665,False,3314,Cyclophora punctaria,900,352,623,509,200,900,99,0;1507;3014,900,{},bounded_3_windows,Cyclophora punctaria,GEOMETRY_REFERENCE_GE30,EXACT,200,167,200,200
+1737904,False,598,Cydia caryana,598,489,567,545,150,598,99,0;300,598,{},complete_query,Cydia caryana,GEOMETRY_REFERENCE_GE30,EXACT,162,126,158,150
+4530002,False,115,Cydia strobilella,115,79,107,87,59,115,99,0,115,{},complete_query,Cydia strobilella,GEOMETRY_REFERENCE_GE30,EXACT,75,51,68,59
+4532886,False,303,Deltote uncula,302,199,276,238,155,303,99,0;300,303,{},complete_query,Deltote uncula,GEOMETRY_REFERENCE_GE30,EXACT,195,124,173,155
+1837356,False,0,Depressaria artemisiae,0,0,0,0,0,0,99,,0,{},complete_query,Depressaria artemisiae,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1837343,False,36,Depressaria olerella,36,30,32,31,18,36,99,0,36,{},complete_query,Depressaria olerella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,23,17,19,18
+1837449,False,14,Depressaria pimpinellae,14,11,14,13,8,14,99,0,14,{},complete_query,Depressaria pimpinellae,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,9,7,9,8
+5126465,False,35,Desmia ufeus,35,34,35,35,18,35,98,0,35,{},complete_query,Desmia ufeus,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,18,17,18,18
+4533431,False,875,Diarsia brunnea,875,396,614,517,200,875,99,0;300;600,875,{},complete_query,Diarsia brunnea,GEOMETRY_REFERENCE_GE30,EXACT,200,187,200,200
+5127378,False,3590,Diastictis fracturalis,898,269,721,471,183,900,99,0;1645;3290,898,{'observation_identity': 2},bounded_3_windows,Diastictis fracturalis,GEOMETRY_REFERENCE_GE30,EXACT,200,120,200,183
+1886868,False,87,Diatraea evanescens,87,40,83,68,35,87,99,0,87,{},complete_query,Diatraea evanescens,GEOMETRY_REFERENCE_GE30,EXACT,47,25,43,35
+1738839,False,523,Dichrorampha acuminatana,523,476,503,484,141,523,99,0;300,523,{},complete_query,Dichrorampha acuminatana,GEOMETRY_REFERENCE_GE30,EXACT,168,135,155,141
+1738829,False,6,Dichrorampha aeratana,6,4,6,6,6,6,99,0,6,{},complete_query,Dichrorampha aeratana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,6,4,6,6
+1738722,False,21,Dichrorampha alpinana,21,6,16,9,9,21,99,0,21,{},complete_query,Dichrorampha alpinana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,20,6,16,9
+1738678,False,0,Dichrorampha montanana,0,0,0,0,0,0,99,,0,{},complete_query,Dichrorampha montanana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1738700,False,431,Dichrorampha petiverella,431,181,378,277,175,431,99,0;300,431,{},complete_query,Dichrorampha petiverella,GEOMETRY_REFERENCE_GE30,EXACT,200,128,200,175
+1738777,False,32,Dichrorampha plumbana,32,31,32,31,25,32,99,0,32,{},complete_query,Dichrorampha plumbana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,26,25,26,25
+1877322,False,3,Dioryctria banksiella,3,0,1,0,0,3,99,0,3,{},complete_query,Dioryctria banksiella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,2,0,1,0
+1877365,False,276,Dioryctria reniculelloides,272,203,248,225,107,276,99,0,272,{'observation_identity': 4},complete_query,Dioryctria reniculelloides,GEOMETRY_REFERENCE_GE30,EXACT,120,100,112,107
+4531246,False,6,Dioryctria schuetzeella,6,5,5,5,5,6,99,0,6,{},complete_query,Dioryctria schuetzeella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,6,5,5,5
+1877310,False,27,Dioryctria sylvestrella,27,17,23,20,18,27,99,0,27,{},complete_query,Dioryctria sylvestrella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,24,15,21,18
+4531708,False,265,Donacaula forficella,265,117,160,132,81,265,99,0,265,{},complete_query,Donacaula forficella,GEOMETRY_REFERENCE_GE30,EXACT,104,69,96,81
+1884212,False,158,Donacaula mucronella,158,126,155,136,73,158,99,0,158,{},complete_query,Donacaula mucronella,GEOMETRY_REFERENCE_GE30,EXACT,82,68,79,73
+4299095,False,407,Doxocopa pavon,401,377,391,390,96,407,99,0;300,401,{'observation_identity': 6},complete_query,Doxocopa pavon,GEOMETRY_REFERENCE_GE30,EXACT,104,85,97,96
+9607447,False,169,Drasteria hudsonica,169,59,143,120,64,169,99,0,169,{},complete_query,Drasteria hudsonica,GEOMETRY_REFERENCE_GE30,EXACT,92,33,78,64
+1789267,False,807,Dryobotodes eremita,807,436,703,548,200,807,99,0;300;600,807,{},complete_query,Dryobotodes eremita,GEOMETRY_REFERENCE_GE30,EXACT,200,193,200,200
+1776862,False,1761,Dypterygia scabriuscula,900,626,787,732,200,900,99,0;730;1461,900,{},bounded_3_windows,Dypterygia scabriuscula,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1961361,False,3638,Dyspteris abortivaria,892,641,808,769,200,900,99,0;1669;3338,892,{'observation_identity': 8},bounded_3_windows,Dyspteris abortivaria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1803073,False,932,Earias clorana,900,543,782,658,200,900,98,0;316;632,900,{},bounded_3_windows,Earias clorana,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1978445,False,4933,Ecliptopera silaceata,887,274,580,422,200,900,99,0;2316;4633,887,{'observation_identity': 13},bounded_3_windows,Ecliptopera silaceata,GEOMETRY_REFERENCE_GE30,EXACT,200,134,200,200
+1735844,False,5,Ectoedemia albifasciella,5,5,5,5,5,5,98,0,5,{},complete_query,Ectoedemia albifasciella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,5,5,5
+9400895,False,155,Ectoedemia sericopeza,155,121,136,125,63,155,99,0,155,{},complete_query,Ectoedemia sericopeza,GEOMETRY_REFERENCE_GE30,EXACT,74,59,70,63
+1735855,False,15,Ectoedemia subbimaculella,15,12,13,13,9,15,98,0,15,{},complete_query,Ectoedemia subbimaculella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,11,8,9,9
+5880257,False,21,Elachista albifrontella,21,14,17,16,14,21,99,0,21,{},complete_query,Elachista albifrontella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,18,12,15,14
+1832853,False,229,Elachista argentella,229,128,175,162,129,229,99,0,229,{},complete_query,Elachista argentella,GEOMETRY_REFERENCE_GE30,EXACT,164,104,139,129
+1833084,False,3,Elachista atricomella,3,2,3,3,3,3,99,0,3,{},complete_query,Elachista atricomella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,3,2,3,3
+1833159,False,4,Elachista humilis,4,2,4,2,2,4,99,0,4,{},complete_query,Elachista humilis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,3,2,3,2
+1833123,False,4,Elachista luticomella,4,4,4,4,4,4,99,0,4,{},complete_query,Elachista luticomella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,4,4,4
+6097225,False,24,Elachista subalbidella,23,16,21,16,15,24,99,0,23,{'observation_identity': 1},complete_query,Elachista subalbidella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,20,15,18,15
+1833153,False,3,Elachista subocellea,3,1,2,2,2,3,99,0,3,{},complete_query,Elachista subocellea,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,3,1,2,2
+1827161,False,1786,Ellida caniplaga,899,475,762,632,200,900,99,0;743;1486,899,{'observation_identity': 1},bounded_3_windows,Ellida caniplaga,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1822182,False,1,Elymiotis longara,1,1,1,1,1,1,99,0,1,{},complete_query,Elymiotis longara,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,1,1,1,1
+9636267,False,1709,Emarginea percara,900,682,841,796,167,900,99,0;704;1409,900,{},bounded_3_windows,Emarginea percara,GEOMETRY_REFERENCE_GE30,EXACT,189,146,178,167
+1741748,False,25,Endothenia marginana,25,19,25,25,21,25,99,0,25,{},complete_query,Endothenia marginana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,21,18,21,21
+1741756,False,101,Endothenia nigricostana,101,89,100,95,72,101,99,0,101,{},complete_query,Endothenia nigricostana,GEOMETRY_REFERENCE_GE30,EXACT,76,68,75,72
+1741752,False,523,Endothenia quadrimaculana,523,477,500,485,183,523,99,0;300,523,{},complete_query,Endothenia quadrimaculana,GEOMETRY_REFERENCE_GE30,EXACT,200,176,194,183
+1957852,False,986,Ennomos quercinaria,900,457,738,624,200,900,98,0;343;686,900,{},bounded_3_windows,Ennomos quercinaria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5149503,False,8,Entephria multivagata,8,1,3,2,2,8,99,0,8,{},complete_query,Entephria multivagata,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,7,1,3,2
+5149597,False,19,Entephria nobiliaria,19,1,5,3,3,19,99,0,19,{},complete_query,Entephria nobiliaria,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,12,1,5,3
+1869496,False,21,Epermenia albapunctella,21,13,19,15,14,21,99,0,21,{},complete_query,Epermenia albapunctella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,18,12,17,14
+4528106,False,5,Ephysteris subdiminutella,5,5,5,5,5,5,99,0,5,{},complete_query,Ephysteris subdiminutella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,5,5,5
+1743532,False,1817,Epiblema foenella,900,806,863,850,200,900,99,0;758;1517,900,{},bounded_3_windows,Epiblema foenella,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1743588,False,73,Epiblema scutulana,73,60,69,68,56,73,99,0,73,{},complete_query,Epiblema scutulana,GEOMETRY_REFERENCE_GE30,EXACT,61,52,57,56
+1745678,False,42,Epinotia abbreviana,42,25,38,32,26,42,99,0,42,{},complete_query,Epinotia abbreviana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,33,21,31,26
+1745816,False,84,Epinotia brunnichana,84,52,74,68,39,84,99,0,84,{},complete_query,Epinotia brunnichana,GEOMETRY_REFERENCE_GE30,EXACT,48,34,43,39
+1745756,False,124,Epinotia criddleana,124,110,119,118,50,124,99,0,124,{},complete_query,Epinotia criddleana,GEOMETRY_REFERENCE_GE30,EXACT,54,43,51,50
+1745737,False,536,Epinotia tedella,536,243,422,346,187,536,99,0;300,536,{},complete_query,Epinotia tedella,GEOMETRY_REFERENCE_GE30,EXACT,200,147,200,187
+1745630,False,40,Epinotia tetraquetrana,40,36,40,37,23,40,99,0,40,{},complete_query,Epinotia tetraquetrana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,26,22,26,23
+5124839,False,13,Epiphora rectifascia,13,8,10,9,7,13,99,0,13,{},complete_query,Epiphora rectifascia,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,10,6,8,7
+1964637,False,1205,Epirrhoe galiata,900,557,813,705,200,900,99,0;452;905,900,{},bounded_3_windows,Epirrhoe galiata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1964657,False,239,Epirrhoe rivata,239,192,231,222,148,239,99,0,239,{},complete_query,Epirrhoe rivata,GEOMETRY_REFERENCE_GE30,EXACT,160,128,155,148
+1741400,False,471,Episimus argutana,471,220,390,331,151,471,99,0;300,471,{},complete_query,Episimus argutana,GEOMETRY_REFERENCE_GE30,EXACT,200,103,183,151
+7791558,False,834,Erebia meolans,834,53,264,170,74,834,99,0;300;600,834,{},complete_query,Erebia meolans,GEOMETRY_REFERENCE_GE30,EXACT,200,23,111,74
+8295666,False,524,Erebia neoridas,522,39,293,201,53,524,98,0;300,524,{},complete_query,Erebia neoridas,GEOMETRY_REFERENCE_GE30,EXACT,144,23,84,53
+8233062,False,760,Erebia tyndarus,759,308,435,329,107,760,99,0;300;600,760,{},complete_query,Erebia tyndarus,GEOMETRY_REFERENCE_GE30,EXACT,199,94,132,107
+1741551,False,30,Eriopsela quadrana,30,26,27,26,13,30,99,0,30,{},complete_query,Eriopsela quadrana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,15,13,14,13
+1789225,False,312,Erygia apicalis,308,268,290,275,77,312,98,0;300,312,{},complete_query,Erygia apicalis,GEOMETRY_REFERENCE_GE30,EXACT,86,71,81,77
+1985945,False,3292,Eubaphe mendica,897,474,815,706,200,900,99,0;1496;2992,897,{'observation_identity': 3},bounded_3_windows,Eubaphe mendica,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+6115793,False,913,Eublemma minima,900,415,815,713,200,900,99,0;306;613,900,{},bounded_3_windows,Eublemma minima,GEOMETRY_REFERENCE_GE30,EXACT,200,163,200,200
+1810348,False,13,Eucereon aeolum,12,7,11,9,7,13,99,0,12,{'observation_identity': 1},complete_query,Eucereon aeolum,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,10,5,9,7
+8951618,False,157,Euchlaena obtusaria,157,120,157,150,111,157,99,0,157,{},complete_query,Euchlaena obtusaria,GEOMETRY_REFERENCE_GE30,EXACT,118,89,118,111
+1863282,False,371,Euchloron megaera,367,270,306,282,123,371,99,0;300,371,{},complete_query,Euchloron megaera,GEOMETRY_REFERENCE_GE30,EXACT,158,113,137,123
+1988881,False,443,Euchoeca nebulata,443,304,397,347,200,443,99,0;300,443,{},complete_query,Euchoeca nebulata,GEOMETRY_REFERENCE_GE30,EXACT,200,189,200,200
+7975250,False,79,Eucosma aspidiscana,79,73,77,74,36,79,99,0,79,{},complete_query,Eucosma aspidiscana,GEOMETRY_REFERENCE_GE30,EXACT,40,35,39,36
+5103451,False,693,Eucosma cana,693,403,587,477,200,693,99,0;300;600,693,{},complete_query,Eucosma cana,GEOMETRY_REFERENCE_GE30,EXACT,200,193,200,200
+5103948,False,739,Eucosma conterminana,739,521,703,659,200,739,99,0;300;600,739,{},complete_query,Eucosma conterminana,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5103562,False,7,Eucosma fulvana,7,2,4,4,4,7,99,0,7,{},complete_query,Eucosma fulvana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,2,4,4
+5103502,False,52,Eucosma obumbratana,52,41,52,48,29,52,99,0,52,{},complete_query,Eucosma obumbratana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,33,26,33,29
+1968831,False,24,Eucrostes disparata,24,18,22,19,10,24,99,0,24,{},complete_query,Eucrostes disparata,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,14,9,12,10
+1778143,False,181,Eugraphe sigma,181,136,163,151,73,181,99,0,181,{},complete_query,Eugraphe sigma,GEOMETRY_REFERENCE_GE30,EXACT,90,69,80,73
+11080751,False,43,Eulamprotes wilkella,43,31,39,39,28,43,99,0,43,{},complete_query,Eulamprotes wilkella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,31,24,28,28
+1965831,False,1010,Eulithis gracilineata,899,727,846,810,200,900,99,0;355;710,899,{'observation_identity': 1},bounded_3_windows,Eulithis gracilineata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5123956,False,448,Eumorpha anchemolus,447,362,436,406,200,448,99,0;300,447,{'observation_identity': 1},complete_query,Eumorpha anchemolus,GEOMETRY_REFERENCE_GE30,EXACT,200,194,200,200
+5123971,False,994,Eumorpha labruscae,890,808,883,860,200,900,99,0;347;694,890,{'observation_identity': 10},bounded_3_windows,Eumorpha labruscae,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1983758,False,5,Eupithecia actaeata,5,2,5,3,3,5,99,0,5,{},complete_query,Eupithecia actaeata,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,2,5,3
+1983696,False,3,Eupithecia casloata,3,2,3,2,2,3,99,0,3,{},complete_query,Eupithecia casloata,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,3,2,3,2
+1982791,False,30,Eupithecia conterminata,30,27,27,27,16,30,99,0,30,{},complete_query,Eupithecia conterminata,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,18,16,16,16
+1983442,False,312,Eupithecia dodoneata,312,143,263,228,109,312,98,0;300,312,{},complete_query,Eupithecia dodoneata,GEOMETRY_REFERENCE_GE30,EXACT,156,82,130,109
+1983646,False,4,Eupithecia gelidata,4,4,4,4,3,4,99,0,4,{},complete_query,Eupithecia gelidata,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,3,3,3,3
+1983288,False,361,Eupithecia intricata,361,129,271,194,103,361,99,0;300,361,{},complete_query,Eupithecia intricata,GEOMETRY_REFERENCE_GE30,EXACT,173,69,138,103
+1982561,False,3,Eupithecia lachrymosa,3,2,2,2,1,3,99,0,3,{},complete_query,Eupithecia lachrymosa,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,2,1,1,1
+1982529,False,216,Eupithecia lanceata,216,157,204,178,94,216,99,0,216,{},complete_query,Eupithecia lanceata,GEOMETRY_REFERENCE_GE30,EXACT,113,81,105,94
+1983239,False,8,Eupithecia ochridata,8,8,8,8,8,8,99,0,8,{},complete_query,Eupithecia ochridata,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,8,8,8,8
+1982460,False,8,Eupithecia perfusca,8,8,8,8,5,8,99,0,8,{},complete_query,Eupithecia perfusca,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,5,5,5
+1982867,False,9,Eupithecia selinata,9,8,8,8,8,9,98,0,9,{},complete_query,Eupithecia selinata,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,9,8,8,8
+1982636,False,1079,Eupithecia tantillaria,900,525,688,613,163,900,99,0;389;779,900,{},bounded_3_windows,Eupithecia tantillaria,GEOMETRY_REFERENCE_GE30,EXACT,200,124,200,163
+7993353,False,3,Eupithecia valerianata,3,3,3,3,2,3,99,0,3,{},complete_query,Eupithecia valerianata,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,2,2,2,2
+1983052,False,273,Eupithecia venosata,273,206,252,234,141,273,98,0,273,{},complete_query,Eupithecia venosata,GEOMETRY_REFERENCE_GE30,EXACT,169,122,156,141
+4532532,False,22583,Euplagia quadripunctaria,900,499,784,662,200,900,99,0;11141;22283,900,{},bounded_3_windows,Euplagia quadripunctaria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5137816,False,550,Eurema albula,547,517,540,529,200,550,99,0;300,547,{'observation_identity': 3},complete_query,Eurema albula,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1978197,False,8733,Eusarca confusaria,896,768,870,820,200,900,99,0;4216;8433,896,{'observation_identity': 4},bounded_3_windows,Eusarca confusaria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+9269372,False,48,Euscirrhopterus poeyi,37,31,36,36,21,48,99,0,37,{'observation_identity': 11},complete_query,Euscirrhopterus poeyi,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,22,19,21,21
+1734453,False,12412,Euthrix potatoria,900,655,842,757,200,900,99,0;6056;12112,900,{},bounded_3_windows,Euthrix potatoria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1773484,False,30,Euxoa aquilina,30,26,28,26,19,30,99,0,30,{},complete_query,Euxoa aquilina,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,23,19,21,19
+1773534,False,3,Euxoa plagigera,3,3,3,3,3,3,99,0,3,{},complete_query,Euxoa plagigera,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,3,3,3,3
+1848636,False,61,Exoteleia dodecella,61,27,52,41,29,61,99,0,61,{},complete_query,Exoteleia dodecella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,46,18,39,29
+7809779,False,5570,Fabriciana adippe,898,170,511,316,186,900,98,0;2635;5270,899,{'observation_identity': 1},bounded_3_windows,Fabriciana adippe,GEOMETRY_REFERENCE_GE30,EXACT,200,93,200,186
+8078362,False,2014,Fabriciana niobe,899,281,444,364,191,900,99,0;857;1714,900,{},bounded_3_windows,Fabriciana niobe,GEOMETRY_REFERENCE_GE30,EXACT,200,145,200,191
+1924770,False,2271,Feniseca tarquinius,898,507,772,657,200,900,99,0;985;1971,898,{'observation_identity': 2},bounded_3_windows,Feniseca tarquinius,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1822613,False,433,Furcula bicuspis,433,209,334,291,157,433,99,0;300,433,{},complete_query,Furcula bicuspis,GEOMETRY_REFERENCE_GE30,EXACT,200,131,184,157
+1822587,False,637,Furcula bifida,637,475,536,500,200,637,99,0;300;600,637,{},complete_query,Furcula bifida,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1850302,False,11,Gelechia nigra,11,6,6,6,4,11,99,0,11,{},complete_query,Gelechia nigra,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,8,4,4,4
+1850394,False,100,Gelechia rhombella,97,75,86,76,32,100,99,0,100,{},complete_query,Gelechia rhombella,GEOMETRY_REFERENCE_GE30,EXACT,41,31,39,32
+1965667,False,22,Glena nigricaria,22,22,22,22,11,22,99,0,22,{},complete_query,Glena nigricaria,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,11,11,11,11
+1827125,False,876,Gluphisia crenata,876,537,750,655,200,876,99,0;300;600,876,{},complete_query,Gluphisia crenata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1829975,False,4,Glyphipterix equitella,4,3,3,3,3,4,99,0,4,{},complete_query,Glyphipterix equitella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,3,3,3
+1829776,False,595,Glyphipterix simpliciella,587,299,461,359,196,595,99,0;300,587,{'observation_identity': 8},complete_query,Glyphipterix simpliciella,GEOMETRY_REFERENCE_GE30,EXACT,200,159,200,196
+1969291,False,455,Gnophos obfuscata,455,76,267,210,90,455,99,0;300,455,{},complete_query,Gnophos obfuscata,GEOMETRY_REFERENCE_GE30,EXACT,173,49,110,90
+1770036,False,24,Gonodonta incurva,24,24,24,24,16,24,99,0,24,{},complete_query,Gonodonta incurva,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,16,16,16,16
+1770047,False,7,Gonodonta nitidimacula,7,5,7,7,7,7,99,0,7,{},complete_query,Gonodonta nitidimacula,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,7,5,7,7
+1736512,False,0,Grapholita tenebrosana,0,0,0,0,0,0,99,,0,{},complete_query,Grapholita tenebrosana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1736918,False,97,Gypsonoma adjuncta,95,53,85,73,39,97,99,0,96,{'observation_identity': 1},complete_query,Gypsonoma adjuncta,GEOMETRY_REFERENCE_GE30,EXACT,50,29,43,39
+1736898,False,132,Gypsonoma sociana,132,116,127,123,78,132,99,0,132,{},complete_query,Gypsonoma sociana,GEOMETRY_REFERENCE_GE30,EXACT,86,71,82,78
+1736939,False,135,Gypsonoma substitutionis,135,109,126,119,62,135,99,0,135,{},complete_query,Gypsonoma substitutionis,GEOMETRY_REFERENCE_GE30,EXACT,74,53,66,62
+1787770,False,479,Hadena confusa,479,334,439,402,192,479,99,0;300,479,{},complete_query,Hadena confusa,GEOMETRY_REFERENCE_GE30,EXACT,200,153,200,192
+1787610,False,295,Hadena perplexa,294,205,259,239,155,295,99,0,295,{},complete_query,Hadena perplexa,GEOMETRY_REFERENCE_GE30,EXACT,192,129,169,155
+1934693,False,2530,Hamearis lucina,900,322,619,496,200,900,99,0;1115;2230,900,{},bounded_3_windows,Hamearis lucina,GEOMETRY_REFERENCE_GE30,EXACT,200,161,200,200
+5105656,False,5351,Harrisina americana,899,538,833,738,200,900,99,0;2525;5051,900,{},bounded_3_windows,Harrisina americana,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1880986,False,52,Hednota longipalpella,52,25,35,26,17,52,99,0,52,{},complete_query,Hednota longipalpella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,25,16,22,17
+1850533,False,160,Helcystogramma lutatella,160,107,136,124,79,160,99,0,160,{},complete_query,Helcystogramma lutatella,GEOMETRY_REFERENCE_GE30,EXACT,98,68,84,79
+1859480,False,31,Hellinsia osteodactylus,31,28,29,28,19,31,99,0,31,{},complete_query,Hellinsia osteodactylus,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,22,19,20,19
+1861797,False,2488,Hemaris fuciformis,900,539,792,695,200,900,98,0;1094;2188,900,{},bounded_3_windows,Hemaris fuciformis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1991179,False,1202,Hemistola chrysoprasaria,899,430,691,608,200,900,99,0;451;902,900,{},bounded_3_windows,Hemistola chrysoprasaria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1900024,False,7822,Hermeuptychia sosybius,896,464,688,569,200,900,99,0;3761;7522,896,{'observation_identity': 4},bounded_3_windows,Hermeuptychia sosybius,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5119016,False,1467,Heterocampa obliqua,899,372,822,675,200,900,99,0;583;1167,899,{'observation_identity': 1},bounded_3_windows,Heterocampa obliqua,GEOMETRY_REFERENCE_GE30,EXACT,200,179,200,200
+5141677,False,1714,Heteropterus morpheus,899,444,685,567,200,900,99,0;707;1414,900,{},bounded_3_windows,Heteropterus morpheus,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1862294,False,33,Hippotion roseipennis,33,31,32,31,16,33,99,0,33,{},complete_query,Hippotion roseipennis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,18,16,17,16
+,,,,,,,,0,,100,,,,,Holomelina laeta,TAXONOMY_NOT_EXACT,NONE,,,,
+1971888,False,271,Horisme tersata,271,190,256,228,108,271,99,0,271,{},complete_query,Horisme tersata,GEOMETRY_REFERENCE_GE30,EXACT,134,91,124,108
+1971858,False,1077,Horisme vitalbata,900,663,843,780,200,900,98,0;388;777,900,{},bounded_3_windows,Horisme vitalbata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1796666,False,10,Hydraecia petasitis,10,6,9,8,6,10,99,0,10,{},complete_query,Hydraecia petasitis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,8,4,7,6
+5146305,False,1044,Hydrelia inornata,897,484,851,742,163,900,99,0;372;744,897,{'observation_identity': 3},bounded_3_windows,Hydrelia inornata,GEOMETRY_REFERENCE_GE30,EXACT,200,107,200,163
+1979308,False,509,Hydriomena impluviata,509,290,440,388,200,509,99,0;300,509,{},complete_query,Hydriomena impluviata,GEOMETRY_REFERENCE_GE30,EXACT,200,164,200,200
+1979475,False,22,Hydriomena transfigurata,22,9,19,16,13,22,99,0,22,{},complete_query,Hydriomena transfigurata,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,18,9,15,13
+1851555,False,104,Hypatima rhomboidella,104,51,82,60,50,104,99,0,104,{},complete_query,Hypatima rhomboidella,GEOMETRY_REFERENCE_GE30,EXACT,78,41,63,50
+9238900,False,7374,Hypena baltimoralis,894,96,464,242,150,900,99,0;3537;7074,894,{'observation_identity': 6},bounded_3_windows,Hypena baltimoralis,GEOMETRY_REFERENCE_GE30,EXACT,200,61,200,150
+9533271,False,1398,Hypena bijugalis,893,395,708,574,200,900,99,0;549;1098,893,{'observation_identity': 7},bounded_3_windows,Hypena bijugalis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+9621113,False,161,Hypena californica,160,27,95,76,37,161,99,0,160,{'observation_identity': 1},complete_query,Hypena californica,GEOMETRY_REFERENCE_GE30,EXACT,60,18,47,37
+4532357,False,550,Hypena crassalis,550,256,483,384,200,550,98,0;300,550,{},complete_query,Hypena crassalis,GEOMETRY_REFERENCE_GE30,EXACT,200,154,200,200
+9425857,False,1277,Hypena deceptalis,898,553,781,634,200,900,99,0;488;977,898,{'observation_identity': 2},bounded_3_windows,Hypena deceptalis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+9358521,False,911,Hypena humuli,898,620,795,718,200,900,99,0;305;611,898,{'observation_identity': 2},bounded_3_windows,Hypena humuli,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1798807,False,8731,Hypena proboscidalis,900,325,647,483,200,900,99,0;4215;8431,900,{},bounded_3_windows,Hypena proboscidalis,GEOMETRY_REFERENCE_GE30,EXACT,200,175,200,200
+1824293,False,0,Hyperaeschra georgica,0,0,0,0,0,0,98,,0,{},complete_query,Hyperaeschra georgica,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1788711,False,217,Hyperstrotia pervertens,217,133,204,187,92,217,99,0,217,{},complete_query,Hyperstrotia pervertens,GEOMETRY_REFERENCE_GE30,EXACT,108,68,99,92
+1806740,False,2215,Hypoprepia miniata,899,215,621,355,197,900,99,0;957;1915,900,{},bounded_3_windows,Hypoprepia miniata,GEOMETRY_REFERENCE_GE30,EXACT,200,115,200,197
+1961190,False,549,Hypoxystis pluviaria,549,523,533,530,200,549,99,0;300,549,{},complete_query,Hypoxystis pluviaria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1798372,False,220,Hyppa rectilinea,220,73,128,86,68,220,99,0,220,{},complete_query,Hyppa rectilinea,GEOMETRY_REFERENCE_GE30,EXACT,117,58,82,68
+5147062,False,683,Idaea muricata,683,574,650,620,200,683,99,0;300;600,683,{},complete_query,Idaea muricata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5147043,False,1027,Idaea ostrinaria,900,750,878,799,200,900,99,0;363;727,900,{},bounded_3_windows,Idaea ostrinaria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1860688,False,93,Incurvaria pectinea,93,57,84,68,54,93,99,0,93,{},complete_query,Incurvaria pectinea,GEOMETRY_REFERENCE_GE30,EXACT,68,44,63,54
+1782627,False,375,Ipimorpha subtusa,375,218,302,266,163,375,99,0;300,375,{},complete_query,Ipimorpha subtusa,GEOMETRY_REFERENCE_GE30,EXACT,200,138,189,163
+7803585,False,398,Isognathus rimosa,396,113,344,245,106,398,98,0;300,396,{'observation_identity': 2},complete_query,Isognathus rimosa,GEOMETRY_REFERENCE_GE30,EXACT,163,61,146,106
+1922197,False,438,Laeosopis roboris,437,127,231,180,81,438,99,0;300,438,{},complete_query,Laeosopis roboris,GEOMETRY_REFERENCE_GE30,EXACT,165,63,105,81
+1862917,False,2677,Lapara bombycoides,878,679,848,770,200,900,99,0;1188;2377,878,{'observation_identity': 22},bounded_3_windows,Lapara bombycoides,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1772427,False,1067,Ledaea perditalis,900,387,782,635,200,900,99,0;383;767,900,{},bounded_3_windows,Ledaea perditalis,GEOMETRY_REFERENCE_GE30,EXACT,200,187,200,200
+1819970,False,884,Leptocneria reducta,884,92,599,244,97,884,99,0;300;600,884,{},complete_query,Leptocneria reducta,GEOMETRY_REFERENCE_GE30,EXACT,200,49,152,97
+5111568,False,800,Leucania adjuta,800,635,766,720,200,800,99,0;300;600,800,{},complete_query,Leucania adjuta,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5111574,False,837,Leucania comma,837,355,637,484,200,837,99,0;300;600,837,{},complete_query,Leucania comma,GEOMETRY_REFERENCE_GE30,EXACT,200,142,200,200
+5111360,False,450,Leucania commoides,439,214,327,296,143,450,99,0;300,439,{'observation_identity': 11},complete_query,Leucania commoides,GEOMETRY_REFERENCE_GE30,EXACT,181,109,157,143
+5111505,False,2,Leucania inconspicua,2,2,2,2,2,2,99,0,2,{},complete_query,Leucania inconspicua,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,2,2,2,2
+5111372,False,156,Leucania insueta,146,45,91,72,44,156,99,0,147,{'observation_identity': 9},complete_query,Leucania insueta,GEOMETRY_REFERENCE_GE30,EXACT,78,29,54,44
+5111388,False,18,Leucania lapidaria,17,10,15,13,11,18,99,0,17,{'observation_identity': 1},complete_query,Leucania lapidaria,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,15,9,13,11
+8253467,False,596,Leucania obsoleta,594,428,526,472,192,596,99,0;300,596,{},complete_query,Leucania obsoleta,GEOMETRY_REFERENCE_GE30,EXACT,200,160,200,192
+1788139,False,6453,Leuconycta diphteroides,882,370,730,533,200,900,99,0;3076;6153,882,{'observation_identity': 18},bounded_3_windows,Leuconycta diphteroides,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+,,,Levipalpus hepatariellus,,,,,0,,97,,,,,Levipalpus hepatariella,TAXONOMY_NOT_EXACT,FUZZY,,,,
+1962636,False,5503,Ligdia adustata,900,409,732,552,200,900,98,0;2601;5203,900,{},bounded_3_windows,Ligdia adustata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+,,,,,,,,0,,100,,,,,Lithacodia muscosula,TAXONOMY_NOT_EXACT,NONE,,,,
+1759661,False,133,Lithophane furcifera,133,83,117,104,72,133,99,0,133,{},complete_query,Lithophane furcifera,GEOMETRY_REFERENCE_GE30,EXACT,94,61,80,72
+1759677,False,226,Lithophane patefacta,226,65,146,104,55,226,99,0,226,{},complete_query,Lithophane patefacta,GEOMETRY_REFERENCE_GE30,EXACT,94,37,71,55
+1986020,False,2288,Lomographa glomeraria,890,812,872,850,200,900,99,0;994;1988,890,{'observation_identity': 10},bounded_3_windows,Lomographa glomeraria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1770307,False,6592,Luperina testacea,900,291,648,502,150,900,99,0;3146;6292,900,{},bounded_3_windows,Luperina testacea,GEOMETRY_REFERENCE_GE30,EXACT,200,101,200,150
+4532405,False,697,Lygephila pastinum,697,338,616,495,200,697,99,0;300;600,697,{},complete_query,Lygephila pastinum,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1976248,False,1944,Lytrosis unitaria,892,474,775,651,200,900,99,0;822;1644,892,{'observation_identity': 8},bounded_3_windows,Lytrosis unitaria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+9362560,False,924,Macrochilo litophora,899,744,852,830,200,900,99,0;312;624,899,{'observation_identity': 1},bounded_3_windows,Macrochilo litophora,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1864652,False,25748,Macroglossum stellatarum,900,714,838,796,200,900,98,0;12724;25448,900,{},bounded_3_windows,Macroglossum stellatarum,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1791736,False,2464,Marathyssa inficita,895,382,609,505,200,900,99,0;1082;2164,895,{'observation_identity': 5},bounded_3_windows,Marathyssa inficita,GEOMETRY_REFERENCE_GE30,EXACT,200,165,200,200
+9426252,False,1356,Meganola minuscula,899,480,820,723,200,900,99,0;528;1056,899,{'observation_identity': 1},bounded_3_windows,Meganola minuscula,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+4534762,False,434,Meganola strigula,434,382,411,396,197,434,99,0;300,434,{},complete_query,Meganola strigula,GEOMETRY_REFERENCE_GE30,EXACT,200,185,200,197
+1956524,False,1081,Melanthia procellata,900,422,769,629,200,900,99,0;390;781,900,{},bounded_3_windows,Melanthia procellata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1790246,False,553,Melipotis fasciolaris,544,447,529,493,200,553,99,0;300,544,{'observation_identity': 9},complete_query,Melipotis fasciolaris,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1790257,False,6162,Melipotis indomita,887,164,535,262,118,900,99,0;2931;5862,887,{'observation_identity': 13},bounded_3_windows,Melipotis indomita,GEOMETRY_REFERENCE_GE30,EXACT,200,84,188,118
+1790276,False,43,Melipotis januaris,43,34,43,42,23,43,99,0,43,{},complete_query,Melipotis januaris,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,24,20,24,23
+1790287,False,559,Melipotis perpendicularis,553,399,474,468,186,559,99,0;300,553,{'observation_identity': 6},complete_query,Melipotis perpendicularis,GEOMETRY_REFERENCE_GE30,EXACT,200,174,191,186
+10219619,False,12,Memphis artacaena,12,5,8,8,3,12,99,0,12,{},complete_query,Memphis artacaena,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,2,3,3
+1870414,False,7,Meroptera abditiva,7,6,7,6,6,7,99,0,7,{},complete_query,Meroptera abditiva,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,7,6,7,6
+1788425,False,399,Mesapamea didyma,399,387,393,392,200,399,99,0;300,399,{},complete_query,Mesapamea didyma,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1760104,False,4507,Mesoligia furuncula,900,349,599,452,200,900,98,0;2103;4207,900,{},bounded_3_windows,Mesoligia furuncula,GEOMETRY_REFERENCE_GE30,EXACT,200,180,200,200
+1777075,False,475,Metalectra quadrisignata,471,321,440,393,200,475,99,0;300,471,{'observation_identity': 4},complete_query,Metalectra quadrisignata,GEOMETRY_REFERENCE_GE30,EXACT,200,168,200,200
+1848868,False,20,Metzneria metzneriella,20,16,20,19,17,20,99,0,20,{},complete_query,Metzneria metzneriella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,18,15,18,17
+1749105,False,9,Micrurapteryx kollariella,9,6,7,7,7,9,99,0,9,{},complete_query,Micrurapteryx kollariella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,9,6,7,7
+1749104,False,161,Micrurapteryx salicifoliella,161,54,95,78,59,161,99,0,161,{},complete_query,Micrurapteryx salicifoliella,GEOMETRY_REFERENCE_GE30,EXACT,93,42,72,59
+1846141,False,38,Mompha conturbatella,38,30,34,33,23,38,99,0,38,{},complete_query,Mompha conturbatella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,27,20,24,23
+1846229,False,724,Mompha eloisella,720,579,649,639,200,724,99,0;300;600,720,{'observation_identity': 4},complete_query,Mompha eloisella,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1846236,False,167,Mompha raschkiella,166,113,145,132,78,167,99,0,166,{'observation_identity': 1},complete_query,Mompha raschkiella,GEOMETRY_REFERENCE_GE30,EXACT,99,68,89,78
+1846166,False,127,Mompha terminella,127,73,103,88,47,127,99,0,127,{},complete_query,Mompha terminella,GEOMETRY_REFERENCE_GE30,EXACT,67,32,55,47
+1846689,False,1,Monochroa conspersella,1,1,1,1,1,1,99,0,1,{},complete_query,Monochroa conspersella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,1,1,1,1
+1846715,False,14,Monochroa lucidella,14,13,13,13,11,14,99,0,14,{},complete_query,Monochroa lucidella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,12,11,11,11
+1846691,False,2,Monochroa lutulentella,2,1,2,2,2,2,99,0,2,{},complete_query,Monochroa lutulentella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,2,1,2,2
+1846729,False,10,Monochroa tenebrella,10,10,10,10,10,10,99,0,10,{},complete_query,Monochroa tenebrella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,10,10,10,10
+5772205,False,273,Mythimna straminea,273,153,228,209,116,273,99,0,273,{},complete_query,Mythimna straminea,GEOMETRY_REFERENCE_GE30,EXACT,147,89,128,116
+1767655,False,860,Mythimna turca,860,388,751,582,200,860,99,0;300;600,860,{},complete_query,Mythimna turca,GEOMETRY_REFERENCE_GE30,EXACT,200,194,200,200
+1948951,False,9,Nascus broteas,9,9,9,9,7,9,99,0,9,{},complete_query,Nascus broteas,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,7,7,7,7
+1848669,False,45,Neofaculta ericetella,45,11,28,19,12,45,99,0,45,{},complete_query,Neofaculta ericetella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,30,8,18,12
+1848672,False,5,Neofaculta infernella,5,4,4,4,4,5,99,0,5,{},complete_query,Neofaculta infernella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,4,4,4
+1851203,False,15,Neofriseria peliella,15,10,12,10,6,15,99,0,15,{},complete_query,Neofriseria peliella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,11,6,8,6
+5124075,False,48,Nephele aequivalens,48,29,35,32,27,48,99,0,48,{},complete_query,Nephele aequivalens,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,35,25,30,27
+1826048,False,1893,Nerice bidentata,895,358,653,504,200,900,99,0;796;1593,895,{'observation_identity': 5},bounded_3_windows,Nerice bidentata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1789730,False,9521,Noctua comes,898,98,337,187,124,900,98,0;4610;9221,898,{'observation_identity': 2},bounded_3_windows,Noctua comes,GEOMETRY_REFERENCE_GE30,EXACT,200,64,200,124
+5110644,False,302,Nonagria typhae,302,242,294,278,151,302,99,0;300,302,{},complete_query,Nonagria typhae,GEOMETRY_REFERENCE_GE30,EXACT,169,130,161,151
+1849477,False,157,Nothris verbascella,157,116,137,127,88,157,99,0,157,{},complete_query,Nothris verbascella,GEOMETRY_REFERENCE_GE30,EXACT,109,79,98,88
+9965948,False,7,Notocelia purpurissatana,6,5,5,5,3,7,99,0,7,{},complete_query,Notocelia purpurissatana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,3,3,3
+1741368,False,667,Notocelia rosaecolana,665,176,565,395,200,667,99,0;300;600,666,{'observation_identity': 1},complete_query,Notocelia rosaecolana,GEOMETRY_REFERENCE_GE30,EXACT,200,118,200,200
+1825083,False,1003,Notodonta torva,898,611,806,738,200,900,99,0;351;703,898,{'observation_identity': 2},bounded_3_windows,Notodonta torva,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+4534914,False,663,Notodonta tritophus,663,451,549,504,200,663,98,0;300;600,663,{},complete_query,Notodonta tritophus,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5114317,False,87,Nycteola cinereana,85,67,79,73,49,87,99,0,85,{'observation_identity': 2},complete_query,Nycteola cinereana,GEOMETRY_REFERENCE_GE30,EXACT,60,45,54,49
+1822397,False,19,Nystalea superciliosa,19,6,8,7,5,19,99,0,19,{},complete_query,Nystalea superciliosa,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,9,4,6,5
+,,,Ochsenheimeria,,,,,0,,98,,,,,Ochsenheimeria urella,TAXONOMY_NOT_EXACT,HIGHERRANK,,,,
+1984734,False,3031,Odezia atrata,900,657,842,787,200,900,99,0;1365;2731,900,{},bounded_3_windows,Odezia atrata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1826022,False,127,Odontosia carmelita,127,95,116,109,63,127,99,0,127,{},complete_query,Odontosia carmelita,GEOMETRY_REFERENCE_GE30,EXACT,77,52,70,63
+1826029,False,0,Odontosia elegans,0,0,0,0,0,0,99,,0,{},complete_query,Odontosia elegans,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+6231906,False,133,Oeneis glacialis,133,0,37,3,3,133,99,0,133,{},complete_query,Oeneis glacialis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,74,0,25,3
+1742089,False,65,Olethreutes atrodentana,65,28,47,31,21,65,99,0,65,{},complete_query,Olethreutes atrodentana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,37,18,30,21
+1742260,False,463,Olethreutes bipartitana,452,278,369,330,179,463,99,0;300,452,{'observation_identity': 11},complete_query,Olethreutes bipartitana,GEOMETRY_REFERENCE_GE30,EXACT,200,145,200,179
+1742335,False,1400,Olethreutes fasciatana,898,518,772,636,200,900,99,0;550;1100,898,{'observation_identity': 2},bounded_3_windows,Olethreutes fasciatana,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1742239,False,42,Olethreutes tilianum,42,22,36,33,25,42,99,0,42,{},complete_query,Olethreutes tilianum,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,34,20,28,25
+7895336,False,914,Oligia strigilis,900,354,665,519,200,900,99,0;307;614,900,{},bounded_3_windows,Oligia strigilis,GEOMETRY_REFERENCE_GE30,EXACT,200,178,200,200
+1735532,False,23,Opostega salaciella,23,18,21,19,17,23,98,0,23,{},complete_query,Opostega salaciella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,21,16,19,17
+1902111,False,2995,Ortilia ithra,900,262,481,358,167,900,99,0;1347;2695,900,{},bounded_3_windows,Ortilia ithra,GEOMETRY_REFERENCE_GE30,EXACT,200,136,200,167
+1858873,False,11,Oxyptilus pilosellae,11,9,10,10,10,11,99,0,11,{},complete_query,Oxyptilus pilosellae,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,11,9,10,10
+1863856,False,1643,Pachylia ficus,882,779,860,828,200,900,99,0;671;1343,883,{'observation_identity': 17},bounded_3_windows,Pachylia ficus,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1780646,False,930,Paectes abrostoloides,900,593,843,773,200,900,98,0;315;630,900,{},bounded_3_windows,Paectes abrostoloides,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1889721,False,804,Palpita flegia,790,708,752,736,200,804,99,0;300;600,790,{'observation_identity': 14},complete_query,Palpita flegia,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1889847,False,0,Palpita unionalis,0,0,0,0,0,0,99,,0,{},complete_query,Palpita unionalis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1889833,False,4809,Palpita vitrealis,900,829,890,874,200,900,99,0;2254;4509,900,{},bounded_3_windows,Palpita vitrealis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1799799,False,1373,Panemeria tenebrata,900,607,832,763,200,900,99,0;536;1073,900,{},bounded_3_windows,Panemeria tenebrata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1785913,False,3406,Panopoda carneicosta,900,470,820,697,200,900,99,0;1553;3106,900,{},bounded_3_windows,Panopoda carneicosta,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1800032,False,861,Panthea coenobita,861,403,670,582,200,861,99,0;300;600,861,{},complete_query,Panthea coenobita,GEOMETRY_REFERENCE_GE30,EXACT,200,199,200,200
+1778033,False,505,Papaipema baptisiae,505,232,417,382,177,505,99,0;300,505,{},complete_query,Papaipema baptisiae,GEOMETRY_REFERENCE_GE30,EXACT,200,126,200,177
+1778045,False,696,Papaipema pterisii,695,495,651,579,169,696,99,0;300;600,695,{'observation_identity': 1},complete_query,Papaipema pterisii,GEOMETRY_REFERENCE_GE30,EXACT,200,146,184,169
+,,,Parapediasia teterellus,,,,,0,,97,,,,,Parapediasia teterrellus,TAXONOMY_NOT_EXACT,FUZZY,,,,
+1884428,False,2775,Parapoynx allionealis,896,482,698,574,200,900,99,0;1237;2475,896,{'observation_identity': 4},bounded_3_windows,Parapoynx allionealis,GEOMETRY_REFERENCE_GE30,EXACT,200,198,200,200
+1884439,False,2578,Parapoynx badiusalis,890,468,704,596,200,900,99,0;1139;2278,890,{'observation_identity': 10},bounded_3_windows,Parapoynx badiusalis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1884465,False,2737,Parapoynx stratiotata,900,726,868,842,200,900,99,0;1218;2437,900,{},bounded_3_windows,Parapoynx stratiotata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+4525420,False,5,Paraswammerdamia conspersella,5,2,5,5,4,5,99,0,5,{},complete_query,Paraswammerdamia conspersella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,2,4,4
+1830510,False,0,Paraswammerdamia lapponica,0,0,0,0,0,0,99,,0,{},complete_query,Paraswammerdamia lapponica,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1748930,False,119,Parectopa plantaginisella,119,97,107,106,57,119,99,0,119,{},complete_query,Parectopa plantaginisella,GEOMETRY_REFERENCE_GE30,EXACT,64,52,58,57
+1749158,False,57,Parornix anglicella,57,7,43,20,15,57,99,0,57,{},complete_query,Parornix anglicella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,33,6,27,15
+1749195,False,8,Parornix conspicuella,8,8,8,8,6,8,99,0,8,{},complete_query,Parornix conspicuella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,6,6,6,6
+1749146,False,189,Parornix devoniella,189,25,151,54,35,189,99,0,189,{},complete_query,Parornix devoniella,GEOMETRY_REFERENCE_GE30,EXACT,69,21,52,35
+1749162,False,0,Parornix finitimella,0,0,0,0,0,0,99,,0,{},complete_query,Parornix finitimella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1749164,False,7,Parornix scoticella,7,4,6,5,3,7,99,0,7,{},complete_query,Parornix scoticella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,2,4,3
+1749210,False,14,Parornix torquillella,14,0,10,9,2,14,99,0,14,{},complete_query,Parornix torquillella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,6,0,3,2
+1749215,False,1,Parornix vicinella,1,1,1,1,1,1,99,0,1,{},complete_query,Parornix vicinella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,1,1,1,1
+1978671,False,6270,Patalene olyzonaria,898,601,860,758,200,900,99,0;2985;5970,898,{'observation_identity': 2},bounded_3_windows,Patalene olyzonaria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1888743,False,100,Pediasia aridella,100,95,97,97,29,100,99,0,100,{},complete_query,Pediasia aridella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,31,27,29,29
+1888823,False,1012,Pediasia trisecta,890,452,773,702,200,900,99,0;356;712,891,{'observation_identity': 9},bounded_3_windows,Pediasia trisecta,GEOMETRY_REFERENCE_GE30,EXACT,200,195,200,200
+4531284,False,261,Pempelia palumbella,261,230,251,245,141,261,99,0,261,{},complete_query,Pempelia palumbella,GEOMETRY_REFERENCE_GE30,EXACT,155,132,147,141
+1875682,False,97,Pempeliella ornatella,97,58,78,76,51,97,99,0,97,{},complete_query,Pempeliella ornatella,GEOMETRY_REFERENCE_GE30,EXACT,67,40,53,51
+1940807,False,328,Pennisetia hylaeiformis,328,274,300,291,200,328,99,0;300,328,{},complete_query,Pennisetia hylaeiformis,GEOMETRY_REFERENCE_GE30,EXACT,200,194,200,200
+1970284,False,436,Perconia strigillaria,436,348,416,384,186,436,99,0;300,436,{},complete_query,Perconia strigillaria,GEOMETRY_REFERENCE_GE30,EXACT,200,160,199,186
+1957570,False,940,Peribatodes secundaria,900,602,744,683,200,900,98,0;320;640,900,{},bounded_3_windows,Peribatodes secundaria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1972185,False,680,Perizoma albulata,680,424,586,534,200,680,99,0;300;600,680,{},complete_query,Perizoma albulata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1972250,False,2880,Perizoma alchemillata,891,392,641,520,200,900,99,0;1290;2580,891,{'observation_identity': 9},bounded_3_windows,Perizoma alchemillata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1972234,False,740,Perizoma flavofasciata,740,554,714,638,200,740,99,0;300;600,740,{},complete_query,Perizoma flavofasciata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1972377,False,111,Perizoma hydrata,111,56,92,76,52,111,99,0,111,{},complete_query,Perizoma hydrata,GEOMETRY_REFERENCE_GE30,EXACT,74,39,64,52
+1760175,False,92,Persectania dyscrita,92,81,87,86,37,92,99,0,92,{},complete_query,Persectania dyscrita,GEOMETRY_REFERENCE_GE30,EXACT,41,33,38,37
+1846604,False,204,Pexicopia malvella,203,163,193,187,94,204,99,0,204,{},complete_query,Pexicopia malvella,GEOMETRY_REFERENCE_GE30,EXACT,105,79,100,94
+1744949,False,451,Phaecasiophora niveiguttana,451,170,401,301,131,451,99,0;300,451,{},complete_query,Phaecasiophora niveiguttana,GEOMETRY_REFERENCE_GE30,EXACT,197,74,171,131
+1772716,False,2571,Phalaenostola larentioides,893,488,725,616,200,900,99,0;1135;2271,894,{'observation_identity': 6},bounded_3_windows,Phalaenostola larentioides,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1825967,False,3794,Pheosia portlandia,891,848,876,870,200,900,99,0;1747;3494,891,{'observation_identity': 9},bounded_3_windows,Pheosia portlandia,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1825983,False,2847,Pheosia tremula,900,433,712,578,200,900,99,0;1273;2547,900,{},bounded_3_windows,Pheosia tremula,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1959383,False,489,Philereme vetulata,489,364,443,427,200,489,99,0;300,489,{},complete_query,Philereme vetulata,GEOMETRY_REFERENCE_GE30,EXACT,200,192,200,200
+1765097,False,3971,Phoberia atomaris,897,438,845,721,200,900,99,0;1835;3671,897,{'observation_identity': 3},bounded_3_windows,Phoberia atomaris,GEOMETRY_REFERENCE_GE30,EXACT,200,152,200,200
+1792383,False,227,Photedes minima,227,135,206,178,83,227,99,0,227,{},complete_query,Photedes minima,GEOMETRY_REFERENCE_GE30,EXACT,117,57,99,83
+1918986,False,196,Phyciodes batesii,196,108,190,182,63,196,99,0,196,{},complete_query,Phyciodes batesii,GEOMETRY_REFERENCE_GE30,EXACT,76,48,71,63
+1875008,False,1250,Phycita roborella,899,615,749,669,200,900,99,0;475;950,900,{},bounded_3_windows,Phycita roborella,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1875918,False,386,Phycitodes binaevella,386,285,362,332,170,386,98,0;300,386,{},complete_query,Phycitodes binaevella,GEOMETRY_REFERENCE_GE30,EXACT,199,146,184,170
+1875952,False,7,Phycitodes maritima,7,6,6,6,5,7,99,0,7,{},complete_query,Phycitodes maritima,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,6,5,5,5
+1749649,False,201,Phyllocnistis ampelopsiella,201,169,178,175,75,201,99,0,201,{},complete_query,Phyllocnistis ampelopsiella,GEOMETRY_REFERENCE_GE30,EXACT,86,72,77,75
+1749656,False,1398,Phyllocnistis insignis,900,855,898,883,200,900,99,0;549;1098,900,{},bounded_3_windows,Phyllocnistis insignis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1749591,False,4129,Phyllocnistis populiella,895,259,574,434,200,900,99,0;1914;3829,895,{'observation_identity': 5},bounded_3_windows,Phyllocnistis populiella,GEOMETRY_REFERENCE_GE30,EXACT,200,130,200,200
+1749596,False,24,Phyllocnistis saligna,24,15,15,15,13,24,99,0,24,{},complete_query,Phyllocnistis saligna,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,20,13,13,13
+1750100,False,48,Phyllonorycter acerifoliella,48,40,43,41,24,48,99,0,48,{},complete_query,Phyllonorycter acerifoliella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,31,23,26,24
+1750281,False,30,Phyllonorycter apparella,30,22,28,26,17,30,99,0,30,{},complete_query,Phyllonorycter apparella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,20,14,18,17
+1750256,False,20,Phyllonorycter cerasicolella,20,17,17,17,9,20,99,0,20,{},complete_query,Phyllonorycter cerasicolella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,12,9,9,9
+1750103,False,13,Phyllonorycter clemensella,13,6,13,9,7,13,99,0,13,{},complete_query,Phyllonorycter clemensella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,9,5,9,7
+1750056,False,18,Phyllonorycter comparella,18,7,14,8,8,18,99,0,18,{},complete_query,Phyllonorycter comparella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,15,7,13,8
+1750265,False,0,Phyllonorycter delitella,0,0,0,0,0,0,99,,0,{},complete_query,Phyllonorycter delitella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1750177,False,1,Phyllonorycter distentella,1,0,0,0,0,1,99,0,1,{},complete_query,Phyllonorycter distentella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,1,0,0,0
+1750072,False,64,Phyllonorycter emberizaepenella,64,39,56,55,35,64,99,0,64,{},complete_query,Phyllonorycter emberizaepenella,GEOMETRY_REFERENCE_GE30,EXACT,41,28,36,35
+1749948,False,52,Phyllonorycter harrisella,52,16,41,26,21,52,99,0,52,{},complete_query,Phyllonorycter harrisella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,40,14,34,21
+1749901,False,7,Phyllonorycter heegeriella,7,5,5,5,4,7,99,0,7,{},complete_query,Phyllonorycter heegeriella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,4,4,4
+1750230,False,4,Phyllonorycter insignitella,4,1,3,3,3,4,99,0,4,{},complete_query,Phyllonorycter insignitella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,1,3,3
+1749762,False,19,Phyllonorycter lantanella,19,5,18,13,7,19,99,0,19,{},complete_query,Phyllonorycter lantanella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,9,5,8,7
+1750244,False,15,Phyllonorycter lautella,15,10,14,13,12,15,99,0,15,{},complete_query,Phyllonorycter lautella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,14,9,13,12
+1749929,False,336,Phyllonorycter maestingella,335,165,227,187,70,336,99,0;300,336,{},complete_query,Phyllonorycter maestingella,GEOMETRY_REFERENCE_GE30,EXACT,170,57,97,70
+1749975,False,3,Phyllonorycter muelleriella,3,2,3,3,3,3,99,0,3,{},complete_query,Phyllonorycter muelleriella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,3,2,3,3
+1749883,False,95,Phyllonorycter nicellii,95,23,65,32,23,95,99,0,95,{},complete_query,Phyllonorycter nicellii,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,54,15,34,23
+1750106,False,56,Phyllonorycter oxyacanthae,56,52,55,54,22,56,99,0,56,{},complete_query,Phyllonorycter oxyacanthae,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,24,20,23,22
+1750070,False,0,Phyllonorycter parisiella,0,0,0,0,0,0,99,,0,{},complete_query,Phyllonorycter parisiella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1750143,False,47,Phyllonorycter quercifoliella,47,14,28,18,13,47,99,0,47,{},complete_query,Phyllonorycter quercifoliella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,37,9,23,13
+1750076,False,46,Phyllonorycter rajella,46,14,28,24,22,46,99,0,46,{},complete_query,Phyllonorycter rajella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,36,13,26,22
+1749869,False,75,Phyllonorycter roboris,75,31,46,37,28,75,99,0,75,{},complete_query,Phyllonorycter roboris,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,55,23,37,28
+1750136,False,21,Phyllonorycter schreberella,21,10,14,13,12,21,99,0,21,{},complete_query,Phyllonorycter schreberella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,17,9,13,12
+1749775,False,26,Phyllonorycter stettinensis,26,18,21,18,14,26,99,0,26,{},complete_query,Phyllonorycter stettinensis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,19,14,15,14
+1750288,False,25,Phyllonorycter strigulatella,25,9,12,9,7,25,99,0,25,{},complete_query,Phyllonorycter strigulatella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,18,7,9,7
+1750144,False,15,Phyllonorycter tenerella,15,8,10,8,8,15,99,0,15,{},complete_query,Phyllonorycter tenerella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,14,8,10,8
+1750051,False,18,Phyllonorycter trifasciella,18,11,14,14,13,18,99,0,18,{},complete_query,Phyllonorycter trifasciella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,17,10,13,13
+1749943,False,41,Phyllonorycter tristrigella,41,38,41,38,18,41,99,0,41,{},complete_query,Phyllonorycter tristrigella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,20,18,20,18
+1749744,False,75,Phyllonorycter ulmifoliella,75,47,65,57,48,75,99,0,75,{},complete_query,Phyllonorycter ulmifoliella,GEOMETRY_REFERENCE_GE30,EXACT,63,39,56,48
+1769336,False,1062,Phyprosopus callitrichoides,899,272,712,575,200,900,99,0;381;762,900,{},bounded_3_windows,Phyprosopus callitrichoides,GEOMETRY_REFERENCE_GE30,EXACT,200,143,200,200
+1760246,False,1109,Phytometra viridaria,900,339,654,538,200,900,98,0;404;809,900,{},bounded_3_windows,Phytometra viridaria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1885158,False,759,Pilocrocis ramentalis,757,708,754,740,200,759,99,0;300;600,757,{'observation_identity': 2},complete_query,Pilocrocis ramentalis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1859100,False,7,Platyptilia calodactyla,7,6,6,6,5,7,99,0,7,{},complete_query,Platyptilia calodactyla,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,6,5,5,5
+1859177,False,282,Platyptilia gonodactyla,282,207,256,232,124,282,99,0,282,{},complete_query,Platyptilia gonodactyla,GEOMETRY_REFERENCE_GE30,EXACT,161,111,141,124
+1859146,False,13,Platyptilia tesseradactyla,13,10,13,10,8,13,99,0,13,{},complete_query,Platyptilia tesseradactyla,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,9,8,9,8
+1831168,False,432,Plutella porrectella,430,281,350,334,156,432,99,0;300,430,{'observation_identity': 2},complete_query,Plutella porrectella,GEOMETRY_REFERENCE_GE30,EXACT,200,132,169,156
+1870733,False,114,Pococera maritimalis,114,79,110,109,50,114,99,0,114,{},complete_query,Pococera maritimalis,GEOMETRY_REFERENCE_GE30,EXACT,55,36,51,50
+1898521,False,711,Polygonia egea,710,491,591,535,174,711,99,0;300;600,711,{},complete_query,Polygonia egea,GEOMETRY_REFERENCE_GE30,EXACT,200,147,200,174
+9297059,False,5144,Polygrammate hebraeicum,900,191,680,451,185,900,99,0;2422;4844,900,{},bounded_3_windows,Polygrammate hebraeicum,GEOMETRY_REFERENCE_GE30,EXACT,200,97,200,185
+1771772,False,2077,Polypogon tentacularia,900,528,806,681,200,900,99,0;888;1777,900,{},bounded_3_windows,Polypogon tentacularia,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5141777,False,27,Polythrix caunus,27,22,25,24,20,27,99,0,27,{},complete_query,Polythrix caunus,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,23,18,21,20
+5141763,False,92,Polythrix octomaculata,92,64,78,71,46,92,99,0,92,{},complete_query,Polythrix octomaculata,GEOMETRY_REFERENCE_GE30,EXACT,56,41,50,46
+1964046,False,1,Probole alienaria,1,1,1,1,1,1,99,0,1,{},complete_query,Probole alienaria,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,1,1,1,1
+1848950,False,6,Prolita solutella,5,4,4,4,3,6,99,0,6,{},complete_query,Prolita solutella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,3,3,3
+1748151,False,312,Proteoteras moffatiana,312,192,253,228,119,312,99,0;300,312,{},complete_query,Proteoteras moffatiana,GEOMETRY_REFERENCE_GE30,EXACT,156,94,133,119
+1787037,False,0,Protorthodes oviduca,0,0,0,0,0,0,99,,0,{},complete_query,Protorthodes oviduca,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1888009,False,345,Psara obscuralis,345,288,345,331,163,345,99,0;300,345,{},complete_query,Psara obscuralis,GEOMETRY_REFERENCE_GE30,EXACT,171,143,171,163
+8245258,False,18,Pseudaletia sequax,18,16,18,16,10,18,99,0,18,{},complete_query,Pseudaletia sequax,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,11,10,11,10
+1736821,False,103,Pseudexentera oregonana,103,43,99,94,30,103,99,0,103,{},complete_query,Pseudexentera oregonana,GEOMETRY_REFERENCE_GE30,EXACT,37,16,33,30
+1954563,False,5595,Pseudopanthera macularia,899,582,822,736,200,900,99,0;2647;5295,900,{},bounded_3_windows,Pseudopanthera macularia,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1922584,False,2084,Pseudophilotes baton,899,412,554,485,200,900,99,0;892;1784,900,{},bounded_3_windows,Pseudophilotes baton,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1786455,False,285,Pseudorthodes vecors,283,177,225,200,108,285,99,0,283,{'observation_identity': 2},complete_query,Pseudorthodes vecors,GEOMETRY_REFERENCE_GE30,EXACT,145,93,124,108
+1978114,False,461,Pterapherapteryx sexalata,461,231,423,365,174,461,99,0;300,461,{},complete_query,Pterapherapteryx sexalata,GEOMETRY_REFERENCE_GE30,EXACT,200,114,200,174
+1991751,False,0,Pygmaena fusca,0,0,0,0,0,0,99,,0,{},complete_query,Pygmaena fusca,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1882884,False,614,Pygospila tyres,614,523,538,527,200,614,99,0;300;600,614,{},complete_query,Pygospila tyres,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1890576,False,10387,Pyrausta despicata,900,645,846,758,200,900,99,0;5043;10087,900,{},bounded_3_windows,Pyrausta despicata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1890876,False,2718,Pyrausta tyralis,899,555,840,749,200,900,99,0;1209;2418,899,{'observation_identity': 1},bounded_3_windows,Pyrausta tyralis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1788679,False,106,Pyreferra pettiti,106,62,96,74,36,106,99,0,106,{},complete_query,Pyreferra pettiti,GEOMETRY_REFERENCE_GE30,EXACT,51,31,45,36
+8404037,False,3097,Pyronia bathseba,899,72,317,166,71,900,98,0;1398;2797,899,{'observation_identity': 1},bounded_3_windows,Pyronia bathseba,GEOMETRY_REFERENCE_GE30,EXACT,200,28,125,71
+7988274,False,3158,Pyronia cecilia,898,61,227,127,67,900,99,0;1429;2858,899,{'observation_identity': 1},bounded_3_windows,Pyronia cecilia,GEOMETRY_REFERENCE_GE30,EXACT,200,42,113,67
+1940158,False,8,Pyropteron chrysidiformis,8,7,8,8,5,8,99,0,8,{},complete_query,Pyropteron chrysidiformis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,4,5,5
+1901801,False,633,Pyrrhogyra neaerea,623,496,563,531,200,633,99,0;300;600,623,{'observation_identity': 10},complete_query,Pyrrhogyra neaerea,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1945848,False,0,Quinta cannae,0,0,0,0,0,0,99,,0,{},complete_query,Quinta cannae,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+5112068,False,1306,Renia adspergillus,897,482,746,627,200,900,99,0;503;1006,897,{'observation_identity': 3},bounded_3_windows,Renia adspergillus,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1754332,False,251,Rhagades pruni,251,207,241,233,180,251,99,0,251,{},complete_query,Rhagades pruni,GEOMETRY_REFERENCE_GE30,EXACT,193,161,186,180
+1831128,False,22,Rhigognostis incarnatella,22,19,21,20,16,22,99,0,22,{},complete_query,Rhigognostis incarnatella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,18,15,17,16
+8105817,False,900,Rhizedra lutosa,900,487,753,619,200,900,99,0;300;600,900,{},complete_query,Rhizedra lutosa,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1872315,False,117,Rhodophaea formosa,117,107,113,110,77,117,99,0,117,{},complete_query,Rhodophaea formosa,GEOMETRY_REFERENCE_GE30,EXACT,84,74,80,77
+1739010,False,20,Rhopobota stagnana,20,19,19,19,15,20,99,0,20,{},complete_query,Rhopobota stagnana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,16,15,15,15
+,,,,,,,,0,,100,,,,,Sabulodes arge,TAXONOMY_NOT_EXACT,NONE,,,,
+6121218,False,151,Salbia haemorrhoidalis,151,126,148,137,88,151,99,0,151,{},complete_query,Salbia haemorrhoidalis,GEOMETRY_REFERENCE_GE30,EXACT,93,80,91,88
+8312017,False,1257,Satyrus ferula,889,109,252,170,79,900,99,0;478;957,900,{},bounded_3_windows,Satyrus ferula,GEOMETRY_REFERENCE_GE30,EXACT,200,54,121,79
+7734292,False,257,Schreckensteinia festaliella,257,177,231,194,145,257,99,0,257,{},complete_query,Schreckensteinia festaliella,GEOMETRY_REFERENCE_GE30,EXACT,190,128,169,145
+1873780,False,49,Sciota hostilis,49,44,45,45,24,49,98,0,49,{},complete_query,Sciota hostilis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,26,23,24,24
+5126834,False,250,Scoparia subfusca,250,201,223,207,117,250,99,0,250,{},complete_query,Scoparia subfusca,GEOMETRY_REFERENCE_GE30,EXACT,137,113,124,117
+7700568,False,1657,Scopula inductata,895,302,533,396,195,900,99,0;678;1357,895,{'observation_identity': 5},bounded_3_windows,Scopula inductata,GEOMETRY_REFERENCE_GE30,EXACT,200,151,200,195
+5144805,False,2600,Scopula ornata,900,512,803,660,200,900,99,0;1150;2300,900,{},bounded_3_windows,Scopula ornata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5145136,False,466,Scopula ternata,466,259,415,363,200,466,99,0;300,466,{},complete_query,Scopula ternata,GEOMETRY_REFERENCE_GE30,EXACT,200,172,200,200
+1849966,False,9,Scrobipalpa artemisiella,9,1,1,1,1,9,99,0,9,{},complete_query,Scrobipalpa artemisiella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,1,1,1
+1849758,False,0,Scrobipalpa samadensis,0,0,0,0,0,0,99,,0,{},complete_query,Scrobipalpa samadensis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1848766,False,0,Scrobipalpula tussilaginis,0,0,0,0,0,0,99,,0,{},complete_query,Scrobipalpula tussilaginis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1841798,False,2,Scythris noricella,2,2,2,2,2,2,99,0,2,{},complete_query,Scythris noricella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,2,2,2,2
+1970227,False,14,Selidosema brunnearia,14,12,14,14,11,14,99,0,14,{},complete_query,Selidosema brunnearia,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,11,9,11,11
+1835457,False,303,Semioscopis avellanella,303,287,298,290,144,303,99,0;300,303,{},complete_query,Semioscopis avellanella,GEOMETRY_REFERENCE_GE30,EXACT,153,141,149,144
+1835432,False,283,Semioscopis steinkellneriana,283,218,265,253,155,283,99,0,283,{},complete_query,Semioscopis steinkellneriana,GEOMETRY_REFERENCE_GE30,EXACT,175,132,165,155
+1902642,False,460,Siderone galanthis,456,424,449,437,104,460,99,0;300,456,{'observation_identity': 4},complete_query,Siderone galanthis,GEOMETRY_REFERENCE_GE30,EXACT,118,96,114,104
+1886579,False,5815,Sitochroa palealis,886,714,805,781,200,900,99,0;2757;5515,886,{'observation_identity': 14},bounded_3_windows,Sitochroa palealis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1743663,False,210,Sonia canadana,209,56,138,80,44,210,99,0,209,{'observation_identity': 1},complete_query,Sonia canadana,GEOMETRY_REFERENCE_GE30,EXACT,81,29,54,44
+1850008,False,17,Sophronia semicostella,17,4,17,11,9,17,99,0,17,{},complete_query,Sophronia semicostella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,14,4,14,9
+1842186,False,2,Sorhagenia janiszewskae,2,2,2,2,2,2,99,0,2,{},complete_query,Sorhagenia janiszewskae,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,2,2,2,2
+1842196,False,3,Sorhagenia rhamniella,3,0,3,0,0,3,99,0,3,{},complete_query,Sorhagenia rhamniella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,1,0,1,0
+1772428,False,1028,Spargaloma sexpunctata,898,572,825,720,200,900,99,0;364;728,898,{'observation_identity': 2},bounded_3_windows,Spargaloma sexpunctata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1972942,False,666,Spargania magnoliata,663,232,588,499,169,666,99,0;300;600,663,{'observation_identity': 3},complete_query,Spargania magnoliata,GEOMETRY_REFERENCE_GE30,EXACT,200,110,200,169
+1944004,False,400,Spathilepia clonius,397,346,386,365,151,400,99,0;300,397,{'observation_identity': 3},complete_query,Spathilepia clonius,GEOMETRY_REFERENCE_GE30,EXACT,166,135,161,151
+6221746,False,6205,Speyeria aglaja,900,248,545,380,200,900,99,0;2952;5905,900,{},bounded_3_windows,Speyeria aglaja,GEOMETRY_REFERENCE_GE30,EXACT,200,162,200,200
+1905301,False,3509,Speyeria aphrodite,894,424,672,554,200,900,99,0;1604;3209,894,{'observation_identity': 6},bounded_3_windows,Speyeria aphrodite,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1905187,False,2785,Speyeria mormonia,898,167,512,399,149,900,99,0;1242;2485,900,{},bounded_3_windows,Speyeria mormonia,GEOMETRY_REFERENCE_GE30,EXACT,200,73,200,149
+1861759,False,1809,Sphecodina abbottii,898,624,852,774,200,900,99,0;754;1509,898,{'observation_identity': 2},bounded_3_windows,Sphecodina abbottii,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1812105,False,4350,Spilosoma congrua,899,181,630,390,200,900,99,0;2025;4050,899,{'observation_identity': 1},bounded_3_windows,Spilosoma congrua,GEOMETRY_REFERENCE_GE30,EXACT,200,103,200,200
+1809248,False,1268,Spilosoma glatignyi,899,653,725,677,156,900,99,0;484;968,899,{'observation_identity': 1},bounded_3_windows,Spilosoma glatignyi,GEOMETRY_REFERENCE_GE30,EXACT,191,143,173,156
+1859061,False,483,Stangeia xerodes,483,424,461,433,146,483,99,0;300,483,{},complete_query,Stangeia xerodes,GEOMETRY_REFERENCE_GE30,EXACT,157,138,152,146
+1942148,False,8,Staphylus azteca,8,8,8,8,5,8,99,0,8,{},complete_query,Staphylus azteca,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,5,5,5
+9940829,False,9,Stathmopoda aenea,9,7,7,7,7,9,99,0,9,{},complete_query,Stathmopoda aenea,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,9,7,7,7
+5109821,False,311,Staurophora celsia,311,215,270,247,178,311,99,0;300,311,{},complete_query,Staurophora celsia,GEOMETRY_REFERENCE_GE30,EXACT,200,157,191,178
+1989090,False,0,Stenoporpia separataria,0,0,0,0,0,0,99,,0,{},complete_query,Stenoporpia separataria,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1858775,False,266,Stenoptilia pterodactyla,266,246,258,252,129,266,99,0,266,{},complete_query,Stenoptilia pterodactyla,GEOMETRY_REFERENCE_GE30,EXACT,137,124,133,129
+1858762,False,679,Stenoptilia zophodactylus,673,555,617,608,189,679,99,0;300;600,673,{'observation_identity': 6},complete_query,Stenoptilia zophodactylus,GEOMETRY_REFERENCE_GE30,EXACT,200,175,195,189
+1742402,False,33,Stictea mygindiana,33,12,15,15,12,33,99,0,33,{},complete_query,Stictea mygindiana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,14,9,12,12
+5102507,False,145,Stigmella anomalella,145,72,105,87,65,145,98,0,145,{},complete_query,Stigmella anomalella,GEOMETRY_REFERENCE_GE30,EXACT,86,53,75,65
+5102515,False,33,Stigmella betulicola,33,29,32,32,25,33,98,0,33,{},complete_query,Stigmella betulicola,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,26,22,25,25
+5102455,False,1,Stigmella glutinosae,1,1,1,1,1,1,98,0,1,{},complete_query,Stigmella glutinosae,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,1,1,1,1
+5769734,False,57,Stigmella lapponica,57,53,55,53,26,57,98,0,57,{},complete_query,Stigmella lapponica,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,29,26,28,26
+5102480,False,6,Stigmella luteella,6,6,6,6,6,6,98,0,6,{},complete_query,Stigmella luteella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,6,6,6,6
+9626406,False,159,Stigmella rhamnicola,159,91,122,104,45,159,99,0,159,{},complete_query,Stigmella rhamnicola,GEOMETRY_REFERENCE_GE30,EXACT,71,37,51,45
+9407109,False,237,Stigmella rosaefoliella,237,132,231,160,101,237,99,0,237,{},complete_query,Stigmella rosaefoliella,GEOMETRY_REFERENCE_GE30,EXACT,118,91,114,101
+5769751,False,24,Stigmella salicis,24,8,16,13,11,24,98,0,24,{},complete_query,Stigmella salicis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,19,7,14,11
+5102454,False,43,Stigmella samiatella,43,43,43,43,31,43,98,0,43,{},complete_query,Stigmella samiatella,GEOMETRY_REFERENCE_GE30,EXACT,31,31,31,31
+9609575,False,46,Stigmella slingerlandella,46,11,34,21,18,46,99,0,46,{},complete_query,Stigmella slingerlandella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,28,9,23,18
+5769737,False,325,Stigmella tityrella,324,262,321,310,122,325,98,0;300,325,{},complete_query,Stigmella tityrella,GEOMETRY_REFERENCE_GE30,EXACT,134,108,132,122
+1830374,False,0,Swammerdamia compunctella,0,0,0,0,0,0,99,,0,{},complete_query,Swammerdamia compunctella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+,,,Sympistis zetterstedti,,,,,0,,96,,,,,Sympistis zetterstedtii,TAXONOMY_NOT_EXACT,FUZZY,,,,
+1785955,False,139,Syngrapha viridisigma,139,71,116,104,51,139,99,0,139,{},complete_query,Syngrapha viridisigma,GEOMETRY_REFERENCE_GE30,EXACT,77,35,60,51
+10368183,False,20,Syssphinx colla,19,2,11,2,2,20,99,0,19,{'observation_identity': 1},complete_query,Syssphinx colla,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,9,2,4,2
+1956505,False,653,Tacparia detersata,639,518,626,593,172,653,99,0;300;600,639,{'observation_identity': 14},complete_query,Tacparia detersata,GEOMETRY_REFERENCE_GE30,EXACT,190,152,182,172
+,,,,,,,,0,,100,,,,,Tarachidia erastrioides,TAXONOMY_NOT_EXACT,NONE,,,,
+1850246,False,234,Teleiodes luculella,234,72,162,120,85,234,99,0,234,{},complete_query,Teleiodes luculella,GEOMETRY_REFERENCE_GE30,EXACT,148,50,113,85
+5121847,False,302,Telphusa longifasciella,302,156,203,180,100,302,99,0;300,302,{},complete_query,Telphusa longifasciella,GEOMETRY_REFERENCE_GE30,EXACT,144,91,109,100
+1903607,False,1078,Temenis laothoe,896,707,787,747,200,900,99,0;389;778,896,{'observation_identity': 4},bounded_3_windows,Temenis laothoe,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5143048,False,1259,Tethea ocularis,900,710,852,772,200,900,99,0;479;959,900,{},bounded_3_windows,Tethea ocularis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+,,,,,,,,0,,100,,,,,Tethea or,TAXONOMY_NOT_EXACT,NONE,,,,
+1963306,False,1142,Thalera fimbrialis,900,686,868,820,200,900,99,0;421;842,900,{},bounded_3_windows,Thalera fimbrialis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5148487,False,1007,Thera obeliscata,900,291,639,408,200,900,99,0;353;707,900,{},bounded_3_windows,Thera obeliscata,GEOMETRY_REFERENCE_GE30,EXACT,200,174,200,200
+1852311,False,14,Thiotricha subocellea,14,10,13,11,8,14,99,0,14,{},complete_query,Thiotricha subocellea,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,11,7,10,8
+1771509,False,2641,Tholera decimalis,900,418,643,543,200,900,99,0;1170;2341,900,{},bounded_3_windows,Tholera decimalis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+8073674,False,2005,Thymelicus acteon,898,95,283,163,77,900,99,0;852;1705,900,{},bounded_3_windows,Thymelicus acteon,GEOMETRY_REFERENCE_GE30,EXACT,200,43,138,77
+1939432,False,838,Tischeria ekebladella,837,644,770,716,200,838,99,0;300;600,838,{},complete_query,Tischeria ekebladella,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5124873,False,246,Titaea tamerlan,246,73,137,111,50,246,99,0,246,{},complete_query,Titaea tamerlan,GEOMETRY_REFERENCE_GE30,EXACT,96,38,58,50
+1747050,False,782,Tortricodes alternella,782,497,725,606,200,782,99,0;300;600,782,{},complete_query,Tortricodes alternella,GEOMETRY_REFERENCE_GE30,EXACT,200,188,200,200
+1969581,False,1003,Traminda mundissima,900,876,896,888,200,900,99,0;351;703,900,{},bounded_3_windows,Traminda mundissima,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1978493,False,5229,Trichodezia albovittata,894,345,624,499,200,900,99,0;2464;4929,894,{'observation_identity': 6},bounded_3_windows,Trichodezia albovittata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1788063,False,1163,Tricholita signata,898,621,785,732,200,900,99,0;431;863,898,{'observation_identity': 2},bounded_3_windows,Tricholita signata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5769846,False,0,Trifurcula eurema,0,0,0,0,0,0,98,,0,{},complete_query,Trifurcula eurema,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+5769827,False,0,Trifurcula subnitidella,0,0,0,0,0,0,98,,0,{},complete_query,Trifurcula subnitidella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+6097236,False,12823,Triodia sylvina,900,534,777,681,200,900,99,0;6261;12523,900,{},bounded_3_windows,Triodia sylvina,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+4532088,False,71,Udea decrepitalis,71,30,54,44,28,71,99,0,71,{},complete_query,Udea decrepitalis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,50,21,37,28
+1887150,False,24,Udea itysalis,24,20,22,21,14,24,99,0,24,{},complete_query,Udea itysalis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,16,13,15,14
+1793419,False,401,Ufeus satyricus,400,365,389,384,145,401,99,0;300,400,{'observation_identity': 1},complete_query,Ufeus satyricus,GEOMETRY_REFERENCE_GE30,EXACT,154,132,148,145
+1944343,False,431,Urbanus simplicius,427,381,422,412,200,431,99,0;300,427,{'observation_identity': 4},complete_query,Urbanus simplicius,GEOMETRY_REFERENCE_GE30,EXACT,200,185,200,200
+1952806,False,3872,Watsonalla binaria,900,465,728,608,200,900,99,0;1786;3572,900,{},bounded_3_windows,Watsonalla binaria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1986623,False,76,Xanthorhoe abrasaria,76,21,53,39,24,76,99,0,76,{},complete_query,Xanthorhoe abrasaria,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,44,15,33,24
+1986166,False,1620,Xanthorhoe spadicearia,899,557,758,647,200,900,99,0;660;1320,900,{},bounded_3_windows,Xanthorhoe spadicearia,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5141662,False,1560,Xenophanes tryxus,889,818,874,855,200,900,99,0;630;1260,889,{'observation_identity': 11},bounded_3_windows,Xenophanes tryxus,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5112302,False,340,Xestia badicollis,340,136,284,251,92,340,99,0;300,340,{},complete_query,Xestia badicollis,GEOMETRY_REFERENCE_GE30,EXACT,118,58,108,92
+5112336,False,330,Xestia castanea,330,193,273,244,114,330,99,0;300,330,{},complete_query,Xestia castanea,GEOMETRY_REFERENCE_GE30,EXACT,144,92,132,114
+5714994,False,429,Xestia dolosa,428,258,335,290,160,429,99,0;300,428,{'observation_identity': 1},complete_query,Xestia dolosa,GEOMETRY_REFERENCE_GE30,EXACT,190,136,179,160
+5772351,False,2828,Xestia triangulum,900,201,540,325,183,900,99,0;1264;2528,900,{},bounded_3_windows,Xestia triangulum,GEOMETRY_REFERENCE_GE30,EXACT,200,120,200,183
+1862181,False,619,Xylophanes pluto,612,490,599,565,200,619,99,0;300;600,612,{'observation_identity': 7},complete_query,Xylophanes pluto,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1851616,False,5,Xystophora pulveratella,5,4,5,5,5,5,99,0,5,{},complete_query,Xystophora pulveratella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,4,5,5
+1830408,False,283,Yponomeuta irrorella,283,242,270,258,122,283,99,0,283,{},complete_query,Yponomeuta irrorella,GEOMETRY_REFERENCE_GE30,EXACT,139,112,133,122
+1831009,False,198,Ypsolopha asperella,198,188,196,194,126,198,99,0,198,{},complete_query,Ypsolopha asperella,GEOMETRY_REFERENCE_GE30,EXACT,129,120,127,126
+5112990,False,1604,Zale galbanata,898,324,626,478,200,900,99,0;652;1304,898,{'observation_identity': 2},bounded_3_windows,Zale galbanata,GEOMETRY_REFERENCE_GE30,EXACT,200,149,200,200
+5112961,False,106,Zale metatoides,106,66,103,93,52,106,99,0,106,{},complete_query,Zale metatoides,GEOMETRY_REFERENCE_GE30,EXACT,60,41,57,52
+5112947,False,185,Zale obliqua,185,133,168,157,73,185,99,0,185,{},complete_query,Zale obliqua,GEOMETRY_REFERENCE_GE30,EXACT,87,60,81,73
+5119482,False,210,Zelleria haimbachi,210,146,202,199,59,210,99,0,210,{},complete_query,Zelleria haimbachi,GEOMETRY_REFERENCE_GE30,EXACT,66,48,62,59
+1876409,False,263,Zophodia grossulariella,263,208,239,227,92,263,99,0,263,{},complete_query,Zophodia grossulariella,GEOMETRY_REFERENCE_GE30,EXACT,107,85,99,92
