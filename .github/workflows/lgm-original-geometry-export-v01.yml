@@ -1,0 +1,29 @@
+name: TTF original geometry export for response-free paired ecology
+on:
+  push:
+    branches: [exploratory/lgm-external-insect-reference-20261019-v01]
+    paths: [.github/workflows/lgm-original-geometry-export-v01.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify exact original locality/edge source before exporting
+        run: |
+          set -euo pipefail
+          echo '92e19da615ffc2003a90569afd4089eb24871f1fc0df69cc3aface4263b96dc4  provenance/data/historical_host_memory_geometry_642_canonical_v01.tar.xz' | sha256sum -c -
+          mkdir -p export_geometry
+          tar -xJf provenance/data/historical_host_memory_geometry_642_canonical_v01.tar.xz -C export_geometry
+          echo '037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9  export_geometry/historical_host_memory_localities_v0.1.csv' | sha256sum -c -
+          echo 'ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9  export_geometry/historical_host_memory_edges_v0.1.csv' | sha256sum -c -
+          cp src/ttf/historical_host_memory.py export_geometry/original_historical_host_memory.py
+          echo 'PASS_ORIGINAL_GEOMETRY_EXPORT_NO_SEQUENCES'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-original-geometry-642-response-free-v01
+          path: export_geometry/
+          retention-days: 30
+          if-no-files-found: error
