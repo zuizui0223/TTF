@@ -76,3 +76,8 @@ def equal_reference_indices(n_actual,n_alternative,n_insect,name,group,draw):
     r=np.sort(rng.choice(n_actual,size=k,replace=False))
     c=np.sort(rng.choice(n_alternative,size=k,replace=False))
     return i,r,c
+
+def tag_donor_reference(taxon_id,plant_points):
+    """Attach immutable WCVP plant ID to raw occurrence points before thinning."""
+    from reference_helpers_min import join_hosts
+    return join_hosts([taxon_id],plant_points)
