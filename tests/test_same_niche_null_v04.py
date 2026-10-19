@@ -1,5 +1,8 @@
 import numpy as np
 import pytest
+import sys
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 from same_niche_null_v04 import (draw_independent_clouds,
     score_analog_history,score_real_and_placebo)
 
