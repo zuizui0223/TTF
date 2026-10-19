@@ -50,3 +50,14 @@ def test_equal_reference_counts_and_draw_synchronization():
 @pytest.mark.parametrize('a,b,c',[(29,200,200),(200,29,200),(200,200,59)])
 def test_ineligible_clouds_fail_closed(a,b,c):
     with pytest.raises(ValueError):equal_reference_indices(a,b,c,'A b',0,0)
+
+def test_raw_plant_checkpoint_gets_frozen_taxon_identity_before_thinning():
+    # Regression: directly calling filter_host_points(plants[id],...) once failed
+    # KeyError('wcvp_id') because raw v0.2 observations do not carry WCVP IDs.
+    from alternative_plant_match_v05 import tag_donor_reference
+    source={'400000':[{'gbif_id':'123','latitude':45.0,'longitude':10.0,
+                        'uncertainty_m':100}]}
+    labeled=tag_donor_reference('400000',source)
+    assert labeled[0]['wcvp_id']=='400000'
+    assert labeled[0]['gbif_id']=='123'
+    assert source['400000'][0].get('wcvp_id') is None
