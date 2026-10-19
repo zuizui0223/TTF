@@ -1,0 +1,34 @@
+{
+  "climate_complete_all_known_hosts": 380,
+  "climate_status_counts": {
+    "COMPLETE_DESCRIPTIVE": 397,
+    "NONFINITE_CLIMATE": 1
+  },
+  "climate_success": 397,
+  "conservative_all_known_hosts_with_observations": 381,
+  "draws_per_species": 32,
+  "fraction_host_delta_exceeds_insect": 0.37531486146095716,
+  "fraction_of_species_unique_fraction_above_0_1": 0.2040302267002519,
+  "host_pending_taxa": 0,
+  "insect_panel": 641,
+  "interpretation_boundaries": [
+    "not confirmation; genetic responses forbidden",
+    "modern plant climate does not establish native or LGM occupied hosts",
+    "modern v0.2 host observations represent 506 exactly matched of 518 taxa but include nonrandom samples and unknown nativity",
+    "32 draws are dependent sampling perturbations, not confidence intervals",
+    "relative climate scores can be affected by observational reference selection"
+  ],
+  "matched_geometry_species": 398,
+  "median_unique_before_geo_complete_hosts": 0.0416697284059183,
+  "median_unique_before_geography": 0.04180015698400218,
+  "median_unique_fraction_complete_hosts": 0.037042245233087495,
+  "median_unique_history_fraction": 0.037141646437086326,
+  "modern_host_observation_sample": "3 nonrandom shallow year bins; nativity is unknown",
+  "nuisance_ladder": "matched host and insect references: model A controls self LGM-change and both 0BP climate distances; model B adds log1p endpoint distance",
+  "post_v01_exploratory_control_decomposition": true,
+  "schema": "ttf_yearstrat_v02_fullhost_matched_climate_v0.3",
+  "source_host_taxa": 506,
+  "source_host_taxa_with_observations": 498,
+  "status": "EXPLORATORY_ECOLOGICAL_INFORMATION_NOT_GENETIC_RESPONSE",
+  "unresolved_taxonomy_taxa": 12
+}
