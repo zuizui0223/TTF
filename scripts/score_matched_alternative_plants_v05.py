@@ -210,7 +210,7 @@ def main():
         a=np.array([v[0]['unique_fraction'] for v in outputs]);b=np.array([v[1]['unique_fraction'] for v in outputs])
         av=np.array([v[0]['residual_variance'] for v in outputs]);bv=np.array([v[1]['residual_variance'] for v in outputs])
         ac=np.array([v[0]['host_current_mean'] for v in outputs]);bc=np.array([v[1]['host_current_mean'] for v in outputs])
-        row.update(status='COMPLETE_MODERN_MATCHED_PLANT_CONTROL',draws_completed=len(outputs),
+        row.update({'status':'COMPLETE_MODERN_MATCHED_PLANT_CONTROL','draws_completed':len(outputs),
             'actual_fraction_median':float(np.median(a)),
             'alternate_fraction_median':float(np.median(b)),
             'fraction_diff_of_medians':float(np.median(a)-np.median(b)),
@@ -221,7 +221,7 @@ def main():
             'current_climate_mismatch_actual_median':float(np.median(ac)),
             'current_climate_mismatch_alternate_median':float(np.median(bc)),
             'current_mismatch_gap':float(np.median(ac)-np.median(bc)),
-            'actual_exceeds_alternate_draws':int(np.sum(a>b)))
+            'actual_exceeds_alternate_draws':int(np.sum(a>b))})
         results.append(row)
         if (i+1)%25==0:print(json.dumps({'species':i+1,'matched_species':len(todo)}),flush=True)
     fields=sorted(set().union(*(r.keys() for r in results)))
