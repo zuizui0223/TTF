@@ -1,0 +1,69 @@
+{
+  "schema": "ttf_lgm_same_niche_reference_split_null_v0.4",
+  "date": "2026-10-19",
+  "status": "EXPLORATORY_RESPONSE_FREE_NULL_DESIGN_FROZEN_BEFORE_V04_CLIMATE",
+  "purpose": "Test whether the unique historical host-climate predictor variance in an insect's actual known-host reference exceeds a noise baseline produced by two disjoint independent subsets of the same insect's modern external climate reference. This is a same-insect-niche *sampling* null, not a random alternative-host or LGM occupancy null.",
+  "data_provenance": {
+    "base_commit": "34a39c3f27e608c66c632233f831b2c9db00d687",
+    "species_panel_sha256": "b70f7189c022ad0123073d8c650be795c4197c0acdbb62c6a15c701130fb4db2",
+    "plant_v02_source": "benchmarks/exploratory/lgm_host_reference_yearstrat_v02",
+    "plant_v02_summary_sha256": "cffb1144a61151c9da78737b1c7a84034398fb50d03ea5ecb46642b317d93634",
+    "source_insect": "benchmarks/exploratory/lgm_external_reference_v01",
+    "source_original_edges_sha256": "ab10a876895cf00817e8ce555665ebb78a0f2ac64323d2e93c213e1857738ba9",
+    "source_original_localities_sha256": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "source_host_association_sha256": "a28fba9efa8a9dc79c162336f62c883059c5dddbfabec2861f554d038dd98044",
+    "chelsa_archive_zip_sha256": "0a797c609d26a185ba08d209a71203a584fa60f1045c4a8c335934372cee30b2",
+    "chelsa_vars": [
+      "bio01",
+      "bio07",
+      "bio12",
+      "bio15"
+    ],
+    "times": {
+      "LGM": -190,
+      "present": 20
+    },
+    "global_reference_valid": 6343
+  },
+  "eligibility": {
+    "all_insects": 641,
+    "original_qualified_geometric": 398,
+    "requires_external_insect_reference_points_at_least": 60,
+    "requires_external_host_reference_points_at_least": 30,
+    "qualifying_before_climate": 348,
+    "prior_climate_nonfinite": 1,
+    "expected_climate_finite": 347,
+    "no_backfill": true,
+    "cohort_definition": "Pre-existing v0.3 same-50km independently sourced, 10km-thinned data only; no re-selection based on null outcome."
+  },
+  "null_design": {
+    "named": "independent same-insect-niche reference split (sampling-noise baseline)",
+    "draws": 32,
+    "draw_seed": "sha256('ttf-v04-same-niche-split|species|draw'), int from first8 bytes, PCG64",
+    "k": "min(100, floor(n_external_insect/2), n_external_host) with k>=30",
+    "split_insect_reference": "uniform random permutation of n_insect, self first k, non-overlapping surrogate-host next k",
+    "real_host_cloud": "uniform draw without replacement k from actual known host external occurrences",
+    "matched_reference_count": "all three clouds (actual host, surrogate host, insect-self) have same k, and surrogate/self are disjoint",
+    "climate_current_and_LGM": "4-var CHELSA standardized using source 6343 present climate support; original five path sample points",
+    "observed_and_null_score": "fraction of a host-cloud historical delta's variance residual to self climate history, host-cloud current mismatch, self current mismatch and log1p endpoint distance",
+    "other_scores": "raw residual variance in standardized climate space, host/pseudo current mismatch, mean delta LGM minus present",
+    "paired_primary": "per species median(actual score over 32 draws) - median(surrogate score over 32 draws), aggregated across species with genus-cluster bootstrap of signed paired difference",
+    "positive_prediction": "actual known-host historic information fraction exceeds same-niche surrogate median under identical reference counts and self-cloud set",
+    "report": "both absolute and relative variance, medians, positive fraction, source counts, null confidence caveats, full 641 status rows",
+    "no_tuning": [
+      "Do not adjust 30/60 thresholds in response to outcomes",
+      "Do not subset by positive null difference",
+      "Do not conflate correlated 32 draws with independent biological reps",
+      "Do not interpret this as random plant host specificity or ancient occupancy"
+    ]
+  },
+  "inference_limits": [
+    "Neither current plant occurrences nor historic climate analogue distance establish past occupied plant ranges or continuous resource corridors",
+    "A surrogate made from same-insect reference positions is an observational sampling null, not an ecological host-association shuffle and does not guarantee identical niche in actual plants",
+    "Fractions have species-cloud-specific response variance denominators; raw residual variance is a required companion",
+    "Original genetic response NOT_EVALUABLE_EMPIRICAL_RESPONSE stays closed; no genotypes, no posthoc confirmatory p-values",
+    "Unresolved 12 host taxa and missing native/introduced labels persist. 3 year bins of 300 records are nonrandom samples",
+    "Same genus and shared host plants create species dependence; resample genus clusters for descriptive sensitivity, never use 32 within-species draws as independent species",
+    "Exploratory null specified after seeing historical predictor v0.3 information values and cannot be a fresh confirmatory hypothesis test"
+  ]
+}
