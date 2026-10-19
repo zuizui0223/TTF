@@ -1,0 +1,53 @@
+name: TTF archive exact matched CHELSA 90-species exploratory result
+on:
+  push:
+    branches: [exploratory/lgm-external-insect-reference-20261019-v01]
+    paths: [.github/workflows/lgm-matched-climate-archive-v01.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: ttf-freeze-matched-climate-v01
+  cancel-in-progress: false
+jobs:
+  archive-frozen-artifact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify exact unmodified climate-analysis output
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          out=benchmarks/exploratory/lgm_matched_climate_partial_host_v01
+          mkdir -p "$out"
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12167222323/zip" > /tmp/ttf-matched90-original.zip
+          echo '3176bbf7e6499c8632374ec6ab5a8e473b42af004a25a344f18cd780a5a4a8a7  /tmp/ttf-matched90-original.zip' | sha256sum -c -
+          unzip -q /tmp/ttf-matched90-original.zip -d "$out"
+          echo '624d79b8bcb379d7849b9e63e95cf315c400939f2de270d4d554a5cf5fae7fd0  benchmarks/exploratory/lgm_matched_climate_partial_host_v01/summary.json' | sha256sum -c -
+          echo '9ca0925d854335cd0c37371d576828ac5dacfc178d2eae0e16c87d1f61fca729  benchmarks/exploratory/lgm_matched_climate_partial_host_v01/species_matched_history_v0.1.csv' | sha256sum -c -
+          echo '50c8f3e4eff7b10c43481c5588dc89fc904ce5b622efa3c25235014530d5212f  benchmarks/exploratory/lgm_matched_climate_partial_host_v01/all_641_eligibility_v0.1.csv' | sha256sum -c -
+          python - <<'PY'
+          import json,csv
+          from pathlib import Path
+          p=Path('benchmarks/exploratory/lgm_matched_climate_partial_host_v01')
+          a=json.loads((p/'summary.json').read_text())
+          rows=list(csv.DictReader((p/'species_matched_history_v0.1.csv').open()))
+          assert a['climate_success']==90 and len(rows)==90
+          assert a['source_host_taxa']==12 and a['host_pending_taxa']==505
+          assert abs(a['median_unique_history_fraction']-0.03775274566722114)<1e-12
+          assert a['status']=='EXPLORATORY_ECOLOGICAL_INFORMATION_NOT_GENETIC_RESPONSE'
+          print('PASS_UNCHANGED_EXPLORATORY_90_SPECIES_CLIMATE_RESULT')
+          PY
+      - name: Commit exact original science result once without rewriting previous receipts
+        run: |
+          set -euo pipefail
+          git fetch origin "${{ github.ref_name }}"
+          test "$(git rev-parse FETCH_HEAD)" = "${{ github.sha }}"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add benchmarks/exploratory/lgm_matched_climate_partial_host_v01/
+          git commit -m 'Archive exact source-pinned 90-species paired CHELSA climate result'
+          git push origin "HEAD:${{ github.ref_name }}"
