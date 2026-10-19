@@ -1,0 +1,97 @@
+name: TTF complete external insect reference independent audit
+on:
+  push:
+    branches: [exploratory/lgm-external-insect-reference-20261019-v01]
+    paths: [.github/workflows/lgm-external-full-audit-v01.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: lgm-external-reference-full-audit-v01
+  cancel-in-progress: false
+jobs:
+  audit-complete-641:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test independent geometry auditor and acquisition primitives
+        run: |
+          set -euo pipefail
+          python -m pip install 'numpy>=1.26,<3' 'scipy>=1.13,<2' 'requests>=2.31,<3' 'pytest>=8,<9'
+          python -m pytest -q tests/test_lgm_external_references.py tests/test_reference_checkpoint.py tests/test_external_snapshot_audit.py
+      - name: Verify complete observation snapshot and original geometry
+        run: |
+          set -euo pipefail
+          echo '92e19da615ffc2003a90569afd4089eb24871f1fc0df69cc3aface4263b96dc4  provenance/data/historical_host_memory_geometry_642_canonical_v01.tar.xz' | sha256sum -c -
+          mkdir -p input/external_reference_geo
+          tar -xJf provenance/data/historical_host_memory_geometry_642_canonical_v01.tar.xz -C input/external_reference_geo
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          q=json.loads(Path('benchmarks/exploratory/lgm_external_reference_v01/summary.json').read_text())
+          assert q['attempted_species']==641 and q['pending_species']==0
+          assert q['status']=='ACQUISITION_COMPLETE_WITH_EXPLICIT_FAILURE_STATES'
+          assert q['retained_reference_points_50km']==62588
+          assert q['status_counts']=={'GEOMETRY_REFERENCE_GE30':414,'INSUFFICIENT_IN_RETRIEVED_REFERENCE':217,'TAXONOMY_NOT_EXACT':10}
+          assert q['genetic_response_used'] is False and q['host_reference_acquisition_executed'] is False
+          print('PASS_COMPLETE_641_REFERENCE_SNAPSHOT')
+          PYTHON
+      - name: Independently audit every saved point and freeze receipt
+        run: |
+          set -euo pipefail
+          out=benchmarks/exploratory/lgm_external_reference_full_audit_v01
+          mkdir -p "$out"
+          python scripts/audit_lgm_external_snapshot.py \
+            --snapshot benchmarks/exploratory/lgm_external_reference_v01 \
+            --localities input/external_reference_geo/historical_host_memory_localities_v0.1.csv \
+            --edges input/external_reference_geo/historical_host_memory_edges_v0.1.csv \
+            --quadrature-module src/ttf/historical_host_memory.py \
+            --output "$out/result.json"
+          python - <<'PYTHON'
+          import hashlib,json,os
+          from pathlib import Path
+          out=Path('benchmarks/exploratory/lgm_external_reference_full_audit_v01')
+          r=json.loads((out/'result.json').read_text())
+          assert r['status']=='PASS_SAVED_SNAPSHOT_GEOMETRY_ONLY'
+          assert (r['attempted_species'],r['pending_species'],r['retained_points'],r['panel_species'])==(641,0,62588,641)
+          assert r['status_counts']=={'GEOMETRY_REFERENCE_GE30':414,'INSUFFICIENT_IN_RETRIEVED_REFERENCE':217,'TAXONOMY_NOT_EXACT':10}
+          assert r['host_association_rows']==1037 and r['unique_accepted_host_ids']==518
+          assert r['minimum_verified_clearance_km']>=50-1e-6
+          assert r['minimum_verified_within_species_spacing_km']>=10-1e-6
+          assert not r['genetic_response_used'] and not r['climate_recalculation_executed']
+          r['boundary']='Complete all-641 observational insect reference audit. Only discrete evaluation positions and observed thinning are verified; not the full route, genetic-source disjointness, historical occupancy, or biological LGM effects.'
+          (out/'result.json').write_text(json.dumps(r,indent=2,sort_keys=True)+'\n')
+          receipt={'schema':'ttf_external_reference_full_audit_receipt_v0.1',
+            'run_id':os.environ['GITHUB_RUN_ID'],'audit_code_commit':os.environ['GITHUB_SHA'],
+            'snapshot_sha256':r['snapshot_summary_sha256'],
+            'result_sha256':hashlib.sha256((out/'result.json').read_bytes()).hexdigest(),
+            'genetic_or_climate_result':False}
+          (out/'receipt.json').write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          print(json.dumps({k:v for k,v in r.items() if k!='counts_by_species'},sort_keys=True))
+          PYTHON
+      - name: Save audit on isolated branch with race guard
+        run: |
+          set -euo pipefail
+          git fetch origin "${{ github.ref_name }}"
+          test "$(git rev-parse FETCH_HEAD)" = "${{ github.sha }}"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add benchmarks/exploratory/lgm_external_reference_full_audit_v01/
+          git commit -m 'Independently audit complete 641-species saved insect reference geometry'
+          git push origin "HEAD:${{ github.ref_name }}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lgm-external-full641-independent-geometry-audit-v01
+          path: benchmarks/exploratory/lgm_external_reference_full_audit_v01/
+          retention-days: 30
+          if-no-files-found: warn
