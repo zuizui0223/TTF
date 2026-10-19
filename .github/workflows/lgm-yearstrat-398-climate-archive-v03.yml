@@ -1,0 +1,62 @@
+name: TTF preserve exact 398-species CHELSA LGM exploratory result v03
+on:
+  push:
+    branches: [exploratory/lgm-yearstrat-398-climate-v03]
+    paths: [.github/workflows/lgm-yearstrat-398-climate-archive-v03.yml]
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: write
+concurrency:
+  group: ttf-source-bound-full398-v03-result-archive
+  cancel-in-progress: false
+jobs:
+  archive-scientific-result:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Verify GH-original 398-species climate artifact and result digests
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          out=benchmarks/exploratory/lgm_yearstrat_398_climate_v03
+          mkdir -p "$out"
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12171499382/zip" > /tmp/ttf-climate-full398-v03.zip
+          echo '0a54b1f904daade5af048e836470bc7f6312d7c24bafc45726320564967764fd  /tmp/ttf-climate-full398-v03.zip' | sha256sum -c -
+          unzip -q /tmp/ttf-climate-full398-v03.zip -d "$out"
+          echo '493f87960952eaf01dbf212428aeba6d8dfc2ff91da1800a338c5c4033c33f86  benchmarks/exploratory/lgm_yearstrat_398_climate_v03/summary.json' | sha256sum -c -
+          echo 'c5a82a2c7adadf7e86ae5a6647e952931c63ec3d0bcd66ea6d46f568df8463f7  benchmarks/exploratory/lgm_yearstrat_398_climate_v03/species_matched_history_v0.3.csv' | sha256sum -c -
+          echo 'ae1ea4743c78595d04892a29d905fe6bb7e5029a6106cdb72e414cc5876b630c  benchmarks/exploratory/lgm_yearstrat_398_climate_v03/all_641_eligibility_v0.3.csv' | sha256sum -c -
+          echo 'a97612fce02894df82c1061d760da2c323cba2b561047fe233c3efccc07e5e90  benchmarks/exploratory/lgm_yearstrat_398_climate_v03/execution_receipt.json' | sha256sum -c -
+          python - <<'PY'
+          import json,csv,math
+          from pathlib import Path
+          d=Path('benchmarks/exploratory/lgm_yearstrat_398_climate_v03')
+          q=json.loads((d/'summary.json').read_text())
+          c=list(csv.DictReader((d/'species_matched_history_v0.3.csv').open()))
+          a=list(csv.DictReader((d/'all_641_eligibility_v0.3.csv').open()))
+          assert len(a)==641 and len(c)==398
+          assert q['status']=='EXPLORATORY_ECOLOGICAL_INFORMATION_NOT_GENETIC_RESPONSE'
+          assert q['climate_status_counts']=={'COMPLETE_DESCRIPTIVE':397,'NONFINITE_CLIMATE':1}
+          assert q['climate_complete_all_known_hosts']==380
+          assert abs(q['median_unique_history_fraction']-0.037141646437086326)<1e-12
+          assert abs(q['median_unique_fraction_complete_hosts']-0.037042245233087495)<1e-12
+          assert sum(v['status']=='COMPLETE_DESCRIPTIVE' for v in c)==397
+          assert sum(v['all_known_hosts_with_observations']=='True' for v in c)==381
+          assert not json.loads((d/'execution_receipt.json').read_text())['genetic_response_used']
+          print('PASS_BYTE_EXACT_397_CLIMATE_SUCCESS_398_GEOMETRY_ELIGIBLE_NO_GENETICS')
+          PY
+      - name: Preserve exact immutable original result in exploratory PR only
+        run: |
+          set -euo pipefail
+          git fetch origin "${{ github.ref_name }}"
+          test "$(git rev-parse FETCH_HEAD)" = "${{ github.sha }}"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add benchmarks/exploratory/lgm_yearstrat_398_climate_v03/
+          git commit -m 'Archive source-bound 398-species exploratory LGM host climate information result'
+          git push origin "HEAD:${{ github.ref_name }}"
