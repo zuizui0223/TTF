@@ -35,3 +35,10 @@ def test_genus_hides_plant_taxonomic_binomial():
     assert genus_of('Ulmus minor subsp. minor')=='ulmus'
     assert genus_of('Ulmus americana')=='ulmus'
     assert genus_of('Picea abies')=='picea'
+
+def test_full_scoring_runner_import_compiles_before_opening_rasters():
+    # Regression: pure helper tests passed while production scoring script had
+    # SyntaxError in output-row construction. Import must check its syntax.
+    import importlib
+    runner=importlib.import_module('score_matched_alternative_plants_v05')
+    assert callable(runner.main)
