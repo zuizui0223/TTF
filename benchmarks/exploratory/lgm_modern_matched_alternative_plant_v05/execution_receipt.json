@@ -1,0 +1,13 @@
+{
+  "alternative_host_taxa_not_verified_nonhosts": true,
+  "commit": "348f5d4a7b6deaf14115e190fd4d8f965b2767b2",
+  "input_0BP_plan_sha256": "c8099e516a42850c8ab946c4cdc23e71afe1e8eb5360a90fcd848365b3cb8075",
+  "no_genetic_response_used": true,
+  "run_id": "39233414704",
+  "schema": "ttf_lgm_v05_altplant_negative_control_receipt",
+  "sha256": {
+    "plant_group_v05.csv": "236931f93d2efcfebb6988d87291ed6628e63a6ce0ae2cb227cc0825d637cf73",
+    "species_v05.csv": "591a1383b739d73c8ffc2cbae5c220dae4b7730629e6d447be80542b88124446",
+    "summary.json": "27c432f54918589e6a4e1a373ce0b1c8271486a0ca94552659528a489e60a5f5"
+  }
+}
