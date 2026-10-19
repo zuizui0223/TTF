@@ -1,0 +1,19 @@
+{
+  "acquisition_result_commit": "3ac0b1587a014275b4ead660e58c5f45613522f3",
+  "acquisition_run_id": 39193877861,
+  "audit_code_commit": "9f7d7462d862ef2fc772bc8050e3e32dde6a8bcc",
+  "audit_script_sha256": "1b76cd8fa8b973da429127e7fe49584160ae3a5fce8a35173ad7368cca9d4e42",
+  "climate_or_genetic_result": false,
+  "input_sha256": {
+    "all_641_species_external_reference.csv": "0b78474e58e2bbc4cb099740a6ff92393c92bfa2d6059cb2673f75fc2c8a874d",
+    "execution_receipt_39193877861.json": "56047e5a33aa128845486bbd57e350c5388077a20e4b3847afd31bd3594e7e36",
+    "external_insect_points_50km.csv.gz": "c7b53aa089bae68aa3517ad2b782a986ed51e0bb02276cd99b0656661bacbb54",
+    "host_reference_request_manifest.csv": "a28fba9efa8a9dc79c162336f62c883059c5dddbfabec2861f554d038dd98044",
+    "request_ledger.json": "1dcd9c78c242e8cc9f79a270bf9e4b0dc5f3ebb8a9d5470bff27e1d2d81b4e3a",
+    "species_details.json": "3fc5ece7d51355b6dc7461c63d6aa17350dfbefe84bc7416c222cc7f9e02e47f",
+    "summary.json": "ec3b5810a71d561ea16eb2d820f49ab6cd0494b0c0282fafe606d044cc804989"
+  },
+  "result_sha256": "766633021e3c944330251bfdbe8c8c5d5b2b858eb0d3c031a882c1bfd114b268",
+  "run_id": "39195178973",
+  "schema": "ttf_external_reference_independent_audit_receipt_v0.1"
+}
