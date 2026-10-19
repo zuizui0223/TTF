@@ -1,0 +1,113 @@
+{
+  "genus_cluster_descriptive_interval": {
+    "descriptive_not_confirmatory": true,
+    "draws": 4000,
+    "genus_clusters": 247,
+    "median_diff_limits": [
+      -0.002921249849412687,
+      -0.0004311747035339285
+    ],
+    "positive_fraction_limits": [
+      0.389723266352842,
+      0.49346719457013577
+    ],
+    "seed": 20261019,
+    "shared_donor_across_genera_not_modelled": true
+  },
+  "group_0_median_fraction_difference": -0.002866508180690796,
+  "group_0_positive_species": 145,
+  "group_rows": 2664,
+  "groups_negative_majority_species": 158,
+  "groups_positive_majority_species": 129,
+  "limitations": [
+    "Outcome is historical climate-analogue predictor variance, not genetic differentiation",
+    "Alternative plants are unlisted for focal insect in the accepted HOSTS data, not biologically proven nonhosts",
+    "Modern climate moment matching is imperfect; distributions, nativity and collection bias remain confounded",
+    "Plant donors shared across insect species; even genus-block intervals do not capture all dependencies",
+    "Balance windows and taxon-breadth splits are ex post and cannot be confirmatory",
+    "Technical 8x8 repeated draws do not create independent species or biological replicates",
+    "Original LGM genetic confirmation remains NOT_EVALUABLE_EMPIRICAL_RESPONSE"
+  ],
+  "paired_metrics": {
+    "median_actual_fraction": 0.039391364933656435,
+    "median_alt_fraction": 0.03801661831726337,
+    "median_modern_climate_gap_abs": 0.031220524151497453,
+    "median_modern_climate_gap_signed": -0.014680036985962097,
+    "median_raw_residual_difference": -0.0003511139667624827,
+    "positive_species_fraction_count": 147,
+    "positive_species_raw_variance_count": 142,
+    "species": 333,
+    "species_median_fraction_difference": -0.0016850394827899644
+  },
+  "posthoc_balance_sensitivity": [
+    {
+      "actual_fraction_gt_other_plant": 15,
+      "posthoc_abs_modern_mismatch_limit": 0.005,
+      "raw_residual_actual_gt_other_plant": 15,
+      "species": 25,
+      "species_paired_difference_median": 0.003516403696691525
+    },
+    {
+      "actual_fraction_gt_other_plant": 30,
+      "posthoc_abs_modern_mismatch_limit": 0.01,
+      "raw_residual_actual_gt_other_plant": 28,
+      "species": 55,
+      "species_paired_difference_median": 0.0008146331174744576
+    },
+    {
+      "actual_fraction_gt_other_plant": 55,
+      "posthoc_abs_modern_mismatch_limit": 0.02,
+      "raw_residual_actual_gt_other_plant": 49,
+      "species": 118,
+      "species_paired_difference_median": -0.0009497314201568457
+    },
+    {
+      "actual_fraction_gt_other_plant": 105,
+      "posthoc_abs_modern_mismatch_limit": 0.05,
+      "raw_residual_actual_gt_other_plant": 95,
+      "species": 226,
+      "species_paired_difference_median": -0.0009965713539823416
+    },
+    {
+      "actual_fraction_gt_other_plant": 132,
+      "posthoc_abs_modern_mismatch_limit": 0.1,
+      "raw_residual_actual_gt_other_plant": 125,
+      "species": 293,
+      "species_paired_difference_median": -0.00140352824541716
+    },
+    {
+      "actual_fraction_gt_other_plant": 144,
+      "posthoc_abs_modern_mismatch_limit": 0.2,
+      "raw_residual_actual_gt_other_plant": 137,
+      "species": 321,
+      "species_paired_difference_median": -0.0014302846270520878
+    }
+  ],
+  "schema": "ttf_v05_source_bound_independent_host_identity_audit_v0.1",
+  "scientific_boundary": "modern climate analogy; unlisted plant != certified nonhost; no LGM occupied plants or genetic response",
+  "source_sha256": {
+    "current_groups": "236931f93d2efcfebb6988d87291ed6628e63a6ce0ae2cb227cc0825d637cf73",
+    "current_species": "591a1383b739d73c8ffc2cbae5c220dae4b7730629e6d447be80542b88124446",
+    "current_summary": "27c432f54918589e6a4e1a373ce0b1c8271486a0ca94552659528a489e60a5f5",
+    "prior_species": "678c513b015af3514d2d54b5bbeea78f02a73d7c00e70c25276ce27ea0cce0a2"
+  },
+  "source_v04_scored": 347,
+  "source_v04_to_v05_paired": 333,
+  "source_v04_total": 348,
+  "source_v05_missing_climate": [
+    "Colotis eris",
+    "Pygospila tyres"
+  ],
+  "source_v05_total": 335,
+  "species_compared": 333,
+  "status": "EXPLORATORY_HOST_IDENTITY_ADVANTAGE_NOT_SUPPORTED_BY_UNLISTED_PLANTS",
+  "transition_counts": {
+    "negative_to_negative": 54,
+    "negative_to_positive": 10,
+    "positive_to_negative": 132,
+    "positive_to_positive": 137
+  },
+  "v04_actual_positive_on_shared_species": 269,
+  "v05_actual_positive_on_shared_species": 147,
+  "v05_raw_positive_on_shared_species": 142
+}
