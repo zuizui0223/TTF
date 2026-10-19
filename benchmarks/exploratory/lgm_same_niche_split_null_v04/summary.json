@@ -1,0 +1,28 @@
+{
+  "actual_unique_fraction_median": 0.038239403937703205,
+  "insect_panel": 641,
+  "interpretation_boundaries": [
+    "The surrogate is another independent sample of the same insect climate niche, not another known host plant",
+    "The unique fractions have different denominators; raw residual variances must be compared alongside fractions",
+    "Modern host and insect observations do not reconstruct LGM plant occupation or historical corridors",
+    "The 32 draws are dependent reference splits, not biological replicates",
+    "Plant nativity and sampling completeness remain unknown; observational reference data are bounded",
+    "No genetic response or genetic barrier effect was opened, no confirmatory p-value"
+  ],
+  "median_species_paired_raw_residual_difference": 0.0030544569449050623,
+  "median_species_paired_unique_fraction_difference": 0.015700965993666015,
+  "null_computable_species": 347,
+  "previously_paired_reference_qualified": 398,
+  "pseudo_unique_fraction_median": 0.017520189163446893,
+  "schema": "ttf_lgm_plant_climate_same_niche_split_null_v0.4",
+  "species_actual_fraction_exceeds_pseudo": 281,
+  "species_actual_raw_variance_exceeds_pseudo": 280,
+  "split_draws_per_species": 32,
+  "split_eligible_species": 348,
+  "status": "EXPLORATORY_SAMPLING_NULL_NOT_HISTORICAL_PLANT_OCCUPANCY_OR_GENETIC_RESPONSE",
+  "status_counts": {
+    "COMPLETE_SAME_NICHE_NULL": 347,
+    "NONFINITE_CLIMATE": 1
+  },
+  "with_all_known_hosts_observed": 335
+}

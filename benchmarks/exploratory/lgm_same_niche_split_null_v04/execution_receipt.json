@@ -1,0 +1,13 @@
+{
+  "LGM_host_occupancy_claimed": false,
+  "commit": "532adf534b86197f5c6c43a5d2abc52f718b14cb",
+  "genetic_response_used": false,
+  "outputs_sha256": {
+    "all_641_split_eligibility_v0.4.csv": "7cdaa90b869fd7fe03d14c2928e9eea2c2c3df9bcf0ae9b609c7f81d567eed06",
+    "species_same_niche_null_v0.4.csv": "678c513b015af3514d2d54b5bbeea78f02a73d7c00e70c25276ce27ea0cce0a2",
+    "summary.json": "6059cae5eb1ac166de6994d0edf209c3b8e10ec1fbd74e99af0f8081e477c108"
+  },
+  "run_id": "39228154896",
+  "same_niche_sampling_null_only": true,
+  "schema": "ttf_lgm_split_sameniche_null_v0.4_receipt"
+}
