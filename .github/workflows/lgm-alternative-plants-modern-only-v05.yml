@@ -4,6 +4,9 @@ on:
     branches: [exploratory/lgm-matched-alternative-plants-v05]
     paths:
       - .github/workflows/lgm-alternative-plants-modern-only-v05.yml
+      - scripts/plan_matched_alternative_plants_v05.py
+      - scripts/alternative_plant_match_v05.py
+      - tests/test_alternative_plant_match_v05.py
   workflow_dispatch:
 permissions:
   contents: read
