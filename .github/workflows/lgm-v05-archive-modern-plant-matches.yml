@@ -1,0 +1,57 @@
+name: TTF archive frozen v05 0BP-only alternative plant matching identities
+on:
+  push:
+    branches: [exploratory/lgm-matched-alternative-plants-v05]
+    paths: [.github/workflows/lgm-v05-archive-modern-plant-matches.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: ttf-v05-currentonly-selected-plant-identity-archive
+  cancel-in-progress: false
+jobs:
+  archive-fixed-matching-before-score-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Verify source-artifact and every selected target/group
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          out=benchmarks/exploratory/lgm_matched_alternative_plants_current_only_v05
+          mkdir -p "$out"
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12177817341/zip" > /tmp/v05-stage1.zip
+          echo '001c6357f5a116f06bf546a8ee3eedd0520750da688367a20d5a16d070d2815c  /tmp/v05-stage1.zip' | sha256sum -c -
+          unzip -q /tmp/v05-stage1.zip -d "$out"
+          echo 'c8099e516a42850c8ab946c4cdc23e71afe1e8eb5360a90fcd848365b3cb8075  benchmarks/exploratory/lgm_matched_alternative_plants_current_only_v05/source_bound_0bp_alternatives.json' | sha256sum -c -
+          python - <<'PYTHON'
+          import json,csv
+          from pathlib import Path
+          p=Path('benchmarks/exploratory/lgm_matched_alternative_plants_current_only_v05')
+          x=json.loads((p/'source_bound_0bp_alternatives.json').read_text())
+          rows=list(csv.DictReader((p/'all_641_current_matching_eligibility.csv').open()))
+          assert x['stage']=='CURRENT_0BP_SELECTION_ONLY_NO_LGM_CLIMATE_OPENED'
+          assert x['source_348_reference_split_cohort']==348
+          assert x['source_336_with_all_known_hosts_observed']==336
+          assert x['eligible_alternative_control_n']==335
+          assert len(rows)==641 and len(x['matched_species'])==335
+          assert sum(r['status']=='MATCHED_ALTERNATIVE_PLANT_CONTROL' for r in rows)==335
+          assert all(len(k['alternative_groups'])==8 for k in x['matched_species'].values())
+          assert x['no_lgm_raster_or_genetic_data_used'] is True
+          print('PASS_FROZEN_335_MODERN_MATCHED_ALTERNATIVE_PLANTS_V05')
+          PYTHON
+      - name: Retain source-only matching on same draft branch
+        run: |
+          set -euo pipefail
+          git fetch origin "${{ github.ref_name }}"
+          test "$(git rev-parse FETCH_HEAD)" = "${{ github.sha }}"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add benchmarks/exploratory/lgm_matched_alternative_plants_current_only_v05
+          git commit -m 'Archive current-only 335-species matched alternative plant identity and source receipt'
+          git push origin "HEAD:${{ github.ref_name }}"
