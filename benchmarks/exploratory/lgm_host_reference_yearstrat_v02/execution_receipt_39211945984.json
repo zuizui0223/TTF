@@ -1,0 +1,11 @@
+{
+  "attempted_taxa": 518,
+  "code_sha": "b946a29f715bc5065871cd8590b4d6bf6951a62b",
+  "genetic_response_used": false,
+  "legacy_host_sample_mixed": false,
+  "new_sampling_scheme": "three_shallow_year_bins_offset_zero",
+  "pending_taxa": 0,
+  "run_id": "39211945984",
+  "schema": "ttf_host_yearstrat_v02_exploratory_source_receipt",
+  "summary_sha256": "cffb1144a61151c9da78737b1c7a84034398fb50d03ea5ecb46642b317d93634"
+}
