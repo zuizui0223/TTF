@@ -1,0 +1,54 @@
+name: TTF archive 90-species matched climate nuisance ladder v02
+on:
+  push:
+    branches: [exploratory/lgm-90-climate-nuisance-ladder-v02]
+    paths: [.github/workflows/lgm-matched-nuisance-ladder-archive-v02.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: ttf-matched-host-nuisance-archive-v02
+  cancel-in-progress: false
+jobs:
+  archive-successful-climate-output:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bind original successful v02 result exactly, not a rerun
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          out=benchmarks/exploratory/lgm_matched_climate_nuisance_ladder_v02
+          mkdir -p "$out"
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12167752080/zip" > /tmp/nuisance-ladder-v02.zip
+          echo '9c46bee94529cbe7dffbe4685392e639fddd47810c4129f4a777d3b9f80cf28f  /tmp/nuisance-ladder-v02.zip' | sha256sum -c -
+          unzip -q /tmp/nuisance-ladder-v02.zip -d "$out"
+          echo '3afea751fc6cbc1fbf4925acbcc6b9f9676fd53442440f02c151998ff01d7458  benchmarks/exploratory/lgm_matched_climate_nuisance_ladder_v02/summary.json' | sha256sum -c -
+          echo '1692231d6e923fbf93f4ad95b17cd25c32962c6ef49f84ef546b48354e66671a  benchmarks/exploratory/lgm_matched_climate_nuisance_ladder_v02/species_matched_history_v0.1.csv' | sha256sum -c -
+          echo '50c8f3e4eff7b10c43481c5588dc89fc904ce5b622efa3c25235014530d5212f  benchmarks/exploratory/lgm_matched_climate_nuisance_ladder_v02/all_641_eligibility_v0.1.csv' | sha256sum -c -
+          python - <<'PY'
+          import json,csv
+          from pathlib import Path
+          p=Path('benchmarks/exploratory/lgm_matched_climate_nuisance_ladder_v02')
+          q=json.loads((p/'summary.json').read_text())
+          rows=list(csv.DictReader((p/'species_matched_history_v0.1.csv').open()))
+          assert len(rows)==90 and q['climate_success']==90 and q['matched_geometry_species']==90
+          assert abs(q['median_unique_before_geography']-0.04015199433288967)<1e-12
+          assert abs(q['median_unique_history_fraction']-0.03775274566722114)<1e-12
+          assert all(float(x['unique_before_geography_median'])>=float(x['unique_hist_fraction_median'])-1e-12 for x in rows)
+          assert q['post_v01_exploratory_control_decomposition'] and q['source_host_taxa']==12
+          print('PASS_EXACT_90_SPECIES_MATCHED_CLIMATE_GEOGRAPHY_DECOMPOSITION')
+          PY
+      - name: Save audited result on the exploratory branch
+        run: |
+          set -euo pipefail
+          git fetch origin "${{ github.ref_name }}"
+          test "$(git rev-parse FETCH_HEAD)" = "${{ github.sha }}"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add benchmarks/exploratory/lgm_matched_climate_nuisance_ladder_v02
+          git commit -m 'Freeze exact 90-species matched LGM climate nuisance ladder v02'
+          git push origin "HEAD:${{ github.ref_name }}"
