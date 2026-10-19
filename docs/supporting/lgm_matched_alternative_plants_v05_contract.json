@@ -23,7 +23,7 @@
       "lgm": -190
     },
     "global_standardization_n": 6343,
-    "cohort": "all 348 previously qualified disjoint-split reference insect species; 335 with every known accepted host ID represented"
+    "cohort": "All 348 prior reference-split-eligible insects, including 336 with all known accepted host taxa having observations (one of the 336 previously has nonfinite LGM climate); no outcome-selected additions."
   },
   "design": {
     "stage1": "Match alternate plant taxon identities using 0 BP CHELSA ONLY, freeze source-bound matched ID sets and modern mismatch before computing any LGM score.",
@@ -32,7 +32,7 @@
     "preselection": "Deterministic SHA256 priority restrict max64 observations per alternate plant for 0 BP four-var climate signatures; require >=30 raw modern observations and >=30 after per-insect 50km exclusion and 10km thinning.",
     "moment_match": "For each insect compare candidate plant centroid + per-var SD standardized present (0 BP) climate with actual selected modern host cloud. Rank by Euclidean four-var mean distance plus 0.5 times SD distance. No LGM, genetics, evolutionary source metadata or host null effect used.",
     "selection": "For each target, rank all source-eligible alternative plant taxa by modern climate moment score. Keep the first 24 distinct, viable taxa whose observations also pass the insect-specific 50km/10km filter. Form up to eight disjoint alternative taxon-ID groups, each of size min(number known host taxa,3), by consecutive rank positions. Use every viable group; if fewer than four groups, not evaluable. No post-LGM substitution.",
-    "min_requirements": "At least four fully viable alternate groups with >=30 selected 50-km-separated observations, >=60 insect observation points and >=30 actual host observations; otherwise label not evaluable. No salvage of species from v0.4 outside 348 list.",
+    "min_requirements": "In source-qualified 348, 336 host-complete observations. Require at least four alternate plant groups with >=30 independent points per group and >=60 insect points; otherwise label not evaluable. Previous nonfinite species remains explicitly nonfinite, not replaced.",
     "replicates": "Eight deterministic random cloud splits per alternative group, up to eight disjoint alternative plant groups per species; all cloud counts equal min(100, floor(n_insect/2), n_actual_host, n_alt_group), k >= 30.",
     "metric": "For each pair calculate historical host-minus-modern nearest climate distance per original edge. Residualize to self LGM change, both present-mismatch distances and log1p endpoint geographic distance, as in v0.4. Report actual-minus-alternate *fraction* and *raw residual variance* plus modern fit gap.",
     "output": "source-qualified 348 taxa and 641 disposition rows, matched plant IDs, number viable controls, 0 BP climatic match scores, v0.5 actual/alternate LGM comparison, sensitivity for those with close modern mismatches.",
