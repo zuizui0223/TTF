@@ -1,0 +1,10 @@
+{
+  "attempted_taxa": 13,
+  "code_sha": "56b8b189ac656af338865dddb36a1ebf90284eb6",
+  "genetic_or_climate_result": false,
+  "manifest_sha256": "a28fba9efa8a9dc79c162336f62c883059c5dddbfabec2861f554d038dd98044",
+  "pending_taxa": 505,
+  "run_id": "39202896874",
+  "schema": "ttf_host_observation_acquisition_receipt_v0.1",
+  "summary_sha256": "4275f727c6a15fbdfa88a3a8097bd1e3524220c803d05c058625c4d0502f1a2e"
+}
