@@ -1,0 +1,151 @@
+{
+  "schema": "ttf_exploratory_same_site_host_landscape_design_v0.1",
+  "status": "POST_EXPOSURE_EXPLORATORY_DESIGN_CENSUS_NOT_LGM_EFFECT_TEST",
+  "date": "2026-10-19",
+  "source_commit": "7319fc9b555aabb2bd6e543dec90ee632588e33c",
+  "source_sha256": {
+    "historical_host_memory_candidate_642_v0.1.csv": "c36cbb2ba0cbf7d0222645a04538c78236cfda392dd0a3d11dd443f12347d35b",
+    "historical_host_memory_localities_v0.1.csv": "037cd8fa1f059fb67c349a465540d3d5fac469b5d14a2a4d2658d74c036c0ae9",
+    "historical_host_climate_lcp_bungalotis_64edges_v0.1.csv": "7d255b208a485e7bc6d02e4e5748781c5e10170ed8bf161542dce3135c897b3b"
+  },
+  "census_bounds_west_south_east_north": [
+    "-85.63",
+    "10.335",
+    "-85.1604",
+    "11.17"
+  ],
+  "bounds_definition": "Original anchor coordinate rectangle plus 0.12 degrees; BEFORE outward native-pixel snapping. Not the exact raster-cell extent.",
+  "minimum_localities_in_rectangle": 12,
+  "candidate_species": 642,
+  "input_locality_rows": 17202,
+  "regional_species": 37,
+  "regional_families_as_frozen": 10,
+  "regional_species_site_records": 957,
+  "regional_unique_recorded_coordinates": 377,
+  "regional_unordered_species_pairs": 666,
+  "shared_coordinate_threshold_diagnostics": {
+    "1": {
+      "species_pairs": 546,
+      "host_disjoint_pairs": 543
+    },
+    "3": {
+      "species_pairs": 266,
+      "host_disjoint_pairs": 263
+    },
+    "6": {
+      "species_pairs": 78,
+      "host_disjoint_pairs": 77
+    },
+    "12": {
+      "species_pairs": 4,
+      "host_disjoint_pairs": 4
+    }
+  },
+  "shared12_pairs": [
+    {
+      "source_species": "Cautethia spuria",
+      "target_species": "Crinodes besckei",
+      "shared_recorded_coordinates": 16,
+      "same_frozen_family": false,
+      "host_shared_species": 0,
+      "host_union_species": 2,
+      "host_jaccard": 0.0,
+      "shared_coordinate_pair_queries": 120
+    },
+    {
+      "source_species": "Crinodes besckei",
+      "target_species": "Xylophanes pluto",
+      "shared_recorded_coordinates": 14,
+      "same_frozen_family": false,
+      "host_shared_species": 0,
+      "host_union_species": 2,
+      "host_jaccard": 0.0,
+      "shared_coordinate_pair_queries": 91
+    },
+    {
+      "source_species": "Isognathus rimosa",
+      "target_species": "Xylophanes pluto",
+      "shared_recorded_coordinates": 12,
+      "same_frozen_family": true,
+      "host_shared_species": 0,
+      "host_union_species": 4,
+      "host_jaccard": 0.0,
+      "shared_coordinate_pair_queries": 66
+    },
+    {
+      "source_species": "Quinta cannae",
+      "target_species": "Xenophanes tryxus",
+      "shared_recorded_coordinates": 12,
+      "same_frozen_family": true,
+      "host_shared_species": 0,
+      "host_union_species": 3,
+      "host_jaccard": 0.0,
+      "shared_coordinate_pair_queries": 66
+    }
+  ],
+  "shared12_unique_species": 6,
+  "shared12_pair_query_rows": 343,
+  "identical_host_pairs": [
+    {
+      "source_species": "Cautethia spuria",
+      "target_species": "Xylophanes pluto",
+      "shared_recorded_coordinates": 10,
+      "same_frozen_family": true,
+      "host_shared_species": 1,
+      "host_union_species": 1,
+      "host_jaccard": 1.0,
+      "shared_coordinate_pair_queries": 45
+    },
+    {
+      "source_species": "Conchylodes ovulalis",
+      "target_species": "Sabulodes arge",
+      "shared_recorded_coordinates": 3,
+      "same_frozen_family": false,
+      "host_shared_species": 1,
+      "host_union_species": 1,
+      "host_jaccard": 1.0,
+      "shared_coordinate_pair_queries": 3
+    }
+  ],
+  "identical_host_query_rows": 48,
+  "pilot_shape_diagnostic": {
+    "all_edges": 64,
+    "positive_path_edges": 63,
+    "same_pixel_edge_ids": [
+      39
+    ],
+    "mean_host_delta_all_edges_cost_km": 1.665783407966145,
+    "mean_self_delta_all_edges_cost_km": 17.794186622317866,
+    "spearman_delta_raw": 0.95741718674988,
+    "spearman_delta_per_chord_km": 0.7771697388632873,
+    "median_host_LGM_to_0BP_ratio": 1.1703062543900415,
+    "median_self_LGM_to_0BP_ratio": 3.256513085366862,
+    "p_values_computed": false,
+    "interpretation": "Amplitude contrast is not spatial-rank divergence. Normalizing by distance is a descriptive sensitivity, not complete geographic confound control.",
+    "reference_counts": {
+      "host": 665,
+      "self": 26
+    },
+    "equal_reference_count_edgewise_shape_checked": false
+  },
+  "output_sha256": {
+    "all_642_species_geometry_screen.csv": "73baf7adedfce3757ff56c04efd5adbddaa596cfc4723203d49d21d2091f591f",
+    "regional_species_panel.csv": "2d793867f1ea8be93e5be80b5e79ed324d186c7a3402cb2dfe9c4e802c34a172",
+    "all_regional_species_pairs.csv": "1313abc276937b489400b283fe1b47087dacb852145e7ac0412db7e2b17763bd",
+    "shared12_coordinate_pair_queries.csv": "d8e0811937765af9aa1182451e66a091e2f3d6e91c4846a1c626999519f21c37",
+    "identical_host_coordinate_pair_queries.csv": "d5436a08e977e69234320824bddfc78786796ea8e75f1edd07939b4589a296c0"
+  },
+  "boundaries": {
+    "new_nucleotide_identity_read": false,
+    "genetic_test_run": false,
+    "new_multispecies_climate_routing_run": false,
+    "native_raster_validity_and_endpoint_distinctness_pending": true,
+    "shared_recorded_coordinates_prove_same_microhabitat": false,
+    "query_pairs_independent_replicates": false,
+    "species_disjoint_or_source_disjoint_confirmation": false,
+    "original_259_state": "NOT_EVALUABLE_EMPIRICAL_RESPONSE",
+    "regional_subset_selected_after_previous_climate_exposure": true,
+    "complete_host_knowledge_assumed": false,
+    "all_642_retained_in_screen_with_exclusions_visible": true
+  }
+}
