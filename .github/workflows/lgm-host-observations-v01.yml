@@ -1,0 +1,68 @@
+name: TTF external observations for 518 fixed host plants
+on:
+  push:
+    branches: [exploratory/lgm-host-observations-20261019-v01]
+    paths:
+      - scripts/acquire_lgm_host_observations.py
+      - tests/test_lgm_host_observations.py
+      - .github/workflows/lgm-host-observations-v01.yml
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: lgm-host-observations-v01
+  cancel-in-progress: false
+jobs:
+  acquire-hosts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify unchanged insect helpers and new host handling
+        run: |
+          set -euo pipefail
+          python -m pip install 'numpy>=1.26,<3' 'scipy>=1.13,<2' 'requests>=2.31,<3' 'pytest>=8,<9'
+          echo 'b452e8b5e85e587e21732e9983f20c3d0524d495965a0a260bc3d48d0304017b  scripts/acquire_lgm_host_observations.py' | sha256sum -c -
+          echo '258553bf6b9180fdd03839a092fde2b890f0d77f2839f0ea7e5ff3c1ff64aaf2  scripts/acquire_lgm_external_references.py' | sha256sum -c -
+          python -m pytest -q tests/test_lgm_host_observations.py tests/test_lgm_external_references.py tests/test_reference_checkpoint.py
+      - name: Retrieve a bounded source-bound host snapshot without climate or genetics
+        run: |
+          set -euo pipefail
+          python -u scripts/acquire_lgm_host_observations.py \
+            --manifest benchmarks/exploratory/lgm_external_reference_v01/host_reference_request_manifest.csv \
+            --output benchmarks/exploratory/lgm_host_observations_v01 \
+            --max-seconds 300
+      - name: Preserve snapshot and all completed host checkpoints
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,hashlib,os
+          from pathlib import Path
+          out=Path('benchmarks/exploratory/lgm_host_observations_v01')
+          q=json.loads((out/'summary.json').read_bytes())
+          assert q['attempted_host_species']+q['pending_host_species']==518 and not q['genetic_response_used']
+          r={'run_id':os.environ['GITHUB_RUN_ID'],'code_commit':os.environ['GITHUB_SHA'],'sha256':{str(p.relative_to(out)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(out.rglob('*')) if p.is_file() and not p.name.startswith('receipt_')}}
+          (out/('receipt_'+os.environ['GITHUB_RUN_ID']+'.json')).write_text(json.dumps(r,indent=2,sort_keys=True)+'\n')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add benchmarks/exploratory/lgm_host_observations_v01/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Save external host observations and immutable per-plant checkpoints; not matched climate or genetics'
+            git push origin HEAD:${{ github.ref_name }}
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lgm-host-observations-v01
+          path: benchmarks/exploratory/lgm_host_observations_v01/
+          retention-days: 30
+          if-no-files-found: warn

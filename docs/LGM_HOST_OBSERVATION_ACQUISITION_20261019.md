@@ -1,0 +1,9 @@
+# External host observation acquisition (exploratory)
+
+Continue the 641-insect reference-symmetry study using all 518 fixed accepted WCVP hosts in the existing 1,037-association manifest. This scope is fixed before host retrieval; no selection using insect support or climate direction. A shared host is fetched once. Maximum two host workers; bounded submission time; completed successes, taxonomy failures and transport failures are checkpointed and never silently retried.
+
+The unchanged insect GBIF query filters, 300-record page-window policy, date interval (2010-01-01 to 2026-10-18), uncertainty <=1,000 m, iNaturalist HUMAN_OBSERVATION source and record-quality helpers are reused. Taxonomy matching is exact species-level Plantae, confidence >=95, with original accepted WCVP ID retained alongside GBIF accepted species key. Non-exact taxonomic resolution is not ecological absence. Large-query windows are bounded and not representative random samples.
+
+Host points here are quality-filtered but intentionally retained BEFORE per-insect spatial exclusion, pooled-host thinning or climate reconstruction. A plant shared by insects must not be globally excluded because it lies near some other insect's evaluation geometry. Per-insect 50-km exclusion must precede shared-host pooling and 10-km thinning later. Native/introduced status and confirmed local larval use are not inferred from plant observations. Available establishment metadata is retained, not silently treated as native status. Nothing here reconstructs LGM plant occupancy or opens genetic outcomes.
+
+The new host collector passed 23 local unit tests; the original insect helper file is unchanged and source-hash checked in the workflow. Full outcome counts and runtime success are not preclaimed. This execution branch separates its output writes from the concurrent pending-insect continuation; both belong to the same #141/#145 research task, not new confirmatory hypotheses.
