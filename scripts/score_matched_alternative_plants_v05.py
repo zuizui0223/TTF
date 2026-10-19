@@ -176,8 +176,9 @@ def main():
         q_idx=data['quad_idx'];h_idx=data['real_idx'];i_idx=data['insect_idx']
         x=curr[q_idx];y=past[q_idx];host=curr[h_idx];insect=curr[i_idx]
         present_groups=[curr[g['index']] for g in data['groups']]
-        past_groups=[past[g['index']] for g in data['groups']]
-        arrays=[x,y,host,insect,*present_groups,*past_groups]
+        # Modern observation reference clouds are evaluated at 0BP only;
+        # the LGM grid is sampled at the five path quadrature positions.
+        arrays=[x,y,host,insect,*present_groups]
         row={'species':name,'edge_n':data['edge_n'],'real_host_taxa':data['num_real_host_taxa'],
             'actual_host_n':len(h_idx),'insect_n':len(i_idx),
             'alternate_groups':len(data['groups'])}
