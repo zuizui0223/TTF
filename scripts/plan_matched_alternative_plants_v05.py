@@ -87,7 +87,7 @@ def edge_dist_km(pair):
     return float(2*6371.0088*np.arcsin(np.sqrt(np.clip(h,0,1))))
 
 from alternative_plant_match_v05 import (genus_of,stable_sample_indices,climate_signature,
-    rank_alternatives,group_alternatives,observation_signature)
+    rank_alternatives,group_alternatives,observation_signature,tag_donor_reference)
 
 def main():
     from ttf.historical_host_memory import great_circle_quadrature_latlon
@@ -183,7 +183,7 @@ def main():
         ranked=rank_alternatives(sig,known,taxa,signatures)
         alternatives=[];rank_scores={}
         for score,key in ranked:
-            donor=filter_host_points(plants[key],task['support'],buffer_km=50,thinning_km=10,cap=200)
+            donor=filter_host_points(tag_donor_reference(key,plants),task['support'],buffer_km=50,thinning_km=10,cap=200)
             n_assess+=1
             if len(donor)<30:continue
             alternatives.append(key);rank_scores[key]=score
