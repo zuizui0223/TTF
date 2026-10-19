@@ -59,7 +59,7 @@ jobs:
             --localities input/external_reference_geo/historical_host_memory_localities_v0.1.csv \
             --edges input/external_reference_geo/historical_host_memory_edges_v0.1.csv \
             --contract docs/supporting/external_insect_reference_contract_v0.1.json \
-            --output "$out" --max-seconds 180
+            --output "$out" --max-seconds 900
           echo 'REFERENCE_SNAPSHOT_CHANGED=true' >> "$GITHUB_ENV"
       - name: Retain partial or complete source-bound snapshot on the isolated branch
         if: env.REFERENCE_SNAPSHOT_CHANGED == 'true'
