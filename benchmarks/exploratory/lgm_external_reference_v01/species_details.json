@@ -1,0 +1,6165 @@
+[
+  {
+    "accepted_species_key": 4301264,
+    "api_count_changed": false,
+    "api_count_initial": 22,
+    "canonical_name": "Abagrotis nefascia",
+    "eligible_before_thinning_0km": 20,
+    "eligible_before_thinning_100km": 7,
+    "eligible_before_thinning_25km": 18,
+    "eligible_before_thinning_50km": 18,
+    "external_reference_points_50km": 8,
+    "fetched_records": 22,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 20,
+    "rejection_counts": {
+      "observation_identity": 2
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Abagrotis nefascia",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 10,
+    "thinned_capped_100km": 5,
+    "thinned_capped_25km": 8,
+    "thinned_capped_50km": 8
+  },
+  {
+    "accepted_species_key": 1767608,
+    "api_count_changed": false,
+    "api_count_initial": 139,
+    "canonical_name": "Abrostola asclepiadis",
+    "eligible_before_thinning_0km": 139,
+    "eligible_before_thinning_100km": 83,
+    "eligible_before_thinning_25km": 106,
+    "eligible_before_thinning_50km": 97,
+    "external_reference_points_50km": 63,
+    "fetched_records": 139,
+    "match_confidence": 98,
+    "page_offsets": "0",
+    "quality_unique_records": 139,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Abrostola asclepiadis",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 82,
+    "thinned_capped_100km": 57,
+    "thinned_capped_25km": 69,
+    "thinned_capped_50km": 63
+  },
+  {
+    "accepted_species_key": 1968205,
+    "api_count_changed": false,
+    "api_count_initial": 480,
+    "canonical_name": "Acasis viridata",
+    "eligible_before_thinning_0km": 477,
+    "eligible_before_thinning_100km": 203,
+    "eligible_before_thinning_25km": 460,
+    "eligible_before_thinning_50km": 366,
+    "external_reference_points_50km": 125,
+    "fetched_records": 480,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 477,
+    "rejection_counts": {
+      "observation_identity": 3
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Acasis viridata",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 163,
+    "thinned_capped_100km": 85,
+    "thinned_capped_25km": 153,
+    "thinned_capped_50km": 125
+  },
+  {
+    "accepted_species_key": 1945462,
+    "api_count_changed": false,
+    "api_count_initial": 304,
+    "canonical_name": "Achlyodes busirus",
+    "eligible_before_thinning_0km": 303,
+    "eligible_before_thinning_100km": 254,
+    "eligible_before_thinning_25km": 281,
+    "eligible_before_thinning_50km": 276,
+    "external_reference_points_50km": 167,
+    "fetched_records": 304,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 303,
+    "rejection_counts": {
+      "observation_identity": 1
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Achlyodes busirus",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 178,
+    "thinned_capped_100km": 151,
+    "thinned_capped_25km": 170,
+    "thinned_capped_50km": 167
+  },
+  {
+    "accepted_species_key": 1945477,
+    "api_count_changed": false,
+    "api_count_initial": 3075,
+    "canonical_name": "Achlyodes thraso",
+    "eligible_before_thinning_0km": 887,
+    "eligible_before_thinning_100km": 839,
+    "eligible_before_thinning_25km": 862,
+    "eligible_before_thinning_50km": 851,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;1387;2775",
+    "quality_unique_records": 887,
+    "rejection_counts": {
+      "observation_identity": 13
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Achlyodes thraso",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1739727,
+    "api_count_changed": false,
+    "api_count_initial": 640,
+    "canonical_name": "Acleris curvalana",
+    "eligible_before_thinning_0km": 640,
+    "eligible_before_thinning_100km": 235,
+    "eligible_before_thinning_25km": 578,
+    "eligible_before_thinning_50km": 524,
+    "external_reference_points_50km": 163,
+    "fetched_records": 640,
+    "match_confidence": 99,
+    "page_offsets": "0;300;600",
+    "quality_unique_records": 640,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Acleris curvalana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 101,
+    "thinned_capped_25km": 194,
+    "thinned_capped_50km": 163
+  },
+  {
+    "accepted_species_key": 1740003,
+    "api_count_changed": false,
+    "api_count_initial": 226,
+    "canonical_name": "Acleris flavivittana",
+    "eligible_before_thinning_0km": 222,
+    "eligible_before_thinning_100km": 150,
+    "eligible_before_thinning_25km": 209,
+    "eligible_before_thinning_50km": 182,
+    "external_reference_points_50km": 72,
+    "fetched_records": 226,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 222,
+    "rejection_counts": {
+      "observation_identity": 4
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Acleris flavivittana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 96,
+    "thinned_capped_100km": 54,
+    "thinned_capped_25km": 87,
+    "thinned_capped_50km": 72
+  },
+  {
+    "accepted_species_key": 1739895,
+    "api_count_changed": false,
+    "api_count_initial": 12,
+    "canonical_name": "Acleris implexana",
+    "eligible_before_thinning_0km": 12,
+    "eligible_before_thinning_100km": 10,
+    "eligible_before_thinning_25km": 10,
+    "eligible_before_thinning_50km": 10,
+    "external_reference_points_50km": 6,
+    "fetched_records": 12,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 12,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Acleris implexana",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 8,
+    "thinned_capped_100km": 6,
+    "thinned_capped_25km": 6,
+    "thinned_capped_50km": 6
+  },
+  {
+    "accepted_species_key": 1740185,
+    "api_count_changed": false,
+    "api_count_initial": 363,
+    "canonical_name": "Acleris laterana",
+    "eligible_before_thinning_0km": 363,
+    "eligible_before_thinning_100km": 236,
+    "eligible_before_thinning_25km": 317,
+    "eligible_before_thinning_50km": 269,
+    "external_reference_points_50km": 135,
+    "fetched_records": 363,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 363,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Acleris laterana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 188,
+    "thinned_capped_100km": 117,
+    "thinned_capped_25km": 156,
+    "thinned_capped_50km": 135
+  },
+  {
+    "accepted_species_key": 1740148,
+    "api_count_changed": false,
+    "api_count_initial": 458,
+    "canonical_name": "Acleris macdunnoughi",
+    "eligible_before_thinning_0km": 456,
+    "eligible_before_thinning_100km": 272,
+    "eligible_before_thinning_25km": 429,
+    "eligible_before_thinning_50km": 349,
+    "external_reference_points_50km": 91,
+    "fetched_records": 458,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 456,
+    "rejection_counts": {
+      "observation_identity": 2
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Acleris macdunnoughi",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 127,
+    "thinned_capped_100km": 68,
+    "thinned_capped_25km": 112,
+    "thinned_capped_50km": 91
+  },
+  {
+    "accepted_species_key": 1739781,
+    "api_count_changed": false,
+    "api_count_initial": 17,
+    "canonical_name": "Acleris negundana",
+    "eligible_before_thinning_0km": 17,
+    "eligible_before_thinning_100km": 5,
+    "eligible_before_thinning_25km": 12,
+    "eligible_before_thinning_50km": 9,
+    "external_reference_points_50km": 7,
+    "fetched_records": 17,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 17,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Acleris negundana",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 13,
+    "thinned_capped_100km": 4,
+    "thinned_capped_25km": 10,
+    "thinned_capped_50km": 7
+  },
+  {
+    "accepted_species_key": 1740389,
+    "api_count_changed": false,
+    "api_count_initial": 1157,
+    "canonical_name": "Acleris nivisellana",
+    "eligible_before_thinning_0km": 894,
+    "eligible_before_thinning_100km": 481,
+    "eligible_before_thinning_25km": 743,
+    "eligible_before_thinning_50km": 621,
+    "external_reference_points_50km": 186,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;428;857",
+    "quality_unique_records": 894,
+    "rejection_counts": {
+      "observation_identity": 6
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Acleris nivisellana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 133,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 186
+  },
+  {
+    "accepted_species_key": 1739897,
+    "api_count_changed": false,
+    "api_count_initial": 19,
+    "canonical_name": "Acleris semiannula",
+    "eligible_before_thinning_0km": 19,
+    "eligible_before_thinning_100km": 19,
+    "eligible_before_thinning_25km": 19,
+    "eligible_before_thinning_50km": 19,
+    "external_reference_points_50km": 14,
+    "fetched_records": 19,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 19,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Acleris semiannula",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 14,
+    "thinned_capped_100km": 14,
+    "thinned_capped_25km": 14,
+    "thinned_capped_50km": 14
+  },
+  {
+    "accepted_species_key": 1739867,
+    "api_count_changed": false,
+    "api_count_initial": 1362,
+    "canonical_name": "Acleris semipurpurana",
+    "eligible_before_thinning_0km": 897,
+    "eligible_before_thinning_100km": 604,
+    "eligible_before_thinning_25km": 815,
+    "eligible_before_thinning_50km": 753,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;531;1062",
+    "quality_unique_records": 897,
+    "rejection_counts": {
+      "observation_identity": 3
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Acleris semipurpurana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1861933,
+    "api_count_changed": false,
+    "api_count_initial": 91,
+    "canonical_name": "Acosmeryx shervillii",
+    "eligible_before_thinning_0km": 91,
+    "eligible_before_thinning_100km": 63,
+    "eligible_before_thinning_25km": 85,
+    "eligible_before_thinning_50km": 73,
+    "external_reference_points_50km": 34,
+    "fetched_records": 91,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 91,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Acosmeryx shervillii",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 44,
+    "thinned_capped_100km": 27,
+    "thinned_capped_25km": 39,
+    "thinned_capped_50km": 34
+  },
+  {
+    "accepted_species_key": 1874176,
+    "api_count_changed": false,
+    "api_count_initial": 0,
+    "canonical_name": "Acrobasis carpinivorella",
+    "eligible_before_thinning_0km": 0,
+    "eligible_before_thinning_100km": 0,
+    "eligible_before_thinning_25km": 0,
+    "eligible_before_thinning_50km": 0,
+    "external_reference_points_50km": 0,
+    "fetched_records": 0,
+    "match_confidence": 99,
+    "page_offsets": "",
+    "quality_unique_records": 0,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Acrobasis carpinivorella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 0,
+    "thinned_capped_100km": 0,
+    "thinned_capped_25km": 0,
+    "thinned_capped_50km": 0
+  },
+  {
+    "accepted_species_key": 1874211,
+    "api_count_changed": false,
+    "api_count_initial": 841,
+    "canonical_name": "Acrobasis tumidana",
+    "eligible_before_thinning_0km": 841,
+    "eligible_before_thinning_100km": 775,
+    "eligible_before_thinning_25km": 821,
+    "eligible_before_thinning_50km": 811,
+    "external_reference_points_50km": 200,
+    "fetched_records": 841,
+    "match_confidence": 98,
+    "page_offsets": "0;300;600",
+    "quality_unique_records": 841,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Acrobasis tumidana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1750924,
+    "api_count_changed": false,
+    "api_count_initial": 200,
+    "canonical_name": "Acrocercops astericola",
+    "eligible_before_thinning_0km": 200,
+    "eligible_before_thinning_100km": 86,
+    "eligible_before_thinning_25km": 142,
+    "eligible_before_thinning_50km": 126,
+    "external_reference_points_50km": 77,
+    "fetched_records": 200,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 200,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Acrocercops astericola",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 121,
+    "thinned_capped_100km": 59,
+    "thinned_capped_25km": 91,
+    "thinned_capped_50km": 77
+  },
+  {
+    "accepted_species_key": 1751051,
+    "api_count_changed": false,
+    "api_count_initial": 549,
+    "canonical_name": "Acrocercops brongniardella",
+    "eligible_before_thinning_0km": 548,
+    "eligible_before_thinning_100km": 361,
+    "eligible_before_thinning_25km": 478,
+    "eligible_before_thinning_50km": 450,
+    "external_reference_points_50km": 200,
+    "fetched_records": 549,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 549,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Acrocercops brongniardella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 178,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1829533,
+    "api_count_changed": false,
+    "api_count_initial": 234,
+    "canonical_name": "Acrolepiopsis assectella",
+    "eligible_before_thinning_0km": 233,
+    "eligible_before_thinning_100km": 168,
+    "eligible_before_thinning_25km": 198,
+    "eligible_before_thinning_50km": 193,
+    "external_reference_points_50km": 74,
+    "fetched_records": 234,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 233,
+    "rejection_counts": {
+      "observation_identity": 1
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Acrolepiopsis assectella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 93,
+    "thinned_capped_100km": 60,
+    "thinned_capped_25km": 78,
+    "thinned_capped_50km": 74
+  },
+  {
+    "accepted_species_key": 1782723,
+    "api_count_changed": false,
+    "api_count_initial": 0,
+    "canonical_name": "Acronicta haesitata",
+    "eligible_before_thinning_0km": 0,
+    "eligible_before_thinning_100km": 0,
+    "eligible_before_thinning_25km": 0,
+    "eligible_before_thinning_50km": 0,
+    "external_reference_points_50km": 0,
+    "fetched_records": 0,
+    "match_confidence": 99,
+    "page_offsets": "",
+    "quality_unique_records": 0,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Acronicta haesitata",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 0,
+    "thinned_capped_100km": 0,
+    "thinned_capped_25km": 0,
+    "thinned_capped_50km": 0
+  },
+  {
+    "accepted_species_key": 1782744,
+    "api_count_changed": false,
+    "api_count_initial": 714,
+    "canonical_name": "Acronicta retardata",
+    "eligible_before_thinning_0km": 713,
+    "eligible_before_thinning_100km": 296,
+    "eligible_before_thinning_25km": 597,
+    "eligible_before_thinning_50km": 464,
+    "external_reference_points_50km": 200,
+    "fetched_records": 714,
+    "match_confidence": 99,
+    "page_offsets": "0;300;600",
+    "quality_unique_records": 713,
+    "rejection_counts": {
+      "observation_identity": 1
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Acronicta retardata",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 194,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1782878,
+    "api_count_changed": false,
+    "api_count_initial": 84,
+    "canonical_name": "Acronicta tristis",
+    "eligible_before_thinning_0km": 84,
+    "eligible_before_thinning_100km": 62,
+    "eligible_before_thinning_25km": 79,
+    "eligible_before_thinning_50km": 75,
+    "external_reference_points_50km": 39,
+    "fetched_records": 84,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 84,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Acronicta tristis",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 46,
+    "thinned_capped_100km": 30,
+    "thinned_capped_25km": 42,
+    "thinned_capped_50km": 39
+  },
+  {
+    "accepted_species_key": 1782837,
+    "api_count_changed": false,
+    "api_count_initial": 1235,
+    "canonical_name": "Acronicta vinnula",
+    "eligible_before_thinning_0km": 896,
+    "eligible_before_thinning_100km": 281,
+    "eligible_before_thinning_25km": 698,
+    "eligible_before_thinning_50km": 427,
+    "external_reference_points_50km": 165,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;467;935",
+    "quality_unique_records": 896,
+    "rejection_counts": {
+      "observation_identity": 4
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Acronicta vinnula",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 123,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 165
+  },
+  {
+    "accepted_species_key": 9972403,
+    "api_count_changed": false,
+    "api_count_initial": 457,
+    "canonical_name": "Actias sinensis",
+    "eligible_before_thinning_0km": 456,
+    "eligible_before_thinning_100km": 112,
+    "eligible_before_thinning_25km": 327,
+    "eligible_before_thinning_50km": 197,
+    "external_reference_points_50km": 68,
+    "fetched_records": 457,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 457,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Actias sinensis",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 138,
+    "thinned_capped_100km": 45,
+    "thinned_capped_25km": 95,
+    "thinned_capped_50km": 68
+  },
+  {
+    "accepted_species_key": 1792292,
+    "api_count_changed": false,
+    "api_count_initial": 905,
+    "canonical_name": "Actinotia polyodon",
+    "eligible_before_thinning_0km": 900,
+    "eligible_before_thinning_100km": 490,
+    "eligible_before_thinning_25km": 749,
+    "eligible_before_thinning_50km": 651,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;302;605",
+    "quality_unique_records": 900,
+    "rejection_counts": {},
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Actinotia polyodon",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 5132446,
+    "api_count_changed": false,
+    "api_count_initial": 128,
+    "canonical_name": "Adelpha melanthe",
+    "eligible_before_thinning_0km": 125,
+    "eligible_before_thinning_100km": 92,
+    "eligible_before_thinning_25km": 109,
+    "eligible_before_thinning_50km": 106,
+    "external_reference_points_50km": 64,
+    "fetched_records": 128,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 125,
+    "rejection_counts": {
+      "observation_identity": 3
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Adelpha melanthe",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 73,
+    "thinned_capped_100km": 55,
+    "thinned_capped_25km": 66,
+    "thinned_capped_50km": 64
+  },
+  {
+    "accepted_species_key": 5124443,
+    "api_count_changed": false,
+    "api_count_initial": 145,
+    "canonical_name": "Aellopos fadus",
+    "eligible_before_thinning_0km": 145,
+    "eligible_before_thinning_100km": 137,
+    "eligible_before_thinning_25km": 144,
+    "eligible_before_thinning_50km": 141,
+    "external_reference_points_50km": 104,
+    "fetched_records": 145,
+    "match_confidence": 98,
+    "page_offsets": "0",
+    "quality_unique_records": 145,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Aellopos fadus",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 106,
+    "thinned_capped_100km": 100,
+    "thinned_capped_25km": 105,
+    "thinned_capped_50km": 104
+  },
+  {
+    "accepted_species_key": 5124450,
+    "api_count_changed": false,
+    "api_count_initial": 420,
+    "canonical_name": "Aellopos titan",
+    "eligible_before_thinning_0km": 418,
+    "eligible_before_thinning_100km": 398,
+    "eligible_before_thinning_25km": 418,
+    "eligible_before_thinning_50km": 412,
+    "external_reference_points_50km": 200,
+    "fetched_records": 420,
+    "match_confidence": 98,
+    "page_offsets": "0;300",
+    "quality_unique_records": 418,
+    "rejection_counts": {
+      "observation_identity": 2
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Aellopos titan",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 8869900,
+    "api_count_changed": false,
+    "api_count_initial": 59,
+    "canonical_name": "Aethes cnicana",
+    "eligible_before_thinning_0km": 59,
+    "eligible_before_thinning_100km": 18,
+    "eligible_before_thinning_25km": 49,
+    "eligible_before_thinning_50km": 33,
+    "external_reference_points_50km": 29,
+    "fetched_records": 59,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 59,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Aethes cnicana",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 45,
+    "thinned_capped_100km": 17,
+    "thinned_capped_25km": 36,
+    "thinned_capped_50km": 29
+  },
+  {
+    "accepted_species_key": 1738514,
+    "api_count_changed": false,
+    "api_count_initial": 310,
+    "canonical_name": "Aethes hartmanniana",
+    "eligible_before_thinning_0km": 310,
+    "eligible_before_thinning_100km": 269,
+    "eligible_before_thinning_25km": 286,
+    "eligible_before_thinning_50km": 281,
+    "external_reference_points_50km": 124,
+    "fetched_records": 310,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 310,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Aethes hartmanniana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 147,
+    "thinned_capped_100km": 116,
+    "thinned_capped_25km": 128,
+    "thinned_capped_50km": 124
+  },
+  {
+    "accepted_species_key": 1738317,
+    "api_count_changed": false,
+    "api_count_initial": 90,
+    "canonical_name": "Aethes rubigana",
+    "eligible_before_thinning_0km": 90,
+    "eligible_before_thinning_100km": 87,
+    "eligible_before_thinning_25km": 89,
+    "eligible_before_thinning_50km": 87,
+    "external_reference_points_50km": 53,
+    "fetched_records": 90,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 90,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Aethes rubigana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 56,
+    "thinned_capped_100km": 53,
+    "thinned_capped_25km": 55,
+    "thinned_capped_50km": 53
+  },
+  {
+    "accepted_species_key": 1738429,
+    "api_count_changed": false,
+    "api_count_initial": 267,
+    "canonical_name": "Aethes tesserana",
+    "eligible_before_thinning_0km": 267,
+    "eligible_before_thinning_100km": 241,
+    "eligible_before_thinning_25km": 250,
+    "eligible_before_thinning_50km": 247,
+    "external_reference_points_50km": 162,
+    "fetched_records": 267,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 267,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Aethes tesserana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 172,
+    "thinned_capped_100km": 156,
+    "thinned_capped_25km": 165,
+    "thinned_capped_50km": 162
+  },
+  {
+    "accepted_species_key": 1840345,
+    "api_count_changed": false,
+    "api_count_initial": 45,
+    "canonical_name": "Agonopterix angelicella",
+    "eligible_before_thinning_0km": 45,
+    "eligible_before_thinning_100km": 27,
+    "eligible_before_thinning_25km": 40,
+    "eligible_before_thinning_50km": 29,
+    "external_reference_points_50km": 17,
+    "fetched_records": 45,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 45,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Agonopterix angelicella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 26,
+    "thinned_capped_100km": 15,
+    "thinned_capped_25km": 21,
+    "thinned_capped_50km": 17
+  },
+  {
+    "accepted_species_key": 1840301,
+    "api_count_changed": false,
+    "api_count_initial": 142,
+    "canonical_name": "Agonopterix propinquella",
+    "eligible_before_thinning_0km": 142,
+    "eligible_before_thinning_100km": 108,
+    "eligible_before_thinning_25km": 130,
+    "eligible_before_thinning_50km": 121,
+    "external_reference_points_50km": 84,
+    "fetched_records": 142,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 142,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Agonopterix propinquella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 98,
+    "thinned_capped_100km": 73,
+    "thinned_capped_25km": 92,
+    "thinned_capped_50km": 84
+  },
+  {
+    "accepted_species_key": 1878895,
+    "api_count_changed": false,
+    "api_count_initial": 3324,
+    "canonical_name": "Agriphila inquinatella",
+    "eligible_before_thinning_0km": 900,
+    "eligible_before_thinning_100km": 538,
+    "eligible_before_thinning_25km": 705,
+    "eligible_before_thinning_50km": 626,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;1512;3024",
+    "quality_unique_records": 900,
+    "rejection_counts": {},
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Agriphila inquinatella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1878939,
+    "api_count_changed": false,
+    "api_count_initial": 671,
+    "canonical_name": "Agriphila selasella",
+    "eligible_before_thinning_0km": 671,
+    "eligible_before_thinning_100km": 622,
+    "eligible_before_thinning_25km": 644,
+    "eligible_before_thinning_50km": 636,
+    "external_reference_points_50km": 200,
+    "fetched_records": 671,
+    "match_confidence": 99,
+    "page_offsets": "0;300;600",
+    "quality_unique_records": 671,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Agriphila selasella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1790160,
+    "api_count_changed": false,
+    "api_count_initial": 0,
+    "canonical_name": "Agrochola circellaris",
+    "eligible_before_thinning_0km": 0,
+    "eligible_before_thinning_100km": 0,
+    "eligible_before_thinning_25km": 0,
+    "eligible_before_thinning_50km": 0,
+    "external_reference_points_50km": 0,
+    "fetched_records": 0,
+    "match_confidence": 99,
+    "page_offsets": "",
+    "quality_unique_records": 0,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Agrochola circellaris",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 0,
+    "thinned_capped_100km": 0,
+    "thinned_capped_25km": 0,
+    "thinned_capped_50km": 0
+  },
+  {
+    "accepted_species_key": 1939964,
+    "api_count_changed": false,
+    "api_count_initial": 849,
+    "canonical_name": "Albuna pyramidalis",
+    "eligible_before_thinning_0km": 849,
+    "eligible_before_thinning_100km": 489,
+    "eligible_before_thinning_25km": 649,
+    "eligible_before_thinning_50km": 584,
+    "external_reference_points_50km": 200,
+    "fetched_records": 849,
+    "match_confidence": 99,
+    "page_offsets": "0;300;600",
+    "quality_unique_records": 849,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Albuna pyramidalis",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 4527972,
+    "api_count_changed": false,
+    "api_count_initial": 69,
+    "canonical_name": "Altenia scriptella",
+    "eligible_before_thinning_0km": 67,
+    "eligible_before_thinning_100km": 46,
+    "eligible_before_thinning_25km": 60,
+    "eligible_before_thinning_50km": 52,
+    "external_reference_points_50km": 37,
+    "fetched_records": 69,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 69,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Altenia scriptella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 46,
+    "thinned_capped_100km": 33,
+    "thinned_capped_25km": 43,
+    "thinned_capped_50km": 37
+  },
+  {
+    "accepted_species_key": 1859285,
+    "api_count_changed": false,
+    "api_count_initial": 1263,
+    "canonical_name": "Amblyptilia acanthadactyla",
+    "eligible_before_thinning_0km": 900,
+    "eligible_before_thinning_100km": 288,
+    "eligible_before_thinning_25km": 633,
+    "eligible_before_thinning_50km": 402,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;481;963",
+    "quality_unique_records": 900,
+    "rejection_counts": {},
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Amblyptilia acanthadactyla",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 167,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1959637,
+    "api_count_changed": false,
+    "api_count_initial": 103,
+    "canonical_name": "Ametris nitocris",
+    "eligible_before_thinning_0km": 103,
+    "eligible_before_thinning_100km": 90,
+    "eligible_before_thinning_25km": 100,
+    "eligible_before_thinning_50km": 98,
+    "external_reference_points_50km": 61,
+    "fetched_records": 103,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 103,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Ametris nitocris",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 66,
+    "thinned_capped_100km": 55,
+    "thinned_capped_25km": 63,
+    "thinned_capped_50km": 61
+  },
+  {
+    "accepted_species_key": 1814182,
+    "api_count_changed": false,
+    "api_count_initial": 299,
+    "canonical_name": "Ammalo helops",
+    "eligible_before_thinning_0km": 296,
+    "eligible_before_thinning_100km": 226,
+    "eligible_before_thinning_25km": 273,
+    "eligible_before_thinning_50km": 256,
+    "external_reference_points_50km": 143,
+    "fetched_records": 299,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 297,
+    "rejection_counts": {
+      "observation_identity": 2
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Ammalo helops",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 162,
+    "thinned_capped_100km": 125,
+    "thinned_capped_25km": 151,
+    "thinned_capped_50km": 143
+  },
+  {
+    "accepted_species_key": 1907153,
+    "api_count_changed": false,
+    "api_count_initial": 1927,
+    "canonical_name": "Anaea aidea",
+    "eligible_before_thinning_0km": 872,
+    "eligible_before_thinning_100km": 438,
+    "eligible_before_thinning_25km": 571,
+    "eligible_before_thinning_50km": 540,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;813;1627",
+    "quality_unique_records": 872,
+    "rejection_counts": {
+      "observation_identity": 28
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Anaea aidea",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 189,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1789580,
+    "api_count_changed": false,
+    "api_count_initial": 675,
+    "canonical_name": "Anarta myrtilli",
+    "eligible_before_thinning_0km": 675,
+    "eligible_before_thinning_100km": 463,
+    "eligible_before_thinning_25km": 627,
+    "eligible_before_thinning_50km": 559,
+    "external_reference_points_50km": 200,
+    "fetched_records": 675,
+    "match_confidence": 99,
+    "page_offsets": "0;300;600",
+    "quality_unique_records": 675,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Anarta myrtilli",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1793369,
+    "api_count_changed": false,
+    "api_count_initial": 389,
+    "canonical_name": "Anathix puta",
+    "eligible_before_thinning_0km": 388,
+    "eligible_before_thinning_100km": 128,
+    "eligible_before_thinning_25km": 352,
+    "eligible_before_thinning_50km": 283,
+    "external_reference_points_50km": 88,
+    "fetched_records": 389,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 388,
+    "rejection_counts": {
+      "observation_identity": 1
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Anathix puta",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 125,
+    "thinned_capped_100km": 65,
+    "thinned_capped_25km": 111,
+    "thinned_capped_50km": 88
+  },
+  {
+    "accepted_species_key": 1838228,
+    "api_count_changed": false,
+    "api_count_initial": 12,
+    "canonical_name": "Anchinia daphnella",
+    "eligible_before_thinning_0km": 12,
+    "eligible_before_thinning_100km": 6,
+    "eligible_before_thinning_25km": 9,
+    "eligible_before_thinning_50km": 9,
+    "external_reference_points_50km": 8,
+    "fetched_records": 12,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 12,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Anchinia daphnella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 11,
+    "thinned_capped_100km": 5,
+    "thinned_capped_25km": 8,
+    "thinned_capped_50km": 8
+  },
+  {
+    "accepted_species_key": 5771259,
+    "api_count_changed": false,
+    "api_count_initial": 196,
+    "canonical_name": "Ancylis apicella",
+    "eligible_before_thinning_0km": 196,
+    "eligible_before_thinning_100km": 160,
+    "eligible_before_thinning_25km": 187,
+    "eligible_before_thinning_50km": 177,
+    "external_reference_points_50km": 120,
+    "fetched_records": 196,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 196,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Ancylis apicella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 136,
+    "thinned_capped_100km": 109,
+    "thinned_capped_25km": 128,
+    "thinned_capped_50km": 120
+  },
+  {
+    "accepted_species_key": 5103201,
+    "api_count_changed": false,
+    "api_count_initial": 734,
+    "canonical_name": "Ancylis burgessiana",
+    "eligible_before_thinning_0km": 734,
+    "eligible_before_thinning_100km": 286,
+    "eligible_before_thinning_25km": 647,
+    "eligible_before_thinning_50km": 448,
+    "external_reference_points_50km": 200,
+    "fetched_records": 734,
+    "match_confidence": 99,
+    "page_offsets": "0;300;600",
+    "quality_unique_records": 734,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Ancylis burgessiana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 135,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 5103121,
+    "api_count_changed": false,
+    "api_count_initial": 272,
+    "canonical_name": "Ancylis laetana",
+    "eligible_before_thinning_0km": 272,
+    "eligible_before_thinning_100km": 249,
+    "eligible_before_thinning_25km": 267,
+    "eligible_before_thinning_50km": 261,
+    "external_reference_points_50km": 151,
+    "fetched_records": 272,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 272,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Ancylis laetana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 160,
+    "thinned_capped_100km": 146,
+    "thinned_capped_25km": 156,
+    "thinned_capped_50km": 151
+  },
+  {
+    "accepted_species_key": 5771239,
+    "api_count_changed": false,
+    "api_count_initial": 116,
+    "canonical_name": "Ancylis myrtillana",
+    "eligible_before_thinning_0km": 116,
+    "eligible_before_thinning_100km": 39,
+    "eligible_before_thinning_25km": 69,
+    "eligible_before_thinning_50km": 51,
+    "external_reference_points_50km": 45,
+    "fetched_records": 116,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 116,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Ancylis myrtillana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 70,
+    "thinned_capped_100km": 34,
+    "thinned_capped_25km": 59,
+    "thinned_capped_50km": 45
+  },
+  {
+    "accepted_species_key": 10501190,
+    "api_count_changed": false,
+    "api_count_initial": 53,
+    "canonical_name": "Ancylis spiraeifoliana",
+    "eligible_before_thinning_0km": 53,
+    "eligible_before_thinning_100km": 35,
+    "eligible_before_thinning_25km": 41,
+    "eligible_before_thinning_50km": 36,
+    "external_reference_points_50km": 21,
+    "fetched_records": 53,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 53,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Ancylis spiraeifoliana",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 32,
+    "thinned_capped_100km": 20,
+    "thinned_capped_25km": 25,
+    "thinned_capped_50km": 21
+  },
+  {
+    "accepted_species_key": 5103229,
+    "api_count_changed": false,
+    "api_count_initial": 136,
+    "canonical_name": "Ancylis subaequana",
+    "eligible_before_thinning_0km": 136,
+    "eligible_before_thinning_100km": 88,
+    "eligible_before_thinning_25km": 120,
+    "eligible_before_thinning_50km": 108,
+    "external_reference_points_50km": 61,
+    "fetched_records": 136,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 136,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Ancylis subaequana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 77,
+    "thinned_capped_100km": 52,
+    "thinned_capped_25km": 70,
+    "thinned_capped_50km": 61
+  },
+  {
+    "accepted_species_key": 5771243,
+    "api_count_changed": false,
+    "api_count_initial": 185,
+    "canonical_name": "Ancylis unculana",
+    "eligible_before_thinning_0km": 185,
+    "eligible_before_thinning_100km": 160,
+    "eligible_before_thinning_25km": 175,
+    "eligible_before_thinning_50km": 167,
+    "external_reference_points_50km": 103,
+    "fetched_records": 185,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 185,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Ancylis unculana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 117,
+    "thinned_capped_100km": 98,
+    "thinned_capped_25km": 107,
+    "thinned_capped_50km": 103
+  },
+  {
+    "accepted_species_key": 1862905,
+    "api_count_changed": false,
+    "api_count_initial": 5,
+    "canonical_name": "Andriasa contraria",
+    "eligible_before_thinning_0km": 5,
+    "eligible_before_thinning_100km": 5,
+    "eligible_before_thinning_25km": 5,
+    "eligible_before_thinning_50km": 5,
+    "external_reference_points_50km": 3,
+    "fetched_records": 5,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 5,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Andriasa contraria",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 3,
+    "thinned_capped_100km": 3,
+    "thinned_capped_25km": 3,
+    "thinned_capped_50km": 3
+  },
+  {
+    "accepted_species_key": 1838422,
+    "api_count_changed": false,
+    "api_count_initial": 23,
+    "canonical_name": "Antaeotricha renselariana",
+    "eligible_before_thinning_0km": 23,
+    "eligible_before_thinning_100km": 22,
+    "eligible_before_thinning_25km": 23,
+    "eligible_before_thinning_50km": 23,
+    "external_reference_points_50km": 19,
+    "fetched_records": 23,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 23,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Antaeotricha renselariana",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 19,
+    "thinned_capped_100km": 18,
+    "thinned_capped_25km": 19,
+    "thinned_capped_50km": 19
+  },
+  {
+    "accepted_species_key": 8007222,
+    "api_count_changed": false,
+    "api_count_initial": 358,
+    "canonical_name": "Apamea anceps",
+    "eligible_before_thinning_0km": 358,
+    "eligible_before_thinning_100km": 88,
+    "eligible_before_thinning_25km": 282,
+    "eligible_before_thinning_50km": 170,
+    "external_reference_points_50km": 70,
+    "fetched_records": 358,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 358,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Apamea anceps",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 115,
+    "thinned_capped_100km": 41,
+    "thinned_capped_25km": 92,
+    "thinned_capped_50km": 70
+  },
+  {
+    "accepted_species_key": 4534485,
+    "api_count_changed": false,
+    "api_count_initial": 95,
+    "canonical_name": "Apamea illyria",
+    "eligible_before_thinning_0km": 95,
+    "eligible_before_thinning_100km": 52,
+    "eligible_before_thinning_25km": 78,
+    "eligible_before_thinning_50km": 60,
+    "external_reference_points_50km": 43,
+    "fetched_records": 95,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 95,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Apamea illyria",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 62,
+    "thinned_capped_100km": 36,
+    "thinned_capped_25km": 53,
+    "thinned_capped_50km": 43
+  },
+  {
+    "accepted_species_key": 1795854,
+    "api_count_changed": false,
+    "api_count_initial": 455,
+    "canonical_name": "Apamea lateritia",
+    "eligible_before_thinning_0km": 455,
+    "eligible_before_thinning_100km": 223,
+    "eligible_before_thinning_25km": 341,
+    "eligible_before_thinning_50km": 284,
+    "external_reference_points_50km": 155,
+    "fetched_records": 455,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 455,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Apamea lateritia",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 137,
+    "thinned_capped_25km": 186,
+    "thinned_capped_50km": 155
+  },
+  {
+    "accepted_species_key": 1796145,
+    "api_count_changed": false,
+    "api_count_initial": 10463,
+    "canonical_name": "Apamea monoglypha",
+    "eligible_before_thinning_0km": 900,
+    "eligible_before_thinning_100km": 180,
+    "eligible_before_thinning_25km": 417,
+    "eligible_before_thinning_50km": 268,
+    "external_reference_points_50km": 156,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;5081;10163",
+    "quality_unique_records": 900,
+    "rejection_counts": {},
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Apamea monoglypha",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 104,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 156
+  },
+  {
+    "accepted_species_key": 7438067,
+    "api_count_changed": false,
+    "api_count_initial": 329,
+    "canonical_name": "Apamea remissa",
+    "eligible_before_thinning_0km": 329,
+    "eligible_before_thinning_100km": 180,
+    "eligible_before_thinning_25km": 251,
+    "eligible_before_thinning_50km": 224,
+    "external_reference_points_50km": 141,
+    "fetched_records": 329,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 329,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Apamea remissa",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 110,
+    "thinned_capped_25km": 159,
+    "thinned_capped_50km": 141
+  },
+  {
+    "accepted_species_key": 1796188,
+    "api_count_changed": false,
+    "api_count_initial": 414,
+    "canonical_name": "Apamea unanimis",
+    "eligible_before_thinning_0km": 411,
+    "eligible_before_thinning_100km": 188,
+    "eligible_before_thinning_25km": 286,
+    "eligible_before_thinning_50km": 244,
+    "external_reference_points_50km": 120,
+    "fetched_records": 414,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 411,
+    "rejection_counts": {
+      "observation_identity": 3
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Apamea unanimis",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 166,
+    "thinned_capped_100km": 93,
+    "thinned_capped_25km": 139,
+    "thinned_capped_50km": 120
+  },
+  {
+    "accepted_species_key": 1796032,
+    "api_count_changed": false,
+    "api_count_initial": 102,
+    "canonical_name": "Apamea zeta",
+    "eligible_before_thinning_0km": 102,
+    "eligible_before_thinning_100km": 37,
+    "eligible_before_thinning_25km": 61,
+    "eligible_before_thinning_50km": 45,
+    "external_reference_points_50km": 12,
+    "fetched_records": 102,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 102,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Apamea zeta",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 47,
+    "thinned_capped_100km": 7,
+    "thinned_capped_25km": 21,
+    "thinned_capped_50km": 12
+  },
+  {
+    "accepted_species_key": 1804969,
+    "api_count_changed": false,
+    "api_count_initial": 295,
+    "canonical_name": "Apantesis vittata",
+    "eligible_before_thinning_0km": 295,
+    "eligible_before_thinning_100km": 228,
+    "eligible_before_thinning_25km": 271,
+    "eligible_before_thinning_50km": 258,
+    "external_reference_points_50km": 161,
+    "fetched_records": 295,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 295,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Apantesis vittata",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 179,
+    "thinned_capped_100km": 142,
+    "thinned_capped_25km": 170,
+    "thinned_capped_50km": 161
+  },
+  {
+    "accepted_species_key": 5131910,
+    "api_count_changed": false,
+    "api_count_initial": 3871,
+    "canonical_name": "Apatura iris",
+    "eligible_before_thinning_0km": 900,
+    "eligible_before_thinning_100km": 586,
+    "eligible_before_thinning_25km": 803,
+    "eligible_before_thinning_50km": 706,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;1785;3571",
+    "quality_unique_records": 900,
+    "rejection_counts": {},
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Apatura iris",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 7588222,
+    "api_count_changed": false,
+    "api_count_initial": 13,
+    "canonical_name": "Aphelia unitana",
+    "eligible_before_thinning_0km": 13,
+    "eligible_before_thinning_100km": 9,
+    "eligible_before_thinning_25km": 10,
+    "eligible_before_thinning_50km": 10,
+    "external_reference_points_50km": 10,
+    "fetched_records": 13,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 13,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Aphelia unitana",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 12,
+    "thinned_capped_100km": 9,
+    "thinned_capped_25km": 10,
+    "thinned_capped_50km": 10
+  },
+  {
+    "accepted_species_key": 1984942,
+    "api_count_changed": false,
+    "api_count_initial": 2240,
+    "canonical_name": "Aplocera plagiata",
+    "eligible_before_thinning_0km": 897,
+    "eligible_before_thinning_100km": 489,
+    "eligible_before_thinning_25km": 692,
+    "eligible_before_thinning_50km": 597,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;970;1940",
+    "quality_unique_records": 897,
+    "rejection_counts": {
+      "observation_identity": 3
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Aplocera plagiata",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1984949,
+    "api_count_changed": false,
+    "api_count_initial": 925,
+    "canonical_name": "Aplocera praeformata",
+    "eligible_before_thinning_0km": 900,
+    "eligible_before_thinning_100km": 548,
+    "eligible_before_thinning_25km": 782,
+    "eligible_before_thinning_50km": 729,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;312;625",
+    "quality_unique_records": 900,
+    "rejection_counts": {},
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Aplocera praeformata",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1744724,
+    "api_count_changed": false,
+    "api_count_initial": 380,
+    "canonical_name": "Apotomis albeolana",
+    "eligible_before_thinning_0km": 370,
+    "eligible_before_thinning_100km": 210,
+    "eligible_before_thinning_25km": 344,
+    "eligible_before_thinning_50km": 262,
+    "external_reference_points_50km": 78,
+    "fetched_records": 380,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 370,
+    "rejection_counts": {
+      "observation_identity": 10
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Apotomis albeolana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 108,
+    "thinned_capped_100km": 61,
+    "thinned_capped_25km": 96,
+    "thinned_capped_50km": 78
+  },
+  {
+    "accepted_species_key": 1744695,
+    "api_count_changed": false,
+    "api_count_initial": 47,
+    "canonical_name": "Apotomis funerea",
+    "eligible_before_thinning_0km": 46,
+    "eligible_before_thinning_100km": 35,
+    "eligible_before_thinning_25km": 45,
+    "eligible_before_thinning_50km": 45,
+    "external_reference_points_50km": 26,
+    "fetched_records": 47,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 46,
+    "rejection_counts": {
+      "observation_identity": 1
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Apotomis funerea",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 27,
+    "thinned_capped_100km": 22,
+    "thinned_capped_25km": 26,
+    "thinned_capped_50km": 26
+  },
+  {
+    "accepted_species_key": 1744709,
+    "api_count_changed": false,
+    "api_count_initial": 51,
+    "canonical_name": "Apotomis infida",
+    "eligible_before_thinning_0km": 51,
+    "eligible_before_thinning_100km": 46,
+    "eligible_before_thinning_25km": 51,
+    "eligible_before_thinning_50km": 47,
+    "external_reference_points_50km": 30,
+    "fetched_records": 51,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 51,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Apotomis infida",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 32,
+    "thinned_capped_100km": 29,
+    "thinned_capped_25km": 32,
+    "thinned_capped_50km": 30
+  },
+  {
+    "accepted_species_key": 1744699,
+    "api_count_changed": false,
+    "api_count_initial": 19,
+    "canonical_name": "Apotomis inundana",
+    "eligible_before_thinning_0km": 19,
+    "eligible_before_thinning_100km": 13,
+    "eligible_before_thinning_25km": 17,
+    "eligible_before_thinning_50km": 14,
+    "external_reference_points_50km": 10,
+    "fetched_records": 19,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 19,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Apotomis inundana",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 15,
+    "thinned_capped_100km": 9,
+    "thinned_capped_25km": 13,
+    "thinned_capped_50km": 10
+  },
+  {
+    "accepted_species_key": 1744748,
+    "api_count_changed": false,
+    "api_count_initial": 5,
+    "canonical_name": "Apotomis sauciana",
+    "eligible_before_thinning_0km": 5,
+    "eligible_before_thinning_100km": 2,
+    "eligible_before_thinning_25km": 3,
+    "eligible_before_thinning_50km": 2,
+    "external_reference_points_50km": 2,
+    "fetched_records": 5,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 5,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Apotomis sauciana",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 5,
+    "thinned_capped_100km": 2,
+    "thinned_capped_25km": 3,
+    "thinned_capped_50km": 2
+  },
+  {
+    "accepted_species_key": 1848219,
+    "api_count_changed": false,
+    "api_count_initial": 212,
+    "canonical_name": "Aproaerema anthyllidella",
+    "eligible_before_thinning_0km": 211,
+    "eligible_before_thinning_100km": 68,
+    "eligible_before_thinning_25km": 149,
+    "eligible_before_thinning_50km": 102,
+    "external_reference_points_50km": 66,
+    "fetched_records": 212,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 212,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Aproaerema anthyllidella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 132,
+    "thinned_capped_100km": 39,
+    "thinned_capped_25km": 86,
+    "thinned_capped_50km": 66
+  },
+  {
+    "accepted_species_key": 1789849,
+    "api_count_changed": false,
+    "api_count_initial": 96,
+    "canonical_name": "Archanara dissoluta",
+    "eligible_before_thinning_0km": 96,
+    "eligible_before_thinning_100km": 71,
+    "eligible_before_thinning_25km": 92,
+    "eligible_before_thinning_50km": 81,
+    "external_reference_points_50km": 45,
+    "fetched_records": 96,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 96,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Archanara dissoluta",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 57,
+    "thinned_capped_100km": 36,
+    "thinned_capped_25km": 53,
+    "thinned_capped_50km": 45
+  },
+  {
+    "accepted_species_key": 1850522,
+    "api_count_changed": false,
+    "api_count_initial": 197,
+    "canonical_name": "Argolamprotes micella",
+    "eligible_before_thinning_0km": 197,
+    "eligible_before_thinning_100km": 94,
+    "eligible_before_thinning_25km": 166,
+    "eligible_before_thinning_50km": 140,
+    "external_reference_points_50km": 100,
+    "fetched_records": 197,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 197,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Argolamprotes micella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 136,
+    "thinned_capped_100km": 67,
+    "thinned_capped_25km": 118,
+    "thinned_capped_50km": 100
+  },
+  {
+    "accepted_species_key": 1830152,
+    "api_count_changed": false,
+    "api_count_initial": 265,
+    "canonical_name": "Argyresthia brockeella",
+    "eligible_before_thinning_0km": 265,
+    "eligible_before_thinning_100km": 183,
+    "eligible_before_thinning_25km": 234,
+    "eligible_before_thinning_50km": 203,
+    "external_reference_points_50km": 127,
+    "fetched_records": 265,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 265,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Argyresthia brockeella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 169,
+    "thinned_capped_100km": 114,
+    "thinned_capped_25km": 146,
+    "thinned_capped_50km": 127
+  },
+  {
+    "accepted_species_key": 1830125,
+    "api_count_changed": false,
+    "api_count_initial": 1373,
+    "canonical_name": "Argyresthia goedartella",
+    "eligible_before_thinning_0km": 900,
+    "eligible_before_thinning_100km": 347,
+    "eligible_before_thinning_25km": 678,
+    "eligible_before_thinning_50km": 516,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;536;1073",
+    "quality_unique_records": 900,
+    "rejection_counts": {},
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Argyresthia goedartella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 185,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1830206,
+    "api_count_changed": false,
+    "api_count_initial": 8,
+    "canonical_name": "Argyresthia semifusca",
+    "eligible_before_thinning_0km": 8,
+    "eligible_before_thinning_100km": 8,
+    "eligible_before_thinning_25km": 8,
+    "eligible_before_thinning_50km": 8,
+    "external_reference_points_50km": 4,
+    "fetched_records": 8,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 8,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Argyresthia semifusca",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 4,
+    "thinned_capped_100km": 4,
+    "thinned_capped_25km": 4,
+    "thinned_capped_50km": 4
+  },
+  {
+    "accepted_species_key": 1830262,
+    "api_count_changed": false,
+    "api_count_initial": 6,
+    "canonical_name": "Argyresthia sorbiella",
+    "eligible_before_thinning_0km": 6,
+    "eligible_before_thinning_100km": 3,
+    "eligible_before_thinning_25km": 5,
+    "eligible_before_thinning_50km": 5,
+    "external_reference_points_50km": 4,
+    "fetched_records": 6,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 6,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Argyresthia sorbiella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 5,
+    "thinned_capped_100km": 3,
+    "thinned_capped_25km": 4,
+    "thinned_capped_50km": 4
+  },
+  {
+    "accepted_species_key": 1830284,
+    "api_count_changed": false,
+    "api_count_initial": 320,
+    "canonical_name": "Argyresthia thuiella",
+    "eligible_before_thinning_0km": 319,
+    "eligible_before_thinning_100km": 95,
+    "eligible_before_thinning_25km": 179,
+    "eligible_before_thinning_50km": 129,
+    "external_reference_points_50km": 62,
+    "fetched_records": 320,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 319,
+    "rejection_counts": {
+      "observation_identity": 1
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Argyresthia thuiella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 120,
+    "thinned_capped_100km": 47,
+    "thinned_capped_25km": 85,
+    "thinned_capped_50km": 62
+  },
+  {
+    "accepted_species_key": 1778555,
+    "api_count_changed": false,
+    "api_count_initial": 515,
+    "canonical_name": "Argyrostrotis anilis",
+    "eligible_before_thinning_0km": 515,
+    "eligible_before_thinning_100km": 368,
+    "eligible_before_thinning_25km": 497,
+    "eligible_before_thinning_50km": 457,
+    "external_reference_points_50km": 200,
+    "fetched_records": 515,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 515,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Argyrostrotis anilis",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 190,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1747147,
+    "api_count_changed": false,
+    "api_count_initial": 988,
+    "canonical_name": "Argyrotaenia alisellana",
+    "eligible_before_thinning_0km": 896,
+    "eligible_before_thinning_100km": 695,
+    "eligible_before_thinning_25km": 829,
+    "eligible_before_thinning_50km": 795,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;344;688",
+    "quality_unique_records": 896,
+    "rejection_counts": {
+      "observation_identity": 4
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Argyrotaenia alisellana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1979781,
+    "api_count_changed": false,
+    "api_count_initial": 586,
+    "canonical_name": "Arichanna melanaria",
+    "eligible_before_thinning_0km": 586,
+    "eligible_before_thinning_100km": 349,
+    "eligible_before_thinning_25km": 540,
+    "eligible_before_thinning_50km": 452,
+    "external_reference_points_50km": 200,
+    "fetched_records": 586,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 586,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Arichanna melanaria",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1933095,
+    "api_count_changed": false,
+    "api_count_initial": 11612,
+    "canonical_name": "Aricia agestis",
+    "eligible_before_thinning_0km": 900,
+    "eligible_before_thinning_100km": 35,
+    "eligible_before_thinning_25km": 110,
+    "eligible_before_thinning_50km": 66,
+    "external_reference_points_50km": 52,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;5656;11312",
+    "quality_unique_records": 900,
+    "rejection_counts": {},
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Aricia agestis",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 28,
+    "thinned_capped_25km": 81,
+    "thinned_capped_50km": 52
+  },
+  {
+    "accepted_species_key": 5122121,
+    "api_count_changed": false,
+    "api_count_initial": 199,
+    "canonical_name": "Aristotelia corallina",
+    "eligible_before_thinning_0km": 199,
+    "eligible_before_thinning_100km": 82,
+    "eligible_before_thinning_25km": 187,
+    "eligible_before_thinning_50km": 139,
+    "external_reference_points_50km": 71,
+    "fetched_records": 199,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 199,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Aristotelia corallina",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 91,
+    "thinned_capped_100km": 44,
+    "thinned_capped_25km": 83,
+    "thinned_capped_50km": 71
+  },
+  {
+    "accepted_species_key": 5122095,
+    "api_count_changed": false,
+    "api_count_initial": 43,
+    "canonical_name": "Aristotelia fungivorella",
+    "eligible_before_thinning_0km": 43,
+    "eligible_before_thinning_100km": 38,
+    "eligible_before_thinning_25km": 43,
+    "eligible_before_thinning_50km": 39,
+    "external_reference_points_50km": 32,
+    "fetched_records": 43,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 43,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Aristotelia fungivorella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 35,
+    "thinned_capped_100km": 31,
+    "thinned_capped_25km": 35,
+    "thinned_capped_50km": 32
+  },
+  {
+    "accepted_species_key": 1851220,
+    "api_count_changed": false,
+    "api_count_initial": 170,
+    "canonical_name": "Aroga velocella",
+    "eligible_before_thinning_0km": 170,
+    "eligible_before_thinning_100km": 93,
+    "eligible_before_thinning_25km": 123,
+    "eligible_before_thinning_50km": 115,
+    "external_reference_points_50km": 77,
+    "fetched_records": 170,
+    "match_confidence": 98,
+    "page_offsets": "0",
+    "quality_unique_records": 170,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Aroga velocella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 97,
+    "thinned_capped_100km": 63,
+    "thinned_capped_25km": 84,
+    "thinned_capped_50km": 77
+  },
+  {
+    "accepted_species_key": 1748890,
+    "api_count_changed": false,
+    "api_count_initial": 136,
+    "canonical_name": "Aspilapteryx tringipennella",
+    "eligible_before_thinning_0km": 136,
+    "eligible_before_thinning_100km": 53,
+    "eligible_before_thinning_25km": 90,
+    "eligible_before_thinning_50km": 73,
+    "external_reference_points_50km": 46,
+    "fetched_records": 136,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 136,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Aspilapteryx tringipennella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 74,
+    "thinned_capped_100km": 33,
+    "thinned_capped_25km": 54,
+    "thinned_capped_50km": 46
+  },
+  {
+    "accepted_species_key": 1876854,
+    "api_count_changed": false,
+    "api_count_initial": 313,
+    "canonical_name": "Assara terebrella",
+    "eligible_before_thinning_0km": 313,
+    "eligible_before_thinning_100km": 190,
+    "eligible_before_thinning_25km": 269,
+    "eligible_before_thinning_50km": 237,
+    "external_reference_points_50km": 118,
+    "fetched_records": 313,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 313,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Assara terebrella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 162,
+    "thinned_capped_100km": 101,
+    "thinned_capped_25km": 135,
+    "thinned_capped_50km": 118
+  },
+  {
+    "accepted_species_key": 1987744,
+    "api_count_changed": false,
+    "api_count_initial": 837,
+    "canonical_name": "Asthena albulata",
+    "eligible_before_thinning_0km": 837,
+    "eligible_before_thinning_100km": 436,
+    "eligible_before_thinning_25km": 755,
+    "eligible_before_thinning_50km": 683,
+    "external_reference_points_50km": 200,
+    "fetched_records": 837,
+    "match_confidence": 99,
+    "page_offsets": "0;300;600",
+    "quality_unique_records": 837,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Asthena albulata",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1943824,
+    "api_count_changed": false,
+    "api_count_initial": 157,
+    "canonical_name": "Astraptes alardus",
+    "eligible_before_thinning_0km": 156,
+    "eligible_before_thinning_100km": 93,
+    "eligible_before_thinning_25km": 147,
+    "eligible_before_thinning_50km": 109,
+    "external_reference_points_50km": 70,
+    "fetched_records": 157,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 156,
+    "rejection_counts": {
+      "observation_identity": 1
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Astraptes alardus",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 85,
+    "thinned_capped_100km": 61,
+    "thinned_capped_25km": 81,
+    "thinned_capped_50km": 70
+  },
+  {
+    "accepted_species_key": 7628188,
+    "api_count_changed": false,
+    "api_count_initial": 259,
+    "canonical_name": "Ategumia ebulealis",
+    "eligible_before_thinning_0km": 259,
+    "eligible_before_thinning_100km": 251,
+    "eligible_before_thinning_25km": 259,
+    "eligible_before_thinning_50km": 258,
+    "external_reference_points_50km": 144,
+    "fetched_records": 259,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 259,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Ategumia ebulealis",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 145,
+    "thinned_capped_100km": 141,
+    "thinned_capped_25km": 145,
+    "thinned_capped_50km": 144
+  },
+  {
+    "accepted_species_key": 5122230,
+    "api_count_changed": false,
+    "api_count_initial": 3,
+    "canonical_name": "Athrips pruinosella",
+    "eligible_before_thinning_0km": 3,
+    "eligible_before_thinning_100km": 3,
+    "eligible_before_thinning_25km": 3,
+    "eligible_before_thinning_50km": 3,
+    "external_reference_points_50km": 3,
+    "fetched_records": 3,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 3,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Athrips pruinosella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 3,
+    "thinned_capped_100km": 3,
+    "thinned_capped_25km": 3,
+    "thinned_capped_50km": 3
+  },
+  {
+    "accepted_species_key": 1761865,
+    "api_count_changed": false,
+    "api_count_initial": 351,
+    "canonical_name": "Auchmis detersa",
+    "eligible_before_thinning_0km": 351,
+    "eligible_before_thinning_100km": 180,
+    "eligible_before_thinning_25km": 273,
+    "eligible_before_thinning_50km": 203,
+    "external_reference_points_50km": 80,
+    "fetched_records": 351,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 351,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Auchmis detersa",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 134,
+    "thinned_capped_100km": 64,
+    "thinned_capped_25km": 103,
+    "thinned_capped_50km": 80
+  },
+  {
+    "accepted_species_key": 1792414,
+    "api_count_changed": false,
+    "api_count_initial": 481,
+    "canonical_name": "Autographa bractea",
+    "eligible_before_thinning_0km": 481,
+    "eligible_before_thinning_100km": 366,
+    "eligible_before_thinning_25km": 441,
+    "eligible_before_thinning_50km": 409,
+    "external_reference_points_50km": 200,
+    "fetched_records": 481,
+    "match_confidence": 98,
+    "page_offsets": "0;300",
+    "quality_unique_records": 481,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Autographa bractea",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 185,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1792426,
+    "api_count_changed": false,
+    "api_count_initial": 518,
+    "canonical_name": "Autographa jota",
+    "eligible_before_thinning_0km": 518,
+    "eligible_before_thinning_100km": 221,
+    "eligible_before_thinning_25km": 449,
+    "eligible_before_thinning_50km": 377,
+    "external_reference_points_50km": 200,
+    "fetched_records": 518,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 518,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Autographa jota",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 126,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 5108417,
+    "api_count_changed": false,
+    "api_count_initial": 1692,
+    "canonical_name": "Balsa tristrigella",
+    "eligible_before_thinning_0km": 891,
+    "eligible_before_thinning_100km": 544,
+    "eligible_before_thinning_25km": 800,
+    "eligible_before_thinning_50km": 733,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;696;1392",
+    "quality_unique_records": 891,
+    "rejection_counts": {
+      "observation_identity": 9
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Balsa tristrigella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1852978,
+    "api_count_changed": false,
+    "api_count_initial": 22,
+    "canonical_name": "Batrachedra pinicolella",
+    "eligible_before_thinning_0km": 22,
+    "eligible_before_thinning_100km": 22,
+    "eligible_before_thinning_25km": 22,
+    "eligible_before_thinning_50km": 22,
+    "external_reference_points_50km": 10,
+    "fetched_records": 22,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 22,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Batrachedra pinicolella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 10,
+    "thinned_capped_100km": 10,
+    "thinned_capped_25km": 10,
+    "thinned_capped_50km": 10
+  },
+  {
+    "accepted_species_key": 1852956,
+    "api_count_changed": false,
+    "api_count_initial": 207,
+    "canonical_name": "Batrachedra praeangusta",
+    "eligible_before_thinning_0km": 207,
+    "eligible_before_thinning_100km": 135,
+    "eligible_before_thinning_25km": 183,
+    "eligible_before_thinning_50km": 161,
+    "external_reference_points_50km": 75,
+    "fetched_records": 207,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 207,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Batrachedra praeangusta",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 105,
+    "thinned_capped_100km": 58,
+    "thinned_capped_25km": 91,
+    "thinned_capped_50km": 75
+  },
+  {
+    "accepted_species_key": 1835819,
+    "api_count_changed": false,
+    "api_count_initial": 745,
+    "canonical_name": "Bibarrambla allenella",
+    "eligible_before_thinning_0km": 729,
+    "eligible_before_thinning_100km": 369,
+    "eligible_before_thinning_25km": 525,
+    "eligible_before_thinning_50km": 422,
+    "external_reference_points_50km": 137,
+    "fetched_records": 745,
+    "match_confidence": 99,
+    "page_offsets": "0;300;600",
+    "quality_unique_records": 729,
+    "rejection_counts": {
+      "observation_identity": 16
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Bibarrambla allenella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 111,
+    "thinned_capped_25km": 174,
+    "thinned_capped_50km": 137
+  },
+  {
+    "accepted_species_key": 9473121,
+    "api_count_changed": false,
+    "api_count_initial": 861,
+    "canonical_name": "Blastobasis glandulella",
+    "eligible_before_thinning_0km": 861,
+    "eligible_before_thinning_100km": 272,
+    "eligible_before_thinning_25km": 543,
+    "eligible_before_thinning_50km": 398,
+    "external_reference_points_50km": 174,
+    "fetched_records": 861,
+    "match_confidence": 99,
+    "page_offsets": "0;300;600",
+    "quality_unique_records": 861,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Blastobasis glandulella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 126,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 174
+  },
+  {
+    "accepted_species_key": 1894268,
+    "api_count_changed": false,
+    "api_count_initial": 3522,
+    "canonical_name": "Boloria euphrosyne",
+    "eligible_before_thinning_0km": 899,
+    "eligible_before_thinning_100km": 140,
+    "eligible_before_thinning_25km": 392,
+    "eligible_before_thinning_50km": 291,
+    "external_reference_points_50km": 156,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;1611;3222",
+    "quality_unique_records": 900,
+    "rejection_counts": {},
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Boloria euphrosyne",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 67,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 156
+  },
+  {
+    "accepted_species_key": 10597291,
+    "api_count_changed": false,
+    "api_count_initial": 96,
+    "canonical_name": "Bondia comonana",
+    "eligible_before_thinning_0km": 96,
+    "eligible_before_thinning_100km": 81,
+    "eligible_before_thinning_25km": 88,
+    "eligible_before_thinning_50km": 86,
+    "external_reference_points_50km": 44,
+    "fetched_records": 96,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 96,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Bondia comonana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 52,
+    "thinned_capped_100km": 39,
+    "thinned_capped_25km": 46,
+    "thinned_capped_50km": 44
+  },
+  {
+    "accepted_species_key": 10014166,
+    "api_count_changed": false,
+    "api_count_initial": 59,
+    "canonical_name": "Bucculatrix canadensisella",
+    "eligible_before_thinning_0km": 59,
+    "eligible_before_thinning_100km": 28,
+    "eligible_before_thinning_25km": 42,
+    "eligible_before_thinning_50km": 39,
+    "external_reference_points_50km": 12,
+    "fetched_records": 59,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 59,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Bucculatrix canadensisella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 23,
+    "thinned_capped_100km": 8,
+    "thinned_capped_25km": 15,
+    "thinned_capped_50km": 12
+  },
+  {
+    "accepted_species_key": 4535904,
+    "api_count_changed": false,
+    "api_count_initial": 186,
+    "canonical_name": "Bucculatrix frangutella",
+    "eligible_before_thinning_0km": 186,
+    "eligible_before_thinning_100km": 114,
+    "eligible_before_thinning_25km": 171,
+    "eligible_before_thinning_50km": 148,
+    "external_reference_points_50km": 104,
+    "fetched_records": 186,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 186,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Bucculatrix frangutella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 124,
+    "thinned_capped_100km": 79,
+    "thinned_capped_25km": 116,
+    "thinned_capped_50km": 104
+  },
+  {
+    "accepted_species_key": 1751298,
+    "api_count_changed": false,
+    "api_count_initial": 39,
+    "canonical_name": "Bucculatrix nigricomella",
+    "eligible_before_thinning_0km": 39,
+    "eligible_before_thinning_100km": 14,
+    "eligible_before_thinning_25km": 38,
+    "eligible_before_thinning_50km": 33,
+    "external_reference_points_50km": 17,
+    "fetched_records": 39,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 39,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Bucculatrix nigricomella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 21,
+    "thinned_capped_100km": 11,
+    "thinned_capped_25km": 20,
+    "thinned_capped_50km": 17
+  },
+  {
+    "accepted_species_key": 1751389,
+    "api_count_changed": false,
+    "api_count_initial": 2,
+    "canonical_name": "Bucculatrix trifasciella",
+    "eligible_before_thinning_0km": 2,
+    "eligible_before_thinning_100km": 2,
+    "eligible_before_thinning_25km": 2,
+    "eligible_before_thinning_50km": 2,
+    "external_reference_points_50km": 2,
+    "fetched_records": 2,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 2,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Bucculatrix trifasciella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 2,
+    "thinned_capped_100km": 2,
+    "thinned_capped_25km": 2,
+    "thinned_capped_50km": 2
+  },
+  {
+    "accepted_species_key": 1947616,
+    "api_count_changed": false,
+    "api_count_initial": 19,
+    "canonical_name": "Bungalotis erythus",
+    "eligible_before_thinning_0km": 19,
+    "eligible_before_thinning_100km": 19,
+    "eligible_before_thinning_25km": 19,
+    "eligible_before_thinning_50km": 19,
+    "external_reference_points_50km": 17,
+    "fetched_records": 19,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 19,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Bungalotis erythus",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 17,
+    "thinned_capped_100km": 17,
+    "thinned_capped_25km": 17,
+    "thinned_capped_50km": 17
+  },
+  {
+    "accepted_species_key": 1789191,
+    "api_count_changed": false,
+    "api_count_initial": 2402,
+    "canonical_name": "Caenurgina crassiuscula",
+    "eligible_before_thinning_0km": 892,
+    "eligible_before_thinning_100km": 637,
+    "eligible_before_thinning_25km": 785,
+    "eligible_before_thinning_50km": 751,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;1051;2102",
+    "quality_unique_records": 892,
+    "rejection_counts": {
+      "observation_identity": 8
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Caenurgina crassiuscula",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1890187,
+    "api_count_changed": false,
+    "api_count_initial": 1218,
+    "canonical_name": "Calamotropha paludella",
+    "eligible_before_thinning_0km": 900,
+    "eligible_before_thinning_100km": 774,
+    "eligible_before_thinning_25km": 867,
+    "eligible_before_thinning_50km": 812,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;459;918",
+    "quality_unique_records": 900,
+    "rejection_counts": {},
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Calamotropha paludella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1749050,
+    "api_count_changed": false,
+    "api_count_initial": 91,
+    "canonical_name": "Callisto denticulella",
+    "eligible_before_thinning_0km": 91,
+    "eligible_before_thinning_100km": 64,
+    "eligible_before_thinning_25km": 78,
+    "eligible_before_thinning_50km": 73,
+    "external_reference_points_50km": 62,
+    "fetched_records": 91,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 91,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Callisto denticulella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 76,
+    "thinned_capped_100km": 54,
+    "thinned_capped_25km": 66,
+    "thinned_capped_50km": 62
+  },
+  {
+    "accepted_species_key": 9053308,
+    "api_count_changed": false,
+    "api_count_initial": 1259,
+    "canonical_name": "Callizzia amorata",
+    "eligible_before_thinning_0km": 896,
+    "eligible_before_thinning_100km": 335,
+    "eligible_before_thinning_25km": 609,
+    "eligible_before_thinning_50km": 444,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 98,
+    "page_offsets": "0;479;959",
+    "quality_unique_records": 897,
+    "rejection_counts": {
+      "observation_identity": 3
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Callizzia amorata",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 151,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 5108660,
+    "api_count_changed": false,
+    "api_count_initial": 482,
+    "canonical_name": "Callopistria latreillei",
+    "eligible_before_thinning_0km": 482,
+    "eligible_before_thinning_100km": 373,
+    "eligible_before_thinning_25km": 480,
+    "eligible_before_thinning_50km": 463,
+    "external_reference_points_50km": 200,
+    "fetched_records": 482,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 482,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Callopistria latreillei",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 189,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 5105120,
+    "api_count_changed": false,
+    "api_count_initial": 627,
+    "canonical_name": "Caloptilia bimaculatella",
+    "eligible_before_thinning_0km": 627,
+    "eligible_before_thinning_100km": 410,
+    "eligible_before_thinning_25km": 571,
+    "eligible_before_thinning_50km": 509,
+    "external_reference_points_50km": 200,
+    "fetched_records": 627,
+    "match_confidence": 99,
+    "page_offsets": "0;300;600",
+    "quality_unique_records": 627,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Caloptilia bimaculatella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 158,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 5104950,
+    "api_count_changed": false,
+    "api_count_initial": 27,
+    "canonical_name": "Caloptilia cornusella",
+    "eligible_before_thinning_0km": 27,
+    "eligible_before_thinning_100km": 20,
+    "eligible_before_thinning_25km": 23,
+    "eligible_before_thinning_50km": 23,
+    "external_reference_points_50km": 15,
+    "fetched_records": 27,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 27,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Caloptilia cornusella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 16,
+    "thinned_capped_100km": 13,
+    "thinned_capped_25km": 15,
+    "thinned_capped_50km": 15
+  },
+  {
+    "accepted_species_key": 5105106,
+    "api_count_changed": false,
+    "api_count_initial": 59,
+    "canonical_name": "Caloptilia cuculipennella",
+    "eligible_before_thinning_0km": 59,
+    "eligible_before_thinning_100km": 15,
+    "eligible_before_thinning_25km": 50,
+    "eligible_before_thinning_50km": 35,
+    "external_reference_points_50km": 26,
+    "fetched_records": 59,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 59,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Caloptilia cuculipennella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 46,
+    "thinned_capped_100km": 9,
+    "thinned_capped_25km": 38,
+    "thinned_capped_50km": 26
+  },
+  {
+    "accepted_species_key": 5105158,
+    "api_count_changed": false,
+    "api_count_initial": 27,
+    "canonical_name": "Caloptilia elongella",
+    "eligible_before_thinning_0km": 27,
+    "eligible_before_thinning_100km": 8,
+    "eligible_before_thinning_25km": 22,
+    "eligible_before_thinning_50km": 15,
+    "external_reference_points_50km": 11,
+    "fetched_records": 27,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 27,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Caloptilia elongella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 21,
+    "thinned_capped_100km": 5,
+    "thinned_capped_25km": 16,
+    "thinned_capped_50km": 11
+  },
+  {
+    "accepted_species_key": 5104829,
+    "api_count_changed": false,
+    "api_count_initial": 15,
+    "canonical_name": "Caloptilia falconipennella",
+    "eligible_before_thinning_0km": 15,
+    "eligible_before_thinning_100km": 10,
+    "eligible_before_thinning_25km": 13,
+    "eligible_before_thinning_50km": 10,
+    "external_reference_points_50km": 9,
+    "fetched_records": 15,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 15,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Caloptilia falconipennella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 14,
+    "thinned_capped_100km": 9,
+    "thinned_capped_25km": 12,
+    "thinned_capped_50km": 9
+  },
+  {
+    "accepted_species_key": 5105031,
+    "api_count_changed": false,
+    "api_count_initial": 226,
+    "canonical_name": "Caloptilia fraxinella",
+    "eligible_before_thinning_0km": 225,
+    "eligible_before_thinning_100km": 114,
+    "eligible_before_thinning_25km": 137,
+    "eligible_before_thinning_50km": 125,
+    "external_reference_points_50km": 71,
+    "fetched_records": 226,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 226,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Caloptilia fraxinella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 101,
+    "thinned_capped_100km": 61,
+    "thinned_capped_25km": 79,
+    "thinned_capped_50km": 71
+  },
+  {
+    "accepted_species_key": 5105000,
+    "api_count_changed": false,
+    "api_count_initial": 2,
+    "canonical_name": "Caloptilia fribergensis",
+    "eligible_before_thinning_0km": 2,
+    "eligible_before_thinning_100km": 0,
+    "eligible_before_thinning_25km": 0,
+    "eligible_before_thinning_50km": 0,
+    "external_reference_points_50km": 0,
+    "fetched_records": 2,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 2,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Caloptilia fribergensis",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 1,
+    "thinned_capped_100km": 0,
+    "thinned_capped_25km": 0,
+    "thinned_capped_50km": 0
+  },
+  {
+    "accepted_species_key": 5105124,
+    "api_count_changed": false,
+    "api_count_initial": 208,
+    "canonical_name": "Caloptilia packardella",
+    "eligible_before_thinning_0km": 207,
+    "eligible_before_thinning_100km": 169,
+    "eligible_before_thinning_25km": 191,
+    "eligible_before_thinning_50km": 185,
+    "external_reference_points_50km": 103,
+    "fetched_records": 208,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 207,
+    "rejection_counts": {
+      "observation_identity": 1
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Caloptilia packardella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 116,
+    "thinned_capped_100km": 91,
+    "thinned_capped_25km": 106,
+    "thinned_capped_50km": 103
+  },
+  {
+    "accepted_species_key": 5105088,
+    "api_count_changed": false,
+    "api_count_initial": 64,
+    "canonical_name": "Caloptilia populetorum",
+    "eligible_before_thinning_0km": 64,
+    "eligible_before_thinning_100km": 52,
+    "eligible_before_thinning_25km": 54,
+    "eligible_before_thinning_50km": 54,
+    "external_reference_points_50km": 40,
+    "fetched_records": 64,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 64,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Caloptilia populetorum",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 48,
+    "thinned_capped_100km": 38,
+    "thinned_capped_25km": 40,
+    "thinned_capped_50km": 40
+  },
+  {
+    "accepted_species_key": 5104781,
+    "api_count_changed": false,
+    "api_count_initial": 41,
+    "canonical_name": "Caloptilia rufipennella",
+    "eligible_before_thinning_0km": 41,
+    "eligible_before_thinning_100km": 28,
+    "eligible_before_thinning_25km": 38,
+    "eligible_before_thinning_50km": 35,
+    "external_reference_points_50km": 16,
+    "fetched_records": 41,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 41,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Caloptilia rufipennella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 22,
+    "thinned_capped_100km": 9,
+    "thinned_capped_25km": 19,
+    "thinned_capped_50km": 16
+  },
+  {
+    "accepted_species_key": 5104927,
+    "api_count_changed": false,
+    "api_count_initial": 18,
+    "canonical_name": "Caloptilia semifascia",
+    "eligible_before_thinning_0km": 18,
+    "eligible_before_thinning_100km": 8,
+    "eligible_before_thinning_25km": 14,
+    "eligible_before_thinning_50km": 10,
+    "external_reference_points_50km": 7,
+    "fetched_records": 18,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 18,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Caloptilia semifascia",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 14,
+    "thinned_capped_100km": 5,
+    "thinned_capped_25km": 11,
+    "thinned_capped_50km": 7
+  },
+  {
+    "accepted_species_key": 1748456,
+    "api_count_changed": false,
+    "api_count_initial": 119,
+    "canonical_name": "Capua vulgana",
+    "eligible_before_thinning_0km": 119,
+    "eligible_before_thinning_100km": 83,
+    "eligible_before_thinning_25km": 112,
+    "eligible_before_thinning_50km": 96,
+    "external_reference_points_50km": 61,
+    "fetched_records": 119,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 119,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Capua vulgana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 76,
+    "thinned_capped_100km": 50,
+    "thinned_capped_25km": 70,
+    "thinned_capped_50km": 61
+  },
+  {
+    "accepted_species_key": 4535386,
+    "api_count_changed": false,
+    "api_count_initial": 0,
+    "canonical_name": "Carcharodus baeticus",
+    "eligible_before_thinning_0km": 0,
+    "eligible_before_thinning_100km": 0,
+    "eligible_before_thinning_25km": 0,
+    "eligible_before_thinning_50km": 0,
+    "external_reference_points_50km": 0,
+    "fetched_records": 0,
+    "match_confidence": 99,
+    "page_offsets": "",
+    "quality_unique_records": 0,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Carcharodus baeticus",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 0,
+    "thinned_capped_100km": 0,
+    "thinned_capped_25km": 0,
+    "thinned_capped_50km": 0
+  },
+  {
+    "accepted_species_key": 1850026,
+    "api_count_changed": false,
+    "api_count_initial": 0,
+    "canonical_name": "Caryocolum amaurella",
+    "eligible_before_thinning_0km": 0,
+    "eligible_before_thinning_100km": 0,
+    "eligible_before_thinning_25km": 0,
+    "eligible_before_thinning_50km": 0,
+    "external_reference_points_50km": 0,
+    "fetched_records": 0,
+    "match_confidence": 99,
+    "page_offsets": "",
+    "quality_unique_records": 0,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Caryocolum amaurella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 0,
+    "thinned_capped_100km": 0,
+    "thinned_capped_25km": 0,
+    "thinned_capped_50km": 0
+  },
+  {
+    "accepted_species_key": 1850045,
+    "api_count_changed": false,
+    "api_count_initial": 4,
+    "canonical_name": "Caryocolum cassella",
+    "eligible_before_thinning_0km": 4,
+    "eligible_before_thinning_100km": 4,
+    "eligible_before_thinning_25km": 4,
+    "eligible_before_thinning_50km": 4,
+    "external_reference_points_50km": 4,
+    "fetched_records": 4,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 4,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Caryocolum cassella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 4,
+    "thinned_capped_100km": 4,
+    "thinned_capped_25km": 4,
+    "thinned_capped_50km": 4
+  },
+  {
+    "accepted_species_key": 1850062,
+    "api_count_changed": false,
+    "api_count_initial": 0,
+    "canonical_name": "Caryocolum schleichi",
+    "eligible_before_thinning_0km": 0,
+    "eligible_before_thinning_100km": 0,
+    "eligible_before_thinning_25km": 0,
+    "eligible_before_thinning_50km": 0,
+    "external_reference_points_50km": 0,
+    "fetched_records": 0,
+    "match_confidence": 99,
+    "page_offsets": "",
+    "quality_unique_records": 0,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Caryocolum schleichi",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 0,
+    "thinned_capped_100km": 0,
+    "thinned_capped_25km": 0,
+    "thinned_capped_50km": 0
+  },
+  {
+    "accepted_species_key": 1850028,
+    "api_count_changed": false,
+    "api_count_initial": 11,
+    "canonical_name": "Caryocolum tischeriella",
+    "eligible_before_thinning_0km": 11,
+    "eligible_before_thinning_100km": 9,
+    "eligible_before_thinning_25km": 11,
+    "eligible_before_thinning_50km": 10,
+    "external_reference_points_50km": 6,
+    "fetched_records": 11,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 11,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Caryocolum tischeriella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 7,
+    "thinned_capped_100km": 5,
+    "thinned_capped_25km": 7,
+    "thinned_capped_50km": 6
+  },
+  {
+    "accepted_species_key": 1964195,
+    "api_count_changed": false,
+    "api_count_initial": 1400,
+    "canonical_name": "Catarhoe cuculata",
+    "eligible_before_thinning_0km": 900,
+    "eligible_before_thinning_100km": 537,
+    "eligible_before_thinning_25km": 733,
+    "eligible_before_thinning_50km": 659,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;550;1100",
+    "quality_unique_records": 900,
+    "rejection_counts": {},
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Catarhoe cuculata",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1797198,
+    "api_count_changed": false,
+    "api_count_initial": 360,
+    "canonical_name": "Catocala andromedae",
+    "eligible_before_thinning_0km": 360,
+    "eligible_before_thinning_100km": 87,
+    "eligible_before_thinning_25km": 308,
+    "eligible_before_thinning_50km": 226,
+    "external_reference_points_50km": 85,
+    "fetched_records": 360,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 360,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Catocala andromedae",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 127,
+    "thinned_capped_100km": 49,
+    "thinned_capped_25km": 109,
+    "thinned_capped_50km": 85
+  },
+  {
+    "accepted_species_key": 1797365,
+    "api_count_changed": false,
+    "api_count_initial": 169,
+    "canonical_name": "Catocala californica",
+    "eligible_before_thinning_0km": 169,
+    "eligible_before_thinning_100km": 92,
+    "eligible_before_thinning_25km": 147,
+    "eligible_before_thinning_50km": 104,
+    "external_reference_points_50km": 61,
+    "fetched_records": 169,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 169,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Catocala californica",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 83,
+    "thinned_capped_100km": 51,
+    "thinned_capped_25km": 70,
+    "thinned_capped_50km": 61
+  },
+  {
+    "accepted_species_key": 1797285,
+    "api_count_changed": false,
+    "api_count_initial": 1386,
+    "canonical_name": "Catocala cara",
+    "eligible_before_thinning_0km": 899,
+    "eligible_before_thinning_100km": 453,
+    "eligible_before_thinning_25km": 690,
+    "eligible_before_thinning_50km": 553,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;543;1086",
+    "quality_unique_records": 899,
+    "rejection_counts": {
+      "observation_identity": 1
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Catocala cara",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1797137,
+    "api_count_changed": false,
+    "api_count_initial": 466,
+    "canonical_name": "Catocala coccinata",
+    "eligible_before_thinning_0km": 466,
+    "eligible_before_thinning_100km": 330,
+    "eligible_before_thinning_25km": 450,
+    "eligible_before_thinning_50km": 420,
+    "external_reference_points_50km": 191,
+    "fetched_records": 466,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 466,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Catocala coccinata",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 147,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 191
+  },
+  {
+    "accepted_species_key": 1797556,
+    "api_count_changed": false,
+    "api_count_initial": 1094,
+    "canonical_name": "Catocala concumbens",
+    "eligible_before_thinning_0km": 899,
+    "eligible_before_thinning_100km": 496,
+    "eligible_before_thinning_25km": 774,
+    "eligible_before_thinning_50km": 660,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;397;794",
+    "quality_unique_records": 899,
+    "rejection_counts": {
+      "observation_identity": 1
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Catocala concumbens",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 184,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1797210,
+    "api_count_changed": false,
+    "api_count_initial": 243,
+    "canonical_name": "Catocala gracilis",
+    "eligible_before_thinning_0km": 243,
+    "eligible_before_thinning_100km": 221,
+    "eligible_before_thinning_25km": 238,
+    "eligible_before_thinning_50km": 232,
+    "external_reference_points_50km": 95,
+    "fetched_records": 243,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 243,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Catocala gracilis",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 105,
+    "thinned_capped_100km": 87,
+    "thinned_capped_25km": 101,
+    "thinned_capped_50km": 95
+  },
+  {
+    "accepted_species_key": 1797122,
+    "api_count_changed": false,
+    "api_count_initial": 1044,
+    "canonical_name": "Catocala grynea",
+    "eligible_before_thinning_0km": 899,
+    "eligible_before_thinning_100km": 429,
+    "eligible_before_thinning_25km": 715,
+    "eligible_before_thinning_50km": 598,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;372;744",
+    "quality_unique_records": 899,
+    "rejection_counts": {
+      "observation_identity": 1
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Catocala grynea",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 192,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 8874140,
+    "api_count_changed": false,
+    "api_count_initial": 408,
+    "canonical_name": "Catocala lacrymosa",
+    "eligible_before_thinning_0km": 408,
+    "eligible_before_thinning_100km": 202,
+    "eligible_before_thinning_25km": 358,
+    "eligible_before_thinning_50km": 295,
+    "external_reference_points_50km": 155,
+    "fetched_records": 408,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 408,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Catocala lacrymosa",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 197,
+    "thinned_capped_100km": 118,
+    "thinned_capped_25km": 180,
+    "thinned_capped_50km": 155
+  },
+  {
+    "accepted_species_key": 1797111,
+    "api_count_changed": false,
+    "api_count_initial": 1767,
+    "canonical_name": "Catocala micronympha",
+    "eligible_before_thinning_0km": 900,
+    "eligible_before_thinning_100km": 417,
+    "eligible_before_thinning_25km": 731,
+    "eligible_before_thinning_50km": 564,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;733;1467",
+    "quality_unique_records": 900,
+    "rejection_counts": {},
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Catocala micronympha",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 179,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1797206,
+    "api_count_changed": false,
+    "api_count_initial": 317,
+    "canonical_name": "Catocala praeclara",
+    "eligible_before_thinning_0km": 316,
+    "eligible_before_thinning_100km": 171,
+    "eligible_before_thinning_25km": 289,
+    "eligible_before_thinning_50km": 220,
+    "external_reference_points_50km": 89,
+    "fetched_records": 317,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 316,
+    "rejection_counts": {
+      "observation_identity": 1
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Catocala praeclara",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 125,
+    "thinned_capped_100km": 66,
+    "thinned_capped_25km": 113,
+    "thinned_capped_50km": 89
+  },
+  {
+    "accepted_species_key": 1797367,
+    "api_count_changed": false,
+    "api_count_initial": 581,
+    "canonical_name": "Catocala sponsa",
+    "eligible_before_thinning_0km": 581,
+    "eligible_before_thinning_100km": 419,
+    "eligible_before_thinning_25km": 529,
+    "eligible_before_thinning_50km": 488,
+    "external_reference_points_50km": 200,
+    "fetched_records": 581,
+    "match_confidence": 98,
+    "page_offsets": "0;300",
+    "quality_unique_records": 581,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Catocala sponsa",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1862923,
+    "api_count_changed": false,
+    "api_count_initial": 83,
+    "canonical_name": "Cautethia spuria",
+    "eligible_before_thinning_0km": 83,
+    "eligible_before_thinning_100km": 48,
+    "eligible_before_thinning_25km": 81,
+    "eligible_before_thinning_50km": 71,
+    "external_reference_points_50km": 18,
+    "fetched_records": 83,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 83,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Cautethia spuria",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 25,
+    "thinned_capped_100km": 12,
+    "thinned_capped_25km": 23,
+    "thinned_capped_50km": 18
+  },
+  {
+    "accepted_species_key": 1864201,
+    "api_count_changed": false,
+    "api_count_initial": 6,
+    "canonical_name": "Centroctena rutherfordi",
+    "eligible_before_thinning_0km": 6,
+    "eligible_before_thinning_100km": 4,
+    "eligible_before_thinning_25km": 6,
+    "eligible_before_thinning_50km": 5,
+    "external_reference_points_50km": 5,
+    "fetched_records": 6,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 6,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Centroctena rutherfordi",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 6,
+    "thinned_capped_100km": 4,
+    "thinned_capped_25km": 6,
+    "thinned_capped_50km": 5
+  },
+  {
+    "accepted_species_key": 1952730,
+    "api_count_changed": false,
+    "api_count_initial": 38,
+    "canonical_name": "Ceranemota fasciata",
+    "eligible_before_thinning_0km": 38,
+    "eligible_before_thinning_100km": 18,
+    "eligible_before_thinning_25km": 36,
+    "eligible_before_thinning_50km": 32,
+    "external_reference_points_50km": 16,
+    "fetched_records": 38,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 38,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Ceranemota fasciata",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 21,
+    "thinned_capped_100km": 8,
+    "thinned_capped_25km": 20,
+    "thinned_capped_50km": 16
+  },
+  {
+    "accepted_species_key": 5110871,
+    "api_count_changed": false,
+    "api_count_initial": 170,
+    "canonical_name": "Cerastis leucographa",
+    "eligible_before_thinning_0km": 170,
+    "eligible_before_thinning_100km": 125,
+    "eligible_before_thinning_25km": 151,
+    "eligible_before_thinning_50km": 142,
+    "external_reference_points_50km": 77,
+    "fetched_records": 170,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 170,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Cerastis leucographa",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 99,
+    "thinned_capped_100km": 62,
+    "thinned_capped_25km": 84,
+    "thinned_capped_50km": 77
+  },
+  {
+    "accepted_species_key": 1941437,
+    "api_count_changed": false,
+    "api_count_initial": 239,
+    "canonical_name": "Chamaesphecia empiformis",
+    "eligible_before_thinning_0km": 239,
+    "eligible_before_thinning_100km": 220,
+    "eligible_before_thinning_25km": 236,
+    "eligible_before_thinning_50km": 231,
+    "external_reference_points_50km": 158,
+    "fetched_records": 239,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 239,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Chamaesphecia empiformis",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 164,
+    "thinned_capped_100km": 149,
+    "thinned_capped_25km": 161,
+    "thinned_capped_50km": 158
+  },
+  {
+    "accepted_species_key": 5128764,
+    "api_count_changed": false,
+    "api_count_initial": 0,
+    "canonical_name": "Charaxes anticlea",
+    "eligible_before_thinning_0km": 0,
+    "eligible_before_thinning_100km": 0,
+    "eligible_before_thinning_25km": 0,
+    "eligible_before_thinning_50km": 0,
+    "external_reference_points_50km": 0,
+    "fetched_records": 0,
+    "match_confidence": 99,
+    "page_offsets": "",
+    "quality_unique_records": 0,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Charaxes anticlea",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 0,
+    "thinned_capped_100km": 0,
+    "thinned_capped_25km": 0,
+    "thinned_capped_50km": 0
+  },
+  {
+    "accepted_species_key": 5129216,
+    "api_count_changed": false,
+    "api_count_initial": 0,
+    "canonical_name": "Charaxes virilis",
+    "eligible_before_thinning_0km": 0,
+    "eligible_before_thinning_100km": 0,
+    "eligible_before_thinning_25km": 0,
+    "eligible_before_thinning_50km": 0,
+    "external_reference_points_50km": 0,
+    "fetched_records": 0,
+    "match_confidence": 99,
+    "page_offsets": "",
+    "quality_unique_records": 0,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Charaxes virilis",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 0,
+    "thinned_capped_100km": 0,
+    "thinned_capped_25km": 0,
+    "thinned_capped_50km": 0
+  },
+  {
+    "accepted_species_key": 1758839,
+    "api_count_changed": false,
+    "api_count_initial": 60,
+    "canonical_name": "Chasmina tibialis",
+    "eligible_before_thinning_0km": 60,
+    "eligible_before_thinning_100km": 21,
+    "eligible_before_thinning_25km": 26,
+    "eligible_before_thinning_50km": 22,
+    "external_reference_points_50km": 19,
+    "fetched_records": 60,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 60,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Chasmina tibialis",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 28,
+    "thinned_capped_100km": 18,
+    "thinned_capped_25km": 21,
+    "thinned_capped_50km": 19
+  },
+  {
+    "accepted_species_key": 1766741,
+    "api_count_changed": false,
+    "api_count_initial": 546,
+    "canonical_name": "Chersotis cuprea",
+    "eligible_before_thinning_0km": 546,
+    "eligible_before_thinning_100km": 202,
+    "eligible_before_thinning_25km": 416,
+    "eligible_before_thinning_50km": 328,
+    "external_reference_points_50km": 150,
+    "fetched_records": 546,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 546,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Chersotis cuprea",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 103,
+    "thinned_capped_25km": 196,
+    "thinned_capped_50km": 150
+  },
+  {
+    "accepted_species_key": 1962990,
+    "api_count_changed": false,
+    "api_count_initial": 503,
+    "canonical_name": "Chesias legatella",
+    "eligible_before_thinning_0km": 503,
+    "eligible_before_thinning_100km": 400,
+    "eligible_before_thinning_25km": 491,
+    "eligible_before_thinning_50km": 475,
+    "external_reference_points_50km": 200,
+    "fetched_records": 503,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 503,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Chesias legatella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 185,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1883145,
+    "api_count_changed": false,
+    "api_count_initial": 7,
+    "canonical_name": "Chilo orichalcociliella",
+    "eligible_before_thinning_0km": 7,
+    "eligible_before_thinning_100km": 3,
+    "eligible_before_thinning_25km": 7,
+    "eligible_before_thinning_50km": 7,
+    "external_reference_points_50km": 7,
+    "fetched_records": 7,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 7,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Chilo orichalcociliella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 7,
+    "thinned_capped_100km": 3,
+    "thinned_capped_25km": 7,
+    "thinned_capped_50km": 7
+  },
+  {
+    "accepted_species_key": 1851000,
+    "api_count_changed": false,
+    "api_count_initial": 11,
+    "canonical_name": "Chionodes continuella",
+    "eligible_before_thinning_0km": 11,
+    "eligible_before_thinning_100km": 10,
+    "eligible_before_thinning_25km": 11,
+    "eligible_before_thinning_50km": 11,
+    "external_reference_points_50km": 10,
+    "fetched_records": 11,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 11,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Chionodes continuella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 10,
+    "thinned_capped_100km": 9,
+    "thinned_capped_25km": 10,
+    "thinned_capped_50km": 10
+  },
+  {
+    "accepted_species_key": 1850923,
+    "api_count_changed": false,
+    "api_count_initial": 138,
+    "canonical_name": "Chionodes thoraceochrella",
+    "eligible_before_thinning_0km": 138,
+    "eligible_before_thinning_100km": 90,
+    "eligible_before_thinning_25km": 125,
+    "eligible_before_thinning_50km": 108,
+    "external_reference_points_50km": 59,
+    "fetched_records": 138,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 138,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Chionodes thoraceochrella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 78,
+    "thinned_capped_100km": 51,
+    "thinned_capped_25km": 68,
+    "thinned_capped_50km": 59
+  },
+  {
+    "accepted_species_key": 5772309,
+    "api_count_changed": false,
+    "api_count_initial": 931,
+    "canonical_name": "Chloantha hyperici",
+    "eligible_before_thinning_0km": 900,
+    "eligible_before_thinning_100km": 707,
+    "eligible_before_thinning_25km": 868,
+    "eligible_before_thinning_50km": 787,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;315;631",
+    "quality_unique_records": 900,
+    "rejection_counts": {},
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Chloantha hyperici",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 5123394,
+    "api_count_changed": false,
+    "api_count_initial": 283,
+    "canonical_name": "Choreutis diana",
+    "eligible_before_thinning_0km": 283,
+    "eligible_before_thinning_100km": 245,
+    "eligible_before_thinning_25km": 274,
+    "eligible_before_thinning_50km": 269,
+    "external_reference_points_50km": 137,
+    "fetched_records": 283,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 283,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Choreutis diana",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 148,
+    "thinned_capped_100km": 121,
+    "thinned_capped_25km": 142,
+    "thinned_capped_50km": 137
+  },
+  {
+    "accepted_species_key": 11873825,
+    "api_count_changed": false,
+    "api_count_initial": 4720,
+    "canonical_name": "Chytolita morbidalis",
+    "eligible_before_thinning_0km": 885,
+    "eligible_before_thinning_100km": 409,
+    "eligible_before_thinning_25km": 651,
+    "eligible_before_thinning_50km": 482,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;2210;4420",
+    "quality_unique_records": 887,
+    "rejection_counts": {
+      "observation_identity": 13
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Chytolita morbidalis",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 5768880,
+    "api_count_changed": false,
+    "api_count_initial": 1285,
+    "canonical_name": "Cidaria fulvata",
+    "eligible_before_thinning_0km": 894,
+    "eligible_before_thinning_100km": 412,
+    "eligible_before_thinning_25km": 805,
+    "eligible_before_thinning_50km": 654,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;492;985",
+    "quality_unique_records": 900,
+    "rejection_counts": {},
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Cidaria fulvata",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1986998,
+    "api_count_changed": false,
+    "api_count_initial": 1309,
+    "canonical_name": "Cladara atroliturata",
+    "eligible_before_thinning_0km": 895,
+    "eligible_before_thinning_100km": 609,
+    "eligible_before_thinning_25km": 859,
+    "eligible_before_thinning_50km": 760,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;504;1009",
+    "quality_unique_records": 895,
+    "rejection_counts": {
+      "observation_identity": 5
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Cladara atroliturata",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1858637,
+    "api_count_changed": false,
+    "api_count_initial": 1267,
+    "canonical_name": "Cnaemidophorus rhododactyla",
+    "eligible_before_thinning_0km": 897,
+    "eligible_before_thinning_100km": 637,
+    "eligible_before_thinning_25km": 806,
+    "eligible_before_thinning_50km": 698,
+    "external_reference_points_50km": 200,
+    "fetched_records": 900,
+    "match_confidence": 99,
+    "page_offsets": "0;483;967",
+    "quality_unique_records": 897,
+    "rejection_counts": {
+      "observation_identity": 3
+    },
+    "retrieval_mode": "bounded_3_windows",
+    "species": "Cnaemidophorus rhododactyla",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 1739072,
+    "api_count_changed": false,
+    "api_count_initial": 14,
+    "canonical_name": "Cnephasia genitalana",
+    "eligible_before_thinning_0km": 14,
+    "eligible_before_thinning_100km": 14,
+    "eligible_before_thinning_25km": 14,
+    "eligible_before_thinning_50km": 14,
+    "external_reference_points_50km": 2,
+    "fetched_records": 14,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 14,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Cnephasia genitalana",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 2,
+    "thinned_capped_100km": 2,
+    "thinned_capped_25km": 2,
+    "thinned_capped_50km": 2
+  },
+  {
+    "accepted_species_key": 1739471,
+    "api_count_changed": false,
+    "api_count_initial": 58,
+    "canonical_name": "Cochylidia heydeniana",
+    "eligible_before_thinning_0km": 58,
+    "eligible_before_thinning_100km": 58,
+    "eligible_before_thinning_25km": 58,
+    "eligible_before_thinning_50km": 58,
+    "external_reference_points_50km": 28,
+    "fetched_records": 58,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 58,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Cochylidia heydeniana",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 28,
+    "thinned_capped_100km": 28,
+    "thinned_capped_25km": 28,
+    "thinned_capped_50km": 28
+  },
+  {
+    "accepted_species_key": 1739449,
+    "api_count_changed": false,
+    "api_count_initial": 13,
+    "canonical_name": "Cochylidia rupicola",
+    "eligible_before_thinning_0km": 13,
+    "eligible_before_thinning_100km": 8,
+    "eligible_before_thinning_25km": 11,
+    "eligible_before_thinning_50km": 11,
+    "external_reference_points_50km": 11,
+    "fetched_records": 13,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 13,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Cochylidia rupicola",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 12,
+    "thinned_capped_100km": 8,
+    "thinned_capped_25km": 11,
+    "thinned_capped_50km": 11
+  },
+  {
+    "accepted_species_key": 8396242,
+    "api_count_changed": false,
+    "api_count_initial": 868,
+    "canonical_name": "Coenonympha dorus",
+    "eligible_before_thinning_0km": 867,
+    "eligible_before_thinning_100km": 56,
+    "eligible_before_thinning_25km": 450,
+    "eligible_before_thinning_50km": 200,
+    "external_reference_points_50km": 83,
+    "fetched_records": 868,
+    "match_confidence": 99,
+    "page_offsets": "0;300;600",
+    "quality_unique_records": 868,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Coenonympha dorus",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 30,
+    "thinned_capped_25km": 156,
+    "thinned_capped_50km": 83
+  },
+  {
+    "accepted_species_key": 1911168,
+    "api_count_changed": false,
+    "api_count_initial": 491,
+    "canonical_name": "Coenonympha hero",
+    "eligible_before_thinning_0km": 491,
+    "eligible_before_thinning_100km": 398,
+    "eligible_before_thinning_25km": 453,
+    "eligible_before_thinning_50km": 445,
+    "external_reference_points_50km": 167,
+    "fetched_records": 491,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 491,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Coenonympha hero",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 185,
+    "thinned_capped_100km": 151,
+    "thinned_capped_25km": 173,
+    "thinned_capped_50km": 167
+  },
+  {
+    "accepted_species_key": 5120751,
+    "api_count_changed": false,
+    "api_count_initial": 5,
+    "canonical_name": "Coleophora alnifoliae",
+    "eligible_before_thinning_0km": 5,
+    "eligible_before_thinning_100km": 5,
+    "eligible_before_thinning_25km": 5,
+    "eligible_before_thinning_50km": 5,
+    "external_reference_points_50km": 5,
+    "fetched_records": 5,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 5,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Coleophora alnifoliae",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 5,
+    "thinned_capped_100km": 5,
+    "thinned_capped_25km": 5,
+    "thinned_capped_50km": 5
+  },
+  {
+    "accepted_species_key": 5120668,
+    "api_count_changed": false,
+    "api_count_initial": 4,
+    "canonical_name": "Coleophora alticolella",
+    "eligible_before_thinning_0km": 4,
+    "eligible_before_thinning_100km": 4,
+    "eligible_before_thinning_25km": 4,
+    "eligible_before_thinning_50km": 4,
+    "external_reference_points_50km": 4,
+    "fetched_records": 4,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 4,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Coleophora alticolella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 4,
+    "thinned_capped_100km": 4,
+    "thinned_capped_25km": 4,
+    "thinned_capped_50km": 4
+  },
+  {
+    "accepted_species_key": 5121634,
+    "api_count_changed": false,
+    "api_count_initial": 0,
+    "canonical_name": "Coleophora glitzella",
+    "eligible_before_thinning_0km": 0,
+    "eligible_before_thinning_100km": 0,
+    "eligible_before_thinning_25km": 0,
+    "eligible_before_thinning_50km": 0,
+    "external_reference_points_50km": 0,
+    "fetched_records": 0,
+    "match_confidence": 99,
+    "page_offsets": "",
+    "quality_unique_records": 0,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Coleophora glitzella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 0,
+    "thinned_capped_100km": 0,
+    "thinned_capped_25km": 0,
+    "thinned_capped_50km": 0
+  },
+  {
+    "accepted_species_key": 5120675,
+    "api_count_changed": false,
+    "api_count_initial": 366,
+    "canonical_name": "Coleophora mayrella",
+    "eligible_before_thinning_0km": 361,
+    "eligible_before_thinning_100km": 335,
+    "eligible_before_thinning_25km": 360,
+    "eligible_before_thinning_50km": 357,
+    "external_reference_points_50km": 200,
+    "fetched_records": 366,
+    "match_confidence": 99,
+    "page_offsets": "0;300",
+    "quality_unique_records": 361,
+    "rejection_counts": {
+      "observation_identity": 5
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Coleophora mayrella",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 200,
+    "thinned_capped_25km": 200,
+    "thinned_capped_50km": 200
+  },
+  {
+    "accepted_species_key": 5120577,
+    "api_count_changed": false,
+    "api_count_initial": 206,
+    "canonical_name": "Coleophora trifolii",
+    "eligible_before_thinning_0km": 205,
+    "eligible_before_thinning_100km": 130,
+    "eligible_before_thinning_25km": 166,
+    "eligible_before_thinning_50km": 146,
+    "external_reference_points_50km": 95,
+    "fetched_records": 206,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 205,
+    "rejection_counts": {
+      "observation_identity": 1
+    },
+    "retrieval_mode": "complete_query",
+    "species": "Coleophora trifolii",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 125,
+    "thinned_capped_100km": 86,
+    "thinned_capped_25km": 103,
+    "thinned_capped_50km": 95
+  },
+  {
+    "accepted_species_key": 1851426,
+    "api_count_changed": false,
+    "api_count_initial": 2,
+    "canonical_name": "Coleotechnites blastovora",
+    "eligible_before_thinning_0km": 2,
+    "eligible_before_thinning_100km": 0,
+    "eligible_before_thinning_25km": 2,
+    "eligible_before_thinning_50km": 1,
+    "external_reference_points_50km": 1,
+    "fetched_records": 2,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 2,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Coleotechnites blastovora",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 2,
+    "thinned_capped_100km": 0,
+    "thinned_capped_25km": 2,
+    "thinned_capped_50km": 1
+  },
+  {
+    "accepted_species_key": 1851407,
+    "api_count_changed": false,
+    "api_count_initial": 4,
+    "canonical_name": "Coleotechnites thujaella",
+    "eligible_before_thinning_0km": 4,
+    "eligible_before_thinning_100km": 1,
+    "eligible_before_thinning_25km": 2,
+    "eligible_before_thinning_50km": 1,
+    "external_reference_points_50km": 1,
+    "fetched_records": 4,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 4,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Coleotechnites thujaella",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 4,
+    "thinned_capped_100km": 1,
+    "thinned_capped_25km": 2,
+    "thinned_capped_50km": 1
+  },
+  {
+    "accepted_species_key": 8203812,
+    "api_count_changed": false,
+    "api_count_initial": 782,
+    "canonical_name": "Colias alfacariensis",
+    "eligible_before_thinning_0km": 776,
+    "eligible_before_thinning_100km": 30,
+    "eligible_before_thinning_25km": 149,
+    "eligible_before_thinning_50km": 73,
+    "external_reference_points_50km": 55,
+    "fetched_records": 782,
+    "match_confidence": 98,
+    "page_offsets": "0;300;600",
+    "quality_unique_records": 782,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Colias alfacariensis",
+    "status": "GEOMETRY_REFERENCE_GE30",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 200,
+    "thinned_capped_100km": 22,
+    "thinned_capped_25km": 95,
+    "thinned_capped_50km": 55
+  },
+  {
+    "accepted_species_key": null,
+    "canonical_name": "Colias croceus",
+    "external_reference_points_50km": 0,
+    "match_confidence": 96,
+    "species": "Colias crocea",
+    "status": "TAXONOMY_NOT_EXACT",
+    "taxonomy_match": "FUZZY"
+  },
+  {
+    "accepted_species_key": 5137700,
+    "api_count_changed": false,
+    "api_count_initial": 136,
+    "canonical_name": "Colias gigantea",
+    "eligible_before_thinning_0km": 136,
+    "eligible_before_thinning_100km": 84,
+    "eligible_before_thinning_25km": 124,
+    "eligible_before_thinning_50km": 112,
+    "external_reference_points_50km": 27,
+    "fetched_records": 136,
+    "match_confidence": 99,
+    "page_offsets": "0",
+    "quality_unique_records": 136,
+    "rejection_counts": {},
+    "retrieval_mode": "complete_query",
+    "species": "Colias gigantea",
+    "status": "INSUFFICIENT_IN_RETRIEVED_REFERENCE",
+    "taxonomy_match": "EXACT",
+    "thinned_capped_0km": 37,
+    "thinned_capped_100km": 20,
+    "thinned_capped_25km": 30,
+    "thinned_capped_50km": 27
+  },
+  {
+    "species": "Colotis eris",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Conchylodes ovulalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Cosmopterix pulchrimella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Cosmorhoe ocellata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Cosmotriche lobulina",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Crinodes besckei",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Cyaniris semiargus",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Cyclophora albipunctata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Cyclophora punctaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Cydia caryana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Cydia strobilella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Deltote uncula",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Depressaria artemisiae",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Depressaria olerella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Depressaria pimpinellae",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Desmia ufeus",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Diarsia brunnea",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Diastictis fracturalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Diatraea evanescens",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Dichrorampha acuminatana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Dichrorampha aeratana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Dichrorampha alpinana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Dichrorampha montanana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Dichrorampha petiverella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Dichrorampha plumbana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Dioryctria banksiella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Dioryctria reniculelloides",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Dioryctria schuetzeella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Dioryctria sylvestrella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Donacaula forficella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Donacaula mucronella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Doxocopa pavon",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Drasteria hudsonica",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Dryobotodes eremita",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Dypterygia scabriuscula",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Dyspteris abortivaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Earias clorana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Ecliptopera silaceata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Ectoedemia albifasciella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Ectoedemia sericopeza",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Ectoedemia subbimaculella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Elachista albifrontella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Elachista argentella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Elachista atricomella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Elachista humilis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Elachista luticomella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Elachista subalbidella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Elachista subocellea",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Ellida caniplaga",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Elymiotis longara",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Emarginea percara",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Endothenia marginana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Endothenia nigricostana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Endothenia quadrimaculana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Ennomos quercinaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Entephria multivagata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Entephria nobiliaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Epermenia albapunctella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Ephysteris subdiminutella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Epiblema foenella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Epiblema scutulana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Epinotia abbreviana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Epinotia brunnichana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Epinotia criddleana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Epinotia tedella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Epinotia tetraquetrana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Epiphora rectifascia",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Epirrhoe galiata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Epirrhoe rivata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Episimus argutana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Erebia meolans",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Erebia neoridas",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Erebia tyndarus",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eriopsela quadrana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Erygia apicalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eubaphe mendica",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eublemma minima",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eucereon aeolum",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Euchlaena obtusaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Euchloron megaera",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Euchoeca nebulata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eucosma aspidiscana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eucosma cana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eucosma conterminana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eucosma fulvana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eucosma obumbratana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eucrostes disparata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eugraphe sigma",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eulamprotes wilkella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eulithis gracilineata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eumorpha anchemolus",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eumorpha labruscae",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eupithecia actaeata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eupithecia casloata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eupithecia conterminata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eupithecia dodoneata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eupithecia gelidata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eupithecia intricata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eupithecia lachrymosa",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eupithecia lanceata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eupithecia ochridata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eupithecia perfusca",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eupithecia selinata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eupithecia tantillaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eupithecia valerianata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eupithecia venosata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Euplagia quadripunctaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eurema albula",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Eusarca confusaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Euscirrhopterus poeyi",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Euthrix potatoria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Euxoa aquilina",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Euxoa plagigera",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Exoteleia dodecella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Fabriciana adippe",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Fabriciana niobe",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Feniseca tarquinius",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Furcula bicuspis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Furcula bifida",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Gelechia nigra",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Gelechia rhombella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Glena nigricaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Gluphisia crenata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Glyphipterix equitella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Glyphipterix simpliciella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Gnophos obfuscata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Gonodonta incurva",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Gonodonta nitidimacula",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Grapholita tenebrosana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Gypsonoma adjuncta",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Gypsonoma sociana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Gypsonoma substitutionis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hadena confusa",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hadena perplexa",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hamearis lucina",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Harrisina americana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hednota longipalpella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Helcystogramma lutatella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hellinsia osteodactylus",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hemaris fuciformis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hemistola chrysoprasaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hermeuptychia sosybius",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Heterocampa obliqua",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Heteropterus morpheus",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hippotion roseipennis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Holomelina laeta",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Horisme tersata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Horisme vitalbata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hydraecia petasitis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hydrelia inornata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hydriomena impluviata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hydriomena transfigurata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hypatima rhomboidella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hypena baltimoralis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hypena bijugalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hypena californica",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hypena crassalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hypena deceptalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hypena humuli",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hypena proboscidalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hyperaeschra georgica",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hyperstrotia pervertens",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hypoprepia miniata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hypoxystis pluviaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Hyppa rectilinea",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Idaea muricata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Idaea ostrinaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Incurvaria pectinea",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Ipimorpha subtusa",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Isognathus rimosa",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Laeosopis roboris",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Lapara bombycoides",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Ledaea perditalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Leptocneria reducta",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Leucania adjuta",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Leucania comma",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Leucania commoides",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Leucania inconspicua",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Leucania insueta",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Leucania lapidaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Leucania obsoleta",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Leuconycta diphteroides",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Levipalpus hepatariella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Ligdia adustata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Lithacodia muscosula",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Lithophane furcifera",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Lithophane patefacta",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Lomographa glomeraria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Luperina testacea",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Lygephila pastinum",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Lytrosis unitaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Macrochilo litophora",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Macroglossum stellatarum",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Marathyssa inficita",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Meganola minuscula",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Meganola strigula",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Melanthia procellata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Melipotis fasciolaris",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Melipotis indomita",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Melipotis januaris",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Melipotis perpendicularis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Memphis artacaena",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Meroptera abditiva",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Mesapamea didyma",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Mesoligia furuncula",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Metalectra quadrisignata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Metzneria metzneriella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Micrurapteryx kollariella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Micrurapteryx salicifoliella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Mompha conturbatella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Mompha eloisella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Mompha raschkiella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Mompha terminella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Monochroa conspersella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Monochroa lucidella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Monochroa lutulentella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Monochroa tenebrella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Mythimna straminea",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Mythimna turca",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Nascus broteas",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Neofaculta ericetella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Neofaculta infernella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Neofriseria peliella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Nephele aequivalens",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Nerice bidentata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Noctua comes",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Nonagria typhae",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Nothris verbascella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Notocelia purpurissatana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Notocelia rosaecolana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Notodonta torva",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Notodonta tritophus",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Nycteola cinereana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Nystalea superciliosa",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Ochsenheimeria urella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Odezia atrata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Odontosia carmelita",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Odontosia elegans",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Oeneis glacialis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Olethreutes atrodentana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Olethreutes bipartitana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Olethreutes fasciatana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Olethreutes tilianum",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Oligia strigilis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Opostega salaciella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Ortilia ithra",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Oxyptilus pilosellae",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pachylia ficus",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Paectes abrostoloides",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Palpita flegia",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Palpita unionalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Palpita vitrealis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Panemeria tenebrata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Panopoda carneicosta",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Panthea coenobita",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Papaipema baptisiae",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Papaipema pterisii",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Parapediasia teterrellus",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Parapoynx allionealis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Parapoynx badiusalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Parapoynx stratiotata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Paraswammerdamia conspersella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Paraswammerdamia lapponica",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Parectopa plantaginisella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Parornix anglicella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Parornix conspicuella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Parornix devoniella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Parornix finitimella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Parornix scoticella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Parornix torquillella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Parornix vicinella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Patalene olyzonaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pediasia aridella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pediasia trisecta",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pempelia palumbella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pempeliella ornatella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pennisetia hylaeiformis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Perconia strigillaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Peribatodes secundaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Perizoma albulata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Perizoma alchemillata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Perizoma flavofasciata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Perizoma hydrata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Persectania dyscrita",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pexicopia malvella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phaecasiophora niveiguttana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phalaenostola larentioides",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pheosia portlandia",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pheosia tremula",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Philereme vetulata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phoberia atomaris",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Photedes minima",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyciodes batesii",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phycita roborella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phycitodes binaevella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phycitodes maritima",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllocnistis ampelopsiella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllocnistis insignis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllocnistis populiella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllocnistis saligna",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter acerifoliella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter apparella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter cerasicolella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter clemensella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter comparella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter delitella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter distentella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter emberizaepenella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter harrisella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter heegeriella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter insignitella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter lantanella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter lautella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter maestingella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter muelleriella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter nicellii",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter oxyacanthae",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter parisiella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter quercifoliella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter rajella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter roboris",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter schreberella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter stettinensis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter strigulatella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter tenerella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter trifasciella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter tristrigella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyllonorycter ulmifoliella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phyprosopus callitrichoides",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Phytometra viridaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pilocrocis ramentalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Platyptilia calodactyla",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Platyptilia gonodactyla",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Platyptilia tesseradactyla",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Plutella porrectella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pococera maritimalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Polygonia egea",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Polygrammate hebraeicum",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Polypogon tentacularia",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Polythrix caunus",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Polythrix octomaculata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Probole alienaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Prolita solutella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Proteoteras moffatiana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Protorthodes oviduca",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Psara obscuralis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pseudaletia sequax",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pseudexentera oregonana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pseudopanthera macularia",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pseudophilotes baton",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pseudorthodes vecors",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pterapherapteryx sexalata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pygmaena fusca",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pygospila tyres",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pyrausta despicata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pyrausta tyralis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pyreferra pettiti",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pyronia bathseba",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pyronia cecilia",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pyropteron chrysidiformis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Pyrrhogyra neaerea",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Quinta cannae",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Renia adspergillus",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Rhagades pruni",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Rhigognostis incarnatella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Rhizedra lutosa",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Rhodophaea formosa",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Rhopobota stagnana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Sabulodes arge",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Salbia haemorrhoidalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Satyrus ferula",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Schreckensteinia festaliella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Sciota hostilis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Scoparia subfusca",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Scopula inductata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Scopula ornata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Scopula ternata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Scrobipalpa artemisiella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Scrobipalpa samadensis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Scrobipalpula tussilaginis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Scythris noricella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Selidosema brunnearia",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Semioscopis avellanella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Semioscopis steinkellneriana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Siderone galanthis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Sitochroa palealis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Sonia canadana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Sophronia semicostella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Sorhagenia janiszewskae",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Sorhagenia rhamniella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Spargaloma sexpunctata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Spargania magnoliata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Spathilepia clonius",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Speyeria aglaja",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Speyeria aphrodite",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Speyeria mormonia",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Sphecodina abbottii",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Spilosoma congrua",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Spilosoma glatignyi",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stangeia xerodes",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Staphylus azteca",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stathmopoda aenea",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Staurophora celsia",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stenoporpia separataria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stenoptilia pterodactyla",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stenoptilia zophodactylus",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stictea mygindiana",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stigmella anomalella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stigmella betulicola",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stigmella glutinosae",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stigmella lapponica",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stigmella luteella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stigmella rhamnicola",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stigmella rosaefoliella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stigmella salicis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stigmella samiatella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stigmella slingerlandella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Stigmella tityrella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Swammerdamia compunctella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Sympistis zetterstedtii",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Syngrapha viridisigma",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Syssphinx colla",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Tacparia detersata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Tarachidia erastrioides",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Teleiodes luculella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Telphusa longifasciella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Temenis laothoe",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Tethea ocularis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Tethea or",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Thalera fimbrialis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Thera obeliscata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Thiotricha subocellea",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Tholera decimalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Thymelicus acteon",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Tischeria ekebladella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Titaea tamerlan",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Tortricodes alternella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Traminda mundissima",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Trichodezia albovittata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Tricholita signata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Trifurcula eurema",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Trifurcula subnitidella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Triodia sylvina",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Udea decrepitalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Udea itysalis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Ufeus satyricus",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Urbanus simplicius",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Watsonalla binaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Xanthorhoe abrasaria",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Xanthorhoe spadicearia",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Xenophanes tryxus",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Xestia badicollis",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Xestia castanea",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Xestia dolosa",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Xestia triangulum",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Xylophanes pluto",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Xystophora pulveratella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Yponomeuta irrorella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Ypsolopha asperella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Zale galbanata",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Zale metatoides",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Zale obliqua",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Zelleria haimbachi",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  },
+  {
+    "species": "Zophodia grossulariella",
+    "status": "NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT"
+  }
+]

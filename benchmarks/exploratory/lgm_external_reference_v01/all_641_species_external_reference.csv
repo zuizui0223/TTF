@@ -1,0 +1,642 @@
+accepted_species_key,api_count_changed,api_count_initial,canonical_name,eligible_before_thinning_0km,eligible_before_thinning_100km,eligible_before_thinning_25km,eligible_before_thinning_50km,external_reference_points_50km,fetched_records,match_confidence,page_offsets,quality_unique_records,rejection_counts,retrieval_mode,species,status,taxonomy_match,thinned_capped_0km,thinned_capped_100km,thinned_capped_25km,thinned_capped_50km
+4301264,False,22,Abagrotis nefascia,20,7,18,18,8,22,99,0,20,{'observation_identity': 2},complete_query,Abagrotis nefascia,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,10,5,8,8
+1767608,False,139,Abrostola asclepiadis,139,83,106,97,63,139,98,0,139,{},complete_query,Abrostola asclepiadis,GEOMETRY_REFERENCE_GE30,EXACT,82,57,69,63
+1968205,False,480,Acasis viridata,477,203,460,366,125,480,99,0;300,477,{'observation_identity': 3},complete_query,Acasis viridata,GEOMETRY_REFERENCE_GE30,EXACT,163,85,153,125
+1945462,False,304,Achlyodes busirus,303,254,281,276,167,304,99,0;300,303,{'observation_identity': 1},complete_query,Achlyodes busirus,GEOMETRY_REFERENCE_GE30,EXACT,178,151,170,167
+1945477,False,3075,Achlyodes thraso,887,839,862,851,200,900,99,0;1387;2775,887,{'observation_identity': 13},bounded_3_windows,Achlyodes thraso,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1739727,False,640,Acleris curvalana,640,235,578,524,163,640,99,0;300;600,640,{},complete_query,Acleris curvalana,GEOMETRY_REFERENCE_GE30,EXACT,200,101,194,163
+1740003,False,226,Acleris flavivittana,222,150,209,182,72,226,99,0,222,{'observation_identity': 4},complete_query,Acleris flavivittana,GEOMETRY_REFERENCE_GE30,EXACT,96,54,87,72
+1739895,False,12,Acleris implexana,12,10,10,10,6,12,99,0,12,{},complete_query,Acleris implexana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,8,6,6,6
+1740185,False,363,Acleris laterana,363,236,317,269,135,363,99,0;300,363,{},complete_query,Acleris laterana,GEOMETRY_REFERENCE_GE30,EXACT,188,117,156,135
+1740148,False,458,Acleris macdunnoughi,456,272,429,349,91,458,99,0;300,456,{'observation_identity': 2},complete_query,Acleris macdunnoughi,GEOMETRY_REFERENCE_GE30,EXACT,127,68,112,91
+1739781,False,17,Acleris negundana,17,5,12,9,7,17,99,0,17,{},complete_query,Acleris negundana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,13,4,10,7
+1740389,False,1157,Acleris nivisellana,894,481,743,621,186,900,99,0;428;857,894,{'observation_identity': 6},bounded_3_windows,Acleris nivisellana,GEOMETRY_REFERENCE_GE30,EXACT,200,133,200,186
+1739897,False,19,Acleris semiannula,19,19,19,19,14,19,99,0,19,{},complete_query,Acleris semiannula,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,14,14,14,14
+1739867,False,1362,Acleris semipurpurana,897,604,815,753,200,900,99,0;531;1062,897,{'observation_identity': 3},bounded_3_windows,Acleris semipurpurana,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1861933,False,91,Acosmeryx shervillii,91,63,85,73,34,91,99,0,91,{},complete_query,Acosmeryx shervillii,GEOMETRY_REFERENCE_GE30,EXACT,44,27,39,34
+1874176,False,0,Acrobasis carpinivorella,0,0,0,0,0,0,99,,0,{},complete_query,Acrobasis carpinivorella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1874211,False,841,Acrobasis tumidana,841,775,821,811,200,841,98,0;300;600,841,{},complete_query,Acrobasis tumidana,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1750924,False,200,Acrocercops astericola,200,86,142,126,77,200,99,0,200,{},complete_query,Acrocercops astericola,GEOMETRY_REFERENCE_GE30,EXACT,121,59,91,77
+1751051,False,549,Acrocercops brongniardella,548,361,478,450,200,549,99,0;300,549,{},complete_query,Acrocercops brongniardella,GEOMETRY_REFERENCE_GE30,EXACT,200,178,200,200
+1829533,False,234,Acrolepiopsis assectella,233,168,198,193,74,234,99,0,233,{'observation_identity': 1},complete_query,Acrolepiopsis assectella,GEOMETRY_REFERENCE_GE30,EXACT,93,60,78,74
+1782723,False,0,Acronicta haesitata,0,0,0,0,0,0,99,,0,{},complete_query,Acronicta haesitata,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1782744,False,714,Acronicta retardata,713,296,597,464,200,714,99,0;300;600,713,{'observation_identity': 1},complete_query,Acronicta retardata,GEOMETRY_REFERENCE_GE30,EXACT,200,194,200,200
+1782878,False,84,Acronicta tristis,84,62,79,75,39,84,99,0,84,{},complete_query,Acronicta tristis,GEOMETRY_REFERENCE_GE30,EXACT,46,30,42,39
+1782837,False,1235,Acronicta vinnula,896,281,698,427,165,900,99,0;467;935,896,{'observation_identity': 4},bounded_3_windows,Acronicta vinnula,GEOMETRY_REFERENCE_GE30,EXACT,200,123,200,165
+9972403,False,457,Actias sinensis,456,112,327,197,68,457,99,0;300,457,{},complete_query,Actias sinensis,GEOMETRY_REFERENCE_GE30,EXACT,138,45,95,68
+1792292,False,905,Actinotia polyodon,900,490,749,651,200,900,99,0;302;605,900,{},bounded_3_windows,Actinotia polyodon,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5132446,False,128,Adelpha melanthe,125,92,109,106,64,128,99,0,125,{'observation_identity': 3},complete_query,Adelpha melanthe,GEOMETRY_REFERENCE_GE30,EXACT,73,55,66,64
+5124443,False,145,Aellopos fadus,145,137,144,141,104,145,98,0,145,{},complete_query,Aellopos fadus,GEOMETRY_REFERENCE_GE30,EXACT,106,100,105,104
+5124450,False,420,Aellopos titan,418,398,418,412,200,420,98,0;300,418,{'observation_identity': 2},complete_query,Aellopos titan,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+8869900,False,59,Aethes cnicana,59,18,49,33,29,59,99,0,59,{},complete_query,Aethes cnicana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,45,17,36,29
+1738514,False,310,Aethes hartmanniana,310,269,286,281,124,310,99,0;300,310,{},complete_query,Aethes hartmanniana,GEOMETRY_REFERENCE_GE30,EXACT,147,116,128,124
+1738317,False,90,Aethes rubigana,90,87,89,87,53,90,99,0,90,{},complete_query,Aethes rubigana,GEOMETRY_REFERENCE_GE30,EXACT,56,53,55,53
+1738429,False,267,Aethes tesserana,267,241,250,247,162,267,99,0,267,{},complete_query,Aethes tesserana,GEOMETRY_REFERENCE_GE30,EXACT,172,156,165,162
+1840345,False,45,Agonopterix angelicella,45,27,40,29,17,45,99,0,45,{},complete_query,Agonopterix angelicella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,26,15,21,17
+1840301,False,142,Agonopterix propinquella,142,108,130,121,84,142,99,0,142,{},complete_query,Agonopterix propinquella,GEOMETRY_REFERENCE_GE30,EXACT,98,73,92,84
+1878895,False,3324,Agriphila inquinatella,900,538,705,626,200,900,99,0;1512;3024,900,{},bounded_3_windows,Agriphila inquinatella,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1878939,False,671,Agriphila selasella,671,622,644,636,200,671,99,0;300;600,671,{},complete_query,Agriphila selasella,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1790160,False,0,Agrochola circellaris,0,0,0,0,0,0,99,,0,{},complete_query,Agrochola circellaris,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1939964,False,849,Albuna pyramidalis,849,489,649,584,200,849,99,0;300;600,849,{},complete_query,Albuna pyramidalis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+4527972,False,69,Altenia scriptella,67,46,60,52,37,69,99,0,69,{},complete_query,Altenia scriptella,GEOMETRY_REFERENCE_GE30,EXACT,46,33,43,37
+1859285,False,1263,Amblyptilia acanthadactyla,900,288,633,402,200,900,99,0;481;963,900,{},bounded_3_windows,Amblyptilia acanthadactyla,GEOMETRY_REFERENCE_GE30,EXACT,200,167,200,200
+1959637,False,103,Ametris nitocris,103,90,100,98,61,103,99,0,103,{},complete_query,Ametris nitocris,GEOMETRY_REFERENCE_GE30,EXACT,66,55,63,61
+1814182,False,299,Ammalo helops,296,226,273,256,143,299,99,0,297,{'observation_identity': 2},complete_query,Ammalo helops,GEOMETRY_REFERENCE_GE30,EXACT,162,125,151,143
+1907153,False,1927,Anaea aidea,872,438,571,540,200,900,99,0;813;1627,872,{'observation_identity': 28},bounded_3_windows,Anaea aidea,GEOMETRY_REFERENCE_GE30,EXACT,200,189,200,200
+1789580,False,675,Anarta myrtilli,675,463,627,559,200,675,99,0;300;600,675,{},complete_query,Anarta myrtilli,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1793369,False,389,Anathix puta,388,128,352,283,88,389,99,0;300,388,{'observation_identity': 1},complete_query,Anathix puta,GEOMETRY_REFERENCE_GE30,EXACT,125,65,111,88
+1838228,False,12,Anchinia daphnella,12,6,9,9,8,12,99,0,12,{},complete_query,Anchinia daphnella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,11,5,8,8
+5771259,False,196,Ancylis apicella,196,160,187,177,120,196,99,0,196,{},complete_query,Ancylis apicella,GEOMETRY_REFERENCE_GE30,EXACT,136,109,128,120
+5103201,False,734,Ancylis burgessiana,734,286,647,448,200,734,99,0;300;600,734,{},complete_query,Ancylis burgessiana,GEOMETRY_REFERENCE_GE30,EXACT,200,135,200,200
+5103121,False,272,Ancylis laetana,272,249,267,261,151,272,99,0,272,{},complete_query,Ancylis laetana,GEOMETRY_REFERENCE_GE30,EXACT,160,146,156,151
+5771239,False,116,Ancylis myrtillana,116,39,69,51,45,116,99,0,116,{},complete_query,Ancylis myrtillana,GEOMETRY_REFERENCE_GE30,EXACT,70,34,59,45
+10501190,False,53,Ancylis spiraeifoliana,53,35,41,36,21,53,99,0,53,{},complete_query,Ancylis spiraeifoliana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,32,20,25,21
+5103229,False,136,Ancylis subaequana,136,88,120,108,61,136,99,0,136,{},complete_query,Ancylis subaequana,GEOMETRY_REFERENCE_GE30,EXACT,77,52,70,61
+5771243,False,185,Ancylis unculana,185,160,175,167,103,185,99,0,185,{},complete_query,Ancylis unculana,GEOMETRY_REFERENCE_GE30,EXACT,117,98,107,103
+1862905,False,5,Andriasa contraria,5,5,5,5,3,5,99,0,5,{},complete_query,Andriasa contraria,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,3,3,3,3
+1838422,False,23,Antaeotricha renselariana,23,22,23,23,19,23,99,0,23,{},complete_query,Antaeotricha renselariana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,19,18,19,19
+8007222,False,358,Apamea anceps,358,88,282,170,70,358,99,0;300,358,{},complete_query,Apamea anceps,GEOMETRY_REFERENCE_GE30,EXACT,115,41,92,70
+4534485,False,95,Apamea illyria,95,52,78,60,43,95,99,0,95,{},complete_query,Apamea illyria,GEOMETRY_REFERENCE_GE30,EXACT,62,36,53,43
+1795854,False,455,Apamea lateritia,455,223,341,284,155,455,99,0;300,455,{},complete_query,Apamea lateritia,GEOMETRY_REFERENCE_GE30,EXACT,200,137,186,155
+1796145,False,10463,Apamea monoglypha,900,180,417,268,156,900,99,0;5081;10163,900,{},bounded_3_windows,Apamea monoglypha,GEOMETRY_REFERENCE_GE30,EXACT,200,104,200,156
+7438067,False,329,Apamea remissa,329,180,251,224,141,329,99,0;300,329,{},complete_query,Apamea remissa,GEOMETRY_REFERENCE_GE30,EXACT,200,110,159,141
+1796188,False,414,Apamea unanimis,411,188,286,244,120,414,99,0;300,411,{'observation_identity': 3},complete_query,Apamea unanimis,GEOMETRY_REFERENCE_GE30,EXACT,166,93,139,120
+1796032,False,102,Apamea zeta,102,37,61,45,12,102,99,0,102,{},complete_query,Apamea zeta,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,47,7,21,12
+1804969,False,295,Apantesis vittata,295,228,271,258,161,295,99,0,295,{},complete_query,Apantesis vittata,GEOMETRY_REFERENCE_GE30,EXACT,179,142,170,161
+5131910,False,3871,Apatura iris,900,586,803,706,200,900,99,0;1785;3571,900,{},bounded_3_windows,Apatura iris,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+7588222,False,13,Aphelia unitana,13,9,10,10,10,13,99,0,13,{},complete_query,Aphelia unitana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,12,9,10,10
+1984942,False,2240,Aplocera plagiata,897,489,692,597,200,900,99,0;970;1940,897,{'observation_identity': 3},bounded_3_windows,Aplocera plagiata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1984949,False,925,Aplocera praeformata,900,548,782,729,200,900,99,0;312;625,900,{},bounded_3_windows,Aplocera praeformata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1744724,False,380,Apotomis albeolana,370,210,344,262,78,380,99,0;300,370,{'observation_identity': 10},complete_query,Apotomis albeolana,GEOMETRY_REFERENCE_GE30,EXACT,108,61,96,78
+1744695,False,47,Apotomis funerea,46,35,45,45,26,47,99,0,46,{'observation_identity': 1},complete_query,Apotomis funerea,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,27,22,26,26
+1744709,False,51,Apotomis infida,51,46,51,47,30,51,99,0,51,{},complete_query,Apotomis infida,GEOMETRY_REFERENCE_GE30,EXACT,32,29,32,30
+1744699,False,19,Apotomis inundana,19,13,17,14,10,19,99,0,19,{},complete_query,Apotomis inundana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,15,9,13,10
+1744748,False,5,Apotomis sauciana,5,2,3,2,2,5,99,0,5,{},complete_query,Apotomis sauciana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,2,3,2
+1848219,False,212,Aproaerema anthyllidella,211,68,149,102,66,212,99,0,212,{},complete_query,Aproaerema anthyllidella,GEOMETRY_REFERENCE_GE30,EXACT,132,39,86,66
+1789849,False,96,Archanara dissoluta,96,71,92,81,45,96,99,0,96,{},complete_query,Archanara dissoluta,GEOMETRY_REFERENCE_GE30,EXACT,57,36,53,45
+1850522,False,197,Argolamprotes micella,197,94,166,140,100,197,99,0,197,{},complete_query,Argolamprotes micella,GEOMETRY_REFERENCE_GE30,EXACT,136,67,118,100
+1830152,False,265,Argyresthia brockeella,265,183,234,203,127,265,99,0,265,{},complete_query,Argyresthia brockeella,GEOMETRY_REFERENCE_GE30,EXACT,169,114,146,127
+1830125,False,1373,Argyresthia goedartella,900,347,678,516,200,900,99,0;536;1073,900,{},bounded_3_windows,Argyresthia goedartella,GEOMETRY_REFERENCE_GE30,EXACT,200,185,200,200
+1830206,False,8,Argyresthia semifusca,8,8,8,8,4,8,99,0,8,{},complete_query,Argyresthia semifusca,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,4,4,4
+1830262,False,6,Argyresthia sorbiella,6,3,5,5,4,6,99,0,6,{},complete_query,Argyresthia sorbiella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,3,4,4
+1830284,False,320,Argyresthia thuiella,319,95,179,129,62,320,99,0;300,319,{'observation_identity': 1},complete_query,Argyresthia thuiella,GEOMETRY_REFERENCE_GE30,EXACT,120,47,85,62
+1778555,False,515,Argyrostrotis anilis,515,368,497,457,200,515,99,0;300,515,{},complete_query,Argyrostrotis anilis,GEOMETRY_REFERENCE_GE30,EXACT,200,190,200,200
+1747147,False,988,Argyrotaenia alisellana,896,695,829,795,200,900,99,0;344;688,896,{'observation_identity': 4},bounded_3_windows,Argyrotaenia alisellana,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1979781,False,586,Arichanna melanaria,586,349,540,452,200,586,99,0;300,586,{},complete_query,Arichanna melanaria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1933095,False,11612,Aricia agestis,900,35,110,66,52,900,99,0;5656;11312,900,{},bounded_3_windows,Aricia agestis,GEOMETRY_REFERENCE_GE30,EXACT,200,28,81,52
+5122121,False,199,Aristotelia corallina,199,82,187,139,71,199,99,0,199,{},complete_query,Aristotelia corallina,GEOMETRY_REFERENCE_GE30,EXACT,91,44,83,71
+5122095,False,43,Aristotelia fungivorella,43,38,43,39,32,43,99,0,43,{},complete_query,Aristotelia fungivorella,GEOMETRY_REFERENCE_GE30,EXACT,35,31,35,32
+1851220,False,170,Aroga velocella,170,93,123,115,77,170,98,0,170,{},complete_query,Aroga velocella,GEOMETRY_REFERENCE_GE30,EXACT,97,63,84,77
+1748890,False,136,Aspilapteryx tringipennella,136,53,90,73,46,136,99,0,136,{},complete_query,Aspilapteryx tringipennella,GEOMETRY_REFERENCE_GE30,EXACT,74,33,54,46
+1876854,False,313,Assara terebrella,313,190,269,237,118,313,99,0;300,313,{},complete_query,Assara terebrella,GEOMETRY_REFERENCE_GE30,EXACT,162,101,135,118
+1987744,False,837,Asthena albulata,837,436,755,683,200,837,99,0;300;600,837,{},complete_query,Asthena albulata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1943824,False,157,Astraptes alardus,156,93,147,109,70,157,99,0,156,{'observation_identity': 1},complete_query,Astraptes alardus,GEOMETRY_REFERENCE_GE30,EXACT,85,61,81,70
+7628188,False,259,Ategumia ebulealis,259,251,259,258,144,259,99,0,259,{},complete_query,Ategumia ebulealis,GEOMETRY_REFERENCE_GE30,EXACT,145,141,145,144
+5122230,False,3,Athrips pruinosella,3,3,3,3,3,3,99,0,3,{},complete_query,Athrips pruinosella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,3,3,3,3
+1761865,False,351,Auchmis detersa,351,180,273,203,80,351,99,0;300,351,{},complete_query,Auchmis detersa,GEOMETRY_REFERENCE_GE30,EXACT,134,64,103,80
+1792414,False,481,Autographa bractea,481,366,441,409,200,481,98,0;300,481,{},complete_query,Autographa bractea,GEOMETRY_REFERENCE_GE30,EXACT,200,185,200,200
+1792426,False,518,Autographa jota,518,221,449,377,200,518,99,0;300,518,{},complete_query,Autographa jota,GEOMETRY_REFERENCE_GE30,EXACT,200,126,200,200
+5108417,False,1692,Balsa tristrigella,891,544,800,733,200,900,99,0;696;1392,891,{'observation_identity': 9},bounded_3_windows,Balsa tristrigella,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1852978,False,22,Batrachedra pinicolella,22,22,22,22,10,22,99,0,22,{},complete_query,Batrachedra pinicolella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,10,10,10,10
+1852956,False,207,Batrachedra praeangusta,207,135,183,161,75,207,99,0,207,{},complete_query,Batrachedra praeangusta,GEOMETRY_REFERENCE_GE30,EXACT,105,58,91,75
+1835819,False,745,Bibarrambla allenella,729,369,525,422,137,745,99,0;300;600,729,{'observation_identity': 16},complete_query,Bibarrambla allenella,GEOMETRY_REFERENCE_GE30,EXACT,200,111,174,137
+9473121,False,861,Blastobasis glandulella,861,272,543,398,174,861,99,0;300;600,861,{},complete_query,Blastobasis glandulella,GEOMETRY_REFERENCE_GE30,EXACT,200,126,200,174
+1894268,False,3522,Boloria euphrosyne,899,140,392,291,156,900,99,0;1611;3222,900,{},bounded_3_windows,Boloria euphrosyne,GEOMETRY_REFERENCE_GE30,EXACT,200,67,200,156
+10597291,False,96,Bondia comonana,96,81,88,86,44,96,99,0,96,{},complete_query,Bondia comonana,GEOMETRY_REFERENCE_GE30,EXACT,52,39,46,44
+10014166,False,59,Bucculatrix canadensisella,59,28,42,39,12,59,99,0,59,{},complete_query,Bucculatrix canadensisella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,23,8,15,12
+4535904,False,186,Bucculatrix frangutella,186,114,171,148,104,186,99,0,186,{},complete_query,Bucculatrix frangutella,GEOMETRY_REFERENCE_GE30,EXACT,124,79,116,104
+1751298,False,39,Bucculatrix nigricomella,39,14,38,33,17,39,99,0,39,{},complete_query,Bucculatrix nigricomella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,21,11,20,17
+1751389,False,2,Bucculatrix trifasciella,2,2,2,2,2,2,99,0,2,{},complete_query,Bucculatrix trifasciella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,2,2,2,2
+1947616,False,19,Bungalotis erythus,19,19,19,19,17,19,99,0,19,{},complete_query,Bungalotis erythus,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,17,17,17,17
+1789191,False,2402,Caenurgina crassiuscula,892,637,785,751,200,900,99,0;1051;2102,892,{'observation_identity': 8},bounded_3_windows,Caenurgina crassiuscula,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1890187,False,1218,Calamotropha paludella,900,774,867,812,200,900,99,0;459;918,900,{},bounded_3_windows,Calamotropha paludella,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1749050,False,91,Callisto denticulella,91,64,78,73,62,91,99,0,91,{},complete_query,Callisto denticulella,GEOMETRY_REFERENCE_GE30,EXACT,76,54,66,62
+9053308,False,1259,Callizzia amorata,896,335,609,444,200,900,98,0;479;959,897,{'observation_identity': 3},bounded_3_windows,Callizzia amorata,GEOMETRY_REFERENCE_GE30,EXACT,200,151,200,200
+5108660,False,482,Callopistria latreillei,482,373,480,463,200,482,99,0;300,482,{},complete_query,Callopistria latreillei,GEOMETRY_REFERENCE_GE30,EXACT,200,189,200,200
+5105120,False,627,Caloptilia bimaculatella,627,410,571,509,200,627,99,0;300;600,627,{},complete_query,Caloptilia bimaculatella,GEOMETRY_REFERENCE_GE30,EXACT,200,158,200,200
+5104950,False,27,Caloptilia cornusella,27,20,23,23,15,27,99,0,27,{},complete_query,Caloptilia cornusella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,16,13,15,15
+5105106,False,59,Caloptilia cuculipennella,59,15,50,35,26,59,99,0,59,{},complete_query,Caloptilia cuculipennella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,46,9,38,26
+5105158,False,27,Caloptilia elongella,27,8,22,15,11,27,99,0,27,{},complete_query,Caloptilia elongella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,21,5,16,11
+5104829,False,15,Caloptilia falconipennella,15,10,13,10,9,15,99,0,15,{},complete_query,Caloptilia falconipennella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,14,9,12,9
+5105031,False,226,Caloptilia fraxinella,225,114,137,125,71,226,99,0,226,{},complete_query,Caloptilia fraxinella,GEOMETRY_REFERENCE_GE30,EXACT,101,61,79,71
+5105000,False,2,Caloptilia fribergensis,2,0,0,0,0,2,99,0,2,{},complete_query,Caloptilia fribergensis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,1,0,0,0
+5105124,False,208,Caloptilia packardella,207,169,191,185,103,208,99,0,207,{'observation_identity': 1},complete_query,Caloptilia packardella,GEOMETRY_REFERENCE_GE30,EXACT,116,91,106,103
+5105088,False,64,Caloptilia populetorum,64,52,54,54,40,64,99,0,64,{},complete_query,Caloptilia populetorum,GEOMETRY_REFERENCE_GE30,EXACT,48,38,40,40
+5104781,False,41,Caloptilia rufipennella,41,28,38,35,16,41,99,0,41,{},complete_query,Caloptilia rufipennella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,22,9,19,16
+5104927,False,18,Caloptilia semifascia,18,8,14,10,7,18,99,0,18,{},complete_query,Caloptilia semifascia,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,14,5,11,7
+1748456,False,119,Capua vulgana,119,83,112,96,61,119,99,0,119,{},complete_query,Capua vulgana,GEOMETRY_REFERENCE_GE30,EXACT,76,50,70,61
+4535386,False,0,Carcharodus baeticus,0,0,0,0,0,0,99,,0,{},complete_query,Carcharodus baeticus,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1850026,False,0,Caryocolum amaurella,0,0,0,0,0,0,99,,0,{},complete_query,Caryocolum amaurella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1850045,False,4,Caryocolum cassella,4,4,4,4,4,4,99,0,4,{},complete_query,Caryocolum cassella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,4,4,4
+1850062,False,0,Caryocolum schleichi,0,0,0,0,0,0,99,,0,{},complete_query,Caryocolum schleichi,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1850028,False,11,Caryocolum tischeriella,11,9,11,10,6,11,99,0,11,{},complete_query,Caryocolum tischeriella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,7,5,7,6
+1964195,False,1400,Catarhoe cuculata,900,537,733,659,200,900,99,0;550;1100,900,{},bounded_3_windows,Catarhoe cuculata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1797198,False,360,Catocala andromedae,360,87,308,226,85,360,99,0;300,360,{},complete_query,Catocala andromedae,GEOMETRY_REFERENCE_GE30,EXACT,127,49,109,85
+1797365,False,169,Catocala californica,169,92,147,104,61,169,99,0,169,{},complete_query,Catocala californica,GEOMETRY_REFERENCE_GE30,EXACT,83,51,70,61
+1797285,False,1386,Catocala cara,899,453,690,553,200,900,99,0;543;1086,899,{'observation_identity': 1},bounded_3_windows,Catocala cara,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1797137,False,466,Catocala coccinata,466,330,450,420,191,466,99,0;300,466,{},complete_query,Catocala coccinata,GEOMETRY_REFERENCE_GE30,EXACT,200,147,200,191
+1797556,False,1094,Catocala concumbens,899,496,774,660,200,900,99,0;397;794,899,{'observation_identity': 1},bounded_3_windows,Catocala concumbens,GEOMETRY_REFERENCE_GE30,EXACT,200,184,200,200
+1797210,False,243,Catocala gracilis,243,221,238,232,95,243,99,0,243,{},complete_query,Catocala gracilis,GEOMETRY_REFERENCE_GE30,EXACT,105,87,101,95
+1797122,False,1044,Catocala grynea,899,429,715,598,200,900,99,0;372;744,899,{'observation_identity': 1},bounded_3_windows,Catocala grynea,GEOMETRY_REFERENCE_GE30,EXACT,200,192,200,200
+8874140,False,408,Catocala lacrymosa,408,202,358,295,155,408,99,0;300,408,{},complete_query,Catocala lacrymosa,GEOMETRY_REFERENCE_GE30,EXACT,197,118,180,155
+1797111,False,1767,Catocala micronympha,900,417,731,564,200,900,99,0;733;1467,900,{},bounded_3_windows,Catocala micronympha,GEOMETRY_REFERENCE_GE30,EXACT,200,179,200,200
+1797206,False,317,Catocala praeclara,316,171,289,220,89,317,99,0;300,316,{'observation_identity': 1},complete_query,Catocala praeclara,GEOMETRY_REFERENCE_GE30,EXACT,125,66,113,89
+1797367,False,581,Catocala sponsa,581,419,529,488,200,581,98,0;300,581,{},complete_query,Catocala sponsa,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1862923,False,83,Cautethia spuria,83,48,81,71,18,83,99,0,83,{},complete_query,Cautethia spuria,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,25,12,23,18
+1864201,False,6,Centroctena rutherfordi,6,4,6,5,5,6,99,0,6,{},complete_query,Centroctena rutherfordi,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,6,4,6,5
+1952730,False,38,Ceranemota fasciata,38,18,36,32,16,38,99,0,38,{},complete_query,Ceranemota fasciata,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,21,8,20,16
+5110871,False,170,Cerastis leucographa,170,125,151,142,77,170,99,0,170,{},complete_query,Cerastis leucographa,GEOMETRY_REFERENCE_GE30,EXACT,99,62,84,77
+1941437,False,239,Chamaesphecia empiformis,239,220,236,231,158,239,99,0,239,{},complete_query,Chamaesphecia empiformis,GEOMETRY_REFERENCE_GE30,EXACT,164,149,161,158
+5128764,False,0,Charaxes anticlea,0,0,0,0,0,0,99,,0,{},complete_query,Charaxes anticlea,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+5129216,False,0,Charaxes virilis,0,0,0,0,0,0,99,,0,{},complete_query,Charaxes virilis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+1758839,False,60,Chasmina tibialis,60,21,26,22,19,60,99,0,60,{},complete_query,Chasmina tibialis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,28,18,21,19
+1766741,False,546,Chersotis cuprea,546,202,416,328,150,546,99,0;300,546,{},complete_query,Chersotis cuprea,GEOMETRY_REFERENCE_GE30,EXACT,200,103,196,150
+1962990,False,503,Chesias legatella,503,400,491,475,200,503,99,0;300,503,{},complete_query,Chesias legatella,GEOMETRY_REFERENCE_GE30,EXACT,200,185,200,200
+1883145,False,7,Chilo orichalcociliella,7,3,7,7,7,7,99,0,7,{},complete_query,Chilo orichalcociliella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,7,3,7,7
+1851000,False,11,Chionodes continuella,11,10,11,11,10,11,99,0,11,{},complete_query,Chionodes continuella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,10,9,10,10
+1850923,False,138,Chionodes thoraceochrella,138,90,125,108,59,138,99,0,138,{},complete_query,Chionodes thoraceochrella,GEOMETRY_REFERENCE_GE30,EXACT,78,51,68,59
+5772309,False,931,Chloantha hyperici,900,707,868,787,200,900,99,0;315;631,900,{},bounded_3_windows,Chloantha hyperici,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5123394,False,283,Choreutis diana,283,245,274,269,137,283,99,0,283,{},complete_query,Choreutis diana,GEOMETRY_REFERENCE_GE30,EXACT,148,121,142,137
+11873825,False,4720,Chytolita morbidalis,885,409,651,482,200,900,99,0;2210;4420,887,{'observation_identity': 13},bounded_3_windows,Chytolita morbidalis,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5768880,False,1285,Cidaria fulvata,894,412,805,654,200,900,99,0;492;985,900,{},bounded_3_windows,Cidaria fulvata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1986998,False,1309,Cladara atroliturata,895,609,859,760,200,900,99,0;504;1009,895,{'observation_identity': 5},bounded_3_windows,Cladara atroliturata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1858637,False,1267,Cnaemidophorus rhododactyla,897,637,806,698,200,900,99,0;483;967,897,{'observation_identity': 3},bounded_3_windows,Cnaemidophorus rhododactyla,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1739072,False,14,Cnephasia genitalana,14,14,14,14,2,14,99,0,14,{},complete_query,Cnephasia genitalana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,2,2,2,2
+1739471,False,58,Cochylidia heydeniana,58,58,58,58,28,58,99,0,58,{},complete_query,Cochylidia heydeniana,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,28,28,28,28
+1739449,False,13,Cochylidia rupicola,13,8,11,11,11,13,99,0,13,{},complete_query,Cochylidia rupicola,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,12,8,11,11
+8396242,False,868,Coenonympha dorus,867,56,450,200,83,868,99,0;300;600,868,{},complete_query,Coenonympha dorus,GEOMETRY_REFERENCE_GE30,EXACT,200,30,156,83
+1911168,False,491,Coenonympha hero,491,398,453,445,167,491,99,0;300,491,{},complete_query,Coenonympha hero,GEOMETRY_REFERENCE_GE30,EXACT,185,151,173,167
+5120751,False,5,Coleophora alnifoliae,5,5,5,5,5,5,99,0,5,{},complete_query,Coleophora alnifoliae,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,5,5,5
+5120668,False,4,Coleophora alticolella,4,4,4,4,4,4,99,0,4,{},complete_query,Coleophora alticolella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,4,4,4
+5121634,False,0,Coleophora glitzella,0,0,0,0,0,0,99,,0,{},complete_query,Coleophora glitzella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
+5120675,False,366,Coleophora mayrella,361,335,360,357,200,366,99,0;300,361,{'observation_identity': 5},complete_query,Coleophora mayrella,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5120577,False,206,Coleophora trifolii,205,130,166,146,95,206,99,0,205,{'observation_identity': 1},complete_query,Coleophora trifolii,GEOMETRY_REFERENCE_GE30,EXACT,125,86,103,95
+1851426,False,2,Coleotechnites blastovora,2,0,2,1,1,2,99,0,2,{},complete_query,Coleotechnites blastovora,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,2,0,2,1
+1851407,False,4,Coleotechnites thujaella,4,1,2,1,1,4,99,0,4,{},complete_query,Coleotechnites thujaella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,4,1,2,1
+8203812,False,782,Colias alfacariensis,776,30,149,73,55,782,98,0;300;600,782,{},complete_query,Colias alfacariensis,GEOMETRY_REFERENCE_GE30,EXACT,200,22,95,55
+,,,Colias croceus,,,,,0,,96,,,,,Colias crocea,TAXONOMY_NOT_EXACT,FUZZY,,,,
+5137700,False,136,Colias gigantea,136,84,124,112,27,136,99,0,136,{},complete_query,Colias gigantea,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,37,20,30,27
+,,,,,,,,,,,,,,,Colotis eris,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Conchylodes ovulalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Cosmopterix pulchrimella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Cosmorhoe ocellata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Cosmotriche lobulina,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Crinodes besckei,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Cyaniris semiargus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Cyclophora albipunctata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Cyclophora punctaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Cydia caryana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Cydia strobilella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Deltote uncula,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Depressaria artemisiae,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Depressaria olerella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Depressaria pimpinellae,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Desmia ufeus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Diarsia brunnea,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Diastictis fracturalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Diatraea evanescens,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Dichrorampha acuminatana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Dichrorampha aeratana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Dichrorampha alpinana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Dichrorampha montanana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Dichrorampha petiverella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Dichrorampha plumbana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Dioryctria banksiella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Dioryctria reniculelloides,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Dioryctria schuetzeella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Dioryctria sylvestrella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Donacaula forficella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Donacaula mucronella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Doxocopa pavon,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Drasteria hudsonica,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Dryobotodes eremita,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Dypterygia scabriuscula,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Dyspteris abortivaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Earias clorana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Ecliptopera silaceata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Ectoedemia albifasciella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Ectoedemia sericopeza,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Ectoedemia subbimaculella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Elachista albifrontella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Elachista argentella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Elachista atricomella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Elachista humilis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Elachista luticomella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Elachista subalbidella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Elachista subocellea,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Ellida caniplaga,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Elymiotis longara,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Emarginea percara,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Endothenia marginana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Endothenia nigricostana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Endothenia quadrimaculana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Ennomos quercinaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Entephria multivagata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Entephria nobiliaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Epermenia albapunctella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Ephysteris subdiminutella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Epiblema foenella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Epiblema scutulana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Epinotia abbreviana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Epinotia brunnichana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Epinotia criddleana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Epinotia tedella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Epinotia tetraquetrana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Epiphora rectifascia,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Epirrhoe galiata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Epirrhoe rivata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Episimus argutana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Erebia meolans,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Erebia neoridas,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Erebia tyndarus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eriopsela quadrana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Erygia apicalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eubaphe mendica,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eublemma minima,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eucereon aeolum,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Euchlaena obtusaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Euchloron megaera,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Euchoeca nebulata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eucosma aspidiscana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eucosma cana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eucosma conterminana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eucosma fulvana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eucosma obumbratana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eucrostes disparata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eugraphe sigma,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eulamprotes wilkella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eulithis gracilineata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eumorpha anchemolus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eumorpha labruscae,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eupithecia actaeata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eupithecia casloata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eupithecia conterminata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eupithecia dodoneata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eupithecia gelidata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eupithecia intricata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eupithecia lachrymosa,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eupithecia lanceata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eupithecia ochridata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eupithecia perfusca,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eupithecia selinata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eupithecia tantillaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eupithecia valerianata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eupithecia venosata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Euplagia quadripunctaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eurema albula,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Eusarca confusaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Euscirrhopterus poeyi,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Euthrix potatoria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Euxoa aquilina,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Euxoa plagigera,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Exoteleia dodecella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Fabriciana adippe,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Fabriciana niobe,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Feniseca tarquinius,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Furcula bicuspis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Furcula bifida,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Gelechia nigra,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Gelechia rhombella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Glena nigricaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Gluphisia crenata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Glyphipterix equitella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Glyphipterix simpliciella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Gnophos obfuscata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Gonodonta incurva,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Gonodonta nitidimacula,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Grapholita tenebrosana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Gypsonoma adjuncta,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Gypsonoma sociana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Gypsonoma substitutionis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hadena confusa,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hadena perplexa,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hamearis lucina,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Harrisina americana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hednota longipalpella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Helcystogramma lutatella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hellinsia osteodactylus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hemaris fuciformis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hemistola chrysoprasaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hermeuptychia sosybius,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Heterocampa obliqua,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Heteropterus morpheus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hippotion roseipennis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Holomelina laeta,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Horisme tersata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Horisme vitalbata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hydraecia petasitis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hydrelia inornata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hydriomena impluviata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hydriomena transfigurata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hypatima rhomboidella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hypena baltimoralis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hypena bijugalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hypena californica,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hypena crassalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hypena deceptalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hypena humuli,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hypena proboscidalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hyperaeschra georgica,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hyperstrotia pervertens,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hypoprepia miniata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hypoxystis pluviaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Hyppa rectilinea,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Idaea muricata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Idaea ostrinaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Incurvaria pectinea,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Ipimorpha subtusa,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Isognathus rimosa,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Laeosopis roboris,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Lapara bombycoides,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Ledaea perditalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Leptocneria reducta,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Leucania adjuta,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Leucania comma,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Leucania commoides,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Leucania inconspicua,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Leucania insueta,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Leucania lapidaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Leucania obsoleta,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Leuconycta diphteroides,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Levipalpus hepatariella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Ligdia adustata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Lithacodia muscosula,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Lithophane furcifera,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Lithophane patefacta,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Lomographa glomeraria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Luperina testacea,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Lygephila pastinum,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Lytrosis unitaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Macrochilo litophora,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Macroglossum stellatarum,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Marathyssa inficita,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Meganola minuscula,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Meganola strigula,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Melanthia procellata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Melipotis fasciolaris,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Melipotis indomita,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Melipotis januaris,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Melipotis perpendicularis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Memphis artacaena,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Meroptera abditiva,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Mesapamea didyma,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Mesoligia furuncula,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Metalectra quadrisignata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Metzneria metzneriella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Micrurapteryx kollariella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Micrurapteryx salicifoliella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Mompha conturbatella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Mompha eloisella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Mompha raschkiella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Mompha terminella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Monochroa conspersella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Monochroa lucidella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Monochroa lutulentella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Monochroa tenebrella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Mythimna straminea,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Mythimna turca,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Nascus broteas,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Neofaculta ericetella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Neofaculta infernella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Neofriseria peliella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Nephele aequivalens,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Nerice bidentata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Noctua comes,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Nonagria typhae,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Nothris verbascella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Notocelia purpurissatana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Notocelia rosaecolana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Notodonta torva,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Notodonta tritophus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Nycteola cinereana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Nystalea superciliosa,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Ochsenheimeria urella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Odezia atrata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Odontosia carmelita,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Odontosia elegans,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Oeneis glacialis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Olethreutes atrodentana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Olethreutes bipartitana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Olethreutes fasciatana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Olethreutes tilianum,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Oligia strigilis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Opostega salaciella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Ortilia ithra,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Oxyptilus pilosellae,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pachylia ficus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Paectes abrostoloides,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Palpita flegia,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Palpita unionalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Palpita vitrealis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Panemeria tenebrata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Panopoda carneicosta,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Panthea coenobita,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Papaipema baptisiae,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Papaipema pterisii,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Parapediasia teterrellus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Parapoynx allionealis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Parapoynx badiusalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Parapoynx stratiotata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Paraswammerdamia conspersella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Paraswammerdamia lapponica,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Parectopa plantaginisella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Parornix anglicella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Parornix conspicuella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Parornix devoniella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Parornix finitimella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Parornix scoticella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Parornix torquillella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Parornix vicinella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Patalene olyzonaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pediasia aridella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pediasia trisecta,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pempelia palumbella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pempeliella ornatella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pennisetia hylaeiformis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Perconia strigillaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Peribatodes secundaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Perizoma albulata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Perizoma alchemillata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Perizoma flavofasciata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Perizoma hydrata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Persectania dyscrita,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pexicopia malvella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phaecasiophora niveiguttana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phalaenostola larentioides,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pheosia portlandia,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pheosia tremula,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Philereme vetulata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phoberia atomaris,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Photedes minima,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyciodes batesii,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phycita roborella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phycitodes binaevella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phycitodes maritima,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllocnistis ampelopsiella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllocnistis insignis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllocnistis populiella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllocnistis saligna,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter acerifoliella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter apparella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter cerasicolella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter clemensella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter comparella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter delitella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter distentella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter emberizaepenella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter harrisella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter heegeriella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter insignitella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter lantanella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter lautella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter maestingella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter muelleriella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter nicellii,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter oxyacanthae,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter parisiella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter quercifoliella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter rajella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter roboris,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter schreberella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter stettinensis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter strigulatella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter tenerella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter trifasciella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter tristrigella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyllonorycter ulmifoliella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phyprosopus callitrichoides,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Phytometra viridaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pilocrocis ramentalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Platyptilia calodactyla,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Platyptilia gonodactyla,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Platyptilia tesseradactyla,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Plutella porrectella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pococera maritimalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Polygonia egea,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Polygrammate hebraeicum,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Polypogon tentacularia,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Polythrix caunus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Polythrix octomaculata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Probole alienaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Prolita solutella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Proteoteras moffatiana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Protorthodes oviduca,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Psara obscuralis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pseudaletia sequax,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pseudexentera oregonana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pseudopanthera macularia,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pseudophilotes baton,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pseudorthodes vecors,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pterapherapteryx sexalata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pygmaena fusca,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pygospila tyres,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pyrausta despicata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pyrausta tyralis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pyreferra pettiti,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pyronia bathseba,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pyronia cecilia,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pyropteron chrysidiformis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Pyrrhogyra neaerea,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Quinta cannae,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Renia adspergillus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Rhagades pruni,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Rhigognostis incarnatella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Rhizedra lutosa,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Rhodophaea formosa,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Rhopobota stagnana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Sabulodes arge,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Salbia haemorrhoidalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Satyrus ferula,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Schreckensteinia festaliella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Sciota hostilis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Scoparia subfusca,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Scopula inductata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Scopula ornata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Scopula ternata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Scrobipalpa artemisiella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Scrobipalpa samadensis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Scrobipalpula tussilaginis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Scythris noricella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Selidosema brunnearia,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Semioscopis avellanella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Semioscopis steinkellneriana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Siderone galanthis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Sitochroa palealis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Sonia canadana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Sophronia semicostella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Sorhagenia janiszewskae,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Sorhagenia rhamniella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Spargaloma sexpunctata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Spargania magnoliata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Spathilepia clonius,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Speyeria aglaja,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Speyeria aphrodite,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Speyeria mormonia,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Sphecodina abbottii,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Spilosoma congrua,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Spilosoma glatignyi,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stangeia xerodes,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Staphylus azteca,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stathmopoda aenea,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Staurophora celsia,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stenoporpia separataria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stenoptilia pterodactyla,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stenoptilia zophodactylus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stictea mygindiana,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stigmella anomalella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stigmella betulicola,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stigmella glutinosae,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stigmella lapponica,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stigmella luteella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stigmella rhamnicola,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stigmella rosaefoliella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stigmella salicis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stigmella samiatella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stigmella slingerlandella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Stigmella tityrella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Swammerdamia compunctella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Sympistis zetterstedtii,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Syngrapha viridisigma,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Syssphinx colla,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Tacparia detersata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Tarachidia erastrioides,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Teleiodes luculella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Telphusa longifasciella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Temenis laothoe,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Tethea ocularis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Tethea or,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Thalera fimbrialis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Thera obeliscata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Thiotricha subocellea,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Tholera decimalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Thymelicus acteon,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Tischeria ekebladella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Titaea tamerlan,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Tortricodes alternella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Traminda mundissima,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Trichodezia albovittata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Tricholita signata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Trifurcula eurema,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Trifurcula subnitidella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Triodia sylvina,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Udea decrepitalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Udea itysalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Ufeus satyricus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Urbanus simplicius,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Watsonalla binaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Xanthorhoe abrasaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Xanthorhoe spadicearia,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Xenophanes tryxus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Xestia badicollis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Xestia castanea,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Xestia dolosa,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Xestia triangulum,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Xylophanes pluto,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Xystophora pulveratella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Yponomeuta irrorella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Ypsolopha asperella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Zale galbanata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Zale metatoides,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Zale obliqua,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Zelleria haimbachi,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+,,,,,,,,,,,,,,,Zophodia grossulariella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
