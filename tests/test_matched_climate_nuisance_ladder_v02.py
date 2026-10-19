@@ -23,8 +23,10 @@ def test_same_references_produce_zero_host_minus_insect_change():
     cloud=rng.normal(size=(70,4))
     q=matched_metrics(current,current+shift,cloud,cloud,np.arange(50)/10,'Identical clouds',0)
     assert q['relative_host_minus_self']==pytest.approx(0.,abs=1e-12)
-    assert q['unique_before_geography'] is not None
-    assert q['unique_history_fraction']==pytest.approx(0.,abs=1e-12)
+    # Because host and self are identical, both control matrices have
+    # collinear columns; the unique fraction is not identifiable.
+    assert q['unique_before_geography'] is None
+    assert q['unique_history_fraction'] is None
 
 def test_added_geo_removes_designed_nuisance():
     rng=np.random.default_rng(44);n=100
