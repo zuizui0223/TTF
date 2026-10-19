@@ -1,0 +1,106 @@
+name: TTF separate v02 shallow year-bin host observations
+on:
+  push:
+    branches: [exploratory/lgm-external-insect-reference-20261019-v01]
+    paths:
+      - .github/workflows/lgm-host-yearstrat-v02.yml
+      - scripts/acquire_hosts_yearstrat_v02.py
+      - tests/test_host_yearstrat_binned_v02.py
+      - docs/supporting/lgm_host_reference_yearstrat_transport_v02.json
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: ttf-host-yearstrat-v02-transport
+  cancel-in-progress: false
+jobs:
+  acquire-response-free-hosts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test v02 shallow windows and inherited v01 taxonomy/transport
+        run: |
+          set -euo pipefail
+          python -m pip install 'numpy>=1.26,<3' 'scipy>=1.13,<2' 'requests>=2.31,<3' 'pytest>=8,<9'
+          python -m pytest -q tests/test_host_yearstrat_binned_v02.py tests/test_host_reference_continuation.py tests/test_lgm_external_references.py tests/test_reference_checkpoint.py
+      - name: Check source and 518-taxon v02 freeze without querying biology
+        run: |
+          set -euo pipefail
+          echo 'a28fba9efa8a9dc79c162336f62c883059c5dddbfabec2861f554d038dd98044  benchmarks/exploratory/lgm_external_reference_v01/host_reference_request_manifest.csv' | sha256sum -c -
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          c=json.loads(Path('docs/supporting/lgm_host_reference_yearstrat_transport_v02.json').read_text())
+          assert c['status']=='EXPLORATORY_SAMPLING_SPECIFICATION_FROZEN_BEFORE_V02_NEW_HOST_OBSERVATION_RESULT'
+          assert c['original_manifest_sha256']=='a28fba9efa8a9dc79c162336f62c883059c5dddbfabec2861f554d038dd98044'
+          assert c['source']['offset']==0 and c['source']['limit_per_bin']==300
+          assert c['source']['years']==[[2010,2015],[2016,2020],[2021,2026]]
+          assert c['required_science_firewall']['genetic_response_used'] is False
+          assert c['required_science_firewall']['v01_v02_observations_automatically_combined'] is False
+          print('PASS_FROZEN_V02_SHALLOW_YEAR_BINS_AND_RESPONSE_FIREWALL')
+          PYTHON
+          python scripts/acquire_hosts_yearstrat_v02.py \
+            --manifest benchmarks/exploratory/lgm_external_reference_v01/host_reference_request_manifest.csv \
+            --original-plan benchmarks/exploratory/lgm_host_reference_v01/host_acquisition_plan.json \
+            --out benchmarks/exploratory/lgm_host_reference_yearstrat_v02/
+      - name: Query bounded modern GBIF host records with shallow year windows
+        run: |
+          set -euo pipefail
+          python -u scripts/acquire_hosts_yearstrat_v02.py \
+            --manifest benchmarks/exploratory/lgm_external_reference_v01/host_reference_request_manifest.csv \
+            --original-plan benchmarks/exploratory/lgm_host_reference_v01/host_acquisition_plan.json \
+            --out benchmarks/exploratory/lgm_host_reference_yearstrat_v02/ \
+            --max-seconds 1700 --execute
+      - name: Validate separate v02 checkpoint counts and record receipt
+        run: |
+          set -euo pipefail
+          python - <<'PYTHON'
+          import json,hashlib,os
+          from pathlib import Path
+          out=Path('benchmarks/exploratory/lgm_host_reference_yearstrat_v02')
+          q=json.loads((out/'summary.json').read_text())
+          assert q['schema']=='ttf_external_host_yearstrat_v0.2_result'
+          assert q['attempted_taxa']+q['pending_taxa']==518
+          assert sum(q['status_counts'].values())==518
+          assert q['binding']['not_equivalent_to_v01'] is True
+          assert q['old_v01_result_mixed'] is False
+          assert q['native_range_filter_applied'] is False
+          assert q['spatial_filter_applied'] is False
+          assert q['climate_or_genetic_response_used'] is False
+          receipt={'schema':'ttf_host_yearstrat_v02_exploratory_source_receipt',
+            'run_id':os.environ['GITHUB_RUN_ID'],
+            'code_sha':os.environ['GITHUB_SHA'],
+            'new_sampling_scheme':'three_shallow_year_bins_offset_zero',
+            'attempted_taxa':q['attempted_taxa'],'pending_taxa':q['pending_taxa'],
+            'summary_sha256':hashlib.sha256((out/'summary.json').read_bytes()).hexdigest(),
+            'legacy_host_sample_mixed':False,'genetic_response_used':False}
+          (out/('execution_receipt_'+os.environ['GITHUB_RUN_ID']+'.json')).write_text(
+            json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          print(json.dumps({k:v for k,v in q.items() if k not in ('pending_ids','binding')},sort_keys=True))
+          PYTHON
+      - name: Preserve source-bound v02 checkpoints without touching original v01
+        run: |
+          set -euo pipefail
+          git fetch origin "${{ github.ref_name }}"
+          test "$(git rev-parse FETCH_HEAD)" = "${{ github.sha }}"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add benchmarks/exploratory/lgm_host_reference_yearstrat_v02/
+          git commit -m 'Archive separate year-stratified shallow modern plant observations v0.2'
+          git push origin "HEAD:${{ github.ref_name }}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ttf-modern-host-shallow-yearstrat-v02
+          path: benchmarks/exploratory/lgm_host_reference_yearstrat_v02/
+          retention-days: 30
+          if-no-files-found: warn
