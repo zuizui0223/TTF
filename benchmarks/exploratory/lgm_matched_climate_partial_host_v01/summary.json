@@ -1,0 +1,22 @@
+{
+  "climate_status_counts": {
+    "COMPLETE_DESCRIPTIVE": 90
+  },
+  "climate_success": 90,
+  "draws_per_species": 32,
+  "fraction_host_delta_exceeds_insect": 0.18888888888888888,
+  "host_pending_taxa": 505,
+  "insect_panel": 641,
+  "interpretation_boundaries": [
+    "not confirmation; genetic responses forbidden",
+    "modern plant climate does not establish native or LGM occupied hosts",
+    "partial high-coverage host sample is not representative of all 518 host taxa",
+    "32 draws are dependent sampling perturbations, not confidence intervals",
+    "relative climate scores can be affected by observational reference selection"
+  ],
+  "matched_geometry_species": 90,
+  "median_unique_history_fraction": 0.03775274566722114,
+  "schema": "ttf_partial_host_matched_climate_diagnostic_v0.1",
+  "source_host_taxa": 12,
+  "status": "EXPLORATORY_ECOLOGICAL_INFORMATION_NOT_GENETIC_RESPONSE"
+}
