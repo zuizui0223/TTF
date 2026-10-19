@@ -2,7 +2,10 @@ name: TTF v05 actual host versus climate-matched unlisted plant LGM comparison
 on:
   push:
     branches: [exploratory/lgm-matched-alternative-plants-v05]
-    paths: [.github/workflows/lgm-unlistedplant-LGM-v05.yml]
+    paths:
+      - .github/workflows/lgm-unlistedplant-LGM-v05.yml
+      - scripts/score_matched_alternative_plants_v05.py
+      - tests/test_score_alt_plants_v05.py
   workflow_dispatch:
 permissions:
   contents: read
