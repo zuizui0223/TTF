@@ -14,9 +14,12 @@ import hashlib
 import importlib.util
 import json
 import math
+import os
+import inspect
+import tempfile
 import time
 from collections import Counter, defaultdict
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from datetime import date, datetime, timezone
 from pathlib import Path
 from urllib.parse import urlparse
@@ -170,10 +173,133 @@ def acquire_one(name,support):
     finally: session.close()
     return summary,points,ledger
 
+
+
+def _canonical_json(value):
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False).encode('utf-8')
+
+
+def _validate_saved_result(name, result):
+    if not isinstance(result, (tuple, list)) or len(result) != 3:
+        raise ValueError('checkpoint result must contain summary, points, ledger')
+    summary, points, ledger = result
+    statuses = {'REQUEST_ERROR','TAXONOMY_NOT_EXACT','GEOMETRY_REFERENCE_GE30','INSUFFICIENT_IN_RETRIEVED_REFERENCE'}
+    if summary.get('species') != name or summary.get('status') not in statuses:
+        raise ValueError('checkpoint species or status mismatch')
+    if not isinstance(points, list) or not isinstance(ledger, list):
+        raise ValueError('invalid checkpoint points or request ledger')
+    if any(point.get('species') != name for point in points):
+        raise ValueError('checkpoint point species mismatch')
+    if summary.get('external_reference_points_50km') != len(points):
+        raise ValueError('checkpoint point count mismatch')
+    if summary['status'] == 'GEOMETRY_REFERENCE_GE30' and len(points) < 30:
+        raise ValueError('checkpoint support status contradicts count')
+    return list(result)
+
+
+def _checkpoint_path(directory, name):
+    return Path(directory) / (hashlib.sha256(name.encode('utf-8')).hexdigest()+'.json')
+
+
+def _save_checkpoint(directory, name, binding, result):
+    result = _validate_saved_result(name, result)
+    payload = {'schema':'ttf_external_reference_species_checkpoint_v0.1',
+               'species':name, 'binding':binding, 'result':result,
+               'result_sha256':hashlib.sha256(_canonical_json(result)).hexdigest()}
+    target = _checkpoint_path(directory, name)
+    fd, temporary = tempfile.mkstemp(prefix='.partial-', dir=directory)
+    try:
+        with os.fdopen(fd, 'wb') as handle:
+            handle.write(_canonical_json(payload)+b'\n')
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, target)
+    finally:
+        if os.path.exists(temporary): os.unlink(temporary)
+    return result
+
+
+def _load_checkpoint(directory, name, binding):
+    path = _checkpoint_path(directory, name)
+    if not path.exists(): return None
+    payload = json.loads(path.read_text(encoding='utf-8'))
+    if (payload.get('schema') != 'ttf_external_reference_species_checkpoint_v0.1'
+            or payload.get('binding') != binding):
+        raise ValueError('checkpoint input binding mismatch')
+    if payload.get('species') != name:
+        raise ValueError('checkpoint species mismatch')
+    if hashlib.sha256(_canonical_json(payload['result'])).hexdigest() != payload.get('result_sha256'):
+        raise ValueError('checkpoint result digest mismatch')
+    return _validate_saved_result(name, payload['result'])
+
+
+def checkpointed_acquisition(names, support, directory, binding, acquire, *,
+                            workers=4, max_new_species=None, max_seconds=None):
+    """Resume only unattempted taxa; successful AND failed attempts are immutable.
+
+    This controls transport, not ecological eligibility. A soft deadline stops
+    submitting new taxa and lets the at-most-four active taxa finish their
+    original bounded retry rule. Finished species are persisted inside workers,
+    even if another worker raises. A corrupted/source-mismatched cache is fatal.
+    """
+    names = list(names)
+    if len(names) != len(set(names)): raise ValueError('duplicate species')
+    if not 1 <= workers <= 4: raise ValueError('workers must remain between 1 and 4')
+    if max_new_species is not None and max_new_species < 0:
+        raise ValueError('negative batch size')
+    if max_seconds is not None and max_seconds <= 0: raise ValueError('invalid soft deadline')
+    directory = Path(directory); directory.mkdir(parents=True, exist_ok=True)
+    completed = {}
+    for name in names:
+        cached = _load_checkpoint(directory, name, binding)
+        if cached is not None: completed[name] = cached
+    todo = [name for name in names if name not in completed]
+    if max_new_species is not None: todo = todo[:max_new_species]
+    remaining = iter(todo)
+    start = time.monotonic()
+    def worker(name):
+        result = acquire(name, support[name])
+        return _save_checkpoint(directory, name, binding, result)
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        active = {}
+        def submit_next():
+            if max_seconds is not None and time.monotonic()-start >= max_seconds: return False
+            name = next(remaining, None)
+            if name is None: return False
+            active[pool.submit(worker, name)] = name
+            return True
+        for _ in range(workers): submit_next()
+        while active:
+            done, _ = wait(active, return_when=FIRST_COMPLETED)
+            for future in done:
+                name = active.pop(future)
+                completed[name] = future.result()
+            print(json.dumps({'checkpointed_species':len(completed),'panel_species':len(names),
+                              'status_counts':dict(Counter(r[0]['status'] for r in completed.values()))}), flush=True)
+            for _ in done: submit_next()
+    return [completed[n] for n in names if n in completed], [n for n in names if n not in completed]
+
+
+def panel_summary_rows(names, completed):
+    mapping = {row[0]['species']:row[0] for row in completed}
+    return [mapping.get(n, {'species':n,'status':'NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT'}) for n in names]
+
+
+def acquisition_code_fingerprint():
+    # Binding is invariant to checkpoint/export-only changes, not to query,
+    # filtering, thinning, retry, or taxonomy changes.
+    functions = (window_offsets,unit_vectors,nearest_km,accepted_key,clean_record,thin_records,get_json,acquire_one)
+    return hashlib.sha256(('\n'.join(inspect.getsource(f) for f in functions)+
+        json.dumps({'dataset':DATASET,'earth_km':EARTH_KM,'buffers':BUFFERS,
+                    'fatal_issues':sorted(FATAL_ISSUES)},sort_keys=True)).encode()).hexdigest()
+
+
 def main():
     ap=argparse.ArgumentParser()
     for name in ('candidates','localities','edges','contract','output'):
         ap.add_argument('--'+name,type=Path,required=True)
+    ap.add_argument('--max-new-species',type=int,default=None)
+    ap.add_argument('--max-seconds',type=float,default=None)
     args=ap.parse_args(); args.output.mkdir(parents=True,exist_ok=True)
     contract=json.loads(args.contract.read_text())
     if (contract['schema']!='ttf_external_insect_reference_v0.1' or contract['buffers_km']!=list(BUFFERS)
@@ -209,16 +335,15 @@ def main():
         for name,host_id in zip(hs,ids): host_manifest.append({'insect_species':r['species'].strip(),'accepted_host_name':name,'wcvp_id_as_frozen':host_id})
     with (args.output/'host_reference_request_manifest.csv').open('w',newline='') as f:
         w=csv.DictWriter(f,fieldnames=list(host_manifest[0]));w.writeheader();w.writerows(host_manifest)
-    results=[];all_points=[];all_ledger=[]
-    with ThreadPoolExecutor(max_workers=4) as pool:
-        future={pool.submit(acquire_one,name,support[name]):name for name in names}
-        for item in as_completed(future):
-            name=future[item]; summary,points,ledger=item.result()
-            results.append(summary);all_points.extend(points)
-            all_ledger.extend({'species':name,**r} for r in ledger)
-            if len(results)%20==0 or len(results)==641:
-                print(json.dumps({'attempted':len(results),'of':641,'status_counts':dict(Counter(r['status'] for r in results)),
-                                  'external_points_50km':len(all_points)}),flush=True)
+    binding=dict(contract_sha256=digest(args.contract), source_hashes=SOURCE_HASHES,
+                 species_sha256=names_sha,original_quadrature_module_sha256=digest(module_path),
+                 acquisition_code_sha256=acquisition_code_fingerprint())
+    completed,pending=checkpointed_acquisition(names,support,args.output/'checkpoints',binding,acquire_one,
+                         workers=4,max_new_species=args.max_new_species,max_seconds=args.max_seconds)
+    results=panel_summary_rows(names,completed); all_points=[];all_ledger=[]
+    for item,points,ledger in completed:
+        all_points.extend(points)
+        all_ledger.extend({'species':item['species'],**r} for r in ledger)
     results.sort(key=lambda r:r['species']);all_points.sort(key=lambda r:(r['species'],r['gbif_id']))
     fields=sorted(set().union(*(r.keys() for r in results)))
     with (args.output/'all_641_species_external_reference.csv').open('w',newline='',encoding='utf-8') as f:
@@ -230,8 +355,10 @@ def main():
     key_groups=defaultdict(list)
     for r in results:
         if r.get('accepted_species_key'): key_groups[str(r['accepted_species_key'])].append(r['species'])
-    summary=dict(schema='ttf_external_insect_reference_result_v0.1',status='ACQUISITION_COMPLETE_WITH_EXPLICIT_FAILURE_STATES',
-        attempted_species=len(results),original_candidate_species=642,previous_nonfinite_species_excluded='Polyommatus coridon',
+    summary=dict(schema='ttf_external_insect_reference_result_v0.1',status='ACQUISITION_PARTIAL_WITH_CHECKPOINTS' if pending else 'ACQUISITION_COMPLETE_WITH_EXPLICIT_FAILURE_STATES',
+        pending_species=len(pending),pending_species_names=pending,
+        checkpoint_binding=binding,
+        attempted_species=len(completed),original_candidate_species=642,previous_nonfinite_species_excluded='Polyommatus coridon',
         species_sha256=names_sha,contract_sha256=digest(args.contract),source_hashes=SOURCE_HASHES,
         original_quadrature_module_sha256=digest(module_path),dataset_key=DATASET,
         completed_at=datetime.now(timezone.utc).isoformat(),status_counts=dict(Counter(r['status'] for r in results)),
