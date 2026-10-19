@@ -18278,5 +18278,685 @@
     "species": "Trifurcula subnitidella",
     "status": 200,
     "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5769827&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "c0ff149e4b1f7371635686cd501bd74c18123121f76a8c612dd1602e9ae09d9c",
+    "retrieved_at": "2026-10-19T04:08:03.902242+00:00",
+    "species": "Triodia sylvina",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Triodia+sylvina&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "52462a297fcb455728b4985863de0ab5a1b62c75ee56fd54d39b976c0b850e2e",
+    "retrieved_at": "2026-10-19T04:08:04.324377+00:00",
+    "species": "Triodia sylvina",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=6097236&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "0cd6d63a81168112cf53adc8b3c273b670da9105ff8a47c7d8273a3d645e212c",
+    "retrieved_at": "2026-10-19T04:08:05.925938+00:00",
+    "species": "Triodia sylvina",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=6097236&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "7137704b852b719e5fd71e3c90af91f7fd945ed5c02723da89695ea9d9174e5a",
+    "retrieved_at": "2026-10-19T04:08:06.479753+00:00",
+    "species": "Triodia sylvina",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=6097236&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=6261&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "e96fcbedfba1362926e5d951ddef88ca1e2b072c2d89ae76131a28cc7a764703",
+    "retrieved_at": "2026-10-19T04:16:03.237369+00:00",
+    "species": "Triodia sylvina",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=6097236&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=12523&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "9160a297343d20b134d39cffdd4121f88d51aab9abd5e55756c13a8b785c1dd9",
+    "retrieved_at": "2026-10-19T04:08:03.919844+00:00",
+    "species": "Udea decrepitalis",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Udea+decrepitalis&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "f638e6d073c7716b782957d5a1072b53d8930efc10689d5c7749968253db290e",
+    "retrieved_at": "2026-10-19T04:08:04.345783+00:00",
+    "species": "Udea decrepitalis",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=4532088&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "99752a4c0387e9781a8f3f804126314c29926b8b70fff2a0e342e3252fd63b60",
+    "retrieved_at": "2026-10-19T04:08:05.547607+00:00",
+    "species": "Udea decrepitalis",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=4532088&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "a319673dc31f92ef554fa856228aa2f2b50217e36d05babab132ea564962e94e",
+    "retrieved_at": "2026-10-19T04:08:03.874670+00:00",
+    "species": "Udea itysalis",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Udea+itysalis&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "a26f9678361204a50e914e0f3fa672158090c91e423d8cafb1e77e23b083a9b8",
+    "retrieved_at": "2026-10-19T04:08:04.321418+00:00",
+    "species": "Udea itysalis",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1887150&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "a8d954821b9ccbfd614c80b8486a75529c662c22e8eb89e0bd1966b28b83afa3",
+    "retrieved_at": "2026-10-19T04:08:04.983541+00:00",
+    "species": "Udea itysalis",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1887150&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "1f46523d956721dfe07883d1e9bff33c918d60b0a686892fc8415e0d4043a3db",
+    "retrieved_at": "2026-10-19T04:08:03.923982+00:00",
+    "species": "Ufeus satyricus",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Ufeus+satyricus&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "d35a2097733e81da0a00d42e1e5fce799d689bd082a1992f64f83c25c9771b50",
+    "retrieved_at": "2026-10-19T04:08:04.338514+00:00",
+    "species": "Ufeus satyricus",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1793419&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "66af19e961cf72d16730de9c09e2a2554fb98eed25ace460b96c6c038fb56f4a",
+    "retrieved_at": "2026-10-19T04:08:05.964515+00:00",
+    "species": "Ufeus satyricus",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1793419&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "5e8ca59055f9daf6565b341f8eec4e6794a60fd4177c4e838d921978542d36e5",
+    "retrieved_at": "2026-10-19T04:08:06.524322+00:00",
+    "species": "Ufeus satyricus",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1793419&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=300&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "cf42b1d9f5950639328a7b0d9e8e78c3f0a85e270ab6bbc975aa96d81f53de89",
+    "retrieved_at": "2026-10-19T04:08:05.380164+00:00",
+    "species": "Urbanus simplicius",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Urbanus+simplicius&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "982f8abc647314d77f940d27a4ab689684ea368f6a525a80610e87b9918a5ffa",
+    "retrieved_at": "2026-10-19T04:08:05.545528+00:00",
+    "species": "Urbanus simplicius",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1944343&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "f543e9b0d8b1aa00e0d17e20fbb38aeb60d10544c8d5103a0e48b97bdaecc7fe",
+    "retrieved_at": "2026-10-19T04:08:07.100342+00:00",
+    "species": "Urbanus simplicius",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1944343&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "b91d525b6b5f747382bcad268c38333e37961e9c5020b268136f535794505b6c",
+    "retrieved_at": "2026-10-19T04:08:07.650185+00:00",
+    "species": "Urbanus simplicius",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1944343&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=300&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "1570c0de7a91cbfbe7e24749b505f719fbb815196bfdef9d383cc8cdce1cc0b5",
+    "retrieved_at": "2026-10-19T04:08:05.952373+00:00",
+    "species": "Watsonalla binaria",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Watsonalla+binaria&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "fa2677b2a12199c805ace4c1982fcc1ac43723da61a88c228fd0a4c880af7a12",
+    "retrieved_at": "2026-10-19T04:08:06.112954+00:00",
+    "species": "Watsonalla binaria",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1952806&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "dbb59f07d541f2627dbf613d0bdc1e3d0762d2bf10959cb2853d6701093dcd06",
+    "retrieved_at": "2026-10-19T04:08:07.594746+00:00",
+    "species": "Watsonalla binaria",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1952806&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "9a54245e4ce881eb140f3f70008d644a47c906d271f22ce4fa99afd7ba80c528",
+    "retrieved_at": "2026-10-19T04:08:08.290509+00:00",
+    "species": "Watsonalla binaria",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1952806&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=1786&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "4de05cc68d3844386386012646e7fb3884fec71d502d3ed9c4c7471a395e36d3",
+    "retrieved_at": "2026-10-19T04:08:08.844373+00:00",
+    "species": "Watsonalla binaria",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1952806&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=3572&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "924fcae458eba420de71b7410da4a9869ef988f7403ef5b988ae3bb67f7670a6",
+    "retrieved_at": "2026-10-19T04:08:06.954203+00:00",
+    "species": "Xanthorhoe abrasaria",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Xanthorhoe+abrasaria&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "098d7e85c06c8c0dc7a5bdfb70aa0010600f96dd1fdaf84507a9cfdf6461d84e",
+    "retrieved_at": "2026-10-19T04:08:07.101902+00:00",
+    "species": "Xanthorhoe abrasaria",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1986623&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "d6e590d28a9561db5dc63f01a8dfbd7cecb38b6347f48781bd7a24511ce3d7bd",
+    "retrieved_at": "2026-10-19T04:08:08.135927+00:00",
+    "species": "Xanthorhoe abrasaria",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1986623&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "941d884d7af856ed84141e01e869761cc66930651984814ef23ee3c217977016",
+    "retrieved_at": "2026-10-19T04:08:08.447475+00:00",
+    "species": "Xanthorhoe spadicearia",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Xanthorhoe+spadicearia&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "1b2180ef0308c6403d2020cece49b8fe8a415fab14c094d13872091dcc5555d2",
+    "retrieved_at": "2026-10-19T04:08:08.888246+00:00",
+    "species": "Xanthorhoe spadicearia",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1986166&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "7d4d2c83e5cc11d447d46447bf11f1fbb9354f9a44e95b5ddcb0bfb5e743a0ce",
+    "retrieved_at": "2026-10-19T04:08:10.285789+00:00",
+    "species": "Xanthorhoe spadicearia",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1986166&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "570b0f110cb0ae89365820cae96fc61b74f91718cad3158275627ee58ac844eb",
+    "retrieved_at": "2026-10-19T04:08:10.984739+00:00",
+    "species": "Xanthorhoe spadicearia",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1986166&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=660&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "fc93ffdb8aa6295bcc21c91bae4b9efa7de690d7751117d96b56d3c4fa8a2520",
+    "retrieved_at": "2026-10-19T04:08:11.662150+00:00",
+    "species": "Xanthorhoe spadicearia",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1986166&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=1320&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "f11448ffc9e8a6b02670463997b9a0c049c46f435bba9101c0fcdd4b885b551d",
+    "retrieved_at": "2026-10-19T04:08:08.582280+00:00",
+    "species": "Xenophanes tryxus",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Xenophanes+tryxus&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "1c0950775e2ce798e786b059b41ca40eef884f694b5badb43a8afd0fece814eb",
+    "retrieved_at": "2026-10-19T04:08:08.907648+00:00",
+    "species": "Xenophanes tryxus",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5141662&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "092c8070f07129829712b0699ebeb3caa263273975578320eda0d6575157545a",
+    "retrieved_at": "2026-10-19T04:08:10.428463+00:00",
+    "species": "Xenophanes tryxus",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5141662&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "8ea4facdcfc7671962e3c3c074fdb948a63f0d662c1a2071849d2ec0df216147",
+    "retrieved_at": "2026-10-19T04:08:11.028014+00:00",
+    "species": "Xenophanes tryxus",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5141662&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=630&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "6b9e35ba7d20fa08a7e15a03c7a7f0ccf24ce0e8c48a47342e171f21ff4d4ff7",
+    "retrieved_at": "2026-10-19T04:08:11.735024+00:00",
+    "species": "Xenophanes tryxus",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5141662&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=1260&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "97cb4e6f5aa1262ed421aa98acc222476d39b617ea7b0bccd13fdcc31c1ce95e",
+    "retrieved_at": "2026-10-19T04:08:09.325800+00:00",
+    "species": "Xestia badicollis",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Xestia+badicollis&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "23708aeeb7fb21bb895fe908ed955f8a71bdd280c6ad0af78da42bd3921db3ac",
+    "retrieved_at": "2026-10-19T04:08:09.580069+00:00",
+    "species": "Xestia badicollis",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5112302&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "f348704545fc7fceacc4183506d92122f1f92a4b0cc14c2573f9735194925f4f",
+    "retrieved_at": "2026-10-19T04:08:11.492587+00:00",
+    "species": "Xestia badicollis",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5112302&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "27c576ec69c0f8ac22d0ddd7b40b6c054d845d26b1ad584106084001e798cb1e",
+    "retrieved_at": "2026-10-19T04:08:11.773650+00:00",
+    "species": "Xestia badicollis",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5112302&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=300&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "f9d627961af71ecb461007af1ed7276e18c594c9ffea41946438703ca001a2a5",
+    "retrieved_at": "2026-10-19T04:08:12.251013+00:00",
+    "species": "Xestia castanea",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Xestia+castanea&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "f99c712c86bcf099e457951aa068ded73877a61bd0594c9be5cc2236bc698b29",
+    "retrieved_at": "2026-10-19T04:08:12.867042+00:00",
+    "species": "Xestia castanea",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5112336&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "dc61e25af93de6eb2a0cb398e3e8b0d66b4e77f0e09364a1d8408ad0bd2d9236",
+    "retrieved_at": "2026-10-19T04:08:14.521134+00:00",
+    "species": "Xestia castanea",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5112336&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "5bb992bb75f2523187c0c9db3741999c8fe9c7f5d191c9c088588fddacb2a382",
+    "retrieved_at": "2026-10-19T04:08:14.714634+00:00",
+    "species": "Xestia castanea",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5112336&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=300&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "d84d5a5aa11c99809de44f6430d6f91bd64f98e9703798c4839fb7a40c31f39f",
+    "retrieved_at": "2026-10-19T04:08:12.398931+00:00",
+    "species": "Xestia dolosa",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Xestia+dolosa&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "96a53789ea6a6b84f32923e4439eb234f2688326d43817dfb0c3161288ba556a",
+    "retrieved_at": "2026-10-19T04:08:12.908443+00:00",
+    "species": "Xestia dolosa",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5714994&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "dc10505e124444ba9c99690804685cb8b464b1b65d3c196bd8228f10b661e900",
+    "retrieved_at": "2026-10-19T04:08:14.772702+00:00",
+    "species": "Xestia dolosa",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5714994&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "e3cdc143ca1c5b86e1e5f96c9ba78d40c52697fc48929b8aef5756f80e497156",
+    "retrieved_at": "2026-10-19T04:08:15.161436+00:00",
+    "species": "Xestia dolosa",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5714994&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=300&limit=300"
+  },
+  {
+    "attempt": 2,
+    "response_sha256": "389bd5f44ae3d251c40d3ab7d7cfc56e502766768ca8e253df06f5fb700bb4d8",
+    "retrieved_at": "2026-10-19T04:08:24.428895+00:00",
+    "species": "Xestia triangulum",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Xestia+triangulum&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "19d2b946a2ab30205a330680835fbdb2921fc3dec9d31c9814afbf869d0a41ae",
+    "retrieved_at": "2026-10-19T04:08:24.685262+00:00",
+    "species": "Xestia triangulum",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5772351&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "34e1faf09e5eefa9c7b4901314c39a0ae9fc330ff03f2854f861541100beadb7",
+    "retrieved_at": "2026-10-19T04:08:26.312909+00:00",
+    "species": "Xestia triangulum",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5772351&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "66d3991fa66f007133fe75cb35c8a870b0695b9dfd36256fea807669c6d77db1",
+    "retrieved_at": "2026-10-19T04:08:27.312659+00:00",
+    "species": "Xestia triangulum",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5772351&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=1264&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "b7fa9782f5e5970be59b124e8447cc2eec67da95fd926dc8aa265fbd80dc36e2",
+    "retrieved_at": "2026-10-19T04:08:27.944520+00:00",
+    "species": "Xestia triangulum",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5772351&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=2528&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "00e4aaa76ad71c5ba08b5a2919de67d6b5ca609629cb9f75df180c3d7af09c3d",
+    "retrieved_at": "2026-10-19T04:08:15.175470+00:00",
+    "species": "Xylophanes pluto",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Xylophanes+pluto&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "93aa68eab418b7a2e4cfc2d0cfd846f2c9c21151041f86ddfc929d5a08db0fbf",
+    "retrieved_at": "2026-10-19T04:08:15.331481+00:00",
+    "species": "Xylophanes pluto",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1862181&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "a8f5f22da62ce3e3ad03807a9ede4ce98310187d6b51f44b32e4fc5519f305ab",
+    "retrieved_at": "2026-10-19T04:08:17.049455+00:00",
+    "species": "Xylophanes pluto",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1862181&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "63859f2e8a5dd3b0ae08bc04d70803c1c940b19ebea5551dd2e3118e3c8fa4c1",
+    "retrieved_at": "2026-10-19T04:08:17.582896+00:00",
+    "species": "Xylophanes pluto",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1862181&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=300&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "5e88bde3538d47c0b9ed2743ca6cee5759df66cc1c367778b5d3da4d6bae4fd8",
+    "retrieved_at": "2026-10-19T04:08:18.013380+00:00",
+    "species": "Xylophanes pluto",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1862181&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=600&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "34712df0430a69e4040fc247bbaebf44791c9ccbfea09dda7bd5c0f757e52479",
+    "retrieved_at": "2026-10-19T04:08:15.757568+00:00",
+    "species": "Xystophora pulveratella",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Xystophora+pulveratella&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "c5f9befe046cde9fe7687305bca674761be41e4e7a789b7542c280bcc3c63584",
+    "retrieved_at": "2026-10-19T04:08:15.900292+00:00",
+    "species": "Xystophora pulveratella",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1851616&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "698ce15097c39e3d744d3e56cdb445814cf1bb1b310705a8ebd9693a28031e0f",
+    "retrieved_at": "2026-10-19T04:08:16.173208+00:00",
+    "species": "Xystophora pulveratella",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1851616&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "14ec10d64b5b30f97984d6fef6cb5dba47f03ba047430ed6725449659e67903a",
+    "retrieved_at": "2026-10-19T04:08:16.521024+00:00",
+    "species": "Yponomeuta irrorella",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Yponomeuta+irrorella&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "95297acffebac6ad9100b7e7c12f3b50b040cea97eca7f38546ff8ae0c0a0c47",
+    "retrieved_at": "2026-10-19T04:08:16.882638+00:00",
+    "species": "Yponomeuta irrorella",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1830408&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "eb2dcbde1446eec45a2920658c0667da5c5aeae8fe5a9da73a8c32ccb33093d2",
+    "retrieved_at": "2026-10-19T04:08:18.351915+00:00",
+    "species": "Yponomeuta irrorella",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1830408&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "8af1199375607ce32771b8412b6ecc8745d6496435278ac496b60c7fbb9bab9f",
+    "retrieved_at": "2026-10-19T04:08:18.451436+00:00",
+    "species": "Ypsolopha asperella",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Ypsolopha+asperella&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "5a92b0256ec3d110980a21c9e0362438f4bf85185ea7b802f4c91894222b6b09",
+    "retrieved_at": "2026-10-19T04:08:18.693141+00:00",
+    "species": "Ypsolopha asperella",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1831009&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "3459b8e0d567cce08869a46e445c869666ed9a8abf70ae8658bb3a2ea093c1f7",
+    "retrieved_at": "2026-10-19T04:08:20.217372+00:00",
+    "species": "Ypsolopha asperella",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1831009&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "c2b2fe7dc477ee145a0a72c4f971dcaf6e56efa0c59acab0fb2a87c9662c3317",
+    "retrieved_at": "2026-10-19T04:08:18.781250+00:00",
+    "species": "Zale galbanata",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Zale+galbanata&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "6f93a61eb4b04f38beedf12249e654896fbe7f2cba123a22900e21b2c2d743dd",
+    "retrieved_at": "2026-10-19T04:08:19.093411+00:00",
+    "species": "Zale galbanata",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5112990&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "ad0e121d13de1bda317ff55d49859b16489ec0c2e1fac55b7028a97bde288519",
+    "retrieved_at": "2026-10-19T04:08:20.938131+00:00",
+    "species": "Zale galbanata",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5112990&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "2dc86502cf78ca5218d1ed9d5774c93a6c0147da1fb184de0f2498a8549e7b2e",
+    "retrieved_at": "2026-10-19T04:08:21.513060+00:00",
+    "species": "Zale galbanata",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5112990&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=652&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "0d0d631181f0b2946a796d90e2d8505f10c551d7c4b5f81feb9e7beeba32f816",
+    "retrieved_at": "2026-10-19T04:08:22.200024+00:00",
+    "species": "Zale galbanata",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5112990&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=1304&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "fee7c9d3bde070d21bfaaa434608af19c50990f75a2151ccdb41c40ce00a91b9",
+    "retrieved_at": "2026-10-19T04:08:20.689310+00:00",
+    "species": "Zale metatoides",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Zale+metatoides&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "0aff14dcce6ba12f3f0e4780d6a6207c437d6a13ae1b665852afa012a584ef23",
+    "retrieved_at": "2026-10-19T04:08:21.165674+00:00",
+    "species": "Zale metatoides",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5112961&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "3f185031252f76f22c8f7f3a31892d9a2fbe3ada078f5a3c4d0d836f28475531",
+    "retrieved_at": "2026-10-19T04:08:22.524530+00:00",
+    "species": "Zale metatoides",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5112961&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "30c701f5a7eee2ec94c804aaaa0b3d961281833e9e56bc1c2713029dbcea1f8e",
+    "retrieved_at": "2026-10-19T04:08:22.651432+00:00",
+    "species": "Zale obliqua",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Zale+obliqua&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "3ff2e58d31c438f75ca35c7b427fd4a49c03b2b1a52a213f251bd7f629a8c674",
+    "retrieved_at": "2026-10-19T04:08:22.817610+00:00",
+    "species": "Zale obliqua",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5112947&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "8c8711b183813180af7a08fdf02bddf702ab2db78889b05454409efecde8e8a9",
+    "retrieved_at": "2026-10-19T04:08:24.175153+00:00",
+    "species": "Zale obliqua",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5112947&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "8decda02a87fc90da484722e9d719a8f9484d98c6e5d4ae8969840270707d7f9",
+    "retrieved_at": "2026-10-19T04:08:22.923307+00:00",
+    "species": "Zelleria haimbachi",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Zelleria+haimbachi&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "009bb595adaabbec3e062f17b639f4c450065ea36276a9cc6e080766920cfdb3",
+    "retrieved_at": "2026-10-19T04:08:23.285224+00:00",
+    "species": "Zelleria haimbachi",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5119482&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "258cf0cc77ce24dc1811e8ef295011cf407af6cf5ceaeb84c88ae8125324e8a9",
+    "retrieved_at": "2026-10-19T04:08:24.627020+00:00",
+    "species": "Zelleria haimbachi",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=5119482&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "abc062d2cbbdc32d44fdf8ced0dfa4b6c60c647d2189620dae7f6accabdde5e8",
+    "retrieved_at": "2026-10-19T04:08:24.583419+00:00",
+    "species": "Zophodia grossulariella",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/species/match?name=Zophodia+grossulariella&strict=true&rank=SPECIES"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "d6451e898b676e2f5d3e0d9427530d2688d27a0319eee1e3ab4dce5025c7ac57",
+    "retrieved_at": "2026-10-19T04:08:24.748194+00:00",
+    "species": "Zophodia grossulariella",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1876409&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&limit=0"
+  },
+  {
+    "attempt": 1,
+    "response_sha256": "b1cd3e83ba678ee99dd57d5990c37b4d6c90e93fc5b1db4151b52e18467895c6",
+    "retrieved_at": "2026-10-19T04:08:26.314276+00:00",
+    "species": "Zophodia grossulariella",
+    "status": 200,
+    "url": "https://api.gbif.org/v1/occurrence/search?taxonKey=1876409&datasetKey=50c9509d-22c7-4a22-a47d-8c48425ef4a7&basisOfRecord=HUMAN_OBSERVATION&occurrenceStatus=PRESENT&hasCoordinate=true&hasGeospatialIssue=false&year=2010%2C2026&eventDate=2010-01-01%2C2026-10-18&coordinateUncertaintyInMeters=0%2C1000&offset=0&limit=300"
   }
 ]

@@ -618,25 +618,25 @@ accepted_species_key,api_count_changed,api_count_initial,canonical_name,eligible
 1788063,False,1163,Tricholita signata,898,621,785,732,200,900,99,0;431;863,898,{'observation_identity': 2},bounded_3_windows,Tricholita signata,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
 5769846,False,0,Trifurcula eurema,0,0,0,0,0,0,98,,0,{},complete_query,Trifurcula eurema,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
 5769827,False,0,Trifurcula subnitidella,0,0,0,0,0,0,98,,0,{},complete_query,Trifurcula subnitidella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,0,0,0,0
-,,,,,,,,,,,,,,,Triodia sylvina,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Udea decrepitalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Udea itysalis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Ufeus satyricus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Urbanus simplicius,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Watsonalla binaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Xanthorhoe abrasaria,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Xanthorhoe spadicearia,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Xenophanes tryxus,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Xestia badicollis,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Xestia castanea,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Xestia dolosa,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Xestia triangulum,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Xylophanes pluto,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Xystophora pulveratella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Yponomeuta irrorella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Ypsolopha asperella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Zale galbanata,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Zale metatoides,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Zale obliqua,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Zelleria haimbachi,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
-,,,,,,,,,,,,,,,Zophodia grossulariella,NOT_ATTEMPTED_IN_CURRENT_SNAPSHOT,,,,,
+6097236,False,12823,Triodia sylvina,900,534,777,681,200,900,99,0;6261;12523,900,{},bounded_3_windows,Triodia sylvina,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+4532088,False,71,Udea decrepitalis,71,30,54,44,28,71,99,0,71,{},complete_query,Udea decrepitalis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,50,21,37,28
+1887150,False,24,Udea itysalis,24,20,22,21,14,24,99,0,24,{},complete_query,Udea itysalis,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,16,13,15,14
+1793419,False,401,Ufeus satyricus,400,365,389,384,145,401,99,0;300,400,{'observation_identity': 1},complete_query,Ufeus satyricus,GEOMETRY_REFERENCE_GE30,EXACT,154,132,148,145
+1944343,False,431,Urbanus simplicius,427,381,422,412,200,431,99,0;300,427,{'observation_identity': 4},complete_query,Urbanus simplicius,GEOMETRY_REFERENCE_GE30,EXACT,200,185,200,200
+1952806,False,3872,Watsonalla binaria,900,465,728,608,200,900,99,0;1786;3572,900,{},bounded_3_windows,Watsonalla binaria,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1986623,False,76,Xanthorhoe abrasaria,76,21,53,39,24,76,99,0,76,{},complete_query,Xanthorhoe abrasaria,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,44,15,33,24
+1986166,False,1620,Xanthorhoe spadicearia,899,557,758,647,200,900,99,0;660;1320,900,{},bounded_3_windows,Xanthorhoe spadicearia,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5141662,False,1560,Xenophanes tryxus,889,818,874,855,200,900,99,0;630;1260,889,{'observation_identity': 11},bounded_3_windows,Xenophanes tryxus,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+5112302,False,340,Xestia badicollis,340,136,284,251,92,340,99,0;300,340,{},complete_query,Xestia badicollis,GEOMETRY_REFERENCE_GE30,EXACT,118,58,108,92
+5112336,False,330,Xestia castanea,330,193,273,244,114,330,99,0;300,330,{},complete_query,Xestia castanea,GEOMETRY_REFERENCE_GE30,EXACT,144,92,132,114
+5714994,False,429,Xestia dolosa,428,258,335,290,160,429,99,0;300,428,{'observation_identity': 1},complete_query,Xestia dolosa,GEOMETRY_REFERENCE_GE30,EXACT,190,136,179,160
+5772351,False,2828,Xestia triangulum,900,201,540,325,183,900,99,0;1264;2528,900,{},bounded_3_windows,Xestia triangulum,GEOMETRY_REFERENCE_GE30,EXACT,200,120,200,183
+1862181,False,619,Xylophanes pluto,612,490,599,565,200,619,99,0;300;600,612,{'observation_identity': 7},complete_query,Xylophanes pluto,GEOMETRY_REFERENCE_GE30,EXACT,200,200,200,200
+1851616,False,5,Xystophora pulveratella,5,4,5,5,5,5,99,0,5,{},complete_query,Xystophora pulveratella,INSUFFICIENT_IN_RETRIEVED_REFERENCE,EXACT,5,4,5,5
+1830408,False,283,Yponomeuta irrorella,283,242,270,258,122,283,99,0,283,{},complete_query,Yponomeuta irrorella,GEOMETRY_REFERENCE_GE30,EXACT,139,112,133,122
+1831009,False,198,Ypsolopha asperella,198,188,196,194,126,198,99,0,198,{},complete_query,Ypsolopha asperella,GEOMETRY_REFERENCE_GE30,EXACT,129,120,127,126
+5112990,False,1604,Zale galbanata,898,324,626,478,200,900,99,0;652;1304,898,{'observation_identity': 2},bounded_3_windows,Zale galbanata,GEOMETRY_REFERENCE_GE30,EXACT,200,149,200,200
+5112961,False,106,Zale metatoides,106,66,103,93,52,106,99,0,106,{},complete_query,Zale metatoides,GEOMETRY_REFERENCE_GE30,EXACT,60,41,57,52
+5112947,False,185,Zale obliqua,185,133,168,157,73,185,99,0,185,{},complete_query,Zale obliqua,GEOMETRY_REFERENCE_GE30,EXACT,87,60,81,73
+5119482,False,210,Zelleria haimbachi,210,146,202,199,59,210,99,0,210,{},complete_query,Zelleria haimbachi,GEOMETRY_REFERENCE_GE30,EXACT,66,48,62,59
+1876409,False,263,Zophodia grossulariella,263,208,239,227,92,263,99,0,263,{},complete_query,Zophodia grossulariella,GEOMETRY_REFERENCE_GE30,EXACT,107,85,99,92
