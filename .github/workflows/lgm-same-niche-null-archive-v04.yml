@@ -1,0 +1,63 @@
+name: TTF archive exact 347-species same-insect-niche LGM reference null v04
+on:
+  push:
+    branches: [exploratory/lgm-host-vs-same-niche-null-v04]
+    paths: [.github/workflows/lgm-same-niche-null-archive-v04.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: ttf-archive-same-niche-sampling-null-v04
+  cancel-in-progress: false
+jobs:
+  preserve-original-result:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Fetch and hash-check the original untuned same-niche result
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          out=benchmarks/exploratory/lgm_same_niche_split_null_v04
+          mkdir -p "$out"
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12175177158/zip" > /tmp/ttf-sameniche-v04-source.zip
+          echo '2aa435c3b7e5f5c05b637fcdd784625f1165eb665713561b31ae38d6c2b0ebb7  /tmp/ttf-sameniche-v04-source.zip' | sha256sum -c -
+          unzip -q /tmp/ttf-sameniche-v04-source.zip -d "$out"
+          echo '7cdaa90b869fd7fe03d14c2928e9eea2c2c3df9bcf0ae9b609c7f81d567eed06  benchmarks/exploratory/lgm_same_niche_split_null_v04/all_641_split_eligibility_v0.4.csv' | sha256sum -c -
+          echo '678c513b015af3514d2d54b5bbeea78f02a73d7c00e70c25276ce27ea0cce0a2  benchmarks/exploratory/lgm_same_niche_split_null_v04/species_same_niche_null_v0.4.csv' | sha256sum -c -
+          echo '6059cae5eb1ac166de6994d0edf209c3b8e10ec1fbd74e99af0f8081e477c108  benchmarks/exploratory/lgm_same_niche_split_null_v04/summary.json' | sha256sum -c -
+          echo '7f894ddb16e782f1784c177e11b5eb0db9680a51dd03bc2fae35df1e74ba0c01  benchmarks/exploratory/lgm_same_niche_split_null_v04/execution_receipt.json' | sha256sum -c -
+          python - <<'PYTHON'
+          import json,csv,math
+          from pathlib import Path
+          p=Path('benchmarks/exploratory/lgm_same_niche_split_null_v04')
+          q=json.loads((p/'summary.json').read_text())
+          rows=list(csv.DictReader((p/'species_same_niche_null_v0.4.csv').open()))
+          el=list(csv.DictReader((p/'all_641_split_eligibility_v0.4.csv').open()))
+          assert q['insect_panel']==len(el)==641
+          assert q['split_eligible_species']==len(rows)==348
+          assert q['status_counts']=={'COMPLETE_SAME_NICHE_NULL':347,'NONFINITE_CLIMATE':1}
+          assert q['null_computable_species']==347 and q['split_draws_per_species']==32
+          assert q['species_actual_fraction_exceeds_pseudo']==281
+          assert q['species_actual_raw_variance_exceeds_pseudo']==280
+          assert abs(q['actual_unique_fraction_median']-0.038239403937703205)<1e-13
+          assert abs(q['pseudo_unique_fraction_median']-0.017520189163446893)<1e-13
+          assert abs(q['median_species_paired_unique_fraction_difference']-0.015700965993666015)<1e-13
+          assert json.loads((p/'execution_receipt.json').read_text())['genetic_response_used'] is False
+          print('PASS_BYTE_IDENTICAL_347_SPECIES_SAME_NICHE_SAMPLING_NULL')
+          PYTHON
+      - name: Commit original science result only with branch race guard
+        run: |
+          set -euo pipefail
+          git fetch origin "${{ github.ref_name }}"
+          test "$(git rev-parse FETCH_HEAD)" = "${{ github.sha }}"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add benchmarks/exploratory/lgm_same_niche_split_null_v04/
+          git commit -m 'Archive original response-free 347-species same-niche climate reference null'
+          git push origin "HEAD:${{ github.ref_name }}"
