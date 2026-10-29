@@ -1,20 +1,12 @@
 name: ttf-CaliPopGen-Fst-independent-ONE-SHOT
 on:
-  push:
-    branches: [research/calipopgen-fst-v01]
-    paths:
-      - '.github/workflows/ttf-calipopgen-fst-one-shot.yml'
-      - 'research/calipopgen-fst/authorize_fst_v01.json'
-  pull_request:
-    branches: [main]
-    paths:
-      - '.github/workflows/ttf-calipopgen-fst-one-shot.yml'
-      - 'research/calipopgen-fst/authorize_fst_v01.json'
+  workflow_dispatch:
 permissions:
   contents: read
   actions: read
 jobs:
   original-genetic-outcome-once:
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
