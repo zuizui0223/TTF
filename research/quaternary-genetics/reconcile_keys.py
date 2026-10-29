@@ -52,11 +52,13 @@ def reconcile(pop,spec):
         "groups_without_metadata":len(pm-sm),
         "groups_without_populations":len(sm-pm),
         "rows_without_metadata":sum(counts[k] for k in pm-sm),
+        "orphan_groups":[{"species_id":k[0],"study_id":k[1],"rows":counts[k]} for k in sorted(pm-sm)],
         "expected_populations_in_unrepresented_metadata_groups":sum(meta[k] for k in sm-pm),
         "mismatched_joined_groups":len(diffs),
         "sum_positive_group_differences":sum(d for k,a,b,d in diffs if d>0),
         "sum_negative_group_differences":sum(d for k,a,b,d in diffs if d<0),
         "duplicate_Pop_id_within_group":sum(len(v)-len(set(v)) for v in pop_ids.values()),
+        "duplicate_pop_id_groups":[{"species_id":k[0],"study_id":k[1],"duplicate_ids":len(v)-len(set(v))} for k,v in sorted(pop_ids.items()) if len(v)!=len(set(v))],
         "difference_histogram":dict(collections.Counter(d for k,a,b,d in diffs)),
         "top_mismatches":[{"species_id":k[0],"study_id":k[1],
            "population_rows":a,"N_pops":b,"difference":d}
