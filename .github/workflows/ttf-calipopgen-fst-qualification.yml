@@ -1,0 +1,40 @@
+name: ttf-calipopgen-Fst-response-blind-qualification
+on:
+  push:
+    branches: [research/calipopgen-fst-v01]
+    paths:
+      - '.github/workflows/ttf-calipopgen-fst-qualification.yml'
+      - 'research/calipopgen-fst/qualify_fst_blind.py'
+      - 'research/calipopgen-fst/geo_policy_v02_preoutcome.json'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-calipopgen-fst-qualification.yml'
+      - 'research/calipopgen-fst/qualify_fst_blind.py'
+      - 'research/calipopgen-fst/geo_policy_v02_preoutcome.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fst-eligibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run independent response-blind unit tests
+        run: python -m unittest discover -s research/calipopgen-fst/tests -v
+      - name: Inspect Fst presence and spatial support WITHOUT reading GenDist values
+        run: |
+          python research/calipopgen-fst/qualify_fst_blind.py \
+            --lock research/calipopgen-fst/published_source_lock_v01.json \
+            --out results/calipopgen-fst/pre_response_qualification.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-calipopgen-fst-response-blind-qualification
+          path: results/calipopgen-fst/pre_response_qualification.json
+          retention-days: 30
+          if-no-files-found: error
