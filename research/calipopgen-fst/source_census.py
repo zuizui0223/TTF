@@ -17,7 +17,7 @@ def choose_article(items):
     hits=[a for a in items if "calipopgen" in str(a.get("title","")).lower()
           and "dataset 2" in str(a.get("title","")).lower()
           and "pairwise" in str(a.get("title","")).lower()]
-    if len(hits)!=1:raise ValueError(f"Expected one distinct Dataset 2, found {len(hits)}")
+    if len(hits)!=1:raise ValueError("Ambiguous Dataset 2 versions: "+repr([(a.get("id"),a.get("title"),a.get("doi"),a.get("published_date")) for a in hits]))
     return int(hits[0]["id"])
 def normalize_detail(detail):
     title=str(detail.get("title",""))
