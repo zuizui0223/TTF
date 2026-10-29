@@ -4,11 +4,13 @@ on:
     branches: [research/quaternary-genetics-v01]
     paths:
       - 'research/quaternary-genetics/geo_mask_census.py'
+      - 'research/quaternary-genetics/inspect_headers_only.py'
       - '.github/workflows/ttf-independent-genetics-geography.yml'
   pull_request:
     branches: [main]
     paths:
       - 'research/quaternary-genetics/geo_mask_census.py'
+      - 'research/quaternary-genetics/inspect_headers_only.py'
       - '.github/workflows/ttf-independent-genetics-geography.yml'
   workflow_dispatch:
 permissions:
