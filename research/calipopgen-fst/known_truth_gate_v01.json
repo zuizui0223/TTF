@@ -1,0 +1,37 @@
+{
+  "schema": "ttf_calipopgen_fst_synthetic_known_truth_v01",
+  "status": "LOCKED_BEFORE_FST_NUMERIC_RESPONSE",
+  "frozen": "2026-10-29",
+  "input_climate_artifact": 12887306539,
+  "source_qualification_artifact": 12886377756,
+  "current_predictor_gate_artifact": 12887520681,
+  "simulation": {
+    "null_worlds": 200,
+    "positive_worlds": 200,
+    "master_seed": 20261029,
+    "bootstraps_per_world": 299,
+    "population_latent_effect_sd": 0.035,
+    "individual_dyad_noise_sd": 0.03,
+    "species_private_history_slope_sd": 0.015,
+    "baseline_coefficients_in_training_column_standard_deviations": [
+      0.02,
+      0.03,
+      0.01,
+      0.01
+    ],
+    "history_positive_slope_per_training_history_SD": 0.05,
+    "null_slope": 0,
+    "group_weight": "equal study/species/marker groups, species-cluster bootstrap across heldout groups",
+    "spatial_dependence": "Each pair response includes two site-level latent random effects shared among all overlapping edges",
+    "simulation_response_centering": "Within each study/species/marker group, same as empirical response"
+  },
+  "qualification": {
+    "declared_test": "heldout relative MSE gain >0 and species bootstrap95 lower>0",
+    "null_max_wilson95_upper_falsepositive": 0.1,
+    "positive_min_wilson95_lower_power": 0.8,
+    "if_fail": "NOT_EVALUABLE_BEFORE_ANY_FST_GENETIC_OUTCOME",
+    "no_retune_after_calibration": true
+  },
+  "model": "research/calipopgen-fst/model_fst_holdout.py",
+  "genetic_response_opened": false
+}
