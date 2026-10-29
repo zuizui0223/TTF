@@ -1,13 +1,5 @@
 name: ttf-Jensen-80-species-actual-climate-barrier-extraction
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - '.github/workflows/ttf-mammal-break-site-features.yml'
-      - 'research/break-location-na-mammals/site_feature_core.py'
-      - 'research/break-location-na-mammals/extract_frozen_site_features.py'
-      - 'research/break-location-na-mammals/tests/test_site_feature_core.py'
-      - 'research/break-location-na-mammals/stage20_*'
   workflow_dispatch:
 permissions:
   contents: read
@@ -17,7 +9,6 @@ concurrency:
   cancel-in-progress: false
 jobs:
   predictor-inputs-only:
-    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'research/break-location-na-mammals-v01'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
