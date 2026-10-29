@@ -41,10 +41,13 @@ def reconcile(pop,spec):
         meta[k]=int(x["N_pops"])
     counts=collections.Counter()
     pop_ids=collections.defaultdict(list)
-    for x in stream(pop,{"Spec_id","Study_id","Pop_id"}):
+    pop_coords=collections.defaultdict(lambda:collections.defaultdict(set))
+    for x in stream(pop,{"Spec_id","Study_id","Pop_id","Latitude","Longitude"}):
         k=(str(x.get("Spec_id") or ""),str(x.get("Study_id") or ""))
         counts[k]+=1
-        if x.get("Pop_id") is not None:pop_ids[k].append(str(x["Pop_id"]))
+        if x.get("Pop_id") is not None:
+            pop_ids[k].append(str(x["Pop_id"]))
+            pop_coords[k][str(x["Pop_id"])].add((x.get("Latitude"),x.get("Longitude")))
     pm=set(counts);sm=set(meta)
     diffs=[(k,counts[k],meta[k],counts[k]-meta[k]) for k in pm&sm
            if counts[k]!=meta[k]]
@@ -62,6 +65,7 @@ def reconcile(pop,spec):
         "sum_negative_group_differences":sum(d for k,a,b,d in diffs if d<0),
         "duplicate_Pop_id_within_group":sum(len(v)-len(set(v)) for v in pop_ids.values()),
         "duplicate_pop_id_groups":[{"species_id":k[0],"study_id":k[1],"duplicate_ids":len(v)-len(set(v))} for k,v in sorted(pop_ids.items()) if len(v)!=len(set(v))],
+        "duplicate_pop_id_location_check":[{"species_id":k[0],"study_id":k[1],"pop_id":pid,"coordinate_pairs":len(pop_coords[k][pid])} for k,ids in pop_ids.items() for pid,n in collections.Counter(ids).items() if n>1],
         "difference_histogram":dict(collections.Counter(d for k,a,b,d in diffs)),
         "top_mismatches":[{"species_id":k[0],"study_id":k[1],
            "population_rows":a,"N_pops":b,"difference":d}
