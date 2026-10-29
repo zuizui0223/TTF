@@ -56,13 +56,13 @@ jobs:
           source=json.loads(Path('research/calipopgen-fst/published_source_lock_v01.json').read_text())
           assert source['xlsx_file_id']==a['source']['file_id']
           assert source['md5']==a['source']['md5']
-          climate=json.loads(Path('inputs/climate/climate/climate_receipt.json').read_text())
+          climate=json.loads(Path('inputs/climate/climate_receipt.json').read_text())
           assert climate['status']=='PASS_CLIMATE_RESPONSE_BLIND'
           assert climate['Fst_values_opened'] is False
           assert climate['climate_value_matrix_sha256']==a['climate_matrix_sha256']
           assert climate['eligible_species_after_climate']==39
           assert climate['eligible_groups_after_climate']==43
-          x=np.load('inputs/climate/climate/climate_values.npy',allow_pickle=False)
+          x=np.load('inputs/climate/climate_values.npy',allow_pickle=False)
           assert hashlib.sha256(x.tobytes()).hexdigest()==a['climate_matrix_sha256']
           assert np.isfinite(x).all()
           inf=json.loads(Path('quality/predictor_information_gate.json').read_text())
