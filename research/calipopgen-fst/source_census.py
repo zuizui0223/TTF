@@ -42,10 +42,18 @@ def main():
     a.add_argument("--output",required=True,type=Path)
     args=a.parse_args()
     listing=get_json(f"{API}/collections/{COLLECTION}/articles")
-    id=choose_article(listing)
-    data=normalize_detail(get_json(f"{API}/articles/{id}"))
+    if isinstance(listing,dict):listing=listing.get("items",listing.get("articles",[]))
+    candidates=sorted({int(a["id"]) for a in listing if
+       "calipopgen" in str(a.get("title","")).lower()
+       and "dataset 2" in str(a.get("title","")).lower()
+       and "pairwise" in str(a.get("title","")).lower()})
+    if not candidates:raise ValueError("no target source")
+    versions=[normalize_detail(get_json(f"{API}/articles/{id}")) for id in candidates]
+    data={"schema":"ttf_calipopgen_fst_figshare_article_variants_v01",
+          "status":"SOURCE_ARTICLE_VARIANTS_METADATA_ONLY","variants":versions,
+          "Fst_numeric_opened":False}
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(data,indent=2,sort_keys=True)+"\n")
-    print(json.dumps({"status":data["status"],"article_id":id,"files":
-                      [{"name":v["name"],"size_bytes":v["size_bytes"]} for v in data["files"]]}))
+    print(json.dumps({"status":data["status"],"variants":[
+          {"id":v["article_id"],"doi":v["doi"],"files":v["files"]} for v in versions]}))
 if __name__=="__main__":main()
