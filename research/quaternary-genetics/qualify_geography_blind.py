@@ -60,6 +60,9 @@ def run(pop,spec):
           "populations_with_He_and_valid_coordinates":observed[k],
           "unique_He_geographic_sites":len(coords)})
     terrestrial=[x for x in eligible if x["habitat_adulthood"]=="Terrestrial"]
+    climate_keys={(x["species_id"],x["study_id"]) for x in terrestrial}
+    climate_sites=[{"species_id":k[0],"study_id":k[1],"latitude":p[0],"longitude":p[1]}
+                   for k,coords in sorted(points.items()) if k in climate_keys for p in sorted(coords)]
     def summary(xs):
         return {"eligible_species":len({x["species_name"] for x in xs}),
           "eligible_study_species_groups":len(xs),
@@ -80,6 +83,7 @@ def run(pop,spec):
         "eligibility_policy": "≥5 unique He-observed sites and exact max great-circle distance ≥100km",
         "all_taxa_frozen_manifest":eligible,
         "adult_terrestrial_frozen_manifest":terrestrial,
+        "adult_terrestrial_climate_sites":climate_sites,
         "He_numeric_values_opened":False,"outcome_opening_authorized":False}
 if __name__=="__main__":
     p=argparse.ArgumentParser()
@@ -90,4 +94,4 @@ if __name__=="__main__":
     report=run(fetch_verified(data["pop_tab_v2025-03-31.xlsx"]),
                fetch_verified(data["spec_tab_v2025-03-31.xlsx"]))
     o.output.write_text(json.dumps(report,sort_keys=True,indent=2)+"\n")
-    print(json.dumps({k:v for k,v in report.items() if "manifest" not in k},sort_keys=True))
+    print(json.dumps({k:v for k,v in report.items() if "manifest" not in k and k!="adult_terrestrial_climate_sites"},sort_keys=True))
