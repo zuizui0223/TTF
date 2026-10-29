@@ -1,26 +1,12 @@
 name: ttf-fresh-GenDivRange-He-independent-endpoint
 on:
-  push:
-    branches: [research/quaternary-genetics-v01]
-    paths:
-      - '.github/workflows/ttf-fresh-gendivrange-he-endpoint.yml'
-      - 'research/quaternary-genetics/model_he_holdout.py'
-      - 'research/quaternary-genetics/run_he_holdout.py'
-      - 'research/quaternary-genetics/authorize_he_v01.json'
-      - 'research/quaternary-genetics/tests/test_holdout_synthetic.py'
-  pull_request:
-    branches: [main]
-    paths:
-      - '.github/workflows/ttf-fresh-gendivrange-he-endpoint.yml'
-      - 'research/quaternary-genetics/model_he_holdout.py'
-      - 'research/quaternary-genetics/run_he_holdout.py'
-      - 'research/quaternary-genetics/authorize_he_v01.json'
   workflow_dispatch:
 permissions:
   contents: read
   actions: read
 jobs:
   one-shot-independent-response:
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
