@@ -1,0 +1,39 @@
+name: ttf-Jensen-2024-barrier-GIS-codebook
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-mammal-break-barrier-codebook.yml'
+      - 'research/break-location-na-mammals/barrier_source_codebook.py'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-mammal-break-barrier-codebook.yml'
+      - 'research/break-location-na-mammals/barrier_source_codebook.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  no-genetic-response:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Shapefile reader
+        run: python -m pip install 'pyshp>=2.3,<3'
+      - name: Verify provider SHA and audit eco-region and major water feature labels
+        run: |
+          python research/break-location-na-mammals/barrier_source_codebook.py \
+            --sources research/break-location-na-mammals/original_barrier_baseline_source_candidates_v01.json \
+            --sha-lock research/break-location-na-mammals/barrier_gis_publisher_SHA_lock_v01.json \
+            --out results/ttf-mammal-breaks/barrier_gis_codebook.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-Jensen-original-water-ecoregion-source-codebook
+          path: results/ttf-mammal-breaks/barrier_gis_codebook.json
+          retention-days: 30
+          if-no-files-found: error
