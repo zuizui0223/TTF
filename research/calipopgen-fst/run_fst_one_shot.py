@@ -9,7 +9,7 @@ from model_fst_holdout import evaluate
 
 KEEP={"CitationID","Pop1ScientificName","Pop2ScientificName","Pop1LatitudeDD",
   "Pop1LongitudeDD","Pop2LatitudeDD","Pop2LongitudeDD","GenDist",
-  "GenDistMetric","MarkerType","GeneTarget","sepAnalyses"}
+  "GenDistMetric","MarkerType","GeneTarget","sepAnalyses","HabitatType","specialComparisonType","CoordError"}
 def response_rows(raw):
     with zipfile.ZipFile(io.BytesIO(raw)) as z:
         strings=[]
@@ -28,14 +28,27 @@ def response_rows(raw):
                     if columns is not None and columns.get(i) not in KEEP:continue
                     v=cell.find(S+"v")
                     if v is None:cells[i]=None;continue
-                    if cell.get("t")=="s":cells[i]=strings[int(v.text)]
+                    if columns is not None and columns.get(i)=="GenDist":
+                        cells[i]=(cell.get("t"),v.text) # shared-string index only
+                    elif cell.get("t")=="s":cells[i]=strings[int(v.text)]
                     elif cell.get("t")=="inlineStr":
                         cells[i]="".join(t.text or "" for t in cell.iter(S+"t"))
                     else:cells[i]=v.text
                 if columns is None:
                     columns={i:str(t or "") for i,t in cells.items()}
                     if not KEEP.issubset(set(columns.values())):raise ValueError("schema missing fields")
-                else:yield {name:cells.get(i) for i,name in columns.items() if name in KEEP}
+                else:
+                    out={name:cells.get(i) for i,name in columns.items() if name in KEEP}
+                    if (str(out.get("GenDistMetric") or "").strip().lower()=="fst"
+                        and str(out.get("HabitatType") or "").strip().lower()=="terrestrial"
+                        and str(out.get("specialComparisonType") or "").strip().lower()=="regular"):
+                        encoded=out.get("GenDist")
+                        if isinstance(encoded,tuple):
+                            t,value=encoded
+                            out["GenDist"]=strings[int(value)] if t=="s" and value is not None else value
+                    else:
+                        out["GenDist"]=None
+                    yield out
                 row.clear()
 
 def source_response_lookup(raw,qualified_groups):
@@ -50,6 +63,8 @@ def source_response_lookup(raw,qualified_groups):
         counts["original_rows"]+=1
         metric=re.sub(r"[^a-z]","",str(r.get("GenDistMetric") or "").lower())
         if metric!="fst":continue
+        if str(r.get("specialComparisonType") or "").strip().lower()!="regular":continue
+        if str(r.get("HabitatType") or "").strip().lower()!="terrestrial":continue
         sp=frozen_binomial(r.get("Pop1ScientificName"))
         if sp!=frozen_binomial(r.get("Pop2ScientificName")):continue
         key=(str(r.get("CitationID") or "").strip(),sp,
