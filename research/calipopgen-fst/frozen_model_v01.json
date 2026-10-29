@@ -1,0 +1,35 @@
+{
+  "schema": "ttf_calipopgen_fst_independent_genetic_endpoint_contract_v01",
+  "status": "PREGENETIC_RESPONSE_FROZEN_PENDING_EXACT_CLIMATE_QUALIFICATION",
+  "date": "2026-10-29",
+  "data": "CaliPopGen Dataset 2 DOI 10.6084/m9.figshare.15015927.v1, original MD5 ca8da2a8db1d87e81d982ff83ea8aff6",
+  "domain": "Terrestrial, contemporaneous, within-species Fst pairs, 39 species and 43 study/species/marker groups before climate",
+  "response": "Raw published Fst across contemporaneous population pairs, within-study/species/marker centered. NOT H_e, population-specific Fst, or spatial break position.",
+  "unit_of_replication": "Species, with all study-marker groups of a species in the same train/test role",
+  "source_response_policy": "Only after climate gate, read GenDist in original XLSX, parse finite scalar decimal float, numeric range -1 to 1; missing or non-float rows dropped with counts, no selection on sign; keep first repeated unordered pair in original source row order; drop exact zero-distance pairs",
+  "frozen_split": "SHA256('calipopgen-fst-ttf-fresh-v01|'+lowercase binomial) first digest byte parity; 17/22 species before climate",
+  "climate": "Original C1 SHA256-verified CHELSA-TraCE21k V1.0 21ka and 0BP four bioclim variables sampled at both present-day population locations",
+  "predictor_current": "Euclidean distance between two 0 BP four-variable climate vectors, each variable divided by training population-site pooled SD",
+  "predictor_historical": "Euclidean distance between two signed LGM-minus-0BP climate-change vectors, each variable divided by training population-site pooled SD of current 0BP same variable",
+  "geography": "log(1+geodesic_distance_km), mean latitude, mean longitude (within California spatial gradient)",
+  "controls": "Within study/species/marker intercept removed by centering both response and predictors; each group weighted equally; no mix of Fst with other distances; no cohort changes after opening",
+  "method": "Equal study/species/marker-group-weighted ordinary least squares of within-group centered Fst; baseline geographic + present climate vs baseline plus exactly 1 historical predictor; outcome evaluated on species-disjoint held-out roles",
+  "estimand": "Relative MSE reduction (baseline - augmented)/baseline on held-out species, each study/species/marker group weighted equally; no binning of Fst or genetic barrier thresholds",
+  "uncertainty": "1999 species-cluster paired bootstrap replicates, fixed seed 20261029; positive only if 2.5 percentile of gain >0",
+  "pre_response_gate": {
+    "min_climate_valid_qualified_species": 30,
+    "min_each_role_species": 10,
+    "min_climate_valid_groups": 35,
+    "min_each_role_groups": 12,
+    "min_training_unique_historical_predictor_variance_fraction": 0.05
+  },
+  "calibration": "Synthetic known-truth worlds must show sensible null/positive behavior under the exact frozen estimator before any empirical Fst numeric values are read",
+  "conditions": [
+    "No postoutcome tuning/ablation/threshold change to rescue failure",
+    "do not treat Fst as mapped genomic barrier location",
+    "unknown coordinate error remains quality limitation",
+    "No inference of geographic universality from California-only panel",
+    "Do not reopen closed GenDivRange H_e or TTF Phase4 results"
+  ],
+  "status_response": "UNOPENED"
+}
