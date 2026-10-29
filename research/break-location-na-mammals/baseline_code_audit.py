@@ -14,7 +14,7 @@ def scan(text):
     excerpts=[{"line":i,"text":s[:300]} for i,s in enumerate(lines,1) if MATCH.search(s)]
     reads=[{"line":i,"text":s[:300]} for i,s in enumerate(lines,1) if SOURCE_OPS.search(s)]
     assets=sorted(set(v for s in lines for v in ASSET_PATTERN.findall(s)))
-    return {"total_lines":len(lines),"candidate_environmental_lines":excerpts,
+    return {"total_lines":len(lines),"input_reader_context":[{"line":i,"text":s[:400]} for i,s in enumerate(lines,1) if 35<=i<=112], "candidate_environmental_lines":excerpts,
             "file_read_calls":reads,"mentioned_file_tokens":assets,
             "response_geometry_or_genetic_outcomes_opened":False}
 
