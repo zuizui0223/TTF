@@ -70,7 +70,7 @@ def frozen_binomial(v):
 
 def evaluate(xlsx):
     c=collections.Counter()
-    groups=collections.defaultdict(lambda:{"pairs":set(),"sites":set(),"missing_coord_error":0,"known_coord_error":0})
+    groups=collections.defaultdict(lambda:{"pairs":set(),"sites":set(),"known_pairs":set(),"missing_coord_error":0,"known_coord_error":0})
     markers=collections.Counter()
     metriclabels=collections.Counter()
     habitatlabels=collections.Counter()
@@ -121,10 +121,12 @@ def evaluate(xlsx):
             c["repeat_unordered_pair_in_group"]+=1;continue
         gp["pairs"].add(pair)
         gp["sites"].update((a,b))
+        if err is not None:gp["known_pairs"].add(pair)
         gp["missing_coord_error" if err is None else "known_coord_error"]+=1
         markers[marker]+=1
         c["prequalified_pair_rows"]+=1
     accepted=[]
+    strict_known_error_groups=0
     for (study,sp,marker,gene,analysis),g in sorted(groups.items()):
         p=g["sites"]
         if len(g["pairs"])<5 or len(p)<4:
@@ -132,12 +134,18 @@ def evaluate(xlsx):
         # Reject groups restricted to a tiny sampled region before response opening.
         if max(gc_km(a,b) for a,b in g["pairs"])<100:
             c["groups_extent_under100km"]+=1;continue
+        q=g["known_pairs"]
+        known_sites={p for pair in q for p in pair}
+        if len(q)>=5 and len(known_sites)>=4 and max(gc_km(a,b) for a,b in q)>=100:
+            strict_known_error_groups+=1
         parity=hashlib.sha256(("calipopgen-fst-ttf-fresh-v01|"+sp).encode()).digest()[0]%2
         accepted.append({"study_id":study,"species":sp,"marker":marker,
           "gene_target":gene,"sep_analyses":analysis,"role":parity,
           "pair_count":len(g["pairs"]),"location_count":len(p),
           "missing_coord_error_pairs":g["missing_coord_error"],
-          "known_coord_error_pairs":g["known_coord_error"]})
+          "known_coord_error_pairs":g["known_coord_error"],
+          "pair_coordinates":[[a[0],a[1],b[0],b[1]] for a,b in sorted(g["pairs"])],
+          "site_coordinates":[[a,b] for a,b in sorted(g["sites"])]})
     roles=[{g["species"] for g in accepted if g["role"]==i} for i in (0,1)]
     per_role_groups=[sum(g["role"]==i for g in accepted) for i in (0,1)]
     eligible_species=len(roles[0]|roles[1])
@@ -151,6 +159,7 @@ def evaluate(xlsx):
        "eligible_species":eligible_species,"eligible_study_species_marker_groups":len(accepted),
        "species_by_hash_role":[len(x) for x in roles],
        "study_groups_by_hash_role":per_role_groups,
+       "strict_known_coord_error_qualified_groups":strict_known_error_groups,
        "eligible_groups":accepted,
        "Fst_numeric_values_opened":False,
        "old_TTF_or_GenDivRange_responses_reopened":False}
