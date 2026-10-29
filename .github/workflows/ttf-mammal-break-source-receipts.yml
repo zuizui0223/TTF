@@ -1,0 +1,35 @@
+name: ttf-mammal-break-exact-source-receipts
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-mammal-break-source-receipts.yml'
+      - 'research/break-location-na-mammals/source_receipts.py'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-mammal-break-source-receipts.yml'
+      - 'research/break-location-na-mammals/source_receipts.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verified-metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Inspect exact Figshare article and file receipts without reading break coordinates
+        run: |
+          python research/break-location-na-mammals/source_receipts.py \
+            --out results/ttf-mammal-breaks/original_source_receipts.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-mammal-break-original-figshare-receipts
+          path: results/ttf-mammal-breaks/original_source_receipts.json
+          retention-days: 30
+          if-no-files-found: error
