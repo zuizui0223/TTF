@@ -1,0 +1,50 @@
+name: ttf-independent-genetics-geography
+on:
+  push:
+    branches: [research/quaternary-genetics-v01]
+    paths:
+      - 'research/quaternary-genetics/geo_mask_census.py'
+      - 'research/quaternary-genetics/reconcile_keys.py'
+      - 'research/quaternary-genetics/qualify_geography_blind.py'
+      - 'research/quaternary-genetics/prospective_terrestrial_v02.json'
+      - 'research/quaternary-genetics/inspect_headers_only.py'
+      - '.github/workflows/ttf-independent-genetics-geography.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'research/quaternary-genetics/geo_mask_census.py'
+      - 'research/quaternary-genetics/reconcile_keys.py'
+      - 'research/quaternary-genetics/qualify_geography_blind.py'
+      - 'research/quaternary-genetics/prospective_terrestrial_v02.json'
+      - 'research/quaternary-genetics/inspect_headers_only.py'
+      - '.github/workflows/ttf-independent-genetics-geography.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  coordinate-census:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Discover Figshare metadata
+        run: python research/quaternary-genetics/figshare_preflight.py --output figshare.json
+      - name: Screen latitude span and genetic-data presence only
+        run: python research/quaternary-genetics/geo_mask_census.py --metadata figshare.json --output geo_census.json
+      - name: Reconcile population and species study keys, no He values
+        run: |
+          python research/quaternary-genetics/reconcile_keys.py --metadata figshare.json --output key_reconciliation.json
+      - name: Freeze exact-distance geographic qualification (He mask only)
+        run: |
+          python research/quaternary-genetics/qualify_geography_blind.py --metadata figshare.json --output eligible_geometry.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-independent-genetics-geographic-census
+          path: |
+            geo_census.json
+            key_reconciliation.json
+            eligible_geometry.json
+          retention-days: 30

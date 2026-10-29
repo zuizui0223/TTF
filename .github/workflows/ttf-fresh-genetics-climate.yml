@@ -1,0 +1,50 @@
+name: ttf-fresh-GenDivRange-CHELSA-21ka-0BP-blind
+on:
+  push:
+    branches: [research/quaternary-genetics-v01]
+    paths:
+      - '.github/workflows/ttf-fresh-genetics-climate.yml'
+      - 'research/quaternary-genetics/sample_8_chelsa_blind.py'
+      - 'research/quaternary-genetics/qualify_geography_blind.py'
+      - 'research/quaternary-genetics/chelsa_original_c1_assets_v01.json'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-fresh-genetics-climate.yml'
+      - 'research/quaternary-genetics/sample_8_chelsa_blind.py'
+      - 'research/quaternary-genetics/qualify_geography_blind.py'
+      - 'research/quaternary-genetics/chelsa_original_c1_assets_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  response-blind-climate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install only climate sampling dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'requests>=2.31,<3' 'rasterio>=1.4,<2'
+      - name: Freeze eligible GenDivRange population sampling coordinates without He
+        run: |
+          python research/quaternary-genetics/figshare_preflight.py --output figshare.json
+          python research/quaternary-genetics/qualify_geography_blind.py --metadata figshare.json --output eligible_geometry.json
+      - name: SHA-verify original C1 climate assets and sample exactly 21ka and 0BP
+        run: |
+          python research/quaternary-genetics/sample_8_chelsa_blind.py \
+            --geo eligible_geometry.json \
+            --manifest research/quaternary-genetics/chelsa_original_c1_assets_v01.json \
+            --out results/gendivrange-climate
+      - name: Preserve response-blind provenance only
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gendivrange-climate-21ka-0bp-exact
+          path: |
+            eligible_geometry.json
+            results/gendivrange-climate/
+          retention-days: 30
+          if-no-files-found: error

@@ -1,0 +1,24 @@
+name: ttf-genetics-species-metadata-bridge
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-genetics-species-metadata-bridge.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  species-metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download published species metadata and check original checksum
+        run: |
+          curl --fail --location --retry 2 https://ndownloader.figshare.com/files/53392835 -o gendivrange_species.xlsx
+          echo '8d4fb06a3f446b4fd2fc6cf566884a33  gendivrange_species.xlsx' | md5sum -c -
+      - uses: actions/upload-artifact@v4
+        with:
+          name: original-gendivrange-species-metadata
+          path: gendivrange_species.xlsx
+          retention-days: 2

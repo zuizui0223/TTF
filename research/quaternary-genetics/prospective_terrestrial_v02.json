@@ -1,0 +1,24 @@
+{
+  "schema": "ttf_gendivrange_biological_response_protocol_v0.2",
+  "status": "PROSPECTIVE_AMENDMENT_BEFORE_ANY_NUMERICAL_HE_OPENING",
+  "supersedes": "research/quaternary-genetics/prospective_v01.json",
+  "reason": "CHELSA-TraCE21k is terrestrial climate; aquatic populations cannot be used as a direct response to terrestrial bioclimatic history. Restrict before response opening.",
+  "source": "GenDivRange figshare article 28407989 v1, published 2025",
+  "identity": "Spec_id + Study_id joins must be 1:1; exclude missing-key workbook rows; no outcome-based filtering",
+  "primary_eligible_domain": {
+    "metadata_field": "Habitat_adulthood",
+    "exact_value": "Terrestrial",
+    "minimum_unique_population_locations_with_numeric_He_present": 5,
+    "minimum_true_great_circle_max_distance_km": 100,
+    "minimum_distinct_species": 40,
+    "minimum_qualified_study_species_groups": 50,
+    "minimum_groups_per_disjoint_hash_role": 20
+  },
+  "response_mask": "He numeric-cell presence only; no He values, GD_Nei, Ho, allele frequencies, genetic correlations or genotypes accessed prior to response-open authorization",
+  "train_evaluation": "SHA256('ttf-fresh-quaternary-gendivrange-v01|'+lowercase(Spec_Latin_GenDivRange)) first digest byte parity; all studies of same species same role",
+  "analysis_mechanics": "Use study/species fixed effects via within-group population contrasts; compare held-out species squared-error difference between 0BP-only + geography + study sampling controls and that model plus the one frozen historical-change magnitude term; cluster unit species, not pairs.",
+  "effect_test": "Two-sided coefficient and predeclared directional sensitivity are reported without post-hoc choice; main decision is held-out prediction gain, with species-level uncertainty.",
+  "climate": "Only original CHELSA-TraCE21k 21ka and 0BP bio01/bio07/bio12/bio15 at corresponding present-day genotype sampling locations; reject offshore/NA cells before opening He numeric outcomes",
+  "freeze_boundary": "Do not modify TTF-Q manuscript, prior genetic Phase4, or relational v0.3 closed family. Failure to meet eligibility or climate support => NOT_EVALUABLE.",
+  "outcome_opened": false
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "ttf_fresh_GenDivRange_He_frozen_empirical_handoff_v01",
+  "status": "TERMINAL_NO_DETECTABLE_EXTRA_HE_PREDICTION_UNDER_FROZEN_SPEC",
+  "date": "2026-10-29",
+  "repo": "zuizui0223/TTF",
+  "pr": 151,
+  "head_commit_tested": "5e648629aed00191034db3a1ef59d8ae708b4e52",
+  "study": "Independent GenDivRange expected-heterozygosity contrasts, not old TTF COI/IBD transfer",
+  "protocol": "research/quaternary-genetics/prospective_terrestrial_v02.json",
+  "qualification": "research/quaternary-genetics/authorize_he_v01.json",
+  "frozen_original_climate": {
+    "sampling_run": 40841822703,
+    "artifact_id": 12882494523,
+    "sites": 11656,
+    "valid_sites": 11652,
+    "qualified_species": 687,
+    "qualified_study_species": 882
+  },
+  "fresh_he_run": {
+    "run_id": 40843176630,
+    "conclusion": "success",
+    "artifact_id": 12883507851,
+    "artifact_digest": "sha256:abcdd20d77511eb22639bc78ca2f37d9d9b07fce5e69b69843bf2b4a1bc48236"
+  },
+  "empirical": {
+    "train_species": 351,
+    "eval_species": 336,
+    "train_groups": 434,
+    "eval_groups": 448,
+    "train_sites": 5707,
+    "eval_sites": 5945,
+    "baseline_pair_MSE": 0.013135643197008409,
+    "historical_added_pair_MSE": 0.013133519971679766,
+    "relative_MSE_gain": 0.00016163847455343198,
+    "species_cluster_bootstrap_95": [
+      -0.0014864364587959169,
+      0.0018341911536177095
+    ],
+    "bootstrap_replicates": 1999,
+    "positive_claim_authorized": false,
+    "history_coefficient_standardized": 0.0017727141846151128,
+    "data_qc": {
+      "identical_duplicate_pop_id_rows_removed": 1,
+      "other_reported_response_issues": 0
+    }
+  },
+  "claim": "Historical climate magnitude was distinguishable from same-product present climate and geography on genetic population sites, but did not materially improve unseen-species He contrast predictions under the prospectively frozen one-extra-term model. Predictor information must not be reinterpreted as biological response relevance.",
+  "limitations": [
+    "He within-study contrasts are not FST or geographic genetic discontinuity",
+    "Single 21ka-minus-0BP magnitude misses time trajectory and signed components",
+    "No post hoc subgroup or predictor selection authorized",
+    "All results observational; no causal historical-memory claim"
+  ],
+  "stop_policy": "Do not rerun the frozen genetic outcome to tune predictors, threshold, site subset or inclusion decisions. Additional independent registered study would be distinct program.",
+  "closed_ttf_v03_or_phase4_outcome_reopened": false
+}

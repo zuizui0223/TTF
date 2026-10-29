@@ -1,0 +1,22 @@
+{
+  "schema": "ttf_gendivrange_climate_qualification_contract_v01",
+  "status": "FROZEN_BEFORE_HE_NUMERIC_RESPONSE_OPENING",
+  "inherit": "research/quaternary-genetics/prospective_terrestrial_v02.json",
+  "eligibility": {
+    "habitat_adulthood": "Terrestrial",
+    "min_He_present_unique_climate_valid_sites_per_study_species": 5,
+    "min_max_geodesic_population_distance_km": 100,
+    "min_species": 40,
+    "min_study_species_groups": 50,
+    "min_study_species_groups_per_role": 20
+  },
+  "historical_predictor": "Euclidean length of 21ka minus 0BP differences for bio01,bio07,bio12,bio15 each divided by training-role population SD of same 0BP variable",
+  "baseline_for_information_gate": "Four 0BP bioclimatic variables + latitude + longitude, all centered within each study/species group",
+  "weight": "Inverse group size, so each training study/species group contributes equally",
+  "minimum_training_partial_unique_historical_predictor_variance": 0.05,
+  "response": "He (numerical values remain unread until all preceding gates pass)",
+  "if_failed": "NOT_EVALUABLE_BEFORE_GENETIC_RESPONSE",
+  "no_outcome_driven_changes": true,
+  "source_data": "Eight original 2026-09-27 C1 SHA256-pinned CHELSA-TraCE21k v1.0 raster assets",
+  "status_outcome": "UNOPENED"
+}
