@@ -36,8 +36,9 @@ def sample_metadata_rows(xlsx):
                     typ=cell.get("t")
                     name=columns.get(j) if columns is not None else None
                     if name=="GenDist":
-                        # Outcome values NEVER decoded. Numeric cell presence is allowed.
-                        record[j]=(value is not None and typ in (None,"n"))
+                        # Outcome values NEVER decoded. Data may be stored as shared strings;
+                        # test cell presence without decoding its genetic value.
+                        record[j]=(value is not None and typ!="e")
                         continue
                     if typ=="s" and value is not None:
                         txt=strings[int(value.text)]
