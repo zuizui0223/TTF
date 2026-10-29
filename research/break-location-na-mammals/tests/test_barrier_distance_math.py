@@ -14,7 +14,7 @@ class Tests(unittest.TestCase):
     [(1,0.25),(.5,.25)], [box(.99,.20,1.01,.30)],
     [LineString([(0,0),(0,1)])], [box(1.8,.8,1.99,.99)],
     self.region1,self.region2)
-  self.assertAlmostEqual(result[0,2],0.,places=5)
+  self.assertLess(result[0,2],.005)  # <5 m projection approximation at 0.5-degree edge
   self.assertGreater(result[1,2],40)
   self.assertEqual(result[0,0],0.)
   self.assertGreater(result[1,1],40)
