@@ -1,0 +1,45 @@
+{
+  "schema": "ttf_independent_gendivrange_he_opening_authorization_v01",
+  "status": "AUTHORIZE_NEW_GENDIVRANGE_HE_ONLY",
+  "authorized_on": "2026-10-29",
+  "scientific_program": "separate fresh terrestrial population-heterozygosity project; no reopening any TTF-Q or relational v0.3 outcome",
+  "protocol": "research/quaternary-genetics/prospective_terrestrial_v02.json",
+  "climate_gate": "research/quaternary-genetics/climate_information_gate_v01.json",
+  "model": "research/quaternary-genetics/model_he_holdout.py",
+  "runner": "research/quaternary-genetics/run_he_holdout.py",
+  "source_genetics": {
+    "name": "GenDivRange",
+    "figshare_article_id": 28407989,
+    "version": 1,
+    "population_xlsx_md5": "50ba6f0fe850e7ef85b14c2f7385ada8",
+    "species_xlsx_md5": "8d4fb06a3f446b4fd2fc6cf566884a33"
+  },
+  "source_climate": {
+    "run_id": 40841822703,
+    "artifact_id": 12882494523,
+    "artifact_zip_sha256": "f7ae6bdc5f6488b2544db9be5d13ee9d29b921b4d57daa740c110083371d52bb",
+    "matrix_raw_sha256": "54ed941158400878e4d1ecd7af1f2f3b6c91a5dbb3b7d304a55b2d21da083666",
+    "sites": 11656,
+    "sites_all_eight_finite": 11652
+  },
+  "qualification": {
+    "status": "PASS",
+    "terrestrial_species_after_climate": 687,
+    "study_species_groups": 882,
+    "source_role_species": 351,
+    "target_role_species": 336,
+    "source_role_groups": 434,
+    "target_role_groups": 448,
+    "train_only_partial_unique_historical_magnitude_fraction": 0.9578394323608026,
+    "frozen_minimum_fraction": 0.05,
+    "He_numbers_read": false,
+    "raw_population_rows": 19224,
+    "identified_blank_key_rows": 50,
+    "distinct_populations_accounted_for": 19173
+  },
+  "primary_test": "One species-hash split; within-study group centered, equal study/group weighted linear OLS with baseline 0BP bioclim4 + latitude + longitude + log(N) + N-missing indicator; alternate adds exactly one 4-var 21ka-0BP magnitude; heldout group average pairwise He-difference MSE relative gain; species clustered bootstrap 1999 draws seed 20261029, positive only if 95% lower bound >0.",
+  "duplicate_rule": "If repeated Pop_id and coordinate have identical numeric He values, retain once; if conflicting, exclude that population ID. Different population IDs at identical coordinates are averaged per unique sampled site.",
+  "no_post_response_tuning": true,
+  "original_TTF_frozen_results_unchanged": true,
+  "endpoint_opened_at_receipt_creation": false
+}
