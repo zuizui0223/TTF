@@ -1,0 +1,99 @@
+name: ttf-CaliPopGen-Fst-independent-ONE-SHOT
+on:
+  push:
+    branches: [research/calipopgen-fst-v01]
+    paths:
+      - '.github/workflows/ttf-calipopgen-fst-one-shot.yml'
+      - 'research/calipopgen-fst/authorize_fst_v01.json'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-calipopgen-fst-one-shot.yml'
+      - 'research/calipopgen-fst/authorize_fst_v01.json'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  original-genetic-outcome-once:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install only pinned-range numpy for exact fixed estimator
+        run: python -m pip install 'numpy>=1.26,<3'
+      - name: Confirm known-truth and leakage unit tests without empirical outcomes
+        run: python -m unittest discover -s research/calipopgen-fst/tests -v
+      - name: Retrieve original PRE-response climate, information, and calibration artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/climate quality calibration
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12887306539/zip" > /tmp/climate.zip
+          echo '8bacad8e331b290e541b49ef32bd6c9331ddf788376ce490cfa300f12737fac7  /tmp/climate.zip' | sha256sum -c -
+          unzip -q /tmp/climate.zip -d inputs
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12887520681/zip" > /tmp/info.zip
+          echo 'f86687a26961fe087b34f7eaaf1c5fd88ba200a1b17f31b638f34d6bfcf28284  /tmp/info.zip' | sha256sum -c -
+          unzip -q /tmp/info.zip -d quality
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12887737737/zip" > /tmp/synthetic.zip
+          echo 'a234a792838531a7beeac90f3537d3422a4f301cedddfb107893105079538c75  /tmp/synthetic.zip' | sha256sum -c -
+          unzip -q /tmp/synthetic.zip -d calibration
+      - name: Authorize only if all original source, climate, and null/power gates are intact
+        run: |
+          python - <<'PY'
+          import hashlib,json,numpy as np
+          from pathlib import Path
+          a=json.loads(Path('research/calipopgen-fst/authorize_fst_v01.json').read_text())
+          assert a['status']=='AUTHORIZE_FRESH_CALIPOPGEN_FST_ONCE'
+          assert a['numeric_Fst_opened_at_creation'] is False
+          assert a['strict_no_post_response_changes'] is True
+          for path,expected in a['bound_git_blobs'].items():
+              raw=Path(path).read_bytes()
+              sha=hashlib.sha1((f'blob {len(raw)}\0').encode()+raw).hexdigest()
+              assert sha==expected,(path,sha,expected)
+          source=json.loads(Path('research/calipopgen-fst/published_source_lock_v01.json').read_text())
+          assert source['xlsx_file_id']==a['source']['file_id']
+          assert source['md5']==a['source']['md5']
+          climate=json.loads(Path('inputs/climate/climate/climate_receipt.json').read_text())
+          assert climate['status']=='PASS_CLIMATE_RESPONSE_BLIND'
+          assert climate['Fst_values_opened'] is False
+          assert climate['climate_value_matrix_sha256']==a['climate_matrix_sha256']
+          assert climate['eligible_species_after_climate']==39
+          assert climate['eligible_groups_after_climate']==43
+          x=np.load('inputs/climate/climate/climate_values.npy',allow_pickle=False)
+          assert hashlib.sha256(x.tobytes()).hexdigest()==a['climate_matrix_sha256']
+          assert np.isfinite(x).all()
+          inf=json.loads(Path('quality/predictor_information_gate.json').read_text())
+          assert inf['status']=='PASS_PREDICTOR_INFORMATION_BEFORE_FST'
+          assert inf['Fst_numeric_values_opened'] is False
+          assert inf['climate_input_sha256']==a['climate_matrix_sha256']
+          assert abs(inf['unique_historical_predictor_fraction']-a['frozen_predictor_information']['partial_unique_variance_fraction'])<1e-12
+          assert inf['unique_historical_predictor_fraction']>=a['frozen_predictor_information']['minimum']
+          sim=json.loads(Path('calibration/synthetic_gate.json').read_text())
+          assert sim['status']=='PASS_SYNTHETIC_BEFORE_FST'
+          assert sim['Fst_numeric_values_opened'] is False
+          assert sim['input_climate_matrix_sha256']==a['climate_matrix_sha256']
+          assert sim['null']['worlds']==200 and sim['null']['positive_decisions']==2
+          assert sim['positive']['worlds']==200 and sim['positive']['positive_decisions']==190
+          assert sim['null']['wilson95'][1]<=0.1
+          assert sim['positive']['wilson95'][0]>=0.8
+          print('ALL FROZEN RESPONSE-BLIND GATES PASS; authorize one new Fst endpoint')
+          PY
+      - name: Open first and only independent CaliPopGen Fst endpoint under frozen estimator
+        run: |
+          python research/calipopgen-fst/run_fst_one_shot.py \
+            --authorization research/calipopgen-fst/authorize_fst_v01.json \
+            --information-gate quality/predictor_information_gate.json \
+            --source-lock research/calipopgen-fst/published_source_lock_v01.json \
+            --climate-dir inputs/climate/climate \
+            --output results/independent_calipopgen_fst_v01.json
+      - name: Retain aggregate first-shot scientific endpoint, no raw Fst
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-calipopgen-fst-independent-one-shot
+          path: results/independent_calipopgen_fst_v01.json
+          retention-days: 30
+          if-no-files-found: error
