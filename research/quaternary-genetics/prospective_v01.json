@@ -1,0 +1,55 @@
+{
+  "schema": "ttf_fresh_quaternary_genetic_outcome_v0.1",
+  "status": "PROSPECTIVE_RESPONSE_BLIND_DESIGN_PREGENETIC_OPENING",
+  "independence": "Separate new project; do not alter frozen TTF-Q, Phase-4, or relational v0.3; never reopen any previously closed response.",
+  "external_source": {
+    "name": "GenDivRange",
+    "citation": "Csilléry et al. (2025), Scientific Data",
+    "doi": "10.6084/m9.figshare.28407989",
+    "figshare_article_id": 28407989
+  },
+  "biological_question": "Does 21ka-to-0BP climatic displacement add out-of-species prediction of geographic contrasts in within-species genetic heterozygosity, after modern climate and geography?",
+  "response": "Within-study and within-species differences in expected heterozygosity (He); not mitochondrial Fst or the original TTF genetic transfer score",
+  "climate": {
+    "product": "CHELSA-TraCE21k V1.0",
+    "times": [
+      "21ka BP",
+      "0BP"
+    ],
+    "variables": [
+      "bio01",
+      "bio07",
+      "bio12",
+      "bio15"
+    ],
+    "focal": "Euclidean norm of four signed changes each scaled by pooled TRAINING-population SD of corresponding 0BP value",
+    "baseline": "Same-product four 0BP bioclim variables, geographic latitude/longitude, study-specific genotyping/sample controls",
+    "no_response_tuning": true
+  },
+  "before_opening": {
+    "min_populations_per_species_study": 5,
+    "min_species": 40,
+    "min_study_species_groups": 50,
+    "min_groups_in_each_species_hash_panel": 20,
+    "min_max_pairwise_population_distance_km": 100,
+    "spatial_population_dedup": "exact lat/lon within study/species",
+    "taxon_join": "exact binomial or deterministic synonym-mapping table frozen before response",
+    "outcome_mask_allowed": "He present/missing only; do not inspect numerical He",
+    "if_fail": "NOT_EVALUABLE; never inspect He"
+  },
+  "inference": {
+    "split": "fixed SHA256 species hash namespace ttf-fresh-quaternary-gendivrange-v01; train and evaluation have disjoint species",
+    "score": "Equal study-species weight, paired held-out within-study contrast MSE: baseline versus one predeclared history term",
+    "beta_direction": "two-sided",
+    "cluster_unit": "species",
+    "spatial_sampling": "do not treat population pairs as independent",
+    "no_post_result_tuning": true
+  },
+  "caveats": [
+    "GenDivRange uses mostly microsatellite heterozygosity, not TTF COI differentiation",
+    "Historic fields are sampled at modern genetic population sites, not inferred refugia",
+    "Predictor-nonredundancy alone is not biological outcome relevance",
+    "Do not infer general causation from any association",
+    "Only independent genetic response counts as an empirical ecological endpoint"
+  ]
+}
