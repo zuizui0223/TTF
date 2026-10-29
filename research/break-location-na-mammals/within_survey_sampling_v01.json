@@ -16,5 +16,10 @@
   "climate_study": "CHELSA-TraCE21k 21ka/0BP four bioclim variables; true author barrier controls should be obtained before history effect can be claimed.",
   "source_rights": "Do not distribute IUCN-derived clipped range polygons or point grids derived from licensed spatial boundaries.",
   "response_label_opened_only_for_geo_QA": true,
-  "historic_climate_or_empirical_model_tested": false
+  "historic_climate_or_empirical_model_tested": false,
+  "positive_spacing_km": 10,
+  "background_spacing_km": 20,
+  "min_positive_points": 5,
+  "min_background_points": 20,
+  "min_background_per_positive": 1
 }
