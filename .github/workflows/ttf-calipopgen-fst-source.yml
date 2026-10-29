@@ -1,0 +1,37 @@
+name: ttf-fresh-calipopgen-fst-source-only
+on:
+  push:
+    branches: [research/calipopgen-fst-v01]
+    paths:
+      - '.github/workflows/ttf-calipopgen-fst-source.yml'
+      - 'research/calipopgen-fst/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-calipopgen-fst-source.yml'
+      - 'research/calipopgen-fst/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify source-census tests
+        run: python -m unittest discover -s research/calipopgen-fst/tests -v
+      - name: Discover original CaliPopGen Dataset 2 files without Fst values
+        run: |
+          python research/calipopgen-fst/source_census.py \
+            --output results/calipopgen-fst/source_metadata.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-calipopgen-fst-source-metadata
+          path: results/calipopgen-fst/source_metadata.json
+          retention-days: 30
+          if-no-files-found: error
