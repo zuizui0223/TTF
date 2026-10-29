@@ -11,7 +11,7 @@ class Tests(unittest.TestCase):
   self.region2=[box(0,0,2,0.5),box(0,0.5,2,1)]
  def test_internal_ecotone_not_dissolved(self):
   result=distance_covariates_wgs84(
-    [(1,0.25),(.5,.25)], [box(.99,.20,1.01,.30)],
+    [(1,0.25),(.5,.5)], [box(.99,.20,1.01,.30)],
     [LineString([(0,0),(0,1)])], [box(1.8,.8,1.99,.99)],
     self.region1,self.region2)
   self.assertLess(result[0,2],.005)  # <5 m projection approximation at 0.5-degree edge
