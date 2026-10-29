@@ -1,0 +1,74 @@
+{
+  "schema": "ttf_gendivrange_climate_assets_v01",
+  "status": "PRE_RESPONSE_LOCKED_ORIGINAL_C1_COG_SHA256",
+  "source_receipt": "original C1 2026-09-27 c1_historical_asset_receipt.json",
+  "variables": [
+    "bio01",
+    "bio07",
+    "bio12",
+    "bio15"
+  ],
+  "time_indices": [
+    -190,
+    20
+  ],
+  "assets": [
+    {
+      "variable": "bio01",
+      "time_index": -190,
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio/CHELSA_TraCE21k_bio01_-190_V1.0.tif",
+      "sha256": "9d8be946c80cb54a2d92030b27021aec1ca771095b6b9ab48f15c55dee782b52",
+      "size_bytes": 559689080
+    },
+    {
+      "variable": "bio07",
+      "time_index": -190,
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio/CHELSA_TraCE21k_bio07_-190_V1.0.tif",
+      "sha256": "5a72abd07a31978097b6c215d7616b4c8dc97be435ea9396084b59628feb19a1",
+      "size_bytes": 169064080
+    },
+    {
+      "variable": "bio12",
+      "time_index": -190,
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio/CHELSA_TraCE21k_bio12_-190_V1.0.tif",
+      "sha256": "fb178048d7e647dacb8c4b50b4f24f229259526eb1a6c3f3bb017c68755e9c30",
+      "size_bytes": 379071734
+    },
+    {
+      "variable": "bio15",
+      "time_index": -190,
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio/CHELSA_TraCE21k_bio15_-190_V1.0.tif",
+      "sha256": "295391c7cc3a0c7252654b614b8640af65c4219abbe1b6a003c1a7b809f6401a",
+      "size_bytes": 1171654401
+    },
+    {
+      "variable": "bio01",
+      "time_index": 20,
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio/CHELSA_TraCE21k_bio01_20_V1.0.tif",
+      "sha256": "c212394f3482f30fd6cceb820f7786c79ad782f364a5cbb7b9dbbe9666087a1d",
+      "size_bytes": 527708089
+    },
+    {
+      "variable": "bio07",
+      "time_index": 20,
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio/CHELSA_TraCE21k_bio07_20_V1.0.tif",
+      "sha256": "f1a26a8e8e7641023f76d64307b52ba2e9bf82e8380d96a3ebb1f510aedd39eb",
+      "size_bytes": 173707693
+    },
+    {
+      "variable": "bio12",
+      "time_index": 20,
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio/CHELSA_TraCE21k_bio12_20_V1.0.tif",
+      "sha256": "f7789911e873a1f852fc8684e1449a93f0f0e123ae513abf005eb17222d8cb14",
+      "size_bytes": 400534930
+    },
+    {
+      "variable": "bio15",
+      "time_index": 20,
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio/CHELSA_TraCE21k_bio15_20_V1.0.tif",
+      "sha256": "37eb574bfc08a452d0268a2e9c152d4b58c814b4aff4ef7cde01add40655c143",
+      "size_bytes": 1232526033
+    }
+  ],
+  "HE_value_opened": false
+}
