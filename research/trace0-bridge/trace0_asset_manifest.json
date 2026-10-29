@@ -1,0 +1,32 @@
+{
+  "assets": [
+    {
+      "logical_basename": "CHELSA_TraCE21K_bio01_20_V1.0.tif",
+      "resolved_url": "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio/CHELSA_TraCE21k_bio01_20_V1.0.tif",
+      "sha256": "c212394f3482f30fd6cceb820f7786c79ad782f364a5cbb7b9dbbe9666087a1d",
+      "size_bytes": 527708089
+    },
+    {
+      "logical_basename": "CHELSA_TraCE21K_bio07_20_V1.0.tif",
+      "resolved_url": "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio/CHELSA_TraCE21k_bio07_20_V1.0.tif",
+      "sha256": "f1a26a8e8e7641023f76d64307b52ba2e9bf82e8380d96a3ebb1f510aedd39eb",
+      "size_bytes": 173707693
+    },
+    {
+      "logical_basename": "CHELSA_TraCE21K_bio12_20_V1.0.tif",
+      "resolved_url": "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio/CHELSA_TraCE21k_bio12_20_V1.0.tif",
+      "sha256": "f7789911e873a1f852fc8684e1449a93f0f0e123ae513abf005eb17222d8cb14",
+      "size_bytes": 400534930
+    },
+    {
+      "logical_basename": "CHELSA_TraCE21K_bio15_20_V1.0.tif",
+      "resolved_url": "https://os.zhdk.cloud.switch.ch/chelsav1/chelsa_trace/bio/CHELSA_TraCE21k_bio15_20_V1.0.tif",
+      "sha256": "37eb574bfc08a452d0268a2e9c152d4b58c814b4aff4ef7cde01add40655c143",
+      "size_bytes": 1232526033
+    }
+  ],
+  "schema": "TTF_stage12_frozen_trace0_asset_manifest_v0.1",
+  "source": "original 2026-09-27 C1 asset receipt",
+  "status": "UNRETRIEVED_REAL_RASTERS",
+  "total_size_bytes": 2334476745
+}
