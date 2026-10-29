@@ -9,7 +9,7 @@ def ix(ref):
         if not c.isalpha(): break
         n=n*26+ord(c.upper())-64
     return n-1
-def stream(blob, requested):
+def stream(blob, requested, presence=frozenset()):
     with zipfile.ZipFile(io.BytesIO(blob)) as z:
         strings=[]
         with z.open("xl/sharedStrings.xml") as f:
@@ -23,12 +23,15 @@ def stream(blob, requested):
                 out={}
                 for c in r.findall(N+"c"):
                     i=ix(c.get("r",""))
-                    if head is not None and head.get(i) not in requested:continue
+                    if head is not None and head.get(i) not in requested and head.get(i) not in presence:continue
                     v=c.find(N+"v")
+                    if head is not None and head.get(i) in presence:
+                        out[i]=(v is not None and c.get("t")!="e")
+                        continue
                     if v is None:continue
                     out[i]=strings[int(v.text)] if c.get("t")=="s" else v.text
                 if head is None:head=out
-                else:yield {name:out.get(i) for i,name in head.items() if name in requested}
+                else:yield {name:out.get(i) for i,name in head.items() if name in requested or name in presence}
                 r.clear()
 def reconcile(pop,spec):
     meta={}
