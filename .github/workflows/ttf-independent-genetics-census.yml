@@ -1,0 +1,36 @@
+name: ttf-independent-genetics-census
+on:
+  push:
+    branches: [research/quaternary-genetics-v01]
+    paths:
+      - '.github/workflows/ttf-independent-genetics-census.yml'
+      - 'research/quaternary-genetics/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-independent-genetics-census.yml'
+      - 'research/quaternary-genetics/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  metadata-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate response-blind preflight without opening He
+        run: python -m unittest discover -s research/quaternary-genetics/tests -v
+      - name: Retrieve GenDivRange public file metadata only
+        run: |
+          python research/quaternary-genetics/figshare_preflight.py \
+            --output results/quaternary_genetics/figshare_file_census.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: quaternary-genetics-metadata-census
+          path: results/quaternary_genetics/figshare_file_census.json
+          retention-days: 30
