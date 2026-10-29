@@ -24,7 +24,7 @@ def zipinventory(dest):
             raise ValueError("unsafe ZIP path")
         return {"member_count":len(files),"uncompressed_bytes":sum(f.file_size for f in files),
           "extensions":dict(collections.Counter(Path(x).suffix.lower() for x in names)),
-          "names":names[:500],"coordinates_or_break_features_read":False}
+          "names":names,"coordinates_or_break_features_read":False}
 def headers(dest):
     with zipfile.ZipFile(dest) as z:
         strings=[]
