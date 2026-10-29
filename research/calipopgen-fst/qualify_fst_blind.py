@@ -73,6 +73,8 @@ def evaluate(xlsx):
     groups=collections.defaultdict(lambda:{"pairs":set(),"sites":set(),"missing_coord_error":0,"known_coord_error":0})
     markers=collections.Counter()
     metriclabels=collections.Counter()
+    habitatlabels=collections.Counter()
+    speciallabels=collections.Counter()
     for r in sample_metadata_rows(xlsx):
         c["total_rows"]+=1
         metric=str(r.get("GenDistMetric") or "").strip()
@@ -82,8 +84,10 @@ def evaluate(xlsx):
         c["rows_fst_label"]+=1
         if not r.get("GenDist"):
             c["no_numeric_type_response_cell"]+=1;continue
+        habitatlabels[str(r.get("HabitatType") or "").strip()]+=1
         if str(r.get("HabitatType") or "").strip().lower()!="terrestrial":
             c["not_terrestrial"]+=1;continue
+        speciallabels[str(r.get("specialComparisonType") or "").strip()]+=1
         if str(r.get("specialComparisonType") or "").strip().lower() not in ("","none","na","nan"):
             c["special_temporal_hybrid_or_interspecific"]+=1;continue
         sp=frozen_binomial(r.get("Pop1ScientificName"))
@@ -141,7 +145,9 @@ def evaluate(xlsx):
     return {"schema":"ttf_calipopgen_fst_response_blind_support_v01",
        "status":"PASS_RESPONSE_BLIND_GEOGRAPHIC_SUPPORT" if passed else "NOT_EVALUABLE_RESPONSE_BLIND_SUPPORT",
        "source_rows_scanned":c["total_rows"],"counts":dict(c),
-       "raw_metric_labels":dict(metriclabels),"prequalified_markers":dict(markers),
+       "raw_metric_labels":dict(metriclabels),"raw_habitat_labels_in_Fst":dict(habitatlabels),
+       "raw_special_comparison_labels_in_terrestrial_Fst":dict(speciallabels),
+       "prequalified_markers":dict(markers),
        "eligible_species":eligible_species,"eligible_study_species_marker_groups":len(accepted),
        "species_by_hash_role":[len(x) for x in roles],
        "study_groups_by_hash_role":per_role_groups,
