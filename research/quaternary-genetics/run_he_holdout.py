@@ -14,13 +14,13 @@ def run(args):
     geo=json.loads((root/"eligible_geometry.json").read_text())
     receipt=json.loads((root/"results/gendivrange-climate/climate_receipt.json").read_text())
     matrix=np.load(root/"results/gendivrange-climate/climate_values.npy",allow_pickle=False)
-    if hashlib.sha256(matrix.tobytes()).hexdigest()!=auth["climate_matrix_raw_sha256"]:
+    if hashlib.sha256(matrix.tobytes()).hexdigest()!=auth["source_climate"]["matrix_raw_sha256"]:
         raise ValueError("frozen exact-CHELSA climate matrix mismatch")
     if receipt["genetic_He_values_opened"] or matrix.shape[1]!=8:
         raise ValueError("unexpected climate provenance")
     with (root/"results/gendivrange-climate/site_keys.csv").open(newline="") as f:
         sites=list(csv.DictReader(f))
-    assert len(sites)==len(matrix)==auth["total_climate_sites"]
+    assert len(sites)==len(matrix)==auth["source_climate"]["sites"]
     manifest={(m["species_id"],m["study_id"]):m for m in geo["adult_terrestrial_frozen_manifest"]}
     lookup={}
     for r,v in zip(sites,matrix):
