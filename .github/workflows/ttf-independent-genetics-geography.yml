@@ -4,12 +4,14 @@ on:
     branches: [research/quaternary-genetics-v01]
     paths:
       - 'research/quaternary-genetics/geo_mask_census.py'
+      - 'research/quaternary-genetics/reconcile_keys.py'
       - 'research/quaternary-genetics/inspect_headers_only.py'
       - '.github/workflows/ttf-independent-genetics-geography.yml'
   pull_request:
     branches: [main]
     paths:
       - 'research/quaternary-genetics/geo_mask_census.py'
+      - 'research/quaternary-genetics/reconcile_keys.py'
       - 'research/quaternary-genetics/inspect_headers_only.py'
       - '.github/workflows/ttf-independent-genetics-geography.yml'
   workflow_dispatch:
@@ -28,8 +30,13 @@ jobs:
         run: python research/quaternary-genetics/figshare_preflight.py --output figshare.json
       - name: Screen latitude span and genetic-data presence only
         run: python research/quaternary-genetics/geo_mask_census.py --metadata figshare.json --output geo_census.json
+      - name: Reconcile population and species study keys, no He values
+        run: |
+          python research/quaternary-genetics/reconcile_keys.py --metadata figshare.json --output key_reconciliation.json
       - uses: actions/upload-artifact@v4
         with:
           name: ttf-independent-genetics-geographic-census
-          path: geo_census.json
+          path: |
+            geo_census.json
+            key_reconciliation.json
           retention-days: 30
