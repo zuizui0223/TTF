@@ -1,0 +1,14 @@
+{
+  "schema": "ttf_calipopgen_fst_geo_quality_v02_pre_response_amendment",
+  "status": "FROZEN_PREOUTCOME_GEO_POLICY",
+  "prior": "research/calipopgen-fst/prospective_source_v01.json",
+  "reason": "CaliPopGen CoordError quantifies uncertainty of curator-georeferenced coordinates, whereas author-reported coordinates may have missing CoordError. Missing error must not be silently imputed as measured zero.",
+  "coordinate_rule": "Require finite two-endpoint lon/lat; accept non-missing CoordError <=25 km; accept missing CoordError only as 'published/unquantified' separate quality category and explicitly report its number. Exclude numeric >25 km. No inference of zero measurement error from missing.",
+  "missing_error_sensitivity": "A separate strictly known-error-only count is descriptive and not an alternative confirmatory panel.",
+  "metric": "Use only exact Fst metrics by deterministic F_ST/Fst normalization; no other genetic distances",
+  "study_group": "CitationID × accepted Pop1ScientificName × MarkerType × GeneTarget × sepAnalyses; no mixing of different study/locus responses",
+  "eligibility": "At least 5 distinct un-ordered site pairs, 4 sites, and maximum 100 km great-circle separation within each study-species-marker group; ≥30 species and ≥10 species in each hash role",
+  "before_opening": "Only GenDist cell presence (not content) may be inspected. Outcomes remain sealed until calibration and climate data complete.",
+  "reason_for_amendment_data_driven": false,
+  "numeric_Fst_opened": false
+}
