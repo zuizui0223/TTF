@@ -28,9 +28,14 @@ jobs:
         run: |
           python research/quaternary-genetics/figshare_preflight.py \
             --output results/quaternary_genetics/figshare_file_census.json
+      - name: SHA-verify three Figshare workbooks and inspect FIRST ROW ONLY
+        run: |
+          python research/quaternary-genetics/inspect_headers_only.py \
+            --metadata results/quaternary_genetics/figshare_file_census.json \
+            --output results/quaternary_genetics/figshare_header_only.json
       - uses: actions/upload-artifact@v4
         if: success()
         with:
           name: quaternary-genetics-metadata-census
-          path: results/quaternary_genetics/figshare_file_census.json
+          path: results/quaternary_genetics/
           retention-days: 30
