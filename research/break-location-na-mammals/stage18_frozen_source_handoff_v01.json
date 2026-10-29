@@ -1,0 +1,68 @@
+{
+  "schema": "ttf_jensen_mammal_breaks_stage18_frozen_source_handoff_v01",
+  "frozen_on": "2026-10-29",
+  "status": "SOURCE_AND_SPECIES_SUPPORT_PASS_EMPIRICAL_LGM_BREAK_PREDICTION_NOT_EVALUATED",
+  "paper_doi": "10.1111/geb.13875",
+  "original_author_filed_source": {
+    "break_shapefiles": 116,
+    "clipped_surveyed_range_shapefiles": 113,
+    "exact_common_name_pairs": 113,
+    "original_break_zip_md5": "33337f23b0b9feae68a5c8418164c24b",
+    "original_range_zip_md5": "e25142d7a4f2734b3319aa3a6e4bd465",
+    "source_byte_verification_run": 40856727117,
+    "complete_member_inventory_run": 40857111909
+  },
+  "crs_qa": {
+    "run_id": 40857531589,
+    "valid_paired_source_crs": 113,
+    "native_break_epsg3857": 113,
+    "native_range_epsg4326": 111,
+    "native_range_epsg3857": 2,
+    "rule": "Always convert to WGS84 and local AEQD before spatial comparison"
+  },
+  "spatial_overlap_qa": {
+    "run_id": 40857912963,
+    "artifact_id": 12890580549,
+    "artifact_digest": "sha256:f24e30a2b776edb73571d84fb9ecd69c57f52d0e4fcdf84056a07eaa428e73ae",
+    "max_predeclared_break_to_surveyed_range_distance_km": 50,
+    "qualified_species": 108,
+    "disqualified_species": 5
+  },
+  "sampled_case_background_qa": {
+    "run_id": 40858585184,
+    "artifact_id": 12890491789,
+    "artifact_digest": "sha256:76160771eed61207b6816e0dc1885da9ecb714918d82cdb66afce8d96d6a16a4",
+    "positive_spacing_km": 10,
+    "background_spacing_km": 20,
+    "minimum_distance_from_break_for_background_km": 50,
+    "qualified_species_min5_case": 95,
+    "total_positive_points_eligible95": 10834,
+    "total_background_points_eligible95": 559265,
+    "positive_points_min10_species_before_taxon_join": 87
+  },
+  "latin_taxon_and_holdout_qa": {
+    "run_id": 40859029474,
+    "artifact_id": 12889949378,
+    "artifact_digest": "sha256:d2cd60f8a99fccbd53de1bda978e533a77ed3012e058408e181f09ba72c32698",
+    "latin_name_joined_species": 88,
+    "unmatched_common_names": 7,
+    "estimator_qualified_species_min10_case": 80,
+    "training_species": 44,
+    "heldout_species": 36,
+    "species_intersection": 0,
+    "split_namespace": "ttf-jensen-na-mammal-break-v01|"
+  },
+  "required_before_empirical_response": [
+    "Original geological barrier covariates (mountains, major rivers/lakes, ecoregion borders, terrain ruggedness) or demonstrably equivalent source audit; do not falsely use just current climate/latlon as equivalent control",
+    "Exact SHA-verified CHELSA-TraCE21k 21ka/0BP for matched points",
+    "Taxonomic crossfit and species-level synthetic false positive/power calibration",
+    "Respect 50km hand-drawn genetic break positional uncertainty and background pseudoabsence nature",
+    "Respect IUCN-derived range redistribution limitations"
+  ],
+  "historical_climate_predictors_actually_tested": false,
+  "genetic_break_location_incremental_auc_actually_tested": false,
+  "prior_TTF_GenDivRange_CaliPopGen_He_Fst_outcomes_reopened": false,
+  "main_modified": false,
+  "branch": "research/break-location-na-mammals-v01",
+  "pull_request": 153
+}
