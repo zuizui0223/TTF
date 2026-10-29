@@ -1,0 +1,41 @@
+name: ttf-Jensen-EarthEnv-TRI-source-provenance
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-mammal-break-tri-source.yml'
+      - 'research/break-location-na-mammals/tri_source_probe.py'
+      - 'research/break-location-na-mammals/tri_1km_source_candidate_v01.json'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-mammal-break-tri-source.yml'
+      - 'research/break-location-na-mammals/tri_source_probe.py'
+      - 'research/break-location-na-mammals/tri_1km_source_candidate_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tri-source-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install raster metadata reader
+        run: python -m pip install 'rasterio>=1.4,<2'
+      - name: Verify EarthEnv 1km TRI source URI and original SHA without genetic outcome
+        run: |
+          python research/break-location-na-mammals/tri_source_probe.py \
+            --candidate research/break-location-na-mammals/tri_1km_source_candidate_v01.json \
+            --work /tmp/ttf-mammal-tri-source \
+            --out results/ttf-mammal-breaks/tri_source_receipt.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-Jensen-EarthEnv-TRI-source-receipt
+          path: results/ttf-mammal-breaks/tri_source_receipt.json
+          retention-days: 30
+          if-no-files-found: error
