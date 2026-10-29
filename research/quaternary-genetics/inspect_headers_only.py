@@ -2,6 +2,18 @@
 import argparse, hashlib, io, json, urllib.request, zipfile, xml.etree.ElementTree as ET
 from pathlib import Path
 NS="{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
+
+def fetch_verified(item):
+    import hashlib,urllib.request
+    url="https://ndownloader.figshare.com/files/"+str(int(item["id"]))
+    with urllib.request.urlopen(url,timeout=90) as response:
+        raw=response.read(int(item["size_bytes"])+1)
+    if len(raw)!=int(item["size_bytes"]):
+        raise ValueError("source-size mismatch")
+    if hashlib.md5(raw).hexdigest()!=item["md5_expected"]:
+        raise ValueError("source-MD5 mismatch")
+    return raw
+
 def examine(item):
     url="https://ndownloader.figshare.com/files/"+str(int(item["id"]))
     with urllib.request.urlopen(url,timeout=90) as r:raw=r.read(int(item["size_bytes"])+1)
