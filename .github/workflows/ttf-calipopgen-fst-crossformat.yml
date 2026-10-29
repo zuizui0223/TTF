@@ -1,0 +1,36 @@
+name: ttf-calipopgen-fst-source-cross-format-audit
+on:
+  push:
+    branches: [research/calipopgen-fst-v01]
+    paths:
+      - '.github/workflows/ttf-calipopgen-fst-crossformat.yml'
+      - 'research/calipopgen-fst/cross_format_count.py'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-calipopgen-fst-crossformat.yml'
+      - 'research/calipopgen-fst/cross_format_count.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  no-genetic-outcome:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compare source serialization against both published original MD5s
+        run: |
+          python research/calipopgen-fst/cross_format_count.py \
+            --source-lock research/calipopgen-fst/published_source_lock_v01.json \
+            --output results/calipopgen-fst/crossformat.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-calipopgen-original-source-crossformat
+          path: results/calipopgen-fst/crossformat.json
+          retention-days: 30
+          if-no-files-found: error

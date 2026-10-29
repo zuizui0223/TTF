@@ -1,0 +1,40 @@
+name: ttf-fresh-calipopgen-fst-schema-only
+on:
+  push:
+    branches: [research/calipopgen-fst-v01]
+    paths:
+      - '.github/workflows/ttf-calipopgen-fst-schema.yml'
+      - 'research/calipopgen-fst/inspect_xlsx_schema.py'
+      - 'research/calipopgen-fst/published_source_lock_v01.json'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-calipopgen-fst-schema.yml'
+      - 'research/calipopgen-fst/inspect_xlsx_schema.py'
+      - 'research/calipopgen-fst/published_source_lock_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-xlsx-schema:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run synthetic schema-only guards
+        run: python -m unittest discover -s research/calipopgen-fst/tests -v
+      - name: Download exact Figshare XLSX and inspect column names and row count only
+        run: |
+          python research/calipopgen-fst/inspect_xlsx_schema.py \
+            --lock research/calipopgen-fst/published_source_lock_v01.json \
+            --output results/calipopgen-fst/schema_only.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-calipopgen-fst-xlsx-schema-only
+          path: results/calipopgen-fst/schema_only.json
+          retention-days: 30
+          if-no-files-found: error

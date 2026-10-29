@@ -1,0 +1,61 @@
+{
+  "schema": "ttf_calipopgen_fst_first_empirical_opening_receipt_v01",
+  "status": "AUTHORIZE_FRESH_CALIPOPGEN_FST_ONCE",
+  "authorized_on": "2026-10-29",
+  "program": "New California pairwise Fst from CaliPopGen Dataset 2, independent of closed TTF-Q/GenDivRange-He/COI outcomes",
+  "source": {
+    "article_id": 15015927,
+    "doi": "10.6084/m9.figshare.15015927.v1",
+    "file_id": 28882428,
+    "md5": "ca8da2a8db1d87e81d982ff83ea8aff6",
+    "expected_rows": 14073
+  },
+  "prior": {
+    "GenDivRange_He": "FROZEN_NON_POSITIVE",
+    "genetic_TTF_Phase4": "FROZEN",
+    "relational_v03": "CLOSED_NO_EVALUABLE_TEST"
+  },
+  "climate_artifact_id": 12887306539,
+  "climate_artifact_sha256": "8bacad8e331b290e541b49ef32bd6c9331ddf788376ce490cfa300f12737fac7",
+  "predictor_artifact_id": 12887520681,
+  "predictor_artifact_sha256": "f86687a26961fe087b34f7eaaf1c5fd88ba200a1b17f31b638f34d6bfcf28284",
+  "synthetic_artifact_id": 12887737737,
+  "synthetic_artifact_sha256": "a234a792838531a7beeac90f3537d3422a4f301cedddfb107893105079538c75",
+  "climate_matrix_sha256": "052bec6219f3e601b2c72419c2b0279ffad471a37e97a47a83f9cdaa5afcb1ed",
+  "frozen_source_support": {
+    "species": 39,
+    "train_species": 17,
+    "eval_species": 22,
+    "groups": 43,
+    "train_groups": 20,
+    "eval_groups": 23,
+    "site_pairs": 2344,
+    "sites": 454
+  },
+  "frozen_calibration": {
+    "null_worlds": 200,
+    "false_positive_decisions": 2,
+    "null_wilson95_upper": 0.0357217617161768,
+    "positive_worlds": 200,
+    "positive_decisions": 190,
+    "positive_wilson95_lower": 0.9104218518612239
+  },
+  "frozen_predictor_information": {
+    "train_groups": 20,
+    "partial_unique_variance_fraction": 0.5509244735725867,
+    "minimum": 0.05
+  },
+  "bound_git_blobs": {
+    "research/calipopgen-fst/model_fst_holdout.py": "d964c4241586548f03b5c7c6a6783492c4fda071",
+    "research/calipopgen-fst/run_fst_one_shot.py": "df100d51b707380c6c49eb93a2a156ba4fb5ccc8",
+    "research/calipopgen-fst/climate_feature_gate.py": "b506cf1234b81ee94bd6185d4f94701565c5c54c",
+    "research/calipopgen-fst/frozen_model_v01.json": "49d16b905d5ef44866ca38bc4b14d5c45ef5718a",
+    "research/calipopgen-fst/known_truth_gate_v01.json": "a61ca9a27f0c3b3f32d7f79d3fb545c5941baf44",
+    "research/calipopgen-fst/published_source_lock_v01.json": "898222c061ea7d26bd627b4b56a199e8eaba3de2"
+  },
+  "main_decision": "Held-out species/group equal-weight baseline versus one historic term relative MSE gain; species-level 1999 bootstrap seed 20261029, positive only when 95% lower >0",
+  "strict_no_post_response_changes": true,
+  "numeric_Fst_opened_at_creation": false,
+  "if_gates_fail": "NOT_EVALUABLE_NO_NUMERICAL_FST_OPENING",
+  "null_and_negative_endpoint_to_be_frozen_unchanged": true
+}

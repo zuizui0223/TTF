@@ -1,0 +1,56 @@
+{
+  "schema": "ttf_fresh_calipopgen_fst_v01",
+  "status": "SOURCE_DISCOVERY_AND_SCHEMA_ONLY_BEFORE_FST_RESPONSE",
+  "frozen_on": "2026-10-29",
+  "source": {
+    "name": "CaliPopGen Dataset 2: Pairwise Population Differentiation",
+    "year": 2022,
+    "collection_doi": "10.6084/m9.figshare.c.5518389.v1",
+    "figshare_collection_id": 5518389,
+    "scientific_data_doi": "10.1038/s41597-022-01479-z",
+    "version_rule": "v1 article/file digest fixed on first discovery; do not silently substitute later versions"
+  },
+  "target": "Within-species pairwise population genetic differentiation Fst; NOT GenDivRange He or TTF original COI transferability",
+  "response_blind_preflight": {
+    "allowed_fields": [
+      "taxonomy",
+      "species ID",
+      "study source",
+      "marker type",
+      "habitat type",
+      "two locations",
+      "coordinate accuracy",
+      "temporal/special comparison label",
+      "GenDistMetric label",
+      "GenDist presence only"
+    ],
+    "forbidden_fields": [
+      "GenDist numeric value",
+      "genetic distance distribution",
+      "model performance",
+      "prior frozen genetic outcomes"
+    ]
+  },
+  "preliminary_filters": {
+    "habitat": "Terrestrial",
+    "metric": "exact Fst alias after deterministic normalization",
+    "site_coordinates": "both populations valid lat/lon and error radius <=25km",
+    "no_special_comparisons": true,
+    "minimum_georeferenced_pairs_per_study_species_marker": 5,
+    "minimum_unique_localities_per_group": 4,
+    "minimum_maximum_pairwise_distance_km": 100
+  },
+  "gates": {
+    "min_species": 30,
+    "min_study_species_marker_groups": 35,
+    "min_species_per_frozen_role": 10,
+    "min_study_groups_per_role": 12,
+    "if_failed": "NOT_EVALUABLE_NO_HE_RESCUE"
+  },
+  "species_split": "SHA256('calipopgen-fst-ttf-fresh-v01|'+lowercase accepted_species_name) fixed parity, all loci/studies of species assigned together",
+  "strategy": "Comparison of contemporary-climate and geographic predictors vs same plus one historical LGM-to-0BP difference-in-displacement term; group-heldout species; response remains closed until source, support and synthetic calibration gates pass",
+  "independence": "New source and Fst response; assess publication-level overlap with GenDivRange before treating studies as independent replications. Do not reopen prior TTF-Q, Phase4 or GenDivRange endpoint.",
+  "no_response_opened": true,
+  "no_posthoc_filter_or_predictor_search": true,
+  "scope_note": "California geographic panel, not global generality. Fst magnitude does not by itself identify location of an abrupt genetic break."
+}

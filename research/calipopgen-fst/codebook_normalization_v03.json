@@ -1,0 +1,16 @@
+{
+  "schema": "ttf_calipopgen_special_comparison_encoding_v03",
+  "status": "PRE_GENETIC_VALUE_DECODING_SOURCE_CODEBOOK_CORRECTION",
+  "prior": "research/calipopgen-fst/geo_policy_v02_preoutcome.json",
+  "observed_response_blind_code_values": {
+    "regular": 2942,
+    "interspecific": 43,
+    "spatio-temoral replicate": 64,
+    "temporal comparison": 16
+  },
+  "policy": "Treat literal regular as normal contemporaneous within-species comparison; exclude every other nonempty specialComparisonType including temporal/replicate/interspecific, and do not infer Fst effect from category counts.",
+  "site_error_policy_unmodified": true,
+  "metric_fst_policy_unmodified": true,
+  "minimum_study_support_unmodified": true,
+  "genetic_values_opened": false
+}

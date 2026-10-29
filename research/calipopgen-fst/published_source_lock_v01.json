@@ -1,0 +1,24 @@
+{
+  "schema": "ttf_calipopgen_fst_published_source_lock_v01",
+  "status": "FROZEN_BEFORE_NUMERICAL_FST_OPENING",
+  "source_article": 15015927,
+  "doi": "10.6084/m9.figshare.15015927.v1",
+  "title": "CaliPopGen Dataset 2: Pairwise Population Differentiation",
+  "dataset_version": 1,
+  "format": "XLSX",
+  "xlsx_file_id": 28882428,
+  "xlsx_file_name": "CaliPopGen_dataset_2_population_genetic_differentiation_XLSX.xlsx",
+  "size_bytes": 5362318,
+  "md5": "ca8da2a8db1d87e81d982ff83ea8aff6",
+  "download_url": "https://ndownloader.figshare.com/files/28882428",
+  "alternative_CSV": {
+    "article": 15015930,
+    "doi": "10.6084/m9.figshare.15015930.v1",
+    "file_id": 28882431,
+    "md5": "269d3297531f9d607a0f12a9e3fbf7e4",
+    "note": "Alternative serialization, not independent biological replication; do not mix."
+  },
+  "rights": "CC0",
+  "provenance": "Figshare metadata, surfaced 2026-10-29; dataset described by Beninde et al. 2022",
+  "genetic_numeric_values_opened": false
+}

@@ -1,0 +1,113 @@
+{
+  "schema": "ttf_fresh_calipopgen_fst_empirical_handoff_v01",
+  "status": "FROZEN_FIRST_SHOT_NO_QUALIFIED_POSITIVE_TRANSFER",
+  "frozen_on": "2026-10-29",
+  "repo": "zuizui0223/TTF",
+  "scientific_program": "independent California population-pair Fst holdout predictor test",
+  "independent_of": [
+    "genetic TTF COI Phase4",
+    "TTF-Q relation-only results",
+    "relational v0.3 closed slots",
+    "GenDivRange He first-shot"
+  ],
+  "source": {
+    "name": "CaliPopGen Dataset 2 v1",
+    "article_id": 15015927,
+    "doi": "10.6084/m9.figshare.15015927.v1",
+    "file_id": 28882428,
+    "original_xlsx_md5": "ca8da2a8db1d87e81d982ff83ea8aff6",
+    "actual_rows": 14073,
+    "published_paper_reported_rows": 14703,
+    "metadata_discrepancy_unresolved": true
+  },
+  "first_successful_empirical_run": {
+    "run_id": 40853075943,
+    "job_id": 123377135868,
+    "conclusion": "success",
+    "artifact_id": 12888326291,
+    "artifact_zip_digest": "sha256:a68f711e2809fe8e1c6806647bee17bb4d6dfd0aad00a4346fbc7242df014ca0"
+  },
+  "before_opening": {
+    "source_geography": {
+      "species": 39,
+      "groups": 43,
+      "pairs": 2344,
+      "sites": 454,
+      "role_species": [
+        17,
+        22
+      ],
+      "role_groups": [
+        20,
+        23
+      ]
+    },
+    "climate": {
+      "run_id": 40850885910,
+      "artifact_id": 12887306539,
+      "artifact_zip_sha256": "8bacad8e331b290e541b49ef32bd6c9331ddf788376ce490cfa300f12737fac7",
+      "eight_rasters_sha_verified": true,
+      "finite_sites": 454,
+      "climate_matrix_sha256": "052bec6219f3e601b2c72419c2b0279ffad471a37e97a47a83f9cdaa5afcb1ed"
+    },
+    "predictor": {
+      "run_id": 40851514481,
+      "artifact_id": 12887520681,
+      "partial_unique_fraction": 0.5509244735725867,
+      "frozen_minimum": 0.05,
+      "status": "PASS"
+    },
+    "known_truth": {
+      "run_id": 40852393077,
+      "artifact_id": 12887737737,
+      "null_worlds": 200,
+      "null_positive": 2,
+      "null_wilson_upper": 0.0357217617161768,
+      "positive_worlds": 200,
+      "positive_positive": 190,
+      "power_wilson_lower": 0.9104218518612239,
+      "status": "PASS"
+    },
+    "authorization": "research/calipopgen-fst/authorize_fst_v01.json",
+    "model": "research/calipopgen-fst/model_fst_holdout.py",
+    "original_response_exposure_during_qualification": false
+  },
+  "empirical": {
+    "status": "FROZEN_CALIPOPGEN_FST_EMPIRICAL_ENDPOINT",
+    "train_species": 17,
+    "heldout_species": 22,
+    "train_groups": 20,
+    "heldout_groups": 23,
+    "train_fst_pairs": 1266,
+    "heldout_fst_pairs": 1077,
+    "total_used_pairs": 2343,
+    "source_qc": {
+      "original_rows": 14073,
+      "prequalified_source_pair_first_occurrence": 2344,
+      "duplicate_unordered_pair_rows_rejected": 131,
+      "malformed_or_invalid_fst": 1,
+      "valid_fst": 2343,
+      "unknown_numeric_coordinate_error_count_in_prior_qualified_pairs": 1696
+    },
+    "baseline_group_equal_MSE": 0.015254409995723292,
+    "plus_history_group_equal_MSE": 0.016074667029056505,
+    "relative_heldout_MSE_gain": -0.05377179671735444,
+    "species_cluster_bootstrap95": [
+      -0.165023263243713,
+      0.006823240542175835
+    ],
+    "bootstrap_draws": 1999,
+    "bootstrap_seed": 20261029,
+    "history_training_coefficient": 0.03585234822629828,
+    "positive_gain_95_lower_gt_zero": false
+  },
+  "interpretive_boundary": [
+    "The historical predictor carries substantial residual variation but did not improve unseen-species Fst magnitude prediction under the one precommitted metric and geography baseline.",
+    "Negative point estimate of prediction gain does not prove harmful historic effects: species-bootstrap uncertainty crosses zero.",
+    "Fst magnitude is not breakpoint geography; no past refugia or historical genetic memory causal claim supported.",
+    "This is a California-only dataset, many eligible pairs lacked quantified coordinate uncertainty.",
+    "CaliPopGen and GenDivRange may overlap underlying publications; independent datasets do not guarantee independent study sources."
+  ],
+  "stopping_rule": "Final. Do not revisit this genetic response to tune predictors, distance/threshold, regions, loci, direction, or feature aggregation.",
+  "original_frozen_TTF_science_modified": false
+}
