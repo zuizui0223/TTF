@@ -88,7 +88,7 @@ def evaluate(xlsx):
         if str(r.get("HabitatType") or "").strip().lower()!="terrestrial":
             c["not_terrestrial"]+=1;continue
         speciallabels[str(r.get("specialComparisonType") or "").strip()]+=1
-        if str(r.get("specialComparisonType") or "").strip().lower() not in ("","none","na","nan"):
+        if str(r.get("specialComparisonType") or "").strip().lower() not in ("","none","na","nan","regular"):
             c["special_temporal_hybrid_or_interspecific"]+=1;continue
         sp=frozen_binomial(r.get("Pop1ScientificName"))
         target=frozen_binomial(r.get("Pop2ScientificName"))
