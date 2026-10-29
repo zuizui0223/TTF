@@ -87,7 +87,7 @@ jobs:
             --authorization research/calipopgen-fst/authorize_fst_v01.json \
             --information-gate quality/predictor_information_gate.json \
             --source-lock research/calipopgen-fst/published_source_lock_v01.json \
-            --climate-dir inputs/climate/climate \
+            --climate-dir inputs/climate \
             --output results/independent_calipopgen_fst_v01.json
       - name: Retain aggregate first-shot scientific endpoint, no raw Fst
         if: success()
