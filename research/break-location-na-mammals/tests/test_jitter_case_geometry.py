@@ -26,3 +26,14 @@ class Tests(unittest.TestCase):
   with self.assertRaises(ValueError):
    jitter_cases(np.array([[0.,0.]]),box(-1,-1,1,1),np.random.default_rng(1),radius_m=55000)
 if __name__=="__main__":unittest.main()
+
+
+class RepairTests(unittest.TestCase):
+ def test_repair_self_crossing_projected_polygon(self):
+  from shapely.geometry import Polygon
+  from jitter_case_geometry import repair_survey_polygon
+  p=Polygon([(0,0),(2,2),(0,2),(2,0),(0,0)])
+  self.assertFalse(p.is_valid)
+  r=repair_survey_polygon(p)
+  self.assertTrue(r.is_valid)
+  self.assertGreater(r.area,0.)

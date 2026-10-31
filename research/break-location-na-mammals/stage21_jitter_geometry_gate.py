@@ -12,7 +12,7 @@ from shapely.ops import transform
 from shapely.validation import make_valid
 from source_integrity import fetch
 from source_overlap_gate import members,load_group,norm
-from jitter_case_geometry import jitter_cases
+from jitter_case_geometry import jitter_cases,repair_survey_polygon
 import zipfile
 
 def main():
@@ -53,11 +53,12 @@ def main():
                 raise ValueError("Original case-grid sites differ from frozen source, species index "+str(i))
             seed_key=rules["seed_namespace"]+s["scientific_name"].lower()
             seed=int.from_bytes(hashlib.sha256(seed_key.encode()).digest()[:8],"big")
-            moved,diagnostic=jitter_cases(xy,polygon,np.random.default_rng(seed),
+            jitter_polygon=repair_survey_polygon(polygon)
+            moved,diagnostic=jitter_cases(xy,jitter_polygon,np.random.default_rng(seed),
                 radius_m=rules["source_uncertainty_radius_km"]*1000,
                 max_attempts=rules["max_attempts"])
             displacement=np.linalg.norm(moved-xy,axis=1)/1000.
-            if (displacement>rules["source_uncertainty_radius_km"]+1e-8).any() or not shapely.covers(polygon,shapely.points(moved)).all():
+            if (displacement>rules["source_uncertainty_radius_km"]+1e-8).any() or not shapely.covers(jitter_polygon,shapely.points(moved)).all():
                 raise RuntimeError("Jitter invalid: source range or radius violated")
             roles[int(s["split_role"])]+=1
             n_cases+=len(xy);n_moved+=diagnostic["successful"];all_distances.append(displacement)

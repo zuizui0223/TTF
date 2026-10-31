@@ -29,3 +29,23 @@ def jitter_cases(points,polygon,rng,radius_m=50000,max_attempts=20):
         "unmoved":int(pending.sum()),
         "displacement_km_median":float(np.median(distance)/1000) if len(distance) else None,
         "displacement_km_p95":float(np.quantile(distance,.95)/1000) if len(distance) else None}
+
+
+def repair_survey_polygon(polygon):
+    """Repair projection-induced ring self-intersections, keep polygonal area only."""
+    from shapely.validation import make_valid
+    from shapely.ops import unary_union
+    if polygon.is_empty:raise ValueError("empty projected source surveyed range")
+    fixed=make_valid(polygon) if not polygon.is_valid else polygon
+    polys=[]
+    def collect(g):
+        if g.geom_type=="Polygon":polys.append(g)
+        elif g.geom_type=="MultiPolygon":polys.extend(g.geoms)
+        elif hasattr(g,"geoms"):
+            for part in g.geoms:collect(part)
+    collect(fixed)
+    if not polys:raise ValueError("no polygonal area after projected survey repair")
+    output=unary_union(polys)
+    if not output.is_valid or output.area<=0:
+        raise ValueError("surveyed range remains invalid")
+    return output
