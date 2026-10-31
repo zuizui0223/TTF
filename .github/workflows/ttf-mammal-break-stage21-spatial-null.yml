@@ -36,7 +36,7 @@ jobs:
           gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12889949378/zip" > /tmp/jensen-frozen-species.zip
           echo 'd2cd60f8a99fccbd53de1bda978e533a77ed3012e058408e181f09ba72c32698  /tmp/jensen-frozen-species.zip' | sha256sum -c -
           unzip -q /tmp/jensen-frozen-species.zip -d inputs
-      - name: Reconcile two independent byte-identical source replays before new simulated models
+      - name: Reconcile two prior independent byte-identical replay inputs with amendment gate
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

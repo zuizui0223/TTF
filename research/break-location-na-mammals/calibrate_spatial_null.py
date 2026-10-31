@@ -15,11 +15,15 @@ def wilson95(k,n):
     c=(p+z*z/(2*n))/d;h=z*np.sqrt(p*(1-p)/n+z*z/(4*n*n))/d
     return [float(max(0.,c-h)),float(min(1.,c+h))]
 
+def check_receipt_hashes(receipt,expected):
+    if any(receipt.get(k)!=v for k,v in expected.items()):
+        raise ValueError("replayed source receipt does not match chosen frozen numerical input")
+
 def locked_site_arrays(private,receipt_path,panel_path,expected):
     r=json.loads(Path(receipt_path).read_text())
     if r["status"]!="PASS_INPUT_SUPPORT_NOT_EMPIRICAL_EFFECT" or r["analysis_boundary"]["genetic_model_fitted"]:
         raise ValueError("Stage20 input firewall violated")
-    if any(r.get(k)!=v for k,v in EXPECTED.items()):raise ValueError("source receipt differs from initial Stage20")
+    check_receipt_hashes(r,expected)
     with np.load(private,allow_pickle=False) as z:
         xy=np.asarray(z["xy"],float);x=np.asarray(z["features"],float)
         case=np.asarray(z["case"],dtype="u1");species=np.asarray(z["species_index"],dtype=int)
