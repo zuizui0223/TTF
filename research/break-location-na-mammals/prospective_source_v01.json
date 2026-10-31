@@ -1,0 +1,54 @@
+{
+  "schema": "ttf_fresh_break_location_jensen2024_v01",
+  "status": "SOURCE_AND_GEO_QUALIFICATION_ONLY_NO_BREAK_LABEL_MODELING",
+  "frozen_date": "2026-10-29",
+  "primary_source": {
+    "paper_doi": "10.1111/geb.13875",
+    "title": "Geographic barriers but not life history traits shape the phylogeography of North American mammals",
+    "lead_author": "Alex J. Jensen",
+    "year": 2024,
+    "paper_reported_species_with_literature": 229,
+    "paper_reported_species_with_mapped_pleistocene_breaks": 115,
+    "manuscript_data_links": {
+      "metadata": "https://figshare.com/s/7a58e7a1b6b3c647b4d2",
+      "linework": "https://figshare.com/s/1fa446cbb00bad232db3",
+      "code": "https://figshare.com/s/36bf9c11338c35a9a5e7"
+    }
+  },
+  "biological_response": "Actual manually mapped within-species phylogeographic break LINE LOCATION, not Fst magnitude, expected heterozygosity or interspecific contact zone",
+  "first_gate": "Confirm source files are truly downloadable and have native geometry with species ID, era metadata and sampled-range masks OR provided background points. If not, NOT_EVALUABLE, do not replace with paper figures or guessing.",
+  "preresponse_qualification": {
+    "no_geometry_coordinate_decoding_before_lock": true,
+    "minimum_species_pleistocene": 50,
+    "minimum_species_per_role": 20,
+    "minimum_annotated_break_segment": 1,
+    "negative_spatial_control": "Within original author's sampled portion of each species geographic range; never treat unsurveyed portions as confirmed negative",
+    "max_allowed_label_uncertainty": "Study used manual interpretation, nominal 50 km jitter as sensitivity; retain as uncertainty not exact break",
+    "spatial_bias": "Separate same-species within-range case/background; required source and geographic support audit",
+    "known_geo_alt_controls": [
+      "distance to mountains",
+      "distance to large rivers/lakes",
+      "ecoregion boundary",
+      "terrain ruggedness",
+      "present-day bioclimatic values"
+    ],
+    "disallow": "training case/background across random points of same species; no taxonomic leakage, no point-wise pseudo-independent inferential SE"
+  },
+  "preregistered_main_test": {
+    "historical_focal": "Local 21ka-to-0BP climatic-change magnitude sampled at candidate break and background sites (CHELSA-TraCE21k V1.0 bio01, bio07, bio12, bio15), standardized using training species within-range background values only",
+    "estimator": "Within each species, compare held-out break-vs-background AUC using source author's baseline geography with/without one predefined historical magnitude term",
+    "split": "SHA256('ttf-jensen-na-mammal-break-v01|'+lowercase accepted Latin binomial) first digest byte parity; all breaks and spatial background points for species same role",
+    "weighting": "Equal species weight, spatial clustering by species for uncertainty; avoid treating 10 km points on a line as independent replication",
+    "scoring": "Species-balanced held-out AUC gain. Spatial uncertainty tested with predetermined jitter only if full field data available. Positive claim only if bootstrap species 95% lower >0.",
+    "limitation": "Climate LGM 21 ka versus modern is not dated genetic-break origin; 2024 linework includes manually interpolated break positions; predictor can encode geographic latitudinal gradients."
+  },
+  "genetics_freeze_policy": {
+    "prior_GenDivRange_He": "CLOSED_NO_POSITIVE_UNSEEN_SPECIES",
+    "prior_CaliPopGen_Fst": "CLOSED_NO_POSITIVE_UNSEEN_SPECIES",
+    "prior_TTF_Phase4": "CLOSED",
+    "prior_TTF_Q_v03": "CLOSED",
+    "do_not_open_prior_responses": true,
+    "no_posthoc_retuning": true
+  },
+  "warning": "This is a new analysis plan only. Biological labels are NOT opened until source, geometry, and comparable negatives are checked."
+}

@@ -1,0 +1,109 @@
+{
+  "schema": "ttf_jensen_break_history_pre_response_model_and_sampling_v01",
+  "status": "FREEZE_PROPOSED_SOURCE_RECONSTRUCTION_BEFORE_BREAK_CLIMATE_OUTCOME",
+  "frozen_date": "2026-10-29",
+  "eligible_panel": {
+    "species": 80,
+    "train_species": 44,
+    "heldout_species": 36,
+    "total_original_10km_case_points": 10013,
+    "total_original_20km_background_points": 504387,
+    "source": "stage18 frozen species_join and sampled geography gates"
+  },
+  "background_selection": {
+    "case_points": "Retain every 10-km spaced sampled-range-constrained Pleistocene line point for 80 frozen species.",
+    "background_points": "Keep eligible 20-km regular-grid sites inside same species' surveyed/clipped polygons and >50 km from documented break lines.",
+    "downsample_limit_per_species": 1000,
+    "downsample_determinism": "If background grid has >1000 sites, choose exactly 1000 with smallest SHA256('jensen20km-background-v01|'+lowercase frozen scientific binomial+'|'+format(longitude,'.6f')+'|'+format(latitude,'.6f')). No sampling based on climate or genetic response.",
+    "estimated_total_background_sites_after_cap": 66687,
+    "estimated_total_break_sites_unchanged": 10013,
+    "estimated_total_climate_sites_before_nodata": 76700,
+    "aggregation": "All species weighted equally at training and evaluation; background is availability-only pseudoabsence and is not a confirmed negative."
+  },
+  "source_gis": [
+    {
+      "role": "mountains",
+      "source": "UNEP-WCMC 2002 georeferenced ArcInfo GRID mtn_02g, EPSG:4326, 30 arcsec",
+      "mask": "values 1–7 mountain, 255 nodata/background; distance zero inside mountains and positive to nearest mountain class outside",
+      "source_sha256": "9a2c8910cc9b694ef967bac15994312b9518ecb071c262414d199ad4a3e66307",
+      "model_equivalence": "RASTER_DERIVED_APPROXIMATION"
+    },
+    {
+      "role": "water",
+      "source": "Natural Earth 10m lakes and rivers v5",
+      "lake_names": [
+        "Great Bear Lake",
+        "Great Slave Lake",
+        "Lake Winnipeg",
+        "Lake Superior",
+        "Lake Michigan",
+        "Lake Huron",
+        "Lake Erie",
+        "Lake Ontario"
+      ],
+      "river_rank_rule": "scalerank <= 3 (predeclared approximation, original paper didn't report its numeric major-river cut)",
+      "manual_additions_missing": [
+        "St Lawrence River special polygon",
+        "Southeast Alaska interior waterways"
+      ],
+      "model_equivalence": "PARTIAL_RECONSTRUCTION"
+    },
+    {
+      "role": "ecoregion_levelI",
+      "source": "EPA/CEC North America Level I codebook",
+      "mask": "Drop region NA_L1CODE = 0 (WATER); retain 15 land ecoregion codes",
+      "topology": "Use union of individual polygon BOUNDARIES; never union polygons and then take outer boundary"
+    },
+    {
+      "role": "ecoregion_levelII",
+      "source": "EPA/CEC North America Level II codebook",
+      "mask": "Drop region NA_L2CODE = 0.0 (WATER); retain 50 land codes",
+      "topology": "Same internal boundary rule"
+    },
+    {
+      "role": "ruggedness",
+      "source": "EarthEnv Amatulli2018 1km tri_1KMmd_GMTEDmd.tif",
+      "url": "https://data.earthenv.org/topography/tri_1KMmd_GMTEDmd.tif",
+      "bytes": 340181706,
+      "sha256": "095273c80273d23d150b5b62c8282773707082aa5529be8a3848a2e86d539374",
+      "model_equivalence": "OPERATONAL_APPROXIMATION_NOT_PROVEN_SAME_AGGREGATION_AS_JENSEN"
+    }
+  ],
+  "same_product_climate": {
+    "source": "Original CHELSA-TraCE21k V1.0 SHA-verified C1 rasters",
+    "epochs": [
+      "21ka",
+      "0BP"
+    ],
+    "variables": [
+      "bio01",
+      "bio07",
+      "bio12",
+      "bio15"
+    ],
+    "focal": "At each current locality, standardized Euclidean magnitude of its four local changes 21ka minus 0BP, training SD only",
+    "modern": "Original 0BP four variables from same climate product"
+  },
+  "baseline": "Published original barrier family (mountain water eco I eco II TRI), modern climate 4 variables and WGS84 lat/lon; never claim exact original author csv replication.",
+  "inference": {
+    "primary": "one species-disjoint heldout delta-AUC for break vs surveyed-range background",
+    "calibration": "200 no-history null and 200 effect-positive geographically correlated synthetic worlds on frozen 80 species case/background structure, fixed seed 20261029. Positive source-only calibration must pass before opening 21ka break outcome.",
+    "uncertainty": "species-cluster bootstrap, not point independent, evaluate 44 train 36 heldout species; 50km break-jitter sensitivity fixed independently of performance.",
+    "claim_boundary": "Per-program positive requires stricter 98.33% species-bootstrap CI excluding zero or new independent replication, in addition to original study-specific 95% CI; this is third distinct biological response target after He and Fst failures."
+  },
+  "opening_gates": [
+    "All geographic baseline reconstructed fields finite for >=50 species and >=20 in each frozen arm",
+    "All 8 original CHELSA 21ka/0BP variables finite for qualified sampled points and no biological result-dependent exclusions",
+    "Source and ensemble provenance hashes identical across independent replays",
+    "Synthetic false positive/power calibration passes before empirical AUC",
+    "No new cutoff, history predictor family or subgroups chosen after reading AUC"
+  ],
+  "endpoints_already_frozen": [
+    "TTF original COI transfer",
+    "TTF-Q v0.3 relational",
+    "GenDivRange He",
+    "CaliPopGen Fst"
+  ],
+  "environmental_source_equivalence": "NOT_EXACT_2024_ORIGINAL. Author's 2024 extracted environmental CSV input files absent from 3 published Figshare articles and bespoke river/lake polygons unavailable. All environmental controls independently reconstructed and explicitly labeled.",
+  "genetic_break_AUC_actually_calculated": false
+}

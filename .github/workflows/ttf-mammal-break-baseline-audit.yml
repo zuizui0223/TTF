@@ -1,0 +1,37 @@
+name: ttf-Jensen-original-barrier-source-audit
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-mammal-break-baseline-audit.yml'
+      - 'research/break-location-na-mammals/baseline_code_audit.py'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-mammal-break-baseline-audit.yml'
+      - 'research/break-location-na-mammals/baseline_code_audit.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify original R script receipt and inspect environmental source usage
+        run: |
+          python research/break-location-na-mammals/baseline_code_audit.py \
+            --manifest research/break-location-na-mammals/original_files_v02.json \
+            --work /tmp/jensen-baseline-audit \
+            --output results/ttf-mammal-breaks/original_baseline_code_audit.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-Jensen-original-barrier-source-audit
+          path: results/ttf-mammal-breaks/original_baseline_code_audit.json
+          retention-days: 30
+          if-no-files-found: error

@@ -1,0 +1,85 @@
+{
+  "schema": "ttf_jensen_original_geographical_baseline_sources_v01",
+  "status": "PRE_RESPONSE_CANDIDATE_URLS_REQUIRING_SOURCE_SHA_AND_SCHEMA",
+  "date": "2026-10-29",
+  "original_ref": "Jensen (2024) doi:10.1111/geb.13875 sections 2.4 and 2.5",
+  "original_analysis_script": "Verified Figshare 44803807 MD5 b35580a16f1340709535d953666d1040; reads offline pre-extracted 'Break data' and 'Range data' CSV files NOT included in the released source articles; therefore author barrier covariates require independent reconstruction.",
+  "response": "Pleistocene lineage break location is NOT opened for climate tests or outcomes.",
+  "observed_original_baseline": [
+    {
+      "term": "distance_to_mountains",
+      "source": "UNEP-WCMC 2002 Mountains of the World polygons",
+      "unit": "km",
+      "process": "distance zero if inside mountain polygon"
+    },
+    {
+      "term": "distance_to_large_water",
+      "source": "Natural Earth major rivers + lakes >15,000 km² plus St Lawrence River and southeastern Alaska inland channels",
+      "unit": "km",
+      "process": "distance to nearest barrier"
+    },
+    {
+      "term": "ecoregion_boundary_level1",
+      "source": "EPA/CEC North America level I",
+      "unit": "km",
+      "process": "distance to boundaries of level I"
+    },
+    {
+      "term": "ecoregion_boundary_level2",
+      "source": "EPA/CEC North America level II",
+      "unit": "km",
+      "process": "distance to boundaries of level II; original averaged the two ecotone models via AIC"
+    },
+    {
+      "term": "terrain_ruggedness",
+      "source": "Amatulli et al. 2018 EarthEnv TRI, 1 km",
+      "unit": "index",
+      "process": "sample exact original TRI layer; cannot substitute elevation"
+    }
+  ],
+  "source_candidates": [
+    {
+      "term": "ecoregion_level1",
+      "provider": "US EPA",
+      "url": "https://dmap-prod-oms-edc.s3.us-east-1.amazonaws.com/ORD/Ecoregions/cec_na/na_cec_eco_l1.zip",
+      "rights": "EPA public GIS",
+      "stage": "SOURCE_HASH_AUDIT"
+    },
+    {
+      "term": "ecoregion_level2",
+      "provider": "US EPA",
+      "url": "https://dmap-prod-oms-edc.s3.us-east-1.amazonaws.com/ORD/Ecoregions/cec_na/na_cec_eco_l2.zip",
+      "rights": "EPA public GIS",
+      "stage": "SOURCE_HASH_AUDIT"
+    },
+    {
+      "term": "naturalearth_rivers",
+      "provider": "Natural Earth",
+      "url": "https://naturalearth.s3.amazonaws.com/10m_physical/ne_10m_rivers_lake_centerlines.zip",
+      "rights": "Public domain",
+      "stage": "SOURCE_HASH_AUDIT"
+    },
+    {
+      "term": "naturalearth_lakes",
+      "provider": "Natural Earth",
+      "url": "https://naturalearth.s3.amazonaws.com/10m_physical/ne_10m_lakes.zip",
+      "rights": "Public domain",
+      "stage": "SOURCE_HASH_AUDIT"
+    },
+    {
+      "term": "unep_mountains",
+      "provider": "UNEP-WCMC",
+      "url": "https://datadownload-production.s3.amazonaws.com/Mountains_and_Tree_Cover_in_Mountain_Regions_2002.zip",
+      "rights": "UNEP-WCMC General Data License: non-commercial, no redistribution",
+      "stage": "SOURCE_HASH_AUDIT"
+    }
+  ],
+  "additional_required": {
+    "terrain_ruggedness": "Amatulli et al. (2018), original 1km TRI layer; exact file identity not yet verified",
+    "additional_large_water": "Southeastern Alaskan waterway + St Lawrence + large lakes inclusion rules must be reproducible, not assumed from Natural Earth core"
+  },
+  "author_equivalence_flag": "NOT_EXACT_SOURCE_REPRODUCTION_UNTIL_PRECOMPUTED_CSV_OR_ALL_GIS_LAYERS_RECONSTRUCTED",
+  "source_leakage": "All GIS receipts are predictor-only, no genetic response labels or break geography is used for choosing URLs.",
+  "unpublished_original_source_data": "Original R analysis script refers to pre-extracted per-species Break data/*.csv and Range data/*.csv from an author's local filesystem; none of those per-species extracted CSVs are among the seven Figshare files in the three published source articles.",
+  "no_empirical_break_response_effect": true
+}

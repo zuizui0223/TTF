@@ -1,0 +1,62 @@
+{
+  "schema": "ttf_jensen80_stage21_spatial_pre_genetic_gate_handoff_v01",
+  "date": "2026-10-31",
+  "status": "FROZEN_PASS_SPATIAL_NULL_CALIBRATION_AND_GEOMETRIC_JITTER",
+  "repository": "zuizui0223/TTF",
+  "branch": "research/break-location-na-mammals-v01",
+  "pr": 153,
+  "source_panel": {
+    "species": 80,
+    "training_species": 44,
+    "heldout_species": 36,
+    "case_sites": 10013,
+    "survey_background_sites": 66687,
+    "total_site_records": 76700
+  },
+  "calibration": {
+    "run_id": 41186154585,
+    "artifact_id": 13037136274,
+    "artifact_zip_sha256": "29dadaeb360ce323a8ebfd34741a815546d6b9ecd0b12da53a3f04d22bbe3833",
+    "conclusion": "success",
+    "n_null": 200,
+    "null_false_positives": 5,
+    "null_rate": 0.025,
+    "null_wilson95": [
+      0.010724719651761264,
+      0.05717834040664198
+    ],
+    "n_positive": 200,
+    "positive_detections": 200,
+    "positive_rate": 1,
+    "positive_wilson95": [
+      0.9811546736227335,
+      1
+    ],
+    "positive_log_odds_per_hist_sd": 1,
+    "median_positive_delta_auc": 0.08698487504272712,
+    "median_null_delta_auc": -0.00009108948300028274,
+    "training_history_unique_fraction": 0.6512146619242042,
+    "prior_min_unique_fraction": 0.05,
+    "decision": "PASS_SYNTHETIC_SPATIAL_GATE",
+    "worlds_are_synthetic": true
+  },
+  "geometry_sensitivity": {
+    "run_id": 41185399093,
+    "artifact_id": 13036917177,
+    "artifact_zip_sha256": "3b6fb618909810fbe14eb4061278abb9da7c75f6c90ee0e1b6b60e3815b75204",
+    "status": "PASS_GEOMETRIC_50KM_JITTER_FEASIBILITY",
+    "successful_out_of_10013": 10013,
+    "median_realized_shift_km": 35.00137608439169,
+    "p95_realized_shift_km": 48.69701904194073,
+    "actual_jittered_feature_values_not_yet_extracted": true
+  },
+  "input_amendment": "research/break-location-na-mammals/stage21_numeric_replay_amendment_v01.json",
+  "two_current_replays_numeric_feature_sha256": "51cf2953dda21ebf06f5cb78bbc0cf2c46f7a0d2bce1f7606128b27239bec2b8",
+  "initial_20261029_unreproduced_feature_sha256": "9c408f6f23be75bee6aa79475bc68542ade225927079e7a43548dc152cdc2db8",
+  "source_precision_limit": "Original first Stage20 raw matrix unavailable, so the cause and elementwise extent of the single older raw SHA discrepancy are unknown. Independent new source replays match byte-for-byte.",
+  "interpretation": "Calibrated method can discriminate the fixed large synthetic effect under conditional case-count spatial worlds. Not evidence that mammal Pleistocene genetic breaks align with historical climate.",
+  "empirical_genetic_break_location_AUC_opened": false,
+  "next_required_gate": "Extract eight CHELSA and five barrier fields at frozen 50km-jittered case positions; assess missingness/novel sources and positional sensitivity BEFORE any empirical break AUC. Genetic outcomes H_e, Fst and original TTF remain frozen.",
+  "restriction": "IUCN sampled coordinates and restricted UNEP mountain grids remain ephemeral; aggregate results only",
+  "no_retest_or_posthoc_recalibration_authorized": true
+}

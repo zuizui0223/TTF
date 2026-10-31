@@ -1,0 +1,16 @@
+{
+ "schema":"ttf_jensen80_input_extraction_numerical_contract_v01",
+ "status":"LOCKED_BEFORE_ACTUAL_FEATURE_EXTRACTION_NO_MODEL_FIT",
+ "authority":"frozen_sampling_barriers_history_v01.json, c360f4906d7f573646af1c9e6a9f65f5d1ac1c7e",
+ "species_artifact":12889949378,
+ "species_artifact_sha256":"d2cd60f8a99fccbd53de1bda978e533a77ed3012e058408e181f09ba72c32698",
+ "expected_design":{"species":80,"roles":[44,36],"cases":10013,"background":66687,"sites":76700},
+ "numerical_method":"Source-reconstructed spherical nearest densified boundary vertex distances, never claimed equal to unpublished author CSVs. Internal ecological borders retained; WCMC native 30arcsec mountain-cell grid, zero inside classes 1-7, 255 is nonmountain background, not numeric mountain distance.",
+ "discretization":{"vector_step_degrees":0.01,"maximum_line_distance_sampling_error_km":0.79,"mountain_cell_center_error_km":0.66,"additional_mean_radius_sphere_vs_ellipsoid_relative_error_approx":0.006},
+ "nodata":"Use raster masks, explicit bounds and finite checks. Do not impute missing climate/TRI to zero or extrapolate from adjacent pixels.",
+ "qualification":{"min_species":50,"min_species_each_role":20,"min_case_points_per_species":10,"min_background_per_species":20,"min_background_to_case_ratio":1},
+ "outputs":"Aggregated completeness/source receipts and hashes only. No IUCN-derived site grids, source ranges, raw UNEP data or pointwise features exported.",
+ "main_model_authorization":false,
+ "AUC_or_history_effect_computation":false,
+ "manual_waterway_sources_unreconstructed":["St Lawrence bespoke polygon","southeast Alaska waterways"]
+}

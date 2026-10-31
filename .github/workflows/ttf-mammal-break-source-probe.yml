@@ -1,0 +1,39 @@
+name: ttf-mammal-break-location-source-probe
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-mammal-break-source-probe.yml'
+      - 'research/break-location-na-mammals/source_probe.py'
+      - 'research/break-location-na-mammals/tests/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-mammal-break-source-probe.yml'
+      - 'research/break-location-na-mammals/source_probe.py'
+      - 'research/break-location-na-mammals/tests/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  metadata-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify source discovery parser tests
+        run: python -m unittest discover -s research/break-location-na-mammals/tests -v
+      - name: Probe published Figshare shares and public metadata search
+        run: |
+          python research/break-location-na-mammals/source_probe.py \
+            --out results/ttf-mammal-breaks/source_metadata_only.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-mammal-break-source-metadata-only
+          path: results/ttf-mammal-breaks/source_metadata_only.json
+          retention-days: 30
+          if-no-files-found: error

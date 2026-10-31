@@ -1,0 +1,11 @@
+{
+  "schema": "ttf_jensen2024_earthenv_tri_1km_source_candidate_v01",
+  "status": "AUTHOR_ORIGINAL_TOPOGRAPHY_TRI_NOT_YET_HASH_VERIFIED",
+  "original_reference": "Amatulli et al. 2018 Scientific Data DOI 10.1038/sdata.2018.40; Jensen (2024) reports 1 km terrain ruggedness index",
+  "candidate_url": "https://data.earthenv.org/topography/tri_1KMmd_GMTEDmd.tif",
+  "url_derivation": "animalbiodiversitylab/envar R/topography.R, file Git blob 4994a37f44237de2923f9a131d11e5e384c6135b, lines 289–313, canonical variable tri, 1KM, aggregation median md, source GMTEDmd",
+  "warning": "Jensen (2024) does not state the original TRI aggregation statistic or DEM source in its article excerpt; median GMTED is a pre-response declared operational approximation, not verified author's original raster.",
+  "max_probe_bytes": 550000000,
+  "source_rights": "EarthEnv Topography citation Amatulli et al. 2018; do not republish raster bytes",
+  "genetic_break_AUC_opened": false
+}

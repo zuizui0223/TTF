@@ -1,0 +1,50 @@
+{
+  "schema": "ttf_jensen_stage21_numeric_identity_amendment_v01",
+  "status": "TWO_INDEPENDENT_REPLAYS_MATCH_PRE_BIOLOGICAL_AUC",
+  "date": "2026-10-31",
+  "original_run": {
+    "id": 40868517419,
+    "attempt": 1,
+    "matrix_sha256": "9c408f6f23be75bee6aa79475bc68542ade225927079e7a43548dc152cdc2db8",
+    "raw_matrix_not_retained": true
+  },
+  "replay_one": {
+    "run": 41184993953,
+    "artifact": 13035828120,
+    "artifact_sha256": "092d34a3f2643e20c8356bd17229d0b2a786b197674f830bd2f3935287cc7d60",
+    "feature_matrix_sha256": "51cf2953dda21ebf06f5cb78bbc0cf2c46f7a0d2bce1f7606128b27239bec2b8",
+    "omp_threads": 1
+  },
+  "replay_two": {
+    "run": 40868517419,
+    "attempt": 2,
+    "artifact": 13035858759,
+    "artifact_sha256": "e221cd1499d3d8f309dd50af283f4af798c36588ed67b6da395dcf5c9c5487d2",
+    "feature_matrix_sha256": "51cf2953dda21ebf06f5cb78bbc0cf2c46f7a0d2bce1f7606128b27239bec2b8",
+    "omp_threads": 2
+  },
+  "new_frozen_feature_matrix_sha256": "51cf2953dda21ebf06f5cb78bbc0cf2c46f7a0d2bce1f7606128b27239bec2b8",
+  "frozen_coordinate_sha256": "fad49f6ec345ef45c1387ef76c8b3b724caf5f39322f8e9c3da56227a7a40bfd",
+  "frozen_class_label_sha256": "e08632a14a990804a7a1c83e236b70834056ac61b7157b9832b8f91c0df855d5",
+  "matched_other_fields": [
+    "80 species 44/36",
+    "76700 species-site records 10013 case records",
+    "14 SHA-pinned original climate/GIS receipts",
+    "all 13 column names and completeness",
+    "per-species support",
+    "same software versions",
+    "raw feature matrix byte-equal between 2026-10-31 independent runs"
+  ],
+  "unresolved": "Initial 2026-10-29 floating-point matrix bytes not retained; cannot measure individual value differences or prove reason for original raw feature SHA discrepancy.",
+  "decision": "Accept separately recorded 2-way byte-identical 2026-10-31 numerical input as the sole source for still-unopened Stage21 synthetic spatial calibration. Do not claim original numeric equality; do not change model, sites, genetic outcome, parameters or thresholds.",
+  "jitter_geometry": {
+    "run": 41185399093,
+    "artifact": 13036917177,
+    "status": "PASS_GEOMETRIC_50KM_JITTER_FEASIBILITY",
+    "shifted": 10013,
+    "original_cases": 10013,
+    "median_km": 35.00137608439169
+  },
+  "genetic_break_auc_not_opened": true,
+  "prior_closures_unchanged": true
+}

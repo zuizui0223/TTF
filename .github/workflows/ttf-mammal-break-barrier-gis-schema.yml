@@ -1,0 +1,42 @@
+name: ttf-Jensen-original-barrier-GIS-geometry-schema
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-mammal-break-barrier-gis-schema.yml'
+      - 'research/break-location-na-mammals/audit_verified_gis_schemas.py'
+      - 'research/break-location-na-mammals/barrier_gis_publisher_SHA_lock_v01.json'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-mammal-break-barrier-gis-schema.yml'
+      - 'research/break-location-na-mammals/audit_verified_gis_schemas.py'
+      - 'research/break-location-na-mammals/barrier_gis_publisher_SHA_lock_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-geometry-schema-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install GIS schema and raster header readers
+        run: python -m pip install 'pyshp>=2.3,<3' 'rasterio>=1.4,<2' 'pyproj>=3.6,<4'
+      - name: Verify five original-barrier publisher source SHA and geometry schema
+        run: |
+          python research/break-location-na-mammals/audit_verified_gis_schemas.py \
+            --sources research/break-location-na-mammals/original_barrier_baseline_source_candidates_v01.json \
+            --lock research/break-location-na-mammals/barrier_gis_publisher_SHA_lock_v01.json \
+            --work /tmp/ttf-Jensen-GIS-schema \
+            --out results/ttf-mammal-breaks/original_barrier_source_schema.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-Jensen-publisher-barrier-GIS-schema
+          path: results/ttf-mammal-breaks/original_barrier_source_schema.json
+          retention-days: 30
+          if-no-files-found: error
