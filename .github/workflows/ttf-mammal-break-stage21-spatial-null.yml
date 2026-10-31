@@ -36,6 +36,17 @@ jobs:
           gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12889949378/zip" > /tmp/jensen-frozen-species.zip
           echo 'd2cd60f8a99fccbd53de1bda978e533a77ed3012e058408e181f09ba72c32698  /tmp/jensen-frozen-species.zip' | sha256sum -c -
           unzip -q /tmp/jensen-frozen-species.zip -d inputs
+      - name: Reconcile two independent byte-identical source replays before new simulated models
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/jensen-replay-one /tmp/jensen-replay-two
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/13035828120/zip" > /tmp/jensen-replay-one.zip
+          echo '092d34a3f2643e20c8356bd17229d0b2a786b197674f830bd2f3935287cc7d60  /tmp/jensen-replay-one.zip' | sha256sum -c -
+          unzip -q /tmp/jensen-replay-one.zip -d /tmp/jensen-replay-one
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/13035858759/zip" > /tmp/jensen-replay-two.zip
+          echo 'e221cd1499d3d8f309dd50af283f4af798c36588ed67b6da395dcf5c9c5487d2  /tmp/jensen-replay-two.zip' | sha256sum -c -
+          unzip -q /tmp/jensen-replay-two.zip -d /tmp/jensen-replay-two
       - name: Independently regenerate original 80-species predictors in ephemeral runner
         run: |
           python research/break-location-na-mammals/extract_frozen_site_features.py \
@@ -50,6 +61,9 @@ jobs:
             --stage20-receipt results/stage21/input_reproduction_receipt.json \
             --panel inputs/frozen_species_join.json \
             --contract research/break-location-na-mammals/stage21_spatial_null_contract_v01.json \
+            --amendment research/break-location-na-mammals/stage21_numeric_replay_amendment_v01.json \
+            --reference-stage21 /tmp/jensen-replay-one/input_reproduction_receipt.json \
+            --reference-stage20 /tmp/jensen-replay-two/feature_support.json \
             --output results/stage21/exact_design_spatial_calibration.json
       - name: Publish aggregate simulation and input receipts only (NO coordinates/feature matrix)
         if: always()
