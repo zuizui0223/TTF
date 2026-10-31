@@ -15,7 +15,7 @@ def wilson95(k,n):
     c=(p+z*z/(2*n))/d;h=z*np.sqrt(p*(1-p)/n+z*z/(4*n*n))/d
     return [float(max(0.,c-h)),float(min(1.,c+h))]
 
-def locked_site_arrays(private,receipt_path,panel_path):
+def locked_site_arrays(private,receipt_path,panel_path,expected):
     r=json.loads(Path(receipt_path).read_text())
     if r["status"]!="PASS_INPUT_SUPPORT_NOT_EMPIRICAL_EFFECT" or r["analysis_boundary"]["genetic_model_fitted"]:
         raise ValueError("Stage20 input firewall violated")
@@ -28,7 +28,7 @@ def locked_site_arrays(private,receipt_path,panel_path):
         raise ValueError("frozen features/labels changed")
     for array,k in ((xy.astype("<f8"),"coordinates_raw_sha256"),
                     (x.astype("<f8"),"feature_matrix_raw_sha256"),(case,"class_labels_sha256")):
-        if hashlib.sha256(array.tobytes()).hexdigest()!=EXPECTED[k]:
+        if hashlib.sha256(array.tobytes()).hexdigest()!=expected[k]:
             raise ValueError("actual private feature matrix SHA does not match original")
     panel=json.loads(Path(panel_path).read_text())
     kept=[s for s in panel["qualified_species_records"] if s["synthetic_estimator_min10_cases"]]
@@ -49,7 +49,26 @@ def run(args):
         raise ValueError("spatial-null protocol not locked")
     if not np.array_equal(BASELINE_COEFF,np.asarray(c["baseline_coefficients_in_training_SD_units"])):
         raise ValueError("synthetic baseline coefficient drift")
-    x,xy,sp,role,counts=locked_site_arrays(args.private,args.stage20_receipt,args.panel)
+    amend=json.loads(args.amendment.read_text())
+    if amend.get("status")!="TWO_INDEPENDENT_REPLAYS_MATCH_PRE_BIOLOGICAL_AUC":
+        raise ValueError("No authorized numerical source replay amendment")
+    if amend["original_run"]["matrix_sha256"]!=EXPECTED["feature_matrix_raw_sha256"]:
+        raise ValueError("Missing original numerical SHA discrepancy provenance")
+    new_sha=amend["new_frozen_feature_matrix_sha256"]
+    if amend["replay_one"]["feature_matrix_sha256"]!=new_sha or amend["replay_two"]["feature_matrix_sha256"]!=new_sha:
+        raise ValueError("Two independent original-source replay SHAs disagree")
+    expected=dict(EXPECTED)
+    expected["feature_matrix_raw_sha256"]=new_sha
+    r1=json.loads(args.reference_stage21.read_text())
+    r2=json.loads(args.reference_stage20.read_text())
+    for ref in (r1,r2):
+        for key,val in expected.items():
+            if ref.get(key)!=val:raise ValueError("Replay receipt disagrees with amended source")
+        if ref.get("status")!="PASS_INPUT_SUPPORT_NOT_EMPIRICAL_EFFECT":
+            raise ValueError("A replay failed its own original source gate")
+    for key in ("source_receipts","species_support","complete_counts_by_feature","software"):
+        if r1.get(key)!=r2.get(key):raise ValueError("Independent source receipts disagree: "+key)
+    x,xy,sp,role,counts=locked_site_arrays(args.private,args.stage20_receipt,args.panel,expected)
     p,mu,scale,climate_sd=standardize_predictors(x,xy,sp,role)
     unique=training_history_unique_fraction(p,sp,role)
     required=c["synthetic_gate"]["min_train_historical_unique_fraction"]
@@ -61,7 +80,9 @@ def run(args):
             "case_site_records":10013,"background_site_records":66687,
             "genetic_history_auc_computed":False,"other_genetic_response_opened":False,
             "input_coordinate_sha256":EXPECTED["coordinates_raw_sha256"],
-            "input_feature_sha256":EXPECTED["feature_matrix_raw_sha256"],
+            "input_feature_sha256":expected["feature_matrix_raw_sha256"],
+            "input_original_stage20_unreproduced_feature_sha256":EXPECTED["feature_matrix_raw_sha256"],
+            "input_replay_amendment_status":amend["status"],
             "input_case_label_sha256":EXPECTED["class_labels_sha256"],
             "historical_training_current_bioclim_sd":climate_sd.tolist(),
             "positional_uncertainty_50km_gate":"SEPARATELY_REQUIRED"}
@@ -100,5 +121,8 @@ if __name__=="__main__":
     p.add_argument("--stage20-receipt",type=Path,required=True)
     p.add_argument("--panel",type=Path,required=True)
     p.add_argument("--contract",type=Path,required=True)
+    p.add_argument("--amendment",type=Path,required=True)
+    p.add_argument("--reference-stage21",type=Path,required=True)
+    p.add_argument("--reference-stage20",type=Path,required=True)
     p.add_argument("--output",type=Path,required=True)
     run(p.parse_args())
