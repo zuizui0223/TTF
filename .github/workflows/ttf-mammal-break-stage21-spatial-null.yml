@@ -1,9 +1,6 @@
-name: ttf-Jensen80-Stage21-spatial-null-and-power-PRE-RESPONSE
+name: ttf-Jensen80-Stage21-spatial-null-and-power-FROZEN
 on:
-  push:
-    branches: [research/break-location-na-mammals-v01]
-    paths:
-      - '.github/workflows/ttf-mammal-break-stage21-spatial-null.yml'
+  workflow_dispatch:
 permissions:
   contents: read
   actions: read
@@ -12,6 +9,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   exact-site-synthetic-only:
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 90
     env:
