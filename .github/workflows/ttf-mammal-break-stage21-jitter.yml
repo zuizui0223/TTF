@@ -4,6 +4,9 @@ on:
     branches: [research/break-location-na-mammals-v01]
     paths:
       - '.github/workflows/ttf-mammal-break-stage21-jitter.yml'
+      - 'research/break-location-na-mammals/tests/test_jitter_case_geometry.py'
+      - 'research/break-location-na-mammals/jitter_case_geometry.py'
+      - 'research/break-location-na-mammals/stage21_jitter_geometry_gate.py'
   workflow_dispatch:
 permissions:
   contents: read
