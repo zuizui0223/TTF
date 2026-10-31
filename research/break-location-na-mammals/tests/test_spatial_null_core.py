@@ -1,4 +1,7 @@
 import unittest
+import sys
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import numpy as np
 from spatial_null_core import (standardize_predictors,draw_synthetic_labels,species_auc,
     training_history_unique_fraction,evaluate_species_holdout)
