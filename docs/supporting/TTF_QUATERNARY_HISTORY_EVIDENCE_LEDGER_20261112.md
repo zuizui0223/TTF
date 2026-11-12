@@ -118,3 +118,38 @@ uncertainty controlled and entirely unseen species evaluated.
   under appropriate permissions and must reproduce the frozen SHA; otherwise
   the new positional sensitivity branch ends as NOT_EVALUABLE_POSITIONAL_REPLAY.
   The older Stage21 synthetic pass and He/Fst/COI outcomes remain unchanged.
+
+
+## Stage22 and Stage23 response-blind resolution (2026-11-12)
+
+- Original October 2026 frozen coordinate SHA was obtained on Ubuntu 24.04.
+  November ubuntu-latest used Ubuntu 26.04 and failed 80 of 80 coordinate
+  identity checks. Explicit Ubuntu 24.04 recovered the frozen coordinate SHA
+  for all 80 species. The exact low-level numeric cause is not isolated.
+- Stage22 first Ubuntu24 success: 76,700 records (10,013 jittered case,
+  66,687 fixed background), all 13 fields complete, all 80 species eligible
+  (44 train, 36 held-out). First-run jittered 13-field numeric SHA differed
+  from a later reproduction. Its raw numerical matrix was not retained.
+- Two later fully independent source-only replay runs 43143255816 and
+  43143333653 produced byte-identical 13-column SHA256:
+  8ac29ed8c1a34dc68c245c3b1cdaeb863485d8b2f312c8881e9e03283d3a9331.
+  All 13 per-column raw hashes, 3-decimal rounded hashes, numeric moments,
+  14 original source assets and species support match exactly. The original
+  discrepancy is preserved in the separate source-only numeric amendment.
+- Stage23 run 43142984279 compared original and frozen <=50-km jittered
+  CHELSA 21ka/current climate at 10,013 published case positions. Historical
+  climate displacement original/moved medians 1.779670/1.773606. Pooled
+  case-site Spearman 0.966726; 80-species median within-species Spearman
+  0.846964, species-bootstrap descriptive 95% interval 0.786873 to 0.868038.
+  Median absolute paired history shift 0.057136, P95 0.424540; 12/80 species
+  rho <0.5, two negative, often in small within-species samples.
+- These are ecological PREDICTOR and SOURCE POSITIONAL STABILITY results,
+  NOT evidence of genetic break-history association.
+- One-shot actual heldout 44/36 mammal break-location AUC is separately
+  frozen in research/break-location-na-mammals/stage24_empirical_break_location_one_shot_contract_v01.json.
+  Its workflow must verify ORIGINAL Stage21 13-column SHA
+  51cf2953dda21ebf06f5cb78bbc0cf2c46f7a0d2bce1f7606128b27239bec2b8
+  AND JITTER Stage22 amended 13-column SHA
+  8ac29ed8c1a34dc68c245c3b1cdaeb863485d8b2f312c8881e9e03283d3a9331
+  BEFORE opening any real genetic break-site AUC. No retuning, selecting
+  subgroups, reopening older response, or exporting licensed source grids.
