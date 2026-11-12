@@ -153,7 +153,8 @@
     "source": {
       "repository": "zuizui0223/TTF",
       "ref": "1bb10342bc1cb979d93f7d393b7825e91b7678f9",
-      "file": "research/break-location-na-mammals/stage23_case_climate_sensitivity_result_v01.json"
+      "file": "research/break-location-na-mammals/stage23_case_climate_sensitivity_result_v01.json",
+      "git_blob_sha": "c94f99db8de153202f98947085f99dce5f4eb55b"
     },
     "n_species": 80,
     "case_sites": 10013,
