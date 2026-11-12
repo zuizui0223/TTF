@@ -91,3 +91,30 @@ and geographic closeness, but a reproducible species-general genetic effect
 has not been demonstrated.** The biological target now is WHERE phylogeographic
 breaks occur, with modern climate, topography, barriers and positional
 uncertainty controlled and entirely unseen species evaluated.
+
+
+## Actual Stage22 execution verdict — 2026-11-12
+
+**STOP BEFORE JITTERED CLIMATE EXTRACTION; no genetic response opened.**
+
+- Synthetic-only Stage22 determinism/containment tests and original 80-species
+  panel ZIP identity passed. Species counts, roles, and original case-label SHA
+  are identical to frozen Stage20.
+- Strict raw-coordinate identity failed for **all 80 species** before any
+  climate/geo extraction at jittered points. Exact frozen original aggregate
+  coordinate SHA: fad49f6ec345ef45c1387ef76c8b3b724caf5f39322f8e9c3da56227a7a40bfd.
+  New regeneration SHA: d49951247ef2cfad76f1a19406e11f5e732cc6b21a0c61c307cd85726b151dba.
+- Old 2026-10-29 original and two old 2026-10-31 independent source replays
+  shared the exact frozen coordinate SHA. Two 2026-11-12 current regenerations
+  reproduce their new SHA identically despite Python 3.12.16 vs exact old
+  Python 3.12.15 and same reported Numpy/Shapely/pyproj versions.
+- Therefore **not** a Python patch-version effect. Remaining cause and actual
+  location displacement unresolved. Do **not** waive SHA or call this an
+  empirical biological null.
+- Evidence receipt:
+  research/break-location-na-mammals/stage22_coordinate_replay_stop_20261112.json
+  and GitHub Actions 43128142339 / 43128609308.
+- To proceed only the exact original restricted geometry can be reconstructed
+  under appropriate permissions and must reproduce the frozen SHA; otherwise
+  the new positional sensitivity branch ends as NOT_EVALUABLE_POSITIONAL_REPLAY.
+  The older Stage21 synthetic pass and He/Fst/COI outcomes remain unchanged.
