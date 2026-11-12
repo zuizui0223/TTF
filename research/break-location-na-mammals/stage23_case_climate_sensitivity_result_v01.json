@@ -1,0 +1,59 @@
+{
+  "schema": "ttf_jensen80_stage23_case_only_climate_50km_predictor_sensitivity_receipt_v01",
+  "date": "2026-11-12",
+  "status": "PASS_PAIRED_CLIMATE_PREDICTOR_SENSITIVITY_MEASURED_NOT_GENETIC_EFFECT",
+  "source": {
+    "workflow_run": 43142984279,
+    "artifact_id": 13910532168,
+    "artifact_zip_sha256": "ea44287a80339e1fb2e6d9c1e0c7069bdcd4a46a55d12277cbce7134d23ae0b9",
+    "prespecified_contract": "research/break-location-na-mammals/stage23_case_climate_shift_contract_v01.json",
+    "original_unchanged_case_count": 10013,
+    "species": 80,
+    "species_train": 44,
+    "species_heldout": 36,
+    "jitter_median_km": 35.00137608439169,
+    "jitter_p95_km": 48.69701904194073,
+    "original_and_moved_climate_bands_complete": true,
+    "original_and_jittered_case_sha_reproduced": true,
+    "original_8_SHA_pinned_CHELSA_source": true
+  },
+  "history_predictor": {
+    "formula": "sqrt(sum((21ka BIO1/7/12/15 - 0BP BIO1/7/12/15)^2 / fixed original Stage21 training SD^2))",
+    "fixed_source_training_current_sd": [
+      9.560206765327766,
+      9.05470917128294,
+      523.8855899026479,
+      27.90489842395831
+    ],
+    "original_median": 1.7796700876352205,
+    "moved_median": 1.773606230907788,
+    "pooled_site_spearman": 0.9667262925915241,
+    "paired_absolute_change_median": 0.057135880768663494,
+    "paired_absolute_change_p95": 0.42453983752984764,
+    "species_median_within_species_spearman": 0.8469640953361883,
+    "species_median_within_species_spearman_descriptive_bootstrap95": [
+      0.786872586872587,
+      0.8680380785643944
+    ],
+    "species_median_paired_abs_change": 0.06952317155796794,
+    "species_median_paired_abs_change_descriptive_bootstrap95": [
+      0.05920419178720315,
+      0.08202315334766719
+    ],
+    "descriptive_bootstrap_specification": "5,000 species-resampled-with-replacement replicates of the median of 80 species-level summaries; seed 20261112; posthoc descriptive uncertainty only, not confirmatory inference",
+    "species_spearman_ge_0_8": 45,
+    "species_spearman_lt_0_5": 12,
+    "species_negative_spearman": 2,
+    "note": "Pooled 10,013-site rho is not 10,013 independent biological replicates; 80 species are clustering units. Low rho species often have 10-22 case points."
+  },
+  "claim_boundary": {
+    "is_predictor_source_sensitivity_only": true,
+    "genetic_break_location_AUC_not_tested": true,
+    "no_He_Fst_COI_TTF_closed_response_reopened": true,
+    "not_a_confirmation_of_glacial_refugia_or_genetic_boundary_causality": true,
+    "does_not_resolve_stage22_full_13feature_byte_sha_instability": true,
+    "original_Jensen_unpublished_covariate_CSVs_not_available": true,
+    "licensed_point_data_not_released": true
+  },
+  "next_gate": "Stage22 two independent per-feature full 13-field SHA diagnostics; preserve STOP on exact numerical inconsistency before any real break-location response opening"
+}
