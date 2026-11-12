@@ -83,6 +83,25 @@ def connected_components(study_to_species):
     return sorted(components,key=lambda x:(-x["species_count"],-x["study_count"]))
 
 
+def native_first_line_schema_diagnostic(raw):
+    """Header bytes only. Does not access row two or any rate response column."""
+    line=raw.split(b"\n",1)[0]
+    decoded=line.decode("utf-8-sig","replace").rstrip("\r")
+    tabs=decoded.count("\t")
+    commas=decoded.count(",")
+    fieldnames=[x.strip() for x in decoded.split("\t")]
+    # Only report canonical-looking metadata variable labels; do not expose
+    # any long or unexpected content in a potentially nonheader first row.
+    safe=[x if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_.-]{0,60}",x) else "<nonheader-or-unsafe>"
+          for x in fieldnames[:90]]
+    return {"native_first_line_bytes":len(line),
+            "tab_count":tabs,"comma_count":commas,
+            "candidate_tabular_field_count":len(fieldnames),
+            "candidate_safe_field_names":safe,
+            "first_8_bytes_hex":raw[:8].hex(),
+            "rows_two_plus_inspected":False}
+
+
 def metadata_only_summary(raw,contract):
     import inspect
     allowed=contract["source_metadata_columns_authorized"]
@@ -242,6 +261,7 @@ def main():
             sha256!=original["observed_sha256"] or
             md5!=f["expected_md5"]):
             raise ValueError("Native original source bytes/MD5/SHA256 not reproducible; STOP before metadata rows")
+        e["native_header_diagnostic"]=native_first_line_schema_diagnostic(raw)
         e.update(metadata_only_summary(raw,c))
         e["source_file"]=f["name"]
         e["source_md5_verified"]=True
