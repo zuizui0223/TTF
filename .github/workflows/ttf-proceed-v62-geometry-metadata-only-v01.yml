@@ -40,7 +40,7 @@ jobs:
           print('SOURCE_META_BINOMIAL_TAXA',r.get('species_with_both_georeferenced_original_endpoints'))
           print('VALID_PAIRWISE_GEOGRAPHY',r.get('record_geolocation_status'))
           PY
-      - name: Public artifact: aggregate metadata counts, NOT biological response or site grids
+      - name: 'Public artifact: aggregate metadata counts, NOT biological response or site grids'
         if: always()
         uses: actions/upload-artifact@v4
         with:
