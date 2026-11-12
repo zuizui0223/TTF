@@ -1,0 +1,62 @@
+{
+  "schema": "ttf_proceed_v62_2026_public_dataverse_original_schema_only_contract_v01",
+  "frozen_on": "2026-11-12",
+  "status": "FROZEN_BOREALIS_PROCEED_V62_NEW_SOURCE_HEADER_ONLY",
+  "parent_v61_attempt": "research/prospective/proceed_v61_source_metadata_contract_v01.json",
+  "parent_catalog_run": 43210404522,
+  "why_new": "The 2025 article describes v6.1 but Borealis latestVersion is dataset version 4.0 released 2026-02-11 and supplies files explicitly labeled PROCEEDv6.2. Do not silently treat v6.2 as v6.1, assume same records, or pool versions.",
+  "current_source": {
+    "api_host": "borealisdata.ca",
+    "dataset_doi": "10.5683/SP3/NXSL3Q",
+    "borealis_dataset_id": 357730,
+    "repository_dataset_version": "4.0",
+    "release_time": "2026-02-11T19:57:41Z",
+    "file_count_current": 15,
+    "files": [
+      {
+        "id": 1024206,
+        "name": "PROCEEDv6.2_RatesDB.tab",
+        "md5": "eae537bd3ac244835fa9c8245f27a40b",
+        "bytes": 11617534
+      },
+      {
+        "id": 1024212,
+        "name": "PROCEEDv6.2_TimeSeriesDB.tab",
+        "md5": "7b8672ede1e20780cdbc364308129a9e",
+        "bytes": 5342714
+      },
+      {
+        "id": 1024209,
+        "name": "PROCEEDv6.2_species_GT.tab",
+        "md5": "993e82737492b4244b5bafcc5f194aa7",
+        "bytes": 282956
+      },
+      {
+        "id": 1024215,
+        "name": "PROCEEDv6.2_species_genome.tab",
+        "md5": "ba9c8dfe849d690ae1c53d57f4508343",
+        "bytes": 178073
+      },
+      {
+        "id": 1024213,
+        "name": "PROCEEDv6.2_taxonomy.tab",
+        "md5": "eec895c4316f432c293cd128871d46c3",
+        "bytes": 149364
+      }
+    ]
+  },
+  "allowed_operations": [
+    "GET Borealis official dataset file access URL of exact frozen 5 file IDs; extract first UTF-8 TSV header line only and close stream without reading response rows.",
+    "Inspect whether rate table declares an original study, population/source locality, original longitude/latitude, common-garden or genetic design, time between sample events and trait type.",
+    "Inspect taxonomy and species generation-time file headers, not row values; do not use generation time to post-hoc select taxa.",
+    "Emit column names, file identity, source version, header status only."
+  ],
+  "prohibited": [
+    "Read per-row Haldane/Darwin rate, genotype, climate, phenotype data",
+    "fit any biological history, adaptation or plasticity effect",
+    "mix v6.1 published counts (9263, 428) with v6.2 count inferred from filenames",
+    "rewrite the TTF-Q or frozen genetic endpoints"
+  ],
+  "if_no_actual_collection_coordinates": "Species-range environmental exposure can only be a newly declared different estimand, not a substitute for individual population LGM history",
+  "no_biological_response_opened": true
+}
