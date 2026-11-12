@@ -1,5 +1,21 @@
 # Quaternary climate evidence ledger — 2026-11-12
 
+
+> **CURRENT TERMINAL STATE (2026-11-12):**
+> 653-species climate-predictor information remains positively supported.
+> Frozen species-heldout He, Fst and mapped mammalian break-location tests
+> did **not** support additional species-general genetic prediction from the
+> tested single-term historical magnitude. Stage24 first empirical opening
+> completed once with no qualified ΔAUC (original +0.0004575; 50-km
+> sensitivity +0.0003781; both 98.33% intervals include zero).
+> All older sections below are preserved chronologically. Historical
+> statements about a *pending* climate extraction, *unopened* break AUC, or
+> *next gate* are superseded by the Stage24 terminal result near the end.
+> For a short independently audited interpretation see
+> [QUATERNARY_MACROECOLOGY_SYNTHESIS_V01.md](../../research/break-location-na-mammals/QUATERNARY_MACROECOLOGY_SYNTHESIS_V01.md).
+> Cross-program scalar/blob audit: GitHub Actions run 43204348393 (PASS).
+
+
 This working-branch ledger is a claim-boundary summary, NOT a change to frozen
 TTF-Q scientific results, one-shot genetic responses, or main. All endpoints
 must remain in their originally frozen families.
