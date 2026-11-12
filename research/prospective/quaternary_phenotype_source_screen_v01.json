@@ -45,7 +45,6 @@
     "ni"
   ],
   "spatial_census": {
-    "source_rows_counted_without_decoding_phenotype": true,
     "keep_only_ecosystem_exact_terrestrial": true,
     "no_marine_aquatic_coastal_CHELSA_sampling": true,
     "original_geographic_population_key": [
@@ -57,9 +56,10 @@
     "unique_sites": "distinct exact latitude+longitude within a study and species; do not infer true geolocation precision",
     "conflict_status": "flag if one study+species+source population maps to multiple distinct origin coordinates; no outcome-based repair",
     "descriptive_source_pilot_gate": "at least two independent georeferenced populations within a study-species group; descriptive viability, not confirmatory fitness",
-    "macro_qualification": "at least 50 terrestrial species, >=15 original studies, >=10 distinct genera and >=20 species per future data-split arm; source-only eligibility before response values",
+    "macro_qualification": "At least 50 terrestrial species with ≥2 exact georeferenced original populations, >=15 original studies, >=10 distinct genera and >=20 species per prespecified split arm, with zero conflicting coordinates for the same population key.",
     "if_insufficient": "PILOT_ONLY_NO_MACRO_HISTORY_VS_PLASTICITY_CLAIM",
-    "historical_climate_sampling_permitted_now": false
+    "historical_climate_sampling_permitted_now": false,
+    "source_rows_counted_without_inspecting_or_using_phenotype_values": true
   },
   "future_model_not_authorized_now": {
     "baseline": "Current-climate means, variability and geographic context; study and experimental method controls, taxonomic and sampling structure",
