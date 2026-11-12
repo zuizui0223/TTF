@@ -1,0 +1,61 @@
+{
+  "schema": "ttf_jensen80_stage22_response_blind_coordinate_replay_stop_20261112",
+  "date": "2026-11-12",
+  "status": "STOP_FROZEN_STAGE20_COORDINATE_SHA_MISMATCH_NO_GENETIC_OPENING",
+  "branch": "research/break-location-na-mammals-v01",
+  "frozen_reference": {
+    "run_id": 40868517419,
+    "attempt": 1,
+    "artifact_id": 12894059862,
+    "coordinate_sha256": "fad49f6ec345ef45c1387ef76c8b3b724caf5f39322f8e9c3da56227a7a40bfd",
+    "case_label_sha256": "e08632a14a990804a7a1c83e236b70834056ac61b7157b9832b8f91c0df855d5",
+    "species": 80,
+    "cases": 10013,
+    "background": 66687
+  },
+  "frozen_independent_replays": [
+    {
+      "run_id": 41184993953,
+      "artifact_id": 13035828120,
+      "coordinate_sha256": "fad49f6ec345ef45c1387ef76c8b3b724caf5f39322f8e9c3da56227a7a40bfd"
+    },
+    {
+      "run_id": 40868517419,
+      "attempt": 2,
+      "artifact_id": 13035858759,
+      "coordinate_sha256": "fad49f6ec345ef45c1387ef76c8b3b724caf5f39322f8e9c3da56227a7a40bfd"
+    }
+  ],
+  "current_source_replays": [
+    {
+      "run_id": 43128142339,
+      "head_sha": "8ea46986ab8fda123c5166df8a680c75b1177524",
+      "python": "3.12.16",
+      "observed_coordinate_sha256": "d49951247ef2cfad76f1a19406e11f5e732cc6b21a0c61c307cd85726b151dba",
+      "per_species_changed": 80
+    },
+    {
+      "run_id": 43128609308,
+      "head_sha": "63e2c637822df69ad3758e33067a8a61b01d539d",
+      "python": "3.12.15",
+      "observed_coordinate_sha256": "d49951247ef2cfad76f1a19406e11f5e732cc6b21a0c61c307cd85726b151dba",
+      "per_species_changed": 80
+    }
+  ],
+  "exact_controls": {
+    "same_original_source_code_blobs": true,
+    "same_original_source_artifact_zip_sha256": "d2cd60f8a99fccbd53de1bda978e533a77ed3012e058408e181f09ba72c32698",
+    "same_packages": "numpy 2.5.4; scipy 1.18.1; Shapely 2.2.0; pyproj 3.8.0; rasterio 1.5.2; pyshp 2.4.2",
+    "same_species_80": true,
+    "same_case_label_sha256": true,
+    "exact_original_coordinate_sha256": false,
+    "python_patch_version_is_cause": false
+  },
+  "interpretation": "All 80 rebuilt species have different raw coordinate block hashes despite identical source byte hashes, code blobs, counts and class label order. The discrepancy is deterministic across 3.12.15/3.12.16 new runs. Its coordinate displacement or exact numerical cause is unknown because original coordinate arrays remain unavailable and restricted site grids must not be publicly exported.",
+  "gate": "STOP before environmental predictors at moved locations and before any actual genetic break-location model/AUC",
+  "resolution_options": "Reproduce exact original coordinates inside a license-compliant private source runtime and verify original raw SHA before restarting original Stage22 gate; if impossible, mark the one-shot Stage22 as NOT_EVALUABLE_POSITIONAL_REPLAY without response opening. Do not accept a new hash, loosen precision, change sampled case or background locations, or open genetic outcomes as a workaround.",
+  "prior_genetic_endpoints_unchanged": true,
+  "existing_ttf_q_scientific_freeze_unchanged": true,
+  "main_untouched": true,
+  "restricted_derived_coordinate_arrays_publicly_exported": false
+}
