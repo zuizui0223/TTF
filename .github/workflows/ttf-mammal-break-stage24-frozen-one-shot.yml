@@ -1,9 +1,8 @@
 name: ttf-Jensen80-Stage24-ONE-SHOT-empirical-break-location-AUC
+# TERMINAL FROZEN: the only empirical response opening succeeded in run 43144845505.
+# This retained historical recipe is intentionally inert; do not rerun or retune.
 on:
-  push:
-    branches: [research/break-location-na-mammals-v01]
-    paths:
-      - '.github/workflows/ttf-mammal-break-stage24-frozen-one-shot.yml'
+  workflow_dispatch:
 permissions:
   contents: read
   actions: read
@@ -12,6 +11,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   single-source-guarded-break-location-response-opening:
+    # Terminal one-shot freeze. Even manual dispatch must not refit the empirical model.
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     env:
