@@ -4,6 +4,9 @@ on:
     branches: [prospective/quaternary-phenotype-source-screen-20261112]
     paths:
       - '.github/workflows/ttf-evo-phenotype-source-screen-v01.yml'
+      - 'research/prospective/barley_source_only_census.py'
+      - 'research/prospective/test_barley_source_only_census.py'
+      - 'research/prospective/quaternary_phenotype_source_screen_v01.json'
   workflow_dispatch:
 permissions:
   contents: read
