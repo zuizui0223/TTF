@@ -1,0 +1,34 @@
+{
+  "schema": "ttf_external_insect_plasticity_data_metadata_census_v01",
+  "frozen_date": "2026-11-12",
+  "status": "PRE_BIOLOGICAL_RESPONSE_METADATA_DISCOVERY_ONLY",
+  "source": {
+    "authors": "Weaving et al 2022, Nature Communications 13:5292",
+    "publication_doi": "10.1038/s41467-022-32953-2",
+    "osf_project_id": "cbhv4",
+    "osf_public_url": "https://osf.io/cbhv4/",
+    "osf_files_api_base": "https://api.osf.io/v2/nodes/cbhv4/files/osfstorage/",
+    "publication_species": 102,
+    "publication_effect_sizes": 1374,
+    "publication_studies": 74,
+    "publication_latitude_missingness_range": "15–35% for some reported moderators including origin latitude, study authors note publication-level missingness"
+  },
+  "metadata_only_operations": [
+    "Read OSF public API file list: name, ID, size, version/hash metadata if available; never read experimental response or published ARR effect-size rows",
+    "Identify raw/supplemental source candidates for 102 insect species and exact dataset version or file content hash",
+    "Require taxon, study ID, georeferenced source-population location, assay design and acclimation contrast before any climate predictor/response analysis",
+    "Do not infer missing origin coordinates from species' modern GBIF centroids without a separate pre-response source-qualification protocol"
+  ],
+  "science_gates": {
+    "minimum_terrestrial_species_with_valid_georeferenced_source_populations": 50,
+    "minimum_heldout_species_per_arm": 20,
+    "minimum_independent_source_studies": 15,
+    "minimum_taxonomic_genera": 10,
+    "prohibit_row_random_split": true,
+    "grouping": "Species and original study as distinct dependence units; compare CTmax and CTmin separately",
+    "historical_driver": "21ka to 0BP climate change and trajectory persistence in same SHA-pinned product with current-climate controls; long-term fluctuation timescale distinct from organism generation duration",
+    "phenotypic_response": "Measured acclimation response ratio ARR, not field phenotype or genetic local adaptation",
+    "stop_if_gates_fail": "NOT_EVALUABLE_MACRO_PLASTICITY_HISTORY_FROM_ORIGINAL_SOURCE"
+  },
+  "no_TTFQ_or_closed_genetic_response_reopened": true
+}
