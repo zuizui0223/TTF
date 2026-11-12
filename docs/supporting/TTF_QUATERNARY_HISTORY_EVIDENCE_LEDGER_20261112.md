@@ -1,0 +1,93 @@
+# Quaternary climate evidence ledger — 2026-11-12
+
+This working-branch ledger is a claim-boundary summary, NOT a change to frozen
+TTF-Q scientific results, one-shot genetic responses, or main. All endpoints
+must remain in their originally frozen families.
+
+## Supported positive results (ecological predictors, not genetic effects)
+
+| Evidence | Exact empirical or source-only measurement | What the positive establishes |
+|---|---|---|
+| TTF-Q 653 species | 15,625 development + 40,602 confirmatory directed dyads; after present climate, taxonomy, sampling and geographic opportunity, about 82–83% of the initially unique historical predictor information survives geographic adjustment | Present-climate similarity cannot simply substitute historical displacement information in the paired covariate geometry |
+| Same-CHELSA-product 0BP bridge | Unique history fraction 0.3075225 / 0.3229562 (development/confirmatory); with both present-climate comparators 0.2946036 / 0.3140511 | Historical predictor nonredundancy is not explained by mixing CHELSA V2.1 with CHELSA-TraCE21k 0BP |
+| External host/insect 397-species climate comparison | Median unique historical-host predictor fraction 0.0371416 after self history, two present mismatch controls and log geographic distance; 81/397 exceed 0.10 and 37/397 exceed 0.20 | Small but nonzero descriptive unique predictor fractions persist under independent, spatially separated reference sampling |
+| North American mammals 80-species Stage21 | Predictor-only training historical residual unique fraction 0.6512147 after 11 controls; 5/200 false positives under synthetic spatial null, 200/200 detections for artificial positive log-odds 1.0 | Conditional known-truth gate passed on fixed inputs, NOT a real genetic-history result |
+
+**Not directly comparable:** 0.30 / 0.037 / 0.65 use different predictor
+definitions, species sets and nuisance spaces. They must NOT be pooled as
+biological explanatory power or genetic R-squared.
+
+## Robust negative controls and biological outcomes
+
+- The early 90-insect historical fraction 0.1800108 dropped to 0.0401520
+  with independent equal-count external observations and to 0.0377527
+  after geographic distance. The 18% number is not a robust effect.
+- A 347-insect known-host versus same-insect-niche surrogate comparison had
+  median paired +1.5701 percentage points, but the modern niche matching
+  distributions were not balanced.
+- With 333 insects and real alternative *plant taxa* matched on present climate,
+  actual-minus-alternative historical information median was -0.0016850,
+  positive in only 147/333. Host-species *identity specificity* did NOT
+  survive this relevant control; do not claim host-specific LGM corridors.
+- Original 211-species cross-lineage post-IBD genetic transfer:
+  T=0.03257, p=0.7393. Frozen species self-structure detectability
+  p=0.00899, but its uncalibrated raw self correlation is negative.
+- Codistributed 326-insect fresh test: beta_G=-0.004447, p=0.969.
+  Sharing the same landscape did not produce transferable spatial genetics.
+- Fresh independent GenDivRange He: 687 prequalified species;
+  heldout prediction relative gain +0.00016164 (+0.0162%);
+  species-cluster 95% interval [-0.00148644,+0.00183419].
+- Fresh CaliPopGen Fst: 39 eligible species; heldout prediction
+  relative gain -0.0537718 (-5.38%);
+  species-cluster 95% interval [-0.1650233,+0.0068232].
+- Do not post-hoc tune, reopen or combine these distinct frozen endpoints.
+
+## Executed next gate: Jensen mammal Stage22 predictor coverage
+
+* Fresh independent endpoint, not a revival of He, Fst or old TTF response.
+* 80 species fixed as 44 source/training and 36 wholly held-out species.
+  Source case sites: 10,013; fixed surveyed backgrounds: 66,687; 76,700 total.
+* Stage21 geometric 50-km source-uncertainty check already passed for all
+  10,013 case sites, median displacement 35.0014 km, P95 48.6970 km.
+  Geometric movement alone does not establish climate-predictor sensitivity.
+* New Stage22 code on PR #153 reproduces original coordinate/label SHA, applies
+  the identical deterministic within-survey 50-km jitter, holds all background
+  coordinates fixed, extracts the same original SHA-verified 8 CHELSA and
+  5 geographic-barrier fields AT THE MOVED CASE POSITIONS, and reports only
+  aggregate completeness, per-species eligibility and source/numeric hashes.
+* This stage reads **no numeric genetic response** and computes **no real
+  AUC or fitted genetic effect**. It cannot by itself authorize empirical
+  response opening. Stop if source SHA, role counts, minimum case/background
+  support, or 50-km jitter controls fail.
+* Original source author fitted barrier CSVs were not published, so geographic
+  controls are independently source-reconstructed, not byte-exact reproduction.
+* NEVER upload IUCN sampled grids, exact cases/jitter coordinates, source
+  polygons, UNEP restricted source rasters or site-level feature matrices.
+* Downstream after Stage22: independently inspect positional predictor
+  missingness and source-numeric repeatability; only a fully qualified frozen
+  source panel can proceed to the predeclared single species-disjoint
+  break-location model with 98.33% bootstrap decision threshold. Model
+  outcome is still NOT EVALUATED.
+
+## Source of record
+
+- TTF-Q main: https://github.com/zuizui0223/TTF
+- Exact same-product current climate control: https://github.com/zuizui0223/TTF/pull/150
+- Host-climate external references: https://github.com/zuizui0223/TTF/pull/147
+- Same-niche and matched plant controls:
+  https://github.com/zuizui0223/TTF/pull/148
+  https://github.com/zuizui0223/TTF/pull/149
+- Genetic cross-geography null: https://github.com/zuizui0223/TTF/pull/135
+- Fresh He and Fst genetic nonpositive endpoints:
+  https://github.com/zuizui0223/TTF/pull/151
+  https://github.com/zuizui0223/TTF/pull/152
+- New 80-species mammal prospective break-location gate:
+  https://github.com/zuizui0223/TTF/pull/153
+
+## Scientific conclusion
+
+**Historical climatic geometry is information-rich beyond current climate
+and geographic closeness, but a reproducible species-general genetic effect
+has not been demonstrated.** The biological target now is WHERE phylogeographic
+breaks occur, with modern climate, topography, barriers and positional
+uncertainty controlled and entirely unseen species evaluated.
