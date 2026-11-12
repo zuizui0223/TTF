@@ -153,3 +153,51 @@ uncertainty controlled and entirely unseen species evaluated.
   8ac29ed8c1a34dc68c245c3b1cdaeb863485d8b2f312c8881e9e03283d3a9331
   BEFORE opening any real genetic break-site AUC. No retuning, selecting
   subgroups, reopening older response, or exporting licensed source grids.
+
+
+## Stage24 terminal frozen heldout mammal break-location result (2026-11-12)
+
+The prospective distinct Jensen mapped genetic-break LOCATION endpoint was
+opened ONCE, after exact original and fixed 50km-jittered 13-column numeric
+SHAs matched the prior separately frozen two-run source inputs. Workflow
+43144845505 SUCCESS, artifact 13912050100, original run commit
+1e56ce6c89ea1bb5efc0850dc6fbe9fcc6fc8701. Termination receipt:
+research/break-location-na-mammals/stage24_frozen_empirical_break_location_handoff_v01.json.
+
+- 80 eligible North American mammals, disjoint 44 training / 36 evaluation,
+  10,013 frozen sampled published break-line cases, 66,687 surveyed range
+  background points. Original sampled case/background labels are the
+  biological response; they were not used to choose predictor families.
+- 11-variable current-climate/geography/reconstructed-barrier baseline
+  species-equal heldout AUC 0.58654165. Adding the single frozen
+  21ka-to-0BP climate displacement magnitude raises AUC to 0.58699912,
+  delta +0.00045747. Frozen 98.33% species cluster-bootstrap CI:
+  -0.00567376 to +0.00583423. No qualified positive effect.
+- One predeclared 50-km moved case sensitivity (same fixed background,
+  retrained same frozen two models): baseline AUC 0.57649444;
+  augmented 0.57687252; delta +0.00037808,
+  98.33% CI -0.00421754 to +0.00475397. No qualified positive effect.
+- Original-training history unique predictor fraction 0.65121466,
+  exactly the pre-unblinding known-truth input. Nonredundant
+  predictor information is not inherited as a predictive biological
+  association.
+- PROGRAM DECISION: NO_QUALIFIED_ADDED_HISTORY_LOCATION_PREDICTION.
+  Do not retune, re-open, retry success, subgroup-rescue, substitute
+  a different genetic estimand or combine He/Fst/COI genetic responses
+  in the same confirmation family.
+- Claim scope: no additional independent out-of-species discrimination
+  under this selected data/one-term model. It is NOT evidence that
+  Quaternary climate had no role in speciation or phylogeographic
+  barriers generally, nor a demonstration of genetic causal irrelevance.
+  The published author's original environmental covariate CSVs were
+  unavailable and terrestrial background points are not observed
+  absence of genetic breaks. The model uses reconstructed source barriers.
+
+The scientifically durable positive is the original TTF-Q finding that
+Quaternary history contains current-climate- and geography-nonredundant
+pairwise information, complemented by the response-blind 80-mammal
+50km position-sensitivity result. All three eligible independent
+genetic endpoints (He, Fst, mapped break locations) fail to show a
+qualified generalizable additional prediction from the tested
+single-term climate-history magnitude. Older within-species detectable
+structure and codistributed insect non-transfer results remain frozen.
