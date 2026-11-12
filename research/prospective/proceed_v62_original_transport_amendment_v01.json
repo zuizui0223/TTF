@@ -1,0 +1,21 @@
+{
+  "schema": "ttf_proceed_v62_datafile_transport_identity_amendment_v01",
+  "dated": "2026-11-12",
+  "status": "FROZEN_SOURCE_ONLY_RETRIEVAL_DIAGNOSTIC_PRE_METADATA_ROW_ACCESS",
+  "parent_contract": "research/prospective/proceed_v62_metadata_row_census_contract_v01.json",
+  "first_run": 43217716969,
+  "first_source_only_failure": {
+    "request": "/api/access/datafile/1024206",
+    "registered_size": 11617534,
+    "downloaded_size": 11618281,
+    "registered_md5": "eae537bd3ac244835fa9c8245f27a40b",
+    "downloaded_md5": "fdaaaa6e6b90dc95e3c8ec540c967d65",
+    "data_values_or_rates_evaluated": false,
+    "failure_stage": "BEFORE_SOURCE_ROW_CENSUS"
+  },
+  "allowed_repair": "Use the Borealis native Dataverse /api/access/datafile/1024206?format=original request, without replacing any source file, metadata denominator, eligibility rule, sample grouping or biological response. Require exact registered 11,617,534 byte size and MD5 before inspecting allowlisted metadata fields.",
+  "if_fail": "SOURCE_RETRIEVAL_OR_METADATA_CENSUS_STOP_NOT_BIOLOGICAL_NULL",
+  "no_source_version_or_threshold_replacement": true,
+  "no_rate_genotype_trait_values_inspected": true,
+  "original_TTF_Q_genetic_sci_freeze_unchanged": true
+}
