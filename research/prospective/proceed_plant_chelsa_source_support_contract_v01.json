@@ -1,0 +1,72 @@
+{
+  "schema": "ttf_proceed_v62_70plant_21ka_current_CHELSA_geo_climate_source_support_contract_v01",
+  "issued_on": "2026-11-12",
+  "status": "FROZEN_BEFORE_SOURCE_ONLY_ORIGINAL_CHELSA_CLIMATE_VALUES",
+  "authority": {
+    "original_source_id": 1024206,
+    "original_md5": "eae537bd3ac244835fa9c8245f27a40b",
+    "original_sha256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2",
+    "plant_source_receipt_run": 43220568305,
+    "plant_source_qualified_taxa": 70,
+    "plant_source_studies": 104,
+    "plant_genera": 57,
+    "plant_all_source_rate_rows_with_valid_geo": 1580,
+    "plant_study_species_components": 55,
+    "plant_component_train_species": 35,
+    "plant_component_heldout_species": 35,
+    "plant_role_membership_sha256": "73b16a46f4458aee64d735a495273e5d760683b020c5432a9701fc14214f231d",
+    "source_assets_manifest": "research/prospective/chelsa_trace21k_fixed8_assets_v01.json",
+    "source_assets_git_blob": "c3a1fb27e6a8c79c8ddc1624a972e74dbe3076d6"
+  },
+  "data_and_source": {
+    "origin_spatial_sites": "Original sample1 and sample2 WGS84 latitude/longitude from the exact PROCEED native source. No GBIF/synthetic centroid substitution.",
+    "two_original_sites_required": true,
+    "unmatched_unresolved_taxon_excluded_before_rasters": true,
+    "records_are_genetic_labelled_but_no_trait_effect_read": true,
+    "mask_source_phylum": "Streptophyta",
+    "mask_source_genphen": "Genetic",
+    "mask_taxa": "Plant",
+    "epochs": [
+      "21ka",
+      "0BP"
+    ],
+    "variables": [
+      "bio01",
+      "bio07",
+      "bio12",
+      "bio15"
+    ],
+    "external_original_COG_count": 8,
+    "all_original_COGs_must_pass_SHA256_and_exact_bytes": true,
+    "no_lgm_plant_occupancy_or_realized_refugium_assumed": true
+  },
+  "diagnostic_only_metrics": [
+    "File-by-file original SHA/bytes and number of finite values sampled at all original unique plant study pairs.",
+    "Number of fully finite 8-band original sample1 and sample2 sites, georeferenced pair records, species, source studies, genera, and 35/35 component study-species split.",
+    "Keep source numeric climate matrices private to ephemeral runner; export only source hashes, aggregate support, and per-role qualification counts.",
+    "Every declared source plant species retains original role from frozen study/species graph; no resplitting after climate missingness."
+  ],
+  "frozen_minimums": {
+    "complete_species_total": 50,
+    "complete_studies_total": 15,
+    "complete_genera_total": 10,
+    "complete_train_species": 20,
+    "complete_heldout_species": 20,
+    "fail_status": "NOT_EVALUABLE_ORIGINAL_CHELSA_PLANT_CLIMATE_SOURCE"
+  },
+  "numeric_environment": {
+    "github_actions_runner": "ubuntu-24.04",
+    "python": "3.12.15",
+    "rasterio": "1.5.2",
+    "numpy": "2.5.4",
+    "pyproj": "3.8.0",
+    "source_GIS_common_util_sha": "a9f4ce3338f5151f9b2d572ee55d1727a189e27d",
+    "no_environmental_variable_retuning": true
+  },
+  "outcome_boundary": {
+    "trait_effects_genotypes_or_rate_columns_never_accessed_as_values": true,
+    "no_any_LGM_to_adaptation_or_speciation_association_fitted": true,
+    "no_TTF_Q_COI_HE_FST_mammal_response_reopened": true,
+    "success_means_data_support_not_evolutionary_causation": true
+  }
+}
