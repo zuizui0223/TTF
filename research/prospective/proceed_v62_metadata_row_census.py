@@ -15,6 +15,7 @@ from proceed_v62_borealis_header_only import validated_get_catalog,verify_frozen
 HERE=Path(__file__).resolve().parent
 CONTRACT=HERE/"proceed_v62_metadata_row_census_contract_v01.json"
 TRANSPORT_AMENDMENT=HERE/"proceed_v62_original_transport_amendment_v01.json"
+NATIVE_SOURCE_IDENTITY=HERE/"proceed_v62_native_original_size_correction_v02.json"
 MAX_BYTES=20_000_000
 CATEGORY_FIELDS=("system","phylum","experimental","exp_type","genphen",
                  "design","trait_type","data_type","climate_change")
@@ -213,6 +214,9 @@ def main():
     amendment=json.loads(TRANSPORT_AMENDMENT.read_text())
     if amendment.get("status")!="FROZEN_SOURCE_ONLY_RETRIEVAL_DIAGNOSTIC_PRE_METADATA_ROW_ACCESS":
         raise ValueError("Original source-transport correction not frozen")
+    native_lock=json.loads(NATIVE_SOURCE_IDENTITY.read_text())
+    if native_lock.get("status")!="NATIVE_ORIGINAL_MD5_MATCHING_TRANSPORT_FROZEN_BEFORE_RESPONSE_FIELD_ACCESS":
+        raise ValueError("Native original source identity not frozen")
     if c.get("status")!="PRE_RESPONSE_SOURCE_CENSUS_FROZEN_AFTER_HEADER_5_OF_5_PASS":
         raise ValueError("Source-only protocol not frozen")
     f=c["header_authority"]["rate_source"]
@@ -232,8 +236,12 @@ def main():
         e["observed_source_size_bytes"]=len(raw)
         e["observed_source_md5"]=md5
         e["observed_source_sha256"]=sha256
-        if len(raw)!=f["expected_bytes"] or md5!=f["expected_md5"]:
-            raise ValueError("Original source rate-table size/MD5 differs from frozen Borealis original")
+        original=native_lock["native_original_transport"]
+        if (len(raw)!=original["observed_size_bytes"] or
+            md5!=original["observed_md5"] or
+            sha256!=original["observed_sha256"] or
+            md5!=f["expected_md5"]):
+            raise ValueError("Native original source bytes/MD5/SHA256 not reproducible; STOP before metadata rows")
         e.update(metadata_only_summary(raw,c))
         e["source_file"]=f["name"]
         e["source_md5_verified"]=True
