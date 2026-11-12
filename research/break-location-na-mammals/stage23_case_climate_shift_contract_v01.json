@@ -1,0 +1,68 @@
+{
+  "schema": "ttf_jensen80_stage23_case_climate_jitter_response_blind_contract_v01",
+  "frozen_date": "2026-11-12",
+  "status": "LOCKED_BEFORE_PAIRED_CASE_CLIMATE_SHIFT_SCORES_NO_GENETIC_AUC",
+  "parent": {
+    "stage21_calibration_artifact_id": 13037136274,
+    "stage21_calibration_zip_sha256": "29dadaeb360ce323a8ebfd34741a815546d6b9ecd0b12da53a3f04d22bbe3833",
+    "stage22_input_success_run_id": 43141328219,
+    "stage22_input_success_artifact_id": 13909364025,
+    "stage22_source_shape": "80 species, 44/36 roles, 10,013 original case sites, 66,687 frozen backgrounds",
+    "frozen_stage20_original_coordinate_sha256": "fad49f6ec345ef45c1387ef76c8b3b724caf5f39322f8e9c3da56227a7a40bfd",
+    "frozen_stage20_original_case_sha256": "e08632a14a990804a7a1c83e236b70834056ac61b7157b9832b8f91c0df855d5",
+    "frozen_stage22_moved_coordinate_sha256": "efd256c588c072d35d323006d13e27939aacd354e517d7330579006ef4415045",
+    "frozen_stage22_moved_13feature_sha256": "2621d503b8f6df7a2f9ca85fdf651bb20fa8a72354c8049b25d04d9ba8b916aa"
+  },
+  "source": {
+    "runner": "ubuntu-24.04",
+    "python": "3.12.15",
+    "chelsa_asset_manifest": "stage20_chelsa8_assets.json",
+    "variables": [
+      "bio01",
+      "bio07",
+      "bio12",
+      "bio15"
+    ],
+    "epochs": [
+      "21ka",
+      "0BP"
+    ],
+    "all_eight_original_COG_sha256_must_match_manifest": true,
+    "jittered_case_positions": "the same deterministic Stage21 within-survey 50km jitter used at Stage22; all 10,013 case points moved; original 66,687 backgrounds unchanged but not needed for this paired-case diagnostic",
+    "data_locations_exported": false
+  },
+  "standardization": {
+    "rule": "The unchanged Stage21 original-train whole-site species-balanced 0BP SD of four bioclimate fields; not fitted on jittered cases, not reestimated after results.",
+    "frozen_training_current_sd": [
+      9.560206765327766,
+      9.05470917128294,
+      523.8855899026479,
+      27.90489842395831
+    ],
+    "source_file": "exact_design_spatial_calibration.json in original Stage21 artifact 13037136274",
+    "historic_magnitude_formula": "sqrt(sum(((21ka_bio - 0BP_bio)/original_stage21_training_current_sd_bio)^2))"
+  },
+  "prespecified_descriptive_summaries": {
+    "primary_unit": "each of 80 species as a cluster; 10,013 paired cases in total",
+    "raw_metrics": [
+      "global old/current displaced history magnitude median and IQR",
+      "paired per-case absolute history magnitude change median/P95",
+      "global Spearman rho(original h,new h)",
+      "median of 80 within-species Spearman rhos",
+      "species summaries of median absolute h change and P95 shift",
+      "all 8 input band paired per-case absolute change medians and P95 values"
+    ],
+    "missingness": "no imputation or outcome-dependent replacement; any missing original/new raster value reported and the Stage23 source gate stops",
+    "terminal_decision": "PASS_PAIRED_CLIMATE_PREDICTOR_SENSITIVITY_MEASURED if all exact frozen sources and 10,013 paired original/new case rows finite; otherwise NOT_EVALUABLE_PAIRED_CASE_CLIMATE",
+    "no_data_driven_similarity_threshold": true,
+    "no_retuning_or_selection_by_break_model": true
+  },
+  "scope": {
+    "response_label_model_fit": false,
+    "species_heldout_AUC_computed": false,
+    "prior_He_Fst_COI_TTF_endpoints_reopened": false,
+    "original_jensen_author_baseline_reproduced_exactly": false,
+    "IUCN_UNEP_raw_or_case_coordinates_redistributed": false,
+    "pass_does_not_authorize_genetic_AUC_by_itself": true
+  }
+}

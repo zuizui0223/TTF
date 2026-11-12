@@ -1,0 +1,39 @@
+name: ttf-Jensen-2024-author-barrier-GIS-receipts
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-mammal-break-barrier-gis-receipts.yml'
+      - 'research/break-location-na-mammals/baseline_gis_receipts.py'
+      - 'research/break-location-na-mammals/original_barrier_baseline_source_candidates_v01.json'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-mammal-break-barrier-gis-receipts.yml'
+      - 'research/break-location-na-mammals/baseline_gis_receipts.py'
+      - 'research/break-location-na-mammals/original_barrier_baseline_source_candidates_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  evidence-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Retrieve and hash official mountain, water and ecoregion GIS; never redistribute source bytes
+        run: |
+          python research/break-location-na-mammals/baseline_gis_receipts.py \
+            --manifest research/break-location-na-mammals/original_barrier_baseline_source_candidates_v01.json \
+            --work /tmp/jensen-barrier-source \
+            --output results/ttf-mammal-breaks/baseline_gis_source_receipts.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-Jensen-publisher-barrier-gis-sha-inventory
+          path: results/ttf-mammal-breaks/baseline_gis_source_receipts.json
+          retention-days: 30
+          if-no-files-found: error

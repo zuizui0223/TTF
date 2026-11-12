@@ -1,0 +1,30 @@
+name: ttf-Jensen-barrier-distance-math-synthetic-tests
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-mammal-break-barrier-math.yml'
+      - 'research/break-location-na-mammals/barrier_distance_math.py'
+      - 'research/break-location-na-mammals/tests/test_barrier_distance_math.py'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-mammal-break-barrier-math.yml'
+      - 'research/break-location-na-mammals/barrier_distance_math.py'
+      - 'research/break-location-na-mammals/tests/test_barrier_distance_math.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  no-genetic-responses:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install geometry math and test ecotone internal boundaries
+        run: |
+          python -m pip install 'numpy>=1.26,<3' 'shapely>=2.0,<3' 'pyproj>=3.6,<4'
+          python -m unittest discover -s research/break-location-na-mammals/tests -p 'test_barrier_distance_math.py' -v

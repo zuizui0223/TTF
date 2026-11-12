@@ -1,0 +1,171 @@
+{
+  "schema": "ttf_quaternary_finite_evidence_cross_program_registry_v01",
+  "created_on": "2026-11-12",
+  "status": "POST_RESULT_DESCRIPTIVE_SYNTHESIS_ONLY_ALL_ORIGINAL_CONFIRMATORY_ENDPOINTS_CLOSED",
+  "scientific_question": "Which parts of late-Quaternary climatic history carry distinct ecological-predictor information, and which preregistered genetic outcomes gain out-of-species predictive skill from the tested history magnitude?",
+  "logic_boundary": {
+    "predictor_nonredundancy_is_not_genetic_variance_explained": true,
+    "source_datasets_overlap_not_fully_audited": true,
+    "no_pooled_p_values_effect_estimates_or_species_denominators": true,
+    "no_new_hypothesis_test_or_posthoc_subgroup": true,
+    "no_model_reruns": true,
+    "separate_TTFQ_scientific_freeze_unchanged": true,
+    "no_license_or_release_rights_assumed": true
+  },
+  "response_blind_predictor": {
+    "source": {
+      "repository": "zuizui0223/TTF",
+      "ref": "main",
+      "file": "benchmarks/frozen/ttf_q_c1_result_receipt_v0.1.json",
+      "git_blob_sha": "ba7c512dea57057fd50209037883c88e030830eb"
+    },
+    "geography_source": {
+      "repository": "zuizui0223/TTF",
+      "ref": "main",
+      "file": "benchmarks/frozen/ttf_q_c2_result_receipt_v0.1.json",
+      "git_blob_sha": "c3f5a355d1c659391cff448fd610f0d82a110950"
+    },
+    "n_species": 653,
+    "development_directed_dyads": 15625,
+    "confirmatory_directed_dyads": 40602,
+    "historical_unique_fraction_before_geography": {
+      "development": 0.3647140731871479,
+      "confirmatory": 0.3812840593549338
+    },
+    "historical_unique_fraction_after_geography": {
+      "development": 0.29893812458713254,
+      "confirmatory": 0.3163113642780213
+    },
+    "geographic_adjustment_retention_fraction": {
+      "development": 0.819650642967475,
+      "confirmatory": 0.8295950394914621
+    },
+    "outcome_genetic_response_evaluated": false,
+    "claim": "historical relation is nonredundant with current climate, source/target identity, taxonomy, sampling imbalance and a frozen 500-km geographic co-opportunity measure"
+  },
+  "genetic_endpoints": [
+    {
+      "id": "COI_transfer_211",
+      "source": {
+        "repository": "zuizui0223/TTF",
+        "ref": "main",
+        "file": "manuscript/genetic_ttf_submission_readiness_v0.1.json",
+        "git_blob_sha": "b868c0e590df88943dc8e28e7003ef61f4abc3e2"
+      },
+      "n_species": 211,
+      "training_species": 103,
+      "heldout_species": 108,
+      "metric": "mean within-heldout-species Spearman transfer statistic after frozen IBD adjustment",
+      "statistic": 0.03256548471362711,
+      "profiled_private_p": 0.7392607392607392,
+      "secondary_within_species_null_calibrated_p": 0.008991008991008992,
+      "secondary_raw_self_statistic": -0.226097652897688,
+      "qualified_positive_transfer": false,
+      "frozen": true,
+      "limitation": "different genetic transfer statistic from history-added He/Fst/break location; significant self test is relative to its structural null, not positive raw self correlation"
+    },
+    {
+      "id": "GenDivRange_He_holdout",
+      "source": {
+        "repository": "zuizui0223/TTF",
+        "ref": "8cac5846ebc616f0da2b40ac6cfffa582806c944",
+        "file": "research/quaternary-genetics/frozen_He_empirical_handoff_v01.json",
+        "git_blob_sha": "e28107407d4702ab5a81492bdadac445124f1dd7"
+      },
+      "n_species": 687,
+      "training_species": 351,
+      "heldout_species": 336,
+      "metric": "relative heldout equal-study-group MSE reduction from adding single 21ka-to-current history term",
+      "baseline_mse": 0.013135643197008409,
+      "augmented_mse": 0.013133519971679766,
+      "gain": 0.00016163847455343198,
+      "uncertainty_interval_95": [
+        -0.0014864364587959169,
+        0.0018341911536177095
+      ],
+      "qualified_positive_additional_prediction": false,
+      "frozen": true,
+      "limitation": "population expected heterozygosity contrast, not spatial break location or genetic differentiation; near-zero point estimate with CI overlapping zero"
+    },
+    {
+      "id": "CaliPopGen_Fst_holdout",
+      "source": {
+        "repository": "zuizui0223/TTF",
+        "ref": "5092f5d6639b1e223ba3179f69a7c612cf08b91d",
+        "file": "research/calipopgen-fst/frozen_empirical_handoff_v01.json",
+        "git_blob_sha": "98dda585fc974b2229951de3fb961595b14c7c9e"
+      },
+      "n_species": 39,
+      "training_species": 17,
+      "heldout_species": 22,
+      "metric": "relative heldout group-equal MSE reduction from adding single history displacement term",
+      "baseline_mse": 0.015254409995723292,
+      "augmented_mse": 0.016074667029056505,
+      "gain": -0.05377179671735444,
+      "uncertainty_interval_95": [
+        -0.165023263243713,
+        0.006823240542175835
+      ],
+      "qualified_positive_additional_prediction": false,
+      "frozen": true,
+      "limitation": "California-only population Fst pairs, missing coordinate-error fields, and uncertain underlying publication independence from He"
+    },
+    {
+      "id": "Jensen_mammal_break_location_holdout",
+      "source": {
+        "repository": "zuizui0223/TTF",
+        "ref": "2d3d380d658d81942ebb090b79f2ee2cd9774b23",
+        "file": "research/break-location-na-mammals/stage24_frozen_empirical_break_location_handoff_v01.json",
+        "git_blob_sha": "52570470681dcceba1e361936d9e42be86f1256c"
+      },
+      "first_successful_action_run": 43144845505,
+      "n_species": 80,
+      "training_species": 44,
+      "heldout_species": 36,
+      "case_site_records": 10013,
+      "surveyed_background_records": 66687,
+      "metric": "species-equal mean heldout AUC difference adding single historical displacement magnitude to 11 baseline controls",
+      "original": {
+        "baseline_auc": 0.5865416475106371,
+        "augmented_auc": 0.5869991176839505,
+        "delta_auc": 0.00045747017331344223,
+        "bootstrap_interval_9833": [
+          -0.00567375712397202,
+          0.005834234875247498
+        ]
+      },
+      "jitter50km": {
+        "baseline_auc": 0.5764944440964184,
+        "augmented_auc": 0.5768725245721279,
+        "delta_auc": 0.00037808047570948855,
+        "bootstrap_interval_9833": [
+          -0.00421754305711577,
+          0.004753966032389162
+        ]
+      },
+      "qualified_positive_additional_prediction": false,
+      "frozen": true,
+      "one_shot_action_disabled_after_success": true,
+      "limitation": "backgrounds are surveyed-range availability not known absence of breaks; barriers are reconstructed and some original author baseline covariates unavailable"
+    }
+  ],
+  "predictor_positional_sensitivity": {
+    "source": {
+      "repository": "zuizui0223/TTF",
+      "ref": "1bb10342bc1cb979d93f7d393b7825e91b7678f9",
+      "file": "research/break-location-na-mammals/stage23_case_climate_sensitivity_result_v01.json",
+      "git_blob_sha": "c94f99db8de153202f98947085f99dce5f4eb55b"
+    },
+    "n_species": 80,
+    "case_sites": 10013,
+    "pooled_original_vs_50km_spearman": 0.9667262925915241,
+    "median_of_species_spearman": 0.8469640953361883,
+    "is_not_genetic_effect": true
+  },
+  "interpretation": {
+    "supported": "Late-Quaternary climatic displacement relation contains distinct predictor geometry after specified current climate and geographic controls; sampled history magnitude is broadly position-stable within frozen 50km uncertainty.",
+    "unsupported": "A generalizable added predictive association with post-IBD COI transfer, He contrasts, Fst magnitude, or mapped mammalian break location under their own frozen designs.",
+    "unknown": "Which specific historical path, refugium, biotic interaction, demographic process, ancestral occupancy or lineage-by-landscape mechanism generated present genetic structures.",
+    "caution": "Finite conditional non-detections are neither demonstration of biological zero nor causal absence of glacial effects. Future mechanisms require new independent preregistered datasets, not rescue of these opened responses."
+  }
+}

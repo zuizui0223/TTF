@@ -1,0 +1,29 @@
+name: ttf-Jensen-frozen-1000-background-grid-sampling
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-mammal-break-background-cap.yml'
+      - 'research/break-location-na-mammals/frozen_background_sample.py'
+      - 'research/break-location-na-mammals/tests/test_frozen_background_sample.py'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-mammal-break-background-cap.yml'
+      - 'research/break-location-na-mammals/frozen_background_sample.py'
+      - 'research/break-location-na-mammals/tests/test_frozen_background_sample.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  deterministic-sampling-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate species-specific reproducible background hash cap, response-blind
+        run: |
+          python -m unittest discover -s research/break-location-na-mammals/tests -p 'test_frozen_background_sample.py' -v

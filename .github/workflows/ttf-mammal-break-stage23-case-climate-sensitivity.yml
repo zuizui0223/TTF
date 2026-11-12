@@ -1,0 +1,56 @@
+name: ttf-Jensen80-Stage23-50km-paired-climate-predictor-sensitivity
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-mammal-break-stage23-case-climate-sensitivity.yml'
+      - 'research/break-location-na-mammals/stage23_paired_case_climate_shift.py'
+      - 'research/break-location-na-mammals/tests/test_stage23_paired_case_climate_shift.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: ttf-stage23-historical-sensitivity-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  paired-original-vs-moved-source-climate-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 100
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '2'
+      GDAL_CACHEMAX: '256'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - name: Install locked source GIS numerical versions
+        run: python -m pip install 'numpy==2.5.4' 'scipy==1.18.1' 'shapely==2.2.0' 'rasterio==1.5.2' 'pyproj==3.8.0' 'pyshp==2.4.2'
+      - name: Run synthetic-only paired climate comparison tests
+        run: python -m unittest discover -s research/break-location-na-mammals/tests -p 'test_stage23_paired_case_climate_shift.py' -v
+      - name: Restore original source-qualified study panel
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs results/stage23
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12889949378/zip" > /tmp/jensen80-stage23-source.zip
+          echo 'd2cd60f8a99fccbd53de1bda978e533a77ed3012e058408e181f09ba72c32698  /tmp/jensen80-stage23-source.zip' | sha256sum -c -
+          unzip -q /tmp/jensen80-stage23-source.zip -d inputs
+      - name: Original-vs-moved CHELSA 21ka/0BP predictor comparison only, not genetic model
+        run: |
+          python research/break-location-na-mammals/stage23_paired_case_climate_shift.py \
+            --panel inputs/frozen_species_join.json \
+            --climate-assets research/break-location-na-mammals/stage20_chelsa8_assets.json \
+            --contract research/break-location-na-mammals/stage23_case_climate_shift_contract_v01.json \
+            --work /tmp/jensen80-stage23-restricted \
+            --output results/stage23/paired_case_climate_source_sensitivity.json
+      - name: Upload aggregate species-level climate-shift summaries only; no coordinates or site-level climate
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-Jensen80-Stage23-climate-predictor-shift-aggregate-only
+          path: results/stage23/paired_case_climate_source_sensitivity.json
+          retention-days: 30
+          if-no-files-found: warn

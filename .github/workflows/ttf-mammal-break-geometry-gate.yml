@@ -1,0 +1,39 @@
+name: ttf-mammal-break-geospatial-schema-gate
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-mammal-break-geometry-gate.yml'
+      - 'research/break-location-na-mammals/source_geometry_gate.py'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-mammal-break-geometry-gate.yml'
+      - 'research/break-location-na-mammals/source_geometry_gate.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-geometry-schemas:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install GIS schema validators
+        run: python -m pip install 'pyshp>=2.3,<3' 'pyproj>=3.7,<4'
+      - name: Verify original author ZIP MD5s then inspect geospatial schemas
+        run: |
+          python research/break-location-na-mammals/source_geometry_gate.py \
+            --manifest research/break-location-na-mammals/original_files_v02.json \
+            --work /tmp/jensen-geometry-source \
+            --out results/ttf-mammal-breaks/geospatial_schema_gate.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-mammal-break-geospatial-schema-gate
+          path: results/ttf-mammal-breaks/geospatial_schema_gate.json
+          retention-days: 30
+          if-no-files-found: error

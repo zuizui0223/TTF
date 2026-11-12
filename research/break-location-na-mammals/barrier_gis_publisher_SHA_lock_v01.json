@@ -1,0 +1,57 @@
+{
+  "schema": "ttf_jensen2024_external_barrier_source_sha_v01",
+  "status": "SHA_VERIFIED_PROVIDER_SOURCES_FROZEN_BEFORE_CLIMATE_GENETIC_AUC",
+  "timestamp": "2026-10-29",
+  "original_model": "Jensen 2024 doi:10.1111/geb.13875",
+  "source_acquisition_run": 40860884723,
+  "asset_hashes": [
+    {
+      "term": "ecoregion_level1",
+      "sha256": "fa8ddbec5711d3b0c2eeb009036e1c2ec24c5b9768ec1edcbc3735754fbdfa6e",
+      "bytes": 29312863,
+      "geometry": ".shp",
+      "provider": "US EPA North American CEC 2010",
+      "license": "US EPA public data"
+    },
+    {
+      "term": "ecoregion_level2",
+      "sha256": "86fd350c83e09f3ac0c7029a5432f603d05c88a097495618056d01f490c122aa",
+      "bytes": 31388641,
+      "geometry": ".shp",
+      "provider": "US EPA North American CEC 2010",
+      "license": "US EPA public data"
+    },
+    {
+      "term": "naturalearth_rivers",
+      "sha256": "ded71b01870855ccfe19b51f2ec14c9bb48fae23c0e9f3c11974d426433b5c38",
+      "bytes": 2079507,
+      "geometry": ".shp",
+      "provider": "Natural Earth 10m",
+      "license": "Public domain"
+    },
+    {
+      "term": "naturalearth_lakes",
+      "sha256": "0803a06f9c3cb4671d89b68c48b142aad9366ba40f665245e12a913fbc61722a",
+      "bytes": 2349685,
+      "geometry": ".shp",
+      "provider": "Natural Earth 10m",
+      "license": "Public domain"
+    },
+    {
+      "term": "unep_mountains",
+      "sha256": "9a2c8910cc9b694ef967bac15994312b9518ecb071c262414d199ad4a3e66307",
+      "bytes": 50857843,
+      "geometry": ".tif/ArcInfo raster rather than vector shapefile",
+      "provider": "UNEP-WCMC Mountains of the World 2002",
+      "license": "Non-commercial, no redistribution"
+    }
+  ],
+  "incomplete_items": [
+    "Exact EarthEnv Amatulli2018 TRI at 1km must be verified; do not substitute other topographic measure",
+    "Author's major-water-way manual supplements, lake >15000 km2 mask, and St Lawrence coverage need exact recipe",
+    "R script expects per-species pre-extracted barrier/range CSVs which are absent from author Figshare files"
+  ],
+  "source_vintage_warning": "Data downloaded on 2026-10-29; may not byte-identically reproduce the 2023 GIS vintages and bespoke 2024 manual water additions. Any rebuilt environmental baseline must be identified as reconstructed—not the author's original covariate table.",
+  "no_raw_iucn_or_unep_assets_republished": true,
+  "genetic_break_location_AUC_not_tested": true
+}

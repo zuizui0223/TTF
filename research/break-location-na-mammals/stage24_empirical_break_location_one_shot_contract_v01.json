@@ -1,0 +1,64 @@
+{
+  "schema": "ttf_jensen80_stage24_frozen_one_shot_biological_break_location_prediction_contract_v01",
+  "date": "2026-11-12",
+  "status": "FROZEN_PRE_EMPIRICAL_GENETIC_BREAK_LOCATION_AUC",
+  "motivation": "Distinct mapped within-species Pleistocene break LOCATION outcome, not Fst/He/COI magnitude; hypothesis and source panel were prospectively frozen 2026-10-29.",
+  "authority": {
+    "original_pr": 153,
+    "frozen_original_design": "research/break-location-na-mammals/frozen_sampling_barriers_history_v01.json",
+    "frozen_known_truth": "research/break-location-na-mammals/stage21_spatial_null_contract_v01.json",
+    "frozen_synthetic_pass": "research/break-location-na-mammals/stage21_frozen_spatial_calibration_handoff_v01.json",
+    "original_numeric_amendment": "research/break-location-na-mammals/stage21_numeric_replay_amendment_v01.json",
+    "original_expected_numeric_matrix_sha256": "51cf2953dda21ebf06f5cb78bbc0cf2c46f7a0d2bce1f7606128b27239bec2b8",
+    "original_expected_coord_sha256": "fad49f6ec345ef45c1387ef76c8b3b724caf5f39322f8e9c3da56227a7a40bfd",
+    "case_labels_expected_sha256": "e08632a14a990804a7a1c83e236b70834056ac61b7157b9832b8f91c0df855d5",
+    "stage22_numeric_amendment": "research/break-location-na-mammals/stage22_two_run_numeric_replay_amendment_v01.json",
+    "jittered_expected_numeric_matrix_sha256": "8ac29ed8c1a34dc68c245c3b1cdaeb863485d8b2f312c8881e9e03283d3a9331",
+    "jittered_expected_coord_sha256": "efd256c588c072d35d323006d13e27939aacd354e517d7330579006ef4415045",
+    "stage23_predictor_sensitivity_receipt": "research/break-location-na-mammals/stage23_case_climate_sensitivity_result_v01.json"
+  },
+  "source_geometry": {
+    "species": 80,
+    "train": 44,
+    "heldout": 36,
+    "case_sites": 10013,
+    "background_sites": 66687,
+    "total": 76700,
+    "true_break_cases": "fixed 10km sampled published Pleistocene break lines within author surveyed polygons",
+    "backgrounds": "fixed 20km surveyed grid >50km from mapped break and capped 1000/species with original SHA rule; availability only",
+    "no_species_or_site_filter_on_genetic_auc": true
+  },
+  "source_feature_rules": {
+    "original_SHA_locked_21ka_and_0BP_CHELSA_four_bioclim": true,
+    "geographic_barriers": "source-reconstructed mountain major river/lake level I/II ecotone TRI, not exact original author extracted CSV",
+    "require_all_13_bands_complete_for_80_species": true,
+    "stop_before_response_if_original_or_jittered_feature_SHA_does_not_match": true,
+    "require_prior_synthetic_gate_5_null_rejections_out_of_200_and_200_power_out_of_200": true,
+    "original_numeric_SDs_moments_fitted_on_training_species_only": true,
+    "no_source_jitter_coords_or_restricted_GIS_exported": true
+  },
+  "model": {
+    "predictor_history": "sqrt(sum(((bio21ka_bio - bio0BP_bio)/training_species_balanced_0BP_SD_bio)^2))",
+    "baseline": "four current climate bio vars + sqrt 4 reconstructed barrier distances + log1p(TRI) + geographic lon and lat",
+    "species_equal_case_background_weight": "all species equally weighted; within species cases and backgrounds split 0.5/0.5",
+    "fit": "scikit-learn LogisticRegression C=2 solver=lbfgs max_iter=150 tol=1e-5 random_state=0",
+    "train_ids": 44,
+    "evaluation_ids": 36,
+    "statistic": "species-equal mean heldout AUC difference with+history minus baseline",
+    "bootstrap": "1,999 species cluster replicates; seed 20261029; two-sided 98.33% interval quantiles 0.008333333333 and 0.991666666667",
+    "original_primary_positive_decision": "98.33% species-bootstrap lower CI > 0",
+    "sensitivity": "retrain the same frozen baseline and augmented models on the single pre-frozen 50km jittered case-site features; same original backgrounds and original observed case labels; one 98.33% species cluster CI",
+    "no_claim_of_robustness_unless_sensitivity_positive": "If original positive but jitter lower CI includes zero, label the primary signal POSITION_SENSITIVE_NOT_ROBUST, never a stable positive",
+    "if_original_primary_nonpositive": "close as NO_QUALIFIED_ADDED_HISTORY_LOCATION_PREDICTION with sensitivity reported descriptively; no retuning or subgroup rescue",
+    "if_original_primary_positive_and_jitter_positive": "QUALIFIED_POSITIVE_HISTORY_BREAK_LOCATION_PREDICTION_ASSOCIATION_WITH_50KM_SENSITIVITY",
+    "if_original_primary_positive_and_jitter_nonpositive": "POSITION_SENSITIVE_NOT_ROBUST_HISTORY_BREAK_LOCATION_ASSOCIATION"
+  },
+  "scope": {
+    "only_one_authorized_original_genetic_break_location_outcome": true,
+    "no_subgroup_rescue": true,
+    "no_historical_plant_occupancy_or_causal_refugia_claim": true,
+    "other_closed_COI_He_Fst_and_TTFQ_results_unmodified": true,
+    "no_model_or_predictor_fitting_until_every_source_and_replay_SHA_gate_passes": true,
+    "never_publicly_upload_pointwise_features_or_real_break_coordinates": true
+  }
+}

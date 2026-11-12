@@ -1,0 +1,83 @@
+{
+  "schema": "ttf_jensen80_stage21_spatial_known_truth_contract_v01",
+  "status": "FROZEN_BEFORE_ANY_GENETIC_HISTORY_AUC",
+  "issued": "2026-10-31",
+  "source_branch": "research/break-location-na-mammals-v01",
+  "source_stage20": {
+    "run": 40868517419,
+    "artifact_id": 12894059862,
+    "aggregate_artifact_sha256": "36c6c1f4d74a3743f3eaea928c5b4ae3c106d62eab575d77f62654e6a7a51845",
+    "coordinate_sha256": "fad49f6ec345ef45c1387ef76c8b3b724caf5f39322f8e9c3da56227a7a40bfd",
+    "feature_sha256": "9c408f6f23be75bee6aa79475bc68542ade225927079e7a43548dc152cdc2db8",
+    "case_label_sha256": "e08632a14a990804a7a1c83e236b70834056ac61b7157b9832b8f91c0df855d5",
+    "n_species": 80,
+    "n_training_species": 44,
+    "n_evaluation_species": 36,
+    "n_cases": 10013,
+    "n_background": 66687,
+    "n_rows": 76700,
+    "climate_bands": 8,
+    "barrier_bands": 5
+  },
+  "historical_predictor": "Euclidean magnitude of four (21ka minus 0BP) local climatic displacements, each standardized by the species-balanced training-only SD of the corresponding 0BP climate band; then standardized for training-only model fit.",
+  "baseline_predictors": [
+    "0BP bio01",
+    "0BP bio07",
+    "0BP bio12",
+    "0BP bio15",
+    "sqrt mountain distance km",
+    "sqrt major water distance km",
+    "sqrt Level-I ecotone distance km",
+    "sqrt Level-II ecotone distance km",
+    "log1p TRI",
+    "latitude",
+    "longitude"
+  ],
+  "baseline_coefficients_in_training_SD_units": [
+    0.3,
+    -0.14,
+    0.12,
+    -0.09,
+    -0.22,
+    0.18,
+    -0.13,
+    0.12,
+    0.12,
+    0.22,
+    -0.18
+  ],
+  "fit": "weighted logistic regression with C=2.0, lbfgs max_iter=150 tolerance=1e-5. All training species sum to equal total weight; cases and surveyed backgrounds each receive half of species weight. No species/random-intercept leakage into heldout species.",
+  "evaluation": "Species-mean held-out AUC improvement of augmented versus baseline; fixed species split 44/36; species cluster bootstrap 98.33% two-sided interval.",
+  "bootstrap": {
+    "draws_per_world": 199,
+    "draws_for_future_one_shot": 1999,
+    "seed_namespace": 20261029,
+    "positive_requires_lower_bound_gt_zero": true
+  },
+  "synthetic_generating_process": {
+    "reps_null": 200,
+    "reps_positive": 200,
+    "seed": 20261029,
+    "positive_history_log_odds_per_training_SD": 1,
+    "null_history_log_odds": 0,
+    "spatial_random_field_amplitude": 0.75,
+    "spatial_wavelengths_km": [
+      100,
+      250,
+      550
+    ],
+    "case_count_conditioning": "Generate exactly the observed frozen number of case-grid records per species using Gumbel top-K weighted by synthetic baseline + history + spatial field. The real case/background response labels are NEVER used as regression responses during synthetic calibration.",
+    "site_level_correlation": "3 random-direction spatial Fourier cosine waves per species and replicate, independent species-level coefficients; fixed feature geometry; does not exactly reproduce line-generating processes."
+  },
+  "synthetic_gate": {
+    "max_null_Wilson95_upper": 0.1,
+    "min_positive_Wilson95_lower": 0.8,
+    "min_train_historical_unique_fraction": 0.05,
+    "fail_state": "NOT_EVALUABLE_PRE_OUTCOME_NO_RESPECIFICATION",
+    "not_recalibrate_effect_size_or_cutoffs_after_results": true
+  },
+  "positional_uncertainty": "Full 50km jittered-break location sensitivity is a SEPARATE required gate before empirical genetic response opening. Synthetic null/positive calibration does not discharge this requirement.",
+  "source_rights": "All licensed IUCN-derived range points and UNEP raw sources remain ephemeral in GitHub Actions; upload only aggregate QA and world calibration counts and no raw matrices.",
+  "no_empirical_break_model_allowed": true,
+  "prior_GenDivRange_He_Fst_COI_TTF_closures_unchanged": true
+}

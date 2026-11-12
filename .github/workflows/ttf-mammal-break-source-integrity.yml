@@ -1,0 +1,39 @@
+name: ttf-mammal-break-original-byte-archive-qualification
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-mammal-break-source-integrity.yml'
+      - 'research/break-location-na-mammals/original_files_v02.json'
+      - 'research/break-location-na-mammals/source_integrity.py'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-mammal-break-source-integrity.yml'
+      - 'research/break-location-na-mammals/original_files_v02.json'
+      - 'research/break-location-na-mammals/source_integrity.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download exact author files and verify all size and MD5 receipts
+        run: |
+          python research/break-location-na-mammals/source_integrity.py \
+            --manifest research/break-location-na-mammals/original_files_v02.json \
+            --work "/tmp/jensen-original-source" \
+            --out results/ttf-mammal-breaks/source_file_integrity.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-mammal-break-exact-source-byte-inventory
+          path: results/ttf-mammal-breaks/source_file_integrity.json
+          retention-days: 30
+          if-no-files-found: error

@@ -1,0 +1,38 @@
+name: ttf-Jensen-WCMC-original-ArcInfo-mountain-grid
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-mammal-break-mountain-native-grid.yml'
+      - 'research/break-location-na-mammals/mountain_arcgrid_schema.py'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-mammal-break-mountain-native-grid.yml'
+      - 'research/break-location-na-mammals/mountain_arcgrid_schema.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  mountain-original-geography:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install original mountain GRID/CRS readers
+        run: python -m pip install 'rasterio>=1.4,<2' 'pyproj>=3.6,<4'
+      - name: Identify real georeferenced UNEP mountain layers without redistributing source
+        run: |
+          python research/break-location-na-mammals/mountain_arcgrid_schema.py \
+            --work /tmp/jensen-native-mountain \
+            --out results/ttf-mammal-breaks/mountain_arcgrid_schema.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-Jensen-WCMC-native-mountain-GIS-schema
+          path: results/ttf-mammal-breaks/mountain_arcgrid_schema.json
+          retention-days: 30
+          if-no-files-found: error

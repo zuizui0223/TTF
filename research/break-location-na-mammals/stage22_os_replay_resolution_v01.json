@@ -1,0 +1,60 @@
+{
+  "schema": "ttf_jensen80_stage22_os_replay_resolution_v01",
+  "date": "2026-11-12",
+  "status": "PASS_ORIGINAL_COORDINATE_IDENTITY_AND_JITTERED_FEATURE_COMPLETENESS_SECOND_REPLAY_PENDING",
+  "incident_stop_receipt": "research/break-location-na-mammals/stage22_coordinate_replay_stop_20261112.json",
+  "root_cause_evidence": {
+    "old_successful_runner_image": "ubuntu-24.04/20261025.353",
+    "new_failed_runner_image": "ubuntu-26.04/20261101.186",
+    "successful_pinned_runner_image": "ubuntu-24.04/20261101.360",
+    "old_python": "3.12.15",
+    "failed_python_3_12_15_on_ubuntu26": true,
+    "effective_fix": "Explicit ubuntu-24.04 job runner while retaining original Python 3.12.15 and exact numerical library versions",
+    "numeric_mechanism": "OS-level numeric/GIS runtime differences suspected; specific lower-level library operation not isolated",
+    "old_source_reproduction_same_per_species_hashes": 80,
+    "frozen_original_coordinate_sha256": "fad49f6ec345ef45c1387ef76c8b3b724caf5f39322f8e9c3da56227a7a40bfd",
+    "failed_ubuntu26_coordinate_sha256": "d49951247ef2cfad76f1a19406e11f5e732cc6b21a0c61c307cd85726b151dba"
+  },
+  "current_pass": {
+    "run_id": 43141328219,
+    "job_id": 130928747346,
+    "artifact_id": 13909364025,
+    "artifact_download_zip_sha256": "ee6bb41c24d3bea70e6f55dbcdb22ae70586ac6b75f9da702f5c58de374b7434",
+    "branch_head_at_run": "ae4973a6215d9c1bde0e0eac5ff7ffb22500636e",
+    "status": "PASS_JITTERED_INPUT_SUPPORT_NOT_EMPIRICAL_EFFECT",
+    "species": 80,
+    "training_species": 44,
+    "evaluation_species": 36,
+    "case_records": 10013,
+    "background_records": 66687,
+    "total_site_records": 76700,
+    "complete_eight_climates": 76700,
+    "complete_thirteen_features": 76700,
+    "post_jitter_eligible_species": 80,
+    "all_case_sites_shifted": 10013,
+    "failed_jitter_proposals_count_requiring_original_fallback": 0,
+    "median_case_shift_km": 35.00137608439169,
+    "p95_case_shift_km": 48.69701904194073,
+    "moved_coordinate_sha256": "efd256c588c072d35d323006d13e27939aacd354e517d7330579006ef4415045",
+    "moved_feature_matrix_sha256": "2621d503b8f6df7a2f9ca85fdf651bb20fa8a72354c8049b25d04d9ba8b916aa",
+    "original_case_label_sha256": "e08632a14a990804a7a1c83e236b70834056ac61b7157b9832b8f91c0df855d5",
+    "source_asset_checksums": "14 original source assets verified exactly",
+    "genetic_model_or_AUC_calculated": false
+  },
+  "reproducibility_next": {
+    "secondary_workflow_path": ".github/workflows/ttf-mammal-break-stage22-independent-replay.yml",
+    "source_code_unchanged_from_first_success": true,
+    "expected_moved_feature_matrix_sha256": "2621d503b8f6df7a2f9ca85fdf651bb20fa8a72354c8049b25d04d9ba8b916aa",
+    "expected_moved_coordinate_sha256": "efd256c588c072d35d323006d13e27939aacd354e517d7330579006ef4415045",
+    "status": "PENDING_INDEPENDENT_EXACT_NUMERIC_REPLAY"
+  },
+  "scope": {
+    "no_genetic_break_AUC_opened": true,
+    "no_previous_closed_He_Fst_COI_outcomes_reopened": true,
+    "not_the_original_authors_exact_barrier_csv": true,
+    "no_IUCN_UNEP_raw_or_pointwise_features_published": true,
+    "prior_stage21_synthetic_calibration_unmodified": true,
+    "main_unmodified": true,
+    "scientific_biological_effect_claim": false
+  }
+}

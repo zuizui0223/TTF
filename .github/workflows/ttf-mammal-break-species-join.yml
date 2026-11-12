@@ -1,0 +1,47 @@
+name: ttf-mammal-break-Latin-species-heldout-gate
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-mammal-break-species-join.yml'
+      - 'research/break-location-na-mammals/species_holdout_gate.py'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ttf-mammal-break-species-join.yml'
+      - 'research/break-location-na-mammals/species_holdout_gate.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  Latin-taxonomic-join:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Retrieve pre-response surveyed sampling counts from original run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p source
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12890491789/zip" > /tmp/surveyedgrid.zip
+          echo '76160771eed61207b6816e0dc1885da9ecb714918d82cdb66afce8d96d6a16a4  /tmp/surveyedgrid.zip' | sha256sum -c -
+          unzip -q /tmp/surveyedgrid.zip -d source
+      - name: Exact source MD5 species-metadata join and disjoint held-out species split
+        run: |
+          python research/break-location-na-mammals/species_holdout_gate.py \
+            --manifest research/break-location-na-mammals/original_files_v02.json \
+            --grid source/surveyed_grid_support_gate.json \
+            --work /tmp/jensen-taxonomy-source \
+            --out results/ttf-mammal-breaks/frozen_species_join.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-mammal-break-Latin-species-panel
+          path: results/ttf-mammal-breaks/frozen_species_join.json
+          retention-days: 30
+          if-no-files-found: error

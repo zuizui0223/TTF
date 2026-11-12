@@ -1,0 +1,56 @@
+name: ttf-Jensen80-Stage24-ONE-SHOT-empirical-break-location-AUC
+# TERMINAL FROZEN: the only empirical response opening succeeded in run 43144845505.
+# This retained historical recipe is intentionally inert; do not rerun or retune.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: ttf-jensen80-single-empirical-response-opening-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  single-source-guarded-break-location-response-opening:
+    # Terminal one-shot freeze. Even manual dispatch must not refit the empirical model.
+    if: ${{ false }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '2'
+      GDAL_CACHEMAX: '256'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - name: Install source-bounded original numerical GIS + scikit-learn versions
+        run: python -m pip install 'numpy==2.5.4' 'scipy==1.18.1' 'shapely==2.2.0' 'rasterio==1.5.2' 'pyproj==3.8.0' 'pyshp==2.4.2' 'scikit-learn==1.9.1'
+      - name: Verify Stage24 original training scaler, frozen source authorizations, and synthetic-only cases
+        run: |
+          python -m unittest discover -s research/break-location-na-mammals/tests -p 'test_stage24_one_shot_break_auc.py' -v
+          python -m unittest discover -s research/break-location-na-mammals/tests -p 'test_stage22_jittered_predictor_support.py' -v
+      - name: Restore byte-verified original pre-outcome 80-species source, not a new response panel
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs results/stage24
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12889949378/zip" > /tmp/jensen80-stage24-frozen-source.zip
+          echo 'd2cd60f8a99fccbd53de1bda978e533a77ed3012e058408e181f09ba72c32698  /tmp/jensen80-stage24-frozen-source.zip' | sha256sum -c -
+          unzip -q /tmp/jensen80-stage24-frozen-source.zip -d inputs
+      - name: Exact original and jitter 13-band SHA source guards BEFORE ONE AND ONLY heldout empirical AUC
+        run: |
+          python research/break-location-na-mammals/stage24_one_shot_break_auc.py \
+            --panel inputs/frozen_species_join.json \
+            --climate-assets research/break-location-na-mammals/stage20_chelsa8_assets.json \
+            --contract research/break-location-na-mammals/stage24_empirical_break_location_one_shot_contract_v01.json \
+            --work /tmp/jensen80-stage24-restricted-original-and-jitter \
+            --output results/stage24/one_shot_break_location_aggregate.json
+      - name: Publish only first-source-qualified species AUC aggregate, not original break sites or pointwise features
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-Jensen80-Stage24-first-empirical-break-location-AUC-aggregate-only
+          path: results/stage24/one_shot_break_location_aggregate.json
+          retention-days: 30
+          if-no-files-found: error

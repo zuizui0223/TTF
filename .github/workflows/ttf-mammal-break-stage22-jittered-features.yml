@@ -1,0 +1,62 @@
+name: ttf-Jensen80-Stage22-jittered-actual-predictor-coverage
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-mammal-break-stage22-jittered-features.yml'
+      - 'research/break-location-na-mammals/stage22_jittered_predictor_support.py'
+      - 'research/break-location-na-mammals/tests/test_stage22_jittered_predictor_support.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: ttf-jensen80-stage22-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  jittered-original-sources-no-genetic-model:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 100
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '2'
+      GDAL_CACHEMAX: '256'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - name: Install bounded GIS and numerical source readers
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2' 'shapely>=2,<3' 'rasterio>=1.4,<2' 'pyproj>=3.6,<4' 'pyshp>=2.3,<3'
+      - name: Verify synthetic deterministic jitter and original SHA guard
+        run: |
+          python -m unittest discover -s research/break-location-na-mammals/tests \
+            -p 'test_stage22_jittered_predictor_support.py' -v
+      - name: Rehydrate original source-authorized 80-species panel only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs results/stage22
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12889949378/zip" > /tmp/ttf-frozen80-stage22.zip
+          echo 'd2cd60f8a99fccbd53de1bda978e533a77ed3012e058408e181f09ba72c32698  /tmp/ttf-frozen80-stage22.zip' | sha256sum -c -
+          unzip -q /tmp/ttf-frozen80-stage22.zip -d inputs
+          mkdir -p inputs/stage20
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12894059862/zip" > /tmp/ttf-original-stage20-report.zip
+          echo '36c6c1f4d74a3743f3eaea928c5b4ae3c106d62eab575d77f62654e6a7a51845  /tmp/ttf-original-stage20-report.zip' | sha256sum -c -
+          unzip -q /tmp/ttf-original-stage20-report.zip -d inputs/stage20
+      - name: Sample original SHA-pinned 8 CHELSA and 5 GIS fields at fixed moved case positions
+        run: |
+          python research/break-location-na-mammals/stage22_jittered_predictor_support.py \
+            --panel inputs/frozen_species_join.json \
+            --climate-assets research/break-location-na-mammals/stage20_chelsa8_assets.json \
+            --work /tmp/ttf-jensen-stage22-restricted \
+            --stage20-report inputs/stage20/feature_support.json \
+            --output results/stage22/jittered_predictor_support.json
+      - name: Upload aggregate counts and source hashes ONLY; never IUCN site grids or individual features
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-Jensen80-Stage22-50km-jittered-predictor-aggregate-only
+          path: results/stage22/jittered_predictor_support.json
+          retention-days: 30
+          if-no-files-found: warn

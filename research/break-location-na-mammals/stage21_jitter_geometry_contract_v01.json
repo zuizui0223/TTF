@@ -1,0 +1,30 @@
+{
+  "schema": "ttf_jensen80_stage21_50km_spatial_jitter_contract_v01",
+  "status": "LOCKED_PRE_EMPIRICAL_BREAK_AUC",
+  "date": "2026-10-31",
+  "source": "Jensen 2024 DOI 10.1111/geb.13875; exact MD5 Pleistocene line/range files from stage18 source",
+  "panel": {
+    "species": 80,
+    "training": 44,
+    "heldout": 36,
+    "positive_case_site_records": 10013,
+    "case_grid_step_km": 10,
+    "background_step_km": 20
+  },
+  "case_jitter": {
+    "seed_namespace": "ttf-stage21-jensen50km-jitter|",
+    "source_uncertainty_radius_km": 50,
+    "sample": "One uniform-in-disk 50km radial displacement in the species-local AEQD plane for every original case line-grid site. Reject proposed points outside corresponding source clipped/surveyed range; at most 20 proposals per site; if no success leave original case point and count it.",
+    "max_attempts": 20,
+    "nonzero_required_fraction": 0.9,
+    "global_nonzero_median_km_at_least": 10,
+    "all_accepted_sites_must_remain_inside_source_polygon": true,
+    "all_jitter_displacement_km_at_most": 50,
+    "synthetic_only_until_qualification": true
+  },
+  "science": "The jitter gates assess feasibility of spatial positional-uncertainty sensitivity, not genetic effectiveness or inference. The conditional-within-range displacement is not spatially uniform when range boundaries truncate the disk. No genetic break-history AUC is permitted without fresh predictor extraction at moved sites.",
+  "reproducibility": "Fixed seed from SHA256(namespace+lowercased scientific name) first eight bytes; independent species streams. Do not use historical climate, barriers, AUC or genetic response for acceptance.",
+  "rights": "Retain per-species summary only; never export IUCN survey range geometry, exact break case coordinates or jittered coordinates.",
+  "gate_if_fail": "NOT_EVALUABLE_POSITIONAL_SENSITIVITY; do not change radius/attempts or substitute a placebo sensitivity after seeing result",
+  "prior_He_Fst_COI_genetic_endpoints_unchanged": true
+}

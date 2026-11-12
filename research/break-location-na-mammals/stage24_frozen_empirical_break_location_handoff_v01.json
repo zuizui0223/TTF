@@ -1,0 +1,63 @@
+{
+  "schema": "ttf_jensen80_stage24_first_qualified_one_shot_empirical_break_location_handoff_v01",
+  "date": "2026-11-12",
+  "status": "FROZEN_NO_QUALIFIED_ADDED_HISTORY_LOCATION_PREDICTION",
+  "source": {
+    "run_id": 43144845505,
+    "job_id": 130940141345,
+    "original_run_head_sha": "1e56ce6c89ea1bb5efc0850dc6fbe9fcc6fc8701",
+    "artifact_id": 13912050100,
+    "artifact_zip_sha256": "9159df472d316a4e7e5177d1c5c4223bcafe72bbd9f6f7ce066bf63530259b2a",
+    "actual_json_filename": "one_shot_break_location_aggregate.json",
+    "workflow": ".github/workflows/ttf-mammal-break-stage24-frozen-one-shot.yml",
+    "scientific_contract": "research/break-location-na-mammals/stage24_empirical_break_location_one_shot_contract_v01.json",
+    "first_only_actual_response_opened": true
+  },
+  "exact_preopening_source": {
+    "n_species": 80,
+    "train": 44,
+    "heldout": 36,
+    "case_sites": 10013,
+    "background_sites": 66687,
+    "original_13column_input_SHA256": "51cf2953dda21ebf06f5cb78bbc0cf2c46f7a0d2bce1f7606128b27239bec2b8",
+    "frozen_jitter_13column_input_SHA256": "8ac29ed8c1a34dc68c245c3b1cdaeb863485d8b2f312c8881e9e03283d3a9331",
+    "original_site_coordinate_SHA256": "fad49f6ec345ef45c1387ef76c8b3b724caf5f39322f8e9c3da56227a7a40bfd",
+    "jittered_site_coordinate_SHA256": "efd256c588c072d35d323006d13e27939aacd354e517d7330579006ef4415045",
+    "unique_history_predictor_fraction_train": 0.6512146619242042,
+    "synthetic_source_gate": "5/200 positive decisions under spatial null; 200/200 under frozen artificial +1.0 log-odds, both gates PASS",
+    "original_geography_sha_and_original_climate_GIS_assets_verified": true,
+    "original_and_jittered_numerical_byte_Sha_gates_passed_before_empirical_model": true,
+    "private_IUCN_sites_and_UNEP_originals_not_exported": true
+  },
+  "primary_original_sites": {
+    "baseline_mean_heldout_auc": 0.5865416475106371,
+    "baseline_plus_historical_mean_heldout_auc": 0.5869991176839505,
+    "historical_added_mean_delta_auc": 0.00045747017331344223,
+    "bootstrap9833_two_sided_ci": [
+      -0.00567375712397202,
+      0.005834234875247498
+    ],
+    "qualified_positive_decision": false
+  },
+  "prespecified_50km_jitter": {
+    "baseline_mean_heldout_auc": 0.5764944440964184,
+    "baseline_plus_historical_mean_heldout_auc": 0.5768725245721279,
+    "historical_added_mean_delta_auc": 0.00037808047570948855,
+    "bootstrap9833_two_sided_ci": [
+      -0.00421754305711577,
+      0.004753966032389162
+    ],
+    "qualified_positive_decision": false
+  },
+  "inference": {
+    "one_shot_spec": "Species-equal heldout AUC on disjoint 36 mammal species comparing 11-variable contemporary climate/geographic barrier baseline to exactly one additional LGM-to-current displacement magnitude predictor; 1,999 species-cluster draws, strict 98.33% CI",
+    "main_claim": "Predictor-only historical climate information survives geography, but under this spatial line/background design its historical-displacement magnitude did not add a qualified out-of-species mapped genetic-break location prediction.",
+    "not_proven": "Global absence of history in phylogeography, no climate refugia, no geographic barriers, no lineage-by-place interaction, or true causal climate irrelevance",
+    "original_published_Jensen_environment_exact_reproduction": false,
+    "surveyed_range_background_not_verified_true_negative": true,
+    "prior_He_Fst_COI_and_211species_results_unchanged": true,
+    "no_further_retuning_repetition_or_subgroup_rescue_authorized": true,
+    "publication_claim_is_frozen_negative": true,
+    "main_branch_unchanged": true
+  }
+}

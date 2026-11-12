@@ -1,0 +1,15 @@
+{
+  "schema": "ttf_jensen2024_geometric_overlap_gate_v01",
+  "frozen_before_break_geometry_coordinates": true,
+  "status": "PRE_SPATIAL_COORDINATE_OPENING_SOURCE_QA",
+  "source_files": "research/break-location-na-mammals/original_files_v02.json",
+  "source_qualification": "research/break-location-na-mammals/source_geometry_gate.py",
+  "names_join": "Normalize common names by stripping nonalphanumeric ASCII, exact one-to-one; no manual matching based on geographic results",
+  "reprojection": "Read original .prj per species, transform all Shapefile break lines and polygons to WGS84 EPSG:4326; construct per-species local azimuthal equidistant (AEQD) projection anchored to sampled polygon representative point for distance calculations",
+  "fix_invalid_polygon": "Apply shapely.make_valid if invalid; count repaired species; never change break-line topology or shift geometry",
+  "spatial_support_definition": "positive mapped Pleistocene break-line length >0, range polygon area >0, and at least one portion of the break-line within 50km of source supplied clipped polygon; 50km is from original 2024 source position-jitter sensitivity, not chosen after seeing spatial overlaps",
+  "minimum_species": 50,
+  "blocking": "If <50 support-qualified species, NOT_EVALUABLE before historical climate predictors or break/background labels evaluated",
+  "interpretation": "Overlap is only QC for genuine spatial comparability; not evidence that historical climate predicts break locations.",
+  "original_TTF_He_Fst_coi_outcomes_reopened": false
+}

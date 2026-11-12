@@ -1,0 +1,26 @@
+name: ttf-Quaternary-closed-evidence-scalar-audit-READ-ONLY
+on:
+  push:
+    branches: [research/break-location-na-mammals-v01]
+    paths:
+      - '.github/workflows/ttf-quaternary-finite-evidence-audit.yml'
+      - 'research/break-location-na-mammals/cross_program_finite_evidence_v01.json'
+      - 'research/break-location-na-mammals/audit_finite_evidence_registry_v01.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-frozen-source-blobs-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate local cross-program arithmetic and claim boundaries
+        run: python research/break-location-na-mammals/audit_finite_evidence_registry_v01.py
+      - name: Verify seven authoritative GitHub source blobs and scalar results (READ ONLY)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python research/break-location-na-mammals/audit_finite_evidence_registry_v01.py --online
