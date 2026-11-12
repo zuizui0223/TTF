@@ -112,12 +112,16 @@ def read_only_first_row(z,path,shared):
     normalized=[re.sub(r"[^a-z]","",str(a).lower()) for a in names]
     contains_lat=any(x in {"latitude","lat","originlatitude","sourcelatitude","collectionlatitude"} for x in normalized)
     contains_lon=any(x in {"longitude","lon","long","originlongitude","sourcelongitude","collectionlongitude"} for x in normalized)
-    contains_taxon=any(x in {"species","specie","taxon","speciesname","scientificname"} for x in normalized)
+    contains_taxon=any(x in {"species","specie","taxon","speciesname","scientificname","speciesid","fullsp"} for x in normalized)
+    contains_standardized_latitude = "standlat" in normalized
+    contains_latitude_bin = "latbin" in normalized
     return {"sheet_dimension_from_source":dim,
             "first_row_header_cells":header or [],
             "contains_latitude_header":contains_lat,
             "contains_longitude_header":contains_lon,
             "contains_taxon_header":contains_taxon,
+            "contains_standardized_latitude_header":contains_standardized_latitude,
+            "contains_latitude_bin_header":contains_latitude_bin,
             "row_level_biological_response_values_read":False}
 
 
@@ -156,6 +160,7 @@ def main():
         sheets=file_schema(raw)
         report["sheets"]=sheets
         report["sheet_count"]=len(sheets)
+        report["origin_geolocation_status"]=("EXACT_LATITUDE_LONGITUDE_COLUMNS_PRESENT" if any(z["contains_latitude_header"] and z["contains_longitude_header"] for z in sheets) else "NO_EXACT_ORIGIN_LATITUDE_LONGITUDE_PAIR_SOURCE_ONLY")
         report["status"]="EXACT_SOURCE_HEADER_ONLY_AUDIT_PASS"
     except Exception as e:
         report["status"]="SOURCE_HEADER_AUDIT_STOP_NOT_BIOLOGICAL_NULL"
