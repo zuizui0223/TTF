@@ -98,9 +98,10 @@ def source_census(csv_bytes: bytes, rules: dict) -> dict:
         z = hashlib.sha256(("ttf-q-evo-phenotype-v01|" + name.strip().lower()).encode()).digest()
         source_split["train" if z[0] & 1 else "heldout"] += 1
     split_counts = {"train": source_split["train"], "heldout": source_split["heldout"]}
-    macro_ok = (len(qualified_species) >= 50 and len(qualified_studies) >= 15 and
-                len(genera) >= 10 and min(split_counts.values()) >= 20)
     duplicate_conflicts = sum(len(coords) > 1 for coords in per_population_coords.values())
+    macro_ok = (len(qualified_species) >= 50 and len(qualified_studies) >= 15 and
+                len(genera) >= 10 and min(split_counts.values()) >= 20 and
+                duplicate_conflicts == 0)
     return {
         "schema": "ttf_barley_response_blind_terrestrial_origin_geometry_v01",
         "status": "MACRO_SOURCE_GEOMETRY_ELIGIBLE_RESPONSE_CLOSED" if macro_ok
