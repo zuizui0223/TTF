@@ -93,6 +93,8 @@ def source_census(csv_bytes: bytes, rules: dict) -> dict:
     qualified_species = {k[1] for k in geocoded_groups}
     qualified_studies = {k[0] for k in geocoded_groups}
     genera = {name.strip().split()[0] for name in qualified_species if len(name.strip().split()) >= 2}
+    nonbinomial_taxa = sorted(x for x in terrestrial_species if len(x.strip().split()) < 2)
+    terrestrial_label_pairs = sorted((str(study), str(taxon)) for study, taxon in per_study_species_sites)
     source_split = Counter()
     for name in sorted(qualified_species):
         z = hashlib.sha256(("ttf-q-evo-phenotype-v01|" + name.strip().lower()).encode()).digest()
@@ -118,6 +120,9 @@ def source_census(csv_bytes: bytes, rules: dict) -> dict:
         "eligible_terrestrial_species_two_populations": len(qualified_species),
         "original_studies_with_two_georeferenced_populations": len(qualified_studies),
         "genera_among_eligible_species": len(genera),
+        "terrestrial_taxon_metadata_labels": sorted(terrestrial_species),
+        "nonbinomial_terrestrial_taxon_labels": nonbinomial_taxa,
+        "metadata_only_study_taxon_groups": [list(x) for x in terrestrial_label_pairs],
         "eligible_species_hash_train_heldout": split_counts,
         "distinct_origin_population_keys": len(per_population_coords),
         "conflicting_origin_coordinates_for_same_pop_key": duplicate_conflicts,
