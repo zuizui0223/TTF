@@ -14,6 +14,7 @@ from proceed_v62_borealis_header_only import validated_get_catalog,verify_frozen
 
 HERE=Path(__file__).resolve().parent
 CONTRACT=HERE/"proceed_v62_metadata_row_census_contract_v01.json"
+TRANSPORT_AMENDMENT=HERE/"proceed_v62_original_transport_amendment_v01.json"
 MAX_BYTES=20_000_000
 CATEGORY_FIELDS=("system","phylum","experimental","exp_type","genphen",
                  "design","trait_type","data_type","climate_change")
@@ -21,7 +22,8 @@ CATEGORY_FIELDS=("system","phylum","experimental","exp_type","genphen",
 
 def fetch_original_datafile_bytes(fileid, maximum=MAX_BYTES):
     if not isinstance(fileid,int) or fileid <= 0: raise ValueError("Invalid frozen file ID")
-    url=f"https://borealisdata.ca/api/access/datafile/{fileid}"
+    # Explicit Dataverse native original, never a transformed TSV serialization.
+    url=f"https://borealisdata.ca/api/access/datafile/{fileid}?format=original"
     req=urllib.request.Request(url,headers={
         "Accept":"text/tab-separated-values",
         "User-Agent":"TTF-PROCEED-v62-response-blind-metadata-census"})
@@ -208,6 +210,9 @@ def main():
     p.add_argument("--output",required=True,type=Path)
     args=p.parse_args()
     c=json.loads(CONTRACT.read_text())
+    amendment=json.loads(TRANSPORT_AMENDMENT.read_text())
+    if amendment.get("status")!="FROZEN_SOURCE_ONLY_RETRIEVAL_DIAGNOSTIC_PRE_METADATA_ROW_ACCESS":
+        raise ValueError("Original source-transport correction not frozen")
     if c.get("status")!="PRE_RESPONSE_SOURCE_CENSUS_FROZEN_AFTER_HEADER_5_OF_5_PASS":
         raise ValueError("Source-only protocol not frozen")
     f=c["header_authority"]["rate_source"]
