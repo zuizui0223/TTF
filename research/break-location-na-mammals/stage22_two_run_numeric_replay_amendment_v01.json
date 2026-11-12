@@ -1,0 +1,53 @@
+{
+  "schema": "ttf_jensen80_stage22_two_run_numeric_replay_amendment_v01",
+  "dated": "2026-11-12",
+  "status": "TWO_INDEPENDENT_REPLAYS_BYTE_EQUAL_FIRST_SUCCESS_NUMERIC_SHA_DISCREPANCY_PRESERVED",
+  "source": "research/break-location-na-mammals/stage22_os_replay_resolution_v01.json",
+  "source_only_scope": "Pre-empirical-source numerical provenance amendment, not a biological effect analysis",
+  "first_original_ubuntu24_run": {
+    "id": 43141328219,
+    "artifact": 13909364025,
+    "moved_coordinate_sha256": "efd256c588c072d35d323006d13e27939aacd354e517d7330579006ef4415045",
+    "moved_feature_matrix_sha256": "2621d503b8f6df7a2f9ca85fdf651bb20fa8a72354c8049b25d04d9ba8b916aa",
+    "raw_numeric_point_matrix_not_retained": true
+  },
+  "second_run_independent_assertion": {
+    "id": 43142252690,
+    "status": "FAILED_EXACT_FIRST_RUN_NUMERIC_SHA_GUARD_BEFORE_BIOLOGY",
+    "observed_numeric_sha256": "8ac29ed8c1a34dc68c245c3b1cdaeb863485d8b2f312c8881e9e03283d3a9331",
+    "moved_coordinates_matched_original": true,
+    "all_13_features_present": true
+  },
+  "exact_replay_a": {
+    "run": 43143255816,
+    "artifact_id": 13911106267,
+    "artifact_zip_sha256": "1c65184d96cec44e5324afd266482555b202a28047790e4efcd9faf466308e01",
+    "moved_coordinate_sha256": "efd256c588c072d35d323006d13e27939aacd354e517d7330579006ef4415045",
+    "moved_feature_matrix_sha256": "8ac29ed8c1a34dc68c245c3b1cdaeb863485d8b2f312c8881e9e03283d3a9331"
+  },
+  "exact_replay_b": {
+    "run": 43143333653,
+    "artifact_id": 13909918931,
+    "artifact_zip_sha256": "5ecc62f2495931caf400187838dff7a3564725b9d26dc8a37ed6b58d8a00f7aa",
+    "moved_coordinate_sha256": "efd256c588c072d35d323006d13e27939aacd354e517d7330579006ef4415045",
+    "moved_feature_matrix_sha256": "8ac29ed8c1a34dc68c245c3b1cdaeb863485d8b2f312c8881e9e03283d3a9331"
+  },
+  "comparison": {
+    "all_13_per_feature_raw_sha256_equal": true,
+    "all_13_per_feature_rounded_3dp_sha256_equal": true,
+    "all_13_per_feature_min_max_mean_std_equal": true,
+    "all_80_per_species_support_agrees": true,
+    "all_14_original_climate_and_gis_source_receipts_equal": true,
+    "site_count": 76700,
+    "complete_site_fields_13": 76700,
+    "predeclared_species_pass": 80,
+    "train_species": 44,
+    "heldout_species": 36,
+    "no_outcome_accessed": true
+  },
+  "decision": "Retain first discrepant raw SHA as unreproduced source-only attempt; accept the two subsequent full 13-column byte-equal pinned Ubuntu24 computations as a separately documented source-only input for future pre-response qualification. Do not imply the first run's numeric values are identical or infer their elementwise size. Any empirical break effect requires a separate explicit authorization and source-matched calibration, not a blind reopening of previous endpoints.",
+  "original_2026_10_29_stage20_numeric_discrepancy_and_2026_10_31_amendment_unchanged": true,
+  "genome_or_genetic_AUC_opened": false,
+  "raw_IUCN_UNEP_pointwise_artifacts_exported": false,
+  "main_modified": false
+}
