@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   jittered-original-sources-no-genetic-model:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 100
     env:
       OPENBLAS_NUM_THREADS: '1'
