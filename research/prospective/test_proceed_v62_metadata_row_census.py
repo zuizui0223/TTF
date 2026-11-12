@@ -29,7 +29,7 @@ def fake_source(change_response=False):
                   "sd1":"nan" if change_response else "0.05"})
         rows.append(r)
     out=io.StringIO()
-    w=csv.writer(out,delimiter="\t",lineterminator="\n")
+    w=csv.writer(out,delimiter=",",lineterminator="\n")
     w.writerow(header)
     for x in rows:w.writerow([x[k] for k in header])
     return out.getvalue().encode()
