@@ -18,6 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 CONTRACT = ROOT / "quaternary_phenotype_source_screen_v01.json"
+AMENDMENT = ROOT / "barley_pretreatment_taxonomy_amendment_v02.json"
 
 
 def git_blob_sha1(raw: bytes) -> str:
@@ -26,6 +27,10 @@ def git_blob_sha1(raw: bytes) -> str:
 
 def source_census(csv_bytes: bytes, rules: dict) -> dict:
     """Reject ambiguous geometry. No ARR or thermal-limit column is accessed."""
+    amendment = json.loads(AMENDMENT.read_text())
+    if amendment["status"] != "FROZEN_PRE_ARR_AMENDMENT_FOR_METADATA_DISCOVERY_ERRORS":
+        raise ValueError("No authorized source-only taxonomy amendment")
+    animal_phyla = set(amendment["allowlisted_animal_phyla"])
     text = csv_bytes.decode("utf-8-sig")
     reader = csv.reader(io.StringIO(text, newline=""))
     cols = next(reader, [])
@@ -40,6 +45,9 @@ def source_census(csv_bytes: bytes, rules: dict) -> dict:
     terrestrial_rows = 0
     terrestrial_species = set()
     nonterrestrial = Counter()
+    terrestrial_nonanimal_rows = Counter()
+    terrestrial_nonanimal_taxa = set()
+    terrestrial_animal_phylum_rows = Counter()
     missing_coords = 0
     invalid_coords = 0
     missing_study_pop = 0
@@ -65,7 +73,14 @@ def source_census(csv_bytes: bytes, rules: dict) -> dict:
             nonterrestrial[ecosystem or "missing"] += 1
             continue
         terrestrial_rows += 1
-        species, study, pop = a["taxon"], a["study"], a["source_population"]
+        phylum = a["phylum"].strip()
+        if phylum not in animal_phyla:
+            terrestrial_nonanimal_rows[phylum or "missing"] += 1
+            terrestrial_nonanimal_taxa.add(a["taxon"])
+            continue
+        terrestrial_animal_phylum_rows[phylum] += 1
+        species = " ".join(a["taxon"].replace("_", " ").split())
+        study, pop = a["study"], a["source_population"]
         if not species or not study or not pop:
             missing_study_pop += 1
             continue
@@ -101,6 +116,7 @@ def source_census(csv_bytes: bytes, rules: dict) -> dict:
         source_split["train" if z[0] & 1 else "heldout"] += 1
     split_counts = {"train": source_split["train"], "heldout": source_split["heldout"]}
     duplicate_conflicts = sum(len(coords) > 1 for coords in per_population_coords.values())
+    conflicting_meta_keys = [list(key) for key, points in per_population_coords.items() if len(points) > 1]
     macro_ok = (len(qualified_species) >= 50 and len(qualified_studies) >= 15 and
                 len(genera) >= 10 and min(split_counts.values()) >= 20 and
                 duplicate_conflicts == 0)
@@ -111,6 +127,9 @@ def source_census(csv_bytes: bytes, rules: dict) -> dict:
         "total_csv_data_rows": all_records,
         "source_header_columns": max_columns,
         "terrestrial_rows": terrestrial_rows,
+        "terrestrial_nonanimal_rows_by_phylum": dict(sorted(terrestrial_nonanimal_rows.items())),
+        "terrestrial_nonanimal_taxon_labels": sorted(terrestrial_nonanimal_taxa),
+        "terrestrial_animal_rows_by_phylum": dict(sorted(terrestrial_animal_phylum_rows.items())),
         "other_ecosystem_rows": dict(sorted(nonterrestrial.items())),
         "ecosystem_labels": sorted(all_ecosystems),
         "terrestrial_species_any_coordinate_status": len(terrestrial_species),
@@ -126,6 +145,8 @@ def source_census(csv_bytes: bytes, rules: dict) -> dict:
         "eligible_species_hash_train_heldout": split_counts,
         "distinct_origin_population_keys": len(per_population_coords),
         "conflicting_origin_coordinates_for_same_pop_key": duplicate_conflicts,
+        "metadata_only_conflicting_source_population_keys": sorted(conflicting_meta_keys),
+        "metadata_only_amendment": amendment["schema"],
         "missing_study_species_population_metadata_rows": missing_study_pop,
         "terrestrial_missing_or_nonfinite_coord_rows": missing_coords,
         "terrestrial_out_of_bounds_coord_rows": invalid_coords,
