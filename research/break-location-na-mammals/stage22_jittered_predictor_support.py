@@ -46,8 +46,13 @@ def sha_bytes(a, dtype):
 def ensure_frozen_geometry(xy, cases, species_index, records, panel):
     if len(xy) != 76700 or int(cases.sum()) != 10013 or len(records) != 80:
         raise ValueError("Stage20 80-species design changed")
-    if sha_bytes(xy, "<f8") != ORIGINAL_XY_SHA256:
-        raise ValueError("Original geographic sampling coordinates differ from frozen Stage20")
+    observed_xy_sha256 = sha_bytes(xy, "<f8")
+    if observed_xy_sha256 != ORIGINAL_XY_SHA256:
+        observed_case_sha256 = hashlib.sha256(np.asarray(cases, dtype="u1").tobytes()).hexdigest()
+        raise ValueError("Stage20 coordinate identity STOP; expected=" + ORIGINAL_XY_SHA256 +
+            " observed=" + observed_xy_sha256 + " case_labels=" + observed_case_sha256 +
+            " numpy=" + np.__version__ + " shapely=" + shapely.__version__ +
+            " pyproj=" + pyproj.__version__ + " (no biological response opened)")
     if hashlib.sha256(np.asarray(cases, dtype="u1").tobytes()).hexdigest() != ORIGINAL_CASE_SHA256:
         raise ValueError("Original case-order labels differ from frozen Stage20")
     roles = [sum(int(s["split_role"]) == r for s in records) for r in (0, 1)]
