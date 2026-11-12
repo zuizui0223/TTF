@@ -92,7 +92,6 @@ def read_only_first_row(z,path,shared):
                 cells=[]
                 for cell in el.findall(NS_SS+"c"):
                     ref=cell.get("r") or ""
-                    numeric=ET.SubElement(ET.Element("dummy"), "unused") if False else None
                     col=re.match(r"[A-Z]+",ref)
                     if not col:
                         continue
