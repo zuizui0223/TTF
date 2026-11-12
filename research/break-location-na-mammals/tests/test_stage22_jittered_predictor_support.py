@@ -27,7 +27,7 @@ class Stage22Tests(unittest.TestCase):
         cases[:10013] = 1
         sp = np.zeros(76700, dtype="i4")
         records = [{"split_role": i % 2} for i in range(80)]
-        with self.assertRaisesRegex(ValueError, "coordinates differ"):
+        with self.assertRaisesRegex(ValueError, "Stage20 coordinate identity STOP"):
             stage22.ensure_frozen_geometry(xy, cases, sp, records, {})
 
     def test_moved_cases_are_deterministic_background_unchanged(self):

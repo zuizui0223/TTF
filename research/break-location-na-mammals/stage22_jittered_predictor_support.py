@@ -249,6 +249,16 @@ def run(args):
         raise ValueError("Stage21 source-calibration authorization missing")
     jitter_contract = load("stage21_jitter_geometry_contract_v01.json")
     xy, cases, sp, records = rebuild_sites(panel, args.work)
+    if args.stage20_report is not None:
+        old = json.loads(args.stage20_report.read_text())
+        original = {s["species"]: s for s in old["species_support"]}
+        drifts = [dict(species=s["scientific_name"], current_sha=s["coordinate_sha256"],
+                       old_sha=original.get(s["scientific_name"], {}).get("coordinate_sha256"))
+                  for s in records if s["coordinate_sha256"] !=
+                  original.get(s["scientific_name"], {}).get("coordinate_sha256")]
+        print("FROZEN_PER_SPECIES_COORDINATE_DIAGNOSTIC", json.dumps(dict(
+            same_blocks=len(records)-len(drifts), changed_blocks=len(drifts),
+            first_ten=drifts[:10]), sort_keys=True), flush=True)
     roles = ensure_frozen_geometry(xy, cases, sp, records, panel)
     moved, species, shift = jitter_cases_from_verified_sources(
         xy, cases, sp, records, args.work, jitter_contract
@@ -301,4 +311,5 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     for arg in ("panel", "climate-assets", "work", "output"):
         p.add_argument("--" + arg, type=Path, required=True)
+    p.add_argument("--stage20-report", type=Path, required=False)
     run(p.parse_args())

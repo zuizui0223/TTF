@@ -40,12 +40,17 @@ jobs:
           gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12889949378/zip" > /tmp/ttf-frozen80-stage22.zip
           echo 'd2cd60f8a99fccbd53de1bda978e533a77ed3012e058408e181f09ba72c32698  /tmp/ttf-frozen80-stage22.zip' | sha256sum -c -
           unzip -q /tmp/ttf-frozen80-stage22.zip -d inputs
+          mkdir -p inputs/stage20
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/12894059862/zip" > /tmp/ttf-original-stage20-report.zip
+          echo '36c6c1f4d74a3743f3eaea928c5b4ae3c106d62eab575d77f62654e6a7a51845  /tmp/ttf-original-stage20-report.zip' | sha256sum -c -
+          unzip -q /tmp/ttf-original-stage20-report.zip -d inputs/stage20
       - name: Sample original SHA-pinned 8 CHELSA and 5 GIS fields at fixed moved case positions
         run: |
           python research/break-location-na-mammals/stage22_jittered_predictor_support.py \
             --panel inputs/frozen_species_join.json \
             --climate-assets research/break-location-na-mammals/stage20_chelsa8_assets.json \
             --work /tmp/ttf-jensen-stage22-restricted \
+            --stage20-report inputs/stage20/feature_support.json \
             --output results/stage22/jittered_predictor_support.json
       - name: Upload aggregate counts and source hashes ONLY; never IUCN site grids or individual features
         if: always()
