@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.12.15'
       - name: Install bounded GIS and numerical source readers
         run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2' 'shapely>=2,<3' 'rasterio>=1.4,<2' 'pyproj>=3.6,<4' 'pyshp>=2.3,<3'
       - name: Verify synthetic deterministic jitter and original SHA guard
