@@ -16,6 +16,7 @@ HERE=Path(__file__).resolve().parent
 CONTRACT=HERE/"proceed_v62_metadata_row_census_contract_v01.json"
 TRANSPORT_AMENDMENT=HERE/"proceed_v62_original_transport_amendment_v01.json"
 NATIVE_SOURCE_IDENTITY=HERE/"proceed_v62_native_original_size_correction_v02.json"
+NATIVE_CSV_DIALECT=HERE/"proceed_v62_native_csv_dialect_amendment_v03.json"
 MAX_BYTES=20_000_000
 CATEGORY_FIELDS=("system","phylum","experimental","exp_type","genphen",
                  "design","trait_type","data_type","climate_change")
@@ -109,7 +110,8 @@ def metadata_only_summary(raw,contract):
     if prohibited.intersection(allowed):
         raise ValueError("Response column leaked into allowlist")
     source=io.TextIOWrapper(io.BytesIO(raw),encoding="utf-8-sig",newline="")
-    reader=csv.reader(source,delimiter="\t",strict=True)
+    # Exact original (MD5-verified) file is comma-delimited despite .tab name.
+    reader=csv.reader(source,delimiter=",",strict=True)
     header=next(reader,[])
     if len(header)<50 or len(header)!=len(set(header)):
         raise ValueError("Unexpected missing or duplicate original file headers")
@@ -236,6 +238,9 @@ def main():
     native_lock=json.loads(NATIVE_SOURCE_IDENTITY.read_text())
     if native_lock.get("status")!="NATIVE_ORIGINAL_MD5_MATCHING_TRANSPORT_FROZEN_BEFORE_RESPONSE_FIELD_ACCESS":
         raise ValueError("Native original source identity not frozen")
+    dialect=json.loads(NATIVE_CSV_DIALECT.read_text())
+    if dialect.get("status")!="FROZEN_SOURCE_ONLY_NATIVE_CSV_DIALECT_BEFORE_METADATA_ROW_ACCESS":
+        raise ValueError("Unapproved original source CSV dialect correction")
     if c.get("status")!="PRE_RESPONSE_SOURCE_CENSUS_FROZEN_AFTER_HEADER_5_OF_5_PASS":
         raise ValueError("Source-only protocol not frozen")
     f=c["header_authority"]["rate_source"]
