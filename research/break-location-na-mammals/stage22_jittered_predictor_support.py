@@ -237,6 +237,15 @@ def jittered_predictor_support(xy, cases, sp, records, moved_xy, per_species, ru
         "per_species_aggregate": per_species,
         "moved_coordinate_sha256": sha_bytes(moved_xy, "<f8"),
         "moved_feature_matrix_sha256": sha_bytes(x, "<f8"),
+        "diagnostic_per_feature_raw_sha256": {n: sha_bytes(x[:, i], "<f8") for i, n in enumerate(names)},
+        "diagnostic_per_feature_rounded_3dp_sha256": {
+            n: sha_bytes(np.round(x[:, i], 3), "<f8") for i, n in enumerate(names)
+        },
+        "diagnostic_per_feature_summary": {
+            n: {"mean": float(np.mean(x[:, i])), "std": float(np.std(x[:, i])),
+                "min": float(np.min(x[:, i])), "max": float(np.max(x[:, i]))}
+            for i, n in enumerate(names)
+        },
     }
 
 
