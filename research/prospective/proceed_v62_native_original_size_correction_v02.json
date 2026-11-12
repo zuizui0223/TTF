@@ -1,0 +1,36 @@
+{
+  "schema": "ttf_proceed_v62_native_original_vs_dataverse_ingested_size_source_only_correction_v02",
+  "date": "2026-11-12",
+  "status": "NATIVE_ORIGINAL_MD5_MATCHING_TRANSPORT_FROZEN_BEFORE_RESPONSE_FIELD_ACCESS",
+  "parent_header_contract": "research/prospective/proceed_v62_source_header_contract_v01.json",
+  "parent_geometry_contract": "research/prospective/proceed_v62_metadata_row_census_contract_v01.json",
+  "first_default_transport": {
+    "run": 43217716969,
+    "retrieval": "/api/access/datafile/1024206",
+    "observed_size_bytes": 11618281,
+    "observed_md5": "fdaaaa6e6b90dc95e3c8ec540c967d65",
+    "matches_published_md5": false,
+    "metadata_rows_parsed": false
+  },
+  "native_original_transport": {
+    "run": 43217988747,
+    "retrieval": "/api/access/datafile/1024206?format=original",
+    "observed_size_bytes": 10814441,
+    "observed_md5": "eae537bd3ac244835fa9c8245f27a40b",
+    "observed_sha256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2",
+    "matches_published_md5": true,
+    "metadata_rows_parsed": false
+  },
+  "separately_preserved_dataverse_catalog": {
+    "dataset_id": 357730,
+    "release": "4.0",
+    "file_id": 1024206,
+    "catalog_reported_filesize_bytes": 11617534,
+    "catalog_reported_md5": "eae537bd3ac244835fa9c8245f27a40b"
+  },
+  "authorization": "Retain BOTH metadata-reported ingested filesize 11617534 and native-original delivered size 10814441 as distinct source representations. Use only native original format, require exact native size, MD5 and independent SHA256 before any allowlisted metadata-row census. No change to the cohort eligibility, study grouping, taxonomy filter, response field firewall, historical predictor or outcome.",
+  "source_version_changes": false,
+  "phenotypic_rate_or_genetic_values_used": false,
+  "if_native_size_or_sha_changed": "SOURCE_RETRIEVAL_OR_METADATA_CENSUS_STOP_NOT_BIOLOGICAL_NULL",
+  "future_response_opening_authorized": false
+}
