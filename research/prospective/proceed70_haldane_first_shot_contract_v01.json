@@ -1,0 +1,120 @@
+{
+  "schema": "ttf_PROCEED70_genetically_based_plant_phenotypic_change_Haldane_first_shot_protocol_v01",
+  "issued": "2026-11-14",
+  "status": "FROZEN_BEFORE_FIRST_NUMERIC_RATE_OPENING",
+  "evidence_chain": {
+    "response_blind_70_source_run": 43221686424,
+    "response_blind_H_information_original_run": 43576786261,
+    "response_blind_H_information_independent_replay": 43577189439,
+    "source_presence_only_run": 43580007045,
+    "original_PROCEED_v62_RatesDB_MD5": "eae537bd3ac244835fa9c8245f27a40b",
+    "original_PROCEED_v62_RatesDB_SHA256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2",
+    "original_PROCEED_v62_BasicCode_MD5": "af35289290f70e8f94076c31d2441730",
+    "original_PROCEED_v62_BasicCode_SHA256": "488bb5bb2e856cc04ab90b794d928b8e41dc74111e3a9c31f6d496a25c167c14",
+    "original_chelsa8_SHA256": "7d03b2f158ade223b752a2b7d6ac57c38fd163e0b44f5566a01e8e6fe6d6b4fb",
+    "original_sites_SHA256": "aed6486ee9aa49b0d454426c4d5964ebd79a8a96db2aac452c80fd5b7f52af32",
+    "original_study_species_role_SHA256": "73b16a46f4458aee64d735a495273e5d760683b020c5432a9701fc14214f231d",
+    "nominal_plant_source_species": 70,
+    "source_presence_eligible_species": 56,
+    "source_presence_eligible_species_roles": [
+      29,
+      27
+    ],
+    "source_presence_eligible_unique_pairs_roles": [
+      91,
+      74
+    ]
+  },
+  "biology": {
+    "response": "Magnitude of within-species genetically based quantitative trait change per generation, NOT demonstrated adaptive fitness. PROCEED genphen=Genetic records used; no claim about speciation or reaction-norm plasticity.",
+    "response_Haldanes_original_code": "H=((mean2-mean1)/sqrt(((n1-1)*sd1^2+(n2-1)*sd2^2)/(n1+n2-2)))/generations",
+    "strict_predeclared_original_rate_QC": [
+      "All seven original response ingredients present and finite, n1 and n2 >= 2, generations > 0, sd1 and sd2 > 0, positive finite pooled SD",
+      "Retain only original BasicCode 2026 criteria: abs(sd1/mean1)*100 between 0.1 and 1000 inclusive and abs(sd2/mean2)*100 between 0.1 and 1000 inclusive; zero denominator means CV infinite and fails",
+      "Do not alter these source-paper inclusion thresholds after outcomes; apply identically to all source plant genetic rows",
+      "No sign choice from observations: within-row magnitude abs(H) and continuous response log1p(abs(H)) (includes exact H=0; no epsilon or zero removal)",
+      "Aggregate one outcome per unique study+species+ordered original coordinate pair by median of all author-QC-qualified log1p(abs(H)) observations in that source pair; no cherry-picking traits, sexes, years or significance",
+      "No substitute Darwin or a second model when Haldanes do not qualify"
+    ],
+    "response_cluster": "One study–species–original ordered geographic pair. Source duplicate trait measurements are NOT independent replication.",
+    "final_first_response_QC_gate": {
+      "min_taxa": 50,
+      "min_train_taxa": 20,
+      "min_heldout_taxa": 20,
+      "min_source_studies": 15,
+      "min_genera": 10,
+      "min_train_pair_geometries": 36,
+      "min_heldout_pair_geometries": 20,
+      "fail": "NOT_EVALUABLE_POST_OPENING_CANONICAL_HALDANE_NUMERIC_QC_NO_ADAPTATION_TEST"
+    },
+    "study_species_preassigned_roles": "Original 70-source components; never re-split after H presence or numeric QC"
+  },
+  "predictors": {
+    "focal_history": "One term: average of both site four-dim 21ka-to-0BP CHELSA climatic displacement magnitudes normalized by source training 0BP climate scales.",
+    "baseline_climate_geo_order": [
+      "0BP pair mean bio01",
+      "0BP pair mean bio07",
+      "0BP pair mean bio12",
+      "0BP pair mean bio15",
+      "0BP abs pair difference bio01",
+      "0BP abs pair difference bio07",
+      "0BP abs pair difference bio12",
+      "0BP abs pair difference bio15",
+      "pair midpoint latitude",
+      "pair midpoint longitude",
+      "great-circle km distance"
+    ],
+    "baseline_metadata_order": [
+      "source percentage Synchronic design",
+      "source percentage experimental Y",
+      "log1p(median positive generation count among pre-H source mask rows)",
+      "log1p(number of H source-presence rows)",
+      "source proportions for six trait families growth, otherLH, othermorphology, phenology, physio, response; size is reference"
+    ],
+    "baseline_has_11_climate_geo_and_10_methodological_columns": true,
+    "original_frozen_response_blind_method_features_invariant_to_H_magnitude": true,
+    "no_topography_vegetation_or_study_absorption_selected_from_outcome": true,
+    "no_paleo_occupancy_claim": true
+  },
+  "model": {
+    "first_shot": "Two fixed L2-ridge weighted regressions, original baseline 21 features vs plus exactly one historical feature; no hyperparameter search",
+    "alpha": 0.1,
+    "predictor_scaling": "Training sample weighted means and SD, species-equal weights; zero-variance baseline predictors set standardized column zero; source history likewise uses training weighted SD",
+    "sample_weights": "For each training source species, equal total weight across its retained unique comparison site pairs; likewise evaluation reports equal species mean heldout MSE",
+    "train": 29,
+    "heldout": 27,
+    "metric": "Relative species-equal MSE improvement (MSE_base-MSE_history)/MSE_base across heldout species",
+    "uncertainty": "1,999 98.33% two-sided species-cluster bootstrap draws, seeded 20261114; positive if 98.33% lower confidence bound >0; negative if includes or is below zero",
+    "no_retrain_on_holdout": true,
+    "no_subgroup_after_rate_opening": true
+  },
+  "synthetic_pre_response_qualification": {
+    "source_only_geometry": "Only source presence mask and CHELSA/source metadata values; no rates",
+    "source_train_history_unique_fraction_min": 0.05,
+    "source_train_history_effective_species_min": 8,
+    "max_one_source_species_fraction_of_history_residual_information": 0.3,
+    "simulated_worlds_null": 100,
+    "simulated_worlds_positive": 100,
+    "frozen_seed": 20261114,
+    "positive_source_history_coef_per_training_SD": 1,
+    "random_intercept_SD_per_species": 0.5,
+    "random_intercept_SD_per_original_study": 0.5,
+    "independent_record_noise_SD": 0.5,
+    "baseline_coef_generation": "Deterministic signed 0.12 multiplier on first 11 training-standardised environmental controls and fixed 0.06 multiplier on ten methodological controls",
+    "bootstrap_draws_per_synthetic_world": 199,
+    "null_gate_Wilson95_upper_max": 0.1,
+    "positive_gate_Wilson95_lower_min": 0.8,
+    "if_fail": "NOT_EVALUABLE_SYNTHETIC_RATE_PREDICTION_GATE_NO_RESPONSE_OPENING",
+    "no_performance_driven_alpha_effect_size_or_threshold_change": true
+  },
+  "outcome_boundary": {
+    "response_from_genetic_label_is_not_adaptive_fitness_proof": true,
+    "successful_history_gain_does_not_prove_Pleistocene_selection": true,
+    "not_testing_adaptation_vs_plasticity_due_to_7_species_paired_support": true,
+    "no_lgm_speciation_inference": true,
+    "program_is_exploratory_given_sequential_external_dataset_discovery": true,
+    "source_public_coordinates_and_individual_rates_never_exported": true,
+    "previous_TTF_Q_COI_He_Fst_Jensen_closed_endpoints_remain_frozen": true,
+    "main_not_modified": true
+  }
+}
