@@ -1,0 +1,58 @@
+name: ttf-history-SCORE-oracle-design-NO-response
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-history-score-oracle-design.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ttf-history-oracle-design-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  mathematical-design-benchmark-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      GDAL_CACHEMAX: '256'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retain original source code authority for exact comparison
+        run: git fetch --no-tags --depth=1 origin a4664cc1fccf7a16fed1b85f239dc0f123389a87
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - name: Install unchanged source and numerical versions
+        run: python -m pip install 'numpy==2.5.4' 'scipy==1.18.1' 'shapely==2.2.0' 'rasterio==1.5.2' 'pyproj==3.8.0' 'pyshp==2.4.2'
+      - name: Deterministic contrast and numerical provenance tests only
+        run: |
+          python -m unittest discover -s research/prospective -p 'test_history_score_oracle*.py' -v
+          python -m unittest discover -s research/prospective -p 'test_terminal_analytic_audit.py' -v
+          python -m unittest discover -s research/prospective -p 'test_terminal_numeric_provenance.py' -v
+      - name: Exact-source analytic oracle benchmark no actual outcomes or random worlds
+        run: |
+          mkdir -p results/oracle_design
+          python research/prospective/history_score_oracle_source.py --output results/oracle_design/oracle_design.json
+      - name: Enforce terminal closure and limited oracle interpretation
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('results/oracle_design/oracle_design.json'))
+          assert d['status']=='ORACLE_DESIGN_BENCHMARK_COMPLETE_OLD_BIOLOGICAL_STOP_UNCHANGED'
+          assert d['empirical_rate_or_fitness_values_read'] is False
+          assert d['additional_null_or_positive_worlds_drawn']==0
+          assert d['no_empirical_opening_authorized'] is True
+          assert d['oracle_design']['empirical_response_opening_authorized'] is False
+          print('ORACLE_DESIGN_COMPLETE_NOT_EMPIRICAL_PASS')
+          PY
+      - name: Publish aggregate oracle-design metrics only never input arrays or contrasts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-history-score-known-covariance-oracle-design
+          path: results/oracle_design/oracle_design.json
+          retention-days: 30
+          if-no-files-found: warn
