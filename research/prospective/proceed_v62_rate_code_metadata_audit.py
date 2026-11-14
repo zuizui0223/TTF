@@ -53,12 +53,12 @@ def code_signals(body,terms,max_lines=35):
         if (p.startswith("#") and not any(k in p.lower() for k in
               ("darwin","haldane","generation","transf_data","pooled"))) or not p:
             continue
-        if any(token in p for token in ("datos$D[","datos$H[","datos$numD[",
+        if (any(token in p for token in ("datos$D[","datos$H[","datos$numD[",
             "datos$numH[","datos$a_D","datos$a_H","datos$pSD[",
             "datos$La_D","datos$La_H","datos$okD[","datos$okH[",
             "okD_ln","okH","D <-","H <-")) or
-           (p.startswith("#") and any(k in p.lower() for k in
-            ("darwin","haldane","generation","transf_data","pooled"))):
+            (p.startswith("#") and any(k in p.lower() for k in
+             ("darwin","haldane","generation","transf_data","pooled")))):
             targeted.append({"line":i,"code_excerpt":p[:180]})
     targeted=targeted[:65]
     return {
