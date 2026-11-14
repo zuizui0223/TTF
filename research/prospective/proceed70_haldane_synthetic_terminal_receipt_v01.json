@@ -1,0 +1,73 @@
+{
+  "schema": "ttf_PROCEED70_genetic_based_phenotype_rate_56_species_known_truth_terminal_handoff_v01",
+  "dated": "2026-11-14",
+  "status": "TERMINAL_NOT_EVALUABLE_H_SYNTHETIC_NULL_CEILING_FAIL_NO_BIOLOGICAL_OUTCOME_OPENING",
+  "source_pre_registered": {
+    "contract": "research/prospective/proceed70_haldane_first_shot_contract_v01.json",
+    "pre_response_run": 43580870641,
+    "pre_response_artifact_id": 14107963308,
+    "source_model_code": "research/prospective/proceed70_haldane_source_null_calibration.py",
+    "frozen_code_source": "research/prospective/proceed70_haldane_rate_model_core.py",
+    "source_proceed_sha256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2",
+    "source_CHELSA8_raw_numeric_SHA256": "7d03b2f158ade223b752a2b7d6ac57c38fd163e0b44f5566a01e8e6fe6d6b4fb",
+    "source_21_baseline_numeric_SHA256": "e4d2f7e5b0ebf900018ae9f8ed87715a90101181b565c83b4215290f6fa07d84",
+    "source_one_history_numeric_SHA256": "b64289ab8a6719a5655ef3f585887c659cd3441455ffff9f92237b2f548f4c9e"
+  },
+  "sample": {
+    "source_genphen_label": "Genetic",
+    "plant_species_total_mask": 56,
+    "train_species": 29,
+    "heldout_species": 27,
+    "total_unique_source_study_species_ordered_site_pairs": 165,
+    "pair_source_records_train": 91,
+    "pair_source_records_heldout": 74,
+    "original_CHELSA_sites": 253,
+    "H_numerical_trait_field_values_inspected": false
+  },
+  "predictor_information_only": {
+    "history_unique_residual_variance_fraction_beyond_full_21_baseline": 0.12849475503663654,
+    "trained_source_species_effective_residual_information": 9.864397397213382,
+    "maximum_one_source_species_information_share": 0.21787745851042095,
+    "n_control_columns": 21,
+    "design_rank_with_intercept": 22,
+    "pre_registered_unique_minimum": 0.05,
+    "effective_species_minimum": 8,
+    "max_single_species_share": 0.3,
+    "pre_response_information_gate_pass": true
+  },
+  "known_truth": {
+    "null_100_worlds": {
+      "synthetic_positive_decisions": 7,
+      "positive_decision_rate": 0.07,
+      "Wilson95": [
+        0.03431926106727268,
+        0.137495147390735
+      ],
+      "pre_registered_upper_limit": 0.1,
+      "gate_pass": false
+    },
+    "positive_100_worlds": {
+      "synthetic_positive_decisions": 100,
+      "positive_decision_rate": 1,
+      "Wilson95": [
+        0.9630065017930143,
+        1
+      ],
+      "pre_registered_lower_limit": 0.8,
+      "gate_pass": true
+    },
+    "global_joint_gate_pass": false,
+    "decision": "Predeclared maximum allowed upper 95% confidence bound of null-positive proportion 0.10 is exceeded by 0.137495; the 7% point is not itself proof the estimator's true false-positive rate exceeds 10%. Do not run more worlds, alter alpha, model, CI, or threshold to rescue this same family.",
+    "interpretation": "No qualified source-level empirical rate prediction is permitted, notwithstanding nonredundant climate history information."
+  },
+  "terminal": {
+    "first_numeric_Haldane_genetic_based_rate_outcome_opened": false,
+    "Haldane_or_Darwin_values_calculated": false,
+    "no_real_adaptation_or_plasticity_or_speciation_effect_tested": true,
+    "no_hypothesis_fit_on_original_effects": true,
+    "no_biological_response_reanalysis_under_this_source_allowed": true,
+    "separate_prospective_new_biological_study_requires_new_independent_response_and_frozen_authority": true,
+    "no_old_TTF_Q_COI_He_Fst_Jensen_outcomes_reopened": true,
+    "main_untouched": true
+  }
+}
