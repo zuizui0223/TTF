@@ -8,6 +8,9 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
+import subprocess
+import sys
 from pathlib import Path
 import tempfile
 import numpy as np
@@ -24,6 +27,41 @@ def digest(a):
 
 def matches_original(X,H,expected_X,expected_H):
     return digest(X)==expected_X and digest(H)==expected_H
+
+
+def select_exact_mode(reports,expected_X,expected_H):
+    """No tolerance or substitute source identity: both original hashes required."""
+    return next((name for name,data in reports.items()
+                 if data.get('X_sha256')==expected_X and data.get('H_sha256')==expected_H),None)
+
+
+def bounded_runtime_reconstruction(work,reports):
+    """One source reconstruction, four deterministic runtime comparisons only."""
+    from terminal_numeric_provenance import worker,numeric_difference
+    from numpy._core import _multiarray_umath as um
+    worker(work,'in_process')
+    reports['runtime_modes']={'in_process':json.loads((work/'in_process.json').read_text())}
+    dispatch=list(um.__cpu_dispatch__)
+    wide=[s for s in dispatch if 'AVX512' in s or s=='X86_V4']
+    settings=[('native_process',''),('without_avx512',','.join(wide)),
+              ('baseline_dispatch',','.join(dispatch))]
+    for label,disabled in settings:
+        env=dict(os.environ);env['NPY_DISABLE_CPU_FEATURES']=disabled
+        result=subprocess.run([sys.executable,str(HERE/'terminal_numeric_provenance.py'),
+                               '--worker',str(work),'--label',label],
+                              env=env,capture_output=True,text=True,timeout=90)
+        if result.returncode:
+            reports['runtime_modes'][label]={'worker_failed':True,'stderr_tail':result.stderr[-1000:]}
+        else:
+            reports['runtime_modes'][label]=json.loads((work/(label+'.json')).read_text())
+    reports['differences_from_in_process']={}
+    with np.load(work/'in_process.npz',allow_pickle=False) as ref:
+        for label,_ in settings:
+            path=work/(label+'.npz')
+            if path.exists():
+                with np.load(path,allow_pickle=False) as candidate:
+                    reports['differences_from_in_process'][label]={
+                        name:numeric_difference(ref[name],candidate[name]) for name in ('X','H')}
 
 
 def analyse_source(X,H,species,studies,roles):
@@ -95,9 +133,15 @@ def main():
             raise ValueError('Frozen source-processing code modified')
         with tempfile.TemporaryDirectory(prefix='ttf-private-absorbed-') as td:
             work=Path(td);out['source_identity']=prepare_sources(work,terminal)
-            worker(work,'unchanged_source')
+            # First attempt failed X identity while H/coordinates/climate matched.
+            # Diagnose runtime behavior, and only consume an EXACT original pair.
+            bounded_runtime_reconstruction(work,out)
             lock=terminal['source_pre_registered']
-            with np.load(work/'unchanged_source.npz',allow_pickle=False) as data:
+            selected=select_exact_mode(out['runtime_modes'],lock['source_21_baseline_numeric_SHA256'],lock['source_one_history_numeric_SHA256'])
+            out['selected_exact_source_mode']=selected
+            if selected is None:
+                raise ValueError('No original X/H identity in bounded runtime comparisons')
+            with np.load(work/(selected+'.npz'),allow_pickle=False) as data:
                 out['source_X_sha256']=digest(data['X']);out['source_H_sha256']=digest(data['H'])
                 if not matches_original(data['X'],data['H'],lock['source_21_baseline_numeric_SHA256'],lock['source_one_history_numeric_SHA256']):
                     raise ValueError('Original source X/H failed exact-byte identity')

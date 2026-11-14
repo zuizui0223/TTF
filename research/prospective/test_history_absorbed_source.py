@@ -29,6 +29,14 @@ class RunnerExists(unittest.TestCase):
 
 @unittest.skipIf(runner is None,'source runner not implemented')
 class SourceTests(unittest.TestCase):
+    def test_runtime_selection_requires_both_original_hashes(self):
+        self.assertTrue(hasattr(runner,'select_exact_mode'),'exact-mode selector is missing')
+        reports={'wrong':{'X_sha256':'a','H_sha256':'H'},
+                 'exact':{'X_sha256':'X','H_sha256':'H'}}
+        self.assertEqual(runner.select_exact_mode(reports,'X','H'),'exact')
+        self.assertIsNone(runner.select_exact_mode(reports,'Z','H'))
+        self.assertIsNone(runner.select_exact_mode({'failed':{'worker_failed':True}},'X','H'))
+
     def test_source_aggregate_has_no_raw_arrays(self):
         r=runner.analyse_source(*source_fixture())
         self.assertEqual(r['heldout_rows'],74)
