@@ -43,8 +43,27 @@ def code_signals(body,terms,max_lines=35):
     # no source response rates or performance selected these.
     preferred=sorted(matched,key=lambda x:(-x["score"],x["line_number"]))[:max_lines]
     preferred.sort(key=lambda x:x["line_number"])
+    # Explicit codebook arithmetic snippets only, not a data table. Limited
+    # to a bounded original BasicCode section describing Darwin/Haldane
+    # admissibility, numerator/denominator and published transforms.
+    targeted=[]
+    for i,line in enumerate(lines,1):
+        if not (20<=i<=132):continue
+        p=line.strip()
+        if (p.startswith("#") and not any(k in p.lower() for k in
+              ("darwin","haldane","generation","transf_data","pooled"))) or not p:
+            continue
+        if any(token in p for token in ("datos$D[","datos$H[","datos$numD[",
+            "datos$numH[","datos$a_D","datos$a_H","datos$pSD[",
+            "datos$La_D","datos$La_H","datos$okD[","datos$okH[",
+            "okD_ln","okH","D <-","H <-")) or
+           (p.startswith("#") and any(k in p.lower() for k in
+            ("darwin","haldane","generation","transf_data","pooled"))):
+            targeted.append({"line":i,"code_excerpt":p[:180]})
+    targeted=targeted[:65]
     return {
         "line_count":len(lines),
+        "bounded_rate_unit_arithmetic_code_excerpts":targeted,
         "number_of_source_code_lines_matching_declared_terms":len(matched),
         "first_controlled_term_matches":preferred,
         "whole_source_code_exported":False,
