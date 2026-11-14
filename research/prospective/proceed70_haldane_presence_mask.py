@@ -30,7 +30,7 @@ def is_present_raw_token(value,empty_tokens):
     return str(value).strip().lower() not in empty_tokens
 
 
-def missingness_summary(raw,protocol):
+def missingness_summary(raw,protocol,check_authority=True):
     fields=protocol["field_presence_only"]["columns"]
     if fields!=list(FIELDS):
         raise ValueError("Frozen Haldane presence-field set changed")
@@ -81,12 +81,12 @@ def missingness_summary(raw,protocol):
             usability_by_design[m["design"] or "<missing>"]+=1
 
     scope=protocol["existing_scope"]
-    if (all_source!=9263 or rows!=scope["original_source_rows"] or
+    if check_authority and (all_source!=9263 or rows!=scope["original_source_rows"] or
         len(source_study_species)!=scope["original_studies"] or
         len(overall_geom)!=scope["original_pair_geometries"]):
         raise ValueError("Original 70-plant source-only geometry changed")
     roles,split,digest=component_assignment(source_study_species)
-    if (digest!=scope["frozen_study_species_split_sha256"] or
+    if check_authority and (digest!=scope["frozen_study_species_split_sha256"] or
         split["species_per_role"]!={"train":35,"heldout":35}):
         raise ValueError("Frozen 35/35 original study-species separation changed")
     mask_species_roles={"train":set(),"heldout":set()}
