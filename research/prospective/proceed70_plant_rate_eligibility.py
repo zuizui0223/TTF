@@ -26,7 +26,7 @@ def safe_count_labels(z,max_codes=30):
     return dict(sorted((str(k or "<missing>"),int(v)) for k,v in z.items()))
 
 
-def response_blind_rate_metadata(raw,contract):
+def response_blind_rate_metadata(raw,contract,check_authoritative=True):
     allowed=contract["metadata_fields_allowed"]
     prohibited=set(contract["explicitly_forbidden_response_fields"])
     if set(allowed)&prohibited:
@@ -83,7 +83,7 @@ def response_blind_rate_metadata(raw,contract):
 
     roles,split,digest=component_assignment(study_species)
     expected=contract["authoritative_inputs"]
-    if (original_rows!=9263 or metarows!=expected["georeferenced_eligible_source_rows"]
+    if check_authoritative and (original_rows!=9263 or metarows!=expected["georeferenced_eligible_source_rows"]
         or len(roles)!=70 or len(study_species)!=104
         or digest!=expected["study_species_role_sha256"]):
         raise ValueError("Frozen original plant source population or role SHA mismatch")
