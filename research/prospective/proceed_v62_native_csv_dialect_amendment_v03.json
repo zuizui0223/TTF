@@ -1,0 +1,23 @@
+{
+  "schema": "ttf_proceed_v62_native_CSV_vs_borealis_ingested_TSV_dialect_amendment_v03",
+  "issued_on": "2026-11-12",
+  "status": "FROZEN_SOURCE_ONLY_NATIVE_CSV_DIALECT_BEFORE_METADATA_ROW_ACCESS",
+  "parent_identity": "research/prospective/proceed_v62_native_original_size_correction_v02.json",
+  "discovery_run": 43218470648,
+  "verified_original_source": {
+    "requested_endpoint": "/api/access/datafile/1024206?format=original",
+    "source_md5": "eae537bd3ac244835fa9c8245f27a40b",
+    "source_sha256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2",
+    "size_bytes": 10814441,
+    "native_first_line_bytes": 746,
+    "native_first_line_comma_separators": 68,
+    "native_first_line_tab_separators": 0,
+    "registered_catalog_ingested_file_size_bytes": 11617534,
+    "default_api_export_size_bytes": 11618281
+  },
+  "authorization": "Parse the exact content-addressed native original using Python csv.reader delimiter ',' with quoted-field support, not Dataverse's transformed TSV. The 69-column source header must contain all frozen allowlisted metadata columns, and only those columns may be accessed as analytical values.",
+  "no_silent_acceptance_of_new_source_md5_size_or_file": true,
+  "no_outcome_filter_or_model_spec_changed": true,
+  "no_original_genetic_or_phenotypic_response_inspected": true,
+  "if_parse_fails": "SOURCE_RETRIEVAL_OR_METADATA_CENSUS_STOP_NOT_BIOLOGICAL_NULL"
+}

@@ -1,0 +1,101 @@
+{
+  "schema": "ttf_proceed_v62_metadata_only_source_row_eligibility_contract_v01",
+  "issued_on": "2026-11-12",
+  "status": "PRE_RESPONSE_SOURCE_CENSUS_FROZEN_AFTER_HEADER_5_OF_5_PASS",
+  "header_authority": {
+    "workflow_run": 43216581296,
+    "source_contract": "research/prospective/proceed_v62_source_header_contract_v01.json",
+    "source_header_sha_not_guessed": true,
+    "rate_source": {
+      "id": 1024206,
+      "name": "PROCEEDv6.2_RatesDB.tab",
+      "expected_bytes": 11617534,
+      "expected_md5": "eae537bd3ac244835fa9c8245f27a40b",
+      "verified_dataset_version": "4.0"
+    }
+  },
+  "source_metadata_columns_authorized": [
+    "es_ID",
+    "ref_ID",
+    "sys_ID",
+    "sp_pub",
+    "sp_ncbi",
+    "taxa",
+    "phylum",
+    "class",
+    "order",
+    "system",
+    "experimental",
+    "exp_type",
+    "sample1",
+    "sample2",
+    "sample1_latitude",
+    "sample1_longitude",
+    "sample2_latitude",
+    "sample2_longitude",
+    "coordinate_means",
+    "coordinate_notes",
+    "design",
+    "genphen",
+    "years",
+    "generations",
+    "gtime",
+    "trait_description",
+    "trait_type",
+    "data_type",
+    "climate_change"
+  ],
+  "outcome_fields_must_not_be_decoded": [
+    "mean1",
+    "mean2",
+    "sd1",
+    "sd2",
+    "n1",
+    "n2",
+    "transf_data",
+    "data_scale",
+    "out_in"
+  ],
+  "prohibited": [
+    "Compute or inspect rate/trait/genotype response values",
+    "Reclassify rows after opening response",
+    "Fit history/adaptation coefficient",
+    "Use sampled species range to fill missing original population coordinates",
+    "Read prior TTF genetic outcomes"
+  ],
+  "source_geometry_rules": {
+    "original_coordinates_only": true,
+    "latitude_range": [
+      -90,
+      90
+    ],
+    "longitude_range": [
+      -180,
+      180
+    ],
+    "no_imputation": true,
+    "count_both_original_endpoints_separately": true,
+    "one_valid_endpoint_not_equal_to_both_valid_endpoints": true,
+    "species_id": "Use normalized published binomial sp_pub when valid; fallback sp_ncbi only if independently plausible binomial, report ambiguity and no fuzzy name matching.",
+    "study_id": "Original ref_ID as published; do not equate effect records with independent studies.",
+    "taxonomic_genus": "First token of valid binomial, not split on underscore count without normalizing underscores.",
+    "numeric_years_and_generation_metadata": "Only counts of presence/validity; do not summarize historical genetic or phenotypic rates.",
+    "environmental_labels": "Report source-defined system, phylum, experimental, exp_type, genphen, design and trait_type code counts as source-only non-outcome metadata; no biological interpretation of undefined codes."
+  },
+  "prospective_gate": {
+    "minimum_terrestrial_georeferenced_species": 50,
+    "minimum_source_studies": 15,
+    "minimum_independent_genera": 10,
+    "minimum_species_per_hash_heldout_arm": 20,
+    "must_have_qualified_genetic_heritable_design_labels_confirmed_by_original_codebook": true,
+    "report_first": "All-source and terrestrial preliminary counts, both-endpoint coordinates vs any-endpoint counts, study/genus/split counts and missingness by design label.",
+    "if_fail": "PILOT_ONLY_NOT_EVALUABLE_FOR_MACROEVOLUTIONARY_PREDICTION; no response opening",
+    "if_pass": "SOURCE_GEOMETRY_POSSIBLE_NOT_FIT_AUTHORIZATION; require independent codebook and effect-size estimation specification before opening phenotype rates"
+  },
+  "delivery": {
+    "only_aggregate_counters_and_source_md5_sha256": true,
+    "do_not_export_sampled_geocoordinates_or_study_level_phenotype": true,
+    "do_not_export_full_raw_tsv": true,
+    "frozen_TTF_COI_HE_FST_JENSEN_unmodified": true
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "ttf_weaving_insect_2022_OSF_xlsx_source_only_schema_audit_v01",
+  "frozen_date": "2026-11-12",
+  "status": "PRE_BINARY_SPREADSHEET_CONTENT_HEADER_ONLY_AUDIT",
+  "parent": "research/prospective/weaving_2022_source_metadata_plan_v01.json",
+  "original_publication": "10.1038/s41467-022-32953-2",
+  "osf_project_id": "cbhv4",
+  "source_file": {
+    "id": "62ea9b57da7e49055693c82a",
+    "name": "Supplementary Data 1.xlsx",
+    "size_bytes": 351661,
+    "sha256": "73b2d9be32d54177e009c2f434dcebd1d918282a12d9a52aaf3a970c96f6ff4e"
+  },
+  "metadata_parent_artifact": {
+    "run_id": 43208575720,
+    "artifact_id": 13938508604
+  },
+  "allowed": "File size/hash, sheet names, dimension attributes, first row column header labels, number of source records from sheet metadata only; zero row-wise phenotype values",
+  "disallowed": [
+    "read ARR or CTmax/CTmin response values",
+    "compute any history-phenotype association",
+    "use species list to choose after-the-fact favorable studies",
+    "write to TTF frozen main"
+  ],
+  "source_schema_success_required": [
+    "source exact sha256 matches OSF receipt",
+    "one or more sheet contains species/study identifier",
+    "ideally original collection site latitude/longitude; whether available is determined without reading response"
+  ],
+  "future_eligibility": "Original 102 species and 1374 effect sizes are publication counts, not guaranteed georeferenced current-response cohorts; no eligibility claim without source-only georeferencing and independent data splits."
+}

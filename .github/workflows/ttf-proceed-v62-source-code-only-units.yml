@@ -1,0 +1,46 @@
+name: ttf-evo-PROCEED-v62-official-R-code-UNITS-only
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-proceed-v62-source-code-only-units.yml'
+      - 'research/prospective/proceed_v62_rate_code_metadata_audit.py'
+      - 'research/prospective/test_proceed_v62_rate_code_metadata_audit.py'
+      - 'research/prospective/proceed_v62_rate_code_metadata_contract_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-code-audit-no-data-model:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic source-code audit tests
+        run: python -m unittest discover -s research/prospective -p 'test_proceed_v62_rate_code_metadata_audit.py' -v
+      - name: Verify source BasicCode original MD5 and inspect short formula-bearing code lines only
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/proceed_v62_rate_code_metadata_audit.py --output results/source_only/proceed_v62_basiccode_unit_audit.json
+      - name: Enforce no original rate data or code execution
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('results/source_only/proceed_v62_basiccode_unit_audit.json'))
+          assert d['genetic_trait_rate_rows_read'] is False
+          assert d['bio_response_fit_or_studied'] is False
+          assert d['code_executed'] is False
+          print('PROCEED_SOURCE_CODE_ONLY',d['status'])
+          print('CODE_LINES',d.get('line_count'), 'MATCHES',d.get('number_of_source_code_lines_matching_declared_terms'))
+          PY
+      - name: Publish only source-code provenance and small diagnostic excerpts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-PROCEEDv62-official-code-rate-unit-metadata-only
+          path: results/source_only/proceed_v62_basiccode_unit_audit.json
+          retention-days: 30
+          if-no-files-found: warn

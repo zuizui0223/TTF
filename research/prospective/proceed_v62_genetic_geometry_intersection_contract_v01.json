@@ -1,0 +1,46 @@
+{
+  "schema": "ttf_proceed_v62_metadata_only_genetic_vs_phenotypic_geography_intersection_contract_v01",
+  "issued_on": "2026-11-12",
+  "status": "SOURCE_RESPONSE_BLIND_STRATIFICATION_FROZEN_BEFORE_RATE_OR_EFFECT_ACCESS",
+  "source": {
+    "datafile_id": 1024206,
+    "exact_native_original_md5": "eae537bd3ac244835fa9c8245f27a40b",
+    "exact_native_original_sha256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2",
+    "parent_receipt": "research/prospective/proceed_v62_source_geometry_receipt_v01.json",
+    "source_metadata_census_success": 43218756103,
+    "original_published_definition": "Gorné et al. 2025 Ecology doi:10.1002/ecy.70009: genetic category denotes common-garden or other quantitative genetic methods aiming to account for heritable component; phenotypic category field variation includes plasticity and genetic contributions."
+  },
+  "source_only_strata": [
+    "All records × Genetic/Phenotypic × both original coordinates × phylum × source study.",
+    "Animal phyla Annelida, Arthropoda, Chordata, Mollusca × both original coordinate endpoints, by genphen.",
+    "By source taxa group as published (do not turn taxa group into a certified habitat label).",
+    "Genetic-labelled animal pairwise georeferenced cohort by source design (Allochronic/Synchronic) and experimental status, retaining study and genus independent counts.",
+    "Cross-arm sharing of original studies under species-only hash, and bipartite study×species connected components for genetic-labelled animals with both geocoordinates.",
+    "Count distinct reference-ID and species populations, not source effect rows as independent biological units."
+  ],
+  "original_animal_phyla": [
+    "Annelida",
+    "Arthropoda",
+    "Chordata",
+    "Mollusca"
+  ],
+  "genphen_labels_to_count": [
+    "Genetic",
+    "Phenotypic"
+  ],
+  "reference_publication_scope": "Source v6.2 is not independent of v6.1 published data; no additive replication.",
+  "qualification": {
+    "min_animal_georeferenced_genetic_label_species": 50,
+    "min_source_studies": 15,
+    "min_genera": 10,
+    "min_species_per_future_train_test_arm": 20,
+    "must_confirm_terrestrial_habitat_externally": true,
+    "genphen_Genetic_not_sufficient_for_adaptation_or_fitness": true,
+    "study_disjoint_species_disjoint_split_required_before_any_effect_test": true,
+    "no_data_driven_relaxation_after_counter": true
+  },
+  "no_rates_or_trait_effects_read": true,
+  "no_historical_climate_assigned": true,
+  "no_TTF_original_frozen_genetic_response_reopened": true,
+  "no_raw_coords_or_rate_rows_exported": true
+}

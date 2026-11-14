@@ -1,0 +1,48 @@
+{
+  "schema": "ttf_proceed_v62_rate_code_source_only_audit_v01",
+  "issued_on": "2026-11-14",
+  "status": "PRE_RESPONSE_PUBLIC_ANALYSIS_CODE_ONLY_AUDIT_FROZEN",
+  "parent_study": "research/prospective/proceed70_plant_history_information_first_pass_receipt_v01.json",
+  "data_repo": "https://borealisdata.ca/",
+  "dataset_doi": "10.5683/SP3/NXSL3Q",
+  "dataset_version": "4.0",
+  "original_code_file": {
+    "id": 1044644,
+    "name": "PROCEEDv6.2_BasicCode.txt",
+    "catalog_size_bytes": 17692,
+    "md5": "af35289290f70e8f94076c31d2441730",
+    "source_endpoint": "https://borealisdata.ca/api/access/datafile/1044644?format=original"
+  },
+  "original_catalog_lock": {
+    "dataset_id": 357730,
+    "rate_file_id": 1024206,
+    "original_rate_md5": "eae537bd3ac244835fa9c8245f27a40b",
+    "rate_csv_phenotypic_rows_must_not_be_opened": true
+  },
+  "inspection": "Parse only code-file text. Identify formulas for rate transformations (haldanes/darwins, standardized mean difference, time years, generations), source filtering code and source unit comments; do not execute R script, query original rates or read phenotype/genotype observations.",
+  "safe_output": "Code file identity MD5/SHA256/bytes, matching source-code line numbers and minimally necessary 200-character source excerpts, high-level formula declarations; never full code file or source data rows.",
+  "controlled_terms": [
+    "haldane",
+    "darwin",
+    "generation",
+    "generations",
+    "gtime",
+    "mean1",
+    "mean2",
+    "sd1",
+    "sd2",
+    "years",
+    "log10",
+    "log(",
+    "abs(",
+    "rate",
+    "data_type",
+    "data_scale",
+    "transf_data",
+    "n1",
+    "n2",
+    "effect"
+  ],
+  "must_not_change_original_closed_TTF": true,
+  "must_not_open_proceed_plant_response_values": true
+}

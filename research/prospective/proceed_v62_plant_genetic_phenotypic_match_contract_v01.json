@@ -1,0 +1,58 @@
+{
+  "schema": "ttf_PROCEED_v62_plant_genetic_vs_phenotypic_source_paired_design_screen_v01",
+  "created_on": "2026-11-14",
+  "status": "FROZEN_PRIOR_TO_SOURCE_ONLY_GEXP_PEXP_MATCHING_NO_RATE_VALUES_OPENED",
+  "source_original": {
+    "file_id": 1024206,
+    "sha256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2",
+    "md5": "eae537bd3ac244835fa9c8245f27a40b",
+    "version": "PROCEED v6.2 Borealis 4.0",
+    "phylum": "Streptophyta",
+    "taxa": "Plant"
+  },
+  "source_metadata_fields_allowed": [
+    "ref_ID",
+    "sp_pub",
+    "sp_ncbi",
+    "phylum",
+    "taxa",
+    "genphen",
+    "trait_type",
+    "sample1_latitude",
+    "sample1_longitude",
+    "sample2_latitude",
+    "sample2_longitude"
+  ],
+  "forbidden_rate_columns": [
+    "mean1",
+    "mean2",
+    "sd1",
+    "sd2",
+    "n1",
+    "n2",
+    "out_in",
+    "transf_data",
+    "data_scale"
+  ],
+  "matches_to_count_before_any_trait_rate": {
+    "strict": "Same original ref_ID + normalized plant binomial + exact trait_type label + exact ordered original collection-location pair, with at least one Genetic and one Phenotypic record.",
+    "intermediate": "Same original ref_ID + normalized plant binomial + exact trait_type, with both categories, regardless of exact geographic-pair equality. Not sufficient for direct phenotype vs genetic separation.",
+    "species_only": "Same plant species and trait_type across any source studies, with both categories. Not sufficient for direct phenotype vs genetic separation.",
+    "deduplicate_original_rate_rows": true,
+    "both_geographic_endpoints_required": true,
+    "no_genetic_phenotypic_rate_difference_computed": true
+  },
+  "gates": {
+    "minimum_strictly_paired_distinct_plant_species": 20,
+    "minimum_strictly_paired_original_studies": 10,
+    "if_fail": "NOT_EVALUABLE_DIRECT_GENETIC_VS_PHENOTYPIC_COMPONENT_COMPARISON",
+    "if_pass": "SOURCE_PAIRED_DESIGN_POSSIBLE_NEEDS_ORIGINAL_GENOTYPE_AND_FITNESS_AUDIT"
+  },
+  "interpretation_limits": [
+    "PROCEED source Genetic labels refer to efforts to measure a heritable phenotype component and do not establish selection or reciprocal-transplant adaptation.",
+    "PROCEED Phenotypic labels refer to field phenotype, which includes both genetic and environmental contributions and is not a direct measure of within-genotype plasticity.",
+    "Even an exact study-species-trait-geographic overlap does not prove same genotypes, measurement methods or experimental assignments without source papers.",
+    "Do not infer fraction due to phenotypic plasticity by subtracting two unpaired published rates."
+  ],
+  "no_original_TTF_genetics_reopened": true
+}

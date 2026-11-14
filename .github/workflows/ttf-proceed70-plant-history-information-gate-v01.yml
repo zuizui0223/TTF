@@ -1,0 +1,58 @@
+name: ttf-evo-PROCEED70-plant-history-INFORMATION-only
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-proceed70-plant-history-information-gate-v01.yml'
+      - 'research/prospective/proceed70_plant_history_information.py'
+      - 'research/prospective/test_proceed70_plant_history_information.py'
+      - 'research/prospective/proceed70_plant_history_information_contract_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: proceed70-source-history-only-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  no-trait-data-original-CHELSA8-H-information:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      GDAL_CACHEMAX: '256'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - name: Install source-original numeric and GIS readers
+        run: python -m pip install 'numpy==2.5.4' 'scipy==1.18.1' 'shapely==2.2.0' 'rasterio==1.5.2' 'pyproj==3.8.0' 'pyshp==2.4.2'
+      - name: Check synthetic unique history geometry and species-weighted regression without phenotype
+        run: python -m unittest discover -s research/prospective -p 'test_proceed70_plant_history_information.py' -v
+      - name: Verify original PROCEED70 and all 8 CHELSA rasters, perform history uniqueness SOURCE-ONLY
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/proceed70_plant_history_information.py \
+            --work /tmp/ttf-proceed70-history-private-CHELSA8 \
+            --output results/source_only/proceed70_history_unique_v01.json
+      - name: Confirm genetic phenotype responses remain closed and report inference boundary
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('results/source_only/proceed70_history_unique_v01.json'))
+          assert r['rate_or_trait_or_genetic_response_values_opened'] is False
+          assert r['TTF_closed_outcomes_reopened'] is False
+          assert r['raw_spatial_climate_or_response_rows_exported'] is False
+          print('SOURCE_ONLY_INFORMATION_STATUS',r['status'])
+          print('UNIQUE_STUDY_SPECIES_LOCATION_PAIRS',r.get('unique_study_species_site_pair_predictor_rows'))
+          print('TRAIN_HISTORY_UNIQUE_FRACTION',r.get('train_unique_historical_predictor_variance_fraction'))
+          PY
+      - name: Retain original source hashes and aggregate predictor information only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-PROCEED70-source-only-history-information-aggregate
+          path: results/source_only/proceed70_history_unique_v01.json
+          retention-days: 30
+          if-no-files-found: warn

@@ -1,0 +1,46 @@
+{
+  "schema": "ttf_barley_2021_origins_only_terrestrial_ectotherm_pilot_receipt_v02",
+  "frozen_on": "2026-11-12",
+  "status": "PILOT_SOURCE_CONFIRMED_MACRO_COMPARATIVE_PREDICTION_NOT_EVALUABLE",
+  "source": {
+    "project": "jmbarley1/plasticity",
+    "commit": "c1416c8925d6f1509b94fb61a9e7973f4cf03cb4",
+    "git_blob_sha1": "8e960f1e43f8d4f4ca4c9521c41d8576e97beaec",
+    "raw_csv_sha256": "2095e19599536920689d8f72db9dab0e6cbaf1c0097b997c3009218eafcd5fc8",
+    "source_run": 43207934785,
+    "source_boundary": "All numeric ARR and thermal limit values withheld from source qualification"
+  },
+  "source_counts": {
+    "total_csv_rows": 326,
+    "terrestrial_labeled_rows": 210,
+    "terrestrial_animal_rows": 188,
+    "terrestrial_animal_phylum_rows": {
+      "Arthropoda": 149,
+      "Chordata": 39
+    },
+    "terrestrial_nonanimal_rows": 22,
+    "terrestrial_nonanimal_taxa": [
+      "Arabidopsis_kamchatica",
+      "Arabidopsis_lyrata",
+      "Arabidopsis_thaliana"
+    ],
+    "terrestrial_animal_taxa_with_2_or_more_coordinates": 12,
+    "terrestrial_animal_studies_with_2_or_more_source_populations": 12,
+    "genera_after_underscore_binomial_normalization": 10,
+    "species_hash_train_heldout": {
+      "train": 6,
+      "heldout": 6
+    },
+    "ambiguous_source_population_keys": 6,
+    "all_ambiguous_keys_same_arthropod_species": "Temnothorax curvispinosus",
+    "requires_author_source_site_metadata_resolution": true,
+    "not_an_independent_count_of_19_published_species": true
+  },
+  "terminal_reason": "Fewer than predeclared 50 terrestrial species; 6 inconsistent one-population/multiple-coordinate labels. Dataset can validate coordinates and climate extraction but not establish a global association between Quaternary history and reaction norms.",
+  "old_v01_false_genera_count_cause": "12 of 15 terrestrial taxon labels used underscores; interpreted as single word, reporting only two apparent genera. The raw CSV also contained non-animal Arabidopsis labels; the source-only v02 amendment corrected both before opening ARR.",
+  "no_response_values_inspected": true,
+  "history_climate_extraction_performed": false,
+  "genetic_outcome_reopened": false,
+  "next_source_stage": "Independently qualify the Weaving et al 2022 102-insect acclimation effect-size source from public OSF without inspecting ARR effects; ecological phenotype outcome belongs in separate fresh program",
+  "ttf_main_unchanged": true
+}

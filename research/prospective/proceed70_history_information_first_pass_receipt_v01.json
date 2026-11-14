@@ -1,0 +1,59 @@
+{
+  "schema": "ttf_PROCEED70_response_blind_historical_climate_information_first_pass_receipt_v01",
+  "recorded_on": "2026-11-14",
+  "status": "FROZEN_POSITIVE_PREDICTOR_NONREDUNDANCY_NOT_ADAPTATION_ASSOCIATION",
+  "run_id": 43576786261,
+  "artifact_id": 14106334907,
+  "run_commit": "bd450457589e22777ba8b12b6e2798198c2dfb0b",
+  "source_contract": "research/prospective/proceed70_plant_history_information_contract_v01.json",
+  "original_proceed_source_sha256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2",
+  "original_source_lonlat_sha256": "aed6486ee9aa49b0d454426c4d5964ebd79a8a96db2aac452c80fd5b7f52af32",
+  "source_original_chelsa8_raw_numeric_sha256": "7d03b2f158ade223b752a2b7d6ac57c38fd163e0b44f5566a01e8e6fe6d6b4fb",
+  "source_study_species_roles_sha256": "73b16a46f4458aee64d735a495273e5d760683b020c5432a9701fc14214f231d",
+  "source_design": {
+    "eligible_plant_species": 70,
+    "independent_original_studies": 104,
+    "source_nominal_rate_effect_rows_with_valid_study_species_and_geo": 1561,
+    "unique_study_species_ordered_geolocation_pairs": 187,
+    "unique_georeferenced_sites": 253,
+    "train_species": 35,
+    "heldout_species": 35,
+    "train_unique_pairs": 102,
+    "heldout_unique_pairs": 85,
+    "train_studies": 54,
+    "heldout_studies": 50,
+    "source_weighting": "One equal total weight per training species, then equal weight per distinct study-species-site pair within species."
+  },
+  "historical_predictor": {
+    "formula": "Mean of four-bioclimate 21ka-versus-0BP standardized Euclidean displacement magnitude across the two original source collection locations; SD on original training plant source endpoint 0BP sites only.",
+    "train_SD_current_0BP": [
+      5.323859384062563,
+      6.157514791211823,
+      448.29313130540925,
+      28.82106993330111
+    ],
+    "modern_geographic_baseline_dim": 11,
+    "intercept_plus_baseline_rank": 12,
+    "unique_fraction_source_predictor_train": 0.5419597099656406,
+    "frozen_pass_min_unique_fraction": 0.05,
+    "frozen_nonredundant_source_information_pass": true,
+    "species_effective_residual_signal": 11.61318809486391,
+    "maximum_one_species_signal_share": 0.2092342773862758,
+    "species_with_nonzero_residual": 35,
+    "heldout_training_projection_error_ratio_NOT_unique_fraction": 0.6596322799035945,
+    "note": "Predictor fraction = weighted residual variation of H after 11 modern and spatial controls divided by total weighted variation of H, fitted only on source TRAIN species. It is NOT genetic explained variance, phenotype rate R², out-of-species trait prediction gain, or evidence of climate-history adaptation."
+  },
+  "interpretive_limitations": [
+    "Only 187 distinct study/species/site-pair geometries remain after collapsing 1561 published effects; 1561 are not independent geographical replicates.",
+    "Residual historical signal is concentrated: effective 11.6 training species among 35, single species 20.9% share. Qualification by the prior 5% nonredundancy gate does not establish broadly distributed empirical genetic effects.",
+    "The 70 source taxa had already been selected on pre-response site/metadata eligibility; not independent verification of genotypic adaptation.",
+    "Original PROCEED genphen=Genetic refers to studies aiming to capture a heritable component (e.g. common gardens or quantitative genetics), not reciprocal-transplant fitness or speciation.",
+    "Sampling original study locations with 21ka palaeoclimate is not evidence those lineages occupied those localities during the LGM.",
+    "Repeat climate/source numerical identity under pinned environment before considering any one-shot trait-rate endpoint; first source information result is source-only and exploratory relative to older 653-species TTF-Q climate information."
+  ],
+  "genetic_or_phenotypic_trait_rate_responses_read": false,
+  "existing_frozen_TTF_tests_reopened": false,
+  "no_biological_effect_or_speciation_claim": true,
+  "raw_coordinates_or_climate_exported": false,
+  "next_gate": "Independent exact-source-only replay; then separately preregister endpoint comparability and study/design metadata before any novel genetic-based trait-rate model."
+}
