@@ -164,6 +164,22 @@ def heldout_first_shot(raw,source_info,contract):
 
 
 def run(args):
+    # TERMINAL scientific hold: the original 100-null synthetic known-truth
+    # calibration exceeded its predeclared Wilson95 false-positive ceiling.
+    # This guard executes before reading ANY original numeric phenotype rate.
+    closure=HERE/"proceed70_haldane_synthetic_terminal_receipt_v01.json"
+    if closure.is_file():
+        stop=json.loads(closure.read_text())
+        if stop.get("status")=="TERMINAL_NOT_EVALUABLE_H_SYNTHETIC_NULL_CEILING_FAIL_NO_BIOLOGICAL_OUTCOME_OPENING":
+            args.output.parent.mkdir(parents=True,exist_ok=True)
+            receipt={"schema":"ttf_PROCEED70_Haldane_empirical_execution_prohibited_after_synthetic_qualification_fail_v01",
+                     "status":"STOP_FROZEN_SYNTHETIC_NULL_CEILING_FAIL_NO_RATE_DATA_OPENED",
+                     "source_terminal_receipt":str(closure.relative_to(HERE)),
+                     "original_numeric_phenotype_or_genetic_H_rate_opened":False,
+                     "any_biological_model_fitted":False}
+            args.output.write_text(json.dumps(receipt,sort_keys=True,indent=2)+"\n")
+            print("STOP_FROZEN_SYNTHETIC_NULL_CEILING_FAIL_NO_RATE_DATA_OPENED",flush=True)
+            return
     contract=json.loads(FULLCONTRACT.read_text())
     if contract["status"]!="FROZEN_BEFORE_FIRST_NUMERIC_RATE_OPENING":
         raise ValueError("Biological outcome contract not frozen")
