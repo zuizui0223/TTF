@@ -1,0 +1,62 @@
+name: ttf-history-UNKNOWN-variance-absorbed-design-only
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-history-absorbed-unknown-variance.yml'
+      - 'research/prospective/history_absorbed_design.py'
+      - 'research/prospective/history_absorbed_source.py'
+      - 'research/prospective/test_history_absorbed*.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: history-absorbed-design-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  unknown-group-variance-design-no-outcomes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      GDAL_CACHEMAX: '256'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retain original frozen source-code authority
+        run: git fetch --no-tags --depth=1 origin a4664cc1fccf7a16fed1b85f239dc0f123389a87
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - name: Install unchanged numerical and GIS source versions
+        run: python -m pip install 'numpy==2.5.4' 'scipy==1.18.1' 'shapely==2.2.0' 'rasterio==1.5.2' 'pyproj==3.8.0' 'pyshp==2.4.2'
+      - name: Deterministic unknown-scale and prior source-identity tests
+        run: |
+          python -m unittest discover -s research/prospective -p 'test_history_absorbed*.py' -v
+          python -m unittest discover -s research/prospective -p 'test_history_score_oracle*.py' -v
+          python -m unittest discover -s research/prospective -p 'test_terminal_analytic_audit.py' -v
+          python -m unittest discover -s research/prospective -p 'test_terminal_numeric_provenance.py' -v
+      - name: Source-exact unknown-variance design diagnostic without biological response
+        run: |
+          mkdir -p results/absorbed_design
+          python research/prospective/history_absorbed_source.py --output results/absorbed_design/design.json
+      - name: Preserve old scientific stop and interpretation boundary
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('results/absorbed_design/design.json'))
+          assert d['status']=='UNKNOWN_VARIANCE_DESIGN_DIAGNOSTIC_COMPLETE_OLD_STOP_UNCHANGED'
+          assert d['actual_phenotype_or_fitness_values_read'] is False
+          assert d['new_random_worlds_drawn']==0
+          assert d['empirical_response_opening_authorized'] is False
+          assert d['design']['real_phenotype_validity_established'] is False
+          print('DESIGN_COMPLETE_NOT_BIOLOGICAL_VALIDATION')
+          PY
+      - name: Publish aggregate design and hashes only, never input arrays or rates
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-history-unknown-variance-absorbed-design-aggregate
+          path: results/absorbed_design/design.json
+          retention-days: 30
+          if-no-files-found: warn
