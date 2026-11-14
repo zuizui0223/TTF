@@ -31,5 +31,5 @@ jobs:
           x=json.load(open(p))
           assert x['status'].startswith('TERMINAL_NOT_EVALUABLE_H_SYNTHETIC')
           assert x['terminal']['first_numeric_Haldane_genetic_based_rate_outcome_opened'] is False
-          print('HALDANE_NEW_BIOLOGICAL_RESPONSE_CLOSED',x['known_truth']['null']['Wilson95'])
+          print('HALDANE_NEW_BIOLOGICAL_RESPONSE_CLOSED',x['known_truth']['null_100_worlds']['Wilson95'])
           PY
