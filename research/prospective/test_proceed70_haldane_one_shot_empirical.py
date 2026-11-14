@@ -1,10 +1,12 @@
 """Synthetic-only first-shot Haldane numerical arithmetic & pre-response firewall tests."""
 from __future__ import annotations
-import math,sys,unittest
+import math,sys,unittest,tempfile,json
+from types import SimpleNamespace
+from unittest.mock import patch
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from proceed70_haldane_one_shot_empirical import (
-    author_qualified_Haldane,only_after_authorized_response
+    author_qualified_Haldane,only_after_authorized_response,run
 )
 
 def sample(**changes):
@@ -30,6 +32,21 @@ class HaldaneProspectiveOnlyTests(unittest.TestCase):
 
     def test_exact_zero_change_rate_retained_not_cherrypicked(self):
         self.assertEqual(author_qualified_Haldane(sample(mean2="10")),0.)
+
+    def test_terminal_known_truth_rejection_blocks_every_original_numeric_opening(self):
+        with tempfile.TemporaryDirectory() as folder:
+            out=Path(folder)/"receipt.json"
+            args=SimpleNamespace(output=out,
+                handoff=Path(folder)/"nonexistent-passing-authority.json",
+                work=Path(folder)/"private")
+            with patch("proceed70_haldane_one_shot_empirical.fetch_original_datafile_bytes",
+                       side_effect=AssertionError("Original biological rates MUST NOT be fetched")):
+                run(args)
+            receipt=json.loads(out.read_text())
+            self.assertEqual(receipt["status"],
+                             "STOP_FROZEN_SYNTHETIC_NULL_CEILING_FAIL_NO_RATE_DATA_OPENED")
+            self.assertFalse(receipt["original_numeric_phenotype_or_genetic_H_rate_opened"])
+            self.assertFalse(receipt["any_biological_model_fitted"])
 
     def test_frozen_response_opening_requires_upstream_pass(self):
         with self.assertRaisesRegex(ValueError,"No authorized"):
