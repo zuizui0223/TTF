@@ -1,0 +1,75 @@
+{
+  "schema": "ttf_proceed70_plant_Haldane_response_missingness_mask_qualification_v01",
+  "issued_on": "2026-11-14",
+  "status": "FROZEN_BEFORE_ANY_NUMERIC_TRAIT_OR_RATE_VALUE_ACCESS",
+  "method_context": {
+    "code_id": 1044644,
+    "code_name": "PROCEEDv6.2_BasicCode.txt",
+    "source_MD5": "af35289290f70e8f94076c31d2441730",
+    "source_SHA256": "488bb5bb2e856cc04ab90b794d928b8e41dc74111e3a9c31f6d496a25c167c14",
+    "code_verified_run": 43579697873,
+    "official_Haldanes": "H=((mean2 - mean1)/sqrt(((n1-1)*sd1^2+(n2-1)*sd2^2)/(n1+n2-2)))/generations",
+    "code_lines": "85–124; original code excludes missing sd/n/generations, zero SD, and CV outside 0.1%–1000%. Masks alone cannot check numeric thresholds.",
+    "H_is_rate_in_trait_pooled_SD_units_per_generation": true,
+    "primary_future_response": "log1p(abs(H)) from frozen original code-defined valid observations, aggregated at unique study/species/ordered-coordinate-pair before any analysis",
+    "no_calculation_of_H_in_this_stage": true,
+    "no_Darwin_fallback_in_same_test": true
+  },
+  "existing_scope": {
+    "original_data_source_sha256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2",
+    "original_data_source_MD5": "eae537bd3ac244835fa9c8245f27a40b",
+    "source_metadata_plant_population": "Streptophyta, Plant, genphen=Genetic, valid original study and species ID and two source WGS84 original coordinates",
+    "original_source_rows": 1561,
+    "qualified_species": 70,
+    "original_studies": 104,
+    "original_pair_geometries": 187,
+    "frozen_study_species_split_sha256": "73b16a46f4458aee64d735a495273e5d760683b020c5432a9701fc14214f231d",
+    "split_species": {
+      "train": 35,
+      "heldout": 35
+    },
+    "historical_predictor_source_independently_reproduced": true
+  },
+  "field_presence_only": {
+    "columns": [
+      "mean1",
+      "mean2",
+      "sd1",
+      "sd2",
+      "n1",
+      "n2",
+      "generations"
+    ],
+    "absent_if_trimmed_lowercase_in": [
+      "",
+      "na",
+      "nan",
+      "n/a",
+      "null",
+      "none",
+      "inf",
+      "-inf"
+    ],
+    "DO_NOT_decode_to_numbers_or_evaluate_numeric_rate_values": true,
+    "DO_NOT_compare_source_means_SDs_or_sample_sizes_to_thresholds": true,
+    "DO_NOT_compute_H_or_decompose_plasticity": true,
+    "record_unique_site_pairs_if_ANY_row_has_all_presence_fields": true,
+    "record_species_and_studies_per_precommitted_source_role": true,
+    "forbid_using_presence_to_optimise_history_predictor_family": true
+  },
+  "scope_support_criteria": {
+    "min_species_total": 50,
+    "min_train_species": 20,
+    "min_heldout_species": 20,
+    "min_studies_total": 15,
+    "min_genera_total": 10,
+    "min_train_distinct_study_species_pair_geometries": 36,
+    "min_heldout_distinct_study_species_pair_geometries": 20,
+    "fail_status": "HALDANE_RATE_SOURCE_NOT_EVALUABLE_MISSING_FIELDS",
+    "pass_status": "HALDANE_PRESENCE_MASK_QUALIFIED_BUT_RATE_VALUES_NOT_OPENED",
+    "pass_does_not_authorise_empirical_response_test": true
+  },
+  "no_original_TTF_genetic_endpoints_reopened": true,
+  "no_plant_phenotypic_rate_numbers_revealed": true,
+  "outputs": "Only counts by completeness mask, original study/species roles, original trait_type and design source metadata, no raw rate values, original coordinates or per-species IDs"
+}
