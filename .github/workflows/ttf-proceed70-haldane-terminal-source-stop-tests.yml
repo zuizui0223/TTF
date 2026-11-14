@@ -1,0 +1,35 @@
+name: ttf-evo-PROCEED70-Haldane-TERMINAL-stop-test-no-rate
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-proceed70-haldane-terminal-source-stop-tests.yml'
+      - 'research/prospective/proceed70_haldane_one_shot_empirical.py'
+      - 'research/prospective/test_proceed70_haldane_one_shot_empirical.py'
+      - 'research/prospective/proceed70_haldane_synthetic_terminal_receipt_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-frozen-empirical-rate-response-must-never-open:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - name: Install imported numerical GIS reader dependencies, no external source data
+        run: python -m pip install 'numpy==2.5.4' 'scipy==1.18.1' 'rasterio==1.5.2' 'pyproj==3.8.0' 'shapely==2.2.0'
+      - name: Assert original Haldane arithmetic and terminal no-source-data opening guard on synthetic inputs only
+        run: python -m unittest discover -s research/prospective -p 'test_proceed70_haldane_one_shot_empirical.py' -v
+      - name: Show frozen synthesis receipt without calculating any Haldane response
+        run: |
+          python - <<'PY'
+          import json
+          p='research/prospective/proceed70_haldane_synthetic_terminal_receipt_v01.json'
+          x=json.load(open(p))
+          assert x['status'].startswith('TERMINAL_NOT_EVALUABLE_H_SYNTHETIC')
+          assert x['terminal']['first_numeric_Haldane_genetic_based_rate_outcome_opened'] is False
+          print('HALDANE_NEW_BIOLOGICAL_RESPONSE_CLOSED',x['known_truth']['null']['Wilson95'])
+          PY
