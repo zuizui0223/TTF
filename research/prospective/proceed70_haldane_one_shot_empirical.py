@@ -213,6 +213,7 @@ def run(args):
         # FIREWALL: only AFTER exact original PROCEED, CHELSA, modeled source
         # and frozen known-truth qualification can original mean, SD and n
         # magnitudes be used in the next single function.
+        output["empirical_source_rate_numeric_QC_opened"]=True
         print("AUTHORIZED_FIRST_ONLY_PROCEED_H_RATE_RESPONSE_OPENING",flush=True)
         rs=source_geometry(raw,json.loads(FULL_GEO.read_text()))[1]
         from proceed_plant_chelsa_source_support import component_assignment
