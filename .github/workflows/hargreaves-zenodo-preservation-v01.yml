@@ -9,6 +9,9 @@ on:
       - 'research/prospective/test_hargreaves_zenodo_preservation_index_v01.py'
       - 'research/prospective/hargreaves_zenodo_header_source_only_v01.py'
       - 'research/prospective/test_hargreaves_zenodo_header_source_only_v01.py'
+      - 'research/prospective/hargreaves_zenodo_study_overlap_source_only_v01.py'
+      - 'research/prospective/test_hargreaves_zenodo_study_overlap_source_only_v01.py'
+      - 'research/prospective/hargreaves_zenodo_study_overlap_contract_v01.json'
       - '.github/workflows/hargreaves-zenodo-preservation-v01.yml'
   pull_request:
     paths:
@@ -16,6 +19,9 @@ on:
       - 'research/prospective/test_hargreaves_zenodo_preservation_index_v01.py'
       - 'research/prospective/hargreaves_zenodo_header_source_only_v01.py'
       - 'research/prospective/test_hargreaves_zenodo_header_source_only_v01.py'
+      - 'research/prospective/hargreaves_zenodo_study_overlap_source_only_v01.py'
+      - 'research/prospective/test_hargreaves_zenodo_study_overlap_source_only_v01.py'
+      - 'research/prospective/hargreaves_zenodo_study_overlap_contract_v01.json'
       - '.github/workflows/hargreaves-zenodo-preservation-v01.yml'
 
 jobs:
@@ -37,3 +43,14 @@ jobs:
         run: python -m unittest discover -s research/prospective -p test_hargreaves_zenodo_header_source_only_v01.py -v
       - name: Probe official preserved original CSV header only (no data rows)
         run: python research/prospective/hargreaves_zenodo_header_source_only_v01.py
+      - name: Fixed source-only original study-label overlap tests (no genetic/fitness outcomes)
+        run: python -m unittest discover -s research/prospective -p test_hargreaves_zenodo_study_overlap_source_only_v01.py -v
+      - name: SHA-verified original Zenodo CSV metadata-only study-label overlap
+        run: python research/prospective/hargreaves_zenodo_study_overlap_source_only_v01.py --output _ttf_source_only/hargreaves_bontrager_original_study_overlap_v01.json
+      - name: Archive only original study-label provenance and aggregate overlap
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-hargreaves-bontrager-study-overlap-source-only-v01
+          path: _ttf_source_only/hargreaves_bontrager_original_study_overlap_v01.json
+          retention-days: 30
+          if-no-files-found: error
