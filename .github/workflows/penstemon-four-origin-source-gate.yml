@@ -1,0 +1,35 @@
+name: Penstemon 2026 four-origin original BioSample TTF-Q gate
+
+on:
+  push:
+    branches:
+      - research/penstemon-ttf-source-join-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/penstemon_four_origin_source_genome_blocks_20261115.py'
+      - 'tests/test_penstemon_four_origin_source_genome_blocks.py'
+      - '.github/workflows/penstemon-four-origin-source-gate.yml'
+
+jobs:
+  original-source-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate exact 52-sample original BioSample frozen source and 4 holdouts
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_penstemon_four_origin_source_genome_blocks.py
+      - name: Emit original 4-origin source coverage and 34-of-52 phenotype uncertainty
+        run: |
+          python research/prospective/penstemon_four_origin_source_genome_blocks_20261115.py > /tmp/penstemon_four_origin_genomic_source_20261115.json
+          cat /tmp/penstemon_four_origin_genomic_source_20261115.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: penstemon-four-origin-source-only
+          path: /tmp/penstemon_four_origin_genomic_source_20261115.json
+          retention-days: 21
