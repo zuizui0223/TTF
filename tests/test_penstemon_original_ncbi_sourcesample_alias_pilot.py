@@ -36,7 +36,7 @@ def test_only_short_submitter_original_key_parsed_and_exact_tip_matched():
 def test_foreign_biosample_uid_join_fails_closed():
     ids,raw=source()
     raw["result"]["5"]["accession"]="SAMN00000"
-    with pytest.raises(ValueError,match="cannot be linked"):
+    with pytest.raises(ValueError,match="outside fixed five source IDs"):
         m.inspect_alias_fields(json.dumps(raw).encode(),ids,{})
 
 
