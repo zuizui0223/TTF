@@ -7,6 +7,7 @@ from __future__ import annotations
 import hashlib
 import json
 import urllib.request
+import urllib.error
 
 from ttf_crest_timema_source_only_20261115 import audit_bytes
 
@@ -39,8 +40,24 @@ def fetch_pinned_public_file(name: str) -> bytes:
 
 
 def main():
-    host = fetch_pinned_public_file("HostRIDat.csv")
-    mating = fetch_pinned_public_file("CountData.csv")
+    try:
+        host = fetch_pinned_public_file("HostRIDat.csv")
+        mating = fetch_pinned_public_file("CountData.csv")
+    except urllib.error.HTTPError as e:
+        if e.code != 401:
+            raise
+        print(json.dumps({
+            "status": "RAW_SOURCE_NOT_ACCESSIBLE_AUTH_REQUIRED_NOT_EVALUABLE",
+            "http_status": 401,
+            "source": {"doi":"10.5061/dryad.q573n5tpk",
+                       "version_id": VERSION_ID, "version_number": VERSION_NUMBER,
+                       "published": PUBLISHED, "files": FILE_CONTRACT},
+            "pair_counts": None,
+            "species_disjoint_holdout": None,
+            "no_biological_outcomes_opened": True,
+            "not_a_genetic_or_reproductive_isolation_null": True,
+        }, sort_keys=True, indent=2))
+        return
     result = audit_bytes(host, mating,
                          FILE_CONTRACT["HostRIDat.csv"]["sha256"],
                          FILE_CONTRACT["CountData.csv"]["sha256"])
