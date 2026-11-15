@@ -44,3 +44,11 @@ Hargreaves 2020の公表元CSV（Dryad DOI 10.5061/dryad.0vt4b8gv1、原本SHA25
 - 未実施／不可：新しいLGM/0BP差の計算、元のBontrager 44/50種停止ゲートの救済、適応度・可塑性・種分化の効果量解析や新規の確認的な解釈。
 
 **最終診断：`WRONG_PAPER_REFERENCE_CORRECTED_2007_SITE_NAMES_EXPLORATORY_ONLY_SOURCE_GEO_UNCERTAIN`**。元のPR #154/旧TTF-Q・He/Fst/COI/Jensen/PROCEED凍結結果と`main`は変更しない。PR #155はDraftのまま。
+
+
+## SHA固定後の永続保存と実行状況
+
+- Raabová 2007/2008元データのK/S集団コード分類を[研究ID別の恒久JSON](./source_registry/raabova_2007_2008_original_ID_metadata_v01.json)に保存（正規の元原本監査 [Actions #43711576389](https://github.com/zuizui0223/TTF/actions/runs/43711576389)、SHA256 `aa4b4482c327a7a5f9e777f1e3951471272ec432611239fb67bb66b2082d52cb`）。
+- 新しい探索的なS1–S3の公表地名座標比較を[同名集団3地点の恒久JSON](./source_registry/raabova2007_castro2011_3site_exploratory_v01.json)に保存（[Actions #43711907352](https://github.com/zuizui0223/TTF/actions/runs/43711907352)、SHA256 `f1364cf928d00c36551aa2542e4fac5be71e1fd6ac739955e5fb687d48b23b59`）。
+- 2つともGitHub Actions [#43712276329](https://github.com/zuizui0223/TTF/actions/runs/43712276329) で元の成果物ZIPからハッシュ再照合し、PR #155の開発ブランチへ恒久化した。元CSV全体、集団の生ID／座標、fitness値は保存していない。
+- **旧Sudová×Raabová2007の1/4は科学的に不適切な原著取り違えであり、現在のQAでは使用禁止。** 2011年公表地名へのS1–S3探索的比較は正しい研究名に対応するが、現地GPS測地精度の証明にはならない。
