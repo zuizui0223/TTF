@@ -26,6 +26,15 @@ class HargreavesZenodoHeaderTests(unittest.TestCase):
         d=original_file_info(self.record())
         self.assertIn("zenodo.org/api/records",d["content_url"])
 
+    def test_legacy_record_file_array_with_official_api_files_link(self):
+        r = self.record()
+        item = r["files"]["entries"][TARGET_FILENAME]
+        item["links"] = {"self": f"https://zenodo.org/api/files/verified-bucket/{TARGET_FILENAME}"}
+        r["files"] = [item]
+        f = original_file_info(r)
+        self.assertEqual(f["size"], 4_380_000)
+        self.assertTrue(f["content_url"].endswith(TARGET_FILENAME))
+
     def test_reject_matching_title_without_correct_original_doi(self):
         r=self.record()
         r["metadata"]["related_identifiers"]=[]
