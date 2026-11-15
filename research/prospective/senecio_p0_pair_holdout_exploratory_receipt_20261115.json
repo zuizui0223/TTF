@@ -1,0 +1,106 @@
+{
+  "analysis": "exploratory_locality_pair_holdout_not_species_TTF",
+  "source_repo": "OB-lab/James_et_al._2021-Evolution",
+  "source_commit": "33222710aca75f79153e4118b409e7d77787d045",
+  "source_path": "phenotype/data_files/traitMeansPairs.txt",
+  "source_git_blob": "400f73bf21fefb6fcb775396f256c3447c755595",
+  "pair_ids": [
+    "D00-H00",
+    "D01-H01",
+    "D02-H04",
+    "D03-H02",
+    "D04-H05",
+    "D05-H06",
+    "D12-H14",
+    "D32-H12"
+  ],
+  "n_independent_evaluation_units": 8,
+  "n_phenotype_traits": 9,
+  "metric": "leave_one_pair_out_mean_contrast_vs_zero_difference",
+  "contrasts": "Headland-minus-Dune on published standardized trait means",
+  "trait_results": {
+    "VH": {
+      "heldout_sse": 3.3570786529958316,
+      "zero_difference_sse": 22.562674418132133,
+      "heldout_skill": 0.8512109605988034,
+      "sign_agreements": 8,
+      "sign_abstentions": 0,
+      "sign_evaluable_pairs": 8
+    },
+    "WW": {
+      "heldout_sse": 2.715295600289669,
+      "zero_difference_sse": 5.824110731221862,
+      "heldout_skill": 0.5337836580383806,
+      "sign_agreements": 7,
+      "sign_abstentions": 0,
+      "sign_evaluable_pairs": 8
+    },
+    "MSA": {
+      "heldout_sse": 3.0368365455268225,
+      "zero_difference_sse": 7.43643489325604,
+      "heldout_skill": 0.5916273605406173,
+      "sign_agreements": 6,
+      "sign_abstentions": 0,
+      "sign_evaluable_pairs": 8
+    },
+    "MSD": {
+      "heldout_sse": 4.643040038723851,
+      "zero_difference_sse": 9.59306651524147,
+      "heldout_skill": 0.5160004330891497,
+      "sign_agreements": 7,
+      "sign_abstentions": 0,
+      "sign_evaluable_pairs": 8
+    },
+    "SBA": {
+      "heldout_sse": 0.6304237090006781,
+      "zero_difference_sse": 16.790512835307783,
+      "heldout_skill": 0.9624535763032206,
+      "sign_agreements": 8,
+      "sign_abstentions": 0,
+      "sign_evaluable_pairs": 8
+    },
+    "AREA": {
+      "heldout_sse": 3.3077768082470613,
+      "zero_difference_sse": 22.30682943952087,
+      "heldout_skill": 0.8517146142523198,
+      "sign_agreements": 8,
+      "sign_abstentions": 0,
+      "sign_evaluable_pairs": 8
+    },
+    "ELONG": {
+      "heldout_sse": 4.989829367933423,
+      "zero_difference_sse": 14.732220158321375,
+      "heldout_skill": 0.6612982079883623,
+      "sign_agreements": 8,
+      "sign_abstentions": 0,
+      "sign_evaluable_pairs": 8
+    },
+    "DISS": {
+      "heldout_sse": 8.11968398760086,
+      "zero_difference_sse": 9.791203242294912,
+      "heldout_skill": 0.17071642915894303,
+      "sign_agreements": 6,
+      "sign_abstentions": 0,
+      "sign_evaluable_pairs": 8
+    },
+    "CIRC": {
+      "heldout_sse": 9.628456455755376,
+      "zero_difference_sse": 15.464104555498258,
+      "heldout_skill": 0.3773673463471261,
+      "sign_agreements": 7,
+      "sign_abstentions": 0,
+      "sign_evaluable_pairs": 8
+    }
+  },
+  "summary_descriptive": {
+    "traits_with_positive_heldout_skill": 9,
+    "median_trait_heldout_skill": 0.5916273605406173
+  },
+  "claims_not_evaluated": [
+    "cross_species_transfer",
+    "genomic_mechanism",
+    "local_adaptation",
+    "reproductive_isolation",
+    "historical_ancestry_additive_value"
+  ]
+}
