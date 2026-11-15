@@ -63,6 +63,28 @@ class OriginalStudyLabelTests(unittest.TestCase):
         self.assertEqual(source_study_inventory(raw)["distinct_qualified_plant_species"], 0)
         self.assertIsNone(binomial("sp."))
 
+    def test_original_underscore_journal_year_is_parsed(self):
+        raw = self.synthetic([
+            self.row("A", 139, study="Adleretal_AmJBot_2016"),
+            self.row("B", 141, study="Adleretal_AmJBot_2016"),
+        ])
+        a = source_study_inventory(raw)
+        self.assertEqual(a["catalog"][0]["candidate_year_from_label_NOT_verified"], "2016")
+        self.assertEqual(a["original_labels_without_year_token"], 0)
+        self.assertEqual(a["original_labels_with_multiple_year_tokens"], 0)
+
+    def test_multi_paper_study_label_not_one_paper(self):
+        label = "Benningtonetal_JEcol_2012_McGrawetal_GlobalChangeBiol_2015"
+        raw = self.synthetic([
+            self.row("A", 139, study=label),
+            self.row("B", 141, study=label),
+        ])
+        a = source_study_inventory(raw)
+        self.assertEqual(a["original_labels_with_multiple_year_tokens"], 1)
+        self.assertIsNone(a["catalog"][0]["candidate_year_from_label_NOT_verified"])
+        self.assertEqual(a["catalog"][0]["source_year_tokens_not_primary_publication_verification"], ["2012", "2015"])
+        self.assertTrue(a["catalog"][0]["multiple_years_in_one_original_study_label_require_paper_mapping"])
+
     def test_no_invented_paper_identity_from_study_label(self):
         raw = self.synthetic([self.row("A", 139, study="Doe, Ecology, 2004"),
                               self.row("B", 141, study="Doe, Ecology, 2004")])
