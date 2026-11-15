@@ -1,0 +1,69 @@
+name: Freeze two-original finegrain metadata overlap receipt
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - '.github/workflows/bontrager-hargreaves-finegrain-receipt-freeze.yml'
+jobs:
+  freeze-source-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: prospective/independent-transplant-overlap-20261115
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43696872468
+          name: ttf-cross-original-garden-source-metadata-overlap-v01
+          github-token: ${{ github.token }}
+          path: _ttf_source_only
+      - name: Match original SHA-pinned biological source metadata and nested overlap
+        run: |
+          python - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          path=Path("_ttf_source_only/bontrager_hargreaves_finegrain_overlap_v01.json")
+          raw=path.read_bytes()
+          assert hashlib.sha256(raw).hexdigest()=="8268387cdaec3a835086418f7ce91f91777cbbc1026e148c6e6e0399647106c3"
+          r=json.loads(raw)
+          assert r["original_input_SHA256_verified"]=={
+            "bontrager":"2995d0f165b27ccf2f38f3d0b286845c107762a0c2b02df2290e9a5df6b396f0",
+            "hargreaves":"f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71"}
+          assert r["qualified_source_study_overlap_reproduced"]==102
+          assert r["all_Bontrager_plant_original_study_labels"]==114
+          assert r["all_Hargreaves_plant_original_study_labels"]==148
+          assert r["all_Bontrager_Hargreaves_shared_original_study_labels"]==113
+          assert r["Hargreaves_study_labels_not_in_any_Bontrager_original_plant_row"]==35
+          assert r["Hargreaves_study_labels_only_unmatched_to_qualified_Bontrager_but_found_in_full_original"]==11
+          k=r["nested_source_key_overlaps"]
+          assert k["study__taxon"]["exact_shared_keys"]==137
+          assert k["study__taxon__source"]["exact_shared_keys"]==1511
+          assert k["study__taxon__site"]["exact_shared_keys"]==502
+          assert k["study__taxon__source__site"]["exact_shared_keys"]==4947
+          assert k["study__taxon__source__site__fitness_type"]["exact_shared_keys"]==6536
+          g=r["shared_transplant_garden_coordinate_agreement"]
+          assert (g["distance_le_1km"],g["distance_gt_1km_le_10km"],g["distance_gt_10km"],g["missing_or_ambiguous"])==(488,4,9,1)
+          assert r["response_columns_indexed_or_fitted"]==[]
+          assert r["fitness_effect_or_direction_opened"] is False
+          assert r["Bontrager_44_of_50_frozen_gate_unchanged"] is True
+          print("FROZEN_TWO_SOURCE_NONRESPONSE_OVERLAP",114,113,35,6536,502,488)
+          PY
+      - name: Persist verified aggregate only in draft branch
+        run: |
+          mkdir -p research/prospective/source_registry
+          cp _ttf_source_only/bontrager_hargreaves_finegrain_overlap_v01.json research/prospective/source_registry/bontrager_hargreaves_finegrain_overlap_v01.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/prospective/source_registry/bontrager_hargreaves_finegrain_overlap_v01.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Freeze SHA-pinned two-original source/garden metadata overlap receipt"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
