@@ -97,11 +97,15 @@ def main():
          "error_type":type(err).__name__,
          "no_negative_biological_claim":True},indent=2))
         return
+    # ENA filereport only exposes run/analysis result types. BioSample
+    # metadata must use the officially documented advanced search endpoint.
     query=urllib.parse.urlencode({
-        "accession":BIOPROJECT,"result":"sample",
-        "fields":",".join(fields),"format":"tsv"
+        "result":"sample",
+        "query":f'study_accession="{BIOPROJECT}"',
+        "fields":",".join(fields),"format":"tsv",
+        "limit":"0"
     })
-    target=f"{BASE}/filereport?{query}"
+    target=f"{BASE}/search?{query}"
     try:
         request=urllib.request.Request(target,headers={"User-Agent":"TTF-Penstemon-sample-source-gate/1.0"})
         with urllib.request.urlopen(request,timeout=50) as r:raw=r.read(MAX_BYTES+1)
