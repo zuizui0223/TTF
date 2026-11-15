@@ -1,0 +1,27 @@
+name: Timema Dryad v3 source-only pair and species geometry
+
+on:
+  push:
+    branches:
+      - research/crest-ttf-four-system-source-preflight-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/ttf_crest_timema_*'
+      - 'tests/test_crest_ttf_timema_source_only.py'
+      - '.github/workflows/timema-v3-source-only.yml'
+
+jobs:
+  timema-geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install offline testing tool
+        run: python -m pip install pytest
+      - name: Run synthetic source integrity, pairing and split tests
+        run: python -m pytest -q tests/test_crest_ttf_timema_source_only.py
+      - name: Verify exact Dryad v3 file digests and print only metadata summary
+        run: python research/prospective/ttf_crest_timema_v3_pinned_source_gate_20261115.py
