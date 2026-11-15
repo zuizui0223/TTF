@@ -76,7 +76,7 @@ def component_disjoint_split(study_species):
     }
 
 
-def metadata_census(original_csv,contract):
+def metadata_census(original_csv,contract,allowed_functional_groups=None):
     allowed=contract["allowed_metadata_only_columns"]
     if set(allowed)&set(contract["absolute_forbidden_response_columns"]):
         raise ValueError("Biological response in source metadata allowlist")
@@ -99,6 +99,12 @@ def metadata_census(original_csv,contract):
             raise ValueError("Original CSV row width changed")
         # Index *only* declared source metadata. Never inspect cells[index_of_fitness].
         m={name:cells[i].strip() for name,i in at.items()}
+        # A new plant-only source stratum can be audited without changing
+        # original all-taxa results or observing any fitness value.
+        if (allowed_functional_groups is not None and
+            m["functional_group"] not in allowed_functional_groups):
+            reason["excluded_nonplant_original_functional_group"]+=1
+            continue
         source_types[m["fitness_type"] or "<missing>"]+=1
         categories[m["functional_group"] or "<missing>"]+=1
         study=m["study"];taxon=binomial(m["taxon"])
