@@ -46,6 +46,23 @@ def haversine(a,b):
     z=math.sin(dlat/2)**2+math.cos(math.radians(la1))*math.cos(math.radians(la2))*math.sin(dlon/2)**2
     return 6371.0088*2*math.asin(math.sqrt(max(0.,min(z,1.))))
 
+
+def exact_original_doi(info:dict,target:str) -> bool:
+    meta=info.get("metadata") or {}
+    identifiers=[v.get("identifier") for key in
+                 ("related_identifiers","identifiers","alternate_identifiers")
+                 for v in (meta.get(key) or []) if isinstance(v,dict)]
+    identifiers.extend([meta.get("doi"),info.get("doi")])
+    pids=info.get("pids") or {}
+    if isinstance(pids,dict) and isinstance(pids.get("doi"),dict):
+        identifiers.append(pids["doi"].get("identifier"))
+    def ndoi(value):
+        if not isinstance(value,str):
+            return ""
+        return re.sub(r"^(?:https?://(?:dx\.)?doi\.org/|doi:)", "",
+                      value.strip().lower()).rstrip("/")
+    return target in {ndoi(s) for s in identifiers}
+
 def zenodo_file_metadata(entry:dict) -> dict:
     rid=entry["zenodo_record"]
     url=f"https://zenodo.org/api/records/{rid}"
@@ -59,12 +76,10 @@ def zenodo_file_metadata(entry:dict) -> dict:
     if str(info.get("id"))!=str(rid):
         raise ValueError("Preservation record identifier differs")
     meta=info.get("metadata") or {}
-    identifiers=[v.get("identifier") for k in ("related_identifiers","identifiers","alternate_identifiers")
-                 for v in (meta.get(k) or []) if isinstance(v,dict)]
-    def ndoi(s):
-        if not isinstance(s,str):return ""
-        return re.sub(r"^(?:https?://(?:dx\.)?doi\.org/|doi:)", "", s.strip().lower()).rstrip("/")
-    if entry["doi"] not in {ndoi(v) for v in identifiers}:
+    # The public record-detail schema may place the original DOI in
+    # metadata.doi or pids.doi.identifier rather than a related_identifier.
+    # Verify literal original DOI in a recognized structured field ONLY.
+    if not exact_original_doi(info,entry["doi"]):
         raise ValueError("No exact structured original Dryad DOI for Zenodo source")
     group=info.get("files") or {}
     if isinstance(group,list):
