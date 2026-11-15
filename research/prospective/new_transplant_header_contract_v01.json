@@ -1,0 +1,58 @@
+{
+  "schema": "ttf_public_transplant_original_headers_source_frozen_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_AFTER_OFFICIAL_FILE_CATALOG_BEFORE_DATA_CONTENT",
+  "authority_run_id": 43667611601,
+  "authority_artifact_id": 14143435603,
+  "source_only_no_fitness_values": true,
+  "selected_source_files": [
+    {
+      "candidate": "hargreaves2020_multi",
+      "doi": "10.5061/dryad.0vt4b8gv1",
+      "version_id": "53142",
+      "file_id": 244459,
+      "file_name": "Hargreaves_etal_2020_AmNat_transplant_data.csv",
+      "size_bytes": 4382308,
+      "sha256": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+      "kind": "csv",
+      "max_download_bytes": 5000000
+    },
+    {
+      "candidate": "bontrager2020_range",
+      "doi": "10.5061/dryad.pnvx0k6mc",
+      "version_id": "113461",
+      "file_id": 643028,
+      "file_name": "dryad.zip",
+      "size_bytes": 811204,
+      "sha256": "2995d0f165b27ccf2f38f3d0b286845c107762a0c2b02df2290e9a5df6b396f0",
+      "kind": "zip",
+      "max_download_bytes": 950000
+    },
+    {
+      "candidate": "cross2026_source_coords_example",
+      "doi": "10.5061/dryad.tb2rbp0h6",
+      "version_id": "435125",
+      "file_id": 4692223,
+      "file_name": "latlongs.csv",
+      "size_bytes": 375,
+      "sha256": "2f874477d3d0b50db9817af47c92b2b3b4d46a7ab60e2a6f86f55b0271d09c01",
+      "kind": "csv",
+      "max_download_bytes": 2000
+    },
+    {
+      "candidate": "cross2026_transplant_coords_example",
+      "doi": "10.5061/dryad.tb2rbp0h6",
+      "version_id": "435125",
+      "file_id": 4692224,
+      "file_name": "tplantlatlongs.csv",
+      "size_bytes": 157,
+      "sha256": "bf84ee8116386da56415c095c743a9320a28559ac8807912d84c49a7da5a3892",
+      "kind": "csv",
+      "max_download_bytes": 2000
+    }
+  ],
+  "purpose": "Inspect original CSV first-line column names and ZIP member paths only; never read, aggregate or model fitness response values, origin coordinate values, genotype, or trait-rate values.",
+  "source_overlap_resolution_pending": true,
+  "old_Haldane_outcome_status": "TERMINAL_NOT_EVALUABLE_H_SYNTHETIC_NULL_CEILING_FAIL_NO_BIOLOGICAL_OUTCOME_OPENING",
+  "new_empirical_fitness_opening_authorized": false
+}
