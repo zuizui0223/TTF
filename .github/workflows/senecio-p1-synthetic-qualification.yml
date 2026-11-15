@@ -1,0 +1,23 @@
+name: Senecio P1 synthetic gate before biological opening
+
+on:
+  push:
+    branches:
+      - research/senecio-p1-genomic-ecotype-holdout-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/senecio_p1_genomic_holdout_20261115.py'
+      - 'tests/test_senecio_p1_genomic_holdout.py'
+      - '.github/workflows/senecio-p1-synthetic-qualification.yml'
+
+jobs:
+  source-and-leakage-unit-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pytest
+      - run: python -m pytest -q tests/test_senecio_p1_genomic_holdout.py
