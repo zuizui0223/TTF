@@ -44,7 +44,11 @@ def run():
         req=Request(URL,headers={"Accept":"application/json",
                                  "User-Agent":"TTF-original-transplant-alternate-repo-catalog-v01"})
         with urlopen(req,timeout=45) as response:raw=response.read(3000000)
-        report.update(parse_catalog(json.loads(raw)))
+        obj=json.loads(raw)
+        report["observed_public_dataset_id"]=((obj.get("data") or {}).get("id"))
+        report["observed_public_persistentId"]=((obj.get("data") or {}).get("persistentId"))
+        report["observed_public_dataset_title"]=next((field.get("value") for field in (((obj.get("data") or {}).get("latestVersion") or {}).get("metadataBlocks") or {}).get("citation",{}).get("fields",[]) if field.get("typeName")=="title"),None)
+        report.update(parse_catalog(obj))
     except Exception as e:
         report.update({"status":"BOREALIS_SOURCE_METADATA_UNAVAILABLE_NOT_BIOLOGICAL_NULL",
                        "error_type":type(e).__name__,"error_message":str(e)[:240]})
