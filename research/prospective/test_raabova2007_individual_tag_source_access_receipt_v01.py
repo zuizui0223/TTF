@@ -38,7 +38,7 @@ class Original2007TagSourceAccessReceiptTests(unittest.TestCase):
         a=self.r["data_dependency_if_2007_original_becomes_accessible"]
         self.assertTrue(a["request_only_identifiers_not_fitness_values"])
         self.assertFalse(a["author_contact_sent"])
-        self.assertFalse(a["author_or_archive_data_exchange_not_authorized_yet"])
+        self.assertTrue(a["author_or_archive_data_exchange_not_authorized_yet"])
         self.assertNotIn("fitness",",".join(a["required_fields"]).lower())
     def test_existing_scientific_qualifications_untouched(self):
         self.assertTrue(self.r["science_boundary"]["Bontrager_PR154_44of50_terminal_unchanged"])
