@@ -31,7 +31,7 @@ def exact_patristic_distances(tree, labels: list[str]) -> dict[tuple[str,str],fl
     distances={}
     for i,a in enumerate(labels):
         for b in labels[i+1:]:
-            val=float(dm.distance(lookup[a],lookup[b]))
+            val=float(dm.patristic_distance(lookup[a],lookup[b]))
             if val<0:
                 raise ValueError("negative patristic distance unsupported")
             distances[(a,b)]=val
