@@ -25,7 +25,31 @@ def fetch_json(url):
     req=urllib.request.Request(url,headers={"User-Agent":"TTF-Penstemon-sample-source-gate/1.0"})
     with urllib.request.urlopen(req,timeout=45) as resp:raw=resp.read(MAX_BYTES+1)
     if len(raw)>MAX_BYTES:raise ValueError("ENA field dictionary too large")
-    return json.loads(raw)
+    value=raw.decode("utf-8-sig").strip()
+    try:
+        return json.loads(value)
+    except json.JSONDecodeError:
+        # ENA returnFields is also served as a tabular plain-text field list.
+        # Do not guess biological records from malformed response bodies.
+        if value.lower().startswith(("<html","<!doctype")):
+            raise ValueError("ENA returned HTML instead of public source field dictionary")
+        lines=value.splitlines()
+        if not 2<=len(lines)<=3000:
+            raise ValueError("Unrecognized ENA returnFields text response shape")
+        first=lines[0].lower()
+        if not any(token in first for token in ("name","field","description")):
+            raise ValueError("ENA returnFields text has no recognizable header")
+        rd=csv.DictReader(io.StringIO(value),delimiter="\t")
+        names=[]
+        for row in rd:
+            candidate=next((v for k,v in row.items()
+                           if k and k.lower().strip() in
+                           ("name","field","fieldname","field name")),None)
+            if candidate and candidate.strip():
+                names.append({"name":candidate.strip()})
+        if not names:
+            raise ValueError("No ENA field names could be extracted from tabular response")
+        return names
 
 def discover_fields(payload):
     if isinstance(payload,list):
