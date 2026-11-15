@@ -8,6 +8,7 @@ CONTRACT=json.loads((Path(__file__).resolve().parent/"bontrager_transplant_geo_c
 def fixture(fitness="0.99",conflict=False):
     header=["study","functional_group","source","site","fitness_type","taxon",
             "lat_source","long_source","lat_site","long_site","fitness"]
+    header += [f"synthetic_unused_{i}" for i in range(47-len(header))]
     rows=[]
     for sp,study in [("Plantus alpha","Study A"),("Plantus beta","Study B")]:
         for key,x in [("origin-A",30),("origin-B",34)]:
