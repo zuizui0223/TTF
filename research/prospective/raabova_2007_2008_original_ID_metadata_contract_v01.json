@@ -1,0 +1,71 @@
+{
+  "schema": "ttf_Raabova2007_2008_original_source_population_ID_morphology_predata_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_BEFORE_RAABOVA_PAIR_ORIGINAL_SOURCE_ID_RECORD_INSPECTION",
+  "purpose": "Determine whether original Hargreaves source/garden IDs carry explicit K1-K3/S1-S3 codes from the correct Raabova 2007 six-diploid population panel; separately audit Raabova 2008 mixed cytotype source labels so the papers cannot be conflated.",
+  "original_data": {
+    "original_dryad_doi": "10.5061/dryad.0vt4b8gv1",
+    "official_preservation_record_id": 4409291,
+    "original_SHA256": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+    "original_metadata_contract": "research/prospective/bontrager_hargreaves_finegrain_overlap_contract_v01.json",
+    "columns": [
+      "study",
+      "taxon",
+      "functional_group",
+      "source",
+      "site"
+    ],
+    "never_index_fitness_or_phenotype_or_genotype": true
+  },
+  "validated_primary_papers": {
+    "target_2007": {
+      "study_label": "Raabovaetal_BiolConservation_2007",
+      "doi": "10.1016/j.biocon.2007.07.007",
+      "ploidy": "six diploid populations",
+      "population_name_to_code": {
+        "K1": "Koda",
+        "K2": "Karlik",
+        "K3": "Lochkov",
+        "S1": "Malic",
+        "S2": "Holy vrch",
+        "S3": "Encovany"
+      }
+    },
+    "different_2008": {
+      "study_label": "Raabovaetal_Oecologia_2008",
+      "doi": "10.1007/s00442-008-1156-1",
+      "ploidy": "three diploid and six hexaploid populations"
+    },
+    "sudova_2010": {
+      "doi": "10.3732/ajb.1000114",
+      "table1_reference_50_is": "10.1007/s00442-008-1156-1",
+      "NOT_the_2007_target": true
+    }
+  },
+  "exact_id_rule": {
+    "allowed_known_2007_population_codes": [
+      "K1",
+      "K2",
+      "K3",
+      "S1",
+      "S2",
+      "S3"
+    ],
+    "source_or_garden_ID_must_have_literal_whole_token": true,
+    "accept_literal_code_or_underscore_hyphen_dot_delimited_code": true,
+    "never_guess_missing_ID_by_nearest_coordinate": true,
+    "if_multiple_2007_codes_in_one_ID": "AMBIGUOUS_EXCLUDE",
+    "forbid_location_spatial_matching_at_this_stage": true,
+    "no_original_source_garden_ID_values_or_coordinates_exported": true,
+    "no_renaming_of_taxon_labels_to_rescue_2008_status": true
+  },
+  "outputs": {
+    "per_2007_population_code_counts_in_origin_and_garden_IDs": true,
+    "2007_source_garden_code_bijectivity_inferred": false,
+    "per_study_raw_row_counts_and_distinct_IDs": true,
+    "2008_raw_taxon_ploidy_text_marker_counts_only": true,
+    "unrecognized_ID_count": true,
+    "no_fitness_response_or_climate_fit": true,
+    "no_prior_44_of_50_or_76_proxies_requalification": true
+  }
+}
