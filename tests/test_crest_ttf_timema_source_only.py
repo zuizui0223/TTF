@@ -67,3 +67,18 @@ def test_gbs_imputed_source_provenance_only():
     assert result["gbs_provenance_blank_pair_count"] == 0
     assert result["species_labels"] == ["A", "B", "C"]
     assert result["observed_genetic_predictor_admissibility"] == "NOT_QUALIFIED_EXCLUDE_PROXY_GBS"
+
+
+def test_species_disjoint_geometry_excludes_cross_split_pairs():
+    host = b"Pair,Species1,Species2\n1,A,A\n2,B,B\n3,C,C\n4,D,D\n5,A,B\n6,B,C\n"
+    mating = b"Pair,nF1M1\n6,1\n1,1\n5,1\n3,1\n4,1\n2,1\n"
+    result = t.audit_bytes(host, mating, t.sha256_bytes(host), t.sha256_bytes(mating))
+    geom = result["species_disjoint_source_geometry"]
+    assert geom["status"] == "GEOMETRY_ONLY_NO_OUTCOME_CLAIM"
+    assert geom["n_species"] == 4
+    assert geom["n_species_disjoint_nonempty_splits"] > 0
+    score = geom["best_balance_capacity"]
+    assert set(score["train_species"]).isdisjoint(score["test_species"])
+    assert score["train_mating_pair_keys"] > 0
+    assert score["test_mating_pair_keys"] > 0
+    assert score["cross_species_pair_keys_discarded"] >= 0
