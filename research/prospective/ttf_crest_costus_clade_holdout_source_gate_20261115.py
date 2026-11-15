@@ -84,7 +84,9 @@ def main():
         print(json.dumps({"status":"NOT_EVALUABLE_ORIGINAL_CHRONOGRAM_NOT_ROOTED",
               "original_tree_tips":original_tree_tip_count,"scent_values_read":False},indent=2))
         return
-    tree.retain_taxa_with_labels(list(poll))
+    original_case_labels=[tip.taxon.label for tip in tree.leaf_node_iter()
+                          if name(tip) in poll]
+    tree.retain_taxa_with_labels(original_case_labels)
     post=set(name(t) for t in tree.leaf_node_iter())
     if post!=set(poll):raise ValueError("source pruned tree tip identities mismatch")
     evaluated={}
