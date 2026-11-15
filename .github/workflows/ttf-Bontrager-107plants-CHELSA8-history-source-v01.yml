@@ -1,0 +1,60 @@
+name: ttf-Bontrager107-CHELSA8-PLANTS-history-SOURCE-only
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-Bontrager-107plants-CHELSA8-history-source-v01.yml'
+      - 'research/prospective/bontrager_107plant_history_contrast_contract_v01.json'
+      - 'research/prospective/bontrager_107plant_history_source.py'
+      - 'research/prospective/test_bontrager_107plant_history_source.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ttf-Bontrager107-original-LGM-source-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  original-SHA-verified-source-climate-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      GDAL_CACHEMAX: '256'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - name: Install pinned source numerical GIS dependencies
+        run: python -m pip install 'numpy==2.5.4' 'scipy==1.18.1' 'shapely==2.2.0' 'rasterio==1.5.2' 'pyproj==3.8.0' 'pyshp==2.4.2'
+      - name: Synthetic original-source modern-matched history contrast tests no fitness
+        run: python -m unittest discover -s research/prospective -p 'test_bontrager_107plant_history_source.py' -v
+      - name: Verify original Dryad ZIP and 8 historical/current CHELSA rasters by SHA and evaluate environmental contrast support
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/bontrager_107plant_history_source.py \
+            --work /tmp/ttf-private-Bontrager107-8-CHELSA \
+            --output results/source_only/Bontrager107_history_matched_source_support.json
+      - name: Verify genetic/fitness historical outcome remains unopened
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('results/source_only/Bontrager107_history_matched_source_support.json'))
+          assert x['fitness_sign_magnitude_sample_rows_NEVER_accessed'] is True
+          assert x['no_phenotype_fitness_or_response_fit'] is True
+          assert x['no_reuse_of_PROCEED_56plant_stopped_Haldane_response'] is True
+          assert x['no_new_phylogeographic_or_speciation_inference'] is True
+          print('BONTRAGER107_HISTORY_SOURCE_STATUS',x['status'])
+          print('MATCHED_HISTORY_SPECIES',x.get('matched_species'))
+          print('MATCHED_HISTORY_ORIGINAL_STUDIES',x.get('matched_studies'))
+          print('MATCHED_HISTORY_SOURCE_GARDEN_CELLS',x.get('matched_study_species_garden_fitness_type_cells'))
+          PY
+      - name: Publish only source climate aggregate and rasters SHA, never original site coordinates or fitness
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-Bontrager107-CHELSA8-matched-historical-source-only
+          path: results/source_only/Bontrager107_history_matched_source_support.json
+          retention-days: 30
+          if-no-files-found: warn
