@@ -64,13 +64,13 @@ def audit_archive(raw: bytes) -> dict:
         raise ValueError("unexpected compressed file size")
     with tarfile.open(fileobj=io.BytesIO(raw), mode="r:gz") as tf:
         members = [x for x in tf.getmembers() if x.isfile()]
-        if len(members) != 1:
-            raise ValueError("expected exactly one archived VCF member")
-        member = members[0]
+        vcfs = [x for x in members if x.name.endswith(".vcf")]
+        if len(vcfs) != 1:
+            names = sorted(x.name for x in members)[:16]
+            raise ValueError(f"expected exactly one VCF among archived files; VCF count={len(vcfs)}, names={names}")
+        member = vcfs[0]
         if member.size > 100_000_000 or member.size < 100:
             raise ValueError("unsafe or empty VCF decompressed length")
-        if not member.name.endswith(".vcf"):
-            raise ValueError("unexpected archive member extension")
         with tf.extractfile(member) as stream:
             if stream is None:
                 raise ValueError("missing VCF stream")
