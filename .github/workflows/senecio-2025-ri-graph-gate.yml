@@ -1,0 +1,27 @@
+name: Senecio 2025 source RI endpoint-graph qualification
+
+on:
+  push:
+    branches:
+      - research/senecio-p1-genomic-ecotype-holdout-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/senecio_2025_ri_endpoint_graph_gate_20261115.py'
+      - 'tests/test_senecio_2025_ri_endpoint_graph_gate.py'
+      - '.github/workflows/senecio-2025-ri-graph-gate.yml'
+
+jobs:
+  source-only-graph:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test synthetic and source SHA safety
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_senecio_2025_ri_endpoint_graph_gate.py
+      - name: Reconstruct exact 2025 crossing comparison graph, no RI response opened
+        run: python research/prospective/senecio_2025_ri_endpoint_graph_gate_20261115.py
