@@ -1,0 +1,82 @@
+{
+  "schema": "ttf_Hargreaves_reciprocal_population_source_as_garden_georecovery_predata_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_BEFORE_NEW_SOURCE_AS_GARDEN_LABEL_JOIN",
+  "purpose": "Response-blind feasibility of recovering population-source coordinates from destination-garden coordinates in reciprocal transplant study when study/species/population identifiers match exactly.",
+  "original_source_contract": "research/prospective/bontrager_hargreaves_finegrain_overlap_contract_v01.json",
+  "original_source_contract_scope": "Reuse both originals and byte-level SHA256/MD5 already pinned, never fit any biological response.",
+  "source_only_allowlist_bontrager": [
+    "study",
+    "functional_group",
+    "taxon",
+    "source",
+    "site",
+    "lat_source",
+    "long_source",
+    "lat_site",
+    "long_site"
+  ],
+  "source_only_allowlist_hargreaves": [
+    "study",
+    "functional_group",
+    "taxon",
+    "source",
+    "site",
+    "experiment",
+    "fitness_type",
+    "lat_site",
+    "long_site"
+  ],
+  "plant_functional_groups": [
+    "annual",
+    "herbaceous_perennial",
+    "woody_perennial"
+  ],
+  "study_label_partition": {
+    "previously_unlinked_35_receipt": "research/prospective/source_registry/bontrager_hargreaves_finegrain_overlap_v01.json",
+    "previously_unlinked_35_receipt_sha256": "8268387cdaec3a835086418f7ce91f91777cbbc1026e148c6e6e0399647106c3",
+    "study_count": 35,
+    "do_not_reopen_Bontrager_44_of_50_response_gate": true
+  },
+  "strict_source_as_garden_rule": {
+    "key": [
+      "study",
+      "binomial_taxon",
+      "exact_ID"
+    ],
+    "definition": "A Hargreaves source population is mapped only if that EXACT same source ID also appears as a destination garden site ID in the same original study and binomial species and that destination site has one unique finite original WGS84 coordinate. No fuzzy aliases, no study-level centroid, no midpoint, no cross-study matching.",
+    "source_ID_and_garden_ID_handling": "Strip surrounding spaces only; retain all interior punctuation and original case. Taxon use already frozen strict binomial normalization.",
+    "garden_ambiguity": "If an original garden name maps to >1 distinct coordinate or any missing/invalid coordinate row, ABSTAIN; do not infer mean.",
+    "source_origin_validation": "Independently compare recovered Hargreaves exact garden-coordinate candidates to ORIGINAL Bontrager source lat_source/long_source for exact shared (study,taxon,source ID) population keys. Do not treat same original paper or local names as independent evidence.",
+    "calibration_distance_bins_km": [
+      0,
+      1,
+      10
+    ],
+    "calibration_group": "unique original source population key, not rows/cells",
+    "output_distances": "Aggregated bins, median/p95 and maximum of valid comparable distances only, never raw coordinates.",
+    "minimum_calibration_population_keys_to_make_any_reliability_statement": 10,
+    "calibration_does_not_automatically_authorize_use": "Known-source calibration may reveal mismatches; no new macro fitness model may start from this source-only study."
+  },
+  "candidate_35_study_rule": {
+    "same_garden_comparison_key": [
+      "study",
+      "binomial_taxon",
+      "experiment",
+      "site",
+      "fitness_type"
+    ],
+    "two_georecovered_origins_required": true,
+    "all_qualifying_source_IDs_require_unique_destinations": true,
+    "source_coordinate_resolution_not_true_ancestral_occupation": true,
+    "source_pair_history_21ka_0BP_not_calculated": true,
+    "source_experiment_independence_not_certified": true
+  },
+  "always_report": {
+    "raw_source_or_garden_IDs_and_coordinates_exported": false,
+    "no_fitness_magnitude_sign_variance_response_indexed_or_fit": true,
+    "geographic_coordinates_are_original_garden_derived_proxies_not_independently_original_source_points": true,
+    "no_lgm_predictor_or_adaptation_effect_fit": true,
+    "no_existing_stopped_program_requalification": true
+  }
+}
