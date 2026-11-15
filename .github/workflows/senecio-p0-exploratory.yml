@@ -1,0 +1,46 @@
+name: Senecio P0 independent exploratory replay
+
+on:
+  push:
+    branches:
+      - research/senecio-ttf-p0-locality-heldout-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/senecio_p0_*'
+      - 'tests/test_senecio_p0_locality_holdout.py'
+      - '.github/workflows/senecio-p0-exploratory.yml'
+
+jobs:
+  local-pair-replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install isolated test dependency
+        run: python -m pip install pytest
+      - name: Check synthetic fail-closed tests
+        run: python -m pytest -q tests/test_senecio_p0_locality_holdout.py
+      - name: Replay published original population means
+        run: |
+          python research/prospective/senecio_p0_pair_holdout_20261115.py --output /tmp/senecio_p0_replayed.json
+          python - <<'PY'
+          import json, math
+          from pathlib import Path
+          expected = json.loads(Path("research/prospective/senecio_p0_pair_holdout_exploratory_receipt_20261115.json").read_text())
+          found = json.loads(Path("/tmp/senecio_p0_replayed.json").read_text())
+          def eq(a,b,path="root"):
+              if isinstance(a,float) or isinstance(b,float):
+                  assert isinstance(a,(float,int)) and isinstance(b,(float,int)) and math.isclose(a,b,rel_tol=1e-10,abs_tol=1e-12),path
+              elif isinstance(a,dict) and isinstance(b,dict):
+                  assert a.keys() == b.keys(),path
+                  for k in a: eq(a[k],b[k],path+"."+str(k))
+              elif isinstance(a,list) and isinstance(b,list):
+                  assert len(a)==len(b),path
+                  for i,(x,y) in enumerate(zip(a,b)):eq(x,y,path+"."+str(i))
+              else:
+                  assert a==b,path
+          eq(expected,found)
+          print("REPLAY_MATCH: original Git blob and all exploratory P0 metrics")
+          PY
