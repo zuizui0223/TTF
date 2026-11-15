@@ -1,0 +1,65 @@
+{
+  "schema": "ttf_Bontrager_reciprocal_transplant_source_only_comparability_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_BEFORE_ORIGINAL_SOURCE_ROW_METADATA_CENSUS",
+  "source_authority": {
+    "dataset": "Bontrager et al. range-wide local adaptation source",
+    "dryad_doi": "10.5061/dryad.pnvx0k6mc",
+    "mirror_doi": "10.5683/SP2/DU3ZTQ",
+    "archive_sha256": "2995d0f165b27ccf2f38f3d0b286845c107762a0c2b02df2290e9a5df6b396f0",
+    "archive_md5": "2de98c1bb2cd2ddffcb090eb65a74d9f",
+    "archive_bytes": 811204,
+    "mirror_file_id": 150984,
+    "verified_firstline_run": 43668757315,
+    "source_member": "dryad/data/fitness_for_analysis.csv"
+  },
+  "unambiguous_required_columns": [
+    "study",
+    "functional_group",
+    "source",
+    "site",
+    "fitness_type",
+    "taxon",
+    "lat_source",
+    "long_source",
+    "lat_site",
+    "long_site"
+  ],
+  "absolute_forbidden_response_columns": [
+    "fitness"
+  ],
+  "allowed_metadata_only_columns": [
+    "study",
+    "functional_group",
+    "source",
+    "site",
+    "fitness_type",
+    "taxon",
+    "lat_source",
+    "long_source",
+    "lat_site",
+    "long_site"
+  ],
+  "record_level_qualification": "Nonmissing study, taxon, source, site, fitness_type, original source lat/lon, original destination lat/lon; finite WGS84 plausible; exact source/name and garden coordinates, no imputation.",
+  "taxon_rule": "Require original binomial (genus+species) for species-level macro counts; report ambiguous labels separately without fuzzy correction.",
+  "source_ambiguity": "A unique (study,taxon,source) ID should map to exactly one source coordinate pair, and (study,taxon,site) to exactly one garden coordinate pair; conflicted IDs excluded and diagnosed, not repaired by fitness.",
+  "unique_experiment_cell": "study × taxon × site × fitness_type. Cell has >=2 distinct original source IDs AND >=2 distinct source coordinate tuples; within same study taxon site to hold shared experiment conditions.",
+  "independence": "A cell is not an independent study or species; shared source populations, sites and papers must not be treated as independent replicates.",
+  "geographic_predictor_qualification": "Current and 21ka climates must be measured at original source coordinates and within-cell climate matching evaluated response-blind in a separate frozen stage; site geolocation alone is not sufficient.",
+  "future_macro_gate": {
+    "minimum_binomial_species": 50,
+    "minimum_original_studies": 15,
+    "minimum_genera": 10,
+    "minimum_species_train": 20,
+    "minimum_species_heldout": 20,
+    "precommitted_grouping": "Study–species connected graph; component disjoint roles without looking at fitness",
+    "if_fail": "PILOT_ONLY_NO_MACRO_ADAPTIVE_FITNESS_PREDICTION"
+  },
+  "source_overlap": "Overlap with Hargreaves et al. and Hereford primary studies UNKNOWN until source-paper IDs reconciled; count not additive.",
+  "selection_bias": "Dataset was assembled to investigate local adaptation across species ranges; do not describe as an unselected global sample.",
+  "report_only": "Aggregate counts by exclusion, distinct study/taxon/species/genus/cells with >=2 sources, shared experiment blocks, source category frequencies and SHA; no original point coordinates/IDs or fitness values exported.",
+  "expected_result_interpretation": "Source-only geography qualification, not demonstration of local adaptation, plasticity or speciation.",
+  "old_Haldane_terminal_unchanged": true,
+  "actual_fitness_values_never_parsed_or_read_as_numbers": true,
+  "no_new_genetic_or_adaptation_outcome_opened": true
+}
