@@ -1,0 +1,23 @@
+name: Hargreaves Dryad source-only header access
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/hargreaves_header_access_probe_v01.py'
+      - '.github/workflows/hargreaves-source-header-only.yml'
+
+jobs:
+  original-header-only:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Source-only HTTP header access probe (no outcome or records)
+        run: python research/prospective/hargreaves_header_access_probe_v01.py
