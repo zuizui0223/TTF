@@ -32,6 +32,12 @@ FILES={
 SOURCE_AUTHOR_REPO_LAST_COMMIT_DATE="2023-06-02"
 PUB_2026_DOI="10.64898/2026.07.21.739878"
 EXPECTED_ORIGINS={"barbatus","cardinalis","eatonii","labrosus"}
+DECLARED_2026_HUMMINGBIRD_BEE_SISTER_CONTRAST={
+    "barbatus":"virgatus",
+    "cardinalis":"glaber",
+    "eatonii":"laevis",
+    "labrosus":"putus",
+}
 
 
 def git_blob_sha(raw:bytes)->str:
@@ -87,6 +93,14 @@ def main():
     groups=group_map(src["target_trios_groupmap"])
     mapped=set(groups)
     found=set(groups.values())
+    namecount=collections.Counter(groups.values())
+    sister_pairs={
+        hb:{"hummingbird_group_sample_count":namecount.get(hb,0),
+            "sister_bee_group":bee,
+            "sister_bee_group_sample_count":namecount.get(bee,0),
+            "both_source_groups_sampled_and_mapped":bool(namecount.get(hb,0) and namecount.get(bee,0))}
+        for hb,bee in DECLARED_2026_HUMMINGBIRD_BEE_SISTER_CONTRAST.items()
+    }
     print(json.dumps({
       "status":"PUBLIC_2023_HABROANTHUS_TREE_KEY_COVERAGE_NOT_CANONICAL_2026",
       "repository":REPO,"pinned_source_commit_prefix":COMMIT,
@@ -96,6 +110,9 @@ def main():
       "CDS_vs_window_tip_ids_equal":a==b,
       "tree_tips_shared":len(a&b),
       "CDS_only_tip_ids":sorted(a-b),"window_only_tip_ids":sorted(b-a),
+      "2026_origin_sister_contrasts_on_older_2023_mapped_source":sister_pairs,
+      "2026_origin_sister_contrasts_both_groups_mapped":sum(x["both_source_groups_sampled_and_mapped"] for x in sister_pairs.values()),
+      "original_tree_may_contain_unmapped_sister_taxa_do_not_assume_taxon_absence":True,
       "group_map_rows":len(groups),
       "group_map_distinct_species_label_count":len(found),
       "group_map_species_labels":dict(sorted(collections.Counter(groups.values()).items())),
