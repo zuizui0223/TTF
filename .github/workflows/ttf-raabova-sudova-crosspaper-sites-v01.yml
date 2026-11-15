@@ -1,0 +1,42 @@
+name: Raabova Sudova original 4-site cross-paper source geography QA
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/raabova_sudova_crosspaper_sites_contract_v01.json'
+      - 'research/prospective/raabova_sudova_crosspaper_sites_v01.py'
+      - 'research/prospective/test_raabova_sudova_crosspaper_sites_v01.py'
+      - '.github/workflows/ttf-raabova-sudova-crosspaper-sites-v01.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/raabova_sudova_crosspaper_sites_contract_v01.json'
+      - 'research/prospective/raabova_sudova_crosspaper_sites_v01.py'
+      - 'research/prospective/test_raabova_sudova_crosspaper_sites_v01.py'
+      - '.github/workflows/ttf-raabova-sudova-crosspaper-sites-v01.yml'
+
+jobs:
+  external-primary-site-validation:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Known-truth published DMS and 1km matching ambiguity unit tests
+        run: python -m unittest discover -s research/prospective -p test_raabova_sudova_crosspaper_sites_v01.py -v
+      - name: Byte-identical original Hargreaves metadata-only plus independent publication site check
+        run: |
+          python research/prospective/raabova_sudova_crosspaper_sites_v01.py \
+            --output _ttf_source_only/raabova_sudova_primary_crosspaper_geography_v01.json
+      - name: Publish aggregate-only cross-paper site validation (no original geo coordinates)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-raabova-sudova-original-site-coherence-v01
+          path: _ttf_source_only/raabova_sudova_primary_crosspaper_geography_v01.json
+          retention-days: 30
+          if-no-files-found: error
