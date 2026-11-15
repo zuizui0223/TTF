@@ -8,6 +8,9 @@ on:
       - 'research/prospective/test_pankova2014_table_s1_original_access_v01.py'
       - 'research/prospective/pankova2014_s1_xls_schema_only_contract_v01.json'
       - 'research/prospective/pankova2014_s1_explanation_only_contract_v01.json'
+      - 'research/prospective/pankova2014_s1_original_plant_mark_join_contract_v01.json'
+      - 'research/prospective/pankova2014_s1_plant_mark_crosssheet_source_only_v01.py'
+      - 'research/prospective/test_pankova2014_s1_plant_mark_crosssheet_source_only_v01.py'
       - 'research/prospective/pankova2014_s1_xls_schema_only_v01.py'
       - 'research/prospective/test_pankova2014_s1_xls_schema_only_v01.py'
       - '.github/workflows/pankova2014-table-s1-source-access-v01.yml'
@@ -17,6 +20,9 @@ on:
       - 'research/prospective/test_pankova2014_table_s1_original_access_v01.py'
       - 'research/prospective/pankova2014_s1_xls_schema_only_contract_v01.json'
       - 'research/prospective/pankova2014_s1_explanation_only_contract_v01.json'
+      - 'research/prospective/pankova2014_s1_original_plant_mark_join_contract_v01.json'
+      - 'research/prospective/pankova2014_s1_plant_mark_crosssheet_source_only_v01.py'
+      - 'research/prospective/test_pankova2014_s1_plant_mark_crosssheet_source_only_v01.py'
       - 'research/prospective/pankova2014_s1_xls_schema_only_v01.py'
       - 'research/prospective/test_pankova2014_s1_xls_schema_only_v01.py'
       - '.github/workflows/pankova2014-table-s1-source-access-v01.yml'
@@ -48,5 +54,18 @@ jobs:
         with:
           name: ttf-pankova2014-original-S1-source-only-headings-v01
           path: _source_only/pankova2014_original_TableS1_early_headers_v01.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Synthetic plant tag ID and target garden composite key tests, no response cells
+        run: python -m unittest discover -s research/prospective -p test_pankova2014_s1_plant_mark_crosssheet_source_only_v01.py -v
+      - name: Pinned original published XLS site-mark individual-ID metadata only
+        run: |
+          python research/prospective/pankova2014_s1_plant_mark_crosssheet_source_only_v01.py \
+            --output _source_only/pankova2014_original_mark_St_crosssheet_v01.json
+      - name: Archive only 2014 per-sheet ID linkage aggregate, no plant outcomes
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-pankova2014-original-plant-mark-site-linkage-v01
+          path: _source_only/pankova2014_original_mark_St_crosssheet_v01.json
           if-no-files-found: error
           retention-days: 30
