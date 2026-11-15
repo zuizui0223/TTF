@@ -1,0 +1,53 @@
+name: ttf-fresh-transplant-Dryad-source-catalog-ONLY
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-fresh-transplant-Dryad-catalog-v01.yml'
+      - 'research/prospective/dryad_metadata_v01.py'
+      - 'research/prospective/test_dryad_metadata_v01.py'
+      - 'research/prospective/new_transplant_catalog_contract_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ttf-fresh-source-catalog-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  public-metadata-only-no-fitness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Source-only synthetic Dryad HAL and DOI identity tests
+        run: python -m unittest discover -s research/prospective -p 'test_dryad_metadata_v01.py' -v
+      - name: Check exact announced public Dryad version file catalog only
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/dryad_metadata_v01.py \
+            --contract research/prospective/new_transplant_catalog_contract_v01.json \
+            --output results/source_only/fresh_transplant_catalog_v01.json
+      - name: Guard against any response or frozen outcome opening
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('results/source_only/fresh_transplant_catalog_v01.json'))
+          assert x['original_old_Haldane_terminal_still_closed'] is True
+          assert x['raw_fitness_or_plasticity_values_read'] is False
+          assert x['new_empirical_outcome_opening_authorized'] is False
+          assert x['source_study_overlap_reconciled'] is False
+          print('CATALOG_SOURCE_ONLY_OK',len(x['source_results']))
+          for y in x['source_results']:
+              print('CANDIDATE',y['candidate_id'],y['source_catalog_status'],y.get('file_count'))
+          PY
+      - name: Publish source metadata only, never transplant fitness or site-level data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-fresh-public-Dryad-transplant-source-metadata-only
+          path: results/source_only/fresh_transplant_catalog_v01.json
+          retention-days: 30
+          if-no-files-found: warn
