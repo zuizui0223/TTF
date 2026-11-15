@@ -45,9 +45,15 @@ def source_only_study_overlap(original_csv: bytes, contract: dict, reference: di
     header_bytes = original_csv.split(b"\n", 1)[0] + b"\n"
     if hashlib.sha256(header_bytes).hexdigest() != source["verified_header_firstline_sha256"]:
         raise ValueError("Original source-only header SHA changed")
-    reader = csv.reader(io.TextIOWrapper(
-        io.BytesIO(original_csv), encoding="utf-8-sig", newline=""
-    ), strict=True)
+    # Source encoding is decided by byte-level validity BEFORE any source ID
+    # or taxon value is indexed. The original data file is never rewritten.
+    try:
+        decoded = original_csv.decode("utf-8-sig", errors="strict")
+        selected_encoding = "utf-8-sig"
+    except UnicodeDecodeError:
+        decoded = original_csv.decode("cp1252", errors="strict")
+        selected_encoding = "cp1252"
+    reader = csv.reader(io.StringIO(decoded, newline=""), strict=True)
     header = next(reader)
     if header != source["original_csv_header"] or len(header) != 47:
         raise ValueError("Source original 47-column schema not identical to precommitted header")
@@ -123,6 +129,8 @@ def source_only_study_overlap(original_csv: bytes, contract: dict, reference: di
         "source_original_CSV_bytes": len(original_csv),
         "source_original_CSV_md5": hashlib.md5(original_csv).hexdigest(),
         "source_original_CSV_sha256": hashlib.sha256(original_csv).hexdigest(),
+        "source_original_text_decode_selected_after_byte_md5_check": selected_encoding,
+        "raw_original_bytes_not_reencoded_or_modified": True,
         "original_source_physical_rows": total_rows,
         "original_plant_functional_group_rows": plant_rows,
         "original_source_functional_group_counts": dict(sorted(functional_group_counts.items())),
