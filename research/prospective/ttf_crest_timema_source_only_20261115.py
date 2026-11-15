@@ -66,6 +66,42 @@ def species_components(host_rows: list[dict[str, str]]) -> list[list[str]]:
     return sorted(components, key=lambda c: (-len(c), c))
 
 
+def _species_disjoint_split_envelope(host_rows: list[dict[str, str]], mating_pair_ids: set[str]) -> dict:
+    """Source-only split feasibility; cross-boundary dyads are discarded.
+
+    Reports pair-key availability, NOT usable outcomes or calibrated power.
+    """
+    names = sorted({r[k] for r in host_rows for k in ("Species1", "Species2")})
+    n = len(names)
+    if n < 2 or n > 18:
+        return {"status": "NOT_ENUMERABLE", "n_species": n}
+    first = names[0]
+    best, eligible = None, 0
+    for bits in range(1 << (n - 1)):
+        training = {first} | {names[i + 1] for i in range(n - 1) if bits & (1 << i)}
+        testing = set(names) - training
+        if not testing:
+            continue
+        tr = [r["Pair"] for r in host_rows if r["Pair"] in mating_pair_ids and
+              r["Species1"] in training and r["Species2"] in training]
+        te = [r["Pair"] for r in host_rows if r["Pair"] in mating_pair_ids and
+              r["Species1"] in testing and r["Species2"] in testing]
+        if tr and te:
+            eligible += 1
+        score = (min(len(tr), len(te)), len(tr) + len(te), -abs(len(tr) - len(te)))
+        current = {"train_species": sorted(training), "test_species": sorted(testing),
+                   "train_mating_pair_keys": len(tr), "test_mating_pair_keys": len(te),
+                   "cross_species_pair_keys_discarded": len(mating_pair_ids) - len(tr) - len(te),
+                   "score": score}
+        if best is None or score > best["score"]:
+            best = current
+    if best is None:
+        return {"status": "NOT_EVALUABLE", "n_species": n}
+    best.pop("score")
+    return {"status": "GEOMETRY_ONLY_NO_OUTCOME_CLAIM", "n_species": n,
+            "n_species_disjoint_nonempty_splits": eligible, "best_balance_capacity": best}
+
+
 def audit_bytes(host_bytes: bytes, count_bytes: bytes,
                 expected_host_sha256: str, expected_count_sha256: str) -> dict:
     for name, raw, declared in (
@@ -81,6 +117,7 @@ def audit_bytes(host_bytes: bytes, count_bytes: bytes,
     if not mids <= hids:
         raise ValueError("CountData references Pair absent from HostRIDat")
     comp = species_components(host)
+    heldout_envelope = _species_disjoint_split_envelope(host, mids)
     has_gbs_provenance = bool(host and "GBS_ref" in host[0])
     imputed_gbs_count = sum(r.get("GBS_ref") == IMPUTED_GBS_PROVENANCE for r in host) if has_gbs_provenance else None
     missing_gbs_ref_count = sum(not r.get("GBS_ref") for r in host) if has_gbs_provenance else None
@@ -96,6 +133,7 @@ def audit_bytes(host_bytes: bytes, count_bytes: bytes,
         "gbs_provenance_blank_pair_count": missing_gbs_ref_count,
         "gbs_provenance_rule_source": "zgompert/TimemaRI GeneticsSummary.R",
         "species_graph_components": comp,
+        "species_disjoint_source_geometry": heldout_envelope,
         "species_graph_component_sizes": [len(c) for c in comp],
         "source_sha256": {"HostRIDat.csv": expected_host_sha256, "CountData.csv": expected_count_sha256},
         "mating_data_outcome_completeness": "NOT_CHECKED",
