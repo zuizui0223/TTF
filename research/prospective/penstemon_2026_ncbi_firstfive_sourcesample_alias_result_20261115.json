@@ -1,0 +1,74 @@
+{
+  "NCBI_study": "PRJNA1479764",
+  "all_52_2026_taxa_already_confirmed_on_separate_source_run": true,
+  "no_flower_or_genotype_outcomes_read": true,
+  "original_2023_groupmap_blob": "360d904346db4ebc17b13d559aed5cd13dde2867",
+  "source": {
+    "n_exact_old_2023_mapped_tips": 0,
+    "n_fixed_source_ids": 5,
+    "n_source_submitter_keys_available": 5,
+    "no_sampledata_or_numeric_outcome_values_decoded": true,
+    "not_full_2026_to_2023_genotype_identity": true,
+    "original_2023_mapped_tip_count": 18,
+    "source_alias_rows": [
+      {
+        "biosample_accession": "SAMN60992931",
+        "exact_match_in_2023_18_taxon_mapped_subset": false,
+        "original_identifier_field_type": "str",
+        "original_key_available": true,
+        "original_source_attribute_type": "str",
+        "source_2023_mapped_species_if_exact_match": null,
+        "source_submitter_sample_key": "BioSample:SAMN60992931"
+      },
+      {
+        "biosample_accession": "SAMN60992932",
+        "exact_match_in_2023_18_taxon_mapped_subset": false,
+        "original_identifier_field_type": "str",
+        "original_key_available": true,
+        "original_source_attribute_type": "str",
+        "source_2023_mapped_species_if_exact_match": null,
+        "source_submitter_sample_key": "BioSample:SAMN60992932"
+      },
+      {
+        "biosample_accession": "SAMN60992933",
+        "exact_match_in_2023_18_taxon_mapped_subset": false,
+        "original_identifier_field_type": "str",
+        "original_key_available": true,
+        "original_source_attribute_type": "str",
+        "source_2023_mapped_species_if_exact_match": null,
+        "source_submitter_sample_key": "BioSample:SAMN60992933"
+      },
+      {
+        "biosample_accession": "SAMN60992934",
+        "exact_match_in_2023_18_taxon_mapped_subset": false,
+        "original_identifier_field_type": "str",
+        "original_key_available": true,
+        "original_source_attribute_type": "str",
+        "source_2023_mapped_species_if_exact_match": null,
+        "source_submitter_sample_key": "BioSample:SAMN60992934"
+      },
+      {
+        "biosample_accession": "SAMN60992935",
+        "exact_match_in_2023_18_taxon_mapped_subset": false,
+        "original_identifier_field_type": "str",
+        "original_key_available": true,
+        "original_source_attribute_type": "str",
+        "source_2023_mapped_species_if_exact_match": null,
+        "source_submitter_sample_key": "BioSample:SAMN60992935"
+      }
+    ],
+    "status": "NCBI_FIVE_SOURCE_ALIAS_DIAGNOSIS_ONLY"
+  },
+  "status": "PENSTEMON_SOURCE_ALIAS_PILOT_WITH_2023_ORIGINAL_METADATA",
+  "execution_provenance": {
+    "source_run": 43710584304,
+    "source_url": "https://github.com/zuizui0223/TTF/actions/runs/43710584304",
+    "artifacts": [
+      {
+        "id": 14159973627,
+        "digest": "sha256:eeae7b049e044f5755e916cdf35ae91c5fcc57b492b8d479d872f4a05d62ba3c"
+      }
+    ],
+    "source_alias_field_is_ncbi_self_reference": true
+  }
+}
