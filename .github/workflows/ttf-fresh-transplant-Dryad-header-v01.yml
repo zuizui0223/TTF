@@ -1,0 +1,52 @@
+name: ttf-fresh-transplant-source-HEADER-and-ZIP-index-only
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-fresh-transplant-Dryad-header-v01.yml'
+      - 'research/prospective/new_transplant_header_contract_v01.json'
+      - 'research/prospective/dryad_headers_v01.py'
+      - 'research/prospective/test_dryad_headers_v01.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ttf-new-transplant-dryad-header-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  sha-locked-original-file-header-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test CSV header only and ZIP directory only source inspection
+        run: python -m unittest discover -s research/prospective -p 'test_dryad_headers_v01.py' -v
+      - name: Verify Dryad original file SHA and inspect column names, no data row decoding
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/dryad_headers_v01.py \
+            --contract research/prospective/new_transplant_header_contract_v01.json \
+            --output results/source_only/new_transplant_public_headers_only.json
+      - name: Source firewall - no fitness, trait, geographic value or old outcomes analyzed
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('results/source_only/new_transplant_public_headers_only.json'))
+          assert x['no_fitness_or_plasticity_response_values_analyzed'] is True
+          assert x['original_TTF_Haldane_outcome_still_closed'] is True
+          assert x['new_phenotype_or_fitness_prediction_not_authorized'] is True
+          for r in x['source_file_reports']:
+              assert r['biological_effect_values_accessed'] is False
+              print('SCHEMA_STATUS',r['candidate'],r['status'])
+          PY
+      - name: Publish original source file names and header/ZIP names only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-fresh-Dryad-original-header-and-ZIP-index-only
+          path: results/source_only/new_transplant_public_headers_only.json
+          retention-days: 30
+          if-no-files-found: warn
