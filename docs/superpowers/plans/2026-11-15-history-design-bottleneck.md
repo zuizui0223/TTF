@@ -18,8 +18,10 @@
 ## Tasks
 - [x] Write tests, confirm explicit missing-implementation failure (core and source runner).
 - [x] Implement pure diagnostics and idealized planning math; 17 local tests pass, including independent group demeaning and explicit paired-block design.
-- [x] Add source runner/workflow; integration must reproduce old final rank and energy and retain input locks.
-- [ ] Execute on GitHub, inspect aggregate artifact, quantify design constraints, record results/citations and no biological inference.
+- [x] Add source runner/workflow; integration reproduces old final rank and energy and retains input locks.
+- [x] Execute on GitHub, inspect aggregate artifact, quantify design constraints, record results/citations and no biological inference.
 
 ## Review focus
 Nonfinite/misaligned inputs; rank-deficient duplicated columns; saturation/no historical variation; singleton vs repeated cells; assumptions and denominator differences in proposed sample counts. Each has a deterministic test.
+
+Execution: run 43665036586 SUCCESS, artifact 14142027277. Old terminal receipt, all original source helpers, source X/H identities and main remain unchanged. 17 new deterministic tests and 50 prior tests succeed. Planning powers independently checked by normal/chi-square quadrature. Local final 17-test verification also passed.
