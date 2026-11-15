@@ -104,7 +104,11 @@ def main():
         "no_outcomes_opened": True,
     }
     if {x["fileName"] for x in result["target_file_metadata"]} != target_names:
-        raise ValueError("target source files missing in selected Dryad version")
+        summary = {"file_embedded_keys": list(b.get("_embedded",{})),
+                   "first_file_keys": list(files[0]) if files else [],
+                   "first_file_preview": {k: str(v)[:180] for k,v in (files[0] if files else {}).items() if k not in ("description",)},
+                   "file_count": len(files), "root_keys": list(b)}
+        raise ValueError("Dryad target names unresolved (metadata schema diagnosis): " + json.dumps(summary))
     print(json.dumps(result, indent=2, sort_keys=True))
 
 
