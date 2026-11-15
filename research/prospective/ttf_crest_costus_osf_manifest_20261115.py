@@ -34,6 +34,8 @@ def meta_file(record:dict)->dict:
     attrs=record.get("attributes") or {}
     links=record.get("links") or {}
     extra=attrs.get("extra") or {}
+    related=(record.get("relationships") or {}).get("files",{}).get("links",{}).get("related")
+    child_href=related.get("href") if isinstance(related,dict) else related if isinstance(related,str) else None
     return {
         "id":record.get("id"),
         "name":attrs.get("name"),
@@ -43,7 +45,7 @@ def meta_file(record:dict)->dict:
         "extra_hashes":extra.get("hashes") if isinstance(extra,dict) else None,
         "path":attrs.get("path"),
         "download_link":links.get("download"),
-        "related_children":(record.get("relationships") or {}).get("files",{}).get("links",{}).get("related",{}).get("href"),
+        "related_children":child_href,
     }
 
 
