@@ -1,0 +1,76 @@
+{
+  "descriptive_max_distance_km": 1.928084,
+  "descriptive_sites_over_1km": 4,
+  "descriptive_sites_within_1km": 2,
+  "exact_code_site_count": 6,
+  "external_later_paper_doi": "10.1371/journal.pone.0093967",
+  "external_paper_is_2014_followup_NOT_independent_field_GPS": true,
+  "independent_population_GPS_validation_certified": false,
+  "independent_primary_experiment_certified": false,
+  "no_adaptation_plasticity_speciation_genetic_history_climate_response_opened": true,
+  "no_original_source_ID_or_raw_dataset_point_coordinates_exported": true,
+  "old_Bontrager_44_of_50_source_gate_not_requalified": true,
+  "old_invalid_Sudova_2010_vs_2007_receipt_remains_invalid": true,
+  "original_Hargreaves_CSV_SHA256_verified": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+  "same_region_site_codes_all_six_consistent": true,
+  "schema": "ttf_Raabova2007_Pankova2014_same_code_six_site_exploratory_source_only_v01",
+  "site_details": [
+    {
+      "descriptively_le_1km": true,
+      "distance_bucket_predeclared": ">0.1-1km",
+      "distance_km": 0.799619,
+      "original_2007_population_code": "K1",
+      "original_Hargreaves_source_population_ID_or_coordinates_exported": false,
+      "published_later_population_name": "Koda",
+      "region": "K"
+    },
+    {
+      "descriptively_le_1km": false,
+      "distance_bucket_predeclared": ">1-2km",
+      "distance_km": 1.812728,
+      "original_2007_population_code": "K2",
+      "original_Hargreaves_source_population_ID_or_coordinates_exported": false,
+      "published_later_population_name": "Karlík",
+      "region": "K"
+    },
+    {
+      "descriptively_le_1km": false,
+      "distance_bucket_predeclared": ">1-2km",
+      "distance_km": 1.928084,
+      "original_2007_population_code": "K3",
+      "original_Hargreaves_source_population_ID_or_coordinates_exported": false,
+      "published_later_population_name": "Lochkov",
+      "region": "K"
+    },
+    {
+      "descriptively_le_1km": true,
+      "distance_bucket_predeclared": ">0.1-1km",
+      "distance_km": 0.734489,
+      "original_2007_population_code": "S1",
+      "original_Hargreaves_source_population_ID_or_coordinates_exported": false,
+      "published_later_population_name": "Malíč",
+      "region": "S"
+    },
+    {
+      "descriptively_le_1km": false,
+      "distance_bucket_predeclared": ">1-2km",
+      "distance_km": 1.311237,
+      "original_2007_population_code": "S2",
+      "original_Hargreaves_source_population_ID_or_coordinates_exported": false,
+      "published_later_population_name": "Holý vrch",
+      "region": "S"
+    },
+    {
+      "descriptively_le_1km": false,
+      "distance_bucket_predeclared": ">1-2km",
+      "distance_km": 1.92598,
+      "original_2007_population_code": "S3",
+      "original_Hargreaves_source_population_ID_or_coordinates_exported": false,
+      "published_later_population_name": "Encovany",
+      "region": "S"
+    }
+  ],
+  "source_garden_proxy_recovered_by_within_study_ID_not_spatial_nearest": true,
+  "status": "NEW_EXPLORATORY_PUBLISHED_SIX_SAME_CODE_SITE_DISTANCES_NOT_FIELD_GPS_ACCURACY",
+  "target_primary_paper_doi": "10.1016/j.biocon.2007.07.007"
+}
