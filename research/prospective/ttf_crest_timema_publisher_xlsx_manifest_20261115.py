@@ -41,12 +41,31 @@ def file_manifest(name, filename):
         sheets=[{"name":a.get("name"),"sheetId":a.get("sheetId")} for a in root.findall(".//x:sheets/x:sheet",ns)]
         if not sheets: raise ValueError("no workbook sheets")
         worksheet_files=sorted(n for n in names if n.startswith("xl/worksheets/sheet") and n.endswith(".xml"))
+        # Count worksheet *structures* without inspecting any cell content.
+        sheet_structure=[]
+        for candidate in worksheet_files:
+            if book.getinfo(candidate).file_size > 15_000_000:
+                raise ValueError("oversized worksheet XML")
+            sheet_root=ET.fromstring(book.read(candidate))
+            dimension=sheet_root.find("x:dimension",ns)
+            rows=sheet_root.findall(".//x:sheetData/x:row",ns)
+            if len(rows)>100000:
+                raise ValueError("worksheet row-count cap exceeded")
+            with_cells=sum(any(child.tag.endswith("}c") for child in row) for row in rows)
+            sheet_structure.append({
+                "xml_part":candidate,
+                "dimension_ref":dimension.get("ref") if dimension is not None else None,
+                "xml_row_element_count":len(rows),
+                "xml_rows_with_cell_elements":with_cells,
+                "scientific_data_row_count":"NOT_EVALUATED",
+            })
     return {
         "status":"PUBLISHER_XLSX_FILE_AND_SHEET_METADATA_VERIFIED",
         "source":name,
         "url":url,"filename":filename,"byte_length":len(raw),
         "sha256":hashlib.sha256(raw).hexdigest(),
         "sheet_names":sheets,"worksheet_file_count":len(worksheet_files),
+        "worksheet_structure_no_values":sheet_structure,
         "no_worksheet_cell_values_read":True,
         "row_count":"NOT_DETERMINED",
         "join_to_dryad":"NOT_VERIFIED",
