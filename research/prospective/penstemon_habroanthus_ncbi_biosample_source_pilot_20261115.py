@@ -19,6 +19,7 @@ import xml.etree.ElementTree as ET
 STUDY="PRJNA1479764"
 LIMIT=5
 SOURCE="https://www.ebi.ac.uk/ena/portal/api/filereport"
+NCBI_SEARCH="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
 NCBI="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi"
 FIELDS=("run_accession","sample_accession","study_accession")
 MAX_BYTES=2_000_000
@@ -42,6 +43,30 @@ def source_samples():
     if len(ids)!=52 or any(not a.startswith("SAMN") for a in ids):
         raise ValueError("BioSample accession type/count mismatch")
     return ids
+
+
+def numeric_uids_from_esearch(raw:bytes,source_accessions:list[str])->dict:
+    """Resolve SAMN source accessions to numeric NCBI Entrez UIDs, before ESummary."""
+    try: data=json.loads(raw)
+    except json.JSONDecodeError:
+        raise ValueError("ESearch source metadata is not JSON")
+    res=data.get("esearchresult") or {}
+    if not isinstance(res,dict):raise ValueError("ESearch result changed")
+    if "errorlist" in res:
+        return {"status":"NCBI_ESEARCH_SOURCE_FIELD_NOT_EVALUABLE",
+                "error_keys":sorted(res["errorlist"])}
+    ids=res.get("idlist") or []
+    try: count=int(res.get("count","-1"))
+    except (TypeError,ValueError):raise ValueError("Invalid ESearch count")
+    if count!=len(source_accessions) or len(ids)!=len(source_accessions):
+        return {"status":"NCBI_ESEARCH_UID_COVERAGE_NOT_EVALUABLE",
+                "source_accessions":len(source_accessions),
+                "esearch_count":count,"numeric_uids_found":len(ids),
+                "not_a_biological_null":True}
+    if len(set(ids))!=len(ids) or not all(str(x).isdigit() for x in ids):
+        raise ValueError("ESearch UID result not unique or numeric")
+    return {"status":"NCBI_SOURCE_UIDS_RESOLVED",
+            "ids":[str(x) for x in ids]}
 
 
 def source_metadata_aggregate(raw:bytes,attempted:list[str])->dict:
@@ -91,14 +116,36 @@ def source_metadata_aggregate(raw:bytes,attempted:list[str])->dict:
 
 def main():
     samples=source_samples()[:LIMIT]
+    term=" OR ".join(f"{sample}[Accession]" for sample in samples)
+    searchquery=urllib.parse.urlencode({
+        "db":"biosample","term":term,"retmode":"json",
+        "retmax":"10","tool":"TTF_CREST_habroanthus_source_pilot",
+    })
+    searchreq=urllib.request.Request(NCBI_SEARCH+"?"+searchquery,
+      headers={"User-Agent":"TTF-Habroanthus-BioSample-ESearch/1.0","Accept":"application/json"})
+    try:
+        with urllib.request.urlopen(searchreq,timeout=45) as response:
+            searchraw=response.read(MAX_BYTES+1)
+    except urllib.error.HTTPError as e:
+        if e.code in (400,401,403,404,429,503):
+            print(json.dumps({"status":"NCBI_ESearch_SOURCE_ACCESS_BLOCKED",
+                "http_status":e.code,"source_samples_confirmed":52,
+                "not_a_biological_null":True},indent=2))
+            return
+        raise
+    resolved=numeric_uids_from_esearch(searchraw,samples)
+    if resolved["status"]!="NCBI_SOURCE_UIDS_RESOLVED":
+        print(json.dumps({"status":"NCBI_BIOSAMPLE_UID_JOIN_NOT_EVALUABLE",
+            "original_52_samples_verified":True,
+            "esearch":resolved,"no_biological_outcomes_opened":True},indent=2))
+        return
     q=urllib.parse.urlencode({
-       "db":"biosample","id":",".join(samples),"retmode":"json",
-       "tool":"TTF_CREST_habroanthus_source_pilot",
-       "email":"", # Anonymous public E-utility rate limit, no API key.
+        "db":"biosample","id":",".join(resolved["ids"]),"retmode":"json",
+        "tool":"TTF_CREST_habroanthus_source_pilot",
     })
     req=urllib.request.Request(NCBI+"?"+q,headers={
-       "User-Agent":"TTF-Habroanthus-public-biosample-source/1.0",
-       "Accept":"application/json",
+        "User-Agent":"TTF-Habroanthus-public-biosample-source/1.0",
+        "Accept":"application/json",
     })
     try:
         with urllib.request.urlopen(req,timeout=45) as resp:
@@ -116,6 +163,7 @@ def main():
          "status":"PENSTEMON_NCBI_FIVE_SOURCE_BIOSAMPLE_METADATA_PILOT",
          "BioProject":STUDY,"verified_ena_source_samples":52,
          "original_source_first_five_samples":samples,
+         "NCBI_source_numeric_UIDs_resolved":len(resolved["ids"]),
          "result":result,
          "no_sequence_genotype_or_flower_outcomes_opened":True,
          "not_2023_specimen_join":True,
