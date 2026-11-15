@@ -1,0 +1,74 @@
+{
+  "schema": "ttf_Bontrager_107plant_source_garden_21ka_0bp_qualified_history_contrasts_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_BEFORE_107PLANT_ORIGINAL_CHELSA_8BAND_SOURCE_SAMPLING",
+  "original_source": {
+    "data_doi": "10.5061/dryad.pnvx0k6mc",
+    "mirror_dataverse_doi": "10.5683/SP2/DU3ZTQ",
+    "zip_sha256": "2995d0f165b27ccf2f38f3d0b286845c107762a0c2b02df2290e9a5df6b396f0",
+    "zip_md5": "2de98c1bb2cd2ddffcb090eb65a74d9f",
+    "original_member": "dryad/data/fitness_for_analysis.csv",
+    "source_only_plant_geo_run": 43669248603,
+    "source_only_artifact_id": 14143800478,
+    "source_nominal_plant_taxa": 107,
+    "source_original_studies": 103,
+    "source_original_garden_fitness_type_cells_with_two_original_origins": 711,
+    "source_study_species_disjoint_membership_sha256": "1858ab87418fd1295507fe4299226be9c1b53d434517010f56bd09a942c272cd",
+    "train_species": 54,
+    "heldout_species": 53,
+    "train_studies": 59,
+    "heldout_studies": 44,
+    "original_functional_groups": [
+      "annual",
+      "herbaceous_perennial",
+      "woody_perennial"
+    ]
+  },
+  "climate_source": {
+    "manifest": "research/prospective/chelsa_trace21k_fixed8_assets_v01.json",
+    "epochs": [
+      "21ka",
+      "0BP"
+    ],
+    "variables": [
+      "bio01",
+      "bio07",
+      "bio12",
+      "bio15"
+    ],
+    "original_8_raster_source_sha_required": true,
+    "frozen_software": "ubuntu-24.04 Python 3.12.15 numpy 2.5.4 scipy 1.18.1 rasterio 1.5.2",
+    "climate_value_grain": "Unique original source WGS84 coordinate tuple and destination site coordinate; evaluate source climate and destination current climate as pre-response geometry, no historical occupancy assumption",
+    "missingness": "No imputation. Retain only blocks with >=2 independent source coordinates complete for 8 original climate bands and destination 0BP present; keep original roles."
+  },
+  "matching": {
+    "unit": "Within the same original (study,taxon,site,fitness_type) cell, compare pairs of *distinct original source population IDs* with different original coordinates.",
+    "source_pair_deduplication": "Report also unique (study,taxon,unordered source_ID pair) to avoid treating the same origin pair in many gardens/outcomes as independent.",
+    "source_0BP_SD": "Training species-equal weighted SD of current four climate bands across unique original source coordinates, dividing each source genus sample by number of source coordinate units and species evenly.",
+    "history_at_source": "Four-dimensional Euclidean norm of (BIO21ka - BIO0BP) / frozen training current SD, at each original source; H-history is not a realized occupied past trajectory.",
+    "modern_climate_pair_distance": "Euclidean norm of differences of original source pair four BIO0BP values standardized by frozen train source SD.",
+    "H_pair_absolute_difference": "Absolute difference between two source historical displacement magnitudes, normalized by training species-equal SD of source H magnitudes.",
+    "source_only_modern_matched_threshold": "Modern standardized 4-dimensional climate distance <=1.0; source-only geographical design rule, not tuned on fitness.",
+    "source_only_H_contrasted_threshold": "Absolute standardized history-magnitude difference >=0.5; source-only qualification not an adaptation effect.",
+    "within_garden_source_history_linear_conditioning": "Regress source H on current source 4 climate bands, source latitude, longitude and source-garden great-circle distance, after absorbing study×taxon×site×fitness_type cell means. Compute weighted residual H variability; no response opened.",
+    "source_equal_weighting": "Each training species equal total weight, each qualifying garden cell equal subweight, each distinct original source coordinate in cell equal subweight.",
+    "minimal_candidate_panel": {
+      "min_species_with_matched_history_contrasts": 50,
+      "min_studies_with_matched_history_contrasts": 15,
+      "min_genera_with_matched_history_contrasts": 10,
+      "min_species_per_original_disjoint_role": 20,
+      "source_only_threshold_is_design_eligibility_not_biological_inference": true,
+      "if_insufficient": "INSUFFICIENT_MATCHED_HISTORY_SOURCE_CONTRAST_NOT_ADAPTATION_NULL"
+    }
+  },
+  "biological_outcome_boundary": {
+    "fitness_sign_magnitude_sample_rows_NEVER_accessed": true,
+    "no_phenotype_fitness_or_response_fit": true,
+    "no_reuse_of_PROCEED_56plant_stopped_Haldane_response": true,
+    "no_new_phylogeographic_or_speciation_inference": true,
+    "published_source_local_adaptation_selection_bias_not_resolved": true,
+    "Bontrager_Hargreaves_primary_study_overlap_unknown": true,
+    "source_only_status_not_confirmatory_evolutionary_prediction": true,
+    "export_only_aggregate_and_original_sha_no_pointwise_locations": true
+  }
+}
