@@ -39,8 +39,9 @@ def git_blob_sha(data: bytes) -> str:
     return hashlib.sha1(f"blob {len(data)}\0".encode() + data).hexdigest()
 
 
-def parse_gt(text: str) -> int:
-    gt = text.split(":", 1)[0]
+def parse_gt(text: str, gt_column: int = 0) -> int:
+    tokens = text.split(":")
+    gt = tokens[gt_column] if gt_column < len(tokens) else "."
     sep = "|" if "|" in gt else "/" if "/" in gt else None
     if sep is None:
         return MISSING
@@ -116,7 +117,11 @@ def read_original_vcf(raw: bytes) -> tuple[list[dict], dict[str,list[int]], dict
             unique_positions.add(key)
             if len(ref) != 1 or len(alt) != 1 or ref not in "ACGT" or alt not in "ACGT" or ref == alt:
                 continue
-            calls = bytearray(parse_gt(fields[9+i]) for i in selected)
+            formats = fields[8].split(":")
+            if "GT" not in formats:
+                continue
+            gt_column = formats.index("GT")
+            calls = bytearray(parse_gt(fields[9+i], gt_column) for i in selected)
             per_pop_freq, per_pop_n = {}, {}
             for pop, indices in pop_idx.items():
                 good = [calls[i] for i in indices if calls[i] != MISSING]
@@ -258,7 +263,7 @@ def analyze(raw: bytes) -> dict:
             "auc_pair_cluster_bootstrap_2000_percentile":bootstrap_pair_auc(auc),
             "pairs_auc_above_0_5":sum(x>0.5 for x in auc),
         },
-        "source_asertainment_limitation": "original source VCF SNP filters used all 18 populations",
+        "source_ascertainment_limitation": "original source VCF SNP filters used all 18 populations",
         "not_claimed":["species_transfer","causal_genetic_loci","adaptive_selection",
                        "reproductive_isolation","CREST_history_effect","independent_species_replication"],
         "no_raw_genotypes_exported":True,
