@@ -10,7 +10,7 @@ from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from bontrager_hargreaves_finegrain_overlap_v01 import (
     CONTRACT, metadata_census, compare, count_matched_garden_coords,
-    norm_taxon, valid_coord, haversine,
+    norm_taxon, valid_coord, haversine, exact_original_doi,
 )
 
 class FinegrainOriginalOverlapTests(unittest.TestCase):
@@ -44,6 +44,17 @@ class FinegrainOriginalOverlapTests(unittest.TestCase):
         return dict(study=study,taxon=taxon,source=source,site=site,
             functional_group="annual",fitness_type=fitness_type,
             lat_site=lat_site,long_site=long_site,fitness=fitness)
+
+    def test_original_doi_location_variants_never_use_title_only(self):
+        target="10.5061/dryad.pnvx0k6mc"
+        r={"metadata":{"title":"same title","doi":target}}
+        self.assertTrue(exact_original_doi(r,target))
+        r={"metadata":{"related_identifiers":[{"identifier":"https://doi.org/"+target}]}}
+        self.assertTrue(exact_original_doi(r,target))
+        r={"metadata":{"title":"identical title"},"pids":{"doi":{"identifier":target}}}
+        self.assertTrue(exact_original_doi(r,target))
+        self.assertFalse(exact_original_doi({"metadata":{"title":"same title"}},target))
+        self.assertFalse(exact_original_doi({"metadata":{"doi":"10.5061/dryad.other"}},target))
 
     def test_exact_key_hierarchy_shared_and_unlinked_counts(self):
         left=self.source("bontrager",[
