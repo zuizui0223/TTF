@@ -59,3 +59,21 @@ The output intentionally sets "verified_independent_primary_studies" to **zero**
 - **Speciation**: separate lineage divergence/reproductive isolation/timing response data; no inference from short-timescale fitness differences or source climate geometry.
 
 **Next empirical dependency:** Obtain original-study *metadata only* from independent sources and map original paper DOI/experiment IDs for manual overlap resolution. Then freeze a genuinely new response-independent data-qualification contract. Do not reuse or requalify the failed Bontrager or PROCEED 56-plant gates. No biological outcome was opened in this branch.
+
+
+## 2026-11-15 executed source preflight: public-source lineage yes, record-level overlap unknown
+
+**Original primary-source provenance from Hargreaves, NOT just an inference based on authorship.** Hargreaves's publisher supplementary Appendix B states that the project **leveraged the Bontrager et al. in-preparation transplant experiment database**. That compilation's literature-search inputs explicitly include Hereford (2009), along with Leimu & Fischer (2008), Lee-Yaw et al. (2016) and others. This establishes a linked *source-selection pipeline*, **not a measured count** of identical original experiments or duplicate source-population records. Hargreaves's Dryad record separately states that much of the information was originally collected for Bontrager.
+
+- Hargreaves Dryad dataset: https://doi.org/10.5061/dryad.0vt4b8gv1
+- Original publisher supplementary Appendix B, printed p. 9: https://mobot-biodiversity-jc.weebly.com/uploads/1/8/6/0/18603232/appendices_from_hargreaves_et_al__2020__local_adaptation_to_biotic_interactions_59113supplement.pdf
+- Bontrager Dryad source: https://doi.org/10.5061/dryad.pnvx0k6mc
+- Hereford Dryad source: https://doi.org/10.5061/dryad.315
+
+**Original CSV access test.** On [GitHub Actions #43672068614](https://github.com/zuizui0223/TTF/actions/runs/43672068614), the exact file listed by Dryad as Hargreaves_etal_2020_AmNat_transplant_data.csv (Dryad file 244459) was probed with a byte-limited request: REST API GET yielded **HTTP 401**, public file-stream URL **HTTP 403**. The probe only attempts the first CSV header; it did not read or fit fitness rows, and did not guess underlying original-study IDs. The two source-only programs passed **15/15 synthetic tests** (10 bibliographic overlap, 5 strict source-header access). The workflow succeeded as a correctly detected access gate, **not as a successful data download**.
+
+Source-only decision: **SOURCE_ACCESS_GATED_NO_RECORD_LEVEL_OVERLAP_CLAIM**. A confirmed shared literature-data lineage means these datasets **cannot automatically be counted as independent replication**, but the **number** of duplicate or nonduplicate primary experiments remains unknown (not observed). This is a distinct state from an ecological null or a data census of zero duplicates. The primary-source metadata branch remains Draft, and the old Bontrager 44/50, PROCEED 56-plant and genetic endpoints are unchanged.
+
+Receipt: [hargreaves_bontrager_access_lineage_receipt_v01.json](./hargreaves_bontrager_access_lineage_receipt_v01.json).
+
+**Independent repository-wide CI caveat.** The earlier PR-wide pytest run found **485 passed / 1 failed** for test_ttf_q_submission_scientific_freeze_binds_current_science: frozen-policy string "new outcome opening" versus test expectation "opening a previously closed outcome". This is unrelated to the new source-only code; neither the science freeze JSON nor the global test was modified in this branch.
