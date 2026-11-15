@@ -1,0 +1,49 @@
+name: ttf-Bontrager-PLANTS-original-source-geo-ONLY
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-bontrager-plant-source-only-geo-v01.yml'
+      - 'research/prospective/bontrager_plant_only_geo_source_v01.py'
+      - 'research/prospective/test_bontrager_plant_only_geo_source_v01.py'
+      - 'research/prospective/bontrager_plant_functional_group_amendment_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  plant-only-geography-census-no-fitness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test plant-only source metadata, mixed-source preservation and fitness firewall
+        run: python -m unittest discover -s research/prospective -p 'test_bontrager_plant_only_geo_source_v01.py' -v
+      - name: Count original plant-only transplant source-garden study blocks with exact ZIP sha
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/bontrager_plant_only_geo_source_v01.py --output results/source_only/plant_transplant_geography_v01.json
+      - name: Verify biological outcome still unopened
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('results/source_only/plant_transplant_geography_v01.json'))
+          assert x['fitness_measurement_sign_or_magnitude_opened'] is False
+          assert x['adaptive_fitness_or_speciation_prediction_performed'] is False
+          assert x['new_fitness_response_opening_authorized'] is False
+          assert x['old_original_frozen_Haldane_status_modified'] is False
+          print('PLANT_SOURCE_GEOMETRY_STATUS',x['status'])
+          print('PLANT_STUDIES',x.get('qualified_original_source_studies'))
+          print('PLANT_SPECIES',x.get('qualified_binomial_taxa'))
+          print('PLANT_COMPARISON_BLOCKS',x.get('shared_garden_fitness_type_cells_with_multiple_source_IDs_and_coordinates'))
+          PY
+      - name: Save source-only plant aggregate and source provenance
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-Bontrager-plants-source-garden-metadata-aggregate
+          path: results/source_only/plant_transplant_geography_v01.json
+          retention-days: 30
+          if-no-files-found: warn
