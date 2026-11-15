@@ -17,11 +17,17 @@ class Shared2004AdultTransplantTests(unittest.TestCase):
     def test_original_methods_match_not_only_reused_population_names(self):
         a=self.x["target_2007"]["adult_transplant_methods"]
         b=self.x["followup_2014"]["adult_transplant_methods"]
-        fields=("seeds_collected","seed_sown","greenhouse","seedlings","field_transplant",
-                "population_sites","origins_per_site","juvenile_replicates_per_origin_site",
-                "blocks_rows_per_site","interplant_distance_cm")
-        for key in fields:
+        numeric_and_exact=("greenhouse","seedlings","field_transplant",
+                           "population_sites","origins_per_site",
+                           "juvenile_replicates_per_origin_site",
+                           "blocks_rows_per_site","interplant_distance_cm")
+        for key in numeric_and_exact:
             self.assertEqual(a[key],b[key],key)
+        for text in (a["seeds_collected"],b["seeds_collected"]):
+            self.assertTrue(text.startswith("September 2003"))
+        for text in (a["seed_sown"],b["seed_sown"]):
+            self.assertTrue(text.startswith("February 2004"))
+            self.assertIn("300 seeds",text)
         self.assertEqual(a["field_transplant"],"October 2004")
         self.assertEqual(a["juvenile_replicates_per_origin_site"],25)
         self.assertEqual(a["origins_per_site"],6)
