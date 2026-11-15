@@ -1,0 +1,19 @@
+name: Penstemon ENA public sample field API schema diagnostic
+
+on:
+  push:
+    branches:
+      - research/penstemon-ttf-source-join-20261115
+
+jobs:
+  diagnose-public-schema:
+    if: github.event.head_commit.message == 'Probe Penstemon ENA public field schema only'
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Print response MIME, bounded source field names, no biological data
+        run: python research/prospective/penstemon_ena_field_schema_diagnostic_20261115.py
