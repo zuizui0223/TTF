@@ -52,3 +52,37 @@ Reproducible metadata-only check: `research/prospective/ttf_crest_four_systems_s
 - Metrosideros genome study https://doi.org/10.1073/pnas.2023801118 ; Zenodo https://doi.org/10.5281/zenodo.4264399 ; NCBI PRJNA534153.
 
 **Evidence level:** Senecio author-source records were read directly with only key and header fields used. For the other three systems, source publisher/repository descriptions and paper methods were verified, but raw per-row records and cross-dataset joins were not inspected. No empirical transferability result is claimed. Biological novelty would require calibrated, disjoint held-out comparisons, not descriptive data inventory.
+
+## 2026-11-15 source-author scripts and leakage audit (new)
+
+### Timema: accession provenance and join identity
+
+The author's executable scripts at [zgompert/TimemaRI](https://github.com/zgompert/TimemaRI) read both CSVs and then calculate mating isolation with row-wise indexing rather than an explicit `Pair` merge. The Dryad README says the pair IDs correspond, but their **order** must be checked from original bytes; a valid `Pair` join, not assumed row order, is required for any new analysis. The original Dryad archive was updated 2024-01-23; the latest `HostRIDat.csv` differs in size from its 2023 version. A single exact version and SHA256 are therefore mandatory.
+
+The original [GeneticsSummary.R](https://github.com/zgompert/TimemaRI/blob/main/GeneticsSummary.R) explicitly excludes `GBS_ref == "0.15897 + nuc * 19.41020"` when analyzing directly observed GBS differentiation versus nuclear sequence divergence. These pairs have a **proxy Fst predicted from another genetic distance**, not independent observed GBS differentiation. For TTF-G, this is a provenance exclusion to freeze **before** examining any genetic response. It is not an observed Fst-to-environment response. The new metadata-only code reports the number of such proxy rows when the `GBS_ref` field is available, without reading GBS or mating/host response values.
+
+`ttf_crest_timema_source_only_20261115.py` implements:
+
+1. Fail-closed, user-provided source SHA256 verification for both Dryad CSVs.
+2. Unique, nonempty `Pair` checks and a `CountData`-to-`HostRIDat` foreign-key check, independent of row order.
+3. Species-level endpoint-sharing graph and an **enumerated species-disjoint candidate split**; pair records crossing train/evaluation species are excluded. Pair-key availability is *not* mating outcome completeness or effective power.
+4. GBS proxy-versus-direct source provenance flag; no `GBS`, `PctPick`, or `yF1M1` values are decoded.
+
+**Current gate:** `RAW_CSV_NOT_FETCHED_NO_SHA256_NO_SPLIT_COUNTS`. Author methods and README were directly checked, but original Dryad file *contents* were unavailable to this session. No true dyad or source-vs-test split count is claimed.
+
+### Costus: measured labels versus imputed labels
+
+[Kay & Grossenbacher 2022 Dryad D1C39G](https://doi.org/10.7291/D1C39G) lists a 52-species combined floral trait matrix, only **28 species with observed pollinators**, and **21 species for which pollinators were predicted from 17 floral features**. The 2025 [Darragh et al. floral scent study](https://doi.org/10.1093/molbev/msaf027) has 100 scent samples / 30 species spanning eight reported hummingbird pollination origins. The actual **intersection** of measured-pollinator 2022 tips with 2025 scent samples and the tree is not yet known. Never treat morphology-inferred pollination labels as independent truth when predicting the same morphology or scent. Use the directly observed-visitor subset only for an independent pollinator-response assessment, with non-overlap species as unknown outcomes. Do not silently call 28+21 equal to the 52-species full tree: some classifications/roster keys may differ and need exact source reconciliation.
+
+2025 scent collections have five wild-sampled Costa Rican species and otherwise greenhouse material. Sampling context, date/control batch, and independent evolutionary transition cluster must be tracked; 100 samples are **not 100 independent transitions**.
+
+**Current gate:** `RAW_TIP_SCENT_SOURCE_JOIN_NOT_VERIFIED`. No species-level train/evaluation eligible count or transfer score is claimed.
+
+### Appropriate TTF goals
+
+- `TTF-P`: new locality-pair/lineage morphology or scent shift, not current-lineage accuracy relabelled cross-species transfer.
+- `TTF-RI`: predict both host and mating isolation in held-out Timema species, using disjoint endpoints and realistic stochastic test variation. Host and mating outcomes are distinct endpoints.
+- `TTF-G`: require genuinely observed, non-derived genetic predictors; full-data candidate outlier filters may not be reused across held-out data.
+- `CREST`: compare baseline contemporary morphology/environment against additional independently derived ancestry/history in held-out responses. Avoid constructing the ancestry predictor from the very outcome being forecast.
+
+Stop if no genuinely disjoint, sufficiently supported held-out units remain. This is **not** a biological null effect.
