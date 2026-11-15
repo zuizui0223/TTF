@@ -14,12 +14,12 @@ from pankova2014_s1_xls_schema_only_v01 import (
 def rec(sid,payload):
     return struct.pack("<HH",sid,len(payload))+payload
 
-def fake_original_workbook(columns=("plant_id","site","survival"),include_numeric=False,late=False):
+def fake_original_workbook(columns=("plant_id","site","survival"),include_numeric=False,late=False,sheetname=b"Data"):
     sst=struct.pack("<II",len(columns),len(columns))
     for name in columns:
         s=name.encode("cp1252")
         sst+=struct.pack("<HB",len(s),0)+s
-    name=b"Data"
+    name=sheetname
     gs=rec(0x0809,b"\0"*8)
     book=rec(0x0085,struct.pack("<IBBB",0,0,0,len(name))+b"\0"+name)
     strrec=rec(0x00FC,sst)
@@ -48,6 +48,20 @@ class SourceOnlyLegacyXLSSchemaTests(unittest.TestCase):
                          ["plant_id","site","survival"])
         self.assertTrue(a["any_explicit_tag_id_column_label_found"])
         self.assertFalse(a["sheets"][0]["any_numeric_or_fitness_values_selected"])
+    def test_explanation_first_12_text_cells_are_sole_exposed_codebook(self):
+        data=fake_original_workbook(columns=("mark","Individual metal label number","nohelp"),
+                                    sheetname=b"explanation",include_numeric=True)
+        a=extract_early_text_headers(data,self.c)
+        rec=a["sheets"][0]
+        self.assertEqual(rec["sheet_name"],"explanation")
+        self.assertEqual([v["text"] for v in rec["original_codebook_first_12_rows_text_cells_only"]],
+                         ["mark","Individual metal label number","nohelp"])
+        self.assertFalse(rec["any_numeric_or_fitness_values_selected"])
+    def test_normal_data_sheet_explanations_never_exported(self):
+        data=fake_original_workbook(sheetname=b"performance")
+        x=extract_early_text_headers(data,self.c)
+        self.assertEqual(x["sheets"][0]["original_codebook_first_12_rows_text_cells_only"],[])
+
     def test_real_values_in_numeric_cells_never_interpreted(self):
         a=extract_early_text_headers(fake_original_workbook(include_numeric=True,late=True),self.c)
         self.assertEqual(a["sheets"][0]["chosen_early_header_row_1_based"],1)
