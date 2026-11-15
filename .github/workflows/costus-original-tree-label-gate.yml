@@ -1,0 +1,35 @@
+name: Costus authentic 2022 tree × 2025 pollinator source categories
+
+on:
+  push:
+    branches:
+      - research/crest-ttf-four-system-source-preflight-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/ttf_crest_costus_original_tree_label_geometry_20261115.py'
+      - 'tests/test_crest_ttf_costus_original_tree_label_geometry.py'
+      - '.github/workflows/costus-original-tree-label-gate.yml'
+
+jobs:
+  source-tree-geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test exact NEXUS/Newick source and categorical metadata integrity
+        run: |
+          python -m pip install pytest dendropy==5.0.8
+          python -m pytest -q tests/test_crest_ttf_costus_original_tree_label_geometry.py
+      - name: Cross-match published Costus 2022 original tree tips to scent taxa without scent values
+        run: |
+          python research/prospective/ttf_crest_costus_original_tree_label_geometry_20261115.py > /tmp/costus_2022_tree_2025_taxon_geometry.json
+          cat /tmp/costus_2022_tree_2025_taxon_geometry.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: costus-original-2022-tree-2025-label-geometry
+          path: /tmp/costus_2022_tree_2025_taxon_geometry.json
+          retention-days: 21
