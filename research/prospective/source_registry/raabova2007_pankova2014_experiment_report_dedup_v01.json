@@ -1,0 +1,43 @@
+{
+  "adult_transplant_report_papers": 2,
+  "adult_transplant_underlying_cohorts": 1,
+  "article_by_experimental_component_records": 4,
+  "author_statement_direct_not_only_author_year_or_DOI_similarity": true,
+  "distinct_underlying_experiment_cohorts": 3,
+  "does_not_certify_three_statistically_independent_species_or_populations": true,
+  "independent_adult_experiments_added_by_later_2014_paper": 0,
+  "original_2007_seed_sowing_intervention_cohorts": 2,
+  "original_individual_tag_IDs_directly_matched": false,
+  "original_unique_article_DOIs": 2,
+  "previous_44of50_LGM_adaptation_source_gate_unchanged": true,
+  "raw_fitness_or_genetic_observations_read": false,
+  "report_components": [
+    {
+      "paper_doi": "10.1016/j.biocon.2007.07.007",
+      "reported_component": "reciprocal_seed_sowing_2003",
+      "time_reported": "2003–2006",
+      "underlying_experiment_id": "Raabova2007_seed_sowing_2003"
+    },
+    {
+      "paper_doi": "10.1016/j.biocon.2007.07.007",
+      "reported_component": "reciprocal_seed_sowing_2004",
+      "time_reported": "2004–2006",
+      "underlying_experiment_id": "Raabova2007_seed_sowing_2004"
+    },
+    {
+      "paper_doi": "10.1016/j.biocon.2007.07.007",
+      "reported_component": "adult_field_transplant_2004",
+      "time_reported": "2005–2006",
+      "underlying_experiment_id": "Raabova2007__Aster_amellus__adult_transplant__2004Oct__K1K2K3S1S2S3"
+    },
+    {
+      "paper_doi": "10.1371/journal.pone.0093967",
+      "reported_component": "adult_field_transplant_followup_2009",
+      "time_reported": "2009",
+      "underlying_experiment_id": "Raabova2007__Aster_amellus__adult_transplant__2004Oct__K1K2K3S1S2S3"
+    }
+  ],
+  "same_species_or_region_does_not_imply_same_experiment": true,
+  "schema": "ttf_author_confirmed_2004_experiment_component_dedup_source_only_v01",
+  "status": "ONE_PHYSICAL_ADULT_EXPERIMENT_TWO_PAPERS_SEED_SOWING_COMPONENTS_DISTINCT"
+}
