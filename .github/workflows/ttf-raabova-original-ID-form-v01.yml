@@ -1,0 +1,41 @@
+name: Correct Raabova 2007 vs 2008 original source ID form audit
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/raabova_2007_2008_original_ID_metadata_contract_v01.json'
+      - 'research/prospective/raabova_2007_2008_original_ID_metadata_v01.py'
+      - 'research/prospective/test_raabova_2007_2008_original_ID_metadata_v01.py'
+      - '.github/workflows/ttf-raabova-original-ID-form-v01.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/raabova_2007_2008_original_ID_metadata_contract_v01.json'
+      - 'research/prospective/raabova_2007_2008_original_ID_metadata_v01.py'
+      - 'research/prospective/test_raabova_2007_2008_original_ID_metadata_v01.py'
+      - '.github/workflows/ttf-raabova-original-ID-form-v01.yml'
+
+jobs:
+  source-only-codes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic correct-study label form and nonresponse tests
+        run: python -m unittest discover -s research/prospective -p test_raabova_2007_2008_original_ID_metadata_v01.py -v
+      - name: Pinned original Hargreaves metadata study code morphology census
+        run: |
+          python research/prospective/raabova_2007_2008_original_ID_metadata_v01.py             --output _ttf_source_only/raabova_2007_2008_original_ID_metadata_v01.json
+      - name: Store only response-blind aggregate identifier code pattern summaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-raabova-2007-2008-source-ID-shape-v01
+          path: _ttf_source_only/raabova_2007_2008_original_ID_metadata_v01.json
+          retention-days: 30
+          if-no-files-found: error
