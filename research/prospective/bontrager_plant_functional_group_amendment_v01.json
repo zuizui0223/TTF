@@ -1,0 +1,30 @@
+{
+  "schema": "ttf_Bontrager_plants_terrestrial_functional_group_source_amendment_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_AFTER_SOURCE_LABEL_DISTRIBUTION_BEFORE_ANY_FITNESS_RESPONSE",
+  "why": "Original 7544 records include 83 arthropod and 9 fungus rows. Source-question is flowering/vascular plant transplant fitness; do not describe all 112 taxa as plants.",
+  "source_result_run": 43669049891,
+  "source_result_artifact": 14143422159,
+  "source_functional_group_rows": {
+    "annual": 1608,
+    "herbaceous_perennial": 3240,
+    "woody_perennial": 2604,
+    "arthropod": 83,
+    "fungus": 9
+  },
+  "plant_original_functional_group_categories_exact": [
+    "annual",
+    "herbaceous_perennial",
+    "woody_perennial"
+  ],
+  "excluded_categories_exact": [
+    "arthropod",
+    "fungus"
+  ],
+  "no_rate_or_native_label_consulted": true,
+  "no_modification_to_prior_all_taxa_counts": true,
+  "qualification": "Re-run identical predeclared study/taxon/garden/fitness-type original-coordinate criteria and study×taxon graph roles under exclusively plant source categories. Publication overlap and selection bias remain unresolved. No phenotype or fitness values accessed.",
+  "study_split_macro_eligibility_same_preregistered_minimums": true,
+  "source_file_sha256": "2995d0f165b27ccf2f38f3d0b286845c107762a0c2b02df2290e9a5df6b396f0",
+  "no_existing_proceed_or_TTF_outcomes_reopened": true
+}
