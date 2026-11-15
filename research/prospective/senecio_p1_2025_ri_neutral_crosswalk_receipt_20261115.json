@@ -1,0 +1,138 @@
+{
+  "2025_author_blob_shas": {
+    "data/CrossesDH-ReciprocalsAveraged.txt": "ae6147df032baf492d692dea33aa03398b794d78",
+    "data/Phylogeny.nex": "a7c79d4b0cccb4b628e46fdcce45f417dc487d38"
+  },
+  "2025_author_commit": "fd8e8f075a72c1420267eecfd482dbc6a312caef",
+  "2025_nexus_declared_taxa": 17,
+  "2025_paper": "https://doi.org/10.1111/mec.70090",
+  "2025_ri_table_rows": 18,
+  "claims_not_licensed": [
+    "causal_SNP_effect",
+    "cross_species_TTF",
+    "ancestral_mechanism_identification",
+    "genomic_AUC_predicts_reproductive_isolation",
+    "2025_independent_genotype_replication",
+    "sample_id_level_phenotype_genotype_cross"
+  ],
+  "no_new_original_vcf_or_genotype_rows_read": true,
+  "original_p1_run_id": 43693277926,
+  "p1_pair_count": 8,
+  "pairs_with_2025_tree_both_tips": 4,
+  "pairs_with_direct_2025_ri_cross": 3,
+  "rows": [
+    {
+      "2025_direct_intrinsic_cross": null,
+      "2025_neutral_tree_both_tips": false,
+      "2025_paper_fig2_clade": null,
+      "not_same_individuals": true,
+      "p0_trait_directions_agree_of_9": 8,
+      "p1_selected_snp_direction_fraction": 0.5675675675675675,
+      "p1_source_frozen_auc": 0.9564772145417306,
+      "pair": "D00-H00"
+    },
+    {
+      "2025_direct_intrinsic_cross": {
+        "clade_comparison": "Within",
+        "ecotype_contrast": "Different",
+        "ecotype_cross": "DH",
+        "ri_seed_set": -0.134067937,
+        "ri_viability": -0.007205908
+      },
+      "2025_neutral_tree_both_tips": true,
+      "2025_paper_fig2_clade": "Eastern",
+      "not_same_individuals": true,
+      "p0_trait_directions_agree_of_9": 6,
+      "p1_selected_snp_direction_fraction": 0.5287356321839081,
+      "p1_source_frozen_auc": 0.9830459770114942,
+      "pair": "D01-H01"
+    },
+    {
+      "2025_direct_intrinsic_cross": null,
+      "2025_neutral_tree_both_tips": false,
+      "2025_paper_fig2_clade": null,
+      "not_same_individuals": true,
+      "p0_trait_directions_agree_of_9": 8,
+      "p1_selected_snp_direction_fraction": 0.48717948717948717,
+      "p1_source_frozen_auc": 0.9739854318418314,
+      "pair": "D02-H04"
+    },
+    {
+      "2025_direct_intrinsic_cross": null,
+      "2025_neutral_tree_both_tips": true,
+      "2025_paper_fig2_clade": "Eastern",
+      "not_same_individuals": true,
+      "p0_trait_directions_agree_of_9": 9,
+      "p1_selected_snp_direction_fraction": 0.44871794871794873,
+      "p1_source_frozen_auc": 0.007524858908895459,
+      "pair": "D03-H02"
+    },
+    {
+      "2025_direct_intrinsic_cross": {
+        "clade_comparison": "Within",
+        "ecotype_contrast": "Different",
+        "ecotype_cross": "DH",
+        "ri_seed_set": -0.1650187,
+        "ri_viability": 0.018300572
+      },
+      "2025_neutral_tree_both_tips": true,
+      "2025_paper_fig2_clade": "Eastern",
+      "not_same_individuals": true,
+      "p0_trait_directions_agree_of_9": 8,
+      "p1_selected_snp_direction_fraction": 0.5,
+      "p1_source_frozen_auc": 0.08246618106139438,
+      "pair": "D04-H05"
+    },
+    {
+      "2025_direct_intrinsic_cross": null,
+      "2025_neutral_tree_both_tips": false,
+      "2025_paper_fig2_clade": null,
+      "not_same_individuals": true,
+      "p0_trait_directions_agree_of_9": 8,
+      "p1_selected_snp_direction_fraction": 0.5,
+      "p1_source_frozen_auc": 0.3618626430801249,
+      "pair": "D05-H06"
+    },
+    {
+      "2025_direct_intrinsic_cross": null,
+      "2025_neutral_tree_both_tips": false,
+      "2025_paper_fig2_clade": null,
+      "not_same_individuals": true,
+      "p0_trait_directions_agree_of_9": 9,
+      "p1_selected_snp_direction_fraction": 0.43243243243243246,
+      "p1_source_frozen_auc": 0,
+      "pair": "D12-H14"
+    },
+    {
+      "2025_direct_intrinsic_cross": {
+        "clade_comparison": "Within",
+        "ecotype_contrast": "Different",
+        "ecotype_cross": "DH",
+        "ri_seed_set": -0.292927966,
+        "ri_viability": -0.130592359
+      },
+      "2025_neutral_tree_both_tips": true,
+      "2025_paper_fig2_clade": "Southeastern",
+      "not_same_individuals": true,
+      "p0_trait_directions_agree_of_9": 9,
+      "p1_selected_snp_direction_fraction": 0.4050632911392405,
+      "p1_source_frozen_auc": 0.3451100870455709,
+      "pair": "D32-H12"
+    }
+  ],
+  "status": "POSTOUTCOME_DESCRIPTIVE_2021_2025_LINKAGE_NOT_TTF_CONFIRMATORY",
+  "provenance": {
+    "github_actions_run": 43694454108,
+    "github_actions_url": "https://github.com/zuizui0223/TTF/actions/runs/43694454108",
+    "github_actions_job_id": 132751793360,
+    "run_head_sha": "af1b31f5f19de3c9cc15c76f4e74618413de029a",
+    "artifact": [
+      {
+        "id": 14154275006,
+        "name": "senecio-2025-neutral-RI-crosswalk-aggregate",
+        "sha256": "sha256:ca6e88fd165082138c13ffd1c5262244dba1a9ad8f0488329817e780dfc7e9f8",
+        "size": 1281
+      }
+    ]
+  }
+}
