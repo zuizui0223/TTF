@@ -31,7 +31,7 @@ jobs:
         with:
           run-id: 43711907352
           name: ttf-raabova2007-castro2011-valid-named-sites-exploratory-v01
-          github-token: __TOKEN__
+          github-token: ${{ github.token }}
           path: _source/names
       - name: Validate publisher referent correction, original metadata SHA and source-only receipts
         run: |
