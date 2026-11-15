@@ -1,0 +1,101 @@
+{
+  "doi": "10.1038/s41467-024-46294-9",
+  "no_experiment_outcome_opened": true,
+  "results": [
+    {
+      "byte_length": 35036,
+      "filename": "41467_2024_46294_MOESM6_ESM.xlsx",
+      "join_to_dryad": "NOT_VERIFIED",
+      "no_worksheet_cell_values_read": true,
+      "row_count": "NOT_DETERMINED",
+      "sha256": "c309402e1b1fa58ab0fb0763086a155aff028cdaa04b804c2c91796c5bed61e2",
+      "sheet_names": [
+        {
+          "name": "Figure3",
+          "sheetId": "1"
+        },
+        {
+          "name": "Figure4",
+          "sheetId": "2"
+        },
+        {
+          "name": "Figure5",
+          "sheetId": "3"
+        },
+        {
+          "name": "Figure6",
+          "sheetId": "4"
+        },
+        {
+          "name": "Figure7A",
+          "sheetId": "5"
+        },
+        {
+          "name": "Figure7B",
+          "sheetId": "6"
+        },
+        {
+          "name": "SupplementaryFigure2",
+          "sheetId": "7"
+        },
+        {
+          "name": "SupplementaryFigure3",
+          "sheetId": "8"
+        },
+        {
+          "name": "SupplementaryTables1-2",
+          "sheetId": "9"
+        },
+        {
+          "name": "SupplementaryFigure1",
+          "sheetId": "10"
+        }
+      ],
+      "source": "source_data",
+      "status": "PUBLISHER_XLSX_FILE_AND_SHEET_METADATA_VERIFIED",
+      "url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41467-024-46294-9/MediaObjects/41467_2024_46294_MOESM6_ESM.xlsx",
+      "worksheet_file_count": 10
+    },
+    {
+      "byte_length": 22070,
+      "filename": "41467_2024_46294_MOESM4_ESM.xlsx",
+      "join_to_dryad": "NOT_VERIFIED",
+      "no_worksheet_cell_values_read": true,
+      "row_count": "NOT_DETERMINED",
+      "sha256": "7e2b6210c182859d7b4d77ad8b0ca0858a1e437c0106a9c42e6c3787c24a33db",
+      "sheet_names": [
+        {
+          "name": "Supplementary Data 1",
+          "sheetId": "1"
+        },
+        {
+          "name": "Supplemenary Data 2",
+          "sheetId": "2"
+        },
+        {
+          "name": "Supplementary Data 3",
+          "sheetId": "3"
+        },
+        {
+          "name": "Supplementary Data 4",
+          "sheetId": "4"
+        },
+        {
+          "name": "Supplementary Data 5",
+          "sheetId": "5"
+        }
+      ],
+      "source": "supplementary_data_1_5",
+      "status": "PUBLISHER_XLSX_FILE_AND_SHEET_METADATA_VERIFIED",
+      "url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41467-024-46294-9/MediaObjects/41467_2024_46294_MOESM4_ESM.xlsx",
+      "worksheet_file_count": 5
+    }
+  ],
+  "status": "PUBLISHER_SOURCE_MANIFEST_ONLY",
+  "provenance": {
+    "actions_run": 43693905992,
+    "actions_url": "https://github.com/zuizui0223/TTF/actions/runs/43693905992",
+    "head_sha": "84b75fa9a074b29e46be75336c6f5902bcf181e8",
+    "description": "Publisher original XLSX verified by byte digest; sheet names only; NO ROW VALUES or scientific outcomes inspected."
+  }
+}
