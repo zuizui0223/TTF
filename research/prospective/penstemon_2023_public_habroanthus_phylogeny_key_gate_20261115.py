@@ -11,6 +11,7 @@ import csv
 import hashlib
 import io
 import json
+import re
 import urllib.request
 from pathlib import Path
 import dendropy
@@ -46,8 +47,20 @@ def fetch_source(info:dict)->bytes:
     return raw
 
 
+def strip_2023_internal_node_figure_annotations(newick: str) -> str:
+    """Remove ONLY original IQ-TREE quote-annotation/slash-support after ')'.
+
+    The 2023 published tree is nonstandard for DendroPy at
+    )'[q1=...;q2=...;...]'/31.6:0.711; tip labels/branch lengths stay.
+    This normalization authorizes TIP ID checks ONLY, never bootstrap inference.
+    """
+    pattern=r"(?<=\\))'\\[[^']+\\]'/[-+]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?=:)"
+    return re.sub(pattern, "", newick)
+
+
 def tip_labels(raw:bytes)->list[str]:
-    phylo=dendropy.Tree.get(data=raw.decode("utf-8-sig"),schema="newick",preserve_underscores=True)
+    newick=strip_2023_internal_node_figure_annotations(raw.decode("utf-8-sig"))
+    phylo=dendropy.Tree.get(data=newick,schema="newick",preserve_underscores=True)
     labels=sorted(x.taxon.label.strip() for x in phylo.leaf_node_iter())
     if not labels or len(set(labels))!=len(labels):
         raise ValueError("repeated or empty 2023 original tree tip")
