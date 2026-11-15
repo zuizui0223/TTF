@@ -1,0 +1,75 @@
+name: Freeze corrected Raabova original ID and Castro exploratory source-only receipts
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - '.github/workflows/ttf-raabova-valid-referent-receipts-freeze-v01.yml'
+
+jobs:
+  freeze-nonresponse:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: prospective/independent-transplant-overlap-20261115
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43711576389
+          name: ttf-raabova-2007-2008-source-ID-shape-v01
+          github-token: ${{ github.token }}
+          path: _source/id
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43711907352
+          name: ttf-raabova2007-castro2011-valid-named-sites-exploratory-v01
+          github-token: __TOKEN__
+          path: _source/names
+      - name: Validate publisher referent correction, original metadata SHA and source-only receipts
+        run: |
+          python - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          path1=Path("_source/id/raabova_2007_2008_original_ID_metadata_v01.json")
+          path2=Path("_source/names/raabova2007_castro2011_3site_exploratory_v01.json")
+          a=path1.read_bytes();b=path2.read_bytes()
+          assert hashlib.sha256(a).hexdigest()=="aa4b4482c327a7a5f9e777f1e3951471272ec432611239fb67bb66b2082d52cb"
+          assert hashlib.sha256(b).hexdigest()=="f1364cf928d00c36551aa2542e4fac5be71e1fd6ac739955e5fb687d48b23b59"
+          x=json.loads(a);y=json.loads(b)
+          assert x["source_original_SHA256"]=="f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71"
+          assert x["raabova2007"]["source_identifiers_with_2007_code_tokens"]==6
+          assert x["raabova2007"]["destination_identifiers_with_2007_code_tokens"]==6
+          assert (x["raabova2007"]["original_plant_rows"],x["raabova2008"]["original_plant_rows"])==(180,405)
+          assert x["raabova2008"]["source_identifiers_with_2007_code_tokens"]==0
+          assert x["sudova_2010_Table1_references_2008_not_2007"] is True
+          assert y["target_Raabova_2007_DOI"]=="10.1016/j.biocon.2007.07.007"
+          assert y["corroborating_Castro_2011_DOI"]=="10.1007/s10682-010-9439-5"
+          assert y["corroborating_Sudova2010_2008_wrong_reference_EXCLUDED"] is True
+          assert [z["verified_Raabova2007_source_population_code"] for z in y["exploratory_published_name_matched_sites"]]==["S1","S2","S3"]
+          assert [z["source_proxy_to_2011_pub_coordinate_km"] for z in y["exploratory_published_name_matched_sites"]]==[0.73524,1.30631,1.918088]
+          assert y["within_1km_descriptive_site_count"]==1
+          assert y["old_invalid_1_of_4_external_test_remains_invalid"] is True
+          assert y["no_fitness_genetic_LGM_adaptation_plasticity_speciation_outcomes_fitted"] is True
+          assert y["preexisting_frozen_44_of_50_adaptation_stop_unchanged"] is True
+          print("CORRECT_2007_2008_PRIMARY_ID_DISTINCTION_AND_VALID_3_SITE_QA_PINNED")
+          PY
+      - name: Persist only provenance summaries (never original source IDs or raw GPS)
+        run: |
+          mkdir -p research/prospective/source_registry
+          cp _source/id/raabova_2007_2008_original_ID_metadata_v01.json research/prospective/source_registry/
+          cp _source/names/raabova2007_castro2011_3site_exploratory_v01.json research/prospective/source_registry/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/prospective/source_registry/raabova_2007_2008_original_ID_metadata_v01.json research/prospective/source_registry/raabova2007_castro2011_3site_exploratory_v01.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Freeze corrected Raabova original year-specific IDs and 3 valid-site descriptive geography"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
