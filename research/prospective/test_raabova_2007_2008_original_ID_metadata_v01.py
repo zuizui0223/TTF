@@ -40,6 +40,22 @@ class RaabovaStudyIDSourceOnlyTests(unittest.TestCase):
         # Synthetic original row-count guard is expected to stop (11088 fixture requirement).
         with self.assertRaisesRegex(ValueError,"row count drift"):
             census(raw,self.rule)
+    def test_valid_11088_row_synthetic_only_metadata_summary(self):
+        rows=[
+            self.r(self.row2007,"p2007_S1","p2007_S1"),
+            self.r(self.row2007,"p2007_S2","p2007_S2"),
+            self.r(self.row2008,"p2008_1","p2008_1",taxon="Aster amellus 6x"),
+        ]
+        rows += [dict(study="Unrelated",taxon="Other species",functional_group="arthropod")] * (11088-len(rows))
+        raw=self.source(rows)
+        out=census(raw,self.rule)
+        self.assertEqual(out["original_total_source_rows"],11088)
+        self.assertEqual(out["raabova2007"]["original_plant_rows"],2)
+        self.assertEqual(out["raabova2007"]["source_identifiers_with_2007_code_tokens"],2)
+        self.assertEqual(out["raabova2007"]["destination_identifiers_with_2007_code_tokens"],2)
+        self.assertEqual(out["raabova2008"]["taxon_text_categories"]["aster_amellus_nonbinomial_with_extra_text"],1)
+        self.assertFalse(out["fitness_or_historical_climate_values_opened"])
+        self.assertFalse(out["exact_study_2007_locality_code_to_Hargreaves_ID_mapping_certified"])
     def test_invalid_primary_reference_pair_is_hard_stop(self):
         raw=self.source([self.r(self.row2007,"S1","S1")])
         self.rule["validated_primary_papers"]["sudova_2010"]["table1_reference_50_is"]=self.rule["validated_primary_papers"]["target_2007"]["doi"]
