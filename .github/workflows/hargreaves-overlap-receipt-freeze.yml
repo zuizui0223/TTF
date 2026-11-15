@@ -1,0 +1,73 @@
+name: Freeze verified Hargreaves Bontrager source overlap receipt
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - '.github/workflows/hargreaves-overlap-receipt-freeze.yml'
+
+jobs:
+  freeze-source-only-receipt:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: prospective/independent-transplant-overlap-20261115
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore original SHA-verified metadata-only overlap artifact
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43695463005
+          name: ttf-hargreaves-bontrager-study-overlap-source-only-v01
+          github-token: ${{ github.token }}
+          path: _ttf_source_only
+      - name: Reverify original immutable source metadata and exact study overlap
+        run: |
+          python - <<'PY'
+          import json, hashlib
+          from pathlib import Path
+          p=Path("_ttf_source_only/hargreaves_bontrager_original_study_overlap_v01.json")
+          b=p.read_bytes()
+          assert hashlib.sha256(b).hexdigest()=="c279c042b1386ebb35af38045e80cc7047c4cd7820aba19ce332d6f980f121f6"
+          x=json.loads(b)
+          assert x["source_original_CSV_sha256"]=="f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71"
+          assert x["source_original_CSV_md5"]=="3e8fde16540509341e8f3c1a096c267d"
+          assert x["reference_source_label_catalog_SHA256"]=="fdfb9a3e825935dc4abc602466142b10bcc8fccbba210b89e65f0575a66fabe9"
+          assert x["source_original_text_decode_selected_after_byte_md5_check"]=="cp1252"
+          assert x["original_source_physical_rows"]==11088
+          assert x["original_plant_functional_group_rows"]==10810
+          assert x["hargreaves_all_source_study_labels"]==160
+          assert x["hargreaves_plant_source_study_labels"]==148
+          assert x["hargreaves_plant_source_taxa_text_labels"]==162
+          assert x["Bontrager_reference_original_study_labels"]==103
+          assert x["exact_original_study_label_overlap_plant"]==102
+          assert x["exact_original_study_labels_with_at_least_one_same_taxon"]==100
+          assert x["exact_source_label_and_plant_taxon_joint_keys"]==128
+          assert x["normalized_only_source_study_label_candidates_for_review"]==0
+          assert x["unlinked_source_labels_NOT_independence_certified"]==46
+          assert len(x["exact_source_study_label_overlap_labels"])==102
+          assert len(x["unlinked_source_study_labels_not_certified"])==46
+          assert x["source_original_response_and_effect_columns_used"]==[]
+          assert x["source_original_numeric_fitness_rows_fit"]==0
+          assert x["no_response_or_adaptive_fitness_model_opened"] is True
+          assert x["Bontrager_frozen_44_of_50_gate_unchanged"] is True
+          print("SOURCE_ONLY_ORIGINAL_OVERLAP_FROZEN",102,103,148,46,"NO_FITNESS")
+          PY
+      - name: Store verified aggregate source-only receipt in Draft PR branch
+        run: |
+          mkdir -p research/prospective/source_registry
+          cp _ttf_source_only/hargreaves_bontrager_original_study_overlap_v01.json research/prospective/source_registry/hargreaves_bontrager_original_study_overlap_v01.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/prospective/source_registry/hargreaves_bontrager_original_study_overlap_v01.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Freeze original Hargreaves Bontrager study-label overlap source-only receipt"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
