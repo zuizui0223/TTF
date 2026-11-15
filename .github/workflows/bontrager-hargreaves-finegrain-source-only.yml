@@ -1,0 +1,40 @@
+name: Two-original source garden overlap audit
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/bontrager_hargreaves_finegrain_overlap_contract_v01.json'
+      - 'research/prospective/bontrager_hargreaves_finegrain_overlap_v01.py'
+      - 'research/prospective/test_bontrager_hargreaves_finegrain_overlap_v01.py'
+      - '.github/workflows/bontrager-hargreaves-finegrain-source-only.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/bontrager_hargreaves_finegrain_overlap_contract_v01.json'
+      - 'research/prospective/bontrager_hargreaves_finegrain_overlap_v01.py'
+      - 'research/prospective/test_bontrager_hargreaves_finegrain_overlap_v01.py'
+      - '.github/workflows/bontrager-hargreaves-finegrain-source-only.yml'
+jobs:
+  source-only-join:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Frozen known-truth nonoutcome tests
+        run: python -m unittest discover -s research/prospective -p test_bontrager_hargreaves_finegrain_overlap_v01.py -v
+      - name: Exact SHA-pinned original metadata join (no fitness observation)
+        run: |
+          python research/prospective/bontrager_hargreaves_finegrain_overlap_v01.py \
+            --output _ttf_source_only/bontrager_hargreaves_finegrain_overlap_v01.json
+      - name: Archive aggregate source-only provenances (no original data rows)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-cross-original-garden-source-metadata-overlap-v01
+          path: _ttf_source_only/bontrager_hargreaves_finegrain_overlap_v01.json
+          if-no-files-found: error
+          retention-days: 30
