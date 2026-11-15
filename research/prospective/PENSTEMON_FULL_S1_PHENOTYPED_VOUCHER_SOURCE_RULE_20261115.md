@@ -16,3 +16,7 @@ This source-only operation is *not* opening floral phenotype magnitudes or SNP/f
 The code must NOT read Table S3 flower trait values, the PDF's quantitative physiology, or NCBI genotype/sequence. Success can establish that the four origins have **phenotyped specimens by published species labels**; it does not establish same-genome-individual causality or a TTF out-of-origin heldout prediction.
 
 No changes to frozen TTF-Q main, original Senecio P0/P1 or Costus/Timema stops.
+
+## Source-format amendment after first strict 51/52 stop (not outcome selection)
+
+The first original pypdf parser, source run [#43712908104](https://github.com/zuizui0223/TTF/actions/runs/43712908104), recognized **51** complete original Table S1 voucher lines on PDF page 11, with zero malformed lines. It **did not** meet the original 52-row source integrity gate; no 34-phenotyped sample count or four-origin result has been asserted. The same official PDF index identifies Table S2 as starting on page 12. Therefore, before reading page 12 values, a *single source-layout diagnostic* is authorized: inspect only page 12 text **preceding the Table S2 heading** and allow any original Table S1 voucher/yes-no continuation line there. Never scan Table S2 numerical content for S1 ID rescue. Require exactly 52 distinct source rows and 34 'yes' entries after this one documented amendment. If that still fails, remain NOT_EVALUABLE and diagnose the original table layout visually rather than expanding regex patterns blindly.
