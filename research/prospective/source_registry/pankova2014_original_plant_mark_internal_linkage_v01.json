@@ -1,0 +1,94 @@
+{
+  "schema": "ttf_Pankova2014_original_S1_plant_marker_within2014_linkage_receipt_v01",
+  "date": "2026-11-15",
+  "status": "SOURCE_ONLY_2014_TWO_SHEET_PLANT_MARK_LINKED_279_FULLY_CONSISTENT_OF_281_NOT_CROSSPAPER_JOIN",
+  "source": {
+    "paper_doi": "10.1371/journal.pone.0093967",
+    "official_published_supplement_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0093967.s001&type=supplementary",
+    "source_supplement_filename": "pone.0093967.s001.xls",
+    "official_original_storage": "OLE2_BIFF8",
+    "original_full_xls_bytes": 147456,
+    "original_XLS_sha256": "7a8de0c203aec2b2edf0a7b6bceea649663a17095471a475fdb8a0abd69665c5",
+    "original_codebook_artifact_sha256": "4a271585e9deb20f3d919e9f6a34a40a11ba1299b4bc90d1c79282a5678b8b2c",
+    "original_mark_St_So_link_artifact_sha256": "7f30d8c34fc317090782cb6f3696e6166c4ad99746d49c315ba7d4e8b0fd1d13",
+    "validated_Actions_run_id": 43721024583,
+    "published_supplement_sheet_names": [
+      "survival",
+      "performance",
+      "explanation"
+    ]
+  },
+  "source_published_variable_definitions": {
+    "mark": "The number of the plant in the field",
+    "nohelp": "Ordering Numbers",
+    "St": "Target site",
+    "So": "Site of origin",
+    "block": "Block within a target site (row)",
+    "surv2009": "Survival in 2009"
+  },
+  "metadata_only_original_worksheet_columns": {
+    "survival": [
+      "nohelp",
+      "mark",
+      "block",
+      "Rt",
+      "Ro",
+      "St",
+      "So",
+      "surv2009"
+    ],
+    "performance": [
+      "nohelp",
+      "mark",
+      "block",
+      "Rt",
+      "Ro",
+      "St",
+      "So",
+      "leaves",
+      "log leaves",
+      "biom",
+      "log biom",
+      "mycorrhizal colonization"
+    ]
+  },
+  "precommitted_source_ID_allowlist": [
+    "mark",
+    "St",
+    "So"
+  ],
+  "within_2014_original_metadata": {
+    "survival_rows_with_site_and_mark": 547,
+    "performance_rows_with_site_and_mark": 281,
+    "survival_distinct_site_mark_pairs": 547,
+    "performance_distinct_site_mark_pairs": 281,
+    "duplicates_site_mark_within_survival": 0,
+    "duplicates_site_mark_within_performance": 0,
+    "distinct_mark_numbers_unconditional_survival": 150,
+    "distinct_mark_numbers_unconditional_performance": 144,
+    "target_gardens_survival": 4,
+    "target_gardens_performance": 4,
+    "shared_site_mark_pairs_between_sheets": 280,
+    "shared_site_mark_pairs_with_origin_metadata_conflict": 1,
+    "shared_site_mark_pairs_with_agreeing_origin_metadata": 279,
+    "performance_site_mark_pairs_absent_in_survival": 1,
+    "survival_site_mark_pairs_absent_in_performance": 267,
+    "raw_plant_mark_or_source_location_IDs_exposed": false,
+    "biological_survival_biomass_mycorrhizal_fitness_measurements_read": false
+  },
+  "interpretation": {
+    "nohelp_is_row_order_NOT_individual": "confirmed from published codebook",
+    "mark_is_field_plant_number": "confirmed from published codebook",
+    "St_x_mark_is_unique_within_both_2014_sheets": true,
+    "2014_survival_to_performance_exact_plant_matching_support": "279 source/target/mark consistent keys with one origin disagreement and one performance-only key",
+    "do_not_silently_resolve_origin_conflict": true,
+    "do_not_silently_assign_unmatched_performance_key": true,
+    "2007_raw_individual_tag_file_located": false,
+    "2007_2014_shared_individual_ID_count": null,
+    "2004_adult_cohort_identity": "author-explicit same transplant experiment, two publications",
+    "independent_extra_2004_adult_experiments_from_2014": 0,
+    "no_new_fitness_genotype_history_adaptation_plasticity_speciation_effect": true,
+    "original_PR154_44of50_source_stop_unchanged": true,
+    "PR155_remains_draft": true
+  }
+}
