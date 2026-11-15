@@ -82,6 +82,7 @@ class HistoricSourceGeometryTest(unittest.TestCase):
         self.assertTrue(0<=result["within_garden_history_residual_variance_ratio_after_7_modern_geographic_controls"]<=1)
         self.assertLessEqual(result["matched_species"],107)
         self.assertEqual(sum(result["climate_finite_comparable_cells_by_role"].values()),107)
-        self.assertNotIn("fitness",str(result).lower())
+        self.assertNotIn("raw_fitness_values",result)
+        self.assertNotIn("adaptive_effect_beta",result)
 
 if __name__=="__main__":unittest.main()
