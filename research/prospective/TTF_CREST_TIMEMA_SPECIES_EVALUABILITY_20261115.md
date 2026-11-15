@@ -69,3 +69,24 @@ If the 10 source labels cannot be reconciled with the nine-sexual-species author
 - Artifact ID `14155335792`, ZIP SHA256 `2e767eb60230c8b369af3b345db3975514f6a82e88f03bfb42feb1e859cbf718`.
 
 No frozen TTF-Q, COI, He, Fst, break-location response or prior Senecio P0/P1 result was changed.
+
+## Corrected quantitative gate: sexual-outcome storage (2026-11-15, later source-only step)
+
+**This paragraph supersedes use of the original 21/21 dyad-balanced split for sexual-isolation TTF.** Original SHA-locked Figure3 contains **29 numeric-literal cells** and **13 shared-string cells** in the sexual-isolation column, despite 42 serialized cells. No numeric *values* or text-placeholder *values* were decoded, and the paper explicitly reports mating experiments for **30 pairs**; 29 versus 30 is an **unresolved source-format/count discrepancy**, not evidence that the original authors sampled only 29 experimental pairs.
+
+When the *predeclared source-only* minimum of two between-species and three within-species available contrasts per arm is applied to the **numeric literal storage** subset, the originally favored split **FAILS**: it has only **1 between-label numeric cell on the training side**, versus **6 on the evaluation side**. Its apparent 4/6 between-label source-row coverage did **not** mean 4/6 measured sexual response cells. The source-only partition family that passes the *same* count thresholds decreases from **103** to **32**.
+
+A new response-blind numeric-storage-balanced candidate is 22/20 raw source dyads, with:
+
+| Outcome-cell storage support (NOT confirmed biological outcomes) | Train | Evaluation |
+|---|---:|---:|
+| Literal source species labels | 6 | 4 |
+| Raw dyad rows | 22 | 20 |
+| Numeric-literal sexual-isolation cells | **15** | **14** |
+| Numeric-literal *between*-label cells | **3** | **4** |
+| Numeric-literal *within*-label cells | 12 | 10 |
+| Unvalidated nonnumeric source cells | 7 | 6 |
+
+This is **NOT** a replacement confirmatory design or valid cross-species TTF endpoint; the selection used only source cell presence/type, not sexual response magnitudes. The 2024 manuscript's 30 pairs, direct-versus-inferred GBS supports, and the paper's nine-sexual-species description still require source/taxonomic reconciliation. In particular the **three separate interspecific source comparison components** remain a strong limit on independent replication of the evolutionary mechanism; none of the 32 partitions is declared statistically well-powered merely from source-cell counts.
+
+[Authentic publisher source-only numeric-cell replay #43697811421](https://github.com/zuizui0223/TTF/actions/runs/43697811421) · [machine source-only receipt](timema_mating_numeric_storage_holdout_receipt_20261115.json) · [reader](ttf_crest_timema_mating_numeric_storage_holdout_20261115.py) · [offline tests](../../tests/test_crest_ttf_timema_mating_numeric_storage_holdout.py). Original XLSX SHA256 `c309402e1b1fa58ab0fb0763086a155aff028cdaa04b804c2c91796c5bed61e2` is unchanged. No genetic/sexual effect-size values were read, and **TTF-RI remains HOLD**.
