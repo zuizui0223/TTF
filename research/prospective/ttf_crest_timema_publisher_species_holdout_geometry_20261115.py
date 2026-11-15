@@ -121,6 +121,30 @@ def read_identity(raw:bytes,source_name:str)->list[dict]:
 def split_geometry(rows:list[dict])->dict:
     species=sorted({x for row in rows for x in (row["species_1"],row["species_2"])})
     if len(species)>14 or len(species)<4:raise ValueError("unexpected number of source species")
+    # Source species-interaction graph before any reproductive response is read.
+    adjacency={sp:set() for sp in species}
+    for row in rows:
+        a,b=row["species_1"],row["species_2"]
+        if a!=b:
+            adjacency[a].add(b)
+            adjacency[b].add(a)
+    pending=set(species)
+    components=[]
+    while pending:
+        start=min(pending)
+        seen={start}
+        todo=[start]
+        while todo:
+            node=todo.pop()
+            for other in sorted(adjacency[node]):
+                if other not in seen:
+                    seen.add(other)
+                    todo.append(other)
+        components.append(sorted(seen))
+        pending-=seen
+    components.sort(key=lambda xs:(-len(xs),xs))
+    comp_counts=[sum(r["species_1"] in group and r["species_2"] in group for r in rows)
+                 for group in components]
     # Canonical species partitions: first species anchored to training.
     n=len(species)
     best=None
@@ -148,6 +172,13 @@ def split_geometry(rows:list[dict])->dict:
        "per_species_endpoint_incidence":dict(sorted(collections.Counter(
            s for row in rows for s in (row["species_1"],row["species_2"])
        ).items())),
+       "source_species_graph_components":components,
+       "source_species_graph_component_pair_counts":comp_counts,
+       "source_species_graph_component_count":len(components),
+       "per_species_within_pair_counts":{
+          sp:sum(r["species_1"]==sp and r["species_2"]==sp for r in rows)
+          for sp in species
+       },
        "partitions_with_nonempty_species_disjoint_train_and_test":viable,
        "best_balanced_species_split_source_only":best[1] if best else None,
        "comparisons_are_not_independent_evolutionary_replicates":True,
@@ -172,6 +203,8 @@ def main():
          "cross_source_identity_mismatch_pair_ids":mismatches,
          "cross_source_identity_consistent":not bool(mismatches),
          "geometry":split_geometry(original),
+         "published_identity_examples_first_5":original[:5],
+         "n_literal_species_labels_vs_article_nine_species":"TAXON_CONCEPT_RECONCILIATION_PENDING",
          "pairs_compared":42,
          "original_response_columns_read":False,
          "no_TTF_transfer_effect_claim":True}
