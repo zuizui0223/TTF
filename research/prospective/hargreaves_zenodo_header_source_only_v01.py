@@ -71,6 +71,10 @@ def original_file_info(record: dict) -> dict:
     if not isinstance(size, int) or not 1_000_000 <= size <= 6_000_000:
         raise ValueError("Original CSV file size outside expected published metadata range")
     return {"content_url": link, "size": size,
+            "verified_official_link_type": ("api_files" if actual_path.startswith("/api/files/")
+                else "record_content" if actual_path.startswith("/api/records/")
+                else "record_download"),
+            "available_official_file_link_keys": sorted(k for k in links if k in ("content","download","self")),
             "checksum_from_published_metadata": f.get("checksum")}
 
 
@@ -97,6 +101,7 @@ def probe() -> dict:
         "fitness_rows_read": 0,
         "response_values_modeled": False,
     }
+    stage = "record_metadata"
     try:
         req = Request(RECORD_URL, headers={"Accept": "application/json",
             "User-Agent": "TTF-Hargreaves-official-preservation-header-only/2026-11-15"})
@@ -106,8 +111,11 @@ def probe() -> dict:
             raise ValueError("Record metadata exceeds cap")
         record = json.loads(metadata_bytes)
         file = original_file_info(record)
+        stage = "original_csv_first_line"
+        result["verified_official_link_type"] = file["verified_official_link_type"]
+        result["available_official_file_link_keys"] = file["available_official_file_link_keys"]
         req = Request(file["content_url"], headers={
-            "Accept": "text/csv,application/octet-stream",
+            "Accept": "*/*",
             "User-Agent": "TTF-source-header-firstline-only/2026-11-15"})
         with urlopen(req, timeout=30) as response:
             header_line = response.readline(MAX_HEADER_BYTES + 1)
@@ -126,6 +134,7 @@ def probe() -> dict:
         result.update({
             "status": "OFFICIAL_ZENODO_PRESERVED_CSV_HEADER_ACCESS_NOT_EVALUABLE",
             "error_type": type(exc).__name__,
+            "failed_stage": stage,
             "error_http_code": getattr(exc, "code", None),
             "error_message": str(exc)[:220] if not hasattr(exc, "code") else None,
         })
