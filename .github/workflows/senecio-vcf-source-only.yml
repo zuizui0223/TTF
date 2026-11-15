@@ -1,0 +1,35 @@
+name: Senecio VCF source-only sample-ID gate
+
+on:
+  push:
+    branches:
+      - research/crest-ttf-four-system-source-preflight-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/ttf_crest_senecio_vcf_header_preflight_20261115.py'
+      - 'tests/test_crest_ttf_senecio_vcf_header_preflight.py'
+      - '.github/workflows/senecio-vcf-source-only.yml'
+
+jobs:
+  vcf-header-qualification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install isolated test tool
+        run: python -m pip install pytest
+      - name: Run synthetic header and source-integrity tests
+        run: python -m pytest -q tests/test_crest_ttf_senecio_vcf_header_preflight.py
+      - name: Verify exact published original blob and audit only VCF sample headers
+        run: |
+          python research/prospective/ttf_crest_senecio_vcf_header_preflight_20261115.py --output /tmp/senecio_vcf_header_summary.json
+          cat /tmp/senecio_vcf_header_summary.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: senecio-source-only-vcf-header-summary
+          path: /tmp/senecio_vcf_header_summary.json
+          retention-days: 14
