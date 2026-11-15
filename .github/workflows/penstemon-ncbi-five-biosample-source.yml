@@ -1,0 +1,35 @@
+name: Penstemon NCBI original five BioSample identity ESummary pilot
+
+on:
+  push:
+    branches:
+      - research/penstemon-ttf-source-join-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/penstemon_habroanthus_ncbi_biosample_source_pilot_20261115.py'
+      - 'tests/test_penstemon_habroanthus_ncbi_biosample_source_pilot.py'
+      - '.github/workflows/penstemon-ncbi-five-biosample-source.yml'
+
+jobs:
+  fixed-five-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test NCBI response-only strict accession and no attribute data
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_penstemon_habroanthus_ncbi_biosample_source_pilot.py
+      - name: Look up fixed first 5 of the original 52 SRA BioSamples via NCBI ESummary
+        run: |
+          python research/prospective/penstemon_habroanthus_ncbi_biosample_source_pilot_20261115.py > /tmp/penstemon_ncbi_five_biosample_public_identity.json
+          cat /tmp/penstemon_ncbi_five_biosample_public_identity.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: penstemon-ncbi-biosample-first-five-taxonomy-only
+          path: /tmp/penstemon_ncbi_five_biosample_public_identity.json
+          retention-days: 21
