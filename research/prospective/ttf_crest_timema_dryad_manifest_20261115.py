@@ -56,8 +56,8 @@ def safe_version(v):
 def safe_file(f):
     links = f.get("_links", {})
     return {
-        "id": f.get("id"),
-        "fileName": f.get("fileName"),
+        "id": f.get("id") or (int(project_link(links.get("self", "")).rsplit("/",1)[-1]) if project_link(links.get("self", "")).rsplit("/",1)[-1].isdigit() else None),
+        "fileName": f.get("fileName") or f.get("path"),
         "path": f.get("path"),
         "size": f.get("size"),
         "digest": f.get("digest"),
@@ -98,8 +98,8 @@ def main():
         "files_url": files_url,
         "file_collection": files_collection,
         "files_total_page": len(files),
-        "target_file_metadata": [safe_file(x) for x in files if x.get("fileName") in target_names],
-        "available_filenames": [x.get("fileName") for x in files],
+        "target_file_metadata": [safe_file(x) for x in files if (x.get("fileName") or x.get("path")) in target_names],
+        "available_filenames": [x.get("fileName") or x.get("path") for x in files],
         "no_file_contents_fetched": True,
         "no_outcomes_opened": True,
     }
