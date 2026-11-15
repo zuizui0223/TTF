@@ -55,7 +55,13 @@ def main():
     if len(pdf.pages)!=21:
         raise ValueError("original supplemental page count drift")
     page=pdf.pages[TABLE_S1_PAGE_1BASED-1]
+    # The original source has embedded fonts whose pypdf layout extraction
+    # can suppress the heading. Plain extraction was independently verified
+    # by the initial all-21-page source index.
+    plain=page.extract_text() or ""
     layout=page.extract_text(extraction_mode="layout") or ""
+    if not re.search(r"\bTable\s*S1\b",layout,re.I) and re.search(r"\bTable\s*S1\b",plain,re.I):
+        layout=plain
     report=inspect_s1_layout(layout)
     print(json.dumps({
         "status":"PENSTEMON_2026_ORIGINAL_TABLE_S1_HEADER_ONLY",
