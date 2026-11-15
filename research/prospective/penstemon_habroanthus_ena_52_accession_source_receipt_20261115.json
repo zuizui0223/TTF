@@ -1,0 +1,50 @@
+{
+  "no_sequences_downloaded": true,
+  "reported_Habroanthus_species": 20,
+  "reported_author_accessions": 52,
+  "reported_outgroup_species": "Penstemon palmeri",
+  "result": {
+    "no_biological_outcomes_read": true,
+    "published_52_accessions_not_assumed_to_equal_run_count": true,
+    "run_count": 52,
+    "run_to_sample_original_crosswalk_not_exported": true,
+    "sample_accession_count": 52,
+    "sample_alias_count": 0,
+    "sample_alias_duplicates": [],
+    "source_field_names": [
+      "run_accession",
+      "sample_accession",
+      "sample_alias",
+      "scientific_name",
+      "study_accession",
+      "experiment_accession"
+    ],
+    "source_species_label_count": 0,
+    "source_species_labels": {},
+    "status": "ENA_PUBLIC_BIOPROJECT_SOURCE_METADATA_ONLY",
+    "study_accessions": [
+      "PRJNA1479764"
+    ]
+  },
+  "source_bioproject": "PRJNA1479764",
+  "source_ena_query_fields": [
+    "run_accession",
+    "sample_accession",
+    "sample_alias",
+    "scientific_name",
+    "study_accession",
+    "experiment_accession"
+  ],
+  "source_manuscript_doi": "10.64898/2026.07.21.739878",
+  "provenance": {
+    "source_actions_run": 43708164658,
+    "source_actions_url": "https://github.com/zuizui0223/TTF/actions/runs/43708164658",
+    "no_reads_or_genotypes_downloaded": true,
+    "artifacts": [
+      {
+        "id": 14159700754,
+        "digest": "sha256:1d62257bc0bd26bee9943021f32d222beda96dde842757bf764fb9ac7bd6aa38"
+      }
+    ]
+  }
+}
