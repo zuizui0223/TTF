@@ -1,0 +1,35 @@
+name: Penstemon Habroanthus original 52-accession BioProject source audit
+
+on:
+  push:
+    branches:
+      - research/penstemon-ttf-source-join-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/penstemon_habroanthus_ena_accession_source_gate_20261115.py'
+      - 'tests/test_penstemon_habroanthus_ena_accession_gate.py'
+      - '.github/workflows/penstemon-habroanthus-ena-source.yml'
+
+jobs:
+  pub-accessions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check sample versus run unit and missing source firewall
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_penstemon_habroanthus_ena_accession_gate.py
+      - name: EBI ENA public original BioProject metadata only, no reads downloaded
+        run: |
+          python research/prospective/penstemon_habroanthus_ena_accession_source_gate_20261115.py > /tmp/penstemon_Habroanthus_ena_metadata.json
+          cat /tmp/penstemon_Habroanthus_ena_metadata.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: penstemon-Habroanthus-ENA-source-only
+          path: /tmp/penstemon_Habroanthus_ena_metadata.json
+          retention-days: 21
