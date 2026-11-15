@@ -1,0 +1,261 @@
+{
+  "candidate_K_order": [
+    4,
+    3,
+    2
+  ],
+  "clustering": "average-linkage with rounded-12-decimal distance lexicographic ties",
+  "distance_method": "DendroPy patristic sum, unrooted valid",
+  "first_qualified_K": null,
+  "not_true_independent_pollinator_transitions": true,
+  "original_pollinator_labels_not_authenticated_observed_visitors": true,
+  "result": "SOURCE_GEOMETRY_NOT_EVALUABLE",
+  "scent_response_values_read": false,
+  "source_original_tree_rooted": false,
+  "source_original_tree_sha256": "24f1cbfaa82ce4d33aad1ba80787cc611a6730aafb38f8244954c4d0d50ae7a1",
+  "source_scent_taxa": 27,
+  "source_support_checks": {
+    "2": {
+      "folds": [
+        {
+          "fold": 1,
+          "passes_source_only_support": false,
+          "test_n": 26,
+          "test_pollination_source_counts": {
+            "Bee": 13,
+            "Hummingbird": 13
+          },
+          "test_taxa": [
+            "costus_allenii_98050",
+            "costus_amazonicus_gual_18009",
+            "costus_arabicus_98080",
+            "costus_barbatus_19242",
+            "costus_bracteatus_18030",
+            "costus_chartaceus_19269",
+            "costus_erythrophyllus_98168",
+            "costus_glaucus_98077",
+            "costus_guanaiensis_var_macrostrobilus_18077",
+            "costus_guanaiensis_var_tarmicus_19243",
+            "costus_laevis_18032",
+            "costus_lasius_18080",
+            "costus_malortieanus_18036",
+            "costus_montanus_19217",
+            "costus_osae_19005",
+            "costus_productus_98170",
+            "costus_pulverulentus_18042",
+            "costus_scaber_18044",
+            "costus_scaber_18085",
+            "costus_spiralis_var_villosus_19209",
+            "costus_stenophyllus_19227",
+            "costus_varzearum_19252",
+            "costus_villosissimus_18090",
+            "costus_vinosus_19273",
+            "costus_wilsonii_18050",
+            "costus_woodsonii_18052"
+          ],
+          "training_pollination_source_counts": {
+            "Bee": 1
+          }
+        },
+        {
+          "fold": 2,
+          "passes_source_only_support": false,
+          "test_n": 1,
+          "test_pollination_source_counts": {
+            "Bee": 1
+          },
+          "test_taxa": [
+            "costus_dubius_98074"
+          ],
+          "training_pollination_source_counts": {
+            "Bee": 13,
+            "Hummingbird": 13
+          }
+        }
+      ],
+      "n_folds": 2,
+      "status": "INSUFFICIENT_POLLINATOR_OR_CLADE_SUPPORT"
+    },
+    "3": {
+      "folds": [
+        {
+          "fold": 1,
+          "passes_source_only_support": false,
+          "test_n": 21,
+          "test_pollination_source_counts": {
+            "Bee": 12,
+            "Hummingbird": 9
+          },
+          "test_taxa": [
+            "costus_allenii_98050",
+            "costus_amazonicus_gual_18009",
+            "costus_arabicus_98080",
+            "costus_barbatus_19242",
+            "costus_bracteatus_18030",
+            "costus_chartaceus_19269",
+            "costus_erythrophyllus_98168",
+            "costus_glaucus_98077",
+            "costus_guanaiensis_var_macrostrobilus_18077",
+            "costus_guanaiensis_var_tarmicus_19243",
+            "costus_laevis_18032",
+            "costus_lasius_18080",
+            "costus_montanus_19217",
+            "costus_osae_19005",
+            "costus_productus_98170",
+            "costus_spiralis_var_villosus_19209",
+            "costus_stenophyllus_19227",
+            "costus_varzearum_19252",
+            "costus_villosissimus_18090",
+            "costus_vinosus_19273",
+            "costus_wilsonii_18050"
+          ],
+          "training_pollination_source_counts": {
+            "Bee": 2,
+            "Hummingbird": 4
+          }
+        },
+        {
+          "fold": 2,
+          "passes_source_only_support": true,
+          "test_n": 5,
+          "test_pollination_source_counts": {
+            "Bee": 1,
+            "Hummingbird": 4
+          },
+          "test_taxa": [
+            "costus_malortieanus_18036",
+            "costus_pulverulentus_18042",
+            "costus_scaber_18044",
+            "costus_scaber_18085",
+            "costus_woodsonii_18052"
+          ],
+          "training_pollination_source_counts": {
+            "Bee": 13,
+            "Hummingbird": 9
+          }
+        },
+        {
+          "fold": 3,
+          "passes_source_only_support": false,
+          "test_n": 1,
+          "test_pollination_source_counts": {
+            "Bee": 1
+          },
+          "test_taxa": [
+            "costus_dubius_98074"
+          ],
+          "training_pollination_source_counts": {
+            "Bee": 13,
+            "Hummingbird": 13
+          }
+        }
+      ],
+      "n_folds": 3,
+      "status": "INSUFFICIENT_POLLINATOR_OR_CLADE_SUPPORT"
+    },
+    "4": {
+      "folds": [
+        {
+          "fold": 1,
+          "passes_source_only_support": false,
+          "test_n": 18,
+          "test_pollination_source_counts": {
+            "Bee": 12,
+            "Hummingbird": 6
+          },
+          "test_taxa": [
+            "costus_allenii_98050",
+            "costus_amazonicus_gual_18009",
+            "costus_arabicus_98080",
+            "costus_bracteatus_18030",
+            "costus_chartaceus_19269",
+            "costus_erythrophyllus_98168",
+            "costus_glaucus_98077",
+            "costus_guanaiensis_var_macrostrobilus_18077",
+            "costus_guanaiensis_var_tarmicus_19243",
+            "costus_laevis_18032",
+            "costus_lasius_18080",
+            "costus_productus_98170",
+            "costus_spiralis_var_villosus_19209",
+            "costus_stenophyllus_19227",
+            "costus_varzearum_19252",
+            "costus_villosissimus_18090",
+            "costus_vinosus_19273",
+            "costus_wilsonii_18050"
+          ],
+          "training_pollination_source_counts": {
+            "Bee": 2,
+            "Hummingbird": 7
+          }
+        },
+        {
+          "fold": 2,
+          "passes_source_only_support": true,
+          "test_n": 5,
+          "test_pollination_source_counts": {
+            "Bee": 1,
+            "Hummingbird": 4
+          },
+          "test_taxa": [
+            "costus_malortieanus_18036",
+            "costus_pulverulentus_18042",
+            "costus_scaber_18044",
+            "costus_scaber_18085",
+            "costus_woodsonii_18052"
+          ],
+          "training_pollination_source_counts": {
+            "Bee": 13,
+            "Hummingbird": 9
+          }
+        },
+        {
+          "fold": 3,
+          "passes_source_only_support": false,
+          "test_n": 3,
+          "test_pollination_source_counts": {
+            "Hummingbird": 3
+          },
+          "test_taxa": [
+            "costus_barbatus_19242",
+            "costus_montanus_19217",
+            "costus_osae_19005"
+          ],
+          "training_pollination_source_counts": {
+            "Bee": 14,
+            "Hummingbird": 10
+          }
+        },
+        {
+          "fold": 4,
+          "passes_source_only_support": false,
+          "test_n": 1,
+          "test_pollination_source_counts": {
+            "Bee": 1
+          },
+          "test_taxa": [
+            "costus_dubius_98074"
+          ],
+          "training_pollination_source_counts": {
+            "Bee": 13,
+            "Hummingbird": 13
+          }
+        }
+      ],
+      "n_folds": 4,
+      "status": "INSUFFICIENT_POLLINATOR_OR_CLADE_SUPPORT"
+    }
+  },
+  "source_tree_pairwise_distances": 351,
+  "status": "COSTUS_UNROOTED_PHYLO_NEIGHBORHOOD_SOURCE_GATE",
+  "provenance": {
+    "github_actions_run": 43701139981,
+    "run_url": "https://github.com/zuizui0223/TTF/actions/runs/43701139981",
+    "original_chronogram_sha256": "24f1cbfaa82ce4d33aad1ba80787cc611a6730aafb38f8244954c4d0d50ae7a1",
+    "artifacts": [
+      {
+        "id": 14156386753,
+        "digest": "sha256:99a7cd0b45eee8865eed4f16c7798397de2a3b0a3189de810fe445ac802f2c5b"
+      }
+    ]
+  }
+}
