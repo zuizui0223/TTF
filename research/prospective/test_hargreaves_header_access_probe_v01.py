@@ -31,6 +31,23 @@ class SourceHeaderProbeTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             parse_header_bytes(b"x" * (MAX_HEADER_BYTES + 1))
 
+    def test_success_reads_only_header_not_any_fitness_row(self):
+        class HeaderOnlyResponse:
+            status = 206
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def readline(self, cap):
+                self.cap = cap
+                return b"study,taxon,fitness\n"
+            def read(self, *args):
+                raise AssertionError("Forbidden: would consume original data rows")
+        response = HeaderOnlyResponse()
+        with patch("hargreaves_header_access_probe_v01.urlopen", return_value=response):
+            outcome = probe()
+        self.assertEqual(outcome["status"], "PUBLIC_CSV_HEADER_OBTAINED_METADATA_FIELDS_ONLY")
+        self.assertEqual(outcome["columns"], ["study", "taxon", "fitness"])
+        self.assertEqual(outcome["fitness_rows_read"], 0)
+
     def test_both_403_fail_access_without_claiming_overlap(self):
         from urllib.error import HTTPError
         def forbidden(request, timeout):
