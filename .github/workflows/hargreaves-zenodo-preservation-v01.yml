@@ -7,11 +7,15 @@ on:
     paths:
       - 'research/prospective/hargreaves_zenodo_preservation_index_v01.py'
       - 'research/prospective/test_hargreaves_zenodo_preservation_index_v01.py'
+      - 'research/prospective/hargreaves_zenodo_header_source_only_v01.py'
+      - 'research/prospective/test_hargreaves_zenodo_header_source_only_v01.py'
       - '.github/workflows/hargreaves-zenodo-preservation-v01.yml'
   pull_request:
     paths:
       - 'research/prospective/hargreaves_zenodo_preservation_index_v01.py'
       - 'research/prospective/test_hargreaves_zenodo_preservation_index_v01.py'
+      - 'research/prospective/hargreaves_zenodo_header_source_only_v01.py'
+      - 'research/prospective/test_hargreaves_zenodo_header_source_only_v01.py'
       - '.github/workflows/hargreaves-zenodo-preservation-v01.yml'
 
 jobs:
@@ -29,3 +33,7 @@ jobs:
         run: python -m unittest discover -s research/prospective -p test_hargreaves_zenodo_preservation_index_v01.py -v
       - name: Public Zenodo preservation-record metadata probe (no original CSV)
         run: python research/prospective/hargreaves_zenodo_preservation_index_v01.py
+      - name: Validate first-line-only original CSV access safeguards
+        run: python -m unittest discover -s research/prospective -p test_hargreaves_zenodo_header_source_only_v01.py -v
+      - name: Probe official preserved original CSV header only (no data rows)
+        run: python research/prospective/hargreaves_zenodo_header_source_only_v01.py
