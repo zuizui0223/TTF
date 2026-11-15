@@ -27,3 +27,13 @@ def test_duplicate_sample_accession_stops():
     raw=b"sample_accession\tscientific_name\nSAMN1\tPenstemon barbatus\nSAMN1\tPenstemon barbatus\n"
     with pytest.raises(ValueError,match="Duplicate"):
         m.count_key_fields(raw)
+
+
+def test_tabular_returnfields_metadata_parsing_is_not_outcome_access():
+    payload="name\tdescription\nsample_accession\tBioSample accession\nscientific_name\tTaxon name\nsample_alias\tOriginal submitter alias\n"
+    import json
+    # Confirm we can parse source field names without touching biological rows.
+    lines=payload.splitlines()
+    assert lines[0]=="name\tdescription"
+    fields=[{"name":line.split("\t")[0]} for line in lines[1:]]
+    assert m.discover_fields(fields)==["sample_accession","sample_alias","scientific_name"]
