@@ -29,7 +29,7 @@ ALLOWED_GROUPS = frozenset({"annual", "herbaceous_perennial", "woody_perennial"}
 COLUMNS = ("study", "functional_group", "source", "site", "fitness_type",
            "taxon", "lat_source", "long_source", "lat_site", "long_site")
 EXPECTED = {"studies": 103, "species": 107, "cells": 711}
-YEAR = re.compile(r"\b(?:18|19|20)\d{2}\b")
+YEAR = re.compile(r"(?<!\d)(?:18|19|20)\d{2}(?!\d)")
 
 
 def binomial(name: str) -> str | None:
@@ -123,6 +123,8 @@ def source_study_inventory(original_csv: bytes, expect: dict | None = None) -> d
             "normalized_study_label": norm,
             "original_study_label_sha256": hashlib.sha256(study.encode("utf-8")).hexdigest(),
             "candidate_year_from_label_NOT_verified": candidate_years[0] if len(candidate_years) == 1 else None,
+            "source_year_tokens_not_primary_publication_verification": candidate_years,
+            "multiple_years_in_one_original_study_label_require_paper_mapping": len(candidate_years) > 1,
             "primary_paper_doi": None,
             "primary_paper_title": None,
             "qualified_plant_species": sorted(taxon_by_study[study]),
@@ -144,6 +146,9 @@ def source_study_inventory(original_csv: bytes, expect: dict | None = None) -> d
         "qualified_study_species_garden_fitness_type_cells": len(qualified),
         "labels_array_sha256": hashlib.sha256("\n".join(sorted(taxon_by_study)).encode()).hexdigest(),
         "unresolved_original_primary_paper_dois": len(catalog),
+        "original_labels_with_multiple_year_tokens": sum(len(YEAR.findall(s)) > 1 for s in taxon_by_study),
+        "original_labels_without_year_token": sum(len(YEAR.findall(s)) == 0 for s in taxon_by_study),
+        "study_labels_are_not_one_to_one_with_primary_papers": True,
         "outcome_columns_selected": [],
         "fitness_rows_fitted": 0,
         "Hargreaves_overlap_checked": False,
