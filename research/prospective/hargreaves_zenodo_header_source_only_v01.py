@@ -28,24 +28,44 @@ def original_file_info(record: dict) -> dict:
     if str(record.get("id")) != str(RECORD_ID) or not is_original_dryad_doimatch(record):
         raise ValueError("Record ID and original Dryad DOI must both be exact")
     group = record.get("files") or {}
-    entries = group.get("entries") if isinstance(group, dict) else None
-    if not isinstance(entries, dict):
-        raise ValueError("Expected public Zenodo files.entries metadata")
+    if isinstance(group, dict):
+        entries = group.get("entries") or {}
+        if not isinstance(entries, dict):
+            raise ValueError("Unexpected modern Zenodo files.entries schema")
+        records = [(name, entry) for name, entry in entries.items()]
+    elif isinstance(group, list):
+        # Zenodo legacy record detail exposes files as an array, while the
+        # preservation-record search response may expose files.entries.
+        records = [(item.get("key"), item) for item in group if isinstance(item, dict)]
+    else:
+        raise ValueError("Unsupported Zenodo public file metadata shape")
     matches = [
-        v for key, v in entries.items()
+        v for key, v in records
         if isinstance(v, dict) and (v.get("key") or key) == TARGET_FILENAME
     ]
     if len(matches) != 1:
         raise ValueError("Original Hargreaves CSV absent or ambiguous")
     f = matches[0]
-    link = (f.get("links") or {}).get("content")
+    links = f.get("links") or {}
+    link = links.get("content") or links.get("download") or links.get("self")
     if not isinstance(link, str):
         raise ValueError("No public metadata-provided official content URL")
     u = urlparse(link)
-    if (u.scheme != "https" or u.hostname != "zenodo.org"
+    from urllib.parse import unquote
+    actual_path = unquote(u.path)
+    official_path = (
+        actual_path.startswith(f"/api/records/{RECORD_ID}/files/") and
+        actual_path.endswith("/content")
+    ) or (
+        actual_path.startswith("/api/files/") and
+        actual_path.endswith("/" + TARGET_FILENAME)
+    ) or (
+        actual_path.startswith(f"/records/{RECORD_ID}/files/") and
+        actual_path.endswith("/" + TARGET_FILENAME)
+    )
+    if (u.scheme != "https" or u.hostname != "zenodo.org" or u.port not in (None, 443)
         or u.username is not None or u.password is not None
-        or not u.path.startswith(f"/api/records/{RECORD_ID}/files/")
-        or not u.path.endswith("/content")):
+        or not official_path):
         raise ValueError("Source-file content URL is not verified official Zenodo API")
     size = f.get("size")
     if not isinstance(size, int) or not 1_000_000 <= size <= 6_000_000:
