@@ -1,0 +1,35 @@
+name: Costus 2022 original phylogeny blocked TTF source gate
+
+on:
+  push:
+    branches:
+      - research/crest-ttf-four-system-source-preflight-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/ttf_crest_costus_clade_holdout_source_gate_20261115.py'
+      - 'tests/test_crest_ttf_costus_clade_holdout_source_gate.py'
+      - '.github/workflows/costus-clade-source-gate.yml'
+
+jobs:
+  source-only-clade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic tree and source-only support tests
+        run: |
+          python -m pip install pytest dendropy==5.0.8
+          python -m pytest -q tests/test_crest_ttf_costus_clade_holdout_source_gate.py
+      - name: Determine fixed Costus tree-only 27-taxon clade fold eligibility, no scent responses
+        run: |
+          python research/prospective/ttf_crest_costus_clade_holdout_source_gate_20261115.py > /tmp/costus_phylo_block_source_gate.json
+          cat /tmp/costus_phylo_block_source_gate.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: costus-phylogenetic-clade-geometry-before-scent
+          path: /tmp/costus_phylo_block_source_gate.json
+          retention-days: 21
