@@ -44,7 +44,7 @@ def fetch_json(url):
         for row in rd:
             candidate=next((v for k,v in row.items()
                            if k and k.lower().strip() in
-                           ("name","field","fieldname","field name")),None)
+                           ("name","field","fieldname","field name","columnid")),None)
             if candidate and candidate.strip():
                 names.append({"name":candidate.strip()})
         if not names:
