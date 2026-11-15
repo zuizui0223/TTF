@@ -1,0 +1,70 @@
+{
+  "schema": "ttf_fresh_transplant_data_public_catalog_source_only_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_BEFORE_EXTERNAL_DRYAD_METADATA_SEARCH",
+  "scientific_goal": "Find new site-georeferenced reciprocal-transplant fitness origin-by-destination experiments without reopening stopped PROCEED Haldane outcomes",
+  "old_outcome_status": "TERMINAL_NOT_EVALUABLE_H_SYNTHETIC_NULL_CEILING_FAIL_NO_BIOLOGICAL_OUTCOME_OPENING",
+  "selection_rule": "Dryad metadata and catalog only: no response values or signs used; do not presume independence before source-paper IDs are compared",
+  "candidates": [
+    {
+      "id": "hargreaves2020_multi",
+      "doi": "10.5061/dryad.0vt4b8gv1",
+      "role": "primary_multispecies_reciprocal_transplant",
+      "expected_file_name": "Hargreaves_etal_2020_AmNat_transplant_data.csv",
+      "why": "Multi-study local adaptation transplant synthesis with locations converted to decimal degrees; first opportunity for species×study source/garden matching",
+      "known_overlap": [
+        "bontrager2020_range",
+        "hereford2009_survey"
+      ],
+      "public_description_url": "https://datadryad.org/dataset/doi:10.5061/dryad.0vt4b8gv1"
+    },
+    {
+      "id": "bontrager2020_range",
+      "doi": "10.5061/dryad.pnvx0k6mc",
+      "role": "multispecies_range_edge_transplant_secondary_overlap_control",
+      "expected_file_name": "dryad.zip",
+      "why": "Literature-based transplant fitness and geographic covariates; potentially shares primary studies with Hargreaves",
+      "known_overlap": [
+        "hargreaves2020_multi",
+        "hereford2009_survey"
+      ],
+      "public_description_url": "https://datadryad.org/dataset/doi:10.5061/dryad.pnvx0k6mc"
+    },
+    {
+      "id": "hereford2009_survey",
+      "doi": "10.5061/dryad.315",
+      "role": "legacy_multispecies_local_adaptation_source_overlap_reference",
+      "expected_file_name": "LA_data_Hereford.xls",
+      "why": "Earlier reciprocal transplant survey; site origin columns not yet verified; overlap sentinel only",
+      "known_overlap": [
+        "hargreaves2020_multi",
+        "bontrager2020_range"
+      ],
+      "public_description_url": "https://datadryad.org/dataset/doi:10.5061/dryad.315"
+    },
+    {
+      "id": "cross2026_coords_example",
+      "doi": "10.5061/dryad.tb2rbp0h6",
+      "role": "single_species_original_source_and_transplant_coordinate_schema_example",
+      "expected_file_name": "latlongs.csv",
+      "why": "Explicit source-origin and transplant-site coordinates, but one focal species not a macro-panel",
+      "known_overlap": [],
+      "public_description_url": "https://datadryad.org/dataset/doi:10.5061/dryad.tb2rbp0h6"
+    }
+  ],
+  "required_public_meta": [
+    "doi",
+    "dataset title",
+    "version identifier",
+    "file name",
+    "file size",
+    "file digest",
+    "download endpoint"
+  ],
+  "future_header_or_row_audit_not_authorized_by_this_manifest": true,
+  "fitness_and_plasticity_values_not_read": true,
+  "speciation_or_adaptation_prediction_not_tested": true,
+  "raw_original_coordinates_not_exported": true,
+  "no_response_reopening": true,
+  "ttf_main_unchanged": true
+}
