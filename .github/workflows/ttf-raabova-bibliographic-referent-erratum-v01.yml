@@ -1,0 +1,29 @@
+name: Raabova 2007 vs 2008 bibliographic referent scientific erratum
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/raabova_2007_2008_wrong_primary_reference_erratum_v01.json'
+      - 'research/prospective/test_raabova_wrong_primary_reference_erratum_v01.py'
+      - 'research/prospective/RECIPROCAL_SOURCE_AS_GARDEN_EXTERNAL_GEO_AUDIT_20261115.md'
+      - '.github/workflows/ttf-raabova-bibliographic-referent-erratum-v01.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/raabova_2007_2008_wrong_primary_reference_erratum_v01.json'
+      - 'research/prospective/test_raabova_wrong_primary_reference_erratum_v01.py'
+      - '.github/workflows/ttf-raabova-bibliographic-referent-erratum-v01.yml'
+
+jobs:
+  scientific-referent-guard:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirm old 1-of-4 geography is invalid 2007 paper validation, not ecological null
+        run: python -m unittest discover -s research/prospective -p test_raabova_wrong_primary_reference_erratum_v01.py -v
