@@ -1,0 +1,71 @@
+name: Freeze response-blind reciprocal source-as-garden georecovery
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - '.github/workflows/ttf-source-as-garden-receipt-freeze.yml'
+
+jobs:
+  freeze-source-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: prospective/independent-transplant-overlap-20261115
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43709603951
+          name: ttf-Hargreaves-plant-source-as-garden-proxy-calibration-v01
+          github-token: ${{ github.token }}
+          path: _ttf_source_only
+      - name: Replay frozen source-only output hash and exact source proxy counts
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json
+          p=Path("_ttf_source_only/hargreaves_source_as_garden_georecovery_v01.json")
+          raw=p.read_bytes()
+          assert hashlib.sha256(raw).hexdigest()=="944344d90b3bb0189c11d57c3a4ba561944453bcef8c42a3e01ea38f911e786d"
+          result=json.loads(raw)
+          assert result["authentic_original_source_sha256"]=={
+            "bontrager":"2995d0f165b27ccf2f38f3d0b286845c107762a0c2b02df2290e9a5df6b396f0",
+            "hargreaves":"f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71"
+          }
+          s=result["summary"]
+          assert len(result["per_unlinked_study"])==35
+          assert s["calibration_true_source_comparisons"]==212
+          assert s["calibration_distance_bins"]["km_le_1"]==212
+          assert s["calibration_distance_max_km"]<0.005
+          assert s["original_Hargreaves_source_ID_keys_existing_as_same_species_gardens"]==292
+          assert s["original_Hargreaves_source_ID_keys_with_unique_garden_coordinate"]==290
+          assert s["unlinked_distinct_source_IDs_eligible_for_garden_derived_proxy"]==76
+          assert s["unlinked_study_labels_with_two_or_more_pop_as_garden_recovered"]==21
+          assert s["unlinked_study_labels_with_any_same_garden_two_georecovered_origins"]==21
+          assert s["unlinked_design_cells_with_two_georecovered_origins"]==142
+          assert s["independently_certified_original_source_experiments"]==0
+          assert s["independently_verified_original_source_latlon_from_original_Hargreaves_columns"]==0
+          assert result["output_contains_raw_coordinates_or_source_IDs"] is False
+          assert result["no_lgm_climate_or_genetic_fitness_effect_opened"] is True
+          assert result["Bontrager_frozen_44_of_50_gate_unchanged"] is True
+          print("RECEIPT_SHA_AND_SCOPE_OK: 212 concordant 76 proxy IDs 21 studies 142 cells")
+          PY
+      - name: Retain only source metadata summary on development Draft PR branch
+        run: |
+          mkdir -p research/prospective/source_registry
+          cp _ttf_source_only/hargreaves_source_as_garden_georecovery_v01.json research/prospective/source_registry/hargreaves_source_as_garden_georecovery_v01.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/prospective/source_registry/hargreaves_source_as_garden_georecovery_v01.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Freeze exact population-as-garden georecovery source-only receipt"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
