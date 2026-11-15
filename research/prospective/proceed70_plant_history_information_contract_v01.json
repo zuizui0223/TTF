@@ -1,0 +1,66 @@
+{
+  "schema": "ttf_proceed70_plant_response_blind_quaternary_predictor_identifiability_contract_v01",
+  "created_on": "2026-11-14",
+  "status": "FROZEN_BEFORE_PLANT_HISTORY_INFORMATION_RESPONSE_BLIND_CALCULATION",
+  "parent_study": "research/prospective/proceed_plant_chelsa_source_support_contract_v01.json",
+  "authoritative_input": {
+    "source_artifact_run": 43221686424,
+    "source_artifact_id": 13946078087,
+    "source_status": "PASS_CHELSA8_PLANT_SOURCE_SUPPORT_NO_ADAPTATION_TEST",
+    "original_source_plant_taxa": 70,
+    "original_source_studies": 104,
+    "original_original_endpoint_pair_rows": 1561,
+    "unique_coordinate_sites": 253,
+    "train_species": 35,
+    "heldout_species": 35,
+    "origin_lonlat_sha256": "aed6486ee9aa49b0d454426c4d5964ebd79a8a96db2aac452c80fd5b7f52af32",
+    "chelsa8_complete_raw_sha256": "7d03b2f158ade223b752a2b7d6ac57c38fd163e0b44f5566a01e8e6fe6d6b4fb",
+    "source_study_species_role_sha256": "73b16a46f4458aee64d735a495273e5d760683b020c5432a9701fc14214f231d",
+    "chelsa8_asset_manifest": "research/prospective/chelsa_trace21k_fixed8_assets_v01.json",
+    "chelsa8_asset_source_blob_sha": "c3a1fb27e6a8c79c8ddc1624a972e74dbe3076d6",
+    "original_proceed_md5": "eae537bd3ac244835fa9c8245f27a40b",
+    "original_proceed_sha256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2"
+  },
+  "source_only_pair_grain": "One unique (original study ID, normalized plant species binomial, exact ordered pair of WGS84 site coordinates). Multiple trait/rate rows sharing this key contribute one predictor geometry row; never select by effect size.",
+  "train_variance_weighting": "One equal total weight per training plant species; each distinct source study/location pair within that species has equal subweight. Source effect row counts never used as analytical weights.",
+  "baseline_controls_order": [
+    "0BP pair mean bio01",
+    "0BP pair mean bio07",
+    "0BP pair mean bio12",
+    "0BP pair mean bio15",
+    "0BP pair absolute bio01 difference",
+    "0BP pair absolute bio07 difference",
+    "0BP pair absolute bio12 difference",
+    "0BP pair absolute bio15 difference",
+    "pair midpoint latitude",
+    "pair midpoint longitude",
+    "pair great-circle distance km"
+  ],
+  "main_focal_history_predictor": "Mean of the two sites' four-dimensional local 21ka-to-0BP standardised displacement magnitudes: Hpair=0.5*(sqrt(sum_j((C21ka(site1,j)-C0BP(site1,j))/s_j)^2)+sqrt(sum_j((C21ka(site2,j)-C0BP(site2,j))/s_j)^2)), where each s_j is the training-species-equal weighted SD of 0BP j at all pair endpoints, floored to one only when zero.",
+  "prespecified_information_estimator": "Weighted residual sum of squares of Hpair from ordinary weighted least squares with intercept and 11 baseline controls, divided by weighted total Hpair centred sum of squares (train only); separate observation-weighted heldout ratio is descriptive and uses TRAIN-FITTED linear coefficients for prediction, not refitted on heldout.",
+  "pass_criterion": {
+    "minimum_training_total_unique_fraction": 0.05,
+    "minimum_distinct_training_species_with_nonzero_H": 20,
+    "minimum_distinct_heldout_species_with_nonzero_H": 20,
+    "stop_if_required_sha_differs": true,
+    "no_response_opening_even_on_success": true,
+    "information_fraction_is_NOT_response_R_squared": true
+  },
+  "analysis_scope": {
+    "no_rate_genetic_effect_mean_SD_or_fitness_columns_accessed": true,
+    "no_historical_refugia_or_paleo_occurrence_inference": true,
+    "no_heritability_or_local_adaptation_effect_test": true,
+    "no_phylogenetic_speciation_test": true,
+    "no_TTF_Q_COI_HE_FST_Jensen_closed_outcomes_reopened": true,
+    "no_source_site_coordinates_or_pointwise_climate_values_exported": true,
+    "sample_size_is_70_species_NOT_1561_effect_rows": true
+  },
+  "outputs": [
+    "source verified original/site/climate SHA",
+    "number of unique study–species–coordinate pairs and deduplication factor",
+    "train/heldout species and study counts, within split nonzero historic predictor support",
+    "train unique-H fraction beyond contemporary climate+geographic geometry; heldout projection ratio descriptive",
+    "training species-equal distribution of H and effective residual historical signal species concentration",
+    "aggregate original present and glacial climate standardization only; no individual species/site climate"
+  ]
+}

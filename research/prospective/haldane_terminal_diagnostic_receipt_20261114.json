@@ -1,0 +1,76 @@
+{
+  "schema": "ttf_haldane_terminal_diagnostic_receipt_20261114",
+  "status": "TERMINAL_CALIBRATION_STOP_UNCHANGED_PARTIAL_DIAGNOSIS_VERIFIED",
+  "recorded_on": "2026-11-14",
+  "original_calibration": {
+    "run_id": 43580870641,
+    "artifact_id": 14107963308,
+    "artifact_zip_sha256": "bb84dd9f726b3dddfeefe4bb157604dca15664d4479a2afd7147f145abc10e22",
+    "null_positive_decisions": 7,
+    "null_worlds": 100,
+    "Wilson95": [0.03431926106727268, 0.137495147390735],
+    "preregistered_Wilson_upper_ceiling": 0.1,
+    "largest_count_passing_original_100_world_rule": 4,
+    "strong_synthetic_positive_detections": 100,
+    "strong_synthetic_positive_worlds": 100,
+    "synthetic_positive_is_not_empirical_power_or_biology": true,
+    "failed_certification_does_not_prove_true_false_positive_rate_above_10_percent": true,
+    "history_predictor_unique_fraction_56_species_21_controls": 0.12849475503663654,
+    "effective_training_species_of_history_signal": 9.864397397213382
+  },
+  "source_dependency_diagnosis": {
+    "run_id": 43595373159,
+    "run_head_sha": "2c73177dec222df9df339c8a135aea1075880f45",
+    "artifact_id": 14114120917,
+    "artifact_zip_sha256": "3e509ee7cadb09229b998d77083d8726e7a64f5b69839849115732619e541062",
+    "source_SHA256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2",
+    "role_SHA256": "73b16a46f4458aee64d735a495273e5d760683b020c5432a9701fc14214f231d",
+    "source_pairs": 165,
+    "train_species": 29,
+    "heldout_species": 27,
+    "train_studies": 48,
+    "heldout_studies": 45,
+    "train_test_species_overlap": 0,
+    "train_test_study_overlap": 0,
+    "heldout_studies_containing_multiple_species": 2,
+    "heldout_species_pairs_sharing_a_study": 2,
+    "heldout_study_species_components": 25,
+    "component_sizes": [2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    "interpretation": "Between-arm leakage is absent. Within-heldout cross-species study dependence exists, so species-only resampling does not preserve all dependence assumed by the synthetic generator. Its contribution to the seven original positive decisions is not quantified."
+  },
+  "deterministic_ridge_counterexample": {
+    "setting": "One centered standardized covariate x, deterministic y=x, alpha=0.1; duplicate the SAME x without adding information.",
+    "single_column_prediction_slope": "1/(1+alpha)",
+    "duplicated_column_total_slope": "2/(2+alpha)",
+    "relative_squared_error_reduction": 0.7256235827664399,
+    "is_real_source_or_biological_result": false,
+    "interpretation": "Algorithmic predictive gain and an independent biological-history effect are different null hypotheses under ridge. This proof is not attribution of the observed seven synthetic rejections."
+  },
+  "unresolved_numeric_replay": {
+    "run_id": 43594694027,
+    "artifact_id": 14113538978,
+    "run_head_sha": "acafe139c73a6086d9702571399cc6ac6037a27c",
+    "stage": "Frozen source model matrix identity check",
+    "original_coordinates_and_8_band_climate_hashes_reproduced": true,
+    "both_21_control_and_history_model_hashes_jointly_reproduced": false,
+    "which_matrix_or_entries_differ": "NOT LOGGED; cannot assign discrepancy to X, H, rounding, or a specific operation",
+    "original_model_expected_risk_computed": false,
+    "cause": "UNRESOLVED despite matching reported OS image, Python and principal numerical library versions",
+    "new_hash_accepted_or_precision_weakened": false
+  },
+  "verification": {
+    "deterministic_algebra_unit_tests": 8,
+    "dependency_topology_unit_tests": 3,
+    "source_retrieval_identity_and_29_27_roles_verified": true,
+    "original_100_world_trial_level_outputs_available": false
+  },
+  "boundaries": {
+    "additional_null_or_positive_worlds_drawn": 0,
+    "real_Haldane_or_genetic_phenotype_magnitudes_read": false,
+    "original_alpha_threshold_sample_split_or_predictors_changed": false,
+    "existing_empirical_stop_reopened": false,
+    "main_modified": false,
+    "diagnosis_is_not_a_new_calibrated_test": true
+  },
+  "next_methodological_requirement_not_executed": "Keep original v1 stopped. In a separate methods development protocol, explicitly separate conditional historical biological signal from ridge predictive improvement, preserve study-species dependence in uncertainty, record per-world diagnostics, and establish complete model-matrix numerical provenance before any independent empirical evaluation."
+}

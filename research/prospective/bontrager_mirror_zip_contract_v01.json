@@ -1,0 +1,22 @@
+{
+  "schema": "ttf_original_Bontrager_Dryad_UBC_Borealis_identity_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_BEFORE_UBC_BOREALIS_ORIGINAL_ZIP_CONTENT",
+  "authority_Dryad_metadata_run": 43667611601,
+  "authority_UBC_metadata_run": 43668291481,
+  "original_Dryad_doi": "10.5061/dryad.pnvx0k6mc",
+  "original_Dryad_version": "113461",
+  "mirror_dataset_doi": "doi:10.5683/SP2/DU3ZTQ",
+  "mirror_dataset_id": 150983,
+  "mirror_version": "1.0",
+  "mirror_source_file_id": 150984,
+  "file_name": "dryad.zip",
+  "expected_file_bytes": 811204,
+  "dryad_sha256": "2995d0f165b27ccf2f38f3d0b286845c107762a0c2b02df2290e9a5df6b396f0",
+  "mirror_md5": "2de98c1bb2cd2ddffcb090eb65a74d9f",
+  "max_download_bytes": 900000,
+  "only_allowed_inspection": "Verify full archive digest and enumerate central-directory member names without extracting or reading any stored study records",
+  "cannot_presume_independent_of_Hargreaves": true,
+  "new_outcome_opening_authorized": false,
+  "old_Haldane_terminal_unchanged": true
+}

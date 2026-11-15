@@ -1,0 +1,32 @@
+name: ttf-Haldane-TERMINAL-original-metadata-dependency
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths: ['.github/workflows/ttf-haldane-terminal-source-dependency.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dependency-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - run: python -m pip install 'numpy==2.5.4' 'scipy==1.18.1' 'shapely==2.2.0' 'rasterio==1.5.2' 'pyproj==3.8.0'
+      - run: python -m unittest discover -s research/prospective -p 'test_terminal_dependency_audit.py' -v
+      - run: |
+          mkdir -p results/terminal_diagnosis
+          python research/prospective/terminal_dependency_audit.py --output results/terminal_diagnosis/source_dependency.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ttf-Haldane-terminal-source-dependency
+          path: results/terminal_diagnosis/source_dependency.json
+          retention-days: 30
+          if-no-files-found: error

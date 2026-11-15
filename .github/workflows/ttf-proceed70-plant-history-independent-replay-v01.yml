@@ -1,0 +1,63 @@
+name: ttf-evo-PROCEED70-history-SOURCE-second-identity-replay
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-proceed70-plant-history-independent-replay-v01.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ttf-proceed70-history-source-second-replay-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  independently-repeat-verified-source-only-climate-information:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      GDAL_CACHEMAX: '256'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - name: Install the same byte-locked original-source GIS/numerical versions
+        run: python -m pip install 'numpy==2.5.4' 'scipy==1.18.1' 'shapely==2.2.0' 'rasterio==1.5.2' 'pyproj==3.8.0' 'pyshp==2.4.2'
+      - name: Verify nonbiological predictor-only mathematical controls
+        run: python -m unittest discover -s research/prospective -p 'test_proceed70_plant_history_information.py' -v
+      - name: Rehydrate original public sources by exact SHA and independently compute source-only climate H
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/proceed70_plant_history_information.py \
+            --work /tmp/ttf-proceed70-history-second-independent-source-replay \
+            --output results/source_only/proceed70_history_replay_v01.json
+      - name: Compare against the first successful pre-response source-only frozen scalar receipt
+        run: |
+          python - <<'PY'
+          import json,math
+          x=json.load(open('results/source_only/proceed70_history_replay_v01.json'))
+          r=json.load(open('research/prospective/proceed70_history_information_first_pass_receipt_v01.json'))
+          assert x['status']=='PASS_PLANT70_HISTORY_NONREDUNDANT_INFORMATION_SOURCE_ONLY'
+          assert x['rate_or_trait_or_genetic_response_values_opened'] is False
+          assert x['original_chelsa8_matrix_sha256']==r['source_original_chelsa8_raw_numeric_sha256']
+          assert x['original_lonlat_sha256']==r['original_source_lonlat_sha256']
+          assert x['source_study_species_split_sha256']==r['source_study_species_roles_sha256']
+          assert x['unique_study_species_site_pair_predictor_rows']==r['source_design']['unique_study_species_ordered_geolocation_pairs']
+          assert x['train_pair_count']==r['source_design']['train_unique_pairs']
+          assert x['heldout_pair_count']==r['source_design']['heldout_unique_pairs']
+          for a,b in [('train_unique_historical_predictor_variance_fraction','unique_fraction_source_predictor_train'),
+                      ('train_species_effective_residual_signal','species_effective_residual_signal'),
+                      ('train_species_max_signal_share','maximum_one_species_signal_share')]:
+              assert math.isclose(x[a],r['historical_predictor'][b],rel_tol=0,abs_tol=1e-11),(a,x[a],r['historical_predictor'][b])
+          print('SECOND_INDEPENDENT_SOURCE_ONLY_EXACT_NUMERIC_REPLAY_PASS',x['train_unique_historical_predictor_variance_fraction'])
+          PY
+      - name: Save aggregate-only verified second source replay; never sites/traits/coordinates
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-PROCEED70-second-replay-historical-predictor-information-only
+          path: results/source_only/proceed70_history_replay_v01.json
+          retention-days: 30
+          if-no-files-found: error

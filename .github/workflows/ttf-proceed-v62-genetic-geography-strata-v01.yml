@@ -1,0 +1,48 @@
+name: ttf-evo-PROCEED-v62-GENETIC-geo-source-stratification-only
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-proceed-v62-genetic-geography-strata-v01.yml'
+      - 'research/prospective/proceed_v62_genetic_geometry_intersection.py'
+      - 'research/prospective/test_proceed_v62_genetic_geometry_intersection.py'
+      - 'research/prospective/proceed_v62_genetic_geometry_intersection_contract_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ttf-proceed-v62-source-strata-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  genetic-design-and-geography-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test source-only strata unaffected by phenotype rate values
+        run: python -m unittest discover -s research/prospective -p 'test_proceed_v62_genetic_geometry_intersection.py' -v
+      - name: Original SHA-verified native source metadata intersection no outcome access
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/proceed_v62_genetic_geometry_intersection.py --output results/source_only/proceed_v62_strata_aggregate.json
+      - name: Report taxonomic and source-design qualification only
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('results/source_only/proceed_v62_strata_aggregate.json'))
+          assert r['no_rate_or_genetic_effect_values_used'] is True
+          assert r['response_biological_effects_opened'] is False
+          print('GENETIC_SOURCE_QUALIFICATION',r['status'])
+          print('ANIMAL_GENETIC_GEO_SPECIES',r.get('animal_phylum_geolocated_genetic',{}).get('distinct_original_species_binomials'))
+          PY
+      - name: Publish only category counts and study-dependency diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-PROCEED-v62-genetic-animal-geography-strata-aggregate
+          path: results/source_only/proceed_v62_strata_aggregate.json
+          retention-days: 30
+          if-no-files-found: warn

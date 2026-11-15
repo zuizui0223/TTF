@@ -1,0 +1,69 @@
+{
+  "schema": "ttf_proceed70_plant_traits_source_metadata_before_rate_response_contract_v01",
+  "issued_on": "2026-11-14",
+  "status": "FROZEN_SOURCE_ONLY_TRAIT_AND_TEMPORAL_DESIGN_ELIGIBILITY_BEFORE_ANY_CHANGE_RATE",
+  "authoritative_inputs": {
+    "source_first_history_information_run": 43576786261,
+    "source_second_information_replay_run": 43577189439,
+    "historical_predictor_source_frozen_result": "research/prospective/proceed70_history_information_first_pass_receipt_v01.json",
+    "source_original_sha256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2",
+    "study_species_role_sha256": "73b16a46f4458aee64d735a495273e5d760683b020c5432a9701fc14214f231d",
+    "study_species_roles_train_heldout": [
+      35,
+      35
+    ],
+    "plants": 70,
+    "source_studies": 104,
+    "georeferenced_eligible_source_rows": 1561,
+    "unique_study_species_ordered_geographic_pairs": 187
+  },
+  "metadata_fields_allowed": [
+    "es_ID",
+    "ref_ID",
+    "sp_pub",
+    "sp_ncbi",
+    "phylum",
+    "taxa",
+    "genphen",
+    "sample1_latitude",
+    "sample1_longitude",
+    "sample2_latitude",
+    "sample2_longitude",
+    "trait_type",
+    "design",
+    "data_type",
+    "years",
+    "generations",
+    "gtime",
+    "experimental",
+    "exp_type",
+    "system"
+  ],
+  "explicitly_forbidden_response_fields": [
+    "mean1",
+    "mean2",
+    "sd1",
+    "sd2",
+    "n1",
+    "n2",
+    "out_in",
+    "transf_data",
+    "data_scale"
+  ],
+  "grain": "Each exact original source (study, species, ordered original location pair, trait_type) counted once per descriptive trait family, regardless of multiple rate rows and effect sizes",
+  "diagnostic_only": [
+    "Data-type metadata category counts and overlap with phylogenetic source 70 taxa",
+    "Trait-type by independent original source study count, independent plant binomial and genus, train/heldout species roles, and unique study–species–location pairs",
+    "Allochronic versus synchronic design count within each original trait type, genomic study-source genetic label remains fixed",
+    "Years/generations/gtime availability; no reading or transformation of rate values",
+    "Study/taxon repeat effects and metric comparability concerns; no model-response choice from observed rates"
+  ],
+  "quarantine_rules": {
+    "study_disjoint_species_disjoint_split_locked": true,
+    "no_geo_imputation_or_taxonomic_fuzzy_matching": true,
+    "no_rate_values_opened_even_if_metadata_sufficient": true,
+    "original_study_source_codebook_needed_for_rate_transformations": true,
+    "no_automatic_selection_of_most_significant_trait_or_time_denominator": true
+  },
+  "no_original_TTF_Q_COI_HE_FST_Jensen_response_reopened": true
+}

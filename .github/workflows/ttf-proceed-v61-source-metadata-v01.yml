@@ -1,0 +1,45 @@
+name: ttf-evo-PROCEED-v61-Borealis-METADATA-only
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-proceed-v61-source-metadata-v01.yml'
+      - 'research/prospective/proceed_v61_borealis_source_metadata.py'
+      - 'research/prospective/test_proceed_v61_metadata_only.py'
+      - 'research/prospective/proceed_v61_source_metadata_contract_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-data-catalog-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic Borealis metadata-only method tests
+        run: python -m unittest discover -s research/prospective -p 'test_proceed_v61_metadata_only.py' -v
+      - name: Verify public PROCEED v6.1 dataset file catalog metadata (NO DATAFILE DOWNLOAD)
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/proceed_v61_borealis_source_metadata.py --output results/source_only/proceed_v61_dataset_catalog.json
+      - name: Enforce no phenotypic or genetic response opening
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('results/source_only/proceed_v61_dataset_catalog.json'))
+          assert d['phenotypic_effect_size_rows_opened'] is False
+          assert d['genetic_study_results_opened'] is False
+          assert d['history_adaptation_statistical_effect_fitted'] is False
+          print('PROCEED_CATALOG',d['status'],'FILES',d.get('file_count',0))
+          PY
+      - name: Retain public source file names/hashes only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-evo-PROCEED-v61-public-file-catalog-only
+          path: results/source_only/proceed_v61_dataset_catalog.json
+          retention-days: 30
+          if-no-files-found: warn

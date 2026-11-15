@@ -1,0 +1,46 @@
+{
+  "schema": "ttf_PROCEED_v62_plant_genetic_phenotypic_source_paired_design_terminal_receipt_v01",
+  "date": "2026-11-14",
+  "status": "FROZEN_SOURCE_ONLY_NOT_EVALUABLE_DIRECT_ADAPTATION_VS_PLASTICITY_DECOMPOSITION",
+  "source": {
+    "source_file_id": 1024206,
+    "source_release": "PROCEED v6.2 Borealis dataset version 4.0",
+    "source_original_md5": "eae537bd3ac244835fa9c8245f27a40b",
+    "source_original_sha256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2",
+    "source_only_pr": 154,
+    "workflow_run_id": 43578184785,
+    "artifact_id": 14106873621,
+    "frozen_contract": "research/prospective/proceed_v62_plant_genetic_phenotypic_match_contract_v01.json"
+  },
+  "source_metadata_count": {
+    "original_rate_source_rows_all_taxa": 9263,
+    "plant_source_rows_genetic_and_phenotypic": 2171,
+    "valid_geolocation_taxon_study_trait_rows_all_plant": 2032,
+    "valid_source_genetic_labels": 1561,
+    "valid_source_phenotypic_labels": 471,
+    "source_distinct_plant_species_across_both_categories": 116,
+    "strictly_matched_study_species_trait_ordered_location_keys": 10,
+    "strictly_matched_distinct_plant_species": 7,
+    "strictly_matched_original_studies": 6,
+    "matching_study_species_trait_ignoring_geo_keys": 14,
+    "matching_study_species_trait_ignoring_geo_species": 10,
+    "matching_species_trait_ignoring_study_geo_keys": 24,
+    "matching_species_trait_ignoring_study_geo_species": 14
+  },
+  "prior_fixed_gate": {
+    "min_strictly_matched_species": 20,
+    "min_strictly_matched_studies": 10,
+    "pass": false,
+    "interpretation": "Direct matched source design does not cover enough independent taxa/studies for a proposed macro genetic-vs-phenotypic rate comparison."
+  },
+  "scientific_caveats": [
+    "Source PROCEED Genphen=Genetic denotes measurement intended to capture heritable phenotypic differences, not independently measured adaptation or reciprocal-transplant fitness.",
+    "Phenotypic refers to total field phenotype and mixes genetic and environmental components; source category contrast alone is not a plasticity reaction norm.",
+    "Even strict same-study/site/trait matches do not prove the same genotypes, measurement conditions or causal population histories.",
+    "No original genetic/phenotypic rate magnitude, fitness outcome or climatic predictor association was read or fitted in this eligibility audit.",
+    "Keep the separate 70-species heritable-phenotypic change RATE prediction program candidate, but do not claim adaptation/plasticity decomposition or speciation."
+  ],
+  "outcome_rate_values_read": false,
+  "prior_TTFQ_COI_He_Fst_Jensen_response_reopened": false,
+  "main_unchanged": true
+}

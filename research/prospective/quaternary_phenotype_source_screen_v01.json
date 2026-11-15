@@ -1,0 +1,73 @@
+{
+  "schema": "ttf_quaternary_phenotypic_evolution_plasticity_source_screen_v01",
+  "created_on": "2026-11-12",
+  "status": "PRE_ROW_LEVEL_ARR_VIEW_SOURCE_GEOGRAPHY_ONLY_PILOT",
+  "scope": "New response-disjoint prospective research feasibility, NOT an amendment or rescue of frozen TTF-Q / COI / He / Fst / Jensen results. Source study's existing published effects are already known: no claim of fully blinded fresh confirmation.",
+  "biological_question": "Does Quaternary climate variability or long-term spatial stability predict experimentally measured capacity for phenotypic acclimation after current climate, lat/lon, methodology, taxonomy and sampling are controlled?",
+  "hypotheses_preliminary": [
+    "History magnitude by itself is not equivalent to environmental predictability on an organism's generation or lifetime scale.",
+    "Phenotypic plasticity must be estimated from repeated environments within a genotype/population (reaction norm or ARR), not from GBIF occurrence breadth or field phenotype alone.",
+    "Heritable local adaptation requires common-garden genetic differentiation or reciprocal-transplant fitness response; species divergence from a phylogeny alone does not prove LGM speciation."
+  ],
+  "source": {
+    "project": "Barley et al. 2021. Limited plasticity in thermally tolerant ectotherm populations: evidence for a trade-off",
+    "publication_doi": "10.1098/rspb.2021.0765",
+    "dryad_doi": "10.5061/dryad.zs7h44j8z",
+    "github_repo": "jmbarley1/plasticity",
+    "github_commit": "c1416c8925d6f1509b94fb61a9e7973f4cf03cb4",
+    "source_file": "Data/acc_data_commoncontrol.csv",
+    "source_git_blob_sha1": "8e960f1e43f8d4f4ca4c9521c41d8576e97beaec",
+    "file_description": "Authors' shared common-control acclimation dataset with origin latitude/longitude and measured ARR",
+    "publication_n_studies": 20,
+    "publication_n_species": 19,
+    "publication_n_populations": 78,
+    "caution": "Publication denominators may not equal all rows in GitHub CSV; do not force or silently replace source records"
+  },
+  "prephenotype_allowed_fields": [
+    "study",
+    "taxon",
+    "phylum",
+    "ecosystem",
+    "source_population",
+    "latitude",
+    "longitude",
+    "acclimation_time",
+    "number_of_populations"
+  ],
+  "response_fields_prohibited_until_separate_authorization": [
+    "ARR",
+    "thermal_limit_1",
+    "thermal_limit_2",
+    "thermal_limit_error_1",
+    "thermal_limit_error_2",
+    "n_1",
+    "n_2",
+    "ni"
+  ],
+  "spatial_census": {
+    "keep_only_ecosystem_exact_terrestrial": true,
+    "no_marine_aquatic_coastal_CHELSA_sampling": true,
+    "original_geographic_population_key": [
+      "study",
+      "taxon",
+      "source_population"
+    ],
+    "valid_coordinate": "finite reported latitude and longitude, WGS84 plausible ranges, no imputation; no source precision threshold invented",
+    "unique_sites": "distinct exact latitude+longitude within a study and species; do not infer true geolocation precision",
+    "conflict_status": "flag if one study+species+source population maps to multiple distinct origin coordinates; no outcome-based repair",
+    "descriptive_source_pilot_gate": "at least two independent georeferenced populations within a study-species group; descriptive viability, not confirmatory fitness",
+    "macro_qualification": "At least 50 terrestrial species with ≥2 exact georeferenced original populations, >=15 original studies, >=10 distinct genera and >=20 species per prespecified split arm, with zero conflicting coordinates for the same population key.",
+    "if_insufficient": "PILOT_ONLY_NO_MACRO_HISTORY_VS_PLASTICITY_CLAIM",
+    "historical_climate_sampling_permitted_now": false,
+    "source_rows_counted_without_inspecting_or_using_phenotype_values": true
+  },
+  "future_model_not_authorized_now": {
+    "baseline": "Current-climate means, variability and geographic context; study and experimental method controls, taxonomic and sampling structure",
+    "history_increment": "Predeclared LGM-to-present temperature change and temporal trajectory after CHELSA original SHA binding; not selected from experimental ARR",
+    "compare": "Heldout original studies AND independent species, not row-random 78 populations; report finite-sample intervals and negative controls",
+    "specimen_population_coordinates_not_necessarily_paleo_occupancy": true,
+    "phenotypic_adaptation_not_identified_by_ARR": true,
+    "species_diversification_not_identified_by_ARR": true
+  },
+  "original_frozen_TTF_programs_unchanged": true
+}

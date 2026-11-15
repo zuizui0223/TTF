@@ -1,0 +1,49 @@
+name: ttf-fresh-Bontrager-original-mirrored-ZIP-MEMBERS-only
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-bontrager-UBC-original-ZIP-index-v01.yml'
+      - 'research/prospective/bontrager_mirror_zip_contract_v01.json'
+      - 'research/prospective/bontrager_mirror_zip_v01.py'
+      - 'research/prospective/test_bontrager_mirror_zip_v01.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-archive-index-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test exact archive publisher digest and ZIP member-only firewall
+        run: python -m unittest discover -s research/prospective -p 'test_bontrager_mirror_zip_v01.py' -v
+      - name: Verify original ZIP publisher SHA256 and mirror MD5 before listing paths only
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/bontrager_mirror_zip_v01.py \
+            --contract research/prospective/bontrager_mirror_zip_contract_v01.json \
+            --output results/source_only/Bontrager_UBC_Dryad_original_zip_index.json
+      - name: Enforce no phenotype/genetic adaptation results or location records
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('results/source_only/Bontrager_UBC_Dryad_original_zip_index.json'))
+          assert x['fitness_or_site_records_read'] is False
+          assert x['biological_model_fitted'] is False
+          assert x['independent_new_studies_qualified'] is False
+          assert x['old_Haldane_opened'] is False
+          print('BONTRAGER_ORIGINAL_SOURCE_INDEX',x['status'])
+          print('ZIP_MEMBER_COUNT',x.get('member_count'))
+          PY
+      - name: Archive aggregate only, never original data ZIP
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-Bontrager-Dryad-UBC-original-ZIP-members-only
+          path: results/source_only/Bontrager_UBC_Dryad_original_zip_index.json
+          retention-days: 30
+          if-no-files-found: warn

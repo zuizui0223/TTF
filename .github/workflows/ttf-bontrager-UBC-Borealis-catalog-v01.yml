@@ -1,0 +1,44 @@
+name: ttf-fresh-transplant-Bontrager-UBC-mirror-catalog-ONLY
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-bontrager-UBC-Borealis-catalog-v01.yml'
+      - 'research/prospective/bontrager_borealis_catalog_v01.py'
+      - 'research/prospective/test_bontrager_borealis_catalog_v01.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  catalog-original-UBC-Dataverse-no-fitness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test DOI identity and source-only Borealis catalog parser
+        run: python -m unittest discover -s research/prospective -p 'test_bontrager_borealis_catalog_v01.py' -v
+      - name: Read UBC Bontrager Dataverse file metadata without fitness data
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/bontrager_borealis_catalog_v01.py --output results/source_only/bontrager_UBC_dataverse_public_catalog.json
+      - name: Assert no new adaptiveness or genetic predictions opened
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('results/source_only/bontrager_UBC_dataverse_public_catalog.json'))
+          assert x['fitness_records_read'] is False
+          assert x['origin_destination_coordinates_read'] is False
+          assert x['independent_from_Dryad_or_Hargreaves_confirmed'] is False
+          print('ALTERNATE_SOURCE_CATALOG',x['status'],x.get('file_count'))
+          PY
+      - name: Save public file IDs/digests only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-new-transplant-UBC-Borealis-alternative-source-catalog-only
+          path: results/source_only/bontrager_UBC_dataverse_public_catalog.json
+          retention-days: 30
+          if-no-files-found: warn

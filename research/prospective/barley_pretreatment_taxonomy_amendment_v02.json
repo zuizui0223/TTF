@@ -1,0 +1,24 @@
+{
+  "schema": "ttf_barley_2021_source_only_taxonomy_normalization_amendment_v02",
+  "issued_on": "2026-11-12",
+  "status": "FROZEN_PRE_ARR_AMENDMENT_FOR_METADATA_DISCOVERY_ERRORS",
+  "parent_protocol": "research/prospective/quaternary_phenotype_source_screen_v01.json",
+  "parent_run": 43207617866,
+  "reason": "The prephenotype source-only audit found that source taxon strings include underscore-delimited binomials, which were undercounted as genera, and the source CSV includes Arabidopsis plant rows despite the published animal-ectotherm study focus. No ARR, thermal limit or genetic response values were inspected.",
+  "changes": [
+    "Replace underscores in taxon metadata with spaces, strip repeated spaces and preserve original case; do not taxonomically fuzzy-match or infer synonyms.",
+    "Explicitly restrict to reported phyla Arthropoda, Chordata, Mollusca before terrestrial CHELSA screening; other or blank phyla are excluded and counts recorded.",
+    "Report original mixed-domain phylum labels and metadata-only source-population keys with duplicate source coordinates; no outcome-based repair.",
+    "Future macro eligibility remains the exact >=50 independent species, >=15 study, >=10 genus, >=20 per split arm and zero conflicting original study-species-population coordinates threshold; no threshold relaxation."
+  ],
+  "source_sha1_unchanged": "8e960f1e43f8d4f4ca4c9521c41d8576e97beaec",
+  "source_ref_unchanged": "c1416c8925d6f1509b94fb61a9e7973f4cf03cb4",
+  "allowlisted_animal_phyla": [
+    "Arthropoda",
+    "Chordata",
+    "Mollusca"
+  ],
+  "no_phenotype_or_ARR_inspection_or_use": true,
+  "no_climate_or_genetics_opening": true,
+  "status_if_insufficient": "PILOT_ONLY_NO_MACRO_HISTORY_VS_PLASTICITY_CLAIM"
+}

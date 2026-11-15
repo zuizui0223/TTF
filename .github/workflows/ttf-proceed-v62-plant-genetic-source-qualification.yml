@@ -1,0 +1,49 @@
+name: ttf-evo-PROCEED-v62-PLANT-genetic-geo-qualification
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-proceed-v62-plant-genetic-source-qualification.yml'
+      - 'research/prospective/proceed_v62_plant_genetic_source_census.py'
+      - 'research/prospective/test_proceed_v62_plant_genetic_source_census.py'
+      - 'research/prospective/proceed_v62_plant_genetic_geo_contract_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ttf-proceed-v62-plant-original-source-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  original-source-plant-heritable-label-metadata-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify source-only genomic-design and no-response synthetic controls
+        run: python -m unittest discover -s research/prospective -p 'test_proceed_v62_plant_genetic_source_census.py' -v
+      - name: Source SHA-verified original plant genotype-labelled trait study/species eligibility only
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/proceed_v62_plant_genetic_source_census.py --output results/source_only/plant_genetic_geo_design_census.json
+      - name: Confirm no adaptation effect outcome was opened
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('results/source_only/plant_genetic_geo_design_census.json'))
+          assert x['phenotype_or_genetic_response_rows_values_read_for_analysis'] is False
+          assert x['actual_effect_size_prediction_performed'] is False
+          print('PLANT_SOURCE_DESIGN_QUALIFICATION',x['status'])
+          print('PLANT_GENETIC_GEO_TAXA',x.get('distinct_plant_binomials'))
+          print('STUDY_SPECIES_ARMS',x.get('species_and_original_study_joint_holdout',{}).get('species_per_role'))
+          PY
+      - name: Publish only original-source metadata aggregate and holdout topology
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-PROCEED-v62-plant-genetic-study-geography-aggregate
+          path: results/source_only/plant_genetic_geo_design_census.json
+          retention-days: 30
+          if-no-files-found: warn

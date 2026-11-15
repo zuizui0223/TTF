@@ -1,0 +1,55 @@
+name: ttf-Haldane-TERMINAL-analytic-diagnosis-NO-new-worlds
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-haldane-terminal-closed-form-diagnosis.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ttf-haldane-terminal-analytic-diagnosis
+  cancel-in-progress: false
+jobs:
+  analytical-diagnosis-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      GDAL_CACHEMAX: '256'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - name: Install unchanged source numeric and GIS versions
+        run: python -m pip install 'numpy==2.5.4' 'scipy==1.18.1' 'shapely==2.2.0' 'rasterio==1.5.2' 'pyproj==3.8.0' 'pyshp==2.4.2'
+      - name: Verify deterministic algebra and linear operators without any Monte Carlo worlds
+        run: python -m unittest discover -s research/prospective -p 'test_terminal_analytic_audit.py' -v
+      - name: Integrate frozen synthetic model analytically on SHA-identical source geometry
+        run: |
+          mkdir -p results/terminal_diagnosis
+          python research/prospective/terminal_analytic_audit.py \
+            --work /tmp/ttf-terminal-source-reconstruction \
+            --output results/terminal_diagnosis/closed_form_diagnosis.json
+      - name: Verify terminal status remains closed and no new simulated worlds or outcomes were read
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('results/terminal_diagnosis/closed_form_diagnosis.json'))
+          assert x['status']=='ANALYTICAL_DIAGNOSIS_COMPLETE_TERMINAL_STOP_UNCHANGED'
+          assert x['additional_null_or_positive_worlds_drawn']==0
+          assert x['real_phenotype_rate_values_read'] is False
+          assert x['parameters_or_decision_thresholds_changed'] is False
+          assert x['diagnostic_not_new_calibration_or_authorization'] is True
+          print('TERMINAL_ANALYTIC_DIAGNOSIS_COMPLETE_NO_NEW_WORLDS')
+          PY
+      - name: Retain aggregate analytical diagnosis only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-Haldane-terminal-closed-form-diagnosis
+          path: results/terminal_diagnosis/closed_form_diagnosis.json
+          retention-days: 30
+          if-no-files-found: warn

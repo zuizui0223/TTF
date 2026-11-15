@@ -1,0 +1,18 @@
+{
+  "schema":"ttf_new_within_study_species_history_contrast_acquisition_spec_v01",
+  "date_JST":"2026-11-15",
+  "status":"PROPOSED_NEW_DATA_ACQUISITION_NOT_OLD_RATE_REOPENING",
+  "main_question":"Can new within-study, within-species trait-rate comparisons separate historical climatic association from modern climate, assay design and group differences?",
+  "unit":"A new block containing two rate-comparison records of the same species and study, same exact trait and measurement procedure, matched on current-climate and methodological controls but contrasting in historical exposure. A record is not necessarily one population or one individual.",
+  "required_metadata":["original_study_id","taxon_accepted_name_and_source_name","exact_trait_identity_and_unit","common_garden_or_quantitative_genetic_design","measurement_environment_id","both_original_population_localities_per_rate_record","individual_or_population_shared_sample_ids","generations_or_elapsed_time_provenance","original_record_sampling_variance_or_covariance_provenance","historical_climate_source_version","modern_climate_and_method_covariates","source_overlap_with_closed_programs"],
+  "priority_rule":"Prioritize genuinely new within-study/species geographic contrasts, not more traits/effect rows at the same old locations. Do not rank sources using observed phenotype-rate signs or significance.",
+  "independence_review":"Shared source individuals, populations, assay batches, species or studies may correlate errors. Independent-block planning is hypothetical, not presumed by counting records.",
+  "claim_limits":["Common garden or source Genetic classification is not evidence of increased fitness.","Field phenotypic difference is not a within-genotype plasticity reaction norm.","Present collection sites are not demonstrated LGM occupancy.","Species diversification requires a separate dated-lineage/reproductive-isolation outcome."],
+  "planning_assumptions":{"common_coefficient_gamma_per_original_history_SD":0.5,"hypothetical_iid_normal_residual_sigma":0.5,"two_sided_alpha":0.016666666666666666,"power":0.8,"perfectly_matched_controls_within_block":true},
+  "idealized_targets":[{"history_difference_SD":0.5,"independent_blocks":87,"rate_records":174},{"history_difference_SD":1.0,"independent_blocks":24,"rate_records":48},{"history_difference_SD":2.0,"independent_blocks":9,"rate_records":18}],
+  "targets_are_not_species_or_population_counts":true,
+  "targets_do_not_replace_old_50_species_gate":true,
+  "not_a_guaranteed_empirical_sample_size":true,
+  "new_empirical_test_authorized":false,
+  "old_Haldane_v1_remains_terminal":true
+}

@@ -1,0 +1,28 @@
+{
+  "schema": "ttf_Bontrager_original_zip_member_header_source_only_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_AFTER_ORIGINAL_ZIP_SHA_MATCH_BEFORE_MEMBER_HEADER_ACCESS",
+  "authority_run": 43668477450,
+  "archive_file_id": 150984,
+  "zip_original_sha256": "2995d0f165b27ccf2f38f3d0b286845c107762a0c2b02df2290e9a5df6b396f0",
+  "zip_original_md5": "2de98c1bb2cd2ddffcb090eb65a74d9f",
+  "selected_source_csv_members": [
+    "dryad/data/fitness_for_analysis.csv",
+    "dryad/data/locs_elev_lat.csv",
+    "dryad/data/locs_range_position.csv",
+    "dryad/data/locs_with_climate.csv",
+    "dryad/data/site_anomalies.csv",
+    "dryad/data/tp_fitness.csv",
+    "dryad/data/tp_locs.csv"
+  ],
+  "readme_member": "dryad/README.txt",
+  "allow_readme_first_bytes": 15000,
+  "only_source_column_names": true,
+  "only_codebook_keyword_excerpts": true,
+  "no_csv_data_rows": true,
+  "no_fitness_response_values": true,
+  "no_origin_site_coordinate_values": true,
+  "no_source_data_export": true,
+  "study_overlap_not_qualified": true,
+  "old_Haldane_outcomes_unopened": true
+}

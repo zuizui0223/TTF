@@ -1,0 +1,50 @@
+name: ttf-evo-PROCEED-v62-geometry-and-design-METADATA-only
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-proceed-v62-geometry-metadata-only-v01.yml'
+      - 'research/prospective/proceed_v62_metadata_row_census_contract_v01.json'
+      - 'research/prospective/proceed_v62_metadata_row_census.py'
+      - 'research/prospective/test_proceed_v62_metadata_row_census.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ttf-proceed-v62-source-geometry-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  census-only-no-trait-or-genotype-effects:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test study leakage and confirm output invariant under synthetic response-value changes
+        run: python -m unittest discover -s research/prospective -p 'test_proceed_v62_metadata_row_census.py' -v
+      - name: Verify Borealis source original MD5 and read allowlisted metadata columns only
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/proceed_v62_metadata_row_census.py --output results/source_only/proceed_v62_source_geometry_aggregate.json
+      - name: Confirm no response summary and do not treat source failure as ecological null
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('results/source_only/proceed_v62_source_geometry_aggregate.json'))
+          assert r['rate_or_phenotype_values_summarized'] is False
+          assert r['genetic_values_opened'] is False
+          assert r['old_TTF_frozen_outcomes_reopened'] is False
+          print('PROCEED_V62_SOURCE_GEOMETRY',r['status'])
+          print('SOURCE_META_BINOMIAL_TAXA',r.get('species_with_both_georeferenced_original_endpoints'))
+          print('VALID_PAIRWISE_GEOGRAPHY',r.get('record_geolocation_status'))
+          PY
+      - name: 'Public artifact: aggregate metadata counts, NOT biological response or site grids'
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-PROCEED-v62-origin-design-metadata-aggregate
+          path: results/source_only/proceed_v62_source_geometry_aggregate.json
+          retention-days: 30
+          if-no-files-found: warn

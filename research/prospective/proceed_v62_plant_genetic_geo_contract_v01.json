@@ -1,0 +1,36 @@
+{
+  "schema": "ttf_proceed_v62_plant_genetically_based_trait_change_source_only_contract_v01",
+  "date": "2026-11-12",
+  "status": "RESPONSE_BLIND_PLANT_SOURCE_ELIGIBILITY_FROZEN_BEFORE_TRAIT_RATE_ANALYSIS",
+  "reason": "Source-only PROCEED v6.2 cross-tab shows georeferenced Streptophyta with source genphen=Genetic but independent plant species/studies/genera/split/trait design are not yet inspected. Plant analysis is a distinct new prospective programme, not outcome-dependent rescue.",
+  "parent": "research/prospective/proceed_v62_genetic_geometry_intersection_contract_v01.json",
+  "source_file_id": 1024206,
+  "original_sha256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2",
+  "original_md5": "eae537bd3ac244835fa9c8245f27a40b",
+  "source_eligibility": {
+    "phylum": "Streptophyta",
+    "genphen": "Genetic",
+    "both_original_localities_required": true,
+    "distinct_taxon_binomial_required": true,
+    "independent_source_study_id": "ref_ID",
+    "distinct_taxonomic_genus_from_valid_binomial": true,
+    "taxa_group_frozen": "Plant",
+    "minimum_independent_taxa": 50,
+    "minimum_source_studies": 15,
+    "minimum_genera": 10,
+    "minimum_species_in_each_study_species_disjoint_role": 20,
+    "study_species_graph_component_partition": "Bipartite study–species graph, independent components only; prospectively sort components by descending species count, tie break stable SHA-256 of sorted component member binomials, assign each component to the arm with fewer species, ties to train. No source study or species appears in both arms.",
+    "per_taxon_repeated_effect_records_are_not_independent": true,
+    "if_fail": "PILOT_ONLY_PLANT_GENETIC_CHANGE_NOT_MACRO_EVALUABLE",
+    "if_pass": "SOURCE_GEO_SUPPORT_POSSIBLE_NOT_ADAPTATION_RESULT_NEEDS_EFFECT_ENDPOINT_AND_CODEBOOK"
+  },
+  "qualitative_boundaries": [
+    "Genetic in PROCEED means authors aimed to account for heritable component via common garden or quantitative genetic methods, not proof of adaptive fitness, selection, or speciation.",
+    "Plant phenotypic change rates measured within ≤500 years cannot by themselves establish a response to LGM or climatic adaptation.",
+    "Source location at present-day or recently observed samples is not necessarily an ancestral glacial locality.",
+    "Reciprocal transplant fitness or a documented selection test remains necessary to call change adaptive rather than simply heritable.",
+    "Do not rerun closed TTF genetic response tests or open PROCEED rate/trait values during source-only census."
+  ],
+  "outputs": "Aggregate taxa, genera, study counts, study-species graph components, role eligibility, design/experimental status, source effects by source study type. No raw phenotype measurements, coordinates, or full species list exported.",
+  "previous_source_2026_11_12_genetic_animal_not_evaluable_remains_terminal": true
+}

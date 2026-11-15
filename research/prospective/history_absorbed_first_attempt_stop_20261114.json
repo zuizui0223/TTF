@@ -1,0 +1,19 @@
+{
+  "schema": "ttf_unknown_variance_design_first_source_stop_v01",
+  "date": "2026-11-14",
+  "run_id": 43604455628,
+  "artifact_id": 14117273196,
+  "artifact_zip_sha256": "3fd95937d8f358a476b955dce6a10139d1ede9f512c1458b7a585167dc7b1ae3",
+  "status": "STOP_BEFORE_UNKNOWN_VARIANCE_DESIGN_INPUT_X_IDENTITY_MISMATCH",
+  "original_source_code_files_unchanged": 10,
+  "original_CSV_coordinate_and_climate8_hashes_match": true,
+  "original_history_H_hash_matches": true,
+  "observed_X_sha256": "143efc7ed316f94596603ecd0ec2635d506c9db87e9d7cd497c8298b6a9a0350",
+  "expected_X_sha256": "e4d2f7e5b0ebf900018ae9f8ed87715a90101181b565c83b4215290f6fa07d84",
+  "expected_and_observed_H_sha256": "b64289ab8a6719a5655ef3f585887c659cd3441455ffff9f92237b2f548f4c9e",
+  "dedicated_deterministic_tests_passed": 49,
+  "old_Haldane_scientific_stop_unchanged": true,
+  "actual_phenotype_values_read": false,
+  "new_random_worlds": 0,
+  "diagnostic_next": "Repeat unchanged source helpers on one host in-process, fresh native process, AVX512-disabled, baseline-dispatch modes; record per-column hashes, runtime and bitwise differences. Only consume a matrix pair whose BOTH ORIGINAL hashes match. Do not round, substitute hashes, change model or use any outcome. This is numerical provenance diagnosis, not a biological retest."
+}

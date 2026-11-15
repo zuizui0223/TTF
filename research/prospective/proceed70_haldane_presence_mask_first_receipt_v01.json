@@ -1,0 +1,52 @@
+{
+  "schema": "ttf_PROCEED70_Haldane_original_response_magnitude_unopened_presence_qualification_v01",
+  "date": "2026-11-14",
+  "status": "HALDANE_PRESENCE_MASK_QUALIFIED_BUT_RATE_VALUES_NOT_OPENED",
+  "run_id": 43580007045,
+  "artifact_id": 14108480573,
+  "source_file_sha256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2",
+  "source_file_md5": "eae537bd3ac244835fa9c8245f27a40b",
+  "original_H_code_sha256": "488bb5bb2e856cc04ab90b794d928b8e41dc74111e3a9c31f6d496a25c167c14",
+  "source_original_rate_records": 9263,
+  "plant_original_geographic_metadata_records": 1561,
+  "plant_original_distinct_study_species_geographic_pairs": 187,
+  "required_field_order": [
+    "mean1",
+    "mean2",
+    "sd1",
+    "sd2",
+    "n1",
+    "n2",
+    "generations"
+  ],
+  "binary_eligibility": {
+    "rows_all_presence": 1279,
+    "unique_geographic_study_species_pairs_with_any_row_complete": 165,
+    "distinct_plant_species_with_any_complete_mask": 56,
+    "distinct_original_studies": 93,
+    "distinct_genera": 45,
+    "original_species_disjoint_study_disjoint_train": 29,
+    "original_species_disjoint_study_disjoint_heldout": 27,
+    "source_pair_geometries_train": 91,
+    "source_pair_geometries_heldout": 74,
+    "original_35_35_roles_unchanged": true
+  },
+  "source_missingness_flags": {
+    "mean1": 1561,
+    "mean2": 1561,
+    "sd1": 1359,
+    "sd2": 1359,
+    "n1": 1390,
+    "n2": 1390,
+    "generations": 1465
+  },
+  "important_limits": [
+    "Source response numbers are not parsed or summarized; 1279 records have all seven required fields present but are NOT numeric-code-valid Haldane rates.",
+    "Original author code excludes missing values, zero SDs, CV<0.1% or CV>1000%; those checks require numeric response opening and can reduce final eligible sample.",
+    "Source species and study roles remain fixed from the 70-species block-disjoint role authority; no re-splitting to rescue.",
+    "Source code selected Haldane per-generation SD-standardized unit prospectively for mixed trait types; no alternative Darwin-rate fallback if H is non-evaluable.",
+    "This is source-field admissibility, not demonstration of local adaptation, reaction-norm plasticity, genetic fitness advantage, speciation or any historical predictor effect."
+  ],
+  "original_TTF_Q_COI_HE_FST_Jensen_frozen": true,
+  "plant_actual_genetic_rate_outcome_opened": false
+}

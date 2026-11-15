@@ -1,0 +1,34 @@
+{
+  "schema": "ttf_proceed_v61_evolutionary_vs_phenotypic_adaptation_source_census_plan_v01",
+  "date": "2026-11-12",
+  "status": "FROZEN_PRE_PHENOTYPIC_RESPONSE_READ_DATAVERSE_METADATA_ONLY",
+  "source": {
+    "publication": "Gorné et al. 2025 PROCEED v6.1, Ecology 106:e70009",
+    "doi": "10.1002/ecy.70009",
+    "dataset_doi": "10.5683/SP3/NXSL3Q",
+    "official_dataset_host": "borealisdata.ca",
+    "dataset_api": "https://borealisdata.ca/api/datasets/:persistentId/?persistentId=doi%3A10.5683%2FSP3%2FNXSL3Q",
+    "published_records": 9263,
+    "published_species": 428,
+    "published_studies": 326,
+    "published_time_series": 655,
+    "maximum_reported_change_interval_years": 500,
+    "source_release": "v6.1, do not silently mix with later v6.2 or an unpublished extension",
+    "licence_stated_by_paper": "CC0 1.0"
+  },
+  "limits": {
+    "only_dataverse_JSON_source_catalog": true,
+    "no_raw_csv_rows_or_phenotypic_rates_read": true,
+    "max_bytes": 5000000,
+    "no_fitted_history_effect_or_genetic_outcome": true,
+    "retain_only": "file names, size, file ID, integrity MD5, content type, version, access, and dataset metadata",
+    "no_change_to_previous_frozen_TTF_tests": true
+  },
+  "biology_definition": {
+    "source_proven_phenotypic_change_alone_not_adaptation": true,
+    "heritable_adaptation_evaluable_only_if_original_common_garden_or_quant_genetic_design_label_available": true,
+    "timescale_scope": "Most records measure recent decades and <=500yr; these are NOT literal LGM speciation cases",
+    "terrestrial_CHELSA_source_locations_required": true,
+    "if_unavailable": "SOURCE_PROVENANCE_ONLY_NO_LGM_TO_ADAPTATION_CLAIM"
+  }
+}

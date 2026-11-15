@@ -1,0 +1,43 @@
+name: ttf-evo-Weaving102-public-OSF-metadata-ONLY
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-weaving-insect-public-osf-source-metadata-v01.yml'
+      - 'research/prospective/weaving_osf_metadata_only_probe.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-availability-no-response-data:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test strict public OSF API metadata-only access
+        run: python -m unittest discover -s research/prospective -p 'test_weaving_osf_metadata_only_probe.py' -v
+      - name: Read public OSF file listing only, no ARR/CTL downloads
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/weaving_osf_metadata_only_probe.py --output results/source_only/weaving_osf_manifest.json
+      - name: Confirm no source response data inspected
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('results/source_only/weaving_osf_manifest.json'))
+          assert r['effect_size_rows_downloaded_or_inspected'] is False
+          assert r['biological_predictive_test_performed'] is False
+          print('SOURCE_ONLY_STATUS', r['status'])
+          print('PUBLIC_FILE_COUNT',r.get('source_file_count',0))
+          PY
+      - name: Retain public source file metadata names/IDs only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-evo-Weaving102-public-OSF-metadata-only
+          path: results/source_only/weaving_osf_manifest.json
+          retention-days: 30
+          if-no-files-found: warn

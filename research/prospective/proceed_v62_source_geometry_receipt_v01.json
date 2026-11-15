@@ -1,0 +1,79 @@
+{
+  "schema": "ttf_proceed_v62_original_metadata_geography_census_frozen_receipt_v01",
+  "date": "2026-11-12",
+  "status": "SOURCE_ONLY_GEOGRAPHY_DATA_REAL_BIOLOGICAL_ADAPTATION_RESPONSE_UNOPENED",
+  "data_source": {
+    "dataset": "PROCEED v6.2",
+    "borealis_doi": "10.5683/SP3/NXSL3Q",
+    "repository_version": "4.0",
+    "file_id": 1024206,
+    "original_69_column_native_CSV_file": "PROCEEDv6.2_RatesDB.tab",
+    "source_original_size_bytes": 10814441,
+    "source_original_md5": "eae537bd3ac244835fa9c8245f27a40b",
+    "source_original_sha256": "6f6dbef2cda8b350d51e42939e00b86546a1f849dbd166d7629041a7d43b76a2",
+    "catalog_ingested_size_bytes": 11617534,
+    "default_TSV_export_size_bytes": 11618281,
+    "source_schema_run": 43216581296,
+    "metadata_census_run": 43218756103,
+    "metadata_census_artifact": 13944103975,
+    "transport_correction_v03": "research/prospective/proceed_v62_native_csv_dialect_amendment_v03.json"
+  },
+  "all_source": {
+    "rows": 9263,
+    "distinct_binomial_labels_approx": 430,
+    "original_studies_any_record": 326,
+    "source_genphen_categories": {
+      "Genetic": 3063,
+      "Phenotypic": 6200
+    },
+    "source_design_categories": {
+      "Allochronic": 3435,
+      "Synchronic": 5828
+    },
+    "source_experimental_categories": {
+      "N": 8910,
+      "Y": 353
+    },
+    "phylum_rows": {
+      "Annelida": 1,
+      "Arthropoda": 1095,
+      "Chordata": 5951,
+      "Mollusca": 45,
+      "Streptophyta": 2171
+    }
+  },
+  "geography": {
+    "both_original_endpoints_complete": 6837,
+    "only_first_complete": 44,
+    "only_second_complete": 46,
+    "neither_complete": 2336,
+    "distinct_first_origin_coordinate_tuples": 851,
+    "distinct_second_origin_coordinate_tuples": 880,
+    "distinct_pairs": 1116,
+    "georeferenced_binomial_taxon_labels_across_all_genphen_systems": 404,
+    "georeferenced_studies_across_all_genphen_systems": 301,
+    "genera_georeferenced_all_genphen": 274,
+    "species_hashed_role_counts_any_genphen": {
+      "train": 198,
+      "heldout": 206
+    },
+    "study_ids_crossing_naive_species_hash_arms": 23,
+    "largest_species_study_connected_component": {
+      "species": 154,
+      "studies": 16
+    },
+    "no_strict_study_species_disjoint_holdout_authorized": true
+  },
+  "limits": [
+    "Neither the 404 taxa nor the 6837 records are a terrestrial-genetic-adaptation subset; both contain phenotypic and genetic source categories and possible aquatic systems.",
+    "Source 'genphen=Genetic' denotes original source category, not established adaptive fitness evidence, population plasticity or a causal historical mechanism.",
+    "Original source 'system' contains 1802 labels and is not assumed to identify terrestrial ecosystem; independent habitat/geography classification is required.",
+    "Species-hash 198/206 split includes 23 original study IDs across both arms; naive species-only split leaks study effects.",
+    "Source datafile bytes necessarily fetched for provenance, but phenotype/genetic response columns not interpreted, summarized, fitted or exported.",
+    "Original v6.1 publication counts and v6.2 raw records are NOT separate or additional biological replications."
+  ],
+  "needed_next": "Pre-freeze and compute metadata-only intersection of genphen category, valid original coordinate pairs, phylum, original study, cross-arm study component and original experimental design. Only then consider an independent habitat/source codebook and a fresh unexposed phenotype endpoint.",
+  "source_data_publicly_redistributed": false,
+  "genetic_effect_or_history_plasticity_fitted": false,
+  "original_TTF_q_coi_He_Fst_mammal_endpoints_unchanged": true
+}

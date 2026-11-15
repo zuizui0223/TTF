@@ -1,0 +1,52 @@
+name: ttf-evo-PROCEED-v62-source-TSV-HEADERS-only
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-proceed-v62-official-tsv-headers-only.yml'
+      - 'research/prospective/proceed_v62_borealis_header_only.py'
+      - 'research/prospective/test_proceed_v62_borealis_header_only.py'
+      - 'research/prospective/proceed_v62_source_header_contract_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ttf-proceed-v62-header-only-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  inspect-original-five-source-headers-not-row-data:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test exact frozen Dataverse catalog and streaming-first-line source firewall
+        run: python -m unittest discover -s research/prospective -p 'test_proceed_v62_borealis_header_only.py' -v
+      - name: Read only first TSV header per exact public source file
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/proceed_v62_borealis_header_only.py --output results/source_only/proceed_v62_verified_headers_v01.json
+      - name: Enforce no biological response or inherited TTF test exposure
+        run: |
+          python - <<'PY'
+          import json
+          f='results/source_only/proceed_v62_verified_headers_v01.json'
+          d=json.load(open(f))
+          assert d['rate_or_trait_rows_read'] is False
+          assert d['genetic_values_read'] is False
+          assert d['LGM_climate_sampled'] is False
+          assert d['adaptive_evolution_test_run'] is False
+          print('V62_HEADER_ONLY_STATUS',d['status'])
+          for f in d.get('source_files',[]):
+              print('SOURCE_FILE',f['filename'],'columns',f['header_column_count'])
+          PY
+      - name: Retain metadata-only header result, not TSV data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-PROCEED-v62-official-five-source-headers-only
+          path: results/source_only/proceed_v62_verified_headers_v01.json
+          retention-days: 30
+          if-no-files-found: warn

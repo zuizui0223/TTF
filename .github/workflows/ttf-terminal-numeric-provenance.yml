@@ -1,0 +1,60 @@
+name: ttf-TERMINAL-numeric-provenance-no-outcomes
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-terminal-numeric-provenance.yml'
+      - 'research/prospective/terminal_numeric_provenance.py'
+      - 'research/prospective/test_terminal_numeric_provenance.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ttf-terminal-numeric-provenance-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  source-identity-not-biological-model:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      GDAL_CACHEMAX: '256'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retrieve original frozen source commit for byte-level code comparison
+        run: git fetch --no-tags --depth=1 origin a4664cc1fccf7a16fed1b85f239dc0f123389a87
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - name: Install unchanged numerical and source GIS versions
+        run: python -m pip install 'numpy==2.5.4' 'scipy==1.18.1' 'shapely==2.2.0' 'rasterio==1.5.2' 'pyproj==3.8.0' 'threadpoolctl==3.6.0'
+      - name: Exact numeric provenance tests and existing analytical operator tests
+        run: |
+          python -m unittest discover -s research/prospective -p 'test_terminal_numeric_provenance.py' -v
+          python -m unittest discover -s research/prospective -p 'test_terminal_analytic_audit.py' -v
+      - name: Reconstruct original inputs once and compare bounded CPU-dispatch processes
+        run: |
+          mkdir -p results/terminal_diagnosis
+          python research/prospective/terminal_numeric_provenance.py --output results/terminal_diagnosis/numeric_provenance.json
+      - name: Preserve terminal decision and no-outcome boundary
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('results/terminal_diagnosis/numeric_provenance.json'))
+          assert r['real_phenotype_rate_values_read'] is False
+          assert r['additional_null_or_positive_worlds_drawn']==0
+          assert r['scientific_thresholds_changed'] is False
+          assert r['source_hashes_replaced_or_tolerance_relaxed'] is False
+          assert r['terminal_status_unchanged']=='TERMINAL_NOT_EVALUABLE_H_SYNTHETIC_NULL_CEILING_FAIL_NO_BIOLOGICAL_OUTCOME_OPENING'
+          print('NUMERIC_PROVENANCE',r['status'])
+          print('EXACT_REFERENCE_MODES',r.get('exact_reference_modes',[]))
+          PY
+      - name: Upload only aggregate diagnostics and hashes, never source arrays or responses
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-terminal-numeric-provenance-aggregate
+          path: results/terminal_diagnosis/numeric_provenance.json
+          retention-days: 30
+          if-no-files-found: warn

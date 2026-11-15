@@ -1,0 +1,93 @@
+{
+  "schema": "ttf_Bontrager107plant_original_modern_matched_History_source_terminal_v01",
+  "date": "2026-11-15",
+  "status": "INSUFFICIENT_MATCHED_HISTORY_SOURCE_CONTRAST_NOT_ADAPTATION_NULL",
+  "scientific_target": "Prospectively identify matched source-origin pairs in shared transplant gardens that are similar in current climate yet contrasting in 21ka-to-0BP climate history, before any fitness response is opened.",
+  "source_fidelity": {
+    "Dryad_original_DOI": "10.5061/dryad.pnvx0k6mc",
+    "UBC_Borealis_original_DOI": "10.5683/SP2/DU3ZTQ",
+    "original_zip_sha256": "2995d0f165b27ccf2f38f3d0b286845c107762a0c2b02df2290e9a5df6b396f0",
+    "original_zip_mirror_md5": "2de98c1bb2cd2ddffcb090eb65a74d9f",
+    "original_source_CSV": "dryad/data/fitness_for_analysis.csv",
+    "source_functional_groups": [
+      "annual",
+      "herbaceous_perennial",
+      "woody_perennial"
+    ],
+    "original_plant_only_geo_run": 43669248603,
+    "historical_source_run": 43669697593,
+    "historical_source_artifact_id": 14143971206,
+    "original_site_numeric_lonlat_SHA256": "95ac18b9d7705bb6143e7ce0cd37dc1149a979edddac2c5ee77e8ae78ca76ffd",
+    "eight_epoch_climate_matrix_SHA256": "37d900a49067a67870c507dc01d3e2f992ccb8f186c934c83382c8d97f2602ba",
+    "study_species_role_SHA256": "1858ab87418fd1295507fe4299226be9c1b53d434517010f56bd09a942c272cd",
+    "eight_21ka_0BP_source_COG_SHA_and_bytes_verified": true
+  },
+  "source_population": {
+    "original_plant_qualified_species": 107,
+    "original_plant_original_studies": 103,
+    "original_plant_functional_genera": 79,
+    "original_plant_garden_fitness_type_cells_with_multiple_sources": 711,
+    "study_species_disjoint_initial_train": 54,
+    "study_species_disjoint_initial_heldout": 53,
+    "source_study_disjoint_initial_train": 59,
+    "source_study_disjoint_initial_heldout": 44,
+    "distinct_original_source_and_garden_coordinates": 1556,
+    "all_eight_climate_values_complete_sites": 1556,
+    "climate_qualified_garden_cells_train": 389,
+    "climate_qualified_garden_cells_heldout": 322
+  },
+  "modern_matched_historical_contrasts": {
+    "rule": "Within original study×species×transplant-garden×fitness-type, select two different source IDs with distinct original geographic coordinates; 4-D current source climate distance <=1.0 source training SD units AND absolute difference in scalar LGM/current displacement magnitude >=0.5 source training H SD units.",
+    "original_source_pair_combinations_within_same_garden": 160205,
+    "pair_combinations_modern_matched": 75457,
+    "pair_combinations_historical_difference_threshold": 87109,
+    "pair_combinations_both": 29867,
+    "original_garden_cells_with_at_least_one_matching_pair": 319,
+    "species_with_at_least_one_matching_pair": 44,
+    "original_studies_with_at_least_one_matching_pair": 37,
+    "genera_with_at_least_one_matching_pair": 39,
+    "matched_species_train": 23,
+    "matched_species_heldout": 21,
+    "unique_source_pair_comparison_keys_collapsing_garden_repetitions": 10255,
+    "by_original_performance_metric_source_code": {
+      "comp": 21679,
+      "germ": 86,
+      "germ_surv": 126,
+      "repro": 606,
+      "surv": 7370
+    },
+    "counting_warning": "The 160,205 source-pair combinations, 29,867 threshold-matched combinations and 10,255 deduplicated keys are correlated combinations of the same populations, studies and gardens; NONE is an independent biological replicate count."
+  },
+  "residual_historical_information": {
+    "unit": "Source H within exact study×taxon×garden×performance-type cell; cell intercept absorbed; current source climate 4 variables, source latitude/longitude and source-garden great-circle distance are 7 linear controls.",
+    "train_within_garden_history_raw_weighted_ss": 0.6692293795857057,
+    "train_within_garden_history_residual_weighted_ss": 0.4023731738599897,
+    "source_only_history_fraction_after_current_geo7": 0.6012485197662475,
+    "seven_control_rank": 7,
+    "train_source_cell_rows_for_predictor_information": 3028,
+    "note": "60.12% is *predictor residual variance*, not variance in plant fitness explained, causal adaptation, Haldane rate, or ecological selection. Assumes simple linear baseline; nonlinear redundancy and concentration remain unchecked."
+  },
+  "frozen_qualification": {
+    "required_matched_species_total": 50,
+    "observed_matched_species": 44,
+    "train_min_required": 20,
+    "heldout_min_required": 20,
+    "train_actual": 23,
+    "heldout_actual": 21,
+    "final_preoutcome_decision": "NO_MACRO_FITNESS_HISTORY_MODEL_ON_THIS_COHORT_UNDER_FROZEN_PREQUALIFICATION",
+    "not_permitted": "Do not lower total species threshold, choose a weaker historical contrast threshold, mix arthropod/fungus records back in, switch to another climate norm, choose favorite fitness type or append overlapping source papers to rescue."
+  },
+  "scope": {
+    "no_fitness_value_or_direction_read": true,
+    "PROCEED_56plants_frozen_Haldane_outcome_unopened": true,
+    "TTF_Q_COI_He_Fst_Jensen_frozen": true,
+    "same_published_studies_may_overlap_Hargreaves_2020": true,
+    "primary_sources_selected_for_local_adaptation_review": true,
+    "no_evidence_for_true_fitness_adaptation_effect_or_speciation": true,
+    "fitness_adaptation_test_performed": false,
+    "new_source_Pairwise_design_support_descriptive_only": true,
+    "raw_CHELSA_sites_and_geometries_exported": false,
+    "main_branch_unchanged": true,
+    "PR_154_stays_draft": true
+  }
+}

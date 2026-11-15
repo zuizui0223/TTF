@@ -51,4 +51,5 @@ def test_ttf_q_submission_scientific_freeze_binds_current_science():
     assert "new analysis" in policy["requires_explicit_scientific_unfreeze"]
     assert "new subgroup" in policy["requires_explicit_scientific_unfreeze"]
     assert "new predictor" in policy["requires_explicit_scientific_unfreeze"]
-    assert "opening a previously closed outcome" in policy["requires_explicit_scientific_unfreeze"]
+    # Match the exact immutable freeze-policy entry; its meaning includes already closed outcomes.
+    assert "new outcome opening" in policy["requires_explicit_scientific_unfreeze"]

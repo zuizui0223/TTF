@@ -1,0 +1,62 @@
+{
+  "schema": "ttf_history_conditional_signal_oracle_design_receipt_v01",
+  "date": "2026-11-14",
+  "status": "ANALYTICAL_ORACLE_DESIGN_COMPLETE_NOT_EMPIRICAL_VALIDATION",
+  "run_id": 43602075500,
+  "run_commit": "0cbefc45c506ded5d4f9b28a8064290b1d76babd",
+  "artifact_id": 14116677584,
+  "artifact_zip_sha256": "0e277a32403786ebc467a02b7458dea272aa3f934930684432d878881859d61a",
+  "artifact_json_sha256": "1f0b8a9551b74513090254ecf9022ca29e5afe32c28dd7cac9628ccf4d0ff31c",
+  "original_X_sha256": "e4d2f7e5b0ebf900018ae9f8ed87715a90101181b565c83b4215290f6fa07d84",
+  "original_H_sha256": "b64289ab8a6719a5655ef3f585887c659cd3441455ffff9f92237b2f548f4c9e",
+  "original_source_helpers_byte_identical": 10,
+  "hypothetical_model": "y=Z beta + gamma h + epsilon, epsilon Gaussian with known Sigma=.25*(species-match+study-match+identity). This is NOT fitted or validated for real trait rates.",
+  "target": "Common conditional history coefficient, NOT heldout ridge prediction gain, adaptation, plasticity or speciation.",
+  "source_design": {
+    "heldout_rows": 74,
+    "heldout_species": 27,
+    "heldout_source_studies": 45,
+    "nuisance_columns_with_intercept": 22,
+    "nuisance_rank": 22,
+    "training_history_equal_species_SD": 1.502666738419986,
+    "training_history_equal_species_mean": 2.45402493271519
+  },
+  "known_covariance_oracle": {
+    "two_sided_alpha": 0.016666666666666666,
+    "analytic_null_rejection_probability": 0.016666666666666684,
+    "information": 37.830734827966786,
+    "coefficient_standard_error": 0.16258392784970196,
+    "scaled_nuisance_leakage": 2.3390473837031526e-15,
+    "null_variance": 1.0000000000000004,
+    "power_at_gamma_0_25": 0.1959546755295543,
+    "power_at_gamma_0_50": 0.7521765560186763,
+    "power_at_gamma_1_00": 0.9999139121032878,
+    "gamma_for_80pct_power": 0.5260567197178901,
+    "effect_units": "Hypothetical response units per ONE TRAIN-SD of original historical magnitude. Not measured Haldanes or an estimated biological effect."
+  },
+  "prespecified_ignore_dependence_sensitivity": {
+    "assumed_variance": 1.0000000000000002,
+    "actual_variance_under_same_clustered_gaussian_model": 1.6284070087375677,
+    "analytic_null_rejection_probability": 0.0606516225644387,
+    "not_an_explanation_of_original_seven_positive_trials": true,
+    "not_used_to_select_a_winning_method": true
+  },
+  "verification": {
+    "new_deterministic_tests": 18,
+    "existing_analytic_tests": 8,
+    "existing_byte_identity_tests": 6,
+    "dedicated_workflow_all_steps_success": true,
+    "repository_wide_CI_status_not_implied": true
+  },
+  "boundaries": {
+    "original_Haldane_v1_terminal_stop_unchanged": true,
+    "empirical_rate_or_fitness_values_evaluated": false,
+    "additional_null_or_positive_worlds_drawn": 0,
+    "old_alpha_or_model_or_hashes_changed": false,
+    "empirical_opening_authorized": false,
+    "unknown_real_covariance_not_estimated": true,
+    "real_mean_model_Gaussianity_phylogeny_and_effect_heterogeneity_not_validated": true,
+    "main_modified": false
+  },
+  "required_future_step": "A separate source/response-disjoint study must predefine and validate covariance estimation, non-Gaussian robustness and a biologically meaningful endpoint. This oracle benchmark cannot turn the closed Haldane v1 gate into PASS."
+}

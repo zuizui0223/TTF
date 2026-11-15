@@ -1,0 +1,46 @@
+name: ttf-evo-Weaving102-original-XLSX-HEADER-only
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-weaving-102-exact-xlsx-header-only.yml'
+      - 'research/prospective/weaving_osf_xlsx_header_only.py'
+      - 'research/prospective/weaving_2022_fixed_source_schema_contract_v01.json'
+      - 'research/prospective/test_weaving_osf_xlsx_header_only.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-xlsx-source-schema-without-response:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic source-header-only workbook QA
+        run: python -m unittest discover -s research/prospective -p 'test_weaving_osf_xlsx_header_only.py' -v
+      - name: Verify exact OSF source file SHA256 and inspect ONLY workbook worksheet headers
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/weaving_osf_xlsx_header_only.py --output results/source_only/weaving_2022_xlsx_header_audit.json
+      - name: Confirm no plasticity response was read or modeled
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('results/source_only/weaving_2022_xlsx_header_audit.json'))
+          assert x['biological_response_rows_inspected'] is False
+          assert x['source_origin_coordinates_inspected'] is False
+          assert x['real_genetic_or_plasticity_effect_test_performed'] is False
+          print('EXACT_OSF_XLSX_STATUS',x['status'])
+          print('SHEETS',x.get('sheet_count',0))
+          PY
+      - name: Save original file SHA and first-row headers only, never source response rows
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-evo-Weaving102-exact-header-only-aggregate
+          path: results/source_only/weaving_2022_xlsx_header_audit.json
+          retention-days: 30
+          if-no-files-found: warn

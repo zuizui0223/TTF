@@ -1,0 +1,46 @@
+name: ttf-evo-PROCEEDv62-plant-Genetic-Phenotypic-source-pairs
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-proceed-v62-plant-genetic-phenotypic-exact-pairs.yml'
+      - 'research/prospective/proceed_v62_plant_genetic_phenotypic_match.py'
+      - 'research/prospective/test_proceed_v62_plant_genetic_phenotypic_match.py'
+      - 'research/prospective/proceed_v62_plant_genetic_phenotypic_match_contract_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-paired-phenotype-versus-genetic-labels-no-rates:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact source matching independent of synthetic rate values
+        run: python -m unittest discover -s research/prospective -p 'test_proceed_v62_plant_genetic_phenotypic_match.py' -v
+      - name: Source SHA-verified metadata paired genetic versus phenotypic category census only
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/proceed_v62_plant_genetic_phenotypic_match.py --output results/source_only/plant_genetic_phenotypic_source_matches.json
+      - name: Confirm no original rate values read, no adaptation or plasticity result fit
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('results/source_only/plant_genetic_phenotypic_source_matches.json'))
+          assert d['no_numerical_trait_or_genetic_rate_access'] is True
+          assert d['no_new_climate_response_association_fitted'] is True
+          assert d['old_TTF_genetic_outcomes_unchanged'] is True
+          print('PLANT_GEXP_PEXP_MATCH_STATUS',d['status'])
+          print('SAME_STUDY_TRAIT_SITES_PAIRED_TAXA',d.get('strictly_matched_distinct_species'))
+          PY
+      - name: Publish only source paired counts, no individual site or trait rate data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-PROCEEDv62-plant-genetic-phenotypic-source-paired-aggregate-only
+          path: results/source_only/plant_genetic_phenotypic_source_matches.json
+          retention-days: 30
+          if-no-files-found: warn

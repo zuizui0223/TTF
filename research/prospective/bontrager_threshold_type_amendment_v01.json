@@ -1,0 +1,18 @@
+{
+  "schema": "ttf_Bontrager_107plants_threshold_numeric_type_correction_source_only_v01",
+  "date": "2026-11-15",
+  "status": "TYPE_CORRECTION_FROZEN_AFTER_SYNTHETIC_TEST_ERROR_BEFORE_REAL_CLIMATE_OR_FITNESS",
+  "original_contract_file": "research/prospective/bontrager_107plant_history_contrast_contract_v01.json",
+  "original_contract_commit": "8242441ef103d436b6ce321382405997afaedece",
+  "original_declared_scientific_thresholds": "Modern source-current 4-D climate distance <=1.0; absolute history-magnitude difference >=0.5 training species-equal H SD, both within same garden study/taxon/fitness_type cell.",
+  "intended_numeric_thresholds": {
+    "source_only_modern_matched_threshold": 1,
+    "source_only_H_contrasted_threshold": 0.5
+  },
+  "failure_run": 43669604738,
+  "error": "TypeError: comparison between float and string in synthetic-only source threshold evaluation",
+  "change": "Store exact 1.0 and 0.5 as JSON numbers while retaining identical original prose as separate definition fields; no change to predictor, source, sample or selection rules.",
+  "real_CHELSA_on_new_cohort_opened": false,
+  "genetic_or_fitness_response_accessed": false,
+  "do_not_retune_after_empirical_results": true
+}

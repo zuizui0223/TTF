@@ -1,0 +1,62 @@
+{
+  "schema": "ttf_weaving_2022_original_102_insect_phenotypic_plasticity_source_header_receipt_v01",
+  "date": "2026-11-12",
+  "status": "EXACT_XLSX_SOURCE_HEADER_PASS_POPULATION_LGM_GEO_EXPOSURE_NOT_EVALUABLE_FROM_THIS_FILE_ALONE",
+  "source": {
+    "publication_doi": "10.1038/s41467-022-32953-2",
+    "osf_project": "https://osf.io/cbhv4/",
+    "osf_file_id": "62ea9b57da7e49055693c82a",
+    "filename": "Supplementary Data 1.xlsx",
+    "size_bytes": 351661,
+    "sha256": "73b2d9be32d54177e009c2f434dcebd1d918282a12d9a52aaf3a970c96f6ff4e",
+    "metadata_run_id": 43208575720,
+    "exact_xlsx_header_run_id": 43209648038,
+    "header_read_only_qa_success": true
+  },
+  "original_sheet": {
+    "name": "Supplementary Data 1",
+    "xlsx_declared_dimension": "A1:AR1377",
+    "not_verified_as_biological_sample_count": true,
+    "another_sheet": "Headers A1:B45",
+    "headers_for_study_and_species": [
+      "studyid",
+      "popid",
+      "speciesid",
+      "gen",
+      "sp",
+      "full_sp",
+      "habitat"
+    ],
+    "headers_for_experimental_response": [
+      "acclim_temp",
+      "cont_temp",
+      "ARR",
+      "ctlimit",
+      "treat",
+      "cont",
+      "var",
+      "precision"
+    ],
+    "headers_for_geolocation": [
+      "stand_lat",
+      "lat_bin"
+    ],
+    "exact_unstandardized_origin_latitude_header": false,
+    "exact_unstandardized_origin_longitude_header": false,
+    "source_population_coordinates_extracted": false
+  },
+  "interpretation": {
+    "publication_total_species": 102,
+    "publication_total_effect_sizes": 1374,
+    "note": "Published counts do not establish that all 102 species have original experimental collection coordinates.",
+    "direct_exact_CHELSA_21ka_and_0BP_assignment_at_populations_evaluable": false,
+    "may_be_evaluable_with_original_study_location_documents": true,
+    "alternative_species_GBIF_distribution_history_is_different_estimand": true,
+    "genetic_local_adaptation_not_measured_by_this_ARR_design": true,
+    "species_divergence_not_measured_by_this_ARR_design": true,
+    "phenotype_data_rows_inspected": false,
+    "original_TTF_genetic_endpoints_reopened": false,
+    "do_not_label_as_negative_biological_result": true
+  },
+  "next_source_only_gate": "Check original publication-linked source-study provenance and georeference availability for study/population IDs, or adopt species-range historical-climate exposure as an explicitly distinct exploratory estimand on a new independent programme."
+}

@@ -1,0 +1,51 @@
+name: ttf-evo-phenotype-LOCALITY-only-source-census-no-ARR
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-evo-phenotype-source-screen-v01.yml'
+      - 'research/prospective/barley_source_only_census.py'
+      - 'research/prospective/test_barley_source_only_census.py'
+      - 'research/prospective/quaternary_phenotype_source_screen_v01.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ttf-evo-phenotype-source-only-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  fetch-exact-blob-and-census-geometry-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run synthetic geography and ARR-firewall invariance tests
+        run: python -m unittest discover -s research/prospective -p 'test_barley_source_only_census.py' -v
+      - name: Retrieve original Barley 2021 public Git blob and count ONLY georeferenced source metadata
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/barley_source_only_census.py --output results/source_only/barley_terrestrial_geom_census_v01.json
+      - name: Validate non-claim boundary before publishing aggregate
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('results/source_only/barley_terrestrial_geom_census_v01.json'))
+          assert x['source_git_blob_sha1_verified']=='8e960f1e43f8d4f4ca4c9521c41d8576e97beaec'
+          assert x['phenotype_ARR_values_evaluated'] is False
+          assert x['genetic_response_opened'] is False
+          assert x['history_climate_extracted'] is False
+          assert x['response_opening_authorized_by_this_census'] is False
+          print('RESPONSE_BLIND_SOURCE_ONLY_ELIGIBILITY',x['status'])
+          print('TERRESTRIAL_GEOGRAPHY_QUALIFIED_SPECIES',x['eligible_terrestrial_species_two_populations'])
+          PY
+      - name: Upload aggregate provenance and census only (no rowwise phenotype or coordinates)
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-evo-Barley-source-only-geometry-census
+          path: results/source_only/barley_terrestrial_geom_census_v01.json
+          retention-days: 30
+          if-no-files-found: error
