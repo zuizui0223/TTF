@@ -1,0 +1,75 @@
+{
+  "schema": "ttf_Raabova_Sudova_2007_2008_external_site_reference_ERRATUM_v01",
+  "date": "2026-11-15",
+  "status": "TERMINAL_INVALID_EXTERNAL_VALIDATION_WRONG_PRIMARY_PAPER_REFERENT",
+  "previous": {
+    "frozen_contract": "research/prospective/raabova_sudova_crosspaper_sites_contract_v01.json",
+    "prior_receipt": "research/prospective/source_registry/raabova_sudova_primary_crosspaper_geography_v01.json",
+    "original_2007_target_DOI": "10.1016/j.biocon.2007.07.007",
+    "compared_Sudova_2010_DOI": "10.3732/ajb.1000114",
+    "original_numeric_1km_matches": 1,
+    "original_numeric_sites": 4,
+    "original_numeric_distances_km_in_order": [
+      1.93168,
+      0.9278,
+      3.76521,
+      6.51907
+    ],
+    "numeric_result_preserved_but_scientific_test_invalid": true,
+    "original_precommitted_distance_threshold_km_unchanged": 1
+  },
+  "author_publication_referent": {
+    "Sudova_2010_Table1_footnote": "Four Aster amellus localities correspond to localities 3, 1, 5, and 6 in reference 50.",
+    "footnote_reference_50": "Raabová J, Fischer M, Münzbergová Z. 2008. Niche differentiation between diploid and hexaploid Aster amellus. Oecologia 158:463–472.",
+    "referenced_primary_DOI": "10.1007/s00442-008-1156-1",
+    "erroneously_assigned_2007_DOI": "10.1016/j.biocon.2007.07.007",
+    "wrong_referent_is_directly_verified_from_publisher_bibliography": true,
+    "Sudova2010_Table1_ploidy_of_four_Aster_populations": [
+      "2x",
+      "2x",
+      "6x",
+      "6x"
+    ],
+    "Raabova2008_population_design": "Three diploid and six hexaploid populations at a contact zone in northern Bohemia.",
+    "Raabova2007_population_design": "Six diploid populations in two regions, Czech Karst (K1-K3) and České středohoří (S1-S3), with 70 km between regions.",
+    "thus_crosspaper_population_IDs_3_1_5_6_do_not_refer_to_target_2007_study": true
+  },
+  "verified_original_evidence": [
+    {
+      "reference": "Sudová et al. 2010 Table 1 footnote and reference #50",
+      "url": "https://bsapubs.onlinelibrary.wiley.com/doi/abs/10.3732/ajb.1000114"
+    },
+    {
+      "reference": "Raabová et al. 2008 original nine-population 2x/6x study",
+      "url": "https://doi.org/10.1007/s00442-008-1156-1"
+    },
+    {
+      "reference": "Raabová et al. 2007 original six-diploid populations across two regions",
+      "url": "https://doi.org/10.1016/j.biocon.2007.07.007"
+    },
+    {
+      "reference": "Castro et al. 2011 Table 1, diploid-hexaploid Aster population names, GPS and ploidies",
+      "url": "https://doi.org/10.1007/s10682-010-9439-5"
+    }
+  ],
+  "scientific_reassessment": {
+    "previous_claim_external_validation_failed_3_of_4": "RETRACT_AS_INVALID_COMPARISON",
+    "allowed_description_of_old_numeric_result": "Exploratory distances between site sets from different underlying studies, not a valid external accuracy test of the target Raabová 2007 original-population proxy coordinates.",
+    "external_primary_georeference_validation_for_2007_study": "NOT_EVALUATED_VALID_STUDY_MATCH_REQUIRED",
+    "original_population_accuracy_in_Hargreaves35": "NOT_ESTABLISHED",
+    "shared_dataset_internal_Bontrager_Hargreaves_212_pairs_1km": "UNCHANGED_INTERNAL_LINEAGE_COMPARISON_ONLY",
+    "Hargreaves35_76_pop_as_garden_proxies_21_multi_source_studies_142_design_cells": "UNCHANGED_UNQUALIFIED",
+    "population_ID_to_primary_paper_crosswalk_certified": false,
+    "LGM_fitness_adaptation_plasticity_speciation_effect_fitted": false,
+    "prior_Bontrager_44_of_50_gate_unchanged": true,
+    "prior_PROCEED_Haldane_null_gate_unchanged": true,
+    "main_untouched": true
+  },
+  "downstream_policy": {
+    "do_not_reinterpret_1_of_4_as_external_model_failure": true,
+    "do_not_reassign_2008_localities_to_2007_by_spatial_nearest_neighbor": true,
+    "original_1km_threshold_unmodified": true,
+    "do_not_use_this_2008_paper_reference_as_2007_validation": true,
+    "any_new_properly_matched_external_study_is_new_exploratory_source_only_audit": true
+  }
+}
