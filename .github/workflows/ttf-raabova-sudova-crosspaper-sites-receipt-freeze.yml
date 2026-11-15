@@ -1,0 +1,66 @@
+name: Freeze Raabova Sudova published-site geography QA negative qualification
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - '.github/workflows/ttf-raabova-sudova-crosspaper-sites-receipt-freeze.yml'
+
+jobs:
+  freeze-external-literature-source-qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: prospective/independent-transplant-overlap-20261115
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43709977042
+          name: ttf-raabova-sudova-original-site-coherence-v01
+          github-token: ${{ github.token }}
+          path: _ttf_source_only
+      - name: SHA and predeclared external-location difference verification
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          p=Path("_ttf_source_only/raabova_sudova_primary_crosspaper_geography_v01.json")
+          raw=p.read_bytes()
+          assert hashlib.sha256(raw).hexdigest()=="3a1dfce8a67f093e416b9e6a3e736eb9e986979336a6656cd27789420706245c"
+          x=json.loads(raw)
+          assert x["source_as_garden_receipt_SHA256"]=="944344d90b3bb0189c11d57c3a4ba561944453bcef8c42a3e01ea38f911e786d"
+          assert x["cross_paper_site_source_doi"]=="10.3732/ajb.1000114"
+          assert x["original_primary_study_doi"]=="10.1016/j.biocon.2007.07.007"
+          s=x["source_only_primary_published_site_correspondence"]
+          assert s["original_external_locality_count"]==4
+          assert s["Hargreaves_original_same_study_source_as_garden_population_positions"]==6
+          assert s["published_sites_spatially_corroborated_uniquely_within_1km"]==1
+          assert s["published_sites_ambiguous_or_unmatched"]==3
+          assert [a["original_primary_locality_number"] for a in s["external_original_site_match_details"]]==[3,1,5,6]
+          assert [round(a["nearest_distance_km"],5) for a in s["external_original_site_match_details"]]==[1.93168,0.9278,3.76521,6.51907]
+          assert s["primary_paper_exact_population_ID_to_Hargreaves_source_ID_crosswalk_certified"] is False
+          assert s["original_field_GPS_independent_acquisition_certified"] is False
+          assert x["historic_climate_measurement_fitted"] is False
+          assert x["fitness_or_adaptation_effect_used"] is False
+          assert x["Bontrager_frozen_44_of_50_gate_unchanged"] is True
+          print("FROZEN_RAABOVA_PRIMARY_GEO_1_OF_4_NOT_CERTIFIED_NO_THRESHOLD_RETUNE")
+          PY
+      - name: Persist cross-paper no-response site discrepancy on Draft PR branch
+        run: |
+          mkdir -p research/prospective/source_registry
+          cp _ttf_source_only/raabova_sudova_primary_crosspaper_geography_v01.json research/prospective/source_registry/raabova_sudova_primary_crosspaper_geography_v01.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/prospective/source_registry/raabova_sudova_primary_crosspaper_geography_v01.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Freeze precommitted Raabova primary geography discrepancy (1/4) without fitness outcomes"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
