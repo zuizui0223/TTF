@@ -1,0 +1,29 @@
+name: Pankova 2014 Table S1 official source access, no biological values
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/pankova2014_table_s1_original_access_v01.py'
+      - 'research/prospective/test_pankova2014_table_s1_original_access_v01.py'
+      - '.github/workflows/pankova2014-table-s1-source-access-v01.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/pankova2014_table_s1_original_access_v01.py'
+      - 'research/prospective/test_pankova2014_table_s1_original_access_v01.py'
+      - '.github/workflows/pankova2014-table-s1-source-access-v01.yml'
+jobs:
+  original-storage-header-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic original-supplement access/abstention tests
+        run: python -m unittest discover -s research/prospective -p test_pankova2014_table_s1_original_access_v01.py -v
+      - name: Check PLOS and PMC original Table S1 Excel storage header ONLY
+        run: python research/prospective/pankova2014_table_s1_original_access_v01.py
