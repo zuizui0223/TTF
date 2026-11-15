@@ -1,0 +1,60 @@
+{
+  "status": "POSTOUTCOME_ORACLE_DIRECTION_FREE_DIAGNOSTIC_NOT_PREDICTION",
+  "source_p1_original_run": 43693277926,
+  "source_p1_receipt_git_blob": "6c2e0ec974798e4d00fd3c007ca514463114084c",
+  "registered_primary_auc_pair_equal_mean": 0.4638090491863802,
+  "postoutcome_oracle_pair_equal_mean": 0.8895681066623838,
+  "postoutcome_oracle_median": 0.9652313231917811,
+  "pairs_with_oracle_auc_over_0_9": 6,
+  "rows": [
+    {
+      "pair": "D00-H00",
+      "registered_auc": 0.9564772145417306,
+      "sign_flip_oracle_auc": 0.9564772145417306,
+      "orientation": "training_orientation"
+    },
+    {
+      "pair": "D01-H01",
+      "registered_auc": 0.9830459770114942,
+      "sign_flip_oracle_auc": 0.9830459770114942,
+      "orientation": "training_orientation"
+    },
+    {
+      "pair": "D02-H04",
+      "registered_auc": 0.9739854318418314,
+      "sign_flip_oracle_auc": 0.9739854318418314,
+      "orientation": "training_orientation"
+    },
+    {
+      "pair": "D03-H02",
+      "registered_auc": 0.007524858908895459,
+      "sign_flip_oracle_auc": 0.9924751410911046,
+      "orientation": "reversed_in_heldout"
+    },
+    {
+      "pair": "D04-H05",
+      "registered_auc": 0.08246618106139438,
+      "sign_flip_oracle_auc": 0.9175338189386056,
+      "orientation": "reversed_in_heldout"
+    },
+    {
+      "pair": "D05-H06",
+      "registered_auc": 0.3618626430801249,
+      "sign_flip_oracle_auc": 0.6381373569198752,
+      "orientation": "reversed_in_heldout"
+    },
+    {
+      "pair": "D12-H14",
+      "registered_auc": 0,
+      "sign_flip_oracle_auc": 1,
+      "orientation": "reversed_in_heldout"
+    },
+    {
+      "pair": "D32-H12",
+      "registered_auc": 0.3451100870455709,
+      "sign_flip_oracle_auc": 0.6548899129544291,
+      "orientation": "reversed_in_heldout"
+    }
+  ],
+  "scientific_boundary": "One may not flip a heldout AUC using its labels during real prediction; this is descriptive evidence that some location-specific genotype scores are strongly discriminative in the opposite orientation. Not causal, not independent neutral ancestry or mechanism. Reanalysis of frozen aggregate only, not new raw outcome opening."
+}
