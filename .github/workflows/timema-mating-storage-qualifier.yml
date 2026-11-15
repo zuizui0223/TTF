@@ -1,0 +1,35 @@
+name: Timema measured-sex cell source-only species gate
+
+on:
+  push:
+    branches:
+      - research/crest-ttf-four-system-source-preflight-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/ttf_crest_timema_mating_numeric_storage_holdout_20261115.py'
+      - 'tests/test_crest_ttf_timema_mating_numeric_storage_holdout.py'
+      - '.github/workflows/timema-mating-storage-qualifier.yml'
+
+jobs:
+  source-numeric-storage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test synthetic missingness and species-split metadata
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_crest_ttf_timema_mating_numeric_storage_holdout.py
+      - name: Compute genuine publisher sexual-cell storage and species split without decoding scores
+        run: |
+          python research/prospective/ttf_crest_timema_mating_numeric_storage_holdout_20261115.py > /tmp/timema_sexual_storage_source_only.json
+          cat /tmp/timema_sexual_storage_source_only.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: timema-sexual-cell-storage-source-only
+          path: /tmp/timema_sexual_storage_source_only.json
+          retention-days: 21
