@@ -23,6 +23,8 @@ def test_split_is_species_disjoint_not_dyad_count():
     assert g["species_count"]==4
     assert g["within_species_pair_count"]==4
     assert g["between_species_pair_count"]==2
+    assert g["source_species_graph_component_count"]==2
+    assert g["source_species_graph_component_pair_counts"]==[3,3]
     assert g["partitions_with_nonempty_species_disjoint_train_and_test"]>=1
     p=g["best_balanced_species_split_source_only"]
     assert set(p["train_species"]).isdisjoint(set(p["test_species"]))
