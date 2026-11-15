@@ -54,7 +54,7 @@ def strip_2023_internal_node_figure_annotations(newick: str) -> str:
     )'[q1=...;q2=...;...]'/31.6:0.711; tip labels/branch lengths stay.
     This normalization authorizes TIP ID checks ONLY, never bootstrap inference.
     """
-    pattern=r"(?<=\\))'\\[[^']+\\]'/[-+]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?=:)"
+    pattern=r"(?<=\))'\[[^']+\]'/[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?=:)"
     return re.sub(pattern, "", newick)
 
 
