@@ -9,8 +9,16 @@ import collections
 import io
 import json
 import statistics
+import sys
+from pathlib import Path
 import xml.etree.ElementTree as ET
 import zipfile
+
+# Imported directly by offline tests via spec_from_file_location, so sibling
+# modules are not automatically on sys.path. Add only this checked source dir.
+_SOURCE_DIR = str(Path(__file__).resolve().parent)
+if _SOURCE_DIR not in sys.path:
+    sys.path.insert(0, _SOURCE_DIR)
 
 from ttf_crest_timema_publisher_species_holdout_geometry_20261115 import (
     M, PKG, REL, SOURCES, fetch, read_identity, split_geometry,
