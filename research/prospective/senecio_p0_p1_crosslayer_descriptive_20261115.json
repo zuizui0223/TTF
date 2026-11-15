@@ -1,0 +1,98 @@
+{
+  "status": "POSTOUTCOME_DESCRIPTIVE_CROSSLAYER_SENECIO_P0_P1_ONLY",
+  "predeclared_primary": false,
+  "source_phenotype_git_blob": "400f73bf21fefb6fcb775396f256c3447c755595",
+  "source_phenotype_author_commit": "33222710aca75f79153e4118b409e7d77787d045",
+  "source_p1_receipt_git_blob": "6c2e0ec974798e4d00fd3c007ca514463114084c",
+  "source_p1_run_id": 43693277926,
+  "traits": [
+    "VH",
+    "WW",
+    "MSA",
+    "MSD",
+    "SBA",
+    "AREA",
+    "ELONG",
+    "DISS",
+    "CIRC"
+  ],
+  "rows": [
+    {
+      "pair": "D00-H00",
+      "morphology_signs_agree": 8,
+      "morphology_trait_count": 9,
+      "genotype_selected_snp_auc": 0.9564772145417306,
+      "genotype_direction_fraction": 0.5675675675675675,
+      "genotype_marker_count": 100
+    },
+    {
+      "pair": "D01-H01",
+      "morphology_signs_agree": 6,
+      "morphology_trait_count": 9,
+      "genotype_selected_snp_auc": 0.9830459770114942,
+      "genotype_direction_fraction": 0.5287356321839081,
+      "genotype_marker_count": 100
+    },
+    {
+      "pair": "D02-H04",
+      "morphology_signs_agree": 8,
+      "morphology_trait_count": 9,
+      "genotype_selected_snp_auc": 0.9739854318418314,
+      "genotype_direction_fraction": 0.48717948717948717,
+      "genotype_marker_count": 100
+    },
+    {
+      "pair": "D03-H02",
+      "morphology_signs_agree": 9,
+      "morphology_trait_count": 9,
+      "genotype_selected_snp_auc": 0.007524858908895459,
+      "genotype_direction_fraction": 0.44871794871794873,
+      "genotype_marker_count": 100
+    },
+    {
+      "pair": "D04-H05",
+      "morphology_signs_agree": 8,
+      "morphology_trait_count": 9,
+      "genotype_selected_snp_auc": 0.08246618106139438,
+      "genotype_direction_fraction": 0.5,
+      "genotype_marker_count": 100
+    },
+    {
+      "pair": "D05-H06",
+      "morphology_signs_agree": 8,
+      "morphology_trait_count": 9,
+      "genotype_selected_snp_auc": 0.3618626430801249,
+      "genotype_direction_fraction": 0.5,
+      "genotype_marker_count": 100
+    },
+    {
+      "pair": "D12-H14",
+      "morphology_signs_agree": 9,
+      "morphology_trait_count": 9,
+      "genotype_selected_snp_auc": 0,
+      "genotype_direction_fraction": 0.43243243243243246,
+      "genotype_marker_count": 100
+    },
+    {
+      "pair": "D32-H12",
+      "morphology_signs_agree": 9,
+      "morphology_trait_count": 9,
+      "genotype_selected_snp_auc": 0.3451100870455709,
+      "genotype_direction_fraction": 0.4050632911392405,
+      "genotype_marker_count": 100
+    }
+  ],
+  "summary": {
+    "pairs_with_morphology_sign_agreement_at_least_8_of_9": 7,
+    "pairs_with_genotype_auc_below_0_5": 5,
+    "pairs_with_both": 5
+  },
+  "limitations": [
+    "same_species_only",
+    "morphology_and_genotype_not_confirmed_same_individuals",
+    "different_estimands_not_numeric_equivalence",
+    "postoutcome_descriptive",
+    "no_genetic_causation",
+    "no_CREST_history_model"
+  ]
+}

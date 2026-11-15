@@ -1,0 +1,25 @@
+{
+  "crossing_comparison_rows": 18,
+  "example_maximum_disjoint_matching": [
+    "D01-H01",
+    "D04-H05",
+    "D23-H21",
+    "D32-H12"
+  ],
+  "graph_pair_independence_is_not_evolutionary_independence": true,
+  "nonoverlapping_population_pair_maximum": 4,
+  "original_response_values_inspected": false,
+  "qualified_unseen_species_TTF": "NOT_EVALUABLE_SINGLE_SPECIES",
+  "source_git_blob": "ae6147df032baf492d692dea33aa03398b794d78",
+  "species_evaluation_unit_count": 1,
+  "status": "SOURCE_ONLY_TTF_RI_ENDPOINT_GEOMETRY",
+  "unique_population_nodes": 8,
+  "unseen_lineage_TTF": "NOT_EVALUABLE_ONLY_TWO_SOURCE_CLADES_AND_SHARED_ENDPOINTS",
+  "provenance": {
+    "github_actions_run": 43694728796,
+    "github_actions_url": "https://github.com/zuizui0223/TTF/actions/runs/43694728796",
+    "original_author": "MaddieEJames",
+    "original_author_commit": "fd8e8f075a72c1420267eecfd482dbc6a312caef",
+    "original_paper_doi": "10.1111/mec.70090"
+  }
+}
