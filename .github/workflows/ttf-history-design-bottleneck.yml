@@ -1,0 +1,59 @@
+name: ttf-history-design-bottleneck-source-only
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-history-design-bottleneck.yml'
+      - 'research/prospective/history_design_bottleneck*.py'
+      - 'research/prospective/test_history_design_bottleneck*.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contrast-design-anatomy-no-outcomes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      GDAL_CACHEMAX: '256'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retain unchanged original source-code authority
+        run: git fetch --no-tags --depth=1 origin a4664cc1fccf7a16fed1b85f239dc0f123389a87
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - name: Install same source numerical and GIS versions
+        run: python -m pip install 'numpy==2.5.4' 'scipy==1.18.1' 'shapely==2.2.0' 'rasterio==1.5.2' 'pyproj==3.8.0' 'pyshp==2.4.2'
+      - name: Deterministic design, source-boundary and previous diagnostic tests
+        run: |
+          python -m unittest discover -s research/prospective -p 'test_history_design_bottleneck*.py' -v
+          python -m unittest discover -s research/prospective -p 'test_history_absorbed*.py' -v
+          python -m unittest discover -s research/prospective -p 'test_history_score_oracle*.py' -v
+          python -m unittest discover -s research/prospective -p 'test_terminal_analytic_audit.py' -v
+          python -m unittest discover -s research/prospective -p 'test_terminal_numeric_provenance.py' -v
+      - name: Exact original input reconstruction and all declared design diagnostics
+        run: |
+          mkdir -p results/design_bottleneck
+          python research/prospective/history_design_bottleneck_source.py --output results/design_bottleneck/design.json
+      - name: Preserve empirical closure and require complete aggregate result
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('results/design_bottleneck/design.json'))
+          assert r['status']=='DESIGN_BOTTLENECK_DIAGNOSED_OLD_RESPONSE_STOP_UNCHANGED'
+          assert r['actual_trait_or_fitness_outcomes_read'] is False
+          assert r['new_random_worlds']==0
+          assert r['empirical_opening_authorized'] is False
+          assert r['design_anatomy']['previous_final_design_reproduced'] is True
+          print('SOURCE_DESIGN_ANATOMY_COMPLETE_NO_BIOLOGICAL_EFFECT_TEST')
+          PY
+      - name: Save aggregate diagnostics only, never site arrays or rates
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-history-design-bottleneck-source-only-aggregate
+          path: results/design_bottleneck/design.json
+          retention-days: 30
+          if-no-files-found: warn
