@@ -1,0 +1,42 @@
+name: New exploratory Raabova 2007 Pankova 2014 six same-code geography
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/raabova2007_pankova2014_six_site_exploratory_contract_v01.json'
+      - 'research/prospective/raabova2007_pankova2014_six_site_exploratory_v01.py'
+      - 'research/prospective/test_raabova2007_pankova2014_six_site_exploratory_v01.py'
+      - '.github/workflows/ttf-raabova2007-pankova2014-six-site-exploratory-v01.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/raabova2007_pankova2014_six_site_exploratory_contract_v01.json'
+      - 'research/prospective/raabova2007_pankova2014_six_site_exploratory_v01.py'
+      - 'research/prospective/test_raabova2007_pankova2014_six_site_exploratory_v01.py'
+      - '.github/workflows/ttf-raabova2007-pankova2014-six-site-exploratory-v01.yml'
+
+jobs:
+  published-same-codes-source-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic exact six-code geography and fail-closed source matching
+        run: python -m unittest discover -s research/prospective -p test_raabova2007_pankova2014_six_site_exploratory_v01.py -v
+      - name: SHA-verified Hargreaves and published 2014 PLOS original six-site DMS only
+        run: |
+          python research/prospective/raabova2007_pankova2014_six_site_exploratory_v01.py \
+            --output _ttf_source_only/raabova2007_pankova2014_six_site_exploratory_v01.json
+      - name: Store response-blind six-site original-code distances only
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-raabova2007-pankova2014-six-site-source-only-v01
+          path: _ttf_source_only/raabova2007_pankova2014_six_site_exploratory_v01.json
+          retention-days: 30
+          if-no-files-found: error
