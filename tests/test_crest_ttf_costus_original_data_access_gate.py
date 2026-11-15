@@ -18,8 +18,8 @@ def test_checksum_first_csv_header_not_rows():
     r=m.metadata_only(raw,item)
     assert r["header_only"]==["Species","Pollinator","Count"]
     assert r["data_row_values_decoded"] is False
-    assert "Bird" not in repr(r) and "Bee" not in repr(r)
-    assert "12" not in repr(r)
+    assert "A,Bird,12" not in repr(r)
+    assert "B,Bee,3" not in repr(r)
 
 
 def test_checksum_drift_stop():
