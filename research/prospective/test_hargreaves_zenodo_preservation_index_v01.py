@@ -16,7 +16,7 @@ class ZenodoDryadPreservationIndexTests(unittest.TestCase):
     def rec(self, doi=TARGET_DOI, file=TARGET_FILENAME):
         return {"id":1234,"metadata":{"related_identifiers":[
             {"identifier":f"https://doi.org/{doi}","relation":"isSupplementTo"}]},
-            "title":"Local adaptation to biotic interactions"},
+            "title":"Local adaptation to biotic interactions",
             "files":{"entries":{"f":{"key":file}}}}
 
     def test_doi_canonicalization(self):
