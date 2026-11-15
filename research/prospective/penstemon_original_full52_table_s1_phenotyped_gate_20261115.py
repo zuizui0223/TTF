@@ -151,8 +151,22 @@ def main():
     pdf=PdfReader(io.BytesIO(data),strict=False)
     if len(pdf.pages)!=21:raise ValueError("original supplemental PDF page count drift")
     text=pdf.pages[TABLE_PAGE_1BASED-1].extract_text() or ""
+    # Source-format-only amendment: page 11 produced 51 complete voucher
+    # lines, while the official Table S2 begins on page 12. The next page
+    # may contain the final S1 line. Only text BEFORE the S2 heading may
+    # be admitted; no Table S2 floral or experiment values are exported.
+    nextpage=pdf.pages[TABLE_PAGE_1BASED].extract_text() or ""
+    stop=re.search(r"\bTable\s*S2\b",nextpage,re.I)
+    if not stop:
+        raise ValueError("original Table S2 page heading missing: no S1 continuation rescue")
+    pre_s2=nextpage[:stop.start()]
+    continuation=[line.strip() for line in pre_s2.splitlines() if ROW.match(line.strip())]
+    if len(continuation)>1:
+        raise ValueError("more than one possible S1 continuation line; source-format gate blocked")
+    text_for_s1=text+("\n"+continuation[0] if continuation else "")
     ncbi=NCBI_source_taxa()
-    page=parse_s1_page(text,sorted(ncbi))
+    page=parse_s1_page(text_for_s1,sorted(ncbi))
+    page["source_page_12_before_S2_continuation_count"]=len(continuation)
     counts=page["source_species_match_counts"]
     mismatch={
        t:{"n_original_2026_table_s1_vouchers":counts.get(t,0),"n_original_2026_ncbi_SAMN":ncbi[t]}
