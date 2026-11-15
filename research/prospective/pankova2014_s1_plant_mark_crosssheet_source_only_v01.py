@@ -132,7 +132,7 @@ def read_selected_id_cells(buf:bytes,offset:int,cols:dict[str,int],nlimit:int):
 def per_sheet_id_metadata(selected:dict,contract:dict)->dict:
     intended=contract["allow_row_cell_values_only_for_columns"]
     if intended!=["mark","St","So"]:
-        raise ValueError("ID metadata fields changed after predata freeze")
+        raise ValueError("ID metadata allowlist changed after predata freeze")
     out={}
     keys={}
     for sheet in ("survival","performance"):
