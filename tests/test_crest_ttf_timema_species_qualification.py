@@ -56,5 +56,8 @@ def test_outcome_presence_does_not_decode_effect_sizes():
     assert present["habitat_isolation"]==2
     assert present["sexual_isolation"]==1
     assert present["both_cells_structurally_present"]==1
+    assert present["numeric_literal_storage_cells_not_validated_trials"] == {
+        "habitat_isolation":2,"sexual_isolation":1
+    }
     assert "0.123456789" not in repr(present)
     assert "-0.192837465" not in repr(present)
