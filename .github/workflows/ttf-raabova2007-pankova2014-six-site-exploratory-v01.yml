@@ -8,12 +8,16 @@ on:
       - 'research/prospective/raabova2007_pankova2014_six_site_exploratory_contract_v01.json'
       - 'research/prospective/raabova2007_pankova2014_six_site_exploratory_v01.py'
       - 'research/prospective/test_raabova2007_pankova2014_six_site_exploratory_v01.py'
+      - 'research/prospective/raabova2007_pankova2014_probable_shared_adult_cohort_v01.json'
+      - 'research/prospective/test_raabova2007_pankova2014_shared_adult_cohort_v01.py'
       - '.github/workflows/ttf-raabova2007-pankova2014-six-site-exploratory-v01.yml'
   pull_request:
     paths:
       - 'research/prospective/raabova2007_pankova2014_six_site_exploratory_contract_v01.json'
       - 'research/prospective/raabova2007_pankova2014_six_site_exploratory_v01.py'
       - 'research/prospective/test_raabova2007_pankova2014_six_site_exploratory_v01.py'
+      - 'research/prospective/raabova2007_pankova2014_probable_shared_adult_cohort_v01.json'
+      - 'research/prospective/test_raabova2007_pankova2014_shared_adult_cohort_v01.py'
       - '.github/workflows/ttf-raabova2007-pankova2014-six-site-exploratory-v01.yml'
 
 jobs:
@@ -29,6 +33,8 @@ jobs:
           python-version: '3.12'
       - name: Synthetic exact six-code geography and fail-closed source matching
         run: python -m unittest discover -s research/prospective -p test_raabova2007_pankova2014_six_site_exploratory_v01.py -v
+      - name: Published methods evidence for probable shared 2004 adult cohort (not independent)
+        run: python -m unittest discover -s research/prospective -p test_raabova2007_pankova2014_shared_adult_cohort_v01.py -v
       - name: SHA-verified Hargreaves and published 2014 PLOS original six-site DMS only
         run: |
           python research/prospective/raabova2007_pankova2014_six_site_exploratory_v01.py \
