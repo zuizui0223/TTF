@@ -1,0 +1,31 @@
+name: Raabova 2007 original source-only data attachment discovery
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/raabova2007_original_data_location_preflight_contract_v01.json'
+      - 'research/prospective/raabova2007_original_data_location_preflight_v01.py'
+      - 'research/prospective/test_raabova2007_original_data_location_preflight_v01.py'
+      - '.github/workflows/raabova2007-source-attachment-index-v01.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/raabova2007_original_data_location_preflight_contract_v01.json'
+      - 'research/prospective/raabova2007_original_data_location_preflight_v01.py'
+      - 'research/prospective/test_raabova2007_original_data_location_preflight_v01.py'
+      - '.github/workflows/raabova2007-source-attachment-index-v01.yml'
+jobs:
+  official-source-list-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test official source attachment detection and absent-data abstention
+        run: python -m unittest discover -s research/prospective -p test_raabova2007_original_data_location_preflight_v01.py -v
+      - name: Fetch ONLY 2007 publisher and 2008/2009 university thesis HTML attachment indexes
+        run: python research/prospective/raabova2007_original_data_location_preflight_v01.py
