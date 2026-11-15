@@ -44,3 +44,26 @@ def test_empty_summary_is_not_negative_biological_result():
 def test_source_identity_design_is_fixed_before_query():
     assert mod.LIMIT==5
     assert mod.STUDY=="PRJNA1479764"
+
+
+def test_esearch_converts_five_accessions_to_five_unique_numeric_uids():
+    attempted=[f"SAMN6099293{i}" for i in range(1,6)]
+    response={"esearchresult":{"count":"5","idlist":["125","123","127","126","124"]}}
+    d=mod.numeric_uids_from_esearch(json.dumps(response).encode(),attempted)
+    assert d["status"]=="NCBI_SOURCE_UIDS_RESOLVED"
+    assert len(d["ids"])==5
+    assert all(v.isdigit() for v in d["ids"])
+
+
+def test_esearch_zero_hits_is_source_not_evaluable_not_biological_null():
+    d=mod.numeric_uids_from_esearch(
+        b'{"esearchresult":{"count":"0","idlist":[]}}',["SAMN60992931"])
+    assert d["status"]=="NCBI_ESEARCH_UID_COVERAGE_NOT_EVALUABLE"
+    assert d["not_a_biological_null"] is True
+
+
+def test_esearch_malformed_duplicate_numeric_uids_fail_closed():
+    with pytest.raises(ValueError,match="not unique"):
+        mod.numeric_uids_from_esearch(
+            b'{"esearchresult":{"count":"2","idlist":["1","1"]}}',
+            ["SAMN60992931","SAMN60992932"])
