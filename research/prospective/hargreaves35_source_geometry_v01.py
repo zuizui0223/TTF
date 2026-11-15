@@ -112,8 +112,8 @@ def audit_hargreaves35(raw:bytes, contract:dict, receipt:dict) -> dict:
         cells[key].add(source)
         gardens[key].add(dest)
         refs[study].add(key)
-    if n_original!=11088:
-        raise ValueError("Hargreaves original 11088 physical rows drifted")
+    if n_original!=src["expected_original_physical_rows"]:
+        raise ValueError("Hargreaves original physical row count drifted")
     per_study=[]
     for study in sorted(targets):
         groups=refs[study]
