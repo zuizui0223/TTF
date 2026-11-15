@@ -1,0 +1,29 @@
+name: Bontrager original Zenodo preservation DOI preflight
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/bontrager_zenodo_preservation_index_v01.py'
+      - 'research/prospective/test_bontrager_zenodo_preservation_index_v01.py'
+      - '.github/workflows/bontrager-zenodo-preservation-v01.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/bontrager_zenodo_preservation_index_v01.py'
+      - 'research/prospective/test_bontrager_zenodo_preservation_index_v01.py'
+      - '.github/workflows/bontrager-zenodo-preservation-v01.yml'
+jobs:
+  metadata-only:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic identity qualification tests
+        run: python -m unittest discover -s research/prospective -p test_bontrager_zenodo_preservation_index_v01.py -v
+      - name: Search exact original DOI on official Zenodo index (metadata only)
+        run: python research/prospective/bontrager_zenodo_preservation_index_v01.py
