@@ -1,0 +1,40 @@
+name: Bontrager verified study-label inventory (source-only)
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/bontrager_reference_study_labels_source_only_v01.py'
+      - 'research/prospective/test_bontrager_reference_study_labels_source_only_v01.py'
+      - '.github/workflows/ttf-bontrager-source-label-inventory.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/bontrager_reference_study_labels_source_only_v01.py'
+      - 'research/prospective/test_bontrager_reference_study_labels_source_only_v01.py'
+      - '.github/workflows/ttf-bontrager-source-label-inventory.yml'
+
+jobs:
+  source-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic source-label and original-geometry qualification tests
+        run: |
+          python -m unittest discover -s research/prospective -p test_bontrager_reference_study_labels_source_only_v01.py -v
+      - name: SHA-verified Borealis/Dryad original study labels only (no fitness response)
+        run: |
+          python research/prospective/bontrager_reference_study_labels_source_only_v01.py --output _ttf_source_only/bontrager_original_reference_study_labels_v01.json
+      - name: Archive source-only bibliography crosswalk input
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-bontrager-original-source-study-label-inventory-v01
+          path: _ttf_source_only/bontrager_original_reference_study_labels_v01.json
+          retention-days: 30
+          if-no-files-found: error
