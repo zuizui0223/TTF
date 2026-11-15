@@ -41,8 +41,10 @@ def project_link(link):
 
 def safe_version(v):
     links = v.get("_links", {})
+    href = project_link(links.get("self", ""))
+    id_from_self = int(href.rsplit("/",1)[-1]) if href.rsplit("/",1)[-1].isdigit() else None
     return {
-        "id": v.get("id"),
+        "id": v.get("id") or id_from_self,
         "versionNumber": v.get("versionNumber"),
         "publicationDate": v.get("publicationDate"),
         "lastModificationDate": v.get("lastModificationDate"),
@@ -78,7 +80,11 @@ def main():
     if not candidates:
         raise ValueError(f"no numeric version ID: {version_rows}")
     # Deterministic latest-number metadata for the *discovery* run.
-    v = max(candidates, key=lambda x: (x["versionNumber"] or 0, x["id"]))
+    versions_2024 = [x for x in candidates if x["versionNumber"] == 3 and x["id"] == 275058
+                     and x["publicationDate"] == "2024-01-23"]
+    if len(versions_2024) != 1:
+        raise ValueError("published 2024 Dryad version 3 ID 275058 not uniquely available")
+    v = versions_2024[0]
     files_url = f"{BASE}/versions/{v['id']}/files"
     b = fetch_json(files_url)
     files, files_collection = nested_list(b, "files")
