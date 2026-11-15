@@ -48,8 +48,8 @@
     "history_at_source": "Four-dimensional Euclidean norm of (BIO21ka - BIO0BP) / frozen training current SD, at each original source; H-history is not a realized occupied past trajectory.",
     "modern_climate_pair_distance": "Euclidean norm of differences of original source pair four BIO0BP values standardized by frozen train source SD.",
     "H_pair_absolute_difference": "Absolute difference between two source historical displacement magnitudes, normalized by training species-equal SD of source H magnitudes.",
-    "source_only_modern_matched_threshold": "Modern standardized 4-dimensional climate distance <=1.0; source-only geographical design rule, not tuned on fitness.",
-    "source_only_H_contrasted_threshold": "Absolute standardized history-magnitude difference >=0.5; source-only qualification not an adaptation effect.",
+    "source_only_modern_matched_threshold": 1,
+    "source_only_H_contrasted_threshold": 0.5,
     "within_garden_source_history_linear_conditioning": "Regress source H on current source 4 climate bands, source latitude, longitude and source-garden great-circle distance, after absorbing study×taxon×site×fitness_type cell means. Compute weighted residual H variability; no response opened.",
     "source_equal_weighting": "Each training species equal total weight, each qualifying garden cell equal subweight, each distinct original source coordinate in cell equal subweight.",
     "minimal_candidate_panel": {
@@ -59,7 +59,9 @@
       "min_species_per_original_disjoint_role": 20,
       "source_only_threshold_is_design_eligibility_not_biological_inference": true,
       "if_insufficient": "INSUFFICIENT_MATCHED_HISTORY_SOURCE_CONTRAST_NOT_ADAPTATION_NULL"
-    }
+    },
+    "source_only_modern_matched_threshold_definition": "Modern standardized 4-dimensional climate distance <=1.0; source-only geographical design rule, not tuned on fitness.",
+    "source_only_H_contrasted_threshold_definition": "Absolute standardized history-magnitude difference >=0.5; source-only qualification not an adaptation effect."
   },
   "biological_outcome_boundary": {
     "fitness_sign_magnitude_sample_rows_NEVER_accessed": true,
@@ -70,5 +72,6 @@
     "Bontrager_Hargreaves_primary_study_overlap_unknown": true,
     "source_only_status_not_confirmatory_evolutionary_prediction": true,
     "export_only_aggregate_and_original_sha_no_pointwise_locations": true
-  }
+  },
+  "numeric_type_correction_audit": "research/prospective/bontrager_threshold_type_amendment_v01.json"
 }
