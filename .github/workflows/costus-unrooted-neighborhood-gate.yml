@@ -1,0 +1,35 @@
+name: Costus original unrooted phylogenetic neighborhood TTF-Q gate
+
+on:
+  push:
+    branches:
+      - research/crest-ttf-four-system-source-preflight-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/ttf_crest_costus_unrooted_neighborhood_gate_20261115.py'
+      - 'tests/test_crest_ttf_costus_unrooted_neighborhood_gate.py'
+      - '.github/workflows/costus-unrooted-neighborhood-gate.yml'
+
+jobs:
+  source-unrooted:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic patristic geometry and source-only grouping
+        run: |
+          python -m pip install pytest dendropy==5.0.8
+          python -m pytest -q tests/test_crest_ttf_costus_unrooted_neighborhood_gate.py
+      - name: Check authentic 2022 Costus original unrooted tree against 27 source pollination tips
+        run: |
+          python research/prospective/ttf_crest_costus_unrooted_neighborhood_gate_20261115.py > /tmp/costus_unrooted_source_holdout_gate.json
+          cat /tmp/costus_unrooted_source_holdout_gate.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: costus-source-only-unrooted-neighborhood-blocks
+          path: /tmp/costus_unrooted_source_holdout_gate.json
+          retention-days: 21
