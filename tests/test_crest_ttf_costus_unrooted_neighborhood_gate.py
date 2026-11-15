@@ -1,7 +1,8 @@
 """Synthetic unrooted Costus distance block and no-outcome source gate."""
 import importlib.util
 from pathlib import Path
-import dendropy
+import pytest
+dendropy = pytest.importorskip("dendropy")
 
 F=Path(__file__).resolve().parents[1]/"research"/"prospective"/"ttf_crest_costus_unrooted_neighborhood_gate_20261115.py"
 spec=importlib.util.spec_from_file_location("costus_unrooted",F)
