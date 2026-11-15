@@ -3,6 +3,10 @@ import importlib.util
 from pathlib import Path
 import pytest
 
+# Only the source-specific workflow installs DendroPy. The frozen TTF-Q
+# base test environment intentionally need not acquire a phylogeny parser.
+pytest.importorskip("dendropy")
+
 P=Path(__file__).resolve().parents[1]/"research"/"prospective"/"penstemon_2023_public_habroanthus_phylogeny_key_gate_20261115.py"
 spec=importlib.util.spec_from_file_location("penstemon_2023_tips",P)
 m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
