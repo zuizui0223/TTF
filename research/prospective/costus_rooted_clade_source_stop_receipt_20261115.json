@@ -1,0 +1,13 @@
+{
+  "status": "NOT_EVALUABLE_ORIGINAL_CHRONOGRAM_NOT_ROOTED",
+  "source_original_tree_sha256": "24f1cbfaa82ce4d33aad1ba80787cc611a6730aafb38f8244954c4d0d50ae7a1",
+  "source_observed_is_rooted": false,
+  "source_tree_tip_count": 69,
+  "scent_source_taxa": 27,
+  "original_rooted_clade_run_id": 43700817708,
+  "original_rooted_clade_run_url": "https://github.com/zuizui0223/TTF/actions/runs/43700817708",
+  "source_unrooted_geometry_receipt": "research/prospective/costus_unrooted_phylogenetic_neighborhood_stop_receipt_20261115.json",
+  "scent_outcome_values_opened": false,
+  "claim": "SOURCE_ONLY_NOT_BIOLOGICAL_NULL",
+  "reexecution_policy": "Verify immutable receipt on future branch commits; no repeated source network fetch needed."
+}
