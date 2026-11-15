@@ -1,0 +1,203 @@
+{
+  "cross_study_independence_unverified": true,
+  "no_observed_pollinator_outcomes_read": true,
+  "no_scent_or_molecular_responses_read": true,
+  "no_species_crosswalk_performed": true,
+  "sources": [
+    {
+      "doi": "10.7291/D1C39G",
+      "expected_source_file_missing": [],
+      "files": [
+        {
+          "bytes": 90309,
+          "digest": "24f1cbfaa82ce4d33aad1ba80787cc611a6730aafb38f8244954c4d0d50ae7a1",
+          "digest_type": "sha-256",
+          "file_id": 1569878,
+          "filename": "chronogram_v8_2.tre",
+          "self": "/api/v2/files/1569878"
+        },
+        {
+          "bytes": 3188,
+          "digest": "7903d53fecdda0b7e1704e9eb71e545030543814d026396b683c172c18dcd2a7",
+          "digest_type": "sha-256",
+          "file_id": 1569879,
+          "filename": "Costus_traits_greenhouse_-_Metadata.csv",
+          "self": "/api/v2/files/1569879"
+        },
+        {
+          "bytes": 33076,
+          "digest": "0938b2d6c7e08cf3fca038f782620557da997a6c6b10ccda40550361af5bce38",
+          "digest_type": "sha-256",
+          "file_id": 1569880,
+          "filename": "Costus_traits_greenhouse.csv",
+          "self": "/api/v2/files/1569880"
+        },
+        {
+          "bytes": 3373,
+          "digest": "f473f5a325e3fa2d81b7dd568dd753f8841253997df7fa28e8e00943503e9384",
+          "digest_type": "sha-256",
+          "file_id": 1569883,
+          "filename": "Costus_traits_Maas_-_metadata.csv",
+          "self": "/api/v2/files/1569883"
+        },
+        {
+          "bytes": 14587,
+          "digest": "92b64682b3fe62101bf26be3ec4d114676e738efac61201e7f4bf1cae205513f",
+          "digest_type": "sha-256",
+          "file_id": 1569881,
+          "filename": "Costus_traits_Maas.csv",
+          "self": "/api/v2/files/1569881"
+        },
+        {
+          "bytes": 8255,
+          "digest": "0168b1235b6a0cd8e95158a260af64f78f525f8bd9fee6026fb1bdc619eb3957",
+          "digest_type": "sha-256",
+          "file_id": 1569882,
+          "filename": "famd_coords.csv",
+          "self": "/api/v2/files/1569882"
+        },
+        {
+          "bytes": 5064,
+          "digest": "1fbf05845fdde9defb6d4615249b890cf5e47f7ea7cbff88aa9d740ec4e4f22c",
+          "digest_type": "sha-256",
+          "file_id": 1569889,
+          "filename": "famd_loadings.csv",
+          "self": "/api/v2/files/1569889"
+        },
+        {
+          "bytes": 12685,
+          "digest": "a114706336bfa92f414b5c6576bbfff2ca73ded5d15502877e7266a874246d8c",
+          "digest_type": "sha-256",
+          "file_id": 1569884,
+          "filename": "imputed.csv",
+          "self": "/api/v2/files/1569884"
+        },
+        {
+          "bytes": 1101254,
+          "digest": "5799b3c64ee8322ca2d3d59ecdaa9536b5f031e2b6cee8acabaf1d8708ed2fbe",
+          "digest_type": "sha-256",
+          "file_id": 1569888,
+          "filename": "occurrences.elev.csv",
+          "self": "/api/v2/files/1569888"
+        },
+        {
+          "bytes": 6994,
+          "digest": "e6bfa395a1792cfe648016609dbdaf8153170206d8ddc69f3e9f1023278562a5",
+          "digest_type": "sha-256",
+          "file_id": 1569887,
+          "filename": "Pollinator_observations.csv",
+          "self": "/api/v2/files/1569887"
+        },
+        {
+          "bytes": 7970,
+          "digest": "5f241fca2751e723fc80312961ec518812abf037aad6dd05c7e905bfd24354ea",
+          "digest_type": "sha-256",
+          "file_id": 1569886,
+          "filename": "README.txt",
+          "self": "/api/v2/files/1569886"
+        },
+        {
+          "bytes": 7030,
+          "digest": "9e160dbf52b873d430ebff2aef9970351e24bea5ffbf7bc350d546068d2aa6c4",
+          "digest_type": "sha-256",
+          "file_id": 1569885,
+          "filename": "species.elev.csv",
+          "self": "/api/v2/files/1569885"
+        }
+      ],
+      "raw_files_downloaded": false,
+      "selected_version": {
+        "id": 190546,
+        "publication_date": "2022-08-05",
+        "self": "/api/v2/versions/190546",
+        "version_number": 4
+      },
+      "source": "kay_grossenbacher_2022",
+      "status": "SOURCE_FILE_METADATA_CHECKED",
+      "versions": [
+        {
+          "id": 183518,
+          "publication_date": "2022-06-16",
+          "self": "/api/v2/versions/183518",
+          "version_number": 3
+        },
+        {
+          "id": 190546,
+          "publication_date": "2022-08-05",
+          "self": "/api/v2/versions/190546",
+          "version_number": 4
+        }
+      ]
+    },
+    {
+      "doi": "10.5061/dryad.931zcrk0r",
+      "expected_source_file_missing": [],
+      "files": [
+        {
+          "bytes": 38955,
+          "digest": "00009bc6170473ddfc3e74003939a5c083c70e6d50268adfa9cc2a8279931796",
+          "digest_type": "sha-256",
+          "file_id": 4746470,
+          "filename": "Data.Availability(Dryad).zip",
+          "self": "/api/v2/files/4746470"
+        },
+        {
+          "bytes": 6108,
+          "digest": "cbd2cb25d4276e18e24c0fb1a529a7abef1a6389659509db1b6017b6a955b478",
+          "digest_type": "sha-256",
+          "file_id": 4731784,
+          "filename": "R-codes(Dryad).zip",
+          "self": "/api/v2/files/4731784"
+        },
+        {
+          "bytes": 6813,
+          "digest": "f39abd1dbc2eb0b760eca7a815ce5946846ea91dd251fb85d3167234f4677ab2",
+          "digest_type": "sha-256",
+          "file_id": 4746475,
+          "filename": "README.md",
+          "self": "/api/v2/files/4746475"
+        }
+      ],
+      "raw_files_downloaded": false,
+      "selected_version": {
+        "id": 439084,
+        "publication_date": "2026-05-06",
+        "self": "/api/v2/versions/439084",
+        "version_number": 7
+      },
+      "source": "costus_efficiency_2026",
+      "status": "SOURCE_FILE_METADATA_CHECKED",
+      "versions": [
+        {
+          "id": 439084,
+          "publication_date": "2026-05-06",
+          "self": "/api/v2/versions/439084",
+          "version_number": 7
+        }
+      ]
+    },
+    {
+      "node_id": "2ap4k",
+      "node_url": "https://osf.io/2ap4k/",
+      "public": true,
+      "raw_files_downloaded": false,
+      "source": "darragh_2025_scent_osf",
+      "status": "OSF_PROJECT_METADATA_ONLY",
+      "title": "Costus scent project"
+    }
+  ],
+  "status": "COSTUS_PRIMARY_SOURCE_METADATA_ONLY_NO_OUTCOMES",
+  "provenance": {
+    "run_id": 43698074392,
+    "run_url": "https://github.com/zuizui0223/TTF/actions/runs/43698074392",
+    "artifacts": [
+      {
+        "id": 14155476579,
+        "name": "costus-2022-2025-2026-original-source-metadata-only",
+        "digest": "sha256:86fc2c5d2eb403337842cfb5f48b57b594a5cf294272ec927f1560ddba81caf1",
+        "size_bytes": 1839
+      }
+    ],
+    "raw_outcomes_read": false
+  }
+}
