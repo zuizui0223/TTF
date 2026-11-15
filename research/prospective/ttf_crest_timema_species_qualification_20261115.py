@@ -134,6 +134,10 @@ def source_response_cell_presence(raw:bytes) -> dict:
         rows=body.findall(f"{{{M}}}row")
         counts={"habitat_isolation":0,"sexual_isolation":0,
                 "both_cells_structurally_present":0}
+        # Storage classes can expose placeholders without opening effect sizes.
+        # XLSX XML numeric cell bodies remain entirely unread.
+        storage_types={"K":collections.Counter(),"L":collections.Counter()}
+        numeric_storage={"K":0,"L":0}
         for row in rows:
             idx=int(row.get("r","0"))
             if idx<2:continue
@@ -146,11 +150,38 @@ def source_response_cell_presence(raw:bytes) -> dict:
                     or cell.find(f"{{{M}}}is") is not None
                     or cell.find(f"{{{M}}}f") is not None)
                 present.append(exists)
+                if not exists:
+                    storage_types[col]["absent_or_empty_xml"]+=1
+                else:
+                    storage_type=cell.get("t","n")
+                    has_numeric_node=(cell.find(f"{{{M}}}v") is not None)
+                    has_formula=(cell.find(f"{{{M}}}f") is not None)
+                    if storage_type in ("n",None) and has_numeric_node and not has_formula:
+                        storage_types[col]["numeric_literal_storage"]+=1
+                        numeric_storage[col]+=1
+                    elif has_formula:
+                        storage_types[col]["formula_storage_not_decoded"]+=1
+                    elif storage_type=="s":
+                        storage_types[col]["shared_string_storage_not_decoded"]+=1
+                    elif storage_type in ("inlineStr","str"):
+                        storage_types[col]["text_storage_not_decoded"]+=1
+                    elif storage_type=="e":
+                        storage_types[col]["excel_error_storage_not_decoded"]+=1
+                    else:
+                        storage_types[col]["other_storage_not_decoded"]+=1
             counts["habitat_isolation"]+=int(present[0])
             counts["sexual_isolation"]+=int(present[1])
             counts["both_cells_structurally_present"]+=int(all(present))
         counts["row_elements"]=len(rows)
-        counts["meaning"]="serialized XML cells only; numeric values not read; not valid response trial count"
+        counts["cell_storage_types_no_value_decoding"]={
+            "habitat_isolation":dict(sorted(storage_types["K"].items())),
+            "sexual_isolation":dict(sorted(storage_types["L"].items())),
+        }
+        counts["numeric_literal_storage_cells_not_validated_trials"]={
+            "habitat_isolation":numeric_storage["K"],
+            "sexual_isolation":numeric_storage["L"],
+        }
+        counts["meaning"]="XML storage type and presence only; no numeric/placeholder contents read; no confirmed trial count"
         return counts
 
 
