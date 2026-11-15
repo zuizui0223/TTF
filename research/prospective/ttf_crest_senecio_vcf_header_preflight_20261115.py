@@ -64,7 +64,9 @@ def audit_archive(raw: bytes) -> dict:
         raise ValueError("unexpected compressed file size")
     with tarfile.open(fileobj=io.BytesIO(raw), mode="r:gz") as tf:
         members = [x for x in tf.getmembers() if x.isfile()]
-        vcfs = [x for x in members if x.name.endswith(".vcf")]
+        # macOS AppleDouble files are resource forks, not VCF content.
+        vcfs = [x for x in members if x.name.endswith(".vcf")
+                and not x.name.rsplit("/", 1)[-1].startswith("._")]
         if len(vcfs) != 1:
             names = sorted(x.name for x in members)[:16]
             raise ValueError(f"expected exactly one VCF among archived files; VCF count={len(vcfs)}, names={names}")
