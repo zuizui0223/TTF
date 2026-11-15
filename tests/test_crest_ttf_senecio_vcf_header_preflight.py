@@ -63,3 +63,21 @@ def test_non_header_line_prevents_variant_read():
     except ValueError as e:
         assert "unexpected non-header" in str(e)
     else: raise AssertionError("variant before header accepted")
+
+
+def test_appledouble_resource_fork_does_not_duplicate_vcf():
+    data = fake_archive()
+    with tarfile.open(fileobj=io.BytesIO(data), mode="r:gz") as old:
+        original = old.extractfile("synthetic.vcf").read()
+    stream = io.BytesIO()
+    with tarfile.open(fileobj=stream, mode="w:gz") as tf:
+        for name, payload in (
+            ("._synthetic.vcf", b"AppleDouble resource fork"),
+            ("synthetic.vcf", original),
+        ):
+            info = tarfile.TarInfo(name)
+            info.size = len(payload)
+            tf.addfile(info, io.BytesIO(payload))
+    result = with_source_sha(stream.getvalue())
+    assert result["vcf_sample_count"] == 4
+    assert result["archive_member_name"] == "synthetic.vcf"
