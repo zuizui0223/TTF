@@ -2,6 +2,7 @@
 import importlib.util
 from pathlib import Path
 import pytest
+pytest.importorskip("dendropy")  # Optional source-only tree CI provides this dependency.
 
 P=Path(__file__).resolve().parents[1]/"research"/"prospective"/"ttf_crest_costus_original_tree_label_geometry_20261115.py"
 spec=importlib.util.spec_from_file_location("costus_tree_source",P)
