@@ -59,7 +59,8 @@
     "source_lonlat_columns_absent": [
       "lat_source",
       "long_source"
-    ]
+    ],
+    "expected_original_physical_rows": 11088
   },
   "allowed_columns": [
     "study",
