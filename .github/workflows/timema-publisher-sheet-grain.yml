@@ -1,0 +1,35 @@
+name: Timema publisher XLSX schema and source-only TTF feasibility
+
+on:
+  push:
+    branches:
+      - research/crest-ttf-four-system-source-preflight-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/ttf_crest_timema_publisher_sheet_grain_20261115.py'
+      - 'tests/test_crest_ttf_timema_publisher_sheet_grain.py'
+      - '.github/workflows/timema-publisher-sheet-grain.yml'
+
+jobs:
+  metadata-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test synthetic workbook metadata-only reader
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_crest_ttf_timema_publisher_sheet_grain.py
+      - name: Inspect original publisher worksheets without numeric response decoding
+        run: |
+          python research/prospective/ttf_crest_timema_publisher_sheet_grain_20261115.py > /tmp/timema_publisher_sheet_grain.json
+          cat /tmp/timema_publisher_sheet_grain.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: timema-publisher-sheet-grain-only
+          path: /tmp/timema_publisher_sheet_grain.json
+          retention-days: 14
