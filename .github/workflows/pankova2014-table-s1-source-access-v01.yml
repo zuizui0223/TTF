@@ -11,6 +11,8 @@ on:
       - 'research/prospective/pankova2014_s1_original_plant_mark_join_contract_v01.json'
       - 'research/prospective/pankova2014_s1_plant_mark_crosssheet_source_only_v01.py'
       - 'research/prospective/test_pankova2014_s1_plant_mark_crosssheet_source_only_v01.py'
+      - 'research/prospective/source_registry/pankova2014_original_plant_mark_internal_linkage_v01.json'
+      - 'research/prospective/test_pankova2014_plant_mark_receipt_v01.py'
       - 'research/prospective/pankova2014_s1_xls_schema_only_v01.py'
       - 'research/prospective/test_pankova2014_s1_xls_schema_only_v01.py'
       - '.github/workflows/pankova2014-table-s1-source-access-v01.yml'
@@ -23,6 +25,8 @@ on:
       - 'research/prospective/pankova2014_s1_original_plant_mark_join_contract_v01.json'
       - 'research/prospective/pankova2014_s1_plant_mark_crosssheet_source_only_v01.py'
       - 'research/prospective/test_pankova2014_s1_plant_mark_crosssheet_source_only_v01.py'
+      - 'research/prospective/source_registry/pankova2014_original_plant_mark_internal_linkage_v01.json'
+      - 'research/prospective/test_pankova2014_plant_mark_receipt_v01.py'
       - 'research/prospective/pankova2014_s1_xls_schema_only_v01.py'
       - 'research/prospective/test_pankova2014_s1_xls_schema_only_v01.py'
       - '.github/workflows/pankova2014-table-s1-source-access-v01.yml'
@@ -58,6 +62,8 @@ jobs:
           retention-days: 30
       - name: Synthetic plant tag ID and target garden composite key tests, no response cells
         run: python -m unittest discover -s research/prospective -p test_pankova2014_s1_plant_mark_crosssheet_source_only_v01.py -v
+      - name: Pinned first-shot original data-receipt integrity tests (no raw IDs)
+        run: python -m unittest discover -s research/prospective -p test_pankova2014_plant_mark_receipt_v01.py -v
       - name: Pinned original published XLS site-mark individual-ID metadata only
         run: |
           python research/prospective/pankova2014_s1_plant_mark_crosssheet_source_only_v01.py \
