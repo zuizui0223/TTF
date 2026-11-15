@@ -1,0 +1,48 @@
+name: ttf-fresh-Bontrager-CSV-HEADERS-and-README-only
+on:
+  push:
+    branches: [prospective/quaternary-phenotype-source-screen-20261112]
+    paths:
+      - '.github/workflows/ttf-bontrager-UBC-member-headers-v01.yml'
+      - 'research/prospective/bontrager_member_header_contract_v01.json'
+      - 'research/prospective/bontrager_member_headers_v01.py'
+      - 'research/prospective/test_bontrager_member_headers_v01.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-source-header-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic source-only test prevents filename substitution and phenotype row access
+        run: python -m unittest discover -s research/prospective -p 'test_bontrager_member_headers_v01.py' -v
+      - name: Verify original SHA and inspect seven CSV first lines and bounded README only
+        run: |
+          mkdir -p results/source_only
+          python research/prospective/bontrager_member_headers_v01.py --output results/source_only/bontrager_member_headers_v01.json
+      - name: Verify original source-only output and old Haldane STOP
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('results/source_only/bontrager_member_headers_v01.json'))
+          assert x['raw_fitness_rows_read'] is False
+          assert x['rowwise_location_values_read'] is False
+          assert x['historical_climate_association_fit'] is False
+          assert x['original_Haldane_terminal_unchanged'] is True
+          print('BONTRAGER_HEADER_STATUS',x['status'])
+          for f in x.get('source_member_columns',[]):
+              print('SOURCE_CSV_HEADER',f['archive_member'],f['column_count'],','.join(f['headers']))
+          PY
+      - name: Publish only verified source headers and codebook metadata
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-Bontrager-original-7-CSV-headers-and-README
+          path: results/source_only/bontrager_member_headers_v01.json
+          retention-days: 30
+          if-no-files-found: warn
