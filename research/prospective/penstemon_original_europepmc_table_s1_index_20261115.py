@@ -15,7 +15,9 @@ import zipfile
 from pypdf import PdfReader
 
 URL="https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13419788/supplementaryFiles"
-ZIP_SHA="42abf929e1428e9f643e76ed80057574b66c4bcd2c47b77ff50ef370c4a01278"
+# Europe PMC dynamically rebuilds ZIP wrappers: prior archive digest is
+# provenance for an earlier manifest, NOT a stable PDF member digest.
+EARLIER_ZIP_SHA="42abf929e1428e9f643e76ed80057574b66c4bcd2c47b77ff50ef370c4a01278"
 PDF_MEMBER="media-1.pdf"
 PDF_DECLARED_BYTES=2808017
 PDF_MAX_BYTES=7_000_000
@@ -43,26 +45,65 @@ def index_pdf(raw:bytes)->dict:
             "no_specimen_or_flower_value_export":True}
 
 
-def main():
-    req=urllib.request.Request(URL,headers={"User-Agent":"TTF-Habroanthus-EPMC-original-PDF-index/1.0"})
-    with urllib.request.urlopen(req,timeout=45) as response:
-        archive=response.read(SOURCE_ZIP_MAX+1)
-    if len(archive)>SOURCE_ZIP_MAX or hashlib.sha256(archive).hexdigest()!=ZIP_SHA:
-        raise ValueError("Europe PMC original supplementary ZIP SHA256 mismatch")
+EXPECTED_MEMBERS={
+    "media-1.pdf",
+    "nihpp-2026.07.21.739878v1-f0001.gif",
+    "nihpp-2026.07.21.739878v1-f0002.gif",
+    "nihpp-2026.07.21.739878v1-f0003.gif",
+    "nihpp-2026.07.21.739878v1-f0004.gif",
+    "nihpp-2026.07.21.739878v1-f0001.jpg",
+    "nihpp-2026.07.21.739878v1-f0002.jpg",
+    "nihpp-2026.07.21.739878v1-f0003.jpg",
+    "nihpp-2026.07.21.739878v1-f0004.jpg",
+}
+
+
+def extract_original_pdf_member(archive:bytes) -> bytes:
+    if len(archive)>SOURCE_ZIP_MAX or not zipfile.is_zipfile(io.BytesIO(archive)):
+        raise ValueError("Europe PMC ZIP unavailable or unsafe")
     with zipfile.ZipFile(io.BytesIO(archive)) as z:
         members={info.filename:info for info in z.infolist() if not info.is_dir()}
-        if PDF_MEMBER not in members:
-            raise ValueError("expected original supplemental PDF member missing")
+        if set(members)!=EXPECTED_MEMBERS:
+            raise ValueError("Europe PMC original supplemental ZIP member inventory drift")
         if members[PDF_MEMBER].file_size!=PDF_DECLARED_BYTES:
-            raise ValueError("original PDF member declared length drift")
-        with z.open(PDF_MEMBER) as member:
-            pdf_bytes=member.read(PDF_MAX_BYTES+1)
-    if len(pdf_bytes)>PDF_MAX_BYTES:raise ValueError("original PDF over cap")
-    result=index_pdf(pdf_bytes)
+            raise ValueError("original PDF member length differs from earlier official manifest")
+        with z.open(PDF_MEMBER) as source:
+            raw=source.read(PDF_MAX_BYTES+1)
+    if len(raw)!=PDF_DECLARED_BYTES:
+        raise ValueError("original PDF uncompressed byte length drift")
+    if not raw.startswith(b"%PDF-"):
+        raise ValueError("original PDF member is not PDF")
+    return raw
+
+
+def source_get():
+    req=urllib.request.Request(URL,headers={
+       "User-Agent":"TTF-Habroanthus-EPMC-original-PDF-index/1.0",
+       "Cache-Control":"no-cache",
+    })
+    with urllib.request.urlopen(req,timeout=45) as response:
+        data=response.read(SOURCE_ZIP_MAX+1)
+    return data
+
+
+def main():
+    a=source_get()
+    b=source_get()
+    pdf_a=extract_original_pdf_member(a)
+    pdf_b=extract_original_pdf_member(b)
+    hash_a=hashlib.sha256(pdf_a).hexdigest()
+    hash_b=hashlib.sha256(pdf_b).hexdigest()
+    if hash_a!=hash_b:
+        raise ValueError("official PDF member hash differs between two independent requests")
+    result=index_pdf(pdf_a)
     print(json.dumps({
        "status":"PENSTEMON_OFFICIAL_SUPPLEMENT_TABLE_INDEX_ONLY",
        "original_source_url":URL,
-       "archive_sha256":ZIP_SHA,
+       "archive_wrapper_sha256_per_request":[hashlib.sha256(a).hexdigest(),
+                                             hashlib.sha256(b).hexdigest()],
+       "earlier_source_zip_sha256":EARLIER_ZIP_SHA,
+       "archive_wrapper_byte_equality":a==b,
+       "pdf_member_same_sha256_in_two_requests":hash_a==hash_b,
        "source_member":PDF_MEMBER,
        "pdf_metadata":result,
        "paper_reported_sequenced_accessions":52,
@@ -72,4 +113,5 @@ def main():
     },indent=2,sort_keys=True))
 
 
-if __name__=="__main__":main()
+if __name__=="__main__":
+    main()
