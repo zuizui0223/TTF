@@ -110,9 +110,18 @@ def extract_early_text_headers(workbook:bytes,contract:dict)->dict:
                   for col,value in sorted(selected[1].items())] if selected else []
         tokens={re.sub(r"[^a-z0-9]+","_",x["column_name"].lower()).strip("_") for x in headings}
         candidates=sorted(set(contract["method"]["candidate_plant_tag_column_names"])&tokens)
+        explanatory=[]
+        if name=="explanation" and typ==0 and maxrow==12:
+            # Publisher codebook TEXT ONLY: never inspect numeric row cells.
+            explanatory=[
+                {"row_number":row+1,"column_number":col+1,"text":value}
+                for row,vals in sorted(options.items())
+                for col,value in sorted(vals.items())
+            ]
         output.append({"sheet_name":name,"original_sheet_type":typ,
           "chosen_early_header_row_1_based":chosenrow,
           "column_names_from_early_header":headings,
+          "original_codebook_first_12_rows_text_cells_only":explanatory,
           "explicit_tag_id_field_name_candidates":candidates,
           "any_numeric_or_fitness_values_selected":False})
     return {"sheets":output,
@@ -140,6 +149,13 @@ def original_workbook_schema()->dict:
         wbook=ole.openstream(name).read()
     finally:
         ole.close()
+    explanation_contract=json.loads(Path(__file__).with_name(
+        "pankova2014_s1_explanation_only_contract_v01.json").read_text(encoding="utf-8"))
+    if (explanation_contract["status"]!="FROZEN_BEFORE_EXPLANATION_SHEET_TEXT_ROWS_REVEALED"
+        or explanation_contract["source"]["published_original_xls_sha256"]!=hashlib.sha256(raw).hexdigest()
+        or explanation_contract["selection"]["only_first_12_rows"] is not True
+        or explanation_contract["selection"]["numeric_cell_values_decoded"] is not False):
+        raise ValueError("Original S1 explanation-only source contract or XLS SHA drifted")
     m=extract_early_text_headers(wbook,c)
     return {
         "schema":"ttf_Pankova2014_original_PLOS_S1_XLS_early_worksheet_header_metadata_v01",
