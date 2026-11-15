@@ -6,6 +6,7 @@ on:
       - 'prospective/independent-transplant-overlap-20261115'
     paths:
       - 'research/prospective/hargreaves_header_access_probe_v01.py'
+      - 'research/prospective/test_hargreaves_header_access_probe_v01.py'
       - '.github/workflows/hargreaves-source-header-only.yml'
 
 jobs:
@@ -20,4 +21,6 @@ jobs:
         with:
           python-version: '3.12'
       - name: Source-only HTTP header access probe (no outcome or records)
-        run: python research/prospective/hargreaves_header_access_probe_v01.py
+        run: |
+          python -m unittest discover -s research/prospective -p test_hargreaves_header_access_probe_v01.py -v
+          python research/prospective/hargreaves_header_access_probe_v01.py
