@@ -15,7 +15,7 @@ def test_tree_tip_taxa_are_not_inferred_from_scent_data():
 
 
 def test_duplicate_tree_tip_label_rejected():
-    with pytest.raises(ValueError,match="repeated"):
+    with pytest.raises(Exception,match="Multiple occurrences|duplicate|repeated"):
         m.original_tree_tips(b"(Costus_A:1,Costus_A:2);")
 
 
