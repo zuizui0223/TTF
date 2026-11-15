@@ -1,0 +1,35 @@
+name: Timema source-only qualified species holdout support
+
+on:
+  push:
+    branches:
+      - research/crest-ttf-four-system-source-preflight-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/ttf_crest_timema_species_qualification_20261115.py'
+      - 'tests/test_crest_ttf_timema_species_qualification.py'
+      - '.github/workflows/timema-species-qualification.yml'
+
+jobs:
+  source-geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic TTF-Q dyadic qualification tests
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_crest_ttf_timema_species_qualification.py
+      - name: SHA256-locked publisher Timema original 42 pair geometry and response presence
+        run: |
+          python research/prospective/ttf_crest_timema_species_qualification_20261115.py > /tmp/timema_qualified_species_summary.json
+          cat /tmp/timema_qualified_species_summary.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: timema-qualified-species-source-only
+          path: /tmp/timema_qualified_species_summary.json
+          retention-days: 21

@@ -1,0 +1,100 @@
+{
+  "archive_member_declared_bytes": 38098330,
+  "archive_member_name": "ESC_rel_50pp_80md_HWE_pairs_MAF0.05.vcf",
+  "compressed_bytes": 1773788,
+  "expected_population_prefixes_missing": [],
+  "genotypes_read": false,
+  "history_or_transfer_effect_estimated": false,
+  "inference_gate": "NO_GENETIC_PREDICTION_AUTHORIZED",
+  "morphology_pair_population_coverage": [
+    {
+      "both_population_prefixes_detected": true,
+      "dune_sample_count": 62,
+      "headland_sample_count": 63,
+      "morphology_pair": "D00-H00"
+    },
+    {
+      "both_population_prefixes_detected": true,
+      "dune_sample_count": 60,
+      "headland_sample_count": 58,
+      "morphology_pair": "D01-H01"
+    },
+    {
+      "both_population_prefixes_detected": true,
+      "dune_sample_count": 62,
+      "headland_sample_count": 62,
+      "morphology_pair": "D02-H04"
+    },
+    {
+      "both_population_prefixes_detected": true,
+      "dune_sample_count": 61,
+      "headland_sample_count": 61,
+      "morphology_pair": "D03-H02"
+    },
+    {
+      "both_population_prefixes_detected": true,
+      "dune_sample_count": 62,
+      "headland_sample_count": 62,
+      "morphology_pair": "D04-H05"
+    },
+    {
+      "both_population_prefixes_detected": true,
+      "dune_sample_count": 62,
+      "headland_sample_count": 62,
+      "morphology_pair": "D05-H06"
+    },
+    {
+      "both_population_prefixes_detected": true,
+      "dune_sample_count": 62,
+      "headland_sample_count": 62,
+      "morphology_pair": "D12-H14"
+    },
+    {
+      "both_population_prefixes_detected": true,
+      "dune_sample_count": 62,
+      "headland_sample_count": 63,
+      "morphology_pair": "D32-H12"
+    }
+  ],
+  "morphology_pairs_with_both_population_prefixes": 8,
+  "phenotype_genotype_same_individuals": "NOT_VERIFIED",
+  "population_prefix_pattern": "^([DH][0-9]{2})(?:$|[^0-9])",
+  "population_sample_counts": {
+    "D00": 62,
+    "D01": 60,
+    "D02": 62,
+    "D03": 61,
+    "D04": 62,
+    "D05": 62,
+    "D12": 62,
+    "D14": 12,
+    "D32": 62,
+    "H00": 63,
+    "H01": 58,
+    "H02": 61,
+    "H04": 62,
+    "H05": 62,
+    "H06": 62,
+    "H12": 63,
+    "H14": 62,
+    "H15": 11
+  },
+  "snp_variant_values_read": false,
+  "source_commit": "33222710aca75f79153e4118b409e7d77787d045",
+  "source_git_blob": "fe1a452b183e0690e013cef57e59bedb13c7e072",
+  "source_path": "genotype/vcf_file/ESC_rel_50pp_80md_HWE_pairs_MAF0.05.vcf.tgz",
+  "source_repo": "OB-lab/James_et_al._2021-Evolution",
+  "status": "SOURCE_ONLY_VCF_HEADER_NO_GENOTYPE_OR_VARIANT_ROWS",
+  "unparsed_sample_count": 0,
+  "vcf_meta_header_lines": 4835,
+  "vcf_sample_count": 1009,
+  "run_provenance": {
+    "github_actions_run": 43691834787,
+    "github_actions_url": "https://github.com/zuizui0223/TTF/actions/runs/43691834787",
+    "github_actions_head_sha": "1a3c1573dfcd321da034c179c4db787d3531245f",
+    "artifact_id": 14152691748,
+    "artifact_zip_sha256": "947e4fa972464fae7444d0574560663beca2da5c753314109b3bca5016642f93"
+  },
+  "matched_morphology_pair_genotype_samples": 986,
+  "unmatched_ninth_pair_genotype_samples": 23
+}

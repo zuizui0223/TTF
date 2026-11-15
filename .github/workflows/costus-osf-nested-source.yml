@@ -1,0 +1,35 @@
+name: Costus nested 2022 and 2025 OSF source inventory
+
+on:
+  push:
+    branches:
+      - research/crest-ttf-four-system-source-preflight-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/ttf_crest_costus_osf_nested_manifest_20261115.py'
+      - 'tests/test_crest_ttf_costus_osf_nested_manifest.py'
+      - '.github/workflows/costus-osf-nested-source.yml'
+
+jobs:
+  source-index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic OSF schema checks
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_crest_ttf_costus_osf_nested_manifest.py
+      - name: Enumerate only public original OSF files, never read contents
+        run: |
+          python research/prospective/ttf_crest_costus_osf_nested_manifest_20261115.py > /tmp/costus_osf_nested_original_source_inventory.json
+          cat /tmp/costus_osf_nested_original_source_inventory.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: costus-original-osf-nested-files-metadata-only
+          path: /tmp/costus_osf_nested_original_source_inventory.json
+          retention-days: 21

@@ -1,0 +1,117 @@
+# CREST × TTF: independent evolutionary systems, source-only preflight (2026-11-15)
+
+**Status: SOURCE-ONLY / EXPLORATORY. No biological response, genotype effect, fitness effect, or transfer score has been newly fitted or opened.** This is a separate candidate-screening branch; it does not change the frozen TTF-Q, COI, He, Fst, or break-location claims on main.
+
+## Primary objective
+
+Can a relation learned in one lineage, habitat pair, island, or pollination transition predict a truly withheld unit after correcting for morphology, geography, historical ancestry, and sampling? Compare response grains separately: morphological trajectory, genomic mechanism, and reproductive isolation. A successful internal analysis is not cross-species transfer unless the unit held out is a species.
+
+### Source audit matrix
+
+| System | Directly verified source and grain | Possible TTF held-out unit | Current stopping issue |
+|---|---|---|---|
+| **Senecio lautus** | Author GitHub at pinned commit below: 605 phenotype individuals in 20 populations; 481 individuals in 16 populations, forming **8 distinct habitat pairs** in paired file; pair-level means in 16 rows. A separate genotype analysis has **9** Dune–Headland pairs and 9,269 SNPs. | Locality pair (TTF-P); later independent lineages only if cross-species support is added | **Individual-level genotype/phenotype join NOT verified.** Only eight of nine named genotype pairs occur in paired morphology. A genome outlier list made using the full data is not an independent test predictor on held-out pairs. |
+| **Timema** | Dryad 10.5061/dryad.q573n5tpk describes **42 host-isolation pair records** (8,749 preference trials) and **30 pair-level mating datasets** (2,436 trials), matched by field `Pair`. Includes divergence-time TSV, nuclear alignment, and six species-specific variant files. Paper covers nine sexual species. | Species-disjoint, population-disjoint host/mating pair evaluation (TTF-RI) | Raw file headers/keys and graph components **not yet locally fetched or audited**. Pair endpoints recur; never treat all 42 dyads as independent units. |
+| **Costus** | Dryad 10.7291/D1C39G has `chronogram_v8_2.tre`, `Pollinator_observations.csv`, and species morphology files; Darragh et al. 2025 assayed **100 scent samples / 30 species**, including eight reported independent shifts; analysis scripts and scent data are deposited on OSF 2ap4k; RNA-seq PRJNA1010186 examines a **restricted three-species clade**, not all 30 species; assembly PRJNA1091680. | Independent pollinator-transition/clade holdout (TTF-P) | 2022 tree tip / pollination label / 2025 scent sample matching **not audited**, and pollinator labels predicted from morphological traits must not be used as independent predictor truth. Field versus greenhouse origin is a potential source confound. |
+| **Metrosideros** | Choi et al. 2021: **131 Hawaiian individuals / 11 taxa**, 22,511,205 variant sites; NCBI PRJNA534153 and Zenodo 4264399. Ten taxa are sampled as one population each; the widespread glaberrima taxon has three populations. | An island- or lineage-held-out genomic model only after comparable trait/site support | Taxon and locality are heavily confounded; no matched independent phenotypic-response table was verified. **HOLD** for a confirmatory TTF test. |
+
+## Direct author-data audit: Senecio
+
+Source repository: https://github.com/OB-lab/James_et_al._2021-Evolution
+Pinned commit: `33222710aca75f79153e4118b409e7d77787d045`
+
+| Original path | Blob SHA | Verified metadata |
+|---|---|---|
+| `phenotype/data_files/allTraits.txt` | `30f3edbdb486733306529e58135e6f1c205c0184` | 605 observations; 20 populations |
+| `phenotype/data_files/allTraitsPairs.txt` | `ac8183378ea0778fa1a2fd42fd6a6d94d7008a85` | 481 observations; 16 populations; 8 named pairs |
+| `phenotype/data_files/traitMeansPairs.txt` | `400f73bf21fefb6fcb775396f256c3447c755595` | 16 population means; 8 named pairs |
+| `genotype/vcf_file/ESC_rel_50pp_80md_HWE_pairs_MAF0.05.vcf.tgz` | `fe1a452b183e0690e013cef57e59bedb13c7e072` | Binary VCF archive identified by author Git tree; genotype rows **not inspected** |
+
+Morphology named pairs: `D00-H00`, `D01-H01`, `D02-H04`, `D03-H02`, `D04-H05`, `D05-H06`, `D12-H14`, `D32-H12`. Four populations not in paired morphology: `D09`, `D35`, `H03`, `H07`. Genotype analysis has an additional `D14-H15` pair, confirmed by a distinct author-file name; the other eight have same-named comparison files. This is a **population-pair name overlap**, not proof that individuals are shared or that all analysis outputs have common samples.
+
+*The README reports population-mean imputation for approximately 11% of morphology samples and standardized phenotypic variables. These are transformed phenotypes, not independent raw field measurement columns.*
+
+**Risk:** using published candidate SNP/outlier sets selected over all nine genomic pairs as train features in a leave-one-pair-out evaluation would leak test data. Proper test requires recomputing feature selection in each training fold from an admissible genotype matrix, or restricting the test to a precommitted phenotype-only ecological predictor.
+
+**Unit restriction:** eight locality-pair comparisons, not 481 independent geographic experiments. A locality holdout is not a species holdout. A phylogenetic-clade holdout still needs a documented clade assignment and sample support.
+
+Reproducible metadata-only check: `research/prospective/ttf_crest_four_systems_senecio_preflight_20261115.py` (fetches exact pinned bytes, checks Git blob SHAs, reads only population/paired-ecotype fields; fails on drift).
+
+## Concrete next admission tests (not outcome analyses)
+
+1. **Senecio:** confirm the eight pair IDs, geographic distinctness, matching genotype pair sample sheet and whether any independent ancestry tree permits grouping into at least two withheld clades. Do not reuse full-data SNP outlier selection on held-out locality.
+2. **Timema:** obtain versioned Dryad `HostRIDat.csv` and `CountData.csv` with source checksum; reconcile `Pair` keys, explicit species/population endpoints, 42 versus 30 pair coverage, and connected components under shared biological endpoints. Determine whether truly disjoint species evaluation is possible **before** outcome values are decoded.
+3. **Costus:** build strict source-only 2022 tree / measured pollinator / 2025 scent / OSF/SRA crosswalk. Derive independent shift/clade eligibility from tree without using scent as a selection criterion. RNA-seq is limited to a subset of species.
+4. **Metrosideros:** obtain Zenodo file inventory and sample-to-taxon-to-island metadata; identify independent measured traits and multiple populations per lineage. Do not report TTF transfer when taxon predicts location by construction.
+
+## Source identities and scope
+
+- Senecio author data: https://github.com/OB-lab/James_et_al._2021-Evolution ; primary paper https://doi.org/10.1111/evo.14387 .
+- Timema species-pair archive: https://doi.org/10.5061/dryad.q573n5tpk ; primary paper https://doi.org/10.1038/s41467-024-46294-9 ; SRA PRJNA356405.
+- Costus phylogeny/morphology: https://doi.org/10.7291/D1C39G ; 2025 scent paper https://doi.org/10.1093/molbev/msaf027 ; OSF https://osf.io/2ap4k/ ; BioProjects PRJNA1010186 and PRJNA1091680.
+- Metrosideros genome study https://doi.org/10.1073/pnas.2023801118 ; Zenodo https://doi.org/10.5281/zenodo.4264399 ; NCBI PRJNA534153.
+
+**Evidence level:** Senecio author-source records were read directly with only key and header fields used. For the other three systems, source publisher/repository descriptions and paper methods were verified, but raw per-row records and cross-dataset joins were not inspected. No empirical transferability result is claimed. Biological novelty would require calibrated, disjoint held-out comparisons, not descriptive data inventory.
+
+## 2026-11-15 source-author scripts and leakage audit (new)
+
+### Timema: accession provenance and join identity
+
+The author's executable scripts at [zgompert/TimemaRI](https://github.com/zgompert/TimemaRI) read both CSVs and then calculate mating isolation with row-wise indexing rather than an explicit `Pair` merge. The Dryad README says the pair IDs correspond, but their **order** must be checked from original bytes; a valid `Pair` join, not assumed row order, is required for any new analysis. The original Dryad archive was updated 2024-01-23; the latest `HostRIDat.csv` differs in size from its 2023 version. A single exact version and SHA256 are therefore mandatory.
+
+The original [GeneticsSummary.R](https://github.com/zgompert/TimemaRI/blob/main/GeneticsSummary.R) explicitly excludes `GBS_ref == "0.15897 + nuc * 19.41020"` when analyzing directly observed GBS differentiation versus nuclear sequence divergence. These pairs have a **proxy Fst predicted from another genetic distance**, not independent observed GBS differentiation. For TTF-G, this is a provenance exclusion to freeze **before** examining any genetic response. It is not an observed Fst-to-environment response. The new metadata-only code reports the number of such proxy rows when the `GBS_ref` field is available, without reading GBS or mating/host response values.
+
+`ttf_crest_timema_source_only_20261115.py` implements:
+
+1. Fail-closed, user-provided source SHA256 verification for both Dryad CSVs.
+2. Unique, nonempty `Pair` checks and a `CountData`-to-`HostRIDat` foreign-key check, independent of row order.
+3. Species-level endpoint-sharing graph and an **enumerated species-disjoint candidate split**; pair records crossing train/evaluation species are excluded. Pair-key availability is *not* mating outcome completeness or effective power.
+4. GBS proxy-versus-direct source provenance flag; no `GBS`, `PctPick`, or `yF1M1` values are decoded.
+
+**Current gate:** `RAW_CSV_NOT_FETCHED_NO_SHA256_NO_SPLIT_COUNTS`. Author methods and README were directly checked, but original Dryad file *contents* were unavailable to this session. No true dyad or source-vs-test split count is claimed.
+
+### Costus: measured labels versus imputed labels
+
+[Kay & Grossenbacher 2022 Dryad D1C39G](https://doi.org/10.7291/D1C39G) lists a 52-species combined floral trait matrix, only **28 species with observed pollinators**, and **21 species for which pollinators were predicted from 17 floral features**. The 2025 [Darragh et al. floral scent study](https://doi.org/10.1093/molbev/msaf027) has 100 scent samples / 30 species spanning eight reported hummingbird pollination origins. The actual **intersection** of measured-pollinator 2022 tips with 2025 scent samples and the tree is not yet known. Never treat morphology-inferred pollination labels as independent truth when predicting the same morphology or scent. Use the directly observed-visitor subset only for an independent pollinator-response assessment, with non-overlap species as unknown outcomes. Do not silently call 28+21 equal to the 52-species full tree: some classifications/roster keys may differ and need exact source reconciliation.
+
+2025 scent collections have five wild-sampled Costa Rican species and otherwise greenhouse material. Sampling context, date/control batch, and independent evolutionary transition cluster must be tracked; 100 samples are **not 100 independent transitions**.
+
+**Current gate:** `RAW_TIP_SCENT_SOURCE_JOIN_NOT_VERIFIED`. No species-level train/evaluation eligible count or transfer score is claimed.
+
+### Appropriate TTF goals
+
+- `TTF-P`: new locality-pair/lineage morphology or scent shift, not current-lineage accuracy relabelled cross-species transfer.
+- `TTF-RI`: predict both host and mating isolation in held-out Timema species, using disjoint endpoints and realistic stochastic test variation. Host and mating outcomes are distinct endpoints.
+- `TTF-G`: require genuinely observed, non-derived genetic predictors; full-data candidate outlier filters may not be reused across held-out data.
+- `CREST`: compare baseline contemporary morphology/environment against additional independently derived ancestry/history in held-out responses. Avoid constructing the ancestry predictor from the very outcome being forecast.
+
+Stop if no genuinely disjoint, sufficiently supported held-out units remain. This is **not** a biological null effect.
+
+## Update: original binary genotype geometry and Dryad access gate (2026-11-15)
+
+**Senecio original VCF: source-only GO for population-level source matching.** Original author Git blob `fe1a452b183e0690e013cef57e59bedb13c7e072`, 1,773,788 byte archive, yielded exactly one true VCF and a macOS AppleDouble resource-fork twin (`._...`). Only the VCF header was read, without SNP variant values or individual genotypes: **1,009 samples across 18 expected populations; 0 unknown sample prefixes; all 8 morphologically matched Dune/Headland locality pairs have both population groups**. The eight pairs comprise **986 genotype samples**; extra ninth `D14–H15` has 12+11=23 genotype samples but no paired morphological trait means. Source-only run [#43691834787](https://github.com/zuizui0223/TTF/actions/runs/43691834787) succeeded and uploaded summary-only artifact 14152691748. Machine readable source audit: [original VCF header receipt](senecio_vcf_population_header_receipt_20261115.json). Individual-level trait/genotype identity is **not** established. No Fst, allele effect or transfer score has been computed from VCF values in this preflight.
+
+**Senecio historical covariate completeness:** Author [`phenoEnvGfDivTime.txt`](https://github.com/OB-lab/James_et_al._2021-Evolution/blob/33222710aca75f79153e4118b409e7d77787d045/phenotype_genotype/input_files/phenoEnvGfDivTime.txt), blob `e507d8baddd5ae83567a9ffe5b0762a98bc6469f`, has 8 pair rows. `EnvDist` complete for 5/8, `DivTime`/gene-flow columns for 7/8, **all history + environmental covariates for 5/8**. Excluded missing `EnvDist`: `D02-H04`, `D05-H06`, `D32-H12`. A multi-parameter history-added LOO prediction is under-supported at n=5, so **HISTORY_INCREMENT_NOT_EVALUABLE**. `PhenoLength` is a phenotype response, not an independent historical predictor and was not used.
+
+**Timema verified public source metadata, NOT raw CSV:** Dryad DOI [10.5061/dryad.q573n5tpk](https://doi.org/10.5061/dryad.q573n5tpk), updated version 3 published 2024-01-23 (API version ID `275058`). The two original raw files are `HostRIDat.csv`: ID `2860173`, 5495 bytes, SHA256 `c619bbebbb2a8b84a90da3eafbad2110c0c9fb8a685027bee5c5563ddadee521`; `CountData.csv`: ID `2860162`, 1556 bytes, SHA256 `80e02a00fdf0cdd915c167269c5c8692d92e9fa5e991ef1926c20072994fdef4`. Public API version/file listing was verified on [GitHub Actions #43692272710](https://github.com/zuizui0223/TTF/actions/runs/43692272710). **Original CSV bytes returned HTTP 401 Unauthorized** on the official Dryad v2 file download, so true pair-key overlap, GBS proxy count, species graph and qualified holdout count remain **unknown**, not zero. The source gate prints `RAW_SOURCE_NOT_ACCESSIBLE_AUTH_REQUIRED_NOT_EVALUABLE` without fabricating a scientific null. The downloaded original file bytes are NOT stored in the repository.
+
+## Publisher alternate-source qualification for Timema (2026-11-15)
+
+Nature Communications 2024 publisher originals were **successfully downloaded and verified**, without reading any biological spreadsheet cell values. Original signed file identities and sheet metadata are recorded in [source-manifest receipt](timema_publisher_xlsx_metadata_receipt_20261115.json) and [worksheet-structure receipt](timema_publisher_xlsx_sheet_structure_receipt_20261115.json), both from GitHub Actions [#43693905992](https://github.com/zuizui0223/TTF/actions/runs/43693905992) / [#43694101866](https://github.com/zuizui0223/TTF/actions/runs/43694101866).
+
+- **Source Data** `41467_2024_46294_MOESM6_ESM.xlsx`: **35,036 original bytes**, SHA256 `c309402e1b1fa58ab0fb0763086a155aff028cdaa04b804c2c91796c5bed61e2`, **10 workbook sheets**. Several figure-specific sheets have XML dimensions such as `A1:L43`, `A1:K43`, with one other `A1:D86`.
+- **Supplementary Data 1–5** `41467_2024_46294_MOESM4_ESM.xlsx`: **22,070 original bytes**, SHA256 `7e2b6210c182859d7b4d77ad8b0ca0858a1e437c0106a9c42e6c3787c24a33db`, **5 workbook sheets**. Sheet XML dimensions `A1:K44`, `A1:D87`, `A1:M44`, `A1:D44`, `A1:I41`. Some rows are blank/noncontiguous; XML dimensions do not equal biological sample size.
+
+These original source workbooks provide a credible **accessible alternative to the HTTP 401 Dryad raw-CSV roadblock**, especially for published figures; however no per-row values, original Pair/Species1/Species2 columns, cross-file IDs, individual trial counts or mating outcomes were inspected. Source sheet names and structural row counts alone do **not** prove that full 42-host and 30-mating pair data can be reconstructed or that a species-heldout design is evaluable. Status is `PUBLISHER_FILES_VERIFIED_PENDING_EXACT_ROW_AND_ID_CROSSWALK`. Leave Timema cross-species TTF score as **NOT_EVALUABLE** until same-unit source reconciliation is completed.
+
+The original publisher source URLs are embedded in the receipts. Neither third-party XLSX bytes nor any undisclosed raw outcomes are copied to this repository.
+
+## Timema source-locked species-disjoint support (2026-11-15)
+
+Official Nature Communications 2024 publisher original Figure3 and Supplementary Data 1 XLSX passed independent SHA256 verification and exact same 42 `Pair`/species/population identity keys (Actions [#43695142257](https://github.com/zuizui0223/TTF/actions/runs/43695142257)). **42 dyads = 32 within-source-species-label pairs + 10 between-label pairs**, from **10 distinct source name labels**. A simple species-label-disjoint partition exists with 21 pair rows in each arm and 0 cross-arm pair exclusions, but is *not* automatically a qualified independent species-heldout transfer comparison: many dyads reuse the same focal species and the response types can be unevenly represented.
+
+Concentration in the candidate 21/21 partition: `T. chumash` occurs at 27/42 training endpoints (64.3%); `T. cristinae` occurs at 22/42 evaluation endpoints (52.4%). Species endpoint concentration is not the same as effective biological independent sample size.
+
+**Source discrepancy:** [Nosil, Gompert & Funk (2024)](https://doi.org/10.1038/s41467-024-46294-9) says **nine sexually reproducing species**, but its two SHA-fixed publisher tables encode **ten distinct species-epithet strings**: bartmani, californicum, chumash, cristinae, curi, knulli, landelsensis, petita, podura, poppensis. We do not silently collapse a taxon nor announce 10 accepted independent species. Taxon concept/label mismatch is **HOLD_RECONCILIATION**, and the script's species-disjoint splits are explicitly label-level preflights, not evolutionary replication proof.
+
+A stricter source-only follow-up [qualifier](ttf_crest_timema_species_qualification_20261115.py) separately counts within/between comparisons for both arms, host- versus mating-isolation serialized response-cell *presence* without decoding original numerical outcomes, connected species components and pair-incidence concentration. **Its original-source result is pending CI and must not be invented.** [Earlier source geometry receipt](timema_publisher_species_holdout_geometry_receipt_20261115.json). No inference has been made that 21/21 source pairs imply enough independent species, enough directly observed Fst or a calibrated TTF effect. Full Dryad CSV download still returns HTTP 401; original publisher workbook sources are independent accessible alternatives.

@@ -1,0 +1,22 @@
+name: Timema publisher-source XLSX workbook manifest only
+
+on:
+  push:
+    branches:
+      - research/crest-ttf-four-system-source-preflight-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/ttf_crest_timema_publisher_xlsx_manifest_20261115.py'
+      - '.github/workflows/timema-publisher-xlsx-manifest.yml'
+
+jobs:
+  publisher-source-metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Publisher original XLSX package and sheet-name inventory only
+        run: python research/prospective/ttf_crest_timema_publisher_xlsx_manifest_20261115.py

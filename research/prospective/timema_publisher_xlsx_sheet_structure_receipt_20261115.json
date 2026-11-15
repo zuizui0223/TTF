@@ -1,0 +1,210 @@
+{
+  "doi": "10.1038/s41467-024-46294-9",
+  "no_experiment_outcome_opened": true,
+  "results": [
+    {
+      "byte_length": 35036,
+      "filename": "41467_2024_46294_MOESM6_ESM.xlsx",
+      "join_to_dryad": "NOT_VERIFIED",
+      "no_worksheet_cell_values_read": true,
+      "row_count": "NOT_DETERMINED",
+      "sha256": "c309402e1b1fa58ab0fb0763086a155aff028cdaa04b804c2c91796c5bed61e2",
+      "sheet_names": [
+        {
+          "name": "Figure3",
+          "sheetId": "1"
+        },
+        {
+          "name": "Figure4",
+          "sheetId": "2"
+        },
+        {
+          "name": "Figure5",
+          "sheetId": "3"
+        },
+        {
+          "name": "Figure6",
+          "sheetId": "4"
+        },
+        {
+          "name": "Figure7A",
+          "sheetId": "5"
+        },
+        {
+          "name": "Figure7B",
+          "sheetId": "6"
+        },
+        {
+          "name": "SupplementaryFigure2",
+          "sheetId": "7"
+        },
+        {
+          "name": "SupplementaryFigure3",
+          "sheetId": "8"
+        },
+        {
+          "name": "SupplementaryTables1-2",
+          "sheetId": "9"
+        },
+        {
+          "name": "SupplementaryFigure1",
+          "sheetId": "10"
+        }
+      ],
+      "source": "source_data",
+      "status": "PUBLISHER_XLSX_FILE_AND_SHEET_METADATA_VERIFIED",
+      "url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41467-024-46294-9/MediaObjects/41467_2024_46294_MOESM6_ESM.xlsx",
+      "worksheet_file_count": 10,
+      "worksheet_structure_no_values": [
+        {
+          "dimension_ref": "A1:L43",
+          "scientific_data_row_count": "NOT_EVALUATED",
+          "xml_part": "xl/worksheets/sheet1.xml",
+          "xml_row_element_count": 43,
+          "xml_rows_with_cell_elements": 43
+        },
+        {
+          "dimension_ref": "A1:D86",
+          "scientific_data_row_count": "NOT_EVALUATED",
+          "xml_part": "xl/worksheets/sheet10.xml",
+          "xml_row_element_count": 86,
+          "xml_rows_with_cell_elements": 86
+        },
+        {
+          "dimension_ref": "A1:K43",
+          "scientific_data_row_count": "NOT_EVALUATED",
+          "xml_part": "xl/worksheets/sheet2.xml",
+          "xml_row_element_count": 43,
+          "xml_rows_with_cell_elements": 43
+        },
+        {
+          "dimension_ref": "A1:L43",
+          "scientific_data_row_count": "NOT_EVALUATED",
+          "xml_part": "xl/worksheets/sheet3.xml",
+          "xml_row_element_count": 43,
+          "xml_rows_with_cell_elements": 43
+        },
+        {
+          "dimension_ref": "A1:K43",
+          "scientific_data_row_count": "NOT_EVALUATED",
+          "xml_part": "xl/worksheets/sheet4.xml",
+          "xml_row_element_count": 43,
+          "xml_rows_with_cell_elements": 43
+        },
+        {
+          "dimension_ref": "A1:E20",
+          "scientific_data_row_count": "NOT_EVALUATED",
+          "xml_part": "xl/worksheets/sheet5.xml",
+          "xml_row_element_count": 20,
+          "xml_rows_with_cell_elements": 20
+        },
+        {
+          "dimension_ref": "A1:D10",
+          "scientific_data_row_count": "NOT_EVALUATED",
+          "xml_part": "xl/worksheets/sheet6.xml",
+          "xml_row_element_count": 10,
+          "xml_rows_with_cell_elements": 10
+        },
+        {
+          "dimension_ref": "A1:N11",
+          "scientific_data_row_count": "NOT_EVALUATED",
+          "xml_part": "xl/worksheets/sheet7.xml",
+          "xml_row_element_count": 11,
+          "xml_rows_with_cell_elements": 11
+        },
+        {
+          "dimension_ref": "A1:E10",
+          "scientific_data_row_count": "NOT_EVALUATED",
+          "xml_part": "xl/worksheets/sheet8.xml",
+          "xml_row_element_count": 10,
+          "xml_rows_with_cell_elements": 10
+        },
+        {
+          "dimension_ref": "A1:L43",
+          "scientific_data_row_count": "NOT_EVALUATED",
+          "xml_part": "xl/worksheets/sheet9.xml",
+          "xml_row_element_count": 43,
+          "xml_rows_with_cell_elements": 43
+        }
+      ]
+    },
+    {
+      "byte_length": 22070,
+      "filename": "41467_2024_46294_MOESM4_ESM.xlsx",
+      "join_to_dryad": "NOT_VERIFIED",
+      "no_worksheet_cell_values_read": true,
+      "row_count": "NOT_DETERMINED",
+      "sha256": "7e2b6210c182859d7b4d77ad8b0ca0858a1e437c0106a9c42e6c3787c24a33db",
+      "sheet_names": [
+        {
+          "name": "Supplementary Data 1",
+          "sheetId": "1"
+        },
+        {
+          "name": "Supplemenary Data 2",
+          "sheetId": "2"
+        },
+        {
+          "name": "Supplementary Data 3",
+          "sheetId": "3"
+        },
+        {
+          "name": "Supplementary Data 4",
+          "sheetId": "4"
+        },
+        {
+          "name": "Supplementary Data 5",
+          "sheetId": "5"
+        }
+      ],
+      "source": "supplementary_data_1_5",
+      "status": "PUBLISHER_XLSX_FILE_AND_SHEET_METADATA_VERIFIED",
+      "url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41467-024-46294-9/MediaObjects/41467_2024_46294_MOESM4_ESM.xlsx",
+      "worksheet_file_count": 5,
+      "worksheet_structure_no_values": [
+        {
+          "dimension_ref": "A1:K44",
+          "scientific_data_row_count": "NOT_EVALUATED",
+          "xml_part": "xl/worksheets/sheet1.xml",
+          "xml_row_element_count": 44,
+          "xml_rows_with_cell_elements": 44
+        },
+        {
+          "dimension_ref": "A1:D87",
+          "scientific_data_row_count": "NOT_EVALUATED",
+          "xml_part": "xl/worksheets/sheet2.xml",
+          "xml_row_element_count": 87,
+          "xml_rows_with_cell_elements": 87
+        },
+        {
+          "dimension_ref": "A1:M44",
+          "scientific_data_row_count": "NOT_EVALUATED",
+          "xml_part": "xl/worksheets/sheet3.xml",
+          "xml_row_element_count": 44,
+          "xml_rows_with_cell_elements": 44
+        },
+        {
+          "dimension_ref": "A1:D44",
+          "scientific_data_row_count": "NOT_EVALUATED",
+          "xml_part": "xl/worksheets/sheet4.xml",
+          "xml_row_element_count": 44,
+          "xml_rows_with_cell_elements": 44
+        },
+        {
+          "dimension_ref": "A1:I41",
+          "scientific_data_row_count": "NOT_EVALUATED",
+          "xml_part": "xl/worksheets/sheet5.xml",
+          "xml_row_element_count": 32,
+          "xml_rows_with_cell_elements": 32
+        }
+      ]
+    }
+  ],
+  "status": "PUBLISHER_SOURCE_MANIFEST_ONLY",
+  "execution": {
+    "github_actions_run_id": 43694101866,
+    "github_actions_run_url": "https://github.com/zuizui0223/TTF/actions/runs/43694101866",
+    "commit": "d6e70adda16975284294ec8ab1e815f25dd682f9",
+    "no_biological_response_opened": true
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "cross_source_identity_consistent": true,
+  "cross_source_identity_mismatch_pair_ids": [],
+  "geometry": {
+    "best_balanced_species_split_source_only": {
+      "cross_boundary_dyads_excluded": 0,
+      "test_dyads": 21,
+      "test_species": [
+        "californicum",
+        "cristinae",
+        "knulli",
+        "landelsensis",
+        "petita",
+        "poppensis"
+      ],
+      "train_dyads": 21,
+      "train_species": [
+        "bartmani",
+        "chumash",
+        "curi",
+        "podura"
+      ]
+    },
+    "between_species_pair_count": 10,
+    "comparisons_are_not_independent_evolutionary_replicates": true,
+    "partitions_with_nonempty_species_disjoint_train_and_test": 490,
+    "per_species_endpoint_incidence": {
+      "bartmani": 3,
+      "californicum": 4,
+      "chumash": 27,
+      "cristinae": 22,
+      "curi": 4,
+      "knulli": 4,
+      "landelsensis": 1,
+      "petita": 1,
+      "podura": 8,
+      "poppensis": 10
+    },
+    "species_count": 10,
+    "species_labels": [
+      "bartmani",
+      "californicum",
+      "chumash",
+      "cristinae",
+      "curi",
+      "knulli",
+      "landelsensis",
+      "petita",
+      "podura",
+      "poppensis"
+    ],
+    "within_species_pair_count": 32
+  },
+  "no_TTF_transfer_effect_claim": true,
+  "original_response_columns_read": false,
+  "pairs_compared": 42,
+  "sources": {
+    "source_data": {
+      "filename": "41467_2024_46294_MOESM6_ESM.xlsx",
+      "pair_count": 42,
+      "sha256": "c309402e1b1fa58ab0fb0763086a155aff028cdaa04b804c2c91796c5bed61e2",
+      "sheet": "Figure3"
+    },
+    "supplement_1": {
+      "filename": "41467_2024_46294_MOESM4_ESM.xlsx",
+      "pair_count": 42,
+      "sha256": "7e2b6210c182859d7b4d77ad8b0ca0858a1e437c0106a9c42e6c3787c24a33db",
+      "sheet": "Supplementary Data 1"
+    }
+  },
+  "status": "ORIGINAL_PUBLISHER_SPECIES_GEOMETRY_NO_OUTCOMES",
+  "provenance": {
+    "run_id": 43695142257,
+    "run_url": "https://github.com/zuizui0223/TTF/actions/runs/43695142257",
+    "run_sha": "08da243d1217fc5d8bbd25514ce1bc0ba0c10a33",
+    "checked": "2026-11-15"
+  },
+  "paper_vs_source_denominator_issue": {
+    "paper_nine_sexual_species_text": "Nosil et al. 2024 Nature Communications main text says nine sexually reproducing species",
+    "publisher_source_identity_distinct_labels": 10,
+    "status": "HOLD_TAXONOMY_RECONCILIATION_NOT_SILENTLY_NINE_OR_TEN_INDEPENDENT_SPECIES"
+  }
+}

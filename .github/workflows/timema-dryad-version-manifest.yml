@@ -1,0 +1,22 @@
+name: Timema Dryad original version manifest (metadata only)
+
+on:
+  push:
+    branches:
+      - research/crest-ttf-four-system-source-preflight-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/ttf_crest_timema_dryad_manifest_20261115.py'
+      - '.github/workflows/timema-dryad-version-manifest.yml'
+
+jobs:
+  dryad-manifest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Audit only public Dryad version/file metadata
+        run: python research/prospective/ttf_crest_timema_dryad_manifest_20261115.py

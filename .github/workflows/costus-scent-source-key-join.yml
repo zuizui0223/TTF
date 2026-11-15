@@ -1,0 +1,35 @@
+name: Costus 2025 scent original taxon keys × 2022 tree source
+
+on:
+  push:
+    branches:
+      - research/crest-ttf-four-system-source-preflight-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/ttf_crest_costus_scent_phylogeny_source_join_20261115.py'
+      - 'tests/test_crest_ttf_costus_scent_phylogeny_source_join.py'
+      - '.github/workflows/costus-scent-source-key-join.yml'
+
+jobs:
+  source-key-join:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check species-ID source firewall
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_crest_ttf_costus_scent_phylogeny_source_join.py
+      - name: Fetch only SHA-verified official OSF originals, read species keys and headers only
+        run: |
+          python research/prospective/ttf_crest_costus_scent_phylogeny_source_join_20261115.py > /tmp/costus_osf_species_join_20261115.json
+          cat /tmp/costus_osf_species_join_20261115.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: costus-osf-species-key-join-no-outcomes
+          path: /tmp/costus_osf_species_join_20261115.json
+          retention-days: 21

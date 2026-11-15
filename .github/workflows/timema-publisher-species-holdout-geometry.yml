@@ -1,0 +1,35 @@
+name: Timema publisher species-disjoint response-blind geometry
+
+on:
+  push:
+    branches:
+      - research/crest-ttf-four-system-source-preflight-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/ttf_crest_timema_publisher_species_holdout_geometry_20261115.py'
+      - 'tests/test_crest_ttf_timema_publisher_species_holdout_geometry.py'
+      - '.github/workflows/timema-publisher-species-holdout-geometry.yml'
+
+jobs:
+  source-only-pair-graph:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic species split tests
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_crest_ttf_timema_publisher_species_holdout_geometry.py
+      - name: Reconcile publisher raw Figure3 and Supplementary Data 1 pair identity
+        run: |
+          python research/prospective/ttf_crest_timema_publisher_species_holdout_geometry_20261115.py > /tmp/timema_species_geometry_response_blind.json
+          cat /tmp/timema_species_geometry_response_blind.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: timema-publisher-species-geometry-no-response
+          path: /tmp/timema_species_geometry_response_blind.json
+          retention-days: 21

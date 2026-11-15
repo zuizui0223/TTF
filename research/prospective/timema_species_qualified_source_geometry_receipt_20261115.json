@@ -1,0 +1,162 @@
+{
+  "figure3_outcome_cell_presence_without_values": {
+    "both_cells_structurally_present": 42,
+    "habitat_isolation": 42,
+    "meaning": "serialized XML cells only; numeric values not read; not valid response trial count",
+    "row_elements": 43,
+    "sexual_isolation": 42
+  },
+  "holdout_support": {
+    "best_both_types_supported_partition": {
+      "cross_boundary_dyads_excluded": 0,
+      "test": {
+        "between_species": 6,
+        "dyads": 21,
+        "effective_species_endpoint_diversity_not_effective_sample_size": 2.854368932038835,
+        "max_species_endpoint_incidence": 22,
+        "max_species_endpoint_incidence_fraction": 0.5238095238095238,
+        "species_involved": 6,
+        "within_species": 15
+      },
+      "test_species": [
+        "californicum",
+        "cristinae",
+        "knulli",
+        "landelsensis",
+        "petita",
+        "poppensis"
+      ],
+      "train": {
+        "between_species": 4,
+        "dyads": 21,
+        "effective_species_endpoint_diversity_not_effective_sample_size": 2.156479217603912,
+        "max_species_endpoint_incidence": 27,
+        "max_species_endpoint_incidence_fraction": 0.6428571428571429,
+        "species_involved": 4,
+        "within_species": 17
+      },
+      "train_species": [
+        "bartmani",
+        "chumash",
+        "curi",
+        "podura"
+      ]
+    },
+    "minimum_between_per_arm": 2,
+    "minimum_species_per_arm": 3,
+    "minimum_within_per_arm": 3,
+    "possible_species_partitions_examined": 456,
+    "source_geometry_qualified_partitions": 103,
+    "source_only_preselected_balanced_partition": {
+      "cross_boundary_dyads_excluded": 0,
+      "test": {
+        "between_species": 6,
+        "dyads": 21,
+        "effective_species_endpoint_diversity_not_effective_sample_size": 2.854368932038835,
+        "max_species_endpoint_incidence": 22,
+        "max_species_endpoint_incidence_fraction": 0.5238095238095238,
+        "species_involved": 6,
+        "within_species": 15
+      },
+      "test_species": [
+        "californicum",
+        "cristinae",
+        "knulli",
+        "landelsensis",
+        "petita",
+        "poppensis"
+      ],
+      "train": {
+        "between_species": 4,
+        "dyads": 21,
+        "effective_species_endpoint_diversity_not_effective_sample_size": 2.156479217603912,
+        "max_species_endpoint_incidence": 27,
+        "max_species_endpoint_incidence_fraction": 0.6428571428571429,
+        "species_involved": 4,
+        "within_species": 17
+      },
+      "train_species": [
+        "bartmani",
+        "chumash",
+        "curi",
+        "podura"
+      ]
+    },
+    "status": "GEOMETRY_ONLY"
+  },
+  "no_prediction_or_effect_estimated": true,
+  "response_values_decoded": false,
+  "source_observation": {
+    "between_species": 10,
+    "dyads": 42,
+    "effective_species_endpoint_diversity_not_effective_sample_size": 4.913649025069638,
+    "max_species_endpoint_incidence": 27,
+    "max_species_endpoint_incidence_fraction": 0.32142857142857145,
+    "species_involved": 10,
+    "within_species": 32
+  },
+  "source_sha256": {
+    "source_data": "c309402e1b1fa58ab0fb0763086a155aff028cdaa04b804c2c91796c5bed61e2",
+    "supplement_1": "7e2b6210c182859d7b4d77ad8b0ca0858a1e437c0106a9c42e6c3787c24a33db"
+  },
+  "species_graph_components": [
+    {
+      "between_species_dyads": 4,
+      "dyads": 19,
+      "species": [
+        "bartmani",
+        "chumash",
+        "podura"
+      ],
+      "species_count": 3,
+      "within_species_dyads": 15
+    },
+    {
+      "between_species_dyads": 0,
+      "dyads": 11,
+      "species": [
+        "cristinae"
+      ],
+      "species_count": 1,
+      "within_species_dyads": 11
+    },
+    {
+      "between_species_dyads": 4,
+      "dyads": 7,
+      "species": [
+        "californicum",
+        "poppensis"
+      ],
+      "species_count": 2,
+      "within_species_dyads": 3
+    },
+    {
+      "between_species_dyads": 2,
+      "dyads": 3,
+      "species": [
+        "knulli",
+        "landelsensis",
+        "petita"
+      ],
+      "species_count": 3,
+      "within_species_dyads": 1
+    },
+    {
+      "between_species_dyads": 0,
+      "dyads": 2,
+      "species": [
+        "curi"
+      ],
+      "species_count": 1,
+      "within_species_dyads": 2
+    }
+  ],
+  "status": "SOURCE_ONLY_TTF_Q_TIMEMA_SPECIES_SUPPORT_AND_RESPONSE_PRESENCE",
+  "provenance": {
+    "github_actions_run": 43696875531,
+    "github_actions_url": "https://github.com/zuizui0223/TTF/actions/runs/43696875531",
+    "observed_head_sha": "342dffb5d7bcafd661599a842674a2f69219761d",
+    "cross_dryad_source_access": "HTTP_401_METADATA_ONLY",
+    "response_numbers_opened": false
+  }
+}
