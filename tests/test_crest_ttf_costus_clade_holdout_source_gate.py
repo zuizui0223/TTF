@@ -1,7 +1,8 @@
 """Synthetic source-only Costus clade holdout design tests."""
 import importlib.util
 from pathlib import Path
-import dendropy
+import pytest
+dendropy = pytest.importorskip("dendropy")
 
 P=Path(__file__).resolve().parents[1]/"research"/"prospective"/"ttf_crest_costus_clade_holdout_source_gate_20261115.py"
 s=importlib.util.spec_from_file_location("costus_tree_clade",P)
