@@ -1,0 +1,101 @@
+{
+  "article_reported_mating_pair_count": 30,
+  "no_effect_size_or_trial_count_read": true,
+  "sexual_storage_class_counts": {
+    "numeric_literal_storage_not_authenticated_trials": 29,
+    "shared_string_storage_not_decoded": 13
+  },
+  "source_numeric_literal_cell_count": 29,
+  "source_sha256": "c309402e1b1fa58ab0fb0763086a155aff028cdaa04b804c2c91796c5bed61e2",
+  "source_vs_article_mating_count_unresolved": true,
+  "species_heldout_numeric_storage_support": {
+    "best_literal_numeric_both_types_supported_split": {
+      "cross_boundary_dyads": 0,
+      "evaluation": {
+        "nonnumeric_or_unknown_storage_dyads": 6,
+        "numeric_literal_between": 4,
+        "numeric_literal_dyads": 14,
+        "numeric_literal_within": 10,
+        "source_between": 4,
+        "source_dyads": 20,
+        "source_within": 16,
+        "species_labels": [
+          "californicum",
+          "cristinae",
+          "curi",
+          "poppensis"
+        ]
+      },
+      "train": {
+        "nonnumeric_or_unknown_storage_dyads": 7,
+        "numeric_literal_between": 3,
+        "numeric_literal_dyads": 15,
+        "numeric_literal_within": 12,
+        "source_between": 6,
+        "source_dyads": 22,
+        "source_within": 16,
+        "species_labels": [
+          "bartmani",
+          "chumash",
+          "knulli",
+          "landelsensis",
+          "petita",
+          "podura"
+        ]
+      }
+    },
+    "literal_numeric_cell_gate_partitions": 32,
+    "no_response_values_decoded": true,
+    "numeric_storage_does_not_validate_an_original_mating_experiment": true,
+    "original_21_21_balanced_split_storage_support": {
+      "cross_boundary_dyads": 0,
+      "evaluation": {
+        "nonnumeric_or_unknown_storage_dyads": 4,
+        "numeric_literal_between": 6,
+        "numeric_literal_dyads": 17,
+        "numeric_literal_within": 11,
+        "source_between": 6,
+        "source_dyads": 21,
+        "source_within": 15,
+        "species_labels": [
+          "californicum",
+          "cristinae",
+          "knulli",
+          "landelsensis",
+          "petita",
+          "poppensis"
+        ]
+      },
+      "train": {
+        "nonnumeric_or_unknown_storage_dyads": 9,
+        "numeric_literal_between": 1,
+        "numeric_literal_dyads": 12,
+        "numeric_literal_within": 11,
+        "source_between": 4,
+        "source_dyads": 21,
+        "source_within": 17,
+        "species_labels": [
+          "bartmani",
+          "chumash",
+          "curi",
+          "podura"
+        ]
+      }
+    }
+  },
+  "status": "SOURCE_ONLY_TIMEMA_SEXUAL_CELL_STORAGE_AND_SPECIES_HOLDOUT",
+  "total_source_dyads": 42,
+  "provenance": {
+    "github_actions_run": 43697811421,
+    "github_actions_url": "https://github.com/zuizui0223/TTF/actions/runs/43697811421",
+    "source_commit": "38f31c50ddce9c8f4657410b550dc92acf516a2f",
+    "artifacts": [
+      {
+        "id": 14155038276,
+        "digest": "sha256:494575d8c172899e5c61f8921af866cf43b1d68ff7f3626c26feef59b0874640",
+        "size": 918
+      }
+    ],
+    "biological_outcomes_opened": false
+  }
+}
