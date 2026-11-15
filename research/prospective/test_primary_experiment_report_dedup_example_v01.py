@@ -1,6 +1,7 @@
 """Known-truth physical-experiment vs publication-report counterexamples."""
 import copy
 import json
+import hashlib
 import sys
 import unittest
 from pathlib import Path
@@ -45,6 +46,14 @@ class ExperimentReportDedupTests(unittest.TestCase):
         self.e["deduplication"]["raw_individual_ID_crosspaper_join_verified"]=True
         with self.assertRaisesRegex(ValueError,"qualification drifted"):
             deduplicate_cohorts(self.e)
+    def test_persisted_receipt_matches_source_only_author_evidence_and_artifact_hash(self):
+        file = HERE/"source_registry/raabova2007_pankova2014_experiment_report_dedup_v01.json"
+        raw=file.read_bytes()
+        self.assertEqual(hashlib.sha256(raw).hexdigest(),
+                         "5bebe1464d083e5edb8efad3b1d4fd6a139e11184983b0b65e7682f878675bef")
+        self.assertEqual(json.loads(raw),deduplicate_cohorts(self.e))
+        self.assertEqual(json.loads(raw)["article_by_experimental_component_records"],4)
+
     def test_source_only_and_old_science_immutable(self):
         r=deduplicate_cohorts(self.e)
         self.assertFalse(r["original_individual_tag_IDs_directly_matched"])
