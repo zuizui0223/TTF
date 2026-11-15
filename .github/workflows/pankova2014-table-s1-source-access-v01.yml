@@ -6,11 +6,17 @@ on:
     paths:
       - 'research/prospective/pankova2014_table_s1_original_access_v01.py'
       - 'research/prospective/test_pankova2014_table_s1_original_access_v01.py'
+      - 'research/prospective/pankova2014_s1_xls_schema_only_contract_v01.json'
+      - 'research/prospective/pankova2014_s1_xls_schema_only_v01.py'
+      - 'research/prospective/test_pankova2014_s1_xls_schema_only_v01.py'
       - '.github/workflows/pankova2014-table-s1-source-access-v01.yml'
   pull_request:
     paths:
       - 'research/prospective/pankova2014_table_s1_original_access_v01.py'
       - 'research/prospective/test_pankova2014_table_s1_original_access_v01.py'
+      - 'research/prospective/pankova2014_s1_xls_schema_only_contract_v01.json'
+      - 'research/prospective/pankova2014_s1_xls_schema_only_v01.py'
+      - 'research/prospective/test_pankova2014_s1_xls_schema_only_v01.py'
       - '.github/workflows/pankova2014-table-s1-source-access-v01.yml'
 jobs:
   original-storage-header-only:
@@ -27,3 +33,18 @@ jobs:
         run: python -m unittest discover -s research/prospective -p test_pankova2014_table_s1_original_access_v01.py -v
       - name: Check PLOS and PMC original Table S1 Excel storage header ONLY
         run: python research/prospective/pankova2014_table_s1_original_access_v01.py
+      - name: Synthetic BIFF8 first-header-only and fail-closed tests
+        run: python -m unittest discover -s research/prospective -p test_pankova2014_s1_xls_schema_only_v01.py -v
+      - name: Generic OLE container dependency (no spreadsheet analysis library)
+        run: python -m pip install --disable-pip-version-check olefile==0.47
+      - name: Original PLOS XLS first-12-rows TEXT HEADINGS ONLY (no outcome cells)
+        run: |
+          python research/prospective/pankova2014_s1_xls_schema_only_v01.py \
+            --output _source_only/pankova2014_original_TableS1_early_headers_v01.json
+      - name: Archive only source workbook schema, without any data rows
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-pankova2014-original-S1-source-only-headings-v01
+          path: _source_only/pankova2014_original_TableS1_early_headers_v01.json
+          if-no-files-found: error
+          retention-days: 30
