@@ -43,3 +43,10 @@ Five pairs (**D03–H02, D04–H05, D05–H06, D12–H14, D32–H12**) have 8–
 - Original phenotype pair-mean table Git blob: 400f73bf21fefb6fcb775396f256c3447c755595, corresponding to 16 population means.
 - P1 original output was not subsequently retuned or re-opened. Authors' full-data candidate SNP outlier lists are not used for the signed predictor. However original VCF SNP discovery/MAF filters were performed before this cross-validation on the complete dataset, imposing ascertainment conditioning.
 - Aggregate-only artifact from the one-shot GitHub workflow: ID 14153331627, SHA256 99acc1717fba2a19e406d3c2a09e7beb1b9ce1871e726f68448bad2c530363ec. Raw VCF and individual sample genotypes are not redistributed.
+
+
+## Direct original-study novelty boundary (reviewed 2026-11-15)
+
+James et al. (2021), *Evolution* 75:3115–3131, DOI [10.1111/evo.14387](https://doi.org/10.1111/evo.14387), **already** reports strong parallel phenotypic trajectories and largely locality-specific SNP/gene contrasts, with stronger parallelism at the level of biological function. The source paper reported only five especially concordant candidate outlier SNPs across its original full-system checks. **Our P1 result must not be claimed as a new discovery that morphology and SNP differentiation can decouple.** Its additional methodological contribution is a prospectively specified *train-seven/hold-one locality predictive estimand* and a reproducible signed-score failure profile across each withheld pair, with the original all-data outlier lists excluded from marker ranking. Even this predictive contribution remains exploratory and requires independent outside-lineage replication before TTF generality can be claimed.
+
+Authors also reported short within-population linkage disequilibrium (median haploblock 42 bp). Our one-SNP-per-contig filter is conservative by construction but cannot prove marker independence, and all-source ascertainment remains a limitation.
