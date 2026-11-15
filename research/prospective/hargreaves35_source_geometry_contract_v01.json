@@ -92,7 +92,7 @@
     "missing_experiment": "Treat missing experiment identifiers as a distinct UNKNOWN stratum and do not claim same causal experiment.",
     "garden_coordinate_rule": "Only count valid finite WGS84 destination lon/lat; report inconsistent coordinates as ambiguous, no repair.",
     "no_source_origin_georeferencing_in_current_file": true,
-    "no_geographical_origin_regression": false,
+    "no_geographical_origin_regression": true,
     "study_label_unmatched_does_not_prove_independent_primary_experiment": true,
     "not_a_requalification_of_frozen_44_of_50_group": true
   },
