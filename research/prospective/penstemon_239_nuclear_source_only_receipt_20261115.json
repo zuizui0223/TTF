@@ -1,0 +1,118 @@
+{
+  "doi": "10.5061/dryad.g79cnp66z",
+  "files": [
+    {
+      "digest_type": "sha-256",
+      "id": 5037928,
+      "name": "1.RawFASTAs.zip",
+      "self": "/api/v2/files/5037928",
+      "sha256": "3f83d605bc85a86d4cd0833134016b2415927544889d13f95b934f4388938819",
+      "size": 973195
+    },
+    {
+      "digest_type": "sha-256",
+      "id": 5037929,
+      "name": "2.RAxML.zip",
+      "self": "/api/v2/files/5037929",
+      "sha256": "552e9f89b1851bff6016ff3eccd24d98b78969ec6cc20433a4e576c2afb2432f",
+      "size": 650969
+    },
+    {
+      "digest_type": "sha-256",
+      "id": 5037930,
+      "name": "3.Astral.zip",
+      "self": "/api/v2/files/5037930",
+      "sha256": "26b54ac40fc44d7cfebaa76fa2c42016e19d2d1501e114a24dfe62f7ef60266f",
+      "size": 418557
+    },
+    {
+      "digest_type": "sha-256",
+      "id": 5037933,
+      "name": "4.DivergenceDating.zip",
+      "self": "/api/v2/files/5037933",
+      "sha256": "7e3850449d34fadc3997d5457d72289ca2f3960da7d2fc7c4e8a1f6a6ce6986e",
+      "size": 26811812
+    },
+    {
+      "digest_type": "sha-256",
+      "id": 5037934,
+      "name": "5.BioGeoBEARS.zip",
+      "self": "/api/v2/files/5037934",
+      "sha256": "68e6ab4ce32a6dae565469be230ae8ad24bd34ae64fbdb8fb7fba0ce31d4d598",
+      "size": 20871916
+    },
+    {
+      "digest_type": "sha-256",
+      "id": 5037935,
+      "name": "6.TaxonomicBootstrap.zip",
+      "self": "/api/v2/files/5037935",
+      "sha256": "bbf53aa594a6f902ff220b0b36e26dd2d4b942883eed0cf9f10700e144f5a167",
+      "size": 181515747
+    },
+    {
+      "digest_type": "sha-256",
+      "id": 5037931,
+      "name": "7.Diversification.zip",
+      "self": "/api/v2/files/5037931",
+      "sha256": "4d91193b11e23e4ca8191670eeba88b52c4a61f65baa520cbbc6af59d4a6ae4f",
+      "size": 85349
+    },
+    {
+      "digest_type": "sha-256",
+      "id": 5037932,
+      "name": "8.Tanglegram.zip",
+      "self": "/api/v2/files/5037932",
+      "sha256": "769c4177d3af80ac8e6d77ecc4642ec9fa539a86fc3c4ea1be6f82f492478e8a",
+      "size": 7827
+    },
+    {
+      "digest_type": "sha-256",
+      "id": 5037944,
+      "name": "README.md",
+      "self": "/api/v2/files/5037944",
+      "sha256": "5a0e647f0c93dae6bf999d38f6ab361cf25175280e1514895ce7af03818aaf38",
+      "size": 19477
+    }
+  ],
+  "no_genetic_or_floral_response_values_read": true,
+  "no_sequences_or_tree_topologies_decoded": true,
+  "not_a_phenotype_phylogeny_join": true,
+  "public_release_date_paper": "2026-11-02",
+  "small_tree_archive_access": {
+    "2.RAxML.zip": {
+      "http_status": 401,
+      "status": "SOURCE_FILE_ACCESS_BLOCKED",
+      "url": "https://datadryad.org/api/v2/files/5037929/download"
+    },
+    "3.Astral.zip": {
+      "http_status": 401,
+      "status": "SOURCE_FILE_ACCESS_BLOCKED",
+      "url": "https://datadryad.org/api/v2/files/5037930/download"
+    }
+  },
+  "status": "PENSTEMON_239SPP_NUCLEAR_SOURCE_METADATA_AND_TREE_ACCESS_ONLY",
+  "version": {
+    "id": 472652,
+    "published": "2026-11-02",
+    "updated": "2026-11-02",
+    "version": 4
+  },
+  "versions": [
+    {
+      "id": 472652,
+      "published": "2026-11-02",
+      "updated": "2026-11-02",
+      "version": 4
+    }
+  ],
+  "provenance": {
+    "source_actions_run": 43701619489,
+    "source_actions_url": "https://github.com/zuizui0223/TTF/actions/runs/43701619489",
+    "artifacts": [
+      {
+        "id": 14156906509,
+        "digest": "sha256:4d81faeeef5139273ed878833366f8aee2f1a46b2fcabc83c3a2b568dcc0cba7"
+      }
+    ]
+  }
+}
