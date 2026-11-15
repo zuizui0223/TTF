@@ -77,7 +77,7 @@ def inspect_csv_species_keys(raw):
     if not hd or len(hd)!=len(set(hd)):
         raise ValueError("duplicate or missing CSV header")
     fields={h.lower().strip():h for h in hd}
-    species_field=next((fields[x] for x in SPECIES_COLS if x in fields),None)
+    species_field=next((fields[x] for x in sorted(SPECIES_COLS) if x in fields),None)
     # deterministic decision on multiple aliases, never inferred by response.
     if not species_field:
         cand=[h for h in hd if re.search(r"species|^sp\.?$|^taxon$",h,re.I)]
