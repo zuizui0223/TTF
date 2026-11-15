@@ -28,7 +28,7 @@ class OriginalStudyOverlapTests(unittest.TestCase):
             "qualified_study_species_garden_fitness_type_cells":2,
         }
 
-    def source(self, rows):
+    def source(self, rows, encoding="utf-8"):
         header=self.contract["source"]["original_csv_header"]
         s=io.StringIO(newline="")
         w=csv.writer(s,lineterminator="\n")
@@ -37,7 +37,7 @@ class OriginalStudyOverlapTests(unittest.TestCase):
             row={key:"" for key in header}
             row.update(values)
             w.writerow([row[k] for k in header])
-        raw=s.getvalue().encode("utf-8")
+        raw=s.getvalue().encode(encoding)
         self.contract["source"]["public_file_metadata_bytes"]=len(raw)
         self.contract["source"]["public_file_metadata_md5"]=hashlib.md5(raw).hexdigest()
         self.contract["source"]["verified_header_firstline_sha256"]=hashlib.sha256(raw.split(b"\n",1)[0]+b"\n").hexdigest()
@@ -60,6 +60,18 @@ class OriginalStudyOverlapTests(unittest.TestCase):
         self.assertEqual(r["normalized_only_source_study_label_candidates_for_review"],1)
         self.assertEqual(r["unlinked_source_labels_NOT_independence_certified"],1)
         self.assertEqual(r["source_original_response_and_effect_columns_used"],[])
+        self.assertEqual(r["source_original_numeric_fitness_rows_fit"],0)
+
+    def test_cp1252_original_non_utf8_source_not_reencoded_or_outcome_read(self):
+        raw=self.source([{
+            "study":"Alphaetal_JEcol_2016", "functional_group":"annual",
+            "taxon":"Plant alpha", "treatment_notes":"drought–water", "fitness":"9.1234",
+        }],encoding="cp1252")
+        self.assertRaises(UnicodeDecodeError, raw.decode, "utf-8")
+        r=source_only_study_overlap(raw,self.contract,self.reference)
+        self.assertEqual(r["source_original_text_decode_selected_after_byte_md5_check"],"cp1252")
+        self.assertTrue(r["raw_original_bytes_not_reencoded_or_modified"])
+        self.assertEqual(r["exact_original_study_label_overlap_plant"],1)
         self.assertEqual(r["source_original_numeric_fitness_rows_fit"],0)
 
     def test_exact_key_but_different_taxon_does_not_count_joint_pair(self):
