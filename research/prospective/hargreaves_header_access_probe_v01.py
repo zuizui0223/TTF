@@ -51,7 +51,8 @@ def probe() -> dict:
         )
         try:
             with urlopen(req, timeout=35) as response:
-                data = response.read(MAX_HEADER_BYTES)
+                # Read exactly one CSV header line; never consume subsequent response rows.
+                data = response.readline(MAX_HEADER_BYTES + 1)
                 header = parse_header_bytes(data)
                 return {
                     "schema": "ttf_Hargreaves2020_source_only_header_preflight_v01",
