@@ -1,0 +1,42 @@
+name: Hargreaves reciprocal population-as-garden georecovery calibration
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/hargreaves_source_as_garden_georecovery_contract_v01.json'
+      - 'research/prospective/hargreaves_source_as_garden_georecovery_v01.py'
+      - 'research/prospective/test_hargreaves_source_as_garden_georecovery_v01.py'
+      - '.github/workflows/ttf-hargreaves-source-as-garden-calibration-v01.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/hargreaves_source_as_garden_georecovery_contract_v01.json'
+      - 'research/prospective/hargreaves_source_as_garden_georecovery_v01.py'
+      - 'research/prospective/test_hargreaves_source_as_garden_georecovery_v01.py'
+      - '.github/workflows/ttf-hargreaves-source-as-garden-calibration-v01.yml'
+
+jobs:
+  source-only-georecovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic known-truth exact-ID and geography abstention tests
+        run: python -m unittest discover -s research/prospective -p test_hargreaves_source_as_garden_georecovery_v01.py -v
+      - name: Byte-verified original source-only georecovery and Bontrager origin calibration
+        run: |
+          python research/prospective/hargreaves_source_as_garden_georecovery_v01.py \
+            --output _ttf_source_only/hargreaves_source_as_garden_georecovery_v01.json
+      - name: Publish source-only aggregate only (no original location coordinates)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-Hargreaves-plant-source-as-garden-proxy-calibration-v01
+          path: _ttf_source_only/hargreaves_source_as_garden_georecovery_v01.json
+          retention-days: 30
+          if-no-files-found: error
