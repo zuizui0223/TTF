@@ -1,0 +1,47 @@
+{
+  "schema": "ttf_YatesFraser2014_Raabova_shared_secondary_XLSX_original_schema_ONLY_predata_v01",
+  "date": "2026-11-16",
+  "status": "FROZEN_BEFORE_SECONDARY_ORIGINAL_XLSX_XML_SHEET_HEADER_EXTRACTION",
+  "original": {
+    "original_data_doi": "10.5061/dryad.81k4v",
+    "official_zenodo_record_id": 4963190,
+    "official_record_api": "https://zenodo.org/api/records/4963190",
+    "original_filename": "Source.Population.Size.Performance.In.Novel.Environments.xlsx",
+    "original_bytes": 162038,
+    "original_md5": "31753f59df54a13ca8fbc992a348702d",
+    "original_paper_doi": "10.1111/eva.12181",
+    "source_role": "Derivative 2014 meta-analysis reusing some J. Raabova supplied data, not automatically original 2007 field individual rows."
+  },
+  "safe_XLSX_member_scope": {
+    "permitted_xml_parts": [
+      "xl/workbook.xml",
+      "xl/_rels/workbook.xml.rels",
+      "xl/sharedStrings.xml",
+      "xl/worksheets/sheet*.xml"
+    ],
+    "max_zip_members": 100,
+    "max_uncompressed_total_bytes": 25000000,
+    "max_worksheet_xml_bytes": 6000000,
+    "first_text_rows_per_sheet": 3,
+    "max_text_columns_scanned": 60,
+    "max_worksheets": 30,
+    "numeric_cells_or_formulas_NOT_SELECTED": true,
+    "only_original_worksheet_names_and_early_text_fields": true,
+    "never_export_rowwise_IDs_or_locations_or_effect_values": true
+  },
+  "candidate_2007_field_tag_keys": [
+    "mark",
+    "plant_id",
+    "individual_id",
+    "plant_number",
+    "plant_tag",
+    "tag_id",
+    "field_plant_number"
+  ],
+  "infer_original_source_ID_only_if_explicit_tag_columns_and_primary_2007_study_provenance_cooccur": true,
+  "inferred_tag_column_from_title_only_forbidden": true,
+  "no_fitness_response_variables_selected": true,
+  "no_2007_to_2014_row_match_authorized": true,
+  "existing_2014_Pankova_individual_within_XLS_counts_unchanged": true,
+  "existing_44_of_50_stopped_Bontrager_gate_unchanged": true
+}
