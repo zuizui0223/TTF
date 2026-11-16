@@ -73,7 +73,9 @@
     "max_files_per_article": 50,
     "data_files_downloaded": false,
     "no_individual_original_CSV_or_fitness_value_opening": true,
-    "metadata_absence_is_not_proof_of_original_data_absence": true
+    "metadata_absence_is_not_proof_of_original_data_absence": true,
+    "max_article_detail_requests": 12,
+    "partial_metadata_discovery_never_assumed_complete": true
   },
   "qualification_gates": {
     "independent_primary_experiment_cohort_verified": false,
