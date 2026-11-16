@@ -99,13 +99,15 @@ def main():
     OUT.mkdir(parents=True,exist_ok=True)
     pdf,attempts=verified_pdf_from_stream()
     if pdf is None:
-        print(json.dumps({
+        status={
           "status":"ORIGINAL_SUPPLEMENT_TEMPORARILY_UNAVAILABLE",
           "source_url":URL,"failed_attempts":attempts,
           "authentic_pdf_required_sha256":PDF_SHA256,
           "trait_outcomes_not_read":True,
           "not_a_source_missing_voucher_conclusion":True,
-        },indent=2,sort_keys=True))
+        }
+        (OUT/"source_recovery_stopped.json").write_text(json.dumps(status,indent=2,sort_keys=True)+"\n")
+        print(json.dumps(status,indent=2,sort_keys=True))
         return
     a=PdfReader(io.BytesIO(pdf),strict=False)
     b=fitz.open(stream=pdf,filetype="pdf")
