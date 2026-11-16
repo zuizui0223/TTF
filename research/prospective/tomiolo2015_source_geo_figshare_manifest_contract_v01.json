@@ -1,0 +1,88 @@
+{
+  "schema": "ttf_Tomiolo2015_historical_source_geography_provenance_gate_v01",
+  "date": "2026-11-16",
+  "status": "FROZEN_BEFORE_TOMIOLO_FIGSHARE_PUBLIC_DATA_MANIFEST_QUERY",
+  "purpose": "Evaluate the highest-available source-only historical exposure geography in a Bontrager-unlinked experiment without opening fitness response; exact 2015 article/2013 original dissertation and Figshare DOI, not multiple independent trials.",
+  "target": {
+    "hargreaves_original_label": "Tomioloetal_Ecology_2015",
+    "original_paper_doi": "10.1890/14-1445.1",
+    "original_title": "Separating the role of biotic interactions and climate in determining adaptive response of plants to climate change",
+    "original_published_article_year": 2015,
+    "figshare_collection_doi": "10.6084/m9.figshare.c.3307653.v1",
+    "figshare_collection_api": "https://api.figshare.com/v2/collections/3307653",
+    "figshare_collection_articles_api": "https://api.figshare.com/v2/collections/3307653/articles",
+    "author_2013_thesis_url": "https://publikationen.uni-tuebingen.de/xmlui/bitstream/handle/10900/49977/pdf/Sara_TomioloTHESIS_040913.pdf",
+    "author_original_thesis_year": 2013,
+    "independence_statement": "Tomiolo 2013 thesis and Tomiolo et al 2015 should not be counted as independent 2 experiments solely because they have separate bibliographic entries."
+  },
+  "already_frozen_source_only_Hargreaves": {
+    "original_full_original_Hargreaves_sha256": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+    "prior_study_geography_receipt": "research/prospective/source_registry/hargreaves_source_as_garden_georecovery_v01.json",
+    "study_label_count_in_35": 1,
+    "origin_population_ID_keys_across_all_species": 6,
+    "ID_keys_with_unique_garden_derived_coordinate": 6,
+    "geographically_unique_garden_derived_coordinates": 2,
+    "comparable_same_garden_source_ID_cells": 12,
+    "direct_independently_georeferenced_original_source_populations": 0
+  },
+  "author_thesis_primary_geography": {
+    "study_area": "Israel, two field sites of approximately 100 by 250 meters",
+    "M": {
+      "climate_zone": "Mediterranean",
+      "location": "Matta, Jerusalem Mountains, southwest of Jerusalem",
+      "latitude_original": "N 31° 42′",
+      "longitude_original": "E 35° 03′",
+      "decimal_latitude_from_minutes": 31.7,
+      "decimal_longitude_from_minutes": 35.05,
+      "soil": "Terra Rossa",
+      "elevation_m": 620
+    },
+    "SA": {
+      "climate_zone": "semi-arid",
+      "location": "Lahav, northern Negev, northeast of Be'er Sheva",
+      "latitude_original": "N 31° 23′",
+      "longitude_original": "E 34° 54′",
+      "decimal_latitude_from_minutes": 31.383333333333333,
+      "decimal_longitude_from_minutes": 34.9,
+      "soil": "Light Brown Rendzina",
+      "elevation_m": 590
+    },
+    "site_location_precision": "Original thesis coordinates given only to whole minutes, not exact source origin plant GPS and not individual source-population coordinates.",
+    "site_coordinate_error_policy": "Nominal 0.5 arcminute rounding plus site area; NEVER treat these decimal numbers as location accuracy to 6 decimal places. No interpolation or invented GPS.",
+    "lineage_concern": "The author's 2013 dissertation describes a field reciprocal transplant and greenhouse experiment with the same 4 winter annual species and two sites; primary experiment date/individual ID correspondence to the 2015 paper not yet adjudicated."
+  },
+  "figshare_source_manifest_policy": {
+    "only_public_official_api_hosts": [
+      "api.figshare.com"
+    ],
+    "only_metadata_fields": [
+      "collection_id",
+      "article_id",
+      "article_title",
+      "article_doi",
+      "file_id",
+      "file_name",
+      "file_size",
+      "public_checksum",
+      "related_paper_doi"
+    ],
+    "exact_collection_id_required": 3307653,
+    "require_Figshare_original_DOI_no_title_only_matching": true,
+    "max_metadata_response_bytes": 850000,
+    "max_collection_articles": 80,
+    "max_files_per_article": 50,
+    "data_files_downloaded": false,
+    "no_individual_original_CSV_or_fitness_value_opening": true,
+    "metadata_absence_is_not_proof_of_original_data_absence": true
+  },
+  "qualification_gates": {
+    "independent_primary_experiment_cohort_verified": false,
+    "unique_original_source_population_GPS_verified": false,
+    "same_study_species_site_ID_to_thesis_name_directly_verified": false,
+    "M_vs_SA_distinct_climate_sites_same_as_six_original_source_populations_not_proven": true,
+    "LGM_21ka_0BP_source_contrast_calculated": false,
+    "population_level_effect_fitted": false,
+    "previous_Bontrager_44of50_gate_unchanged": true,
+    "PR155_draft_and_main_untouched": true
+  }
+}
