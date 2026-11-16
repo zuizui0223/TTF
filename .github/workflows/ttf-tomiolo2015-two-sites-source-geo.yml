@@ -7,12 +7,18 @@ on:
       - 'research/prospective/tomiolo2015_geo_proxy_site_matrix_contract_v01.json'
       - 'research/prospective/tomiolo2015_geo_proxy_site_matrix_v01.py'
       - 'research/prospective/test_tomiolo2015_geo_proxy_site_matrix_v01.py'
+      - 'research/prospective/source_registry/hargreaves35_independent_source_firstwave_eligibility_v01.json'
+      - 'research/prospective/source_registry/tomiolo2015_geo_proxy_matrix_v01.json'
+      - 'research/prospective/source_registry/tomiolo2015_figshare_appendixA_source_provenance_v01.json'
       - '.github/workflows/ttf-tomiolo2015-two-sites-source-geo.yml'
   pull_request:
     paths:
       - 'research/prospective/tomiolo2015_geo_proxy_site_matrix_contract_v01.json'
       - 'research/prospective/tomiolo2015_geo_proxy_site_matrix_v01.py'
       - 'research/prospective/test_tomiolo2015_geo_proxy_site_matrix_v01.py'
+      - 'research/prospective/source_registry/hargreaves35_independent_source_firstwave_eligibility_v01.json'
+      - 'research/prospective/source_registry/tomiolo2015_geo_proxy_matrix_v01.json'
+      - 'research/prospective/source_registry/tomiolo2015_figshare_appendixA_source_provenance_v01.json'
       - '.github/workflows/ttf-tomiolo2015-two-sites-source-geo.yml'
 jobs:
   original-study-site-geometry-only:
