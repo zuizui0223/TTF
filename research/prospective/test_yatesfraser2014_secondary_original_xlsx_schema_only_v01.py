@@ -71,7 +71,7 @@ class RaabovaSecondaryXLSXSchemaSafetyTests(unittest.TestCase):
         self.assertEqual(lim["first_text_rows_per_sheet"],3)
         self.assertTrue(lim["numeric_cells_or_formulas_NOT_SELECTED"])
         self.assertFalse(self.c["sources_allow_file_outcome_read"]) if "sources_allow_file_outcome_read" in self.c else None
-        self.assertFalse(self.c["no_2007_to_2014_row_match_authorized"])
+        self.assertTrue(self.c["no_2007_to_2014_row_match_authorized"])
     def test_unexpected_workbook_relation_fails_closed(self):
         raw=synthetic_xlsx()
         with zipfile.ZipFile(io.BytesIO(raw)) as z:
