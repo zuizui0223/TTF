@@ -1,0 +1,40 @@
+{
+  "A_is_reference_aridity_gradient_site_not_automatically_an_experiment_source": true,
+  "Hargreaves_garden_proxy_coords_exported": false,
+  "anonymous_proxy_point_to_published_site_distance_km": {
+    "anonymous_proxy_point_1": {
+      "A": 58.8356,
+      "M": 37.9732,
+      "SA": 0.0004
+    },
+    "anonymous_proxy_point_2": {
+      "A": 96.4949,
+      "M": 0.0,
+      "SA": 37.9728
+    }
+  },
+  "independent_primary_experiment_cohort_verified": false,
+  "no_fitness_phenotype_genotype_LGM_model_opened": true,
+  "nominal_published_coordinate_precision": "whole arcminute",
+  "old_Bontrager_44of50_source_gate_unchanged": true,
+  "original_Hargreaves_study_label": "Tomioloetal_Ecology_2015",
+  "original_paper_doi": "10.1890/14-1445.1",
+  "original_paper_field_origin_sites": [
+    "M",
+    "SA"
+  ],
+  "original_study_binomial_species_labels": 3,
+  "original_study_source_population_ID_keys": 6,
+  "original_study_unique_garden_derived_site_points": 2,
+  "published_author_site_labels": [
+    "M",
+    "SA",
+    "A"
+  ],
+  "schema": "ttf_Tomiolo2015_two_garden_derived_sites_three_published_appendix_sites_geo_matrix_v01",
+  "source_original_SHA256_verified": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+  "source_population_GPS_directly_verified": false,
+  "status": "EXPLORATORY_TWO_GEOGRAPHIC_POINTS_VS_PUBLISHED_SITES_NOT_GPS_SOURCE_PROOF",
+  "strict_binomial_species_with_two_distinct_garden_proxy_locations": 3,
+  "study_site_code_to_source_population_ID_directly_certified": false
+}
