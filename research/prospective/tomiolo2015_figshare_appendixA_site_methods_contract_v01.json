@@ -1,0 +1,78 @@
+{
+  "schema": "ttf_Tomiolo2015_Figshare_appendixA_source_site_description_exact_original_v01",
+  "date": "2026-11-16",
+  "status": "FROZEN_BEFORE_ORIGINAL_FIGSHARE_APPENDIX_A_FILE_FETCH",
+  "source": {
+    "paper_doi": "10.1890/14-1445.1",
+    "collection_doi": "10.6084/m9.figshare.c.3307653.v1",
+    "collection_id": 3307653,
+    "article_id": 3562074,
+    "article_doi": "10.6084/m9.figshare.3562074.v1",
+    "article_public_url": "https://wiley.figshare.com/articles/dataset/Appendix_A_Detailed_description_of_the_study_sites_and_of_the_experimental_set_up_/3562074",
+    "article_metadata_api": "https://api.figshare.com/v2/articles/3562074",
+    "original_file_id": 5634123,
+    "original_filename": "appendix-A.htm",
+    "published_bytes": 134278,
+    "published_md5": "f2dc5a3c1715a72d297112434dac8f45",
+    "source_author_2013_thesis_url": "https://publikationen.uni-tuebingen.de/xmlui/bitstream/handle/10900/49977/pdf/Sara_TomioloTHESIS_040913.pdf",
+    "source_author_thesis_geography_M": "31°42′ N, 35°03′ E",
+    "source_author_thesis_geography_SA": "31°23′ N, 34°54′ E",
+    "source_sites_in_thesis": [
+      "Mediterranean (M)",
+      "semi-arid (SA)"
+    ]
+  },
+  "authorization": {
+    "allowed_article_metadata_hostname": "api.figshare.com",
+    "approved_file_download_hostnames": [
+      "ndownloader.figshare.com",
+      "wiley.figshare.com",
+      "figshare.com"
+    ],
+    "only_exact_article_and_original_file_metadata_qualified": true,
+    "require_original_md5_and_size_before_extraction": true,
+    "no_appendixB_or_appendixC_fetch": true,
+    "original_HTML_may_be_read_only_for_site_location_and_design_methods": true,
+    "max_context_chars_per_source_match": 260,
+    "max_relevant_site_context_segments": 24,
+    "allowed_context_words": [
+      "Mediterranean",
+      "semi-arid",
+      "Lahav",
+      "Matta",
+      "coordinates",
+      "latitude",
+      "longitude",
+      "study sites",
+      "site location",
+      "Israel",
+      "Negev",
+      "Jerusalem"
+    ],
+    "exclude_context_if_contains_biological_outcome_terms": [
+      "survival",
+      "fitness",
+      "fecundity",
+      "reproduction",
+      "biomass",
+      "germination",
+      "seed production",
+      "results",
+      "performance",
+      "growth"
+    ],
+    "no_fitness_effect_or_response_values_indexed": true,
+    "no_auto_relabel_site_source_population_by_nearest_coordinates": true,
+    "no_new_lgm_raster_sampling": true
+  },
+  "prespecified_interpretation": {
+    "existing_original_Hargreaves_population_IDs": 6,
+    "existing_garden_derived_unique_coordinates": 2,
+    "original_study_disjoint_from_Bontrager_original_study_labels": true,
+    "but_original_experiment_cohort_independence_not_directly_verified": true,
+    "external_minutes_resolution_is_coarse_site_location_not_original_individual_population_GPS": true,
+    "site_context_strings_not_verified_source_ID_crosswalk": true,
+    "no_experimental_outcome_or_adaptation_model_reopened": true,
+    "Bontrager_44of50_previous_stop_unchanged": true
+  }
+}
