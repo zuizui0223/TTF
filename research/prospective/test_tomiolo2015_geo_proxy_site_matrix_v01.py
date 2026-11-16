@@ -87,6 +87,39 @@ class TomioloTwoSiteGeographyTests(unittest.TestCase):
         self.assertTrue(r["qualifications"]["no_numerical_fitness_response_data_modeled"])
         self.assertTrue(r["qualifications"]["no_LGM_21ka_0BP_raster_sampled"])
         self.assertTrue(r["qualifications"]["Bontrager_previous_44of50_gate_unchanged"])
+    def test_hargreaves35_source_only_firstwave_not_19_certified_experiments(self):
+        import hashlib
+        root=HERE.parents[1]
+        rec=json.loads((HERE/"source_registry/hargreaves35_independent_source_firstwave_eligibility_v01.json").read_text())
+        inp=rec["input_original_source_evidence"]
+        orig1=(root/inp["hargreaves_source_only_study_geometry_json"]).read_bytes()
+        orig2=(root/inp["hargreaves_source_as_garden_proxy_json"]).read_bytes()
+        self.assertEqual(hashlib.sha256(orig1).hexdigest(),inp["source_only_geometry_original_SHA256"])
+        self.assertEqual(hashlib.sha256(orig2).hexdigest(),inp["source_garden_geo_original_SHA256"])
+        old1=json.loads(orig1);old2=json.loads(orig2)
+        ids=old2["per_unlinked_study"]
+        qualified=[v for v in ids if v["multi_source_cells_with_two_distinct_georecovered_coordinates"]>0]
+        duplicate={"Raabovaetal_BiolConservation_2007","PankovaandRaabova_PLoSOne_2014"}
+        pending=[v for v in qualified if v["original_study_label"] not in duplicate]
+        a=rec["source_only_counts"]
+        self.assertEqual(a["total_original_unlinked_study_labels"],35)
+        self.assertEqual(a["with_at_least_two_distinct_garden_derived_origin_proxy_coordinates"],len(qualified))
+        self.assertEqual(a["original_geo_proxy_candidate_cells"],sum(v["multi_source_cells_with_two_distinct_georecovered_coordinates"] for v in qualified))
+        self.assertEqual(a["remaining_non_Raabova_study_labels_with_two_proxy_locations"],len(pending))
+        self.assertEqual(a["remaining_non_Raabova_comparison_cells"],sum(v["multi_source_cells_with_two_distinct_georecovered_coordinates"] for v in pending))
+        self.assertEqual((len(qualified),len(pending)),(21,19))
+        self.assertEqual(a["remaining_non_Raabova_comparison_cells"],114)
+        self.assertEqual(a["independently_certified_original_experiment_cohorts"],0)
+        self.assertEqual(a["independently_certified_source_population_GPS_studies"],0)
+        self.assertTrue(rec["science_boundary"]["not_19_independently_certified_trials"])
+        self.assertTrue(rec["science_boundary"]["Bontrager_44_of_50_source_gate_frozen"])
+    def test_new_orchid_study_is_biotic_endpoint_not_inferred_climate_adaptation(self):
+        rec=json.loads((HERE/"source_registry/hargreaves35_independent_source_firstwave_eligibility_v01.json").read_text())
+        sun=rec["known_study_specific_source_geography"]["Sunetal_AnnBot_2014"]
+        self.assertEqual(sun["original_DOI"],"10.1093/aob/mct219")
+        self.assertIn("pollinator-guild",sun["original_research_scope"])
+        self.assertEqual(sun["unique_proxy_points"],9)
+        self.assertFalse(sun["source_population_original_GPS_qualified"])
     def test_prior_source_and_genetic_stops_remain_unchanged(self):
         x=proxy_geography(self.original_metadata(),self.c)
         self.assertTrue(x["old_Bontrager_44of50_source_gate_unchanged"])
