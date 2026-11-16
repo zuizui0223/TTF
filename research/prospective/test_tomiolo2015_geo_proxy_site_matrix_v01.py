@@ -57,6 +57,36 @@ class TomioloTwoSiteGeographyTests(unittest.TestCase):
         self.c["matching_rules"]["descriptive_distance_bands_km"]=[1,2,5,20]
         with self.assertRaisesRegex(ValueError,"no-retune"):
             proxy_geography(self.original_metadata(),self.c)
+    def test_frozen_original_action_artifact_persisted_byte_identical(self):
+        import hashlib
+        original=HERE/"source_registry/tomiolo2015_geo_proxy_matrix_v01.json"
+        self.assertEqual(hashlib.sha256(original.read_bytes()).hexdigest(),
+            "78f1096d0e3ba985a6bfc55f2d7f2911f8b8187322b57ef0243fa2c35bf8e98c")
+        data=json.loads(original.read_text(encoding="utf-8"))
+        self.assertEqual(data["original_study_source_population_ID_keys"],6)
+        self.assertEqual(data["original_study_unique_garden_derived_site_points"],2)
+        self.assertEqual(data["strict_binomial_species_with_two_distinct_garden_proxy_locations"],3)
+        self.assertFalse(data["source_population_GPS_directly_verified"])
+    def test_source_manifest_three_appendices_are_not_three_origins(self):
+        r=json.loads((HERE/"source_registry/tomiolo2015_figshare_appendixA_source_provenance_v01.json").read_text())
+        self.assertEqual(r["original_paper"]["official_collection_id"],3307653)
+        self.assertEqual(len(r["original_paper"]["original_Figshare_articles"]),3)
+        self.assertEqual(r["original_paper"]["field_origin_site_names"],["M","SA"])
+        self.assertEqual(r["original_paper"]["appendix_gradient_context_only_site"],"A")
+        self.assertEqual(r["reference_full_original"]["Hargreaves_SHA256"],
+                         self.c["source"]["Hargreaves_exact_sha256"])
+        self.assertEqual(r["reference_full_original"]["original_geo_artifact_SHA256"],
+                         "78f1096d0e3ba985a6bfc55f2d7f2911f8b8187322b57ef0243fa2c35bf8e98c")
+        self.assertEqual(r["reference_full_original"]["population_ID_keys"],6)
+        self.assertEqual(r["reference_full_original"]["distinct_source_derived_garden_proxy_locations"],2)
+        self.assertEqual(r["reference_full_original"]["same_original_study_origin_GPS_independently_confirmed"],0)
+    def test_not_independent_GPS_or_new_fitness_adaptation_support(self):
+        r=json.loads((HERE/"source_registry/tomiolo2015_figshare_appendixA_source_provenance_v01.json").read_text())
+        self.assertTrue(r["descriptive_geo_distance"]["this_is_NOT_independent_original_field_GPS_measurement"])
+        self.assertTrue(r["qualifications"]["original_Appendix_A_source_context_contained_qualitative_mortality_language_in_initial_excerpt"])
+        self.assertTrue(r["qualifications"]["no_numerical_fitness_response_data_modeled"])
+        self.assertTrue(r["qualifications"]["no_LGM_21ka_0BP_raster_sampled"])
+        self.assertTrue(r["qualifications"]["Bontrager_previous_44of50_gate_unchanged"])
     def test_prior_source_and_genetic_stops_remain_unchanged(self):
         x=proxy_geography(self.original_metadata(),self.c)
         self.assertTrue(x["old_Bontrager_44of50_source_gate_unchanged"])
