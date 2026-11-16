@@ -1,0 +1,29 @@
+name: Penstemon single-source original S1 and S3 streaming recovery
+
+on:
+  push:
+    branches:
+      - research/penstemon-source-recovery-20261116
+
+jobs:
+  original-source-single-pass:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install exact original-source PDF readers and tests
+        run: python -m pip install pytest pypdf pymupdf
+      - name: Reject fabricated S1 voucher and species identities
+        run: python -m pytest -q tests/test_penstemon_authentic_s1_s3_one_zip_recovery_20261116.py
+      - name: Stream one authentic PDF zip; verify SHA and examine source identity layout
+        run: python research/prospective/penstemon_authentic_s1_s3_one_zip_recovery_20261116.py
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: penstemon-original-S1-S3-single-verified-source-recovery
+          path: /tmp/penstemon_authentic_source_recovery_20261116/*
+          if-no-files-found: warn
+          retention-days: 2
