@@ -84,7 +84,7 @@ class RaabovaSecondaryXLSXSchemaSafetyTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"Unexpected XLSX workbook relation"):
             schema_only(target.getvalue(),self.c)
     def test_frozen_Dryad_meta_analysis_is_not_original_field_tag_evidence(self):
-        self.assertIn("Meta-analysis",self.c["origin"]["published_data_scale"])
+        self.assertIn("meta-analysis",self.c["original"]["source_role"])
         self.assertFalse(self.c["infer_original_source_ID_only_if_explicit_tag_columns_and_primary_2007_study_provenance_cooccur"] is False)
         self.assertTrue(self.c["existing_44_of_50_stopped_Bontrager_gate_unchanged"])
 if __name__=="__main__":
