@@ -1,0 +1,203 @@
+{
+  "schema": "ttf_Hargreaves35_new_independent_cohort_firstwave_geo_eligibility_receipt_v01",
+  "date": "2026-11-16",
+  "status": "19_PROVISIONAL_NON_RAABOVA_STUDY_LABELS_NO_INDEPENDENT_PRIMARY_COHORT_OR_SOURCE_GPS_CERTIFIED",
+  "input_original_source_evidence": {
+    "hargreaves_source_only_study_geometry_json": "research/prospective/source_registry/hargreaves35_study_geometry_v01.json",
+    "source_only_geometry_original_SHA256": "7354b7fc559a16b0a2656ef251da84add8d4062d74d8e797092a2d3c76450dca",
+    "hargreaves_source_as_garden_proxy_json": "research/prospective/source_registry/hargreaves_source_as_garden_georecovery_v01.json",
+    "source_garden_geo_original_SHA256": "944344d90b3bb0189c11d57c3a4ba561944453bcef8c42a3e01ea38f911e786d",
+    "author_confirmed_shared_2004_adult_cohort_json": "research/prospective/raabova2007_pankova2014_author_confirmed_adult_cohort_v02.json"
+  },
+  "source_only_counts": {
+    "total_original_unlinked_study_labels": 35,
+    "original_multiple_source_same_garden_study_labels": 30,
+    "original_multiple_source_same_garden_cells": 167,
+    "with_at_least_two_distinct_garden_derived_origin_proxy_coordinates": 21,
+    "original_geo_proxy_candidate_cells": 142,
+    "known_two_published_study_labels_from_one_2004_adult_experiment": 2,
+    "remaining_non_Raabova_study_labels_with_two_proxy_locations": 19,
+    "remaining_non_Raabova_comparison_cells": 114,
+    "independently_certified_original_experiment_cohorts": 0,
+    "independently_certified_source_population_GPS_studies": 0
+  },
+  "known_repeated_one_adult_cohort_article_study_labels": [
+    "Raabovaetal_BiolConservation_2007",
+    "PankovaandRaabova_PLoSOne_2014"
+  ],
+  "remaining_provisional_original_study_labels_source_only": [
+    {
+      "study_label": "Ellisetal_NewPhytol_2007",
+      "source_population_ID_keys": 6,
+      "source_IDs_with_garden_proxy": 6,
+      "unique_garden_derived_geographic_points": 6,
+      "same_garden_distinct_proxy_origin_comparison_cells": 18
+    },
+    {
+      "study_label": "Tomioloetal_Ecology_2015",
+      "source_population_ID_keys": 6,
+      "source_IDs_with_garden_proxy": 6,
+      "unique_garden_derived_geographic_points": 2,
+      "same_garden_distinct_proxy_origin_comparison_cells": 12
+    },
+    {
+      "study_label": "Meloetal_NewPhytol_2014",
+      "source_population_ID_keys": 2,
+      "source_IDs_with_garden_proxy": 2,
+      "unique_garden_derived_geographic_points": 2,
+      "same_garden_distinct_proxy_origin_comparison_cells": 10
+    },
+    {
+      "study_label": "Volisetal_Oecologia_2002",
+      "source_population_ID_keys": 2,
+      "source_IDs_with_garden_proxy": 2,
+      "unique_garden_derived_geographic_points": 2,
+      "same_garden_distinct_proxy_origin_comparison_cells": 10
+    },
+    {
+      "study_label": "Sunetal_AnnBot_2014",
+      "source_population_ID_keys": 10,
+      "source_IDs_with_garden_proxy": 9,
+      "unique_garden_derived_geographic_points": 9,
+      "same_garden_distinct_proxy_origin_comparison_cells": 9
+    },
+    {
+      "study_label": "BaackandStanton_Evolution_2005",
+      "source_population_ID_keys": 6,
+      "source_IDs_with_garden_proxy": 6,
+      "unique_garden_derived_geographic_points": 6,
+      "same_garden_distinct_proxy_origin_comparison_cells": 8
+    },
+    {
+      "study_label": "Brancalionetal_EcolEvol_2018",
+      "source_population_ID_keys": 3,
+      "source_IDs_with_garden_proxy": 3,
+      "unique_garden_derived_geographic_points": 3,
+      "same_garden_distinct_proxy_origin_comparison_cells": 8
+    },
+    {
+      "study_label": "OFarrilletal_SeedSciRes_2011",
+      "source_population_ID_keys": 2,
+      "source_IDs_with_garden_proxy": 2,
+      "unique_garden_derived_geographic_points": 2,
+      "same_garden_distinct_proxy_origin_comparison_cells": 6
+    },
+    {
+      "study_label": "VantienderenandVandertoorn_JEcol_1991",
+      "source_population_ID_keys": 3,
+      "source_IDs_with_garden_proxy": 3,
+      "unique_garden_derived_geographic_points": 3,
+      "same_garden_distinct_proxy_origin_comparison_cells": 6
+    },
+    {
+      "study_label": "Kalskeetal_JEcol_2012",
+      "source_population_ID_keys": 4,
+      "source_IDs_with_garden_proxy": 4,
+      "unique_garden_derived_geographic_points": 4,
+      "same_garden_distinct_proxy_origin_comparison_cells": 4
+    },
+    {
+      "study_label": "LopezGallego_BotRev_2013",
+      "source_population_ID_keys": 2,
+      "source_IDs_with_garden_proxy": 2,
+      "unique_garden_derived_geographic_points": 2,
+      "same_garden_distinct_proxy_origin_comparison_cells": 4
+    },
+    {
+      "study_label": "Helenurm_ConservBiol_1998",
+      "source_population_ID_keys": 3,
+      "source_IDs_with_garden_proxy": 3,
+      "unique_garden_derived_geographic_points": 3,
+      "same_garden_distinct_proxy_origin_comparison_cells": 3
+    },
+    {
+      "study_label": "Hsuetal_PlantEcol_2014",
+      "source_population_ID_keys": 3,
+      "source_IDs_with_garden_proxy": 3,
+      "unique_garden_derived_geographic_points": 3,
+      "same_garden_distinct_proxy_origin_comparison_cells": 3
+    },
+    {
+      "study_label": "Ortegon-Camposetal_JEvolBiol_2009",
+      "source_population_ID_keys": 3,
+      "source_IDs_with_garden_proxy": 3,
+      "unique_garden_derived_geographic_points": 3,
+      "same_garden_distinct_proxy_origin_comparison_cells": 3
+    },
+    {
+      "study_label": "Bobergetal_AnnBot_2014",
+      "source_population_ID_keys": 4,
+      "source_IDs_with_garden_proxy": 2,
+      "unique_garden_derived_geographic_points": 2,
+      "same_garden_distinct_proxy_origin_comparison_cells": 2
+    },
+    {
+      "study_label": "HuffordandMazer_RestorationEcol_2012",
+      "source_population_ID_keys": 2,
+      "source_IDs_with_garden_proxy": 2,
+      "unique_garden_derived_geographic_points": 2,
+      "same_garden_distinct_proxy_origin_comparison_cells": 2
+    },
+    {
+      "study_label": "Huffordetal_RestorationEcol_2008",
+      "source_population_ID_keys": 2,
+      "source_IDs_with_garden_proxy": 2,
+      "unique_garden_derived_geographic_points": 2,
+      "same_garden_distinct_proxy_origin_comparison_cells": 2
+    },
+    {
+      "study_label": "Knightetal_MolecularEcol_2006",
+      "source_population_ID_keys": 2,
+      "source_IDs_with_garden_proxy": 2,
+      "unique_garden_derived_geographic_points": 2,
+      "same_garden_distinct_proxy_origin_comparison_cells": 2
+    },
+    {
+      "study_label": "Newmanetal_Evolution_2015",
+      "source_population_ID_keys": 2,
+      "source_IDs_with_garden_proxy": 2,
+      "unique_garden_derived_geographic_points": 2,
+      "same_garden_distinct_proxy_origin_comparison_cells": 2
+    }
+  ],
+  "known_study_specific_source_geography": {
+    "Tomioloetal_Ecology_2015": {
+      "original_Figshare_DOI": "10.6084/m9.figshare.c.3307653.v1",
+      "published_field_M_SA_sites": 2,
+      "appendix_A_climate_gradient_site_count": 3,
+      "strict_binomial_species_with_two_site_proxy": 3,
+      "source_IDs": 6,
+      "unique_proxy_points": 2,
+      "source_only_cells": 12,
+      "direct_original_GPS_qualified": false
+    },
+    "Ellisetal_NewPhytol_2007": {
+      "primary_DOI": "10.1111/j.1469-8137.2007.02043.x",
+      "study_basin_habitat_design": "3 drainage basins × 2 quartz-cover habitat categories",
+      "source_IDs": 6,
+      "unique_proxy_points": 6,
+      "source_only_cells": 18,
+      "source_specific_exact_GPS_table_qualified": false
+    },
+    "Sunetal_AnnBot_2014": {
+      "original_DOI": "10.1093/aob/mct219",
+      "original_research_scope": "Orchid Gymnadenia odoratissima pollinator-guild translocation, biotic fitness endpoint distinct from abiotic climate adaptation",
+      "source_IDs": 10,
+      "unique_proxy_points": 9,
+      "source_only_cells": 9,
+      "source_population_original_GPS_qualified": false
+    }
+  },
+  "science_boundary": {
+    "not_19_independently_certified_trials": true,
+    "not_114_independent_fitness_observations": true,
+    "study_label_not_primary_experiment_id": true,
+    "original_source_IDs_may_share_published_geographical_site_locations": true,
+    "source_garden_proxy_is_not_original_population_GPS_validation": true,
+    "no_current_or_LGM_climate_association_or_fitness_effect_tested": true,
+    "Bontrager_44_of_50_source_gate_frozen": true,
+    "previous_He_Fst_COI_TTFQ_PROCEED_outcomes_frozen": true,
+    "PR155_remains_draft": true,
+    "main_untouched": true
+  }
+}
