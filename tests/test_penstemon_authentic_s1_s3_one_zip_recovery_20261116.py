@@ -15,7 +15,7 @@ def test_explicit_partial_source_never_becomes_52_34_admitted():
     assert t["explicit_phenotyped_yes"]==1
     assert t["source_taxon_unmatched_ids"]==[]
     assert t["status"]=="INCOMPLETE_SOURCE_DO_NOT_REDEFINE_52_34_GATE"
-    assert t["four_origin_partial_lower_bound_coverage"]["barbatus_virgatus"]["origin_both_derived_and_any_bee_phenotyped"] is False
+    assert t["four_origin_partial_lower_bound_coverage"]["B1_barbatus_virgatus"]["origin_both_derived_and_any_bee_phenotyped"] is False
 
 
 def test_unmatched_species_is_not_guessed():
