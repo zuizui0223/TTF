@@ -1,0 +1,92 @@
+{
+  "schema": "ttf_YatesFraser2014_Dryad81k4v_original_XLSX_source_only_schema_receipt_v01",
+  "date": "2026-11-16",
+  "status": "DERIVATIVE_POPULATION_LEVEL_META_ANALYSIS_NOT_ORIGINAL_RAABOVA2007_FIELD_TAG_TABLE",
+  "evidence": {
+    "source_paper_doi": "10.1111/eva.12181",
+    "original_dataset_doi": "10.5061/dryad.81k4v",
+    "publisher_acknowledges_J_Raabova_data_provider": true,
+    "official_original_Zenodo_record_id": 4963190,
+    "official_record_url": "https://zenodo.org/records/4963190",
+    "original_filename": "Source.Population.Size.Performance.In.Novel.Environments.xlsx",
+    "original_file_size_bytes": 162038,
+    "published_original_MD5": "31753f59df54a13ca8fbc992a348702d",
+    "observed_original_SHA256": "da3aa332c84fc0d0e2d79b8663563d51e79baee7d9927d87231bf8195550bd18",
+    "original_header_Actions_run": 43875572888,
+    "source_only_synthetic_tests_passed": 6,
+    "published_paper_scope": "Meta-analysis of 874 survival estimates from 111 populations and 13 species, not original 2007 plant tags"
+  },
+  "original_first_text_header_rows": {
+    "Home vs. Away": [
+      "Taxa",
+      "Population",
+      "Transplant.Site",
+      "Species",
+      "Lifehistorystage",
+      "LOGPopulation.Size",
+      "Population.Size",
+      "Home.Survival",
+      "Home.Sample.Size",
+      "Proportion.Surivived",
+      "New.Site.Survival",
+      "New.Site.Sample.Size",
+      "Effect.size",
+      "LOR",
+      "SE",
+      "SE2",
+      "Article"
+    ],
+    "Common Garden ": [
+      "Taxa",
+      "Population",
+      "Transplant.site",
+      "Home",
+      "Species",
+      "Lifehistorystage",
+      "LOGPopulationsize",
+      "Populationsize",
+      "Survival",
+      "Dead",
+      "Sample.Size",
+      "Article"
+    ],
+    "Reciprocal Transplant": [
+      "Taxa",
+      "Population",
+      "Transplant.site",
+      "Home",
+      "Species",
+      "Lifehistorystage",
+      "LOGTransplant.Site.Population.Size",
+      "Transplant.Site.Population.Size",
+      "LOGPopulation.size",
+      "Populationsize",
+      "Survival",
+      "Dead",
+      "Sample.Size",
+      "Article"
+    ],
+    "References": [
+      "Bagatell, C., T. Rasch, and C. Johnson. 1980. A review of the experiments with the 1970 and 1971 brood coho salmon (Onco"
+    ]
+  },
+  "interpretation": {
+    "four_sheet_names_observed": true,
+    "no_explicit_mark_plant_id_field_in_observed_sheet_headers": true,
+    "source_is_secondary_population_level_analysis": true,
+    "original_Raabova_2007_rowwise_plant_tags_not_certified": true,
+    "study_population_identifier_is_not_unique_original_2004_individual_tag": true,
+    "original_2007_to_2014_individual_overlap_count": null,
+    "shared_adult_2004_experiment_stays_one_cohort": true,
+    "Pankova_2014_internal_279_consistent_plant_IDs_unchanged": true,
+    "independent_experiment_increment": 0
+  },
+  "scope": {
+    "only_worksheet_names_and_first_text_headers_selected": true,
+    "biological_survival_fitness_effect_size_variance_values_not_read": true,
+    "original_data_file_not_committed_into_repository": true,
+    "Bontrager_prior_44_of_50_source_gate_terminal_unchanged": true,
+    "no_LGM_genetics_adaptation_plasticity_speciation_effects_opened": true,
+    "PR155_remains_draft": true
+  }
+}
