@@ -85,6 +85,26 @@ class EllisMissingOriginalTransplantArmsTests(unittest.TestCase):
         self.c["predeclared_primary_article_transplant_topology"]["expected_total_pair_edges"]=18
         with self.assertRaisesRegex(ValueError,"topology changed"):
             arm_census(self.fixture(),self.c)
+    def test_persisted_two_exact_original_source_only_artifacts_and_full_missing_arm_categories(self):
+        import hashlib
+        first=(HERE/"source_registry/ellis2007_six_original_populations_geometry_v01.json").read_bytes()
+        second=(HERE/"source_registry/ellis2007_24_to_18_origin_garden_arm_audit_v02.json").read_bytes()
+        self.assertEqual(hashlib.sha256(first).hexdigest(),
+                         "9f637d2be1272e9d406d55864ed8726598efa0a2e6cb26a841f3b2e03396ad35")
+        self.assertEqual(hashlib.sha256(second).hexdigest(),
+                         "28cea27d59affd846c9ee490f20daedd36220e6e75041f429663a208dcd239ce")
+        geometry=json.loads(first);audit=json.loads(second)
+        self.assertEqual(geometry["original_paper_doi"],audit["original_paper_doi"])
+        self.assertEqual(geometry["source_population_ID_keys"],6)
+        self.assertEqual(geometry["all_15_unique_source_point_pair_distances_km"]["count"],15)
+        self.assertEqual(geometry["per_garden_distinct_source_ID_count_distribution"],{"3":6})
+        self.assertEqual(geometry["within_basin_3_pairs_if_literal_IDs_qualified"]["count"],3)
+        self.assertEqual(geometry["between_basin_12_pairs_if_literal_IDs_qualified"]["count"],12)
+        self.assertEqual(audit["source_garden_pairs_absent_from_Hargreaves_extract"],6)
+        self.assertEqual([x["not_represented_in_secondary_original"]
+                          for x in audit["published_origin_site_pairs_by_class"]],[0,6,0,0])
+        self.assertTrue(audit["no_fitness_growth_survival_reproduction_or_AFLP_response_rows_read"])
+        self.assertTrue(audit["source_pair_absence_is_not_original_2000_intervention_absence"])
     def test_no_fuzzy_label_assignment_or_binomial_changes(self):
         m=self.fixture()
         k=next(iter(m["origin_keys"]))
