@@ -55,8 +55,10 @@ class EllisMissingOriginalTransplantArmsTests(unittest.TestCase):
         self.assertFalse(v["coordinate_discrepancy_cause_certified"])
     def test_illegal_crossbasin_different_quartz_does_not_become_expected(self):
         m=self.fixture()
-        k=(self.study,self.taxon,"adult2000","Ariz_dense","survival")
-        m["source_groups"][k]=set(m["source_groups"][k])|{"Sout_sparse"}
+        for metric in ("survival","size","reproduction"):
+            k=(self.study,self.taxon,"adult2000","Ariz_dense",metric)
+            m["source_groups"][k]=(
+                set(m["source_groups"][k])-{"Sout_dense"})|{"Sout_sparse"}
         with self.assertRaisesRegex(ValueError,"not compatible"):
             arm_census(m,self.c)
     def test_old_experimental_raw_source_and_garden_labels_must_be_classifiable(self):
