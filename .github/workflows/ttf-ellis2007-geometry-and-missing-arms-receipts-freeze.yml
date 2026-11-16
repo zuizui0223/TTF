@@ -1,0 +1,81 @@
+name: Freeze source-only Ellis original six site and 24-versus-18 arm receipts
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - '.github/workflows/ttf-ellis2007-geometry-and-missing-arms-receipts-freeze.yml'
+
+jobs:
+  verified-original-source-metadata-receipts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: prospective/independent-transplant-overlap-20261115
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43889172121
+          name: ttf-ellis2007-original-six-site-geometry-source-only-v01
+          github-token: ${{ github.token }}
+          path: _ttf_source_only/v01
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43889952277
+          name: ttf-ellis2007-original-vs-curated-arm-classes-v02
+          github-token: ${{ github.token }}
+          path: _ttf_source_only/v02
+      - name: Verify original publication, original archive SHA and both exact artifact receipts
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          a=Path("_ttf_source_only/v01/ellis2007_six_original_populations_geometry_v01.json")
+          b=Path("_ttf_source_only/v02/ellis2007_24_to_18_origin_garden_arm_audit_v02.json")
+          assert hashlib.sha256(a.read_bytes()).hexdigest()=="9f637d2be1272e9d406d55864ed8726598efa0a2e6cb26a841f3b2e03396ad35"
+          assert hashlib.sha256(b.read_bytes()).hexdigest()=="28cea27d59affd846c9ee490f20daedd36220e6e75041f429663a208dcd239ce"
+          x=json.loads(a.read_bytes());y=json.loads(b.read_bytes())
+          sha="f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71"
+          doi="10.1111/j.1469-8137.2007.02043.x"
+          assert x["original_source_dataset_SHA256"]==sha and y["Hargreaves_original_SHA256_verified"]==sha
+          assert x["original_paper_doi"]==doi and y["original_paper_doi"]==doi
+          assert x["source_population_ID_keys"]==6
+          assert x["unique_garden_derived_proxy_location_points"]==6
+          assert x["all_15_unique_source_point_pair_distances_km"]["count"]==15
+          assert x["within_basin_3_pairs_if_literal_IDs_qualified"]["count"]==3
+          assert x["between_basin_12_pairs_if_literal_IDs_qualified"]["count"]==12
+          assert x["original_source_metadata_comparison_cells_not_independent"]==18
+          assert x["original_distinct_source_plus_garden_directed_ID_pairs"]==18
+          assert x["per_garden_distinct_source_ID_count_distribution"]=={"3":6}
+          assert y["original_primary_expected_directed_source_garden_pairs"]==24
+          assert y["observed_Hargreaves_distinct_directed_source_garden_pairs"]==18
+          assert y["source_garden_pairs_absent_from_Hargreaves_extract"]==6
+          assert [v["not_represented_in_secondary_original"] for v in y["published_origin_site_pairs_by_class"]]==[0,6,0,0]
+          assert [v["original_Hargreaves_extract_observed"] for v in y["published_origin_site_pairs_by_class"]]==[6,0,12,0]
+          assert y["within_basin_dense_sparse_pair_distance_km"]=={"Ariz":0.37811,"QK":3.12968,"Sout":0.91993}
+          assert y["source_pair_absence_is_not_original_2000_intervention_absence"] is True
+          assert x["no_21ka_0BP_climate_predictor_or_fitness_effect_fitted"] is True
+          assert y["no_fitness_growth_survival_reproduction_or_AFLP_response_rows_read"] is True
+          assert y["old_Bontrager_44of50_terminal_stop_unchanged"] is True
+          print("ELLIS_SOURCE_ONLY_TWO_SHA_RECEIPTS_CONFIRMED; 24_PRIMARY_18_CURATED_MISSING_ALL_6_WITHIN_BASIN_CROSS_QUARTZ")
+          PY
+      - name: Persist only aggregate geometry and experimental arm eligibility on Draft PR branch
+        run: |
+          mkdir -p research/prospective/source_registry
+          cp _ttf_source_only/v01/ellis2007_six_original_populations_geometry_v01.json research/prospective/source_registry/
+          cp _ttf_source_only/v02/ellis2007_24_to_18_origin_garden_arm_audit_v02.json research/prospective/source_registry/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/prospective/source_registry/ellis2007_six_original_populations_geometry_v01.json research/prospective/source_registry/ellis2007_24_to_18_origin_garden_arm_audit_v02.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Freeze SHA-verified Ellis2007 original site pairs and full-versus-meta arm missingness"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
