@@ -1,0 +1,41 @@
+name: Ellis 2007 six population original basin and quartz site audit
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/ellis2007_six_sites_basin_habitat_geometry_contract_v01.json'
+      - 'research/prospective/ellis2007_six_sites_basin_habitat_geometry_v01.py'
+      - 'research/prospective/test_ellis2007_six_sites_basin_habitat_geometry_v01.py'
+      - '.github/workflows/ttf-ellis2007-six-populations-source-geometry-v01.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/ellis2007_six_sites_basin_habitat_geometry_contract_v01.json'
+      - 'research/prospective/ellis2007_six_sites_basin_habitat_geometry_v01.py'
+      - 'research/prospective/test_ellis2007_six_sites_basin_habitat_geometry_v01.py'
+      - '.github/workflows/ttf-ellis2007-six-populations-source-geometry-v01.yml'
+
+jobs:
+  exact-original-six-garden-source-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 3 drainage basins by 2 quartz habitats original geometry synthetic tests
+        run: python -m unittest discover -s research/prospective -p test_ellis2007_six_sites_basin_habitat_geometry_v01.py -v
+      - name: SHA-pinned published original Hargreaves Ellis study sources/gardens metadata only
+        run: |
+          python research/prospective/ellis2007_six_sites_basin_habitat_geometry_v01.py \
+            --output _ttf_source_only/ellis2007_six_original_populations_geometry_v01.json
+      - name: Retain 15 pair distances aggregated, no original GPS or fitness values
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-ellis2007-original-six-site-geometry-source-only-v01
+          path: _ttf_source_only/ellis2007_six_original_populations_geometry_v01.json
+          if-no-files-found: error
+          retention-days: 30
