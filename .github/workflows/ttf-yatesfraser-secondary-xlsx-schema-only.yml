@@ -1,0 +1,31 @@
+name: Yates Fraser archived secondary XLSX early source schema (no fitness)
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/yatesfraser2014_raabova_secondary_xlsx_header_contract_v01.json'
+      - 'research/prospective/yatesfraser2014_secondary_original_xlsx_schema_only_v01.py'
+      - 'research/prospective/test_yatesfraser2014_secondary_original_xlsx_schema_only_v01.py'
+      - '.github/workflows/ttf-yatesfraser-secondary-xlsx-schema-only.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/yatesfraser2014_raabova_secondary_xlsx_header_contract_v01.json'
+      - 'research/prospective/yatesfraser2014_secondary_original_xlsx_schema_only_v01.py'
+      - 'research/prospective/test_yatesfraser2014_secondary_original_xlsx_schema_only_v01.py'
+      - '.github/workflows/ttf-yatesfraser-secondary-xlsx-schema-only.yml'
+jobs:
+  source-only-original-archive-headings:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic source header-only XML and DOI identity checks
+        run: python -m unittest discover -s research/prospective -p test_yatesfraser2014_secondary_original_xlsx_schema_only_v01.py -v
+      - name: Inspect SHA-verified published secondary workbook sheet names and first text headers ONLY
+        run: python research/prospective/yatesfraser2014_secondary_original_xlsx_schema_only_v01.py
