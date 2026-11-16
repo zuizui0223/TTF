@@ -83,6 +83,22 @@ class RaabovaSecondaryXLSXSchemaSafetyTests(unittest.TestCase):
             for n,b in vals.items():z.writestr(n,b)
         with self.assertRaisesRegex(ValueError,"Unexpected XLSX workbook relation"):
             schema_only(target.getvalue(),self.c)
+    def test_provenance_receipt_preserves_exact_original_population_level_schema(self):
+        raw=(HERE/"source_registry/yatesfraser2014_raabova_secondary_original_xlsx_schema_v01.json").read_text()
+        x=json.loads(raw)
+        self.assertEqual(x["evidence"]["observed_original_SHA256"],
+                         "da3aa332c84fc0d0e2d79b8663563d51e79baee7d9927d87231bf8195550bd18")
+        self.assertEqual(x["evidence"]["published_original_MD5"],self.c["original"]["original_md5"])
+        self.assertEqual(x["evidence"]["original_filename"],self.c["original"]["original_filename"])
+        self.assertEqual(set(x["original_first_text_header_rows"]),
+                         {"Home vs. Away","Common Garden ","Reciprocal Transplant","References"})
+        self.assertIn("Population",x["original_first_text_header_rows"]["Home vs. Away"])
+        self.assertIn("Transplant.site",x["original_first_text_header_rows"]["Reciprocal Transplant"])
+        self.assertFalse(x["interpretation"]["no_explicit_mark_plant_id_field_in_observed_sheet_headers"] is False)
+        self.assertIsNone(x["interpretation"]["original_2007_to_2014_individual_overlap_count"])
+        self.assertTrue(x["scope"]["biological_survival_fitness_effect_size_variance_values_not_read"])
+        self.assertTrue(x["scope"]["Bontrager_prior_44_of_50_source_gate_terminal_unchanged"])
+
     def test_frozen_Dryad_meta_analysis_is_not_original_field_tag_evidence(self):
         self.assertIn("meta-analysis",self.c["original"]["source_role"])
         self.assertFalse(self.c["infer_original_source_ID_only_if_explicit_tag_columns_and_primary_2007_study_provenance_cooccur"] is False)
