@@ -59,11 +59,16 @@
       "seed production",
       "results",
       "performance",
-      "growth"
+      "growth",
+      "mortality",
+      "dead",
+      "death",
+      "died"
     ],
     "no_fitness_effect_or_response_values_indexed": true,
     "no_auto_relabel_site_source_population_by_nearest_coordinates": true,
-    "no_new_lgm_raster_sampling": true
+    "no_new_lgm_raster_sampling": true,
+    "technical_redaction_amendment": "After first source-only appendix extraction, a bounded site-context snippet contained qualitative mortality language; this amendment only expands snippet redaction, preserves all original file identity, source-site and geographic eligibility criteria; no numeric outcome was parsed or modeled."
   },
   "prespecified_interpretation": {
     "existing_original_Hargreaves_population_IDs": 6,
