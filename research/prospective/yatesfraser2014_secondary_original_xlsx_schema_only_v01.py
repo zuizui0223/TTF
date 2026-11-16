@@ -213,7 +213,7 @@ def run():
       "original_XLSX_bytes":len(raw),
       "original_XLSX_MD5_verified":c["original"]["original_md5"],
       "original_XLSX_SHA256":hashlib.sha256(raw).hexdigest(),
-      "schema":preview,
+      "source_workbook_schema":preview,
       "2007_original_individual_field_tag_table_certified":False,
       "2007_vs_2014_original_individual_shared_count":None,
       "all_sheet_numeric_biological_response_values_unread":True,
