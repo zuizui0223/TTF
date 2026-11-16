@@ -39,7 +39,7 @@ class TomioloOriginalAppendixASafetyTests(unittest.TestCase):
             verified_file_url(bad,self.c)
     def test_site_method_only_html_excerpts_not_survival_or_biomass(self):
         html=(b"<html><style>ignore this text</style><p>Study sites in Israel: Mediterranean M Matta"
-              b" and semi-arid SA Lahav, both visited during the field trial.</p>"
+              b" and semi-arid SA Lahav, both visited during the field trial. "+b" calcareous landscape"*25+b"</p>"
               b"<p>Survival data were 18 and performance was 5 in a site.</p></html>")
         self.src["published_bytes"]=len(html)
         self.src["published_md5"]=hashlib.md5(html).hexdigest()
