@@ -15,6 +15,7 @@ import re
 import sys
 import urllib.request
 import urllib.error
+import zipfile
 from pathlib import Path
 
 import fitz
@@ -54,7 +55,7 @@ def verified_pdf_from_stream():
                     # ZIP signatures in compressed payloads until those checks.
                     if b"PK\x05\x06" in buf[-(CHUNK_SIZE+128):]:
                         try:pdf=extract_original_pdf_member(bytes(buf))
-                        except (OSError,ValueError,KeyError,EOFError,Exception) as e:
+                        except (zipfile.BadZipFile, ValueError, KeyError, EOFError, OSError):
                             # Source may still be streaming; never accept
                             # partially written ZIP or an unauthenticated PDF.
                             continue
