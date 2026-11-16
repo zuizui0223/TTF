@@ -47,7 +47,7 @@ class EllisOriginalBasinQuartzDesignTests(unittest.TestCase):
         self.assertEqual(r["within_basin_3_pairs_if_literal_IDs_qualified"]["count"],3)
         self.assertEqual(r["between_basin_12_pairs_if_literal_IDs_qualified"]["count"],12)
         self.assertEqual(r["original_distinct_source_plus_garden_directed_ID_pairs"],24)
-        self.assertEqual(r["per_garden_distinct_source_ID_count_distribution"],{"4":6})
+        self.assertEqual(r["per_garden_distinct_source_ID_count_distribution"],{4:6})
         self.assertEqual(r["original_source_metadata_comparison_cells_not_independent"],18)
         self.assertEqual(r["between_basin_different_quartz_habitat_edges_observed_if_codes_qualified"],0)
         self.assertFalse(r["no_21ka_0BP_climate_predictor_or_fitness_effect_fitted"] is False)
