@@ -1,0 +1,24 @@
+{
+  "former_frozen_endpoints_changed": false,
+  "genetic_or_fitness_or_LGM_response_opened": false,
+  "graph_edges_are_transplants_not_genetic_migration": true,
+  "original_connected_components": 1,
+  "original_directed_arms": 24,
+  "original_observed_arm_classes": 3,
+  "original_within_basin_cross_quartz_arms": 6,
+  "schema": "ttf_Ellis2007_source_only_transfer_graph_scope_v01",
+  "secondary_component_sizes": [
+    3,
+    3
+  ],
+  "secondary_components_homogeneous_by_quartz": true,
+  "secondary_connected_components": 2,
+  "secondary_directed_arms": 18,
+  "secondary_local_vs_other_basin_same_quartz_comparison_present": true,
+  "secondary_observed_arm_classes": 2,
+  "secondary_within_basin_cross_quartz_arms": 0,
+  "secondary_within_basin_cross_quartz_comparison_present": false,
+  "source_garden_IDs_or_coordinates_exported": false,
+  "source_receipt_sha256": "28cea27d59affd846c9ee490f20daedd36220e6e75041f429663a208dcd239ce",
+  "status": "DESCRIPTIVE_COMPARISON_SUPPORT_NOT_BIOLOGICAL_OR_LGM_EFFECT"
+}
