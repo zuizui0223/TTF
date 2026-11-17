@@ -1,0 +1,32 @@
+{
+  "all_original_outcomes_unopened": true,
+  "columns": [
+    "intercept",
+    "source_quartz",
+    "garden_quartz",
+    "source_basin_2",
+    "source_basin_3",
+    "garden_basin_2",
+    "garden_basin_3"
+  ],
+  "contrasts": {},
+  "frozen_endpoints_unchanged": true,
+  "interpretation": "Only the sum of separate source and garden quartz coefficients is estimable in the secondary additive design. Not an identified adaptation effect.",
+  "no_new_climate_or_LGM_effect": true,
+  "primary_nullity": 0,
+  "primary_rank": 7,
+  "schema": "ttf_Ellis2007_source_only_estimable_contrasts_v01",
+  "secondary_null_vector": [
+    0,
+    -1,
+    1,
+    0,
+    0,
+    0,
+    0
+  ],
+  "secondary_nullity": 1,
+  "secondary_rank": 6,
+  "source_receipt_sha256": "28cea27d59affd846c9ee490f20daedd36220e6e75041f429663a208dcd239ce",
+  "status": "ALGEBRAIC_CONTRAST_IDENTIFIABILITY_NOT_CAUSAL_OR_FITNESS_INFERENCE"
+}
