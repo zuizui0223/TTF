@@ -9,7 +9,32 @@
     "garden_basin_2",
     "garden_basin_3"
   ],
-  "contrasts": {},
+  "contrasts": {
+    "garden_basin_2_vs_1": {
+      "primary_estimable": true,
+      "secondary_estimable": true
+    },
+    "garden_quartz_only": {
+      "primary_estimable": true,
+      "secondary_estimable": false
+    },
+    "source_basin_2_vs_1": {
+      "primary_estimable": true,
+      "secondary_estimable": true
+    },
+    "source_minus_garden_quartz": {
+      "primary_estimable": true,
+      "secondary_estimable": false
+    },
+    "source_plus_garden_quartz": {
+      "primary_estimable": true,
+      "secondary_estimable": true
+    },
+    "source_quartz_only": {
+      "primary_estimable": true,
+      "secondary_estimable": false
+    }
+  },
   "frozen_endpoints_unchanged": true,
   "interpretation": "Only the sum of separate source and garden quartz coefficients is estimable in the secondary additive design. Not an identified adaptation effect.",
   "no_new_climate_or_LGM_effect": true,
