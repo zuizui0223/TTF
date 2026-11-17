@@ -1,0 +1,69 @@
+{
+  "actual_primary_response_values_recovered": false,
+  "all_six_arms_present_in_original_experimental_design": true,
+  "baseline_components": 2,
+  "baseline_rank": 6,
+  "by_number_of_restored_arms": {
+    "0": {
+      "connected_subsets": 0,
+      "full_rank_subsets": 0,
+      "max_basin_coverage": 0,
+      "min_basin_coverage": 0,
+      "subsets": 1
+    },
+    "1": {
+      "connected_subsets": 6,
+      "full_rank_subsets": 6,
+      "max_basin_coverage": 1,
+      "min_basin_coverage": 1,
+      "subsets": 6
+    },
+    "2": {
+      "connected_subsets": 15,
+      "full_rank_subsets": 15,
+      "max_basin_coverage": 2,
+      "min_basin_coverage": 1,
+      "subsets": 15
+    },
+    "3": {
+      "connected_subsets": 20,
+      "full_rank_subsets": 20,
+      "max_basin_coverage": 3,
+      "min_basin_coverage": 2,
+      "subsets": 20
+    },
+    "4": {
+      "connected_subsets": 15,
+      "full_rank_subsets": 15,
+      "max_basin_coverage": 3,
+      "min_basin_coverage": 2,
+      "subsets": 15
+    },
+    "5": {
+      "connected_subsets": 6,
+      "full_rank_subsets": 6,
+      "max_basin_coverage": 3,
+      "min_basin_coverage": 3,
+      "subsets": 6
+    },
+    "6": {
+      "connected_subsets": 1,
+      "full_rank_subsets": 1,
+      "max_basin_coverage": 3,
+      "min_basin_coverage": 3,
+      "subsets": 1
+    }
+  },
+  "fitness_genetics_LGM_or_adaptation_response_opened": false,
+  "frozen_TTF_endpoints_unchanged": true,
+  "minimum_added_original_arms_for_connected_graph": 1,
+  "minimum_added_original_arms_for_full_rank": 1,
+  "original_missing_within_basin_cross_quartz_arms": 6,
+  "original_source_gps_verified": false,
+  "restored_one_arm_sufficient_for_precision_or_causal_identification": false,
+  "schema": "ttf_Ellis2007_source_only_missing_arm_restoration_v01",
+  "secondary_directed_arms": 18,
+  "source_receipt_sha256": "28cea27d59affd846c9ee490f20daedd36220e6e75041f429663a208dcd239ce",
+  "status": "DESIGN_RESTORATION_IDENTIFIABILITY_ONLY_NOT_EMPIRICAL_RECOVERY",
+  "subset_count": 64
+}
