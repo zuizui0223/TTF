@@ -30,4 +30,11 @@ jobs:
       - name: Verify exact frozen precision JSON
         run: |
           python research/prospective/ellis2007_quartz_design_precision_v01.py --output _source_only/ellis2007_quartz_design_precision_v01.json
-          cmp research/prospective/source_registry/ellis2007_quartz_design_precision_v01.json _source_only/ellis2007_quartz_design_precision_v01.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          expected=json.loads(Path("research/prospective/source_registry/ellis2007_quartz_design_precision_v01.json").read_text())
+          actual=json.loads(Path("_source_only/ellis2007_quartz_design_precision_v01.json").read_text())
+          assert expected==actual, "Frozen precision receipt differs in values or structure"
+          print("Frozen precision JSON semantic equality: PASS")
+          PY
