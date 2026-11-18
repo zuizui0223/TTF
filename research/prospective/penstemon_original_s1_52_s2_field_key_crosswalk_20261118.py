@@ -31,7 +31,7 @@ from penstemon_original_full52_table_s1_phenotyped_gate_20261115 import (
 # S2 field voucher IDs use a different source table from the genomes. Only
 # compare normalized exact original alphanumeric collector-voucher token,
 # never assume a field specimen is among the 52 sequenced accessions.
-S2_ROW=re.compile(r"^\s*(?P<key>[A-Z]{2,4}\s*-?\s*\d{2,6})\s+(?P<species>P\.\s*[A-Za-z][A-Za-z\s-]*)\s+(?P<rest>.*)$",re.I)
+S2_ROW=re.compile(r"^\s*(?P<key>[A-Z]{2,4}\s*-?\s*\d{2,6})\s+(?P<species>P\.\s*[A-Za-z]+)\s+(?P<rest>.+)$",re.I)
 S2_TITLE=re.compile(r"\bTable\s+S2\b",re.I)
 S3_TITLE=re.compile(r"\bTable\s+S3\b",re.I)
 
