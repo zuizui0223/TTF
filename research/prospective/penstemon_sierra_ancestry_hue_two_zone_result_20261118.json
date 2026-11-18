@@ -1,0 +1,96 @@
+{
+  "baseline": "training-zone mean hue only",
+  "distinct_zone_count": 2,
+  "folds": [
+    {
+      "fitted_training_ancestry_slope": 22.744370702691537,
+      "fitted_training_intercept": 64.0327293984028,
+      "heldout_baseline_sse": 12208.461396099361,
+      "heldout_mae": 3.2228164675951163,
+      "heldout_n_individuals": 220,
+      "heldout_pearson_r_pred_vs_observed": 0.8490291718011327,
+      "heldout_rmse": 4.0873919281951885,
+      "heldout_sse": 3675.49001042854,
+      "heldout_sse_skill_vs_training_mean": 0.6989391299051927,
+      "heldout_training_mean_baseline_mae": 6.09671713741902,
+      "heldout_training_mean_baseline_rmse": 7.449362814758467,
+      "heldout_zone": "hybrids_gemlakes",
+      "train_n_individuals": 63,
+      "training_hue_mean_benchmark": 79.73760328573603,
+      "training_zone": "hybrids_virginialakes"
+    },
+    {
+      "fitted_training_ancestry_slope": 21.089103581186176,
+      "fitted_training_intercept": 66.13536527866718,
+      "heldout_baseline_sse": 4016.022350954278,
+      "heldout_mae": 2.9839378479964958,
+      "heldout_n_individuals": 63,
+      "heldout_pearson_r_pred_vs_observed": 0.8721791595490518,
+      "heldout_rmse": 4.049376528931298,
+      "heldout_sse": 1033.0393672027606,
+      "heldout_sse_skill_vs_training_mean": 0.7427705134765268,
+      "heldout_training_mean_baseline_mae": 6.737674189651676,
+      "heldout_training_mean_baseline_rmse": 7.984133423426977,
+      "heldout_zone": "hybrids_virginialakes",
+      "train_n_individuals": 220,
+      "training_hue_mean_benchmark": 80.11745418161314,
+      "training_zone": "hybrids_gemlakes"
+    }
+  ],
+  "heldout_unit": "entire hybrid-zone group",
+  "limitations": [
+    "one species pair across only two source zones",
+    "source pooled ancestry K1 uses source test zone genotypes transductively",
+    "no independent neutral-history term",
+    "not causal locus or reproductive barrier inference",
+    "source author paper already reported hue versus genomic barrier decoupling",
+    "pre-analysis source peek included four rows, not fully blinded"
+  ],
+  "model": "one training-zone univariate OLS with intercept and no tuning",
+  "no_pooled_individual_as_independent_zone_pvalue": true,
+  "not_TTF_Q_confirmatory": true,
+  "original_TTF_main_frozen_science_unmodified": true,
+  "original_source_blob": "7cd5abd0f2a5ad6de1563d3ddd2c0d857b037de8",
+  "original_source_commit": "0ba4842824bcd9ddc824eedea303ad1c176fc82b",
+  "original_source_path": "1.phenotype_curation/data/allcombined_phenotype_admixture_subpopulations_spreadsheet-sierras.csv",
+  "original_source_repo": "benstemon/sierra-hybrid-zone",
+  "predictor": "original pooled ADMIXTURE K1",
+  "published_study": "Stone et al. 2026 Evolution doi:10.1093/evolut/qpag199",
+  "response": "original authored modified_hue",
+  "source_audit": {
+    "complete_case_hybrid_counts": {
+      "hybrids_gemlakes": 220,
+      "hybrids_virginialakes": 63
+    },
+    "eligible_hybrid_missingness": {},
+    "excluded_nonhybrids_and_unassigned": 138,
+    "original_class_by_subpopulation_counts": {
+      "NA:NA": 64,
+      "davidsonii:davidsonii_gemlakes": 11,
+      "davidsonii:davidsonii_virginialakes": 36,
+      "hybrid:hybrids_gemlakes": 220,
+      "hybrid:hybrids_virginialakes": 63,
+      "newberryi:newberryi_gemlakes": 11,
+      "newberryi:newberryi_virginialakes": 16
+    },
+    "phenotypes_and_genome_ancestry_same_newID": true,
+    "source_count": 421
+  },
+  "source_only_descriptive_mean_skill": 0.7208548216908597,
+  "status": "EXPLORATORY_SIERRA_TWO_ZONE_ANCESTRY_HUE_TRANSFER",
+  "provenance": {
+    "github_actions_run": 44303269859,
+    "github_actions_url": "https://github.com/zuizui0223/TTF/actions/runs/44303269859",
+    "source_author": "benstemon/sierra-hybrid-zone",
+    "source_author_commit": "0ba4842824bcd9ddc824eedea303ad1c176fc82b",
+    "artifacts": [
+      {
+        "id": 14427096712,
+        "name": "penstemon-sierra-ttf-ancestry-hue-aggregate-only",
+        "digest": "sha256:2d61b8603df11fa37808a5c3a6564e3dcc13ad04d249ac84571e2e7297f1e39d",
+        "size": 1661
+      }
+    ],
+    "original_biological_data_not_redistributed": true
+  }
+}
