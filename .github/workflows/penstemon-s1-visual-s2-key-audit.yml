@@ -21,7 +21,7 @@ jobs:
           python-version: '3.12'
       - name: Test exact unhyphenated voucher and field S2 source rules
         run: |
-          python -m pip install pytest pypdf
+          python -m pip install pytest pypdf pymupdf
           python -m pytest -q tests/test_penstemon_original_full52_table_s1_phenotyped_gate.py tests/test_penstemon_original_S1_two_parser_source_diagnostic.py tests/test_penstemon_original_s1_52_s2_field_key_crosswalk.py
       - name: Re-read original PDF S1/S2 source IDs, retain 52/34 biological gate
         run: |
