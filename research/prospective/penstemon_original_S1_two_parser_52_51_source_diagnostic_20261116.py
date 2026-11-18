@@ -26,11 +26,13 @@ from penstemon_original_full52_table_s1_phenotyped_gate_20261115 import (
     PDF_SHA256,ROW,MAYBE_ID,identify_original_source_species,NCBI_source_taxa
 )
 
-ID_ANYWHERE=re.compile(r"(?<![A-Za-z0-9])(?P<prefix>[A-Z]{2,4})\s*-\s*(?P<digits>\d{2,6})(?P<star>\*)?",re.I)
+ID_ANYWHERE=re.compile(r"(?<![A-Za-z0-9])(?:(?P<unhyphen>TTC026503)|(?P<prefix>[A-Z]{2,4})\s*-\s*(?P<digits>\d{2,6})(?P<star>\*)?)",re.I)
 TABLE_S2=re.compile(r"\bTable\s*S2\b",re.I)
 
 
 def clean_id(match):
+    if match.group("unhyphen"):
+        return "TTC026503"  # exact visually verified source voucher, not a general ID grammar
     return match.group("prefix").upper()+"-"+match.group("digits")
 
 
