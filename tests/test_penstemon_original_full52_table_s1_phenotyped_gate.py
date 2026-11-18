@@ -54,3 +54,22 @@ def test_taxonomic_synonyms_never_guessed():
 def test_source_pdf_SHA_pin_and_original_NCBI_receipt_blob_pin():
     assert m.PDF_SHA256=="3682720dad4f0621bebef3be7014aa667067c5f0dce9160ca8f4c4a758e7f943"
     assert m.git_blob_sha(m.GENOME_SOURCE.read_bytes())==m.GENOME_SOURCE_BLOB
+
+
+def test_visually_authenticated_unhyphenated_TTC026503_restores_one_source_row_only():
+    source=("Table S1. Collection information\nPopulation identifier Species determination Phenotyped\n"
+       "CAW-034* P. cardinalis (car-034) Bonito Lake, NM CAW KANU yes\n"
+       "TTC026503 P. cardinalis Guadalupe Mtns, TX MJ TTC no\n")
+    d=m.parse_s1_page(source,["Penstemon cardinalis"],expected_n=2,expected_yes=1)
+    keys={r["original_voucher_population_id"]:r for r in d["original_voucher_rows"]}
+    assert set(keys)=={"CAW-034","TTC026503"}
+    assert keys["TTC026503"]["phenotyped"] is False
+    assert keys["TTC026503"]["source_species_taxon_match"]=="Penstemon cardinalis"
+
+
+def test_original_34_phenotyped_gate_remains_strict_after_52nd_record_fix():
+    source=("Table S1\nPopulation Phenotyped\n"
+       "CAW-034 P. cardinalis yes\n"
+       "TTC026503 P. cardinalis no\n")
+    with pytest.raises(ValueError,match="source phenotyped count 1 differs"):
+        m.parse_s1_page(source,["Penstemon cardinalis"],expected_n=2,expected_yes=2)
