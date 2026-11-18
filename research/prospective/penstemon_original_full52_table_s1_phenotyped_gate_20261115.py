@@ -29,8 +29,8 @@ TABLE_PAGE_1BASED=11
 GENOME_SOURCE=HERE/"penstemon_habroanthus_52_ncbi_biosample_taxon_receipt_20261115.json"
 GENOME_SOURCE_BLOB="acdf2997e4d338fcb879d0323dc4c6a54f4fe413"
 # This is an original source *voucher ID* prefix. A SAMN is NOT this ID.
-ROW=re.compile(r"^(?P<key>[A-Z]{2,4}-\d{2,6})(?P<star>\*)?\s+(?P<rest>.*\S)\s+(?P<phenotyped>yes|no)\s*$",re.I)
-MAYBE_ID=re.compile(r"^[A-Z]{2,4}-\d{2,6}\*?\b",re.I)
+ROW=re.compile(r"^(?P<key>(?:[A-Z]{2,4}-\d{2,6}|TTC026503))(?P<star>\*)?\s+(?P<rest>.*\S)\s+(?P<phenotyped>yes|no)\s*$",re.I)
+MAYBE_ID=re.compile(r"^(?:[A-Z]{2,4}-\d{2,6}|TTC026503)\*?\b",re.I)
 
 
 def git_blob_sha(raw:bytes)->str:
