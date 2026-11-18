@@ -35,17 +35,13 @@ def test_exact_source_grain_and_two_zones(monkeypatch):
     assert len(s["rows"])==4
 
 
-def test_train_only_ols_and_baseline_direction_not_flipped():
+def test_train_only_ols_and_baseline_direction_not_flipped(monkeypatch):
+    monkeypatch.setattr(m,"MIN_HYBRIDS_PER_ZONE",2)
     train=[{"x":0.0,"y":1.0},{"x":0.5,"y":2.0},{"x":1.0,"y":3.0}]
     test=[{"x":0.0,"y":3.0},{"x":0.5,"y":4.0},{"x":1.0,"y":5.0}]
     a,b=m.ols_fit([r["x"] for r in train],[r["y"] for r in train])
     assert math.isclose(a,1.0) and math.isclose(b,2.0)
-    old=m.MIN_HYBRIDS_PER_ZONE
-    m.MIN_HYBRIDS_PER_ZONE=2
-    try:
-        d=m.one_fold(train,test,"train","heldout")
-    finally:
-        m.MIN_HYBRIDS_PER_ZONE=old
+    d=m.one_fold(train,test,"train","heldout")
     assert d["heldout_sse_skill_vs_training_mean"]<1
     assert d["fitted_training_ancestry_slope"]==2.0
     assert d["heldout_n_individuals"]==3
