@@ -1,0 +1,81 @@
+{
+  "10kb_window_tree_tip_count": 45,
+  "2023_source_sha": {
+    "10kb_window_tree": "21f35d1490714d4584a0cd6f1af419243d3f3166",
+    "CDS_nuclear_tree": "ca1d2072e7df72649a8ec8699e31d8397fc46cae",
+    "target_trios_groupmap": "360d904346db4ebc17b13d559aed5cd13dde2867"
+  },
+  "2026_four_hummingbird_origins_named_in_older_groupmap": [
+    "barbatus",
+    "cardinalis",
+    "eatonii",
+    "labrosus"
+  ],
+  "2026_manuscript": "10.64898/2026.07.21.739878",
+  "2026_origin_sister_contrasts_both_groups_mapped": 3,
+  "2026_origin_sister_contrasts_on_older_2023_mapped_source": {
+    "barbatus": {
+      "both_source_groups_sampled_and_mapped": true,
+      "hummingbird_group_sample_count": 5,
+      "sister_bee_group": "virgatus",
+      "sister_bee_group_sample_count": 2
+    },
+    "cardinalis": {
+      "both_source_groups_sampled_and_mapped": false,
+      "hummingbird_group_sample_count": 1,
+      "sister_bee_group": "glaber",
+      "sister_bee_group_sample_count": 0
+    },
+    "eatonii": {
+      "both_source_groups_sampled_and_mapped": true,
+      "hummingbird_group_sample_count": 5,
+      "sister_bee_group": "laevis",
+      "sister_bee_group_sample_count": 2
+    },
+    "labrosus": {
+      "both_source_groups_sampled_and_mapped": true,
+      "hummingbird_group_sample_count": 1,
+      "sister_bee_group": "putus",
+      "sister_bee_group_sample_count": 1
+    }
+  },
+  "CDS_only_tip_ids": [],
+  "CDS_tree_tip_count": 45,
+  "CDS_vs_window_tip_ids_equal": true,
+  "group_map_distinct_species_label_count": 8,
+  "group_map_rows": 18,
+  "group_map_species_labels": {
+    "barbatus": 5,
+    "cardinalis": 1,
+    "eatonii": 5,
+    "labrosus": 1,
+    "laevis": 2,
+    "palmeri": 1,
+    "putus": 1,
+    "virgatus": 2
+  },
+  "group_map_tips_mapped_to_both_tree_sets": 18,
+  "group_map_tips_not_in_CDS_tree": [],
+  "group_map_tips_not_in_window_tree": [],
+  "last_source_repo_commit_date": "2023-06-02",
+  "no_floral_or_genomic_values_opened": true,
+  "not_a_species_holdout_TTF_result": true,
+  "original_tree_may_contain_unmapped_sister_taxa_do_not_assume_taxon_absence": true,
+  "pinned_source_commit_prefix": "fd93699387a8",
+  "repository": "lcwheeler/penstemon_novaseq",
+  "same_2026_sample_specimens_not_verified": true,
+  "status": "PUBLIC_2023_HABROANTHUS_TREE_KEY_COVERAGE_NOT_CANONICAL_2026",
+  "tree_tips_shared": 45,
+  "window_only_tip_ids": [],
+  "run_provenance": {
+    "source_only_workflow_run": 43709417265,
+    "github_actions_url": "https://github.com/zuizui0223/TTF/actions/runs/43709417265",
+    "artifacts": [
+      {
+        "id": 14159991445,
+        "digest": "sha256:7b2569b5141f584ee557a9d8562146e7a9ee5c141466390c341b21ffae927535"
+      }
+    ],
+    "no_genome_or_phenotype_values_read": true
+  }
+}

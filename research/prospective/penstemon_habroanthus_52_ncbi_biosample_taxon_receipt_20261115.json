@@ -1,0 +1,302 @@
+{
+  "no_floral_or_genotype_values_read": true,
+  "not_a_species_transfer_or_ancestral_trait_prediction": true,
+  "older_2023_tree_45_specimens_not_equated_to_2026_sra": true,
+  "source_ena_bioproject": "PRJNA1479764",
+  "source_esearch_numeric_uid_count": 52,
+  "source_input_accession_count": 52,
+  "source_matched_taxonomy": {
+    "blank_scientific_names": 0,
+    "four_origin_sister_source_coverage": {
+      "barbatus_to_virgatus": {
+        "bee_genome_samples": 5,
+        "bee_source_taxon": "Penstemon virgatus",
+        "hummingbird_genome_samples": 5,
+        "hummingbird_source_taxon": "Penstemon barbatus",
+        "source_pair_covered": true
+      },
+      "cardinalis_to_glaber": {
+        "bee_genome_samples": 2,
+        "bee_source_taxon": "Penstemon glaber",
+        "hummingbird_genome_samples": 2,
+        "hummingbird_source_taxon": "Penstemon cardinalis",
+        "source_pair_covered": true
+      },
+      "eatonii_to_laevis": {
+        "bee_genome_samples": 3,
+        "bee_source_taxon": "Penstemon laevis",
+        "hummingbird_genome_samples": 6,
+        "hummingbird_source_taxon": "Penstemon eatonii",
+        "source_pair_covered": true
+      },
+      "labrosus_to_deaveri": {
+        "bee_genome_samples": 4,
+        "bee_source_taxon": "Penstemon deaveri",
+        "hummingbird_genome_samples": 2,
+        "hummingbird_source_taxon": "Penstemon labrosus",
+        "source_pair_covered": true
+      },
+      "labrosus_to_putus": {
+        "bee_genome_samples": 4,
+        "bee_source_taxon": "Penstemon putus",
+        "hummingbird_genome_samples": 2,
+        "hummingbird_source_taxon": "Penstemon labrosus",
+        "source_pair_covered": true
+      }
+    },
+    "not_a_molecular_phenotype_or_species_transfer_result": true,
+    "number_of_four_primary_sister_source_pairs_covered": 4,
+    "sample_attribute_values_never_exported": true,
+    "source_biosample_taxon_crosswalk": [
+      {
+        "biosample_accession": "SAMN60992931",
+        "scientific_name": "Penstemon virgatus"
+      },
+      {
+        "biosample_accession": "SAMN60992932",
+        "scientific_name": "Penstemon barbatus"
+      },
+      {
+        "biosample_accession": "SAMN60992933",
+        "scientific_name": "Penstemon virgatus"
+      },
+      {
+        "biosample_accession": "SAMN60992934",
+        "scientific_name": "Penstemon barbatus"
+      },
+      {
+        "biosample_accession": "SAMN60992935",
+        "scientific_name": "Penstemon virgatus"
+      },
+      {
+        "biosample_accession": "SAMN60992936",
+        "scientific_name": "Penstemon barbatus"
+      },
+      {
+        "biosample_accession": "SAMN60992937",
+        "scientific_name": "Penstemon barbatus"
+      },
+      {
+        "biosample_accession": "SAMN60992938",
+        "scientific_name": "Penstemon virgatus"
+      },
+      {
+        "biosample_accession": "SAMN60992939",
+        "scientific_name": "Penstemon barbatus"
+      },
+      {
+        "biosample_accession": "SAMN60992940",
+        "scientific_name": "Penstemon virgatus"
+      },
+      {
+        "biosample_accession": "SAMN60992941",
+        "scientific_name": "Penstemon speciosus"
+      },
+      {
+        "biosample_accession": "SAMN60992942",
+        "scientific_name": "Penstemon cardinalis"
+      },
+      {
+        "biosample_accession": "SAMN60992943",
+        "scientific_name": "Penstemon strictus"
+      },
+      {
+        "biosample_accession": "SAMN60992944",
+        "scientific_name": "Penstemon glaber"
+      },
+      {
+        "biosample_accession": "SAMN60992945",
+        "scientific_name": "Penstemon eatonii"
+      },
+      {
+        "biosample_accession": "SAMN60992946",
+        "scientific_name": "Penstemon eatonii"
+      },
+      {
+        "biosample_accession": "SAMN60992947",
+        "scientific_name": "Penstemon putus"
+      },
+      {
+        "biosample_accession": "SAMN60992948",
+        "scientific_name": "Penstemon pseudoputus"
+      },
+      {
+        "biosample_accession": "SAMN60992949",
+        "scientific_name": "Penstemon labrosus"
+      },
+      {
+        "biosample_accession": "SAMN60992950",
+        "scientific_name": "Penstemon palmeri"
+      },
+      {
+        "biosample_accession": "SAMN60992951",
+        "scientific_name": "Penstemon leiophyllus"
+      },
+      {
+        "biosample_accession": "SAMN60992952",
+        "scientific_name": "Penstemon wardii"
+      },
+      {
+        "biosample_accession": "SAMN60992953",
+        "scientific_name": "Penstemon cyananthus"
+      },
+      {
+        "biosample_accession": "SAMN60992954",
+        "scientific_name": "Penstemon subglaber"
+      },
+      {
+        "biosample_accession": "SAMN60992955",
+        "scientific_name": "Penstemon eatonii"
+      },
+      {
+        "biosample_accession": "SAMN60992956",
+        "scientific_name": "Penstemon eatonii"
+      },
+      {
+        "biosample_accession": "SAMN60992957",
+        "scientific_name": "Penstemon cyananthus"
+      },
+      {
+        "biosample_accession": "SAMN60992958",
+        "scientific_name": "Penstemon cyanocaulis"
+      },
+      {
+        "biosample_accession": "SAMN60992959",
+        "scientific_name": "Penstemon mensarum"
+      },
+      {
+        "biosample_accession": "SAMN60992960",
+        "scientific_name": "Penstemon comarrhenus"
+      },
+      {
+        "biosample_accession": "SAMN60992961",
+        "scientific_name": "Penstemon hallii"
+      },
+      {
+        "biosample_accession": "SAMN60992962",
+        "scientific_name": "Penstemon strictus"
+      },
+      {
+        "biosample_accession": "SAMN60992963",
+        "scientific_name": "Penstemon putus"
+      },
+      {
+        "biosample_accession": "SAMN60992964",
+        "scientific_name": "Penstemon deaveri"
+      },
+      {
+        "biosample_accession": "SAMN60992965",
+        "scientific_name": "Penstemon deaveri"
+      },
+      {
+        "biosample_accession": "SAMN60992966",
+        "scientific_name": "Penstemon strictus"
+      },
+      {
+        "biosample_accession": "SAMN60992967",
+        "scientific_name": "Penstemon strictus"
+      },
+      {
+        "biosample_accession": "SAMN60992968",
+        "scientific_name": "Penstemon comarrhenus"
+      },
+      {
+        "biosample_accession": "SAMN60992969",
+        "scientific_name": "Penstemon deaveri"
+      },
+      {
+        "biosample_accession": "SAMN60992970",
+        "scientific_name": "Penstemon deaveri"
+      },
+      {
+        "biosample_accession": "SAMN60992971",
+        "scientific_name": "Penstemon labrosus"
+      },
+      {
+        "biosample_accession": "SAMN60992972",
+        "scientific_name": "Penstemon speciosus"
+      },
+      {
+        "biosample_accession": "SAMN60992973",
+        "scientific_name": "Penstemon putus"
+      },
+      {
+        "biosample_accession": "SAMN60992974",
+        "scientific_name": "Penstemon putus"
+      },
+      {
+        "biosample_accession": "SAMN60992975",
+        "scientific_name": "Penstemon eatonii"
+      },
+      {
+        "biosample_accession": "SAMN60992976",
+        "scientific_name": "Penstemon eatonii"
+      },
+      {
+        "biosample_accession": "SAMN60992977",
+        "scientific_name": "Penstemon laevis"
+      },
+      {
+        "biosample_accession": "SAMN60992978",
+        "scientific_name": "Penstemon laevis"
+      },
+      {
+        "biosample_accession": "SAMN60992979",
+        "scientific_name": "Penstemon laevis"
+      },
+      {
+        "biosample_accession": "SAMN60992980",
+        "scientific_name": "Penstemon glaber"
+      },
+      {
+        "biosample_accession": "SAMN60992981",
+        "scientific_name": "Penstemon cardinalis"
+      },
+      {
+        "biosample_accession": "SAMN60992982",
+        "scientific_name": "Penstemon hallii"
+      }
+    ],
+    "source_distinct_taxon_labels": 21,
+    "source_genome_sample_count": 52,
+    "source_taxon_sample_counts": {
+      "Penstemon barbatus": 5,
+      "Penstemon cardinalis": 2,
+      "Penstemon comarrhenus": 2,
+      "Penstemon cyananthus": 2,
+      "Penstemon cyanocaulis": 1,
+      "Penstemon deaveri": 4,
+      "Penstemon eatonii": 6,
+      "Penstemon glaber": 2,
+      "Penstemon hallii": 2,
+      "Penstemon labrosus": 2,
+      "Penstemon laevis": 3,
+      "Penstemon leiophyllus": 1,
+      "Penstemon mensarum": 1,
+      "Penstemon palmeri": 1,
+      "Penstemon pseudoputus": 1,
+      "Penstemon putus": 4,
+      "Penstemon speciosus": 2,
+      "Penstemon strictus": 4,
+      "Penstemon subglaber": 1,
+      "Penstemon virgatus": 5,
+      "Penstemon wardii": 1
+    },
+    "status": "ALL_52_ORIGINAL_BIOSAMPLES_TAXON_SOURCE_MATCHED"
+  },
+  "status": "PENSTEMON_HABROANTHUS_52_ORIGINAL_BIOSAMPLE_SOURCE_TAXON_GATE",
+  "source_provenance": {
+    "source_run": 43710257923,
+    "source_url": "https://github.com/zuizui0223/TTF/actions/runs/43710257923",
+    "workflow_head_sha": "908797b5aa1c1c5e3c03e625aaa36086d8b314a6",
+    "github_artifact": [
+      {
+        "id": 14160421493,
+        "name": "penstemon-original-52-biosample-source-taxon-only",
+        "digest": "sha256:461924bf2909aec47907f46ac0c74c1662c313d62163281e2f3be57a6a298ee1",
+        "size": 1346
+      }
+    ],
+    "original_ENA_SAMN_and_NCBI_uid_matched": true
+  }
+}

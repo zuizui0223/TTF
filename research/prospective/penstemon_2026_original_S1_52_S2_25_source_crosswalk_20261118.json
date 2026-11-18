@@ -1,0 +1,206 @@
+{
+  "S1_source_yes_by_four_origin": {
+    "B1_barbatus_virgatus": {
+      "origin_both_derived_and_any_bee_phenotyped": true,
+      "same_NCBI_SAMN_individuals_verified": false,
+      "source_block_phenotyped_count": 8,
+      "source_block_voucher_count": 10,
+      "source_species_phenotyped_by_original_taxon": {
+        "Penstemon barbatus": {
+          "original_source_phenotyped_count": 4,
+          "original_source_voucher_count": 5
+        },
+        "Penstemon virgatus": {
+          "original_source_phenotyped_count": 4,
+          "original_source_voucher_count": 5
+        }
+      }
+    },
+    "B2_cardinalis_glaber": {
+      "origin_both_derived_and_any_bee_phenotyped": true,
+      "same_NCBI_SAMN_individuals_verified": false,
+      "source_block_phenotyped_count": 2,
+      "source_block_voucher_count": 4,
+      "source_species_phenotyped_by_original_taxon": {
+        "Penstemon cardinalis": {
+          "original_source_phenotyped_count": 1,
+          "original_source_voucher_count": 2
+        },
+        "Penstemon glaber": {
+          "original_source_phenotyped_count": 1,
+          "original_source_voucher_count": 2
+        }
+      }
+    },
+    "B3_eatonii_laevis": {
+      "origin_both_derived_and_any_bee_phenotyped": true,
+      "same_NCBI_SAMN_individuals_verified": false,
+      "source_block_phenotyped_count": 3,
+      "source_block_voucher_count": 9,
+      "source_species_phenotyped_by_original_taxon": {
+        "Penstemon eatonii": {
+          "original_source_phenotyped_count": 2,
+          "original_source_voucher_count": 6
+        },
+        "Penstemon laevis": {
+          "original_source_phenotyped_count": 1,
+          "original_source_voucher_count": 3
+        }
+      }
+    },
+    "B4_labrosus_deaveri_putus": {
+      "origin_both_derived_and_any_bee_phenotyped": true,
+      "same_NCBI_SAMN_individuals_verified": false,
+      "source_block_phenotyped_count": 7,
+      "source_block_voucher_count": 10,
+      "source_species_phenotyped_by_original_taxon": {
+        "Penstemon deaveri": {
+          "original_source_phenotyped_count": 3,
+          "original_source_voucher_count": 4
+        },
+        "Penstemon labrosus": {
+          "original_source_phenotyped_count": 2,
+          "original_source_voucher_count": 2
+        },
+        "Penstemon putus": {
+          "original_source_phenotyped_count": 2,
+          "original_source_voucher_count": 4
+        }
+      }
+    }
+  },
+  "S1_yes_30_is_not_manuscript_34": true,
+  "S2_field_source": {
+    "no_source_numeric_effects_read": true,
+    "original_field_species_name_prefixes": [
+      "P. vi",
+      "P. vi",
+      "P. vi",
+      "P. vi",
+      "P. barbatus",
+      "P. vi",
+      "P. vi",
+      "P. vi",
+      "P. vi",
+      "P. barbatus",
+      "P. barbatus",
+      "P. barbatus",
+      "P. l",
+      "P. barbatus",
+      "P. barbatus",
+      "P. vi",
+      "P. barbatus",
+      "P. barbatus",
+      "P. barbatus",
+      "P. barbatus",
+      "P. l",
+      "P. eatoni",
+      "P. eatoni",
+      "P. l",
+      "P. eatoni"
+    ],
+    "original_field_voucher_ids": [
+      "CAW015",
+      "CAW017",
+      "CAW019",
+      "CAW020",
+      "CAW030",
+      "CAW031",
+      "CAW032",
+      "CAW033",
+      "CAW035",
+      "CAW036",
+      "CAW037",
+      "CAW041",
+      "CAW080",
+      "CAW162",
+      "CAW164",
+      "CAW167",
+      "CAW169",
+      "CAW174",
+      "CAW176",
+      "CAW177",
+      "CAW180",
+      "CAW181",
+      "CAW232",
+      "CAW233",
+      "CAW234"
+    ],
+    "s2_field_ids_also_present_as_s1_genome_vouchers": [
+      {
+        "s1": "CAW-080",
+        "s2": "CAW080"
+      },
+      {
+        "s1": "CAW-167",
+        "s2": "CAW167"
+      },
+      {
+        "s1": "CAW-176",
+        "s2": "CAW176"
+      },
+      {
+        "s1": "CAW-180",
+        "s2": "CAW180"
+      },
+      {
+        "s1": "CAW-181",
+        "s2": "CAW181"
+      }
+    ],
+    "s2_field_vouchers_not_in_s1": [
+      "CAW015",
+      "CAW017",
+      "CAW019",
+      "CAW020",
+      "CAW030",
+      "CAW031",
+      "CAW032",
+      "CAW033",
+      "CAW035",
+      "CAW036",
+      "CAW037",
+      "CAW041",
+      "CAW162",
+      "CAW164",
+      "CAW169",
+      "CAW174",
+      "CAW177",
+      "CAW232",
+      "CAW233",
+      "CAW234"
+    ],
+    "s2_source_names_are_not_phenotype_values": true,
+    "source_rows": 25,
+    "status": "SOURCE_S2_FIELD_IDENTITIES_PARSED"
+  },
+  "TTF_P_G_RI_effects_not_evaluated": true,
+  "manuscript_reports_flower_phenotyped_accessions": 34,
+  "no_S3_trait_values_read": true,
+  "no_flower_trait_or_genotype_values_read": true,
+  "no_individual_voucher_to_SAMN_mapping_inferred": true,
+  "original_NCBI_sample_count": 52,
+  "original_pdf_sha256": "3682720dad4f0621bebef3be7014aa667067c5f0dce9160ca8f4c4a758e7f943",
+  "s1_source_no_count": 22,
+  "s1_source_voucher_count": 52,
+  "s1_source_yes_count": 30,
+  "source_taxon_match_count": 51,
+  "special_id_phenotyped": false,
+  "special_id_source_taxon": "Penstemon cardinalis",
+  "status": "S1_VISUAL_RECORD_52_CONFIRMED_S1_YES_30_NOT_34",
+  "unmatched_literal_source_species_keys": [
+    "CAW-190"
+  ],
+  "visually_authenticated_special_id": "TTC026503",
+  "provenance": {
+    "github_actions_run": 44302939000,
+    "url": "https://github.com/zuizui0223/TTF/actions/runs/44302939000",
+    "original_source_sha256": "3682720dad4f0621bebef3be7014aa667067c5f0dce9160ca8f4c4a758e7f943",
+    "artifact": [
+      {
+        "id": 14427815767,
+        "digest": "sha256:1529c313593ff618d78131890c2fb973a5f281c994b2e815bf8d45de701f8d70"
+      }
+    ]
+  }
+}

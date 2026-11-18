@@ -1,0 +1,47 @@
+name: Penstemon authentic Table S1 two-text-engine identity diagnosis
+
+on:
+  push:
+    branches:
+      - research/penstemon-ttf-source-join-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/penstemon_original_S1_two_parser_52_51_source_diagnostic_20261116.py'
+      - 'tests/test_penstemon_original_S1_two_parser_source_diagnostic.py'
+      - '.github/workflows/penstemon-original-S1-two-engine-diagnostic.yml'
+
+jobs:
+  two-pdf-parsers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install official PDF source readers
+        run: python -m pip install pytest pypdf pymupdf
+      - name: Run synthetic source-only identity-parser tests
+        run: python -m pytest -q tests/test_penstemon_original_S1_two_parser_source_diagnostic.py
+      - name: Compare source voucher IDs and phenotyped flags under two independent PDF engines
+        run: |
+          python research/prospective/penstemon_original_S1_two_parser_52_51_source_diagnostic_20261116.py > /tmp/penstemon_S1_2026_11_16_two_engine_identity.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('/tmp/penstemon_S1_2026_11_16_two_engine_identity.json').read_text())
+          for name,report in x['per_engine'].items():
+              print(name, 'complete_id_rows:', report['exact_rows'],
+                    'unique_anywhere_ids:', report['unique_identifiers_any_position'],
+                    'yes:',report['exact_phenotyped_yes'],
+                    'missing_id_rows:',report['id_mentions_not_complete_rows'])
+          print('PYPDF_NCBI_SPECIES_MISMATCH:', json.dumps(x['NCBI_taxa_count_mismatch_with_51_rows'],sort_keys=True))
+          print('PARSE_DIFFS:',json.dumps(x['differences_from_pypdf_plain'],sort_keys=True))
+          print('STATUS:',x['status'])
+          PY
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: penstemon-S1-two-parser-source-identity-not-traits
+          path: /tmp/penstemon_S1_2026_11_16_two_engine_identity.json
+          retention-days: 21

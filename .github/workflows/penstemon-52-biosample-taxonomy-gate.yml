@@ -1,0 +1,35 @@
+name: Penstemon prospective full 52 BioSample source taxon crosswalk
+
+on:
+  push:
+    branches:
+      - research/penstemon-ttf-source-join-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/penstemon_habroanthus_full52_ncbi_taxon_gate_20261115.py'
+      - 'tests/test_penstemon_habroanthus_full52_ncbi_taxon_gate.py'
+      - '.github/workflows/penstemon-52-biosample-taxonomy-gate.yml'
+
+jobs:
+  all-source-samples:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify source 52-sample identity and no-outcome regression tests
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_penstemon_habroanthus_full52_ncbi_taxon_gate.py
+      - name: Official source ENA 52 SAMNs to NCBI ESearch UIDs and BioSample species identities
+        run: |
+          python research/prospective/penstemon_habroanthus_full52_ncbi_taxon_gate_20261115.py > /tmp/penstemon_source_52_BioSamples_species_labels.json
+          cat /tmp/penstemon_source_52_BioSamples_species_labels.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: penstemon-original-52-biosample-source-taxon-only
+          path: /tmp/penstemon_source_52_BioSamples_species_labels.json
+          retention-days: 21

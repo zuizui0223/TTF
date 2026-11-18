@@ -1,0 +1,5 @@
+# Original source evidence: temporary 48-hour SHA-locked supplemental PDF (2026-11-18)
+
+Following the first successful verified page-11 Table S1 visual render [Actions #44300695234](https://github.com/zuizui0223/TTF/actions/runs/44300695234), a temporary original 2,808,017-byte PDF will be staged solely as a GitHub Actions artifact to diagnose source layout around Table S1 and S2. The original Europe PMC source and PDF SHA256 `3682720dad4f0621bebef3be7014aa667067c5f0dce9160ca8f4c4a758e7f943` are unchanged, and the archive will **not** be committed to this repo. Artifact retention is 2 days.
+
+This artifact is original public-source evidence, not a processed phenotypic dataset or TTF prediction; no source numeric trait effects or genotype values are analyzed. All 52-source-voucher/34-manuscript-phenotype gates stay strict.

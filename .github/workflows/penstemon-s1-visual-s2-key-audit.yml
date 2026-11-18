@@ -1,0 +1,35 @@
+name: Penstemon 2026 original visual S1 52-voucher and field S2 keys
+
+on:
+  push:
+    branches:
+      - research/penstemon-ttf-source-join-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/penstemon_original_s1_52_s2_field_key_crosswalk_20261118.py'
+      - 'tests/test_penstemon_original_s1_52_s2_field_key_crosswalk.py'
+      - '.github/workflows/penstemon-s1-visual-s2-key-audit.yml'
+
+jobs:
+  source-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test exact unhyphenated voucher and field S2 source rules
+        run: |
+          python -m pip install pytest pypdf pymupdf
+          python -m pytest -q tests/test_penstemon_original_full52_table_s1_phenotyped_gate.py tests/test_penstemon_original_S1_two_parser_source_diagnostic.py tests/test_penstemon_original_s1_52_s2_field_key_crosswalk.py
+      - name: Re-read original PDF S1/S2 source IDs, retain 52/34 biological gate
+        run: |
+          python research/prospective/penstemon_original_s1_52_s2_field_key_crosswalk_20261118.py > /tmp/penstemon_original_s1_52_s2_source_diagnosis.json
+          cat /tmp/penstemon_original_s1_52_s2_source_diagnosis.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: penstemon-original-s1-s2-field-id-source-only
+          path: /tmp/penstemon_original_s1_52_s2_source_diagnosis.json
+          retention-days: 30

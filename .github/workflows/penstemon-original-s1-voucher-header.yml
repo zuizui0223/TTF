@@ -1,0 +1,35 @@
+name: Penstemon 2026 authentic Table S1 original voucher header
+
+on:
+  push:
+    branches:
+      - research/penstemon-ttf-source-join-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/penstemon_original_table_s1_specimen_header_20261115.py'
+      - 'tests/test_penstemon_original_table_s1_specimen_header.py'
+      - '.github/workflows/penstemon-original-s1-voucher-header.yml'
+
+jobs:
+  official-source-header:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install PDF source verification library
+        run: python -m pip install pytest pypdf
+      - name: Test Table S1 missing heading and bounded preview
+        run: python -m pytest -q tests/test_penstemon_original_table_s1_specimen_header.py
+      - name: Extract page 11 identity schema only from original PDF SHA
+        run: |
+          python research/prospective/penstemon_original_table_s1_specimen_header_20261115.py > /tmp/penstemon_2026_table_s1_original_header.json
+          cat /tmp/penstemon_2026_table_s1_original_header.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: penstemon-2026-original-s1-header-only
+          path: /tmp/penstemon_2026_table_s1_original_header.json
+          retention-days: 21

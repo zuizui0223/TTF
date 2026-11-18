@@ -1,0 +1,35 @@
+name: Penstemon official Europe PMC PDF Table S1 headings only
+
+on:
+  push:
+    branches:
+      - research/penstemon-ttf-source-join-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/penstemon_original_europepmc_table_s1_index_20261115.py'
+      - 'tests/test_penstemon_original_europepmc_table_s1_index.py'
+      - '.github/workflows/penstemon-table-s1-heading-index.yml'
+
+jobs:
+  official-original-supplement:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install source PDF verifier
+        run: python -m pip install pytest pypdf
+      - name: Validate source SHA and anti-fake original checks
+        run: python -m pytest -q tests/test_penstemon_original_europepmc_table_s1_index.py
+      - name: Index only Table S1/S2 headings from official archived PDF
+        run: |
+          python research/prospective/penstemon_original_europepmc_table_s1_index_20261115.py > /tmp/penstemon_source_pdf_table_index.json
+          cat /tmp/penstemon_source_pdf_table_index.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: penstemon-2026-supplement-table-headings-only
+          path: /tmp/penstemon_source_pdf_table_index.json
+          retention-days: 21

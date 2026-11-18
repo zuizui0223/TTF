@@ -1,0 +1,35 @@
+name: Penstemon 2026 published Table S1 52 voucher and 34 phenotyped flags
+
+on:
+  push:
+    branches:
+      - research/penstemon-ttf-source-join-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/penstemon_original_full52_table_s1_phenotyped_gate_20261115.py'
+      - 'tests/test_penstemon_original_full52_table_s1_phenotyped_gate.py'
+      - '.github/workflows/penstemon-full-s1-phenotyped-gate.yml'
+
+jobs:
+  source-voucher:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install source PDF parser
+        run: python -m pip install pytest pypdf
+      - name: Validate original Table S1 source schema and refuse guessed IDs
+        run: python -m pytest -q tests/test_penstemon_original_full52_table_s1_phenotyped_gate.py
+      - name: Join published 52 voucher keys and 34 measured flags without reading floral outcomes
+        run: |
+          python research/prospective/penstemon_original_full52_table_s1_phenotyped_gate_20261115.py > /tmp/penstemon_S1_52_vouchers_34_pheno_source.json
+          cat /tmp/penstemon_S1_52_vouchers_34_pheno_source.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: penstemon-original-published-52-vouchers-34-phenotyped
+          path: /tmp/penstemon_S1_52_vouchers_34_pheno_source.json
+          retention-days: 21

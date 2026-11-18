@@ -1,0 +1,35 @@
+name: Penstemon public older Habroanthus genome-tree sample identity gate
+
+on:
+  push:
+    branches:
+      - research/penstemon-ttf-source-join-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/penstemon_2023_public_habroanthus_phylogeny_key_gate_20261115.py'
+      - 'tests/test_penstemon_2023_public_habroanthus_phylogeny_key_gate.py'
+      - '.github/workflows/penstemon-2023-source-phylogeny-identity.yml'
+
+jobs:
+  old-author-source-identity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic source tree tip and group-ID tests
+        run: |
+          python -m pip install pytest dendropy==5.0.8
+          python -m pytest -q tests/test_penstemon_2023_public_habroanthus_phylogeny_key_gate.py
+      - name: Read pinned public 2023 author CDS/window trees and exact sample group keys
+        run: |
+          python research/prospective/penstemon_2023_public_habroanthus_phylogeny_key_gate_20261115.py > /tmp/penstemon_older_author_tree_keys.json
+          cat /tmp/penstemon_older_author_tree_keys.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: penstemon-2023-public-author-tree-sample-keys
+          path: /tmp/penstemon_older_author_tree_keys.json
+          retention-days: 21

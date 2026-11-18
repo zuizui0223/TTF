@@ -1,0 +1,52 @@
+{
+  "archive_wrapper_byte_equality": false,
+  "archive_wrapper_sha256_per_request": [
+    "32e6a7f7c63673d9aebfd437b6ef5ffc54fd66e9936c82ee3da0c13db8d662fb",
+    "aae413a57a0dd724fce13f335f6df433c1279eb7cd83c6c5a92e474a6fc22b97"
+  ],
+  "earlier_source_zip_sha256": "42abf929e1428e9f643e76ed80057574b66c4bcd2c47b77ff50ef370c4a01278",
+  "identified_34_phenotyped_BioSample_IDs": false,
+  "no_floral_or_genetic_outcomes_read": true,
+  "original_source_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13419788/supplementaryFiles",
+  "paper_reported_flower_phenotyped_accessions": 34,
+  "paper_reported_sequenced_accessions": 52,
+  "pdf_member_same_sha256_in_two_requests": true,
+  "pdf_metadata": {
+    "no_specimen_or_flower_value_export": true,
+    "page_count": 21,
+    "pages_with_author_table_headings": {
+      "1": [
+        "Phenotyping"
+      ],
+      "11": [
+        "Table S1"
+      ],
+      "12": [
+        "Table S2"
+      ],
+      "13": [
+        "Table S3"
+      ],
+      "14": [
+        "Table S4"
+      ]
+    },
+    "pdf_bytes": 2808017,
+    "pdf_sha256": "3682720dad4f0621bebef3be7014aa667067c5f0dce9160ca8f4c4a758e7f943",
+    "status": "OFFICIAL_PDF_PAGES_INDEXED_NO_TABLE_ROWS"
+  },
+  "source_member": "media-1.pdf",
+  "status": "PENSTEMON_OFFICIAL_SUPPLEMENT_TABLE_INDEX_ONLY",
+  "provenance": {
+    "run_id": 43711994307,
+    "run_url": "https://github.com/zuizui0223/TTF/actions/runs/43711994307",
+    "source_binary_artifact": [
+      {
+        "name": "penstemon-2026-supplement-table-headings-only",
+        "id": 14161375396,
+        "digest": "sha256:2a69f98a35dabaf4215ea8d9d318dff4520a3371ead1aeee140dc02f2cad9bc1"
+      }
+    ],
+    "no_tables_transcribed": true
+  }
+}

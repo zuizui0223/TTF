@@ -1,0 +1,35 @@
+name: Penstemon 2026 BioSample to older 2023 voucher key source pilot
+
+on:
+  push:
+    branches:
+      - research/penstemon-ttf-source-join-20261115
+  pull_request:
+    paths:
+      - 'research/prospective/penstemon_original_ncbi_sourcesample_alias_pilot_20261115.py'
+      - 'tests/test_penstemon_original_ncbi_sourcesample_alias_pilot.py'
+      - '.github/workflows/penstemon-original-sourcesample-alias-pilot.yml'
+
+jobs:
+  exact-original-key:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test strict SAMN-UID and original specimen identity checks
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_penstemon_original_ncbi_sourcesample_alias_pilot.py
+      - name: Compare only first five original submitter alias keys against older 18 publicly mapped specimen labels
+        run: |
+          python research/prospective/penstemon_original_ncbi_sourcesample_alias_pilot_20261115.py > /tmp/penstemon_2026_original_alias_2023_subset_source.json
+          cat /tmp/penstemon_2026_original_alias_2023_subset_source.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: penstemon-first-five-original-alias-2023-key-source-only
+          path: /tmp/penstemon_2026_original_alias_2023_subset_source.json
+          retention-days: 21
