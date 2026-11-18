@@ -32,13 +32,13 @@ def evaluate():
         entries.append({"site":site,"published_latitude":lat,"published_longitude":lon,
                         "latitude_issues":le,"longitude_issues":oe,
                         "valid_dms_pair":not(le or oe),"certified_source_GPS":False})
-    if len(entries)!=4 or sum(x["valid_dms_pair"] for x in entries)!=0:
+    if len(entries)!=4 or sum(x["valid_dms_pair"] for x in entries)!=1:
         raise AssertionError("publisher DMS qualification unexpectedly changed")
     return {"schema":"ttf_Kalske2012_publisher_DMS_quarantine_v01",
             "publisher_doi":"10.1111/j.1365-2745.2012.02008.x",
-            "status":"ALL_FOUR_PUBLISHER_DMS_PAIRS_QUARANTINED",
+            "status":"THREE_INVALID_ONE_SYNTAX_VALID_BUT_UNVERIFIED",
             "published_site_count":4,
-            "valid_publisher_DMS_pairs":0,
+            "valid_publisher_DMS_pairs":1,
             "certified_original_source_GPS":0,
             "entries":entries,
             "no_coordinate_correction_or_cross_study_substitution":True,
@@ -47,5 +47,5 @@ def main():
     p=argparse.ArgumentParser();p.add_argument("--output",required=True,type=Path)
     a=p.parse_args();r=evaluate();a.output.parent.mkdir(parents=True,exist_ok=True)
     a.output.write_text(json.dumps(r,ensure_ascii=False,indent=2,sort_keys=True)+"\n",encoding="utf-8")
-    print(json.dumps({"status":r["status"],"valid_publisher_DMS_pairs":0}))
+    print(json.dumps({"status":r["status"],"valid_publisher_DMS_pairs":1}))
 if __name__=="__main__":main()
