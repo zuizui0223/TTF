@@ -33,3 +33,14 @@ def test_any_position_detects_linebroken_source_ids_without_repair():
     p=s.text_profile(text,"synthetic",NAMES)
     assert "BWS-002" in p["id_mentions_not_complete_rows"]
     assert p["exact_rows"]==1
+
+
+def test_original_unhyphenated_TTC026503_is_not_invented_synonym():
+    original=("Table S1\nPopulation Phenotyped\n"
+       "CAW-034 P. cardinalis yes\n"
+       "TTC026503 P. cardinalis Guadalupe Mtns, TX MJ TTC no\n")
+    profile=s.text_profile(original,"visual-verified",["Penstemon cardinalis"])
+    assert profile["exact_rows"]==2
+    assert profile["exact_phenotyped_yes"]==1
+    assert profile["exact_phenotyped_no"]==1
+    assert "TTC026503" in profile["exact_row_ids"]
