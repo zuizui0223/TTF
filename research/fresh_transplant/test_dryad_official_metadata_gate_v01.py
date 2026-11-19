@@ -70,6 +70,33 @@ class DryadManifestTests(unittest.TestCase):
         self.assertFalse(r["LGM21ka_contrast_qualified"])
         self.assertEqual(r["source_GPS_independently_certified"],0)
         self.assertTrue(all(not s["file_or_response_bytes_downloaded"] for s in r["studies"]))
+    def test_dryad_HAL_version_record_without_inline_integer_id(self):
+        r={"_links":{"self":{"href":"/api/v2/versions/261740"},
+                     "stash:files":{"href":"/api/v2/versions/261740/files"}},
+           "versionNumber":2}
+        self.assertEqual(a.linked_record_id(r,"versions"),261740)
+    def test_dryad_HAL_file_record_without_inline_integer_id(self):
+        r={"path":"latlongs.csv","_links":{"stash:download":{
+             "href":"/api/v2/files/4692223/download"}}}
+        self.assertEqual(a.linked_record_id(r,"files"),4692223)
+    def test_complete_version_and_file_Hal_only(self):
+        def got(url):
+            if "/versions?" in url:
+                return {"_embedded":{"stash:versions":[{"versionNumber":2,
+                   "_links":{"self":{"href":"/api/v2/versions/361800"},
+                             "stash:files":{"href":"/api/v2/versions/361800/files"}}}]}}
+            if "/versions/361800/files?" in url:
+                return {"_embedded":{"stash:files":[
+                   {"path":"latlongs.csv","size":375,
+                    "_links":{"stash:download":{"href":"/api/v2/files/4692223/download"}}},
+                   {"path":"tplantlatlongs.csv","size":157,
+                    "_links":{"stash:download":{"href":"/api/v2/files/4692224/download"}}}
+                ]}}
+            raise ValueError("Wrong fake URL")
+        s=a.check_study(self.d["candidates"][1],fetcher=got)
+        self.assertEqual(s["latest_public_version_id"],361800)
+        self.assertEqual(s["status"],"ALL_PINNED_FILES_REGISTERED_IN_OFFICIAL_METADATA")
+        self.assertTrue(all(x["file_id_matches_frozen_page"] for x in s["files_metadata"]))
     def test_lexical_DOI_held_to_Dryad(self):
         d=copy.deepcopy(self.d["candidates"][0])
         d["doi"]="https://evil.example/data"
