@@ -1,0 +1,137 @@
+{
+  "Bontrager_44_of_50_frozen_gate_unchanged": true,
+  "Bontrager_plant_study_labels_not_in_Hargreaves": 1,
+  "Hargreaves_study_labels_not_in_any_Bontrager_original_plant_row": 35,
+  "Hargreaves_study_labels_only_unmatched_to_qualified_Bontrager_but_found_in_full_original": 11,
+  "Hargreaves_unlinked_full_study_labels_for_followup": [
+    "Aranyetal_PlantEcol_2009",
+    "BaackandStanton_Evolution_2005",
+    "Bobergetal_AnnBot_2014",
+    "Brancalionetal_EcolEvol_2018",
+    "CarbajalNavarroetal_FrontiersEcolEvol_submitted",
+    "Ellisetal_NewPhytol_2007",
+    "EranenandKozlov_PlantEcol_2009",
+    "Garridoetal_2012_NewPhytol",
+    "Gellieetal_BiolCons_2016",
+    "Heimesetal_PlantEcol_2016",
+    "Helenurm_ConservBiol_1998",
+    "Hsuetal_PlantEcol_2014",
+    "HuffordandMazer_RestorationEcol_2012",
+    "Huffordetal_RestorationEcol_2008",
+    "Kalskeetal_JEcol_2012",
+    "Kindelletal_JEcol_1996",
+    "KnightandMiller_EvolutionaryEcologyResearch_2004",
+    "Knightetal_MolecularEcol_2006",
+    "LopezGallego_BotRev_2013",
+    "Meloetal_NewPhytol_2014",
+    "Newmanetal_Evolution_2015",
+    "OFarrilletal_SeedSciRes_2011",
+    "Ortegon-Camposetal_JEvolBiol_2009",
+    "PankovaandRaabova_PLoSOne_2014",
+    "Raabovaetal_BiolConservation_2007",
+    "Raabovaetal_Oecologia_2008",
+    "Remingtonetal_Genetics_2013",
+    "Roy_Oecologia_1998",
+    "SotoCorreaetal_Agrociencia_2012",
+    "Sunetal_AnnBot_2014",
+    "Thompsonetal_NewPhytol_1991",
+    "Tomioloetal_Ecology_2015",
+    "VantienderenandVandertoorn_JEcol_1991",
+    "ViverosViverosetal_RevistaFitotecniaMexicana_2006",
+    "Volisetal_Oecologia_2002"
+  ],
+  "all_Bontrager_Hargreaves_shared_original_study_labels": 113,
+  "all_Bontrager_plant_original_study_labels": 114,
+  "all_Hargreaves_plant_original_study_labels": 148,
+  "all_exact_source_keys_shared_do_NOT_certify_identical_experiments": true,
+  "fitness_effect_or_direction_opened": false,
+  "missingness_rows_by_source": {
+    "bontrager": {
+      "study/taxon": 701,
+      "study/taxon/site": 701,
+      "study/taxon/source": 701,
+      "study/taxon/source/site": 701,
+      "study/taxon/source/site/fitness_type": 701
+    },
+    "hargreaves": {
+      "study/taxon": 1375,
+      "study/taxon/site": 1375,
+      "study/taxon/source": 1375,
+      "study/taxon/source/site": 1375,
+      "study/taxon/source/site/fitness_type": 1375
+    }
+  },
+  "nested_source_key_overlaps": {
+    "study": {
+      "bontrager_all_plant_unique_keys": 114,
+      "bontrager_keys_not_shared_with_hargreaves": 1,
+      "exact_shared_keys": 113,
+      "hargreaves_keys_not_shared_with_bontrager": 35,
+      "hargreaves_plant_unique_keys": 148
+    },
+    "study__taxon": {
+      "bontrager_all_plant_unique_keys": 143,
+      "bontrager_keys_not_shared_with_hargreaves": 6,
+      "exact_shared_keys": 137,
+      "hargreaves_keys_not_shared_with_bontrager": 37,
+      "hargreaves_plant_unique_keys": 174
+    },
+    "study__taxon__site": {
+      "bontrager_all_plant_unique_keys": 538,
+      "bontrager_keys_not_shared_with_hargreaves": 36,
+      "exact_shared_keys": 502,
+      "hargreaves_keys_not_shared_with_bontrager": 113,
+      "hargreaves_plant_unique_keys": 615
+    },
+    "study__taxon__source": {
+      "bontrager_all_plant_unique_keys": 1554,
+      "bontrager_keys_not_shared_with_hargreaves": 43,
+      "exact_shared_keys": 1511,
+      "hargreaves_keys_not_shared_with_bontrager": 159,
+      "hargreaves_plant_unique_keys": 1670
+    },
+    "study__taxon__source__site": {
+      "bontrager_all_plant_unique_keys": 5100,
+      "bontrager_keys_not_shared_with_hargreaves": 153,
+      "exact_shared_keys": 4947,
+      "hargreaves_keys_not_shared_with_bontrager": 426,
+      "hargreaves_plant_unique_keys": 5373
+    },
+    "study__taxon__source__site__fitness_type": {
+      "bontrager_all_plant_unique_keys": 6751,
+      "bontrager_keys_not_shared_with_hargreaves": 215,
+      "exact_shared_keys": 6536,
+      "hargreaves_keys_not_shared_with_bontrager": 797,
+      "hargreaves_plant_unique_keys": 7333
+    }
+  },
+  "original_input_SHA256_verified": {
+    "bontrager": "2995d0f165b27ccf2f38f3d0b286845c107762a0c2b02df2290e9a5df6b396f0",
+    "hargreaves": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71"
+  },
+  "original_source_record_counts": {
+    "bontrager_plant_rows": 7452,
+    "bontrager_rows": 7544,
+    "hargreaves_plant_rows": 10810,
+    "hargreaves_rows": 11088
+  },
+  "original_text_encodings": {
+    "bontrager": "utf-8-sig",
+    "hargreaves": "cp1252"
+  },
+  "qualified_Bontrager_reference_labels": 103,
+  "qualified_source_study_overlap_reproduced": 102,
+  "raw_population_or_garden_coordinates_exported": false,
+  "reference_catalog_SHA256_verified": "fdfb9a3e825935dc4abc602466142b10bcc8fccbba210b89e65f0575a66fabe9",
+  "response_columns_indexed_or_fitted": [],
+  "schema": "ttf_Bontrager_Hargreaves_two_original_source_finegrain_overlap_v01",
+  "shared_transplant_garden_coordinate_agreement": {
+    "distance_gt_10km": 9,
+    "distance_gt_1km_le_10km": 4,
+    "distance_le_1km": 488,
+    "missing_or_ambiguous": 1,
+    "shared_source_study_species_garden_keys": 502
+  },
+  "status": "SOURCE_ONLY_FINEGRAIN_EXPERIMENT_LABEL_OVERLAP_NOT_REPLICATE_CERTIFICATION",
+  "unlinked_study_labels_do_NOT_certify_independent_experiments": true
+}

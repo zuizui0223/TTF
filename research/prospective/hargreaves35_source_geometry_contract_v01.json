@@ -1,0 +1,120 @@
+{
+  "schema": "ttf_Hargreaves35_unlinked_study_original_source_only_geometry_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_BEFORE_HARGREAVES35_METADATA_ROW_CENSUS",
+  "target": "Characterize 35 Hargreaves plant original study labels absent from ALL Bontrager plant original rows. Do not promote any to independent experiments without source-study/experiment and primary-paper adjudication.",
+  "reference": {
+    "metadata_receipt": "research/prospective/source_registry/bontrager_hargreaves_finegrain_overlap_v01.json",
+    "metadata_receipt_original_sha256": "8268387cdaec3a835086418f7ce91f91777cbbc1026e148c6e6e0399647106c3",
+    "count_unlinked_original_studies": 35,
+    "exact_unlinked_study_labels": [
+      "Aranyetal_PlantEcol_2009",
+      "BaackandStanton_Evolution_2005",
+      "Bobergetal_AnnBot_2014",
+      "Brancalionetal_EcolEvol_2018",
+      "CarbajalNavarroetal_FrontiersEcolEvol_submitted",
+      "Ellisetal_NewPhytol_2007",
+      "EranenandKozlov_PlantEcol_2009",
+      "Garridoetal_2012_NewPhytol",
+      "Gellieetal_BiolCons_2016",
+      "Heimesetal_PlantEcol_2016",
+      "Helenurm_ConservBiol_1998",
+      "Hsuetal_PlantEcol_2014",
+      "HuffordandMazer_RestorationEcol_2012",
+      "Huffordetal_RestorationEcol_2008",
+      "Kalskeetal_JEcol_2012",
+      "Kindelletal_JEcol_1996",
+      "KnightandMiller_EvolutionaryEcologyResearch_2004",
+      "Knightetal_MolecularEcol_2006",
+      "LopezGallego_BotRev_2013",
+      "Meloetal_NewPhytol_2014",
+      "Newmanetal_Evolution_2015",
+      "OFarrilletal_SeedSciRes_2011",
+      "Ortegon-Camposetal_JEvolBiol_2009",
+      "PankovaandRaabova_PLoSOne_2014",
+      "Raabovaetal_BiolConservation_2007",
+      "Raabovaetal_Oecologia_2008",
+      "Remingtonetal_Genetics_2013",
+      "Roy_Oecologia_1998",
+      "SotoCorreaetal_Agrociencia_2012",
+      "Sunetal_AnnBot_2014",
+      "Thompsonetal_NewPhytol_1991",
+      "Tomioloetal_Ecology_2015",
+      "VantienderenandVandertoorn_JEcol_1991",
+      "ViverosViverosetal_RevistaFitotecniaMexicana_2006",
+      "Volisetal_Oecologia_2002"
+    ],
+    "historical_qualified_Bontrager_44_of_50_GATE_STOP": true
+  },
+  "source": {
+    "data_doi": "10.5061/dryad.0vt4b8gv1",
+    "zenodo_record_id": 4409291,
+    "file_name": "Hargreaves_etal_2020_AmNat_transplant_data.csv",
+    "exact_original_byte_count": 4382308,
+    "expected_original_md5": "3e8fde16540509341e8f3c1a096c267d",
+    "expected_original_sha256": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+    "expected_header_sha256": "2ea31cf076d3053096a97374b9b1ff7347d9f759328a3cbcc40ced7c3092df6b",
+    "expected_47_columns": true,
+    "expected_text_encoding": "cp1252",
+    "source_lonlat_columns_absent": [
+      "lat_source",
+      "long_source"
+    ],
+    "expected_original_physical_rows": 11088
+  },
+  "allowed_columns": [
+    "study",
+    "functional_group",
+    "taxon",
+    "source",
+    "site",
+    "experiment",
+    "fitness_type",
+    "year_begin",
+    "lat_site",
+    "long_site"
+  ],
+  "group_allowlist": [
+    "annual",
+    "herbaceous_perennial",
+    "woody_perennial"
+  ],
+  "conservative_eligibility": {
+    "taxon_rule": "Strict binomial genus + species text only (letters/dashes, ignoring underscore and surrounding whitespace); no fuzzy matching or taxon repair.",
+    "study_rule": "Exact full source study label in the 35 prior response-blind unlinked label set.",
+    "geometry_grouping": [
+      "study",
+      "taxon",
+      "experiment",
+      "site",
+      "fitness_type"
+    ],
+    "distinct_source_rule": "At least two nonempty distinct source ID labels in exact same study/taxon/experiment/site/fitness-type group; source IDs are not verified distinct source geographic points.",
+    "missing_experiment": "Treat missing experiment identifiers as a distinct UNKNOWN stratum and do not claim same causal experiment.",
+    "garden_coordinate_rule": "Only count valid finite WGS84 destination lon/lat; report inconsistent coordinates as ambiguous, no repair.",
+    "no_source_origin_georeferencing_in_current_file": true,
+    "no_geographical_origin_regression": true,
+    "study_label_unmatched_does_not_prove_independent_primary_experiment": true,
+    "not_a_requalification_of_frozen_44_of_50_group": true
+  },
+  "output": {
+    "include_per_study_counts_and_original_study_labels": true,
+    "allowed_per_study_measurements": [
+      "candidate_original_plant_taxa",
+      "distinct_original_source_IDs",
+      "distinct_original_garden_IDs",
+      "distinct_experiment_labels",
+      "candidate_comparable_same_garden_cells",
+      "candidate_same_garden_cells_with_complete_garden_coordinate",
+      "candidate_same_garden_cells_missing_or_ambiguous_garden_coordinate",
+      "source_only_plant_rows"
+    ],
+    "raw_original_source_IDs_exported": false,
+    "raw_garden_IDs_or_WGS84_coordinates_exported": false,
+    "original_per_row_fitness_or_response_accessed": false,
+    "no_public_original_raw_CSV_export": true,
+    "primary_study_DOIs_not_imputed_from_labels": true,
+    "independently_certified_source_experiments": 0,
+    "fitness_effect_or_direction_opened": false
+  }
+}

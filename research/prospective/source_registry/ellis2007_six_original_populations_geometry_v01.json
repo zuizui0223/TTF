@@ -1,0 +1,70 @@
+{
+  "Bontrager_terminal_44_of_50_gate_unchanged": true,
+  "all_15_unique_source_point_pair_distances_km": {
+    "bins": {
+      "le_0p4_km": 1,
+      "le_10_km": 8,
+      "le_1p2_km": 1,
+      "le_5_km": 5
+    },
+    "count": 15,
+    "max_km": 9.00309,
+    "median_km": 5.00492,
+    "min_km": 0.37811
+  },
+  "between_basin_12_pairs_if_literal_IDs_qualified": {
+    "bins": {
+      "le_10_km": 8,
+      "le_5_km": 4
+    },
+    "count": 12,
+    "max_km": 9.00309,
+    "median_km": 5.17008,
+    "min_km": 2.77494
+  },
+  "between_basin_different_quartz_habitat_edges_observed_if_codes_qualified": 0,
+  "literal_basin_names_found_in_IDs": {
+    "Ariz": 2,
+    "QK": 2,
+    "Sout": 2
+  },
+  "literal_quartz_habitat_names_found_in_IDs": {
+    "dense": 3,
+    "sparse": 3
+  },
+  "no_21ka_0BP_climate_predictor_or_fitness_effect_fitted": true,
+  "no_coordinate_or_source_ID_values_exported": true,
+  "original_2000_adult_transplant_cohort_known_from_paper_methods": true,
+  "original_Hargreaves_destination_site_proxies_NOT_independent_source_GPS": true,
+  "original_distinct_source_plus_garden_directed_ID_pairs": 18,
+  "original_fitness_or_genetic_outcomes_not_read_from_Hargreaves": true,
+  "original_gardens_with_source_pair_metadata": 6,
+  "original_paper_doi": "10.1111/j.1469-8137.2007.02043.x",
+  "original_source_IDs_that_equal_same_study_garden_IDs": 6,
+  "original_source_dataset_SHA256": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+  "original_source_metadata_comparison_cells_not_independent": 18,
+  "original_study_basin_habitat_labels_directly_classifiable_from_ID_text": true,
+  "original_unmatched_garden_metadata_label_count": 0,
+  "paper_provides_six_original_field_source_population_WGS84_points_as_exact_ID_table": false,
+  "per_garden_distinct_source_ID_count_distribution": {
+    "3": 6
+  },
+  "schema": "ttf_Ellis2007_SA_Knersvlakte_six_population_source_only_spatial_design_v01",
+  "source_ID_pair_geometry_is_not_15_independent_historical_exposures": true,
+  "source_population_ID_keys": 6,
+  "species_contrasts_are_edaphic_vs_basin_not_direct_LGM_selection_evidence": true,
+  "status": "SOURCE_ONLY_SIX_SITES_ORIGINAL_BARRIER_HABITAT_DESIGN_NOT_HISTORICAL_CLIMATE_VALIDATION",
+  "study_original_binomial_taxa": 1,
+  "unique_garden_derived_proxy_location_points": 6,
+  "within_basin_3_pairs_if_literal_IDs_qualified": {
+    "bins": {
+      "le_0p4_km": 1,
+      "le_1p2_km": 1,
+      "le_5_km": 1
+    },
+    "count": 3,
+    "max_km": 3.12968,
+    "median_km": 0.91993,
+    "min_km": 0.37811
+  }
+}

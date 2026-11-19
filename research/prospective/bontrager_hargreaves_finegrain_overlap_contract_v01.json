@@ -1,0 +1,91 @@
+{
+  "schema": "ttf_cross_original_Bontrager_Hargreaves_source_garden_metadata_key_audit_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_BEFORE_TWO_ORIGINAL_SOURCE_DATA_ROW_KEY_AUDIT",
+  "original": {
+    "bontrager": {
+      "doi": "10.5061/dryad.pnvx0k6mc",
+      "zenodo_record": 4666308,
+      "file": "dryad.zip",
+      "size": 811204,
+      "md5": "2de98c1bb2cd2ddffcb090eb65a74d9f",
+      "sha256": "2995d0f165b27ccf2f38f3d0b286845c107762a0c2b02df2290e9a5df6b396f0",
+      "member": "dryad/data/fitness_for_analysis.csv",
+      "expected_csv_columns": 47
+    },
+    "hargreaves": {
+      "doi": "10.5061/dryad.0vt4b8gv1",
+      "zenodo_record": 4409291,
+      "file": "Hargreaves_etal_2020_AmNat_transplant_data.csv",
+      "size": 4382308,
+      "md5": "3e8fde16540509341e8f3c1a096c267d",
+      "sha256": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+      "expected_csv_columns": 47,
+      "expected_header_sha256": "2ea31cf076d3053096a97374b9b1ff7347d9f759328a3cbcc40ced7c3092df6b"
+    }
+  },
+  "original_plant_groups": [
+    "annual",
+    "herbaceous_perennial",
+    "woody_perennial"
+  ],
+  "strict_metadata_only_fields": [
+    "study",
+    "functional_group",
+    "taxon",
+    "source",
+    "site",
+    "fitness_type",
+    "lat_site",
+    "long_site"
+  ],
+  "exact_join_hierarchy": [
+    [
+      "study"
+    ],
+    [
+      "study",
+      "taxon"
+    ],
+    [
+      "study",
+      "taxon",
+      "source"
+    ],
+    [
+      "study",
+      "taxon",
+      "site"
+    ],
+    [
+      "study",
+      "taxon",
+      "source",
+      "site"
+    ],
+    [
+      "study",
+      "taxon",
+      "source",
+      "site",
+      "fitness_type"
+    ]
+  ],
+  "text_normalization": "For study, source, site and fitness_type strip only surrounding whitespace and otherwise require character-for-character equality. For taxon use lowercase, replace underscores with spaces, collapse spaces, require exactly two binomial tokens; no fuzzy taxonomic remapping.",
+  "original_site_comparability": "For exact shared (study,taxon,site), compare WGS84 garden coordinates only when exactly one finite lon-lat pair occurs per side; use haversine. Predeclare bins <=1km, >1km<=10km, >10km and ambiguous/missing; keep repeated rows non-independent.",
+  "qualified_reference": "research/prospective/source_registry/bontrager_original_reference_study_labels_v01.json",
+  "reference_SHA256": "fdfb9a3e825935dc4abc602466142b10bcc8fccbba210b89e65f0575a66fabe9",
+  "prior_reference_counts": {
+    "bontrager_qualified_studies": 103,
+    "bontrager_qualified_species": 107,
+    "bontrager_qualified_cells": 711,
+    "hargreaves_plant_study_labels": 148,
+    "exact_qualified_study_label_overlap": 102
+  },
+  "no_fitness_or_response_columns_indexed": true,
+  "no_automatic_new_species_admission": true,
+  "no_outcome_reopening": true,
+  "no_independent_experiment_certification_from_metadata": true,
+  "no_raw_source_or_garden_coordinate_export": true,
+  "no_adjustment_of_frozen_Bontrager_44_of_50_gate": true
+}

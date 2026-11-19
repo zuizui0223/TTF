@@ -1,0 +1,14 @@
+{
+  "schema": "ttf_Hargreaves2020_original_source_encoding_technical_amendment_v01",
+  "date": "2026-11-15",
+  "trigger": "First original 4,382,308-byte Zenodo-preserved CSV passed exact published MD5 and frozen firstline SHA; row metadata parsing stopped at strict UTF-8 UnicodeDecodeError before any outcome indexing.",
+  "source_original_md5": "3e8fde16540509341e8f3c1a096c267d",
+  "source_bytes": 4382308,
+  "fix": "After exact byte MD5 + header SHA verification, decode original immutable bytes using strict UTF-8-sig, falling back once to strict Windows-1252 (cp1252) if and only if UTF-8 raises UnicodeDecodeError. Do not replace invalid characters; fail if both fail. No biological field or eligibility threshold altered.",
+  "data_epoch": "pre-empirical-outcome source-only",
+  "response_columns_indexed": [],
+  "old_Bontrager_44_of_50_terminal_unchanged": true,
+  "source_only_Hargreaves_comparison_rule_unchanged": true,
+  "required_regression_test": "test_cp1252_original_non_utf8_source_not_reencoded_or_outcome_read",
+  "outcome_opened": false
+}

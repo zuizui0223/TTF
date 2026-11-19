@@ -1,0 +1,78 @@
+{
+  "schema": "ttf_Tomiolo2015_original_hargreaves_garden_proxy_vs_Figshare2015_published_site_DMS_v01",
+  "date": "2026-11-16",
+  "status": "FROZEN_BEFORE_ORIGINAL_HARGREAVES_SITE_DISTANCE_MATRIX_EXECUTION",
+  "source": {
+    "paper_doi": "10.1890/14-1445.1",
+    "Hargreaves_original_study_label": "Tomioloetal_Ecology_2015",
+    "Hargreaves_exact_sha256": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+    "Hargreaves_original_source_metadata_contract": "research/prospective/bontrager_hargreaves_finegrain_overlap_contract_v01.json",
+    "source_as_garden_metadata_contract": "research/prospective/hargreaves_source_as_garden_georecovery_contract_v01.json",
+    "original_Figshare2015_DOI": "10.6084/m9.figshare.c.3307653.v1",
+    "published_Appendix_A_article_id": 3562074,
+    "published_Appendix_A_original_md5": "f2dc5a3c1715a72d297112434dac8f45",
+    "actual_primary_paper_field_trial_sites": [
+      "M",
+      "SA"
+    ],
+    "third_appendix_table_climate_gradient_site": "A",
+    "author_2013_dissertation_doi_or_url": "https://publikationen.uni-tuebingen.de/xmlui/bitstream/handle/10900/49977/pdf/Sara_TomioloTHESIS_040913.pdf"
+  },
+  "published_site_locations": {
+    "M": {
+      "lat": 31.7,
+      "lon": 35.05,
+      "coordinate_original": "31°42'N 35°03'E",
+      "precision": "whole_arcminute"
+    },
+    "SA": {
+      "lat": 31.383333333333333,
+      "lon": 34.9,
+      "coordinate_original": "31°23'N 34°54'E",
+      "precision": "whole_arcminute"
+    },
+    "A": {
+      "lat": 30.866666666666667,
+      "lon": 34.766666666666666,
+      "coordinate_original": "30°52'N 34°46'E",
+      "precision": "whole_arcminute",
+      "role": "appendix climatological gradient reference site, NOT automatically a third eligible transplant source origin"
+    }
+  },
+  "from_previously_SHA_frozen_original_metadata": {
+    "original_study_plant_sourceID_keys_across_species": 6,
+    "original_study_distinct_sourceIDs_with_garden_proxy": 6,
+    "original_study_unique_garden_proxy_coordinate_points": 2,
+    "original_study_same_garden_multi_source_design_cells": 12,
+    "original_study_independent_GPS_origin_populations_verified": 0
+  },
+  "matching_rules": {
+    "only_exact_study_label_and_strict_original_binomial_taxon": true,
+    "source_as_garden_same_string_key_only": true,
+    "accept_only_unique_finite_garden_coordinate_for_each_source_population_key": true,
+    "unique_geometry_point_count_must_equal_2": true,
+    "source_population_ID_count_must_equal_6": true,
+    "sort_Hargreaves_garden_proxy_points_by_latitude_then_longitude_to_generate_anonymous_P1_P2": true,
+    "report_full_2_by_3_Haversine_distance_matrix_km_not_nearest_site_ID_assignment": true,
+    "descriptive_distance_bands_km": [
+      0.5,
+      1,
+      2,
+      5,
+      10,
+      50
+    ],
+    "same_site_code_M_or_SA_NOT_verified_by_geographic_proximity": true,
+    "do_not_open_any_original_fitness_or_experimental_response_columns": true,
+    "no_21ka_0BP_raster_sampling_or_model": true,
+    "no_radius_retuning_based_on_output": true
+  },
+  "outcome": {
+    "scope": "SOURCE_ONLY_EXPLORATORY_SITE_GEO_CONCORDANCE_NOT_INDEPENDENT_ORIGINAL_POPULATION_GPS",
+    "third_site_A_not_added_as_independent_source_population": true,
+    "original_article_and_dissertation_not_counted_as_two_independent_experiments": true,
+    "no_experiment_cohort_independence_certified": true,
+    "no_populations_with_independently_confirmed_source_GPS_counted": true,
+    "existing_Bontrager_44of50_terminal_and_TTF_genetic_stop_unchanged": true
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "ttf_Pankova2014_tableS1_xls_original_first_12_rows_header_inspection_contract_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_AFTER_512BYTE_ORIGINAL_OLE_HEADER_BEFORE_ANY_WORKBOOK_ROWS",
+  "original": {
+    "doi": "10.1371/journal.pone.0093967",
+    "official_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0093967.s001&type=supplementary",
+    "expected_supplement": "pone.0093967.s001.xls",
+    "reference_2014_S1_data_availability": "The data are available as a Supporting Information file Table S1.",
+    "prior_source_header_run_id": 43719719382,
+    "expected_ole_signature_hex": "D0CF11E0A1B11AE1",
+    "max_original_file_bytes": 5000000
+  },
+  "method": {
+    "only_ole_biff8_sheet_names_and_first_12_worksheet_rows_may_be_inspected": true,
+    "max_header_rows_per_sheet": 12,
+    "max_sheet_count": 16,
+    "max_column_count": 150,
+    "max_BIFF_SST_header_string_index": 1000,
+    "forbid_numeric_cell_value_field_read": true,
+    "forbid_fitness_survival_biomass_phenotype_measurement_values_read": true,
+    "allow_excel_metadata_styles_only_if_needed": false,
+    "permitted_software": "Python stdlib BIFF8 header-only parser plus olefile (generic OLE container reader, not a spreadsheet analysis library)",
+    "if_BIFF8_shared_string_crosses_CONTINUE": "ABSTAIN_INCOMPLETE_SHARED_STRING_NO_ID_NEGATIVE",
+    "if_encrypted_or_unexpected_BIFF": "ABSTAIN_UNSUPPORTED_WORKBOOK",
+    "candidate_plant_tag_column_names": [
+      "plant_id",
+      "individual_id",
+      "plant_number",
+      "individual_number",
+      "tag_id",
+      "metal_tag",
+      "label_id",
+      "plantid",
+      "individualid"
+    ],
+    "header_names_alone_may_show_metadata_availability_not_usable_row_IDs": true
+  },
+  "comparison_boundary": {
+    "Raabova2007_individual_raw_table_available": false,
+    "same_2004_adult_reciprocal_experiment_confirmed_by_author": true,
+    "individual_ID_from_2014_alone_does_not_confirm_crosspaper_ID_match": true,
+    "do_not_open_original_published_numerical_plant_fitness_values": true,
+    "no_2007_2014_sample_level_overlap_count_without_join": true,
+    "existing_44of50_bontrager_gate_stays_terminal": true,
+    "adaptation_plasticity_speciation_effects_not_opened": true
+  }
+}

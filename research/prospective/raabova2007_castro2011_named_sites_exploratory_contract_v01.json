@@ -1,0 +1,84 @@
+{
+  "schema": "ttf_Raabova2007_S1S2S3_Castro2011_correct_primary_label_site_comparison_exploratory_v01",
+  "date": "2026-11-15",
+  "status": "EXPLORATORY_SOURCE_ONLY_FROZEN_BEFORE_NEW_PUBLISHED_SITE_COMPARISON",
+  "scientific_scope": "This is a NEW exploratory bibliographic/source-location quality audit after invalid 2007-vs-2008 reference was detected; not a retuned confirmatory replacement or a rescue of the existing outcome family.",
+  "primary_original": {
+    "paper_doi": "10.1016/j.biocon.2007.07.007",
+    "Hargreaves_study_label": "Raabovaetal_BiolConservation_2007",
+    "taxon": "aster amellus",
+    "published_2007_population_codes": [
+      "K1",
+      "K2",
+      "K3",
+      "S1",
+      "S2",
+      "S3"
+    ],
+    "population_codes_directly_verified_in_Hargreaves_source_and_gardens": true,
+    "required_source_and_garden_code_counts": 6,
+    "expected_all_plant_metadata_rows": 180,
+    "six_populations_all_diploid": true,
+    "S1_name": "Malíč",
+    "S2_name": "Holý vrch",
+    "S3_name": "Encovany"
+  },
+  "corroborating_external_publication": {
+    "paper_doi": "10.1007/s10682-010-9439-5",
+    "title": "Breeding barriers at a diploid–hexaploid contact zone in Aster amellus",
+    "Table1_diploid_populations": [
+      {
+        "primary_2007_population_code": "S1",
+        "site_name": "Malíč",
+        "pub_2011_Table1_ID": 1,
+        "latitude_DMS": "50:32:24.2N",
+        "longitude_DMS": "14:05:16.1E"
+      },
+      {
+        "primary_2007_population_code": "S2",
+        "site_name": "Holý vrch",
+        "pub_2011_Table1_ID": 2,
+        "latitude_DMS": "50:31:40.9N",
+        "longitude_DMS": "14:13:48.8E"
+      },
+      {
+        "primary_2007_population_code": "S3",
+        "site_name": "Encovany",
+        "pub_2011_Table1_ID": 3,
+        "latitude_DMS": "50:31:45.8N",
+        "longitude_DMS": "14:15:33.3E"
+      }
+    ],
+    "map_basis": "Matches published *site names* of northern Bohemia diploid populations between Raabová 2007 Table 1 (S1-S3) and Castro et al. 2011 Table 1 (2011 IDs 1-3). Different papers may reuse same field geolocation, so this is not independent GPS field verification."
+  },
+  "original_source": {
+    "original_Dryad_DOI": "10.5061/dryad.0vt4b8gv1",
+    "Zenodo_original_record": 4409291,
+    "original_Hargreaves_SHA256": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+    "original_source_contract": "research/prospective/bontrager_hargreaves_finegrain_overlap_contract_v01.json",
+    "correct_referent_erratum": "research/prospective/raabova_2007_2008_wrong_primary_reference_erratum_v01.json",
+    "original_metadata_only_2007_ID_parser": "research/prospective/raabova_2007_2008_original_ID_metadata_v01.py"
+  },
+  "matching_rule": {
+    "exact_2007_study_and_taxon_required": true,
+    "only_literal_original_K1_to_S3_codes_from_exact_original_source_ID_and_original_destination_ID": true,
+    "no_fuzzy_alias_or_nearest_site_number_matching": true,
+    "require_code_unique_in_hargreaves_sources_and_gardens": true,
+    "requirement_that_all_six_original_KS_codes_are_present": true,
+    "compare_by_primary_2007_site_code_S1_S2_S3_to_external_named_localities": true,
+    "geographic_metric": "WGS84 haversine",
+    "descriptive_1km_cutoff_only_not_a_confirmatory_acceptance_rule": true,
+    "descriptive_cutoff_km": 1,
+    "no_post_result_reselection_or_renaming": true,
+    "never_use_2008_Sudova_2010_external_table_as_2007_population_crosswalk": true
+  },
+  "output": {
+    "original_2007_codes_and_external_sites_only": true,
+    "no_raw_Hargreaves_original_source_ID_or_population_coordinates_exported": true,
+    "no_raw_fitness_or_effect_values_indexed": true,
+    "no_LGM_fitness_adaptation_plasticity_speciation_effect_fitted": true,
+    "no_independent_GPS_field_verification_claim": true,
+    "original_bontrager_44of50_null_gate_unchanged": true,
+    "previous_invalid_1of4_receipt_preserved_but_not_a_valid_external_result": true
+  }
+}

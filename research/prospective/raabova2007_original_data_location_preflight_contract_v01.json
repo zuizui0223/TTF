@@ -1,0 +1,57 @@
+{
+  "schema": "ttf_Raabova2007_2008_institutional_original_record_files_metadata_gate_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_BEFORE_INSTITUTIONAL_SOURCE_RECORD_ATTACHMENT_CENSUS",
+  "purpose": "Find whether Raabova 2007 original adult transplant individual marker file was deposited alongside 2008 dissertation, later rigorous thesis, or 2007 publisher article. Only HTML attachment metadata; no PDF contents, workbook, original fitness or individual tag values.",
+  "sources": [
+    {
+      "key": "raabova_2008_dissertation",
+      "url": "https://dspace.cuni.cz/handle/20.500.11956/94265?show=full",
+      "source_kind": "Charles University official dissertation repository",
+      "author": "Jana Raabová",
+      "year": 2008,
+      "description": "Local adaptation of the rare herb Aster amellus in fragmented landscape"
+    },
+    {
+      "key": "raabova_2009_rigorous",
+      "url": "https://dspace.cuni.cz/handle/20.500.11956/95341?show=full",
+      "source_kind": "Charles University official rigorous thesis repository",
+      "author": "Jana Raabová",
+      "year": 2009,
+      "description": "Local adaptation of the rare herb Aster amellus in fragmented landscape"
+    },
+    {
+      "key": "raabova_2007_publisher",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0006320707002777",
+      "source_kind": "Original publisher article page",
+      "doi": "10.1016/j.biocon.2007.07.007",
+      "year": 2007,
+      "description": "Ecological rather than geographic or genetic distance affects local adaptation of the rare perennial herb, Aster amellus"
+    }
+  ],
+  "allowlisted_hosts": [
+    "dspace.cuni.cz",
+    "www.sciencedirect.com"
+  ],
+  "file_extensions": [
+    "pdf",
+    "csv",
+    "tsv",
+    "xls",
+    "xlsx",
+    "ods",
+    "zip",
+    "txt",
+    "rds",
+    "rdata",
+    "dat"
+  ],
+  "source_html_only": true,
+  "maximum_html_bytes_per_source": 2500000,
+  "independent_files": "A discovered thesis/report text PDF is not a 2007 raw individual-ID table; data files only candidate until actual original ID columns and exact 2007 cohort/source match are independently verified.",
+  "fail_closed": "403, timeout, HTML challenge or missing links => NOT_EVALUABLE, not absence of original files.",
+  "no_individual_row_or_biological_fitness_values_read": true,
+  "one_author_confirmed_2004_adult_cohort_unchanged": true,
+  "unknown_2007_2014_individual_overlap_count": null,
+  "prior_Bontrager_44_of_50_source_gate_unchanged": true
+}

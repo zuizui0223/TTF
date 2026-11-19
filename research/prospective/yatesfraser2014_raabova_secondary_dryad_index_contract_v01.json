@@ -1,0 +1,43 @@
+{
+  "schema": "ttf_YatesFraser2014_Dryad_Raabova_data_reuse_original_file_index_predata_v01",
+  "date": "2026-11-16",
+  "status": "FROZEN_BEFORE_SECONDARY_ARCHIVE_SOURCE_FILE_METADATA_SEARCH",
+  "origin": {
+    "paper_doi": "10.1111/eva.12181",
+    "paper_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4211717/",
+    "archived_dataset_doi": "10.5061/dryad.81k4v",
+    "author_acknowledgment": "J. Raabova among original data providers, along with U. Becker, B. Seifert and A. Jakobsson.",
+    "published_data_scale": "Meta-analysis of 874 estimates of survival, 111 source populations, 13 species, plant and salmonid data. Published aggregate numbers are a property of Yates/Fraser, not a raw Raabova field-tag census.",
+    "role": "Potential derivative location for Raabova 2007 data, not proof individual tag IDs survive meta-analytic extraction."
+  },
+  "sources": {
+    "zenodo_official_records_api": "https://zenodo.org/api/records",
+    "zenodo_exact_doi_queries": [
+      "81k4v",
+      "Does source population size affect performance in new environments"
+    ],
+    "dryad_official_api": "https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.81k4v",
+    "allowed_domains": [
+      "zenodo.org",
+      "datadryad.org"
+    ],
+    "max_zenodo_search_records": 25,
+    "max_source_metadata_bytes": 750000,
+    "data_file_download_authorized": false
+  },
+  "exact_Dryad_DOI_required_before_accepted_zenodo_candidate": true,
+  "title_only_records_not_verified": true,
+  "source_file_metadata_allowed": [
+    "filename",
+    "size_bytes",
+    "published_checksum",
+    "metadata_host",
+    "record_id"
+  ],
+  "do_not_fetch_or_read_data_files": true,
+  "no_Raabova_2007_2004_adult_tag_ID_corroboration_without_original_row_ID": true,
+  "prior_author_confirmed_one_shared_2004_adult_cohort": true,
+  "existing_Pankova_2014_intraXLS_279_consistent_IDs_are_NOT_crosspaper_overlap": true,
+  "previous_44of50_Bontrager_gate_unchanged": true,
+  "no_adaptation_LGM_genetic_fitness_plasticity_speciation_outcomes_opened": true
+}

@@ -1,0 +1,33 @@
+name: Raabova-contributed Yates Fraser 2014 Dryad secondary source index
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/yatesfraser2014_raabova_secondary_dryad_index_contract_v01.json'
+      - 'research/prospective/yatesfraser2014_raabova_secondary_archive_index_v01.py'
+      - 'research/prospective/test_yatesfraser2014_raabova_secondary_archive_index_v01.py'
+      - '.github/workflows/ttf-yatesfraser2014-raabova-dryad-index.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/yatesfraser2014_raabova_secondary_dryad_index_contract_v01.json'
+      - 'research/prospective/yatesfraser2014_raabova_secondary_archive_index_v01.py'
+      - 'research/prospective/test_yatesfraser2014_raabova_secondary_archive_index_v01.py'
+      - '.github/workflows/ttf-yatesfraser2014-raabova-dryad-index.yml'
+
+jobs:
+  secondary-archive-metadata-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic exact DOI and fail-closed tests
+        run: python -m unittest discover -s research/prospective -p test_yatesfraser2014_raabova_secondary_archive_index_v01.py -v
+      - name: Query only official Zenodo and Dryad file index metadata; no individual data
+        run: python research/prospective/yatesfraser2014_raabova_secondary_archive_index_v01.py

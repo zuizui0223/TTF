@@ -1,0 +1,26 @@
+{
+  "design_columns": [
+    "intercept",
+    "source_quartz",
+    "garden_quartz",
+    "source_basin_2",
+    "source_basin_3",
+    "garden_basin_2",
+    "garden_basin_3"
+  ],
+  "fitness_genetics_climate_or_LGM_response_opened": false,
+  "input_sha256": "28cea27d59affd846c9ee490f20daedd36220e6e75041f429663a208dcd239ce",
+  "main_or_frozen_endpoints_modified": false,
+  "original_design_rank": 7,
+  "original_directed_arms": 24,
+  "original_full_column_rank": true,
+  "schema": "ttf_Ellis2007_source_only_design_rank_v01",
+  "scope": "linear additive fixed-effect design with separate source/garden basin and quartz, not fitted fitness effects",
+  "secondary_design_rank": 6,
+  "secondary_directed_arms": 18,
+  "secondary_full_column_rank": false,
+  "secondary_source_quartz_equals_garden_quartz_on_all_observed_arms": true,
+  "source_vs_garden_quartz_separately_identifiable_original": true,
+  "source_vs_garden_quartz_separately_identifiable_secondary": false,
+  "status": "SOURCE_ONLY_ALGEBRAIC_IDENTIFIABILITY_NOT_BIOLOGICAL_EFFECT"
+}

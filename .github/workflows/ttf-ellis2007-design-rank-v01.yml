@@ -1,0 +1,33 @@
+name: Ellis 2007 source-only algebraic design rank
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - '.github/workflows/ttf-ellis2007-design-rank-v01.yml'
+      - 'research/prospective/ellis2007_design_rank_v01.py'
+      - 'research/prospective/test_ellis2007_design_rank_v01.py'
+      - 'research/prospective/source_registry/ellis2007_design_rank_v01.json'
+  pull_request:
+    paths:
+      - '.github/workflows/ttf-ellis2007-design-rank-v01.yml'
+      - 'research/prospective/ellis2007_design_rank_v01.py'
+      - 'research/prospective/test_ellis2007_design_rank_v01.py'
+      - 'research/prospective/source_registry/ellis2007_design_rank_v01.json'
+jobs:
+  source-only-design-rank:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exact rational rank regression checks
+        run: python -m unittest discover -s research/prospective -p test_ellis2007_design_rank_v01.py -v
+      - name: Reproduce frozen design-rank receipt byte-for-byte
+        run: |
+          python research/prospective/ellis2007_design_rank_v01.py --output _source_only/ellis2007_design_rank_v01.json
+          cmp research/prospective/source_registry/ellis2007_design_rank_v01.json _source_only/ellis2007_design_rank_v01.json

@@ -1,0 +1,58 @@
+{
+  "Bontrager44of50_stopped_gate_unchanged": true,
+  "exact_study_2007_locality_code_to_Hargreaves_ID_mapping_certified": false,
+  "fitness_or_historical_climate_values_opened": false,
+  "independent_pop_site_2007_georeference_certified": false,
+  "original_total_source_rows": 11088,
+  "previous_invalid_2007_Sudova_georeference_benchmark_reopened": false,
+  "raabova2007": {
+    "destination_identifiers_with_2007_code_tokens": 6,
+    "literal_original_2007_population_code_destination_identifier_counts": {
+      "K1": 1,
+      "K2": 1,
+      "K3": 1,
+      "S1": 1,
+      "S2": 1,
+      "S3": 1
+    },
+    "literal_original_2007_population_code_source_identifier_counts": {
+      "K1": 1,
+      "K2": 1,
+      "K3": 1,
+      "S1": 1,
+      "S2": 1,
+      "S3": 1
+    },
+    "no_raw_original_identifiers_exported": true,
+    "original_plant_rows": 180,
+    "original_study_label": "Raabovaetal_BiolConservation_2007",
+    "source_identifiers_with_2007_code_tokens": 6,
+    "taxon_text_categories": {
+      "strict_binomial_aster_amellus": 180
+    },
+    "unique_original_destination_identifiers": 6,
+    "unique_original_source_identifiers": 6
+  },
+  "raabova2008": {
+    "destination_identifiers_with_2007_code_tokens": 0,
+    "literal_original_2007_population_code_destination_identifier_counts": {
+      "NONE": 9
+    },
+    "literal_original_2007_population_code_source_identifier_counts": {
+      "NONE": 9
+    },
+    "no_raw_original_identifiers_exported": true,
+    "original_plant_rows": 405,
+    "original_study_label": "Raabovaetal_Oecologia_2008",
+    "source_identifiers_with_2007_code_tokens": 0,
+    "taxon_text_categories": {
+      "aster_amellus_nonbinomial_with_extra_text": 405
+    },
+    "unique_original_destination_identifiers": 9,
+    "unique_original_source_identifiers": 9
+  },
+  "schema": "ttf_Raabova2007_2008_literal_original_ID_form_source_only_v01",
+  "source_original_SHA256": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+  "status": "SOURCE_ONLY_PRIMARY_STUDY_LABEL_FORM_NOT_GEOGRAPHIC_VERIFICATION",
+  "sudova_2010_Table1_references_2008_not_2007": true
+}

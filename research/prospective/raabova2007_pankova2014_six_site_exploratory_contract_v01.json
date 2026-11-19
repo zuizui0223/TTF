@@ -1,0 +1,111 @@
+{
+  "schema": "ttf_Raabova2007_Pankova2014_six_same_code_sites_exploratory_predata_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_BEFORE_HARGREAVES_CODE_MATCHED_SIX_SITE_GEO_COMPARISON",
+  "scientific_scope": "New separate exploratory source-only check of published six same-code localities. This follows invalid 2007-vs-2008 reference and exploratory Castro2011 three-site check; NOT a retuned confirmation and does not reopen adaptation outcomes.",
+  "target": {
+    "original_study": "Raabovaetal_BiolConservation_2007",
+    "original_paper_doi": "10.1016/j.biocon.2007.07.007",
+    "strict_species": "aster amellus",
+    "source_population_codes": [
+      "K1",
+      "K2",
+      "K3",
+      "S1",
+      "S2",
+      "S3"
+    ],
+    "expected_original_unique_source_codes": 6,
+    "expected_Hargreaves_original_study_plant_rows": 180
+  },
+  "external_primary_author_source": {
+    "paper": "Pánková H, Raabová J, Münzbergová Z (2014) Mycorrhizal Symbiosis and Local Adaptation in Aster amellus: A Field Transplant Experiment",
+    "doi": "10.1371/journal.pone.0093967",
+    "publication_date": "2014-04-07",
+    "table": "Table 1, printed page 3",
+    "public_publisher_print_pdf": "https://journals.plos.org/plosone/article/file?id=10.1371%2Fjournal.pone.0093967&type=printable",
+    "table_title": "Location and soil properties of the studied sites with Aster amellus populations in the Czech Republic",
+    "experimental_difference": "Five-year 2004-2009 reciprocal transplant, using six same-named diploid populations and referring to Raabová et al. 2007, but not necessarily the same experimental microplots or original field GPS observations.",
+    "published_site_rows": [
+      {
+        "code": "K1",
+        "name": "Koda",
+        "region": "K",
+        "lat_dms": "49:56:01N",
+        "lon_dms": "14:07:29E"
+      },
+      {
+        "code": "K2",
+        "name": "Karlík",
+        "region": "K",
+        "lat_dms": "49:56:52N",
+        "lon_dms": "14:15:02E"
+      },
+      {
+        "code": "K3",
+        "name": "Lochkov",
+        "region": "K",
+        "lat_dms": "49:59:56N",
+        "lon_dms": "14:20:16E"
+      },
+      {
+        "code": "S1",
+        "name": "Malíč",
+        "region": "S",
+        "lat_dms": "50:32:24N",
+        "lon_dms": "14:05:16E"
+      },
+      {
+        "code": "S2",
+        "name": "Holý vrch",
+        "region": "S",
+        "lat_dms": "50:31:41N",
+        "lon_dms": "14:13:49E"
+      },
+      {
+        "code": "S3",
+        "name": "Encovany",
+        "region": "S",
+        "lat_dms": "50:31:46N",
+        "lon_dms": "14:15:33E"
+      }
+    ],
+    "published_original_dms_coordinate_resolution": "1 arc-second nominal; no independent field GPS error distribution available"
+  },
+  "hargreaves_original": {
+    "dryad_doi": "10.5061/dryad.0vt4b8gv1",
+    "zenodo_record": 4409291,
+    "csv_sha256": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+    "original_source_contract": "research/prospective/bontrager_hargreaves_finegrain_overlap_contract_v01.json",
+    "source_as_garden_rule": "research/prospective/hargreaves_source_as_garden_georecovery_contract_v01.json",
+    "correct_2007_vs_2008_erratum": "research/prospective/raabova_2007_2008_wrong_primary_reference_erratum_v01.json",
+    "literal_code_extractor": "research/prospective/raabova_2007_2008_original_ID_metadata_v01.py",
+    "previous_source_as_garden_receipt_sha256": "944344d90b3bb0189c11d57c3a4ba561944453bcef8c42a3e01ea38f911e786d"
+  },
+  "rules": {
+    "source_garden_IDs_must_match_study_and_species_and_original_exact_population_token": true,
+    "match_six_original_population_codes_by_literal_code_not_geographically_nearest": true,
+    "reject_multiple_codes_in_one_ID": true,
+    "unique_original_garden_coordinate_per_code_required": true,
+    "no_fuzzy_name_or_spatial_override": true,
+    "published_coordinate_parser": "Strict cardinal DMS degrees:minutes:seconds, no geographic centroid or copy from different paper.",
+    "distance": "WGS84 haversine great-circle, km",
+    "precommitted_descriptive_distance_bins_km": [
+      0.1,
+      1,
+      2,
+      5,
+      10
+    ],
+    "descriptive_previous_1km_line_not_a_pass_gate_for_new_exploration": true,
+    "scientific_success_criterion": "NONE; descriptive distances only, no binary validation/certification. Investigate discrepancy patterns as later exploratory source only.",
+    "no_posthoc_radius_relaxation": true,
+    "no_raw_Hargreaves_coordinates_or_IDs_exported": true,
+    "published_source_coords_may_appear_in_contract_as_public_bibliography": true
+  },
+  "no_biological_response_opening": true,
+  "no_local_adaptation_or_LGM_or_plasticity_or_speciation_model": true,
+  "previous_invalid_Sudova_reference_stays_invalid": true,
+  "no_Bontrager_44of50_requalification": true,
+  "main_unchanged": true
+}

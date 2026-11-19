@@ -1,0 +1,62 @@
+name: Freeze Pankova 2014 six-code site exploratory receipt
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - '.github/workflows/ttf-raabova-pankova-six-site-receipt-freeze.yml'
+
+jobs:
+  freeze-source-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: prospective/independent-transplant-overlap-20261115
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43713220041
+          name: ttf-raabova2007-pankova2014-six-site-source-only-v01
+          github-token: ${{ github.token }}
+          path: _ttf_source_only
+      - name: Verify exact source-only receipt SHA, original DOI and six immutable code matching
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          p=Path("_ttf_source_only/raabova2007_pankova2014_six_site_exploratory_v01.json")
+          raw=p.read_bytes()
+          assert hashlib.sha256(raw).hexdigest()=="7d6c4c4e33a8e920a71a2e2064dc851665eca33ab6f258c6764ed358c254a342"
+          x=json.loads(raw)
+          assert x["target_primary_paper_doi"]=="10.1016/j.biocon.2007.07.007"
+          assert x["external_later_paper_doi"]=="10.1371/journal.pone.0093967"
+          assert x["original_Hargreaves_CSV_SHA256_verified"]=="f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71"
+          assert [z["original_2007_population_code"] for z in x["site_details"]]==["K1","K2","K3","S1","S2","S3"]
+          assert [z["distance_km"] for z in x["site_details"]]==[0.799619,1.812728,1.928084,0.734489,1.311237,1.92598]
+          assert x["descriptive_sites_within_1km"]==2 and x["descriptive_sites_over_1km"]==4
+          assert x["external_paper_is_2014_followup_NOT_independent_field_GPS"] is True
+          assert x["old_invalid_Sudova_2010_vs_2007_receipt_remains_invalid"] is True
+          assert x["no_adaptation_plasticity_speciation_genetic_history_climate_response_opened"] is True
+          assert x["old_Bontrager_44_of_50_source_gate_not_requalified"] is True
+          assert x["no_original_source_ID_or_raw_dataset_point_coordinates_exported"] is True
+          print("SIX_SITE_SAME_CODE_SOURCE_ONLY_SHA_VERIFIED_2_OF_6_WITHIN_1KM")
+          PY
+      - name: Persist only immutable published-site comparison summary on Draft branch
+        run: |
+          mkdir -p research/prospective/source_registry
+          cp _ttf_source_only/raabova2007_pankova2014_six_site_exploratory_v01.json research/prospective/source_registry/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/prospective/source_registry/raabova2007_pankova2014_six_site_exploratory_v01.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Freeze source-only Raabova2007 Pankova2014 six-code site differences"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi

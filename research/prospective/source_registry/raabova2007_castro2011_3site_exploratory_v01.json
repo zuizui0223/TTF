@@ -1,0 +1,41 @@
+{
+  "Hargreaves_2007_all_six_literal_population_codes_present": true,
+  "corroborating_Castro_2011_DOI": "10.1007/s10682-010-9439-5",
+  "corroborating_Sudova2010_2008_wrong_reference_EXCLUDED": true,
+  "exploratory_published_name_matched_sites": [
+    {
+      "descriptive_distance_le_original_1km_cutoff": true,
+      "named_locality_shared_in_2007_and_2011": "Malíč",
+      "original_Hargreaves_source_ID_and_coordinate_not_exported": true,
+      "source_proxy_to_2011_pub_coordinate_km": 0.73524,
+      "verified_Raabova2007_source_population_code": "S1"
+    },
+    {
+      "descriptive_distance_le_original_1km_cutoff": false,
+      "named_locality_shared_in_2007_and_2011": "Holý vrch",
+      "original_Hargreaves_source_ID_and_coordinate_not_exported": true,
+      "source_proxy_to_2011_pub_coordinate_km": 1.30631,
+      "verified_Raabova2007_source_population_code": "S2"
+    },
+    {
+      "descriptive_distance_le_original_1km_cutoff": false,
+      "named_locality_shared_in_2007_and_2011": "Encovany",
+      "original_Hargreaves_source_ID_and_coordinate_not_exported": true,
+      "source_proxy_to_2011_pub_coordinate_km": 1.918088,
+      "verified_Raabova2007_source_population_code": "S3"
+    }
+  ],
+  "independent_primary_experiments_certified": 0,
+  "independently_verified_raw_field_GPS_coordinates": 0,
+  "no_fitness_genetic_LGM_adaptation_plasticity_speciation_outcomes_fitted": true,
+  "old_invalid_1_of_4_external_test_remains_invalid": true,
+  "original_1km_distance_threshold_unchanged": true,
+  "original_source_SHA256": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+  "preexisting_frozen_44_of_50_adaptation_stop_unchanged": true,
+  "published_named_diploid_localities_compared": 3,
+  "schema": "ttf_Raabova2007_Castro2011_diploid_sites_exploratory_name_matched_geodistance_v01",
+  "scientific_scope": "One exploratory source-only matched-name site check; these published GPS may share source georeferencing or represent different microplots.",
+  "status": "EXPLORATORY_VALID_PAPER_AND_NAME_CROSSWALK_NOT_INDEPENDENT_GPS_CERTIFICATION",
+  "target_Raabova_2007_DOI": "10.1016/j.biocon.2007.07.007",
+  "within_1km_descriptive_site_count": 1
+}

@@ -1,0 +1,77 @@
+name: Bontrager verified study-label inventory (source-only)
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/bontrager_reference_study_labels_source_only_v01.py'
+      - 'research/prospective/test_bontrager_reference_study_labels_source_only_v01.py'
+      - '.github/workflows/ttf-bontrager-source-label-inventory.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/bontrager_reference_study_labels_source_only_v01.py'
+      - 'research/prospective/test_bontrager_reference_study_labels_source_only_v01.py'
+      - '.github/workflows/ttf-bontrager-source-label-inventory.yml'
+
+jobs:
+  source-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic source-label and original-geometry qualification tests
+        run: |
+          python -m unittest discover -s research/prospective -p test_bontrager_reference_study_labels_source_only_v01.py -v
+      - name: Restore original-source verified source-only artifact from successful run
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43682268718
+          name: ttf-bontrager-original-source-study-label-inventory-v01
+          github-token: ${{ github.token }}
+          path: _ttf_source_only
+      - name: Re-verify pinned original-study metadata only (no new source requests)
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          p=Path("_ttf_source_only/bontrager_original_reference_study_labels_v01.json")
+          raw=p.read_bytes()
+          assert hashlib.sha256(raw).hexdigest()=="fdfb9a3e825935dc4abc602466142b10bcc8fccbba210b89e65f0575a66fabe9"
+          d=json.loads(raw)
+          assert d["original_zip_SHA256_verified"]=="2995d0f165b27ccf2f38f3d0b286845c107762a0c2b02df2290e9a5df6b396f0"
+          assert d["labels_array_sha256"]=="83a80a48be293a3ca2b91ebafcea6e4860ba5c7100c7d11447e3aa71c107fa85"
+          assert (d["distinct_qualified_original_study_labels"],d["distinct_qualified_plant_species"],d["qualified_study_species_garden_fitness_type_cells"])==(103,107,711)
+          assert len(d["catalog"])==103
+          assert sum(len(x["source_year_tokens_not_primary_publication_verification"])==1 for x in d["catalog"])==102
+          assert sum(len(x["source_year_tokens_not_primary_publication_verification"])==2 for x in d["catalog"])==1
+          assert d["outcome_columns_selected"]==[] and d["fitness_rows_fitted"]==0
+          assert d["Hargreaves_overlap_checked"] is False
+          print("PINNED_SOURCE_ONLY_CATALOG_VALIDATED",103,107,711,"COMPOSITE_STUDY_LABELS",1)
+          PY
+      - name: Archive source-only bibliography crosswalk input
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-bontrager-original-source-study-label-inventory-v01
+          path: _ttf_source_only/bontrager_original_reference_study_labels_v01.json
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Retain verified source-only catalog on dedicated Draft PR branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/prospective/independent-transplant-overlap-20261115'
+        run: |
+          mkdir -p research/prospective/source_registry
+          cp _ttf_source_only/bontrager_original_reference_study_labels_v01.json research/prospective/source_registry/bontrager_original_reference_study_labels_v01.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/prospective/source_registry/bontrager_original_reference_study_labels_v01.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Freeze verified Bontrager source-study reference catalog (no fitness)"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi

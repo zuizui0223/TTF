@@ -1,0 +1,48 @@
+name: Hargreaves 35 unlinked study source-only feasibility
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/hargreaves35_source_geometry_contract_v01.json'
+      - 'research/prospective/hargreaves35_source_geometry_v01.py'
+      - 'research/prospective/test_hargreaves35_source_geometry_v01.py'
+      - 'research/prospective/hargreaves35_primary_article_recovery_shortlist_v01.json'
+      - 'research/prospective/test_hargreaves35_primary_source_shortlist_v01.py'
+      - '.github/workflows/hargreaves35-source-geometry-v01.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/hargreaves35_source_geometry_contract_v01.json'
+      - 'research/prospective/hargreaves35_source_geometry_v01.py'
+      - 'research/prospective/test_hargreaves35_source_geometry_v01.py'
+      - 'research/prospective/hargreaves35_primary_article_recovery_shortlist_v01.json'
+      - 'research/prospective/test_hargreaves35_primary_source_shortlist_v01.py'
+      - '.github/workflows/hargreaves35-source-geometry-v01.yml'
+
+jobs:
+  source-only-unlinked35:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic-only known truth source-design and response-blind tests
+        run: python -m unittest discover -s research/prospective -p test_hargreaves35_source_geometry_v01.py -v
+      - name: Source-only primary DOI recovery list integrity tests
+        run: python -m unittest discover -s research/prospective -p test_hargreaves35_primary_source_shortlist_v01.py -v
+      - name: Exact published SHA Hargreaves unlinked-35 original metadata census
+        run: |
+          python research/prospective/hargreaves35_source_geometry_v01.py \
+            --output _ttf_source_only/hargreaves35_study_geometry_v01.json
+      - name: Archive only aggregate per-original-study qualification geometry
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-hargreaves35-source-geometry-only-v01
+          path: _ttf_source_only/hargreaves35_study_geometry_v01.json
+          retention-days: 30
+          if-no-files-found: error

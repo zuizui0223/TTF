@@ -1,0 +1,89 @@
+{
+  "schema": "ttf_pankova2014_S1_original_plant_mark_within_workbook_linkage_predata_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_AFTER_EXPLANATION_CODEBOOK_BEFORE_NUMERIC_PLANT_MARK_METADATA_CELLS",
+  "original": {
+    "paper_doi": "10.1371/journal.pone.0093967",
+    "original_source_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0093967.s001&type=supplementary",
+    "bytes": 147456,
+    "sha256": "7a8de0c203aec2b2edf0a7b6bceea649663a17095471a475fdb8a0abd69665c5",
+    "schema_source_run": 43720495186,
+    "sheets": [
+      "survival",
+      "performance",
+      "explanation"
+    ]
+  },
+  "verified_dictionary": {
+    "mark": "The number of the plant in the field",
+    "nohelp": "Ordering Numbers",
+    "block": "Block within a target site (row)",
+    "St": "Target site",
+    "So": "Site of origin",
+    "surv2009": "Survival in 2009"
+  },
+  "allow_row_cell_values_only_for_columns": [
+    "mark",
+    "St",
+    "So"
+  ],
+  "allow_selected_original_sheets": [
+    "survival",
+    "performance"
+  ],
+  "match_levels": [
+    [
+      "mark"
+    ],
+    [
+      "St",
+      "mark"
+    ],
+    [
+      "St",
+      "So",
+      "mark"
+    ]
+  ],
+  "row_limits": {
+    "per_sheet_max": 2000
+  },
+  "expected_sheet_headers": {
+    "survival": [
+      "nohelp",
+      "mark",
+      "block",
+      "Rt",
+      "Ro",
+      "St",
+      "So",
+      "surv2009"
+    ],
+    "performance": [
+      "nohelp",
+      "mark",
+      "block",
+      "Rt",
+      "Ro",
+      "St",
+      "So",
+      "leaves",
+      "log leaves",
+      "biom",
+      "log biom",
+      "mycorrhizal colonization"
+    ]
+  },
+  "source_unit_definition": "St is target site; mark is individual field plant number. The pair (St,mark) is a candidate unique plant ID, while repeated mark numbers across St require site. So is origin-site metadata for conflict checking, not a second plant marker.",
+  "source_value_policy": "Read only text/numeric cells within mark/St/So columns; original nohelp, surv2009, leaves, biomass and all biological outcomes are not accessed.",
+  "missingness_policy": "Blank St or mark is not a match; ambiguous within-sheet repeated composite keys invalidate unique-ID inference, not imputed.",
+  "crosssheet_id_inference": "If St x mark unique in both, exact intersection is a within-2014 individual crosssheet ID match, not a 2007-2014 individual join.",
+  "biological_limits": {
+    "original_2007_raw_individual_tag_data_available": false,
+    "same_2004_adult_cohort_author_confirmed": true,
+    "separate_2003_2004_seed_sowing_trials_remain_separate": true,
+    "no_biological_response_read_or_modeled": true,
+    "never_claim_2007_and_2014_same_individual_tag_numbers_without_source": true,
+    "previous_Bontrager_44of50_source_qualification_unchanged": true
+  }
+}

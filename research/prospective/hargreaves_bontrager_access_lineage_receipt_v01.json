@@ -1,0 +1,48 @@
+{
+  "schema": "ttf_Hargreaves_Bontrager_Hereford_public_source_lineage_and_access_v01",
+  "date": "2026-11-15",
+  "purpose": "Response-blind source lineage / accessibility preflight before any record-level original-study overlap determination.",
+  "external_source_lineage": {
+    "hargreaves_dataset_doi": "10.5061/dryad.0vt4b8gv1",
+    "hargreaves_paper_doi": "10.1086/707323",
+    "hargreaves_public_source_page": "https://datadryad.org/dataset/doi:10.5061/dryad.0vt4b8gv1",
+    "hargreaves_public_supplement": "https://mobot-biodiversity-jc.weebly.com/uploads/1/8/6/0/18603232/appendices_from_hargreaves_et_al__2020__local_adaptation_to_biotic_interactions_59113supplement.pdf",
+    "original_source_lineage_statement": "Hargreaves supplement Appendix B explicitly says it leveraged a database of transplant experiments compiled for Bontrager et al. in prep, including references of previous reviews such as Hereford 2009.",
+    "bontrager_dataset_doi": "10.5061/dryad.pnvx0k6mc",
+    "hereford_dataset_doi": "10.5061/dryad.315",
+    "exact_common_original_primary_study_count": null,
+    "exact_independent_original_primary_study_count": null,
+    "no_automatic_addition_to_prior_44_species_panel": true
+  },
+  "access_probe": {
+    "script": "research/prospective/hargreaves_header_access_probe_v01.py",
+    "original_file_id": 244459,
+    "original_filename": "Hargreaves_etal_2020_AmNat_transplant_data.csv",
+    "Github_Actions_run": 43672366333,
+    "Dryad_API_download": "HTTP_401",
+    "Dryad_direct_file_stream": "HTTP_403",
+    "frozen_status": "SOURCE_ACCESS_GATED_NO_RECORD_LEVEL_OVERLAP_CLAIM",
+    "data_rows_read": 0,
+    "empirical_response_values_read": 0,
+    "original_study_overlap_performed": false,
+    "additional_independent_studies_certified": false,
+    "prior_Github_Actions_run": 43672068614
+  },
+  "validation": {
+    "overlap_gate_synthetic_tests_passed": 10,
+    "access_probe_synthetic_tests_passed": 6,
+    "dedicated_GitHub_Actions_conclusion": "success",
+    "repo_wide_Pytest_prior_run": "485 passed, 1 failed",
+    "repo_wide_Pytest_prior_failure": "tests/test_ttf_q_submission_scientific_freeze.py : expected policy phrase 'opening a previously closed outcome' but frozen policy uses 'new outcome opening'; unrelated to source overlap gate",
+    "repo_wide_Pytest_failure_repaired_in_this_branch": false,
+    "total_source_only_synthetic_tests_passed": 16,
+    "one_line_read_regression_test_passed": true
+  },
+  "scientific_boundary": {
+    "frozen_PR_154_44_less_than_50_response_gate_unchanged": true,
+    "frozen_PROCEED_Haldane_56plant_null_calibration_fail_unchanged": true,
+    "fitness_model_authorized": false,
+    "plasticity_or_speciation_inference_authorized": false,
+    "next_dependency": "A licensed/retrievable, original-study-ID and source-population-metadata-only source or an independent pre-registered source panel; reconcile actual experiments manually before qualifying new biological endpoint."
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "schema": "ttf_Raabova2007_raw_adult_individual_tag_source_access_terminal_v01",
+  "date": "2026-11-15",
+  "status": "PUBLISHER_2007_403_AND_UNIVERSITY_2008_2009_TIMEOUT_NO_ORIGINAL_ID_ROW_QUALIFICATION",
+  "original_source_article": {
+    "doi": "10.1016/j.biocon.2007.07.007",
+    "title": "Ecological rather than geographic or genetic distance affects local adaptation of the rare perennial herb, Aster amellus",
+    "publisher": "Biological Conservation (Elsevier) 139, 348–357 (2007)",
+    "authors": "Raabová, Münzbergová and Fischer",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0006320707002777",
+    "access_result": "HTTP_403",
+    "original_rowwise_tag_table_retrieved": false
+  },
+  "original_author_institutional_archives": [
+    {
+      "handle": "20.500.11956/94265",
+      "year": 2008,
+      "kind": "Charles University doctoral dissertation",
+      "url": "https://dspace.cuni.cz/handle/20.500.11956/94265",
+      "title": "Local adaptation of the rare herb Aster amellus in fragmented landscape",
+      "document_index_result": "TimeoutError",
+      "original_rowwise_tag_table_retrieved": false
+    },
+    {
+      "handle": "20.500.11956/95341",
+      "year": 2009,
+      "kind": "Charles University rigorous thesis",
+      "url": "https://dspace.cuni.cz/handle/20.500.11956/95341",
+      "title": "Local adaptation of the rare herb Aster amellus in fragmented landscape",
+      "document_index_result": "TimeoutError",
+      "original_rowwise_tag_table_retrieved": false
+    }
+  ],
+  "executed_audit": {
+    "github_actions_run_id": 43723238370,
+    "synthetic_source_only_tests_passed": 6,
+    "script": "research/prospective/raabova2007_original_data_location_preflight_v01.py",
+    "contract": "research/prospective/raabova2007_original_data_location_preflight_contract_v01.json",
+    "inspected_html_attachment_index_only": true,
+    "downloaded_original_2007_tag_ID_table": false,
+    "downloaded_dissertation_PDF_data": false,
+    "source_access_errors_are_not_proof_of_file_absence": true,
+    "original_row_ID_crosspaper_join_attempted": false
+  },
+  "prior_evidence": {
+    "same_2004_adult_transplant_author_explicit": true,
+    "distinct_adult_transplant_experiment_count_across_two_papers": 1,
+    "original_2014_Table_S1_mark_variable_definition": "The number of the plant in the field",
+    "original_2014_survival_distinct_St_mark": 547,
+    "original_2014_performance_distinct_St_mark": 281,
+    "original_2014_shared_St_mark": 280,
+    "original_2014_shared_St_mark_So_consistent": 279,
+    "original_2014_origin_ID_conflict": 1,
+    "original_2014_performance_only_key": 1,
+    "original_2007_individual_mark_values_retrieved": false,
+    "crosspaper_2007_2014_shared_plant_tag_count": null
+  },
+  "data_dependency_if_2007_original_becomes_accessible": {
+    "required_fields": [
+      "original 2004 adult transplant field plant ID or plot/row/plant number",
+      "garden ID K1-K3/S1-S3",
+      "origin population K1-K3/S1-S3",
+      "original experiment year",
+      "year-specific renumbering key if original marker differs"
+    ],
+    "request_only_identifiers_not_fitness_values": true,
+    "author_or_archive_data_exchange_not_authorized_yet": true,
+    "author_contact_sent": false
+  },
+  "science_boundary": {
+    "do_not_interpret_access_gate_as_data_absence": true,
+    "never_present_2014_intrasheet_ID_join_as_2007_2014_tag_overlap": true,
+    "fitness_historical_climate_genetics_adaptation_plasticity_speciation_not_opened": true,
+    "Bontrager_PR154_44of50_terminal_unchanged": true,
+    "PR155_draft": true,
+    "main_unchanged": true
+  }
+}

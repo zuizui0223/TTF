@@ -1,0 +1,31 @@
+name: Tomiolo 2015 original Appendix A site methods only
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/tomiolo2015_figshare_appendixA_site_methods_contract_v01.json'
+      - 'research/prospective/tomiolo2015_figshare_appendixA_site_methods_v01.py'
+      - 'research/prospective/test_tomiolo2015_figshare_appendixA_site_methods_v01.py'
+      - '.github/workflows/ttf-tomiolo2015-appendix-A-site-only.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/tomiolo2015_figshare_appendixA_site_methods_contract_v01.json'
+      - 'research/prospective/tomiolo2015_figshare_appendixA_site_methods_v01.py'
+      - 'research/prospective/test_tomiolo2015_figshare_appendixA_site_methods_v01.py'
+      - '.github/workflows/ttf-tomiolo2015-appendix-A-site-only.yml'
+jobs:
+  frozen-original-A-site-context-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic original appendix A and no biology-response tests
+        run: python -m unittest discover -s research/prospective -p test_tomiolo2015_figshare_appendixA_site_methods_v01.py -v
+      - name: DOI and MD5 verified publisher Appendix A site descriptions only
+        run: python research/prospective/tomiolo2015_figshare_appendixA_site_methods_v01.py

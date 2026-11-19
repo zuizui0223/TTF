@@ -1,0 +1,91 @@
+{
+  "schema": "ttf_Raabova2007_Pankova2014_probable_same_2004_adult_transplant_cohort_source_provenance_v01",
+  "date": "2026-11-15",
+  "status": "PROBABLE_SHARED_2004_ADULT_TRANSPLANT_COHORT_INDIVIDUAL_ID_UNVERIFIED",
+  "purpose": "Primary-methods provenance adjudication: determine whether later Pankova 2014 six-site coordinates constitute independent source validation or likely a long-term follow-up of Raabova 2007 adult transplant.",
+  "target_2007": {
+    "doi": "10.1016/j.biocon.2007.07.007",
+    "publication": "Raabová, Münzbergová and Fischer 2007 Biological Conservation",
+    "methods_section": "2.6.2 Reciprocal transplant of adult plants",
+    "study_2007_other_components": "Two seed sowing experiments in 2003 and 2004, distinct from 2004 adult transplant.",
+    "adult_transplant_methods": {
+      "seeds_collected": "September 2003 (methods sections 2.6)",
+      "seed_sown": "February 2004 approx 300 seeds per population",
+      "greenhouse": "10 degrees Celsius natural light",
+      "seedlings": "April 2004 into 3 by 3 cm multipot trays",
+      "field_transplant": "October 2004",
+      "population_sites": 6,
+      "origins_per_site": 6,
+      "juvenile_replicates_per_origin_site": 25,
+      "blocks_rows_per_site": 5,
+      "interplant_distance_cm": 10,
+      "measurements_reported": "September 2005 and 2006"
+    },
+    "source": "https://www.academia.edu/4145747/Ecological_rather_than_geographic_or_genetic_distance_affects_local_adaptation_of_the_rare_perennial_herb_Aster_amellus"
+  },
+  "followup_2014": {
+    "doi": "10.1371/journal.pone.0093967",
+    "publication": "Pánková, Raabová and Münzbergová 2014 PLOS ONE",
+    "methods_section": "Materials and Methods: Reciprocal transplant experiment",
+    "adult_transplant_methods": {
+      "seeds_collected": "September 2003",
+      "seed_sown": "February 2004 approx 300 seeds per origin site",
+      "greenhouse": "10 degrees Celsius natural light",
+      "seedlings": "April 2004 into 3 by 3 cm multipot trays",
+      "field_transplant": "October 2004",
+      "population_sites": 6,
+      "origins_per_site": 6,
+      "juvenile_replicates_per_origin_site": 25,
+      "blocks_rows_per_site": 5,
+      "interplant_distance_cm": 10,
+      "measurements_reported": "October 2009 after five years"
+    },
+    "reported_followup_losses": "Two of six garden sites affected by erosion, analysis of surviving four targets; does not establish new cohort.",
+    "referenced_prior_publication": "Raabová et al. 2007 appears as reference 21",
+    "source": "https://doi.org/10.1371/journal.pone.0093967",
+    "published_geography": "Table 1 with six K1–K3 S1–S3 DMS coords"
+  },
+  "methods_identity_assessment": {
+    "comparison_units": "2004 adult transplant only; 2007 seed-sowing 2003 and 2004 experiments are not hereby equated to 2014 data",
+    "matching_fields": [
+      "seed collection year and month",
+      "greenhouse sowing year month and ~300 seeds/origin",
+      "10C greenhouse",
+      "April 3x3cm multipot",
+      "October 2004 field transplant",
+      "six identical population codes and garden sites",
+      "25 juveniles per origin per site",
+      "five randomized rows per garden",
+      "10 cm interplant spacing"
+    ],
+    "supports_probable_shared_2004_adult_cohort": true,
+    "individual_label_ID_crosspaper_directly_verified": false,
+    "shared_plants_confirmed_with_persistent_individual_tag_match": false,
+    "duplicate_published_biological_measurements_checked": false,
+    "independent_replication_certified": false,
+    "later_paper_is_certainly_a_completely_separate_2004_experiment": false,
+    "as_internal_geo_source_only": "The 2014 study provides code-matched published localities but not independently measured 2007 field GPS; same cohort plausible so do not inflate independent experiment counts.",
+    "uncertainty": "Near-identical planting protocol strongly suggests later follow-up of 2004 adult transplant, but without direct original individual/plot IDs cannot establish 1:1 individual overlap."
+  },
+  "frozen_previous_six_geography": {
+    "result_path": "research/prospective/source_registry/raabova2007_pankova2014_six_site_exploratory_v01.json",
+    "source_only_result_SHA256": "7d6c4c4e33a8e920a71a2e2064dc851665eca33ab6f258c6764ed358c254a342",
+    "six_distances_km": [
+      0.799619,
+      1.812728,
+      1.928084,
+      0.734489,
+      1.311237,
+      1.92598
+    ],
+    "numeric_result_not_modified": true,
+    "previous_invalid_2007_vs_2008_Sudova_stays_invalid": true
+  },
+  "boundaries": {
+    "no_fitness_genetic_plasticity_speciation_LGM_outcome_opened": true,
+    "no_new_independent_experiment_added": true,
+    "bontrager_previous_44_of_50_frozen_stop_unchanged": true,
+    "main_unchanged": true,
+    "PR155_remains_draft": true
+  }
+}

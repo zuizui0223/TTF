@@ -1,0 +1,55 @@
+{
+  "Bontrager_frozen_44_of_50_gate_unchanged": true,
+  "cross_paper_site_source_doi": "10.3732/ajb.1000114",
+  "fitness_or_adaptation_effect_used": false,
+  "historic_climate_measurement_fitted": false,
+  "original_population_lon_lat_values_exported": false,
+  "original_primary_study_doi": "10.1016/j.biocon.2007.07.007",
+  "original_study_label": "Raabovaetal_BiolConservation_2007",
+  "raw_original_source_pop_ID_exported": false,
+  "schema": "ttf_Raabova_Sudova_pub_primary_sites_crosspaper_source_only_geocoherence_v01",
+  "source_as_garden_receipt_SHA256": "944344d90b3bb0189c11d57c3a4ba561944453bcef8c42a3e01ea38f911e786d",
+  "source_only_primary_published_site_correspondence": {
+    "Hargreaves_original_same_study_source_as_garden_population_positions": 6,
+    "external_original_site_match_details": [
+      {
+        "actual_Hargreaves_source_ID_or_coordinates_exported": false,
+        "nearest_distance_km": 1.93168,
+        "nearest_second_choice_ambiguous": false,
+        "original_primary_locality_number": 3,
+        "source_only_nearest_distance_bucket": ">1km",
+        "unique_nearest_population_1km_corroboration": false
+      },
+      {
+        "actual_Hargreaves_source_ID_or_coordinates_exported": false,
+        "nearest_distance_km": 0.9278,
+        "nearest_second_choice_ambiguous": false,
+        "original_primary_locality_number": 1,
+        "source_only_nearest_distance_bucket": "0.1-1km",
+        "unique_nearest_population_1km_corroboration": true
+      },
+      {
+        "actual_Hargreaves_source_ID_or_coordinates_exported": false,
+        "nearest_distance_km": 3.76521,
+        "nearest_second_choice_ambiguous": false,
+        "original_primary_locality_number": 5,
+        "source_only_nearest_distance_bucket": ">1km",
+        "unique_nearest_population_1km_corroboration": false
+      },
+      {
+        "actual_Hargreaves_source_ID_or_coordinates_exported": false,
+        "nearest_distance_km": 6.51907,
+        "nearest_second_choice_ambiguous": false,
+        "original_primary_locality_number": 6,
+        "source_only_nearest_distance_bucket": ">1km",
+        "unique_nearest_population_1km_corroboration": false
+      }
+    ],
+    "original_external_locality_count": 4,
+    "original_field_GPS_independent_acquisition_certified": false,
+    "primary_paper_exact_population_ID_to_Hargreaves_source_ID_crosswalk_certified": false,
+    "published_sites_ambiguous_or_unmatched": 3,
+    "published_sites_spatially_corroborated_uniquely_within_1km": 1
+  },
+  "status": "LITERATURE_SAME_SITE_SPATIAL_COHERENCE_NOT_IDENTICAL_SOURCE_ID_CERTIFICATION"
+}

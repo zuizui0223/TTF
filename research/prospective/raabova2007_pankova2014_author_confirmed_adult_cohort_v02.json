@@ -1,0 +1,65 @@
+{
+  "schema": "ttf_raabova2007_pankova2014_author_explicit_shared_cohort_v02",
+  "date": "2026-11-15",
+  "status": "AUTHOR_EXPLICIT_SHARED_ADULT_2004_TRANSPLANT_EXPERIMENT_INDIVIDUAL_ID_UNVERIFIED",
+  "supersedes_interpretation_only": "research/prospective/raabova2007_pankova2014_probable_shared_adult_cohort_v01.json",
+  "evidence": {
+    "followup_doi": "10.1371/journal.pone.0093967",
+    "followup_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3977983/",
+    "section": "Discussion: Local adaptation",
+    "short_source_quote": "same reciprocal transplant experiments after two years",
+    "reference_number": 21,
+    "reference_doi": "10.1016/j.biocon.2007.07.007",
+    "reference_author_year": "Raabová, Münzbergová & Fischer 2007",
+    "original_methods_section": "2.6.2 Reciprocal transplant of adult plants",
+    "source_year2007": "https://www.academia.edu/4145747/Ecological_rather_than_geographic_or_genetic_distance_affects_local_adaptation_of_the_rare_perennial_herb_Aster_amellus",
+    "authors_explicitly_identify_same_experiment": true
+  },
+  "cohort": {
+    "key": "Raabova2007__Aster_amellus__adult_transplant__2004Oct__K1K2K3S1S2S3",
+    "source_seeds_collected": "September 2003",
+    "greenhouse_sowing": "February 2004",
+    "field_transplant": "October 2004",
+    "original_six_origin_and_garden_codes": [
+      "K1",
+      "K2",
+      "K3",
+      "S1",
+      "S2",
+      "S3"
+    ],
+    "plants_per_origin_garden": 25,
+    "early_report": "Raabová 2007 September 2005 and 2006",
+    "late_report": "Pánková 2014 October 2009",
+    "late_gardens_analysable_after_erosion": [
+      "K1",
+      "K3",
+      "S1",
+      "S2"
+    ],
+    "late_individuals_marked_with_numbered_metal_tags": true,
+    "individual_tags_from_early_paper_verified": false,
+    "separate_year2003_year2004_seed_sowing_experiments_not_merged": true
+  },
+  "deduplication": {
+    "source_dois": [
+      "10.1016/j.biocon.2007.07.007",
+      "10.1371/journal.pone.0093967"
+    ],
+    "papers": 2,
+    "shared_adult_cohort_count": 1,
+    "incremental_independent_adult_cohorts_from_followup": 0,
+    "raw_individual_ID_crosspaper_join_verified": false,
+    "overlap_count_of_raw_measurement_rows": null,
+    "not_independent_GPS_verification": true,
+    "not_an_additional_independent_experiment": true
+  },
+  "boundaries": {
+    "prior_geo_receipts_unchanged": true,
+    "no_fitness_effect_or_LGM_adaptation_genetics_plasticity_speciation_fit": true,
+    "PR154_44of50_stop_unchanged": true,
+    "PROCEED_TTFQ_and_genetic_outcomes_unchanged": true,
+    "PR155_draft": true,
+    "main_untouched": true
+  }
+}

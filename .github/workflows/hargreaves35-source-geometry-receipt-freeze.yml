@@ -1,0 +1,71 @@
+name: Freeze original Hargreaves35 source geometry receipt
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - '.github/workflows/hargreaves35-source-geometry-receipt-freeze.yml'
+
+jobs:
+  retain-source-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: prospective/independent-transplant-overlap-20261115
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43708203840
+          name: ttf-hargreaves35-source-geometry-only-v01
+          github-token: ${{ github.token }}
+          path: _ttf_source_only
+      - name: Verify frozen source-only original 35-study geometry receipt
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          path=Path("_ttf_source_only/hargreaves35_study_geometry_v01.json")
+          raw=path.read_bytes()
+          assert hashlib.sha256(raw).hexdigest()=="7354b7fc559a16b0a2656ef251da84add8d4062d74d8e797092a2d3c76450dca"
+          a=json.loads(raw)
+          assert a["source_SHA256_verified"]=="f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71"
+          assert a["frozen_unlinked_source_study_list_receipt_SHA256"]=="8268387cdaec3a835086418f7ce91f91777cbbc1026e148c6e6e0399647106c3"
+          s=a["summary"]
+          assert s["original_study_labels_previously_unlinked"]==35
+          assert s["plant_rows_in_35_unlinked_source_labels"]==1234
+          assert s["study_labels_with_at_least_one_plant_row"]==35
+          assert s["study_labels_with_at_least_two_source_IDs"]==35
+          assert s["study_labels_with_multiple_original_garden_IDs"]==31
+          assert s["study_labels_with_same_garden_multi_source_opportunity"]==30
+          assert s["sum_candidate_same_garden_cells_not_independent_experiments"]==167
+          assert s["study_labels_with_no_original_experiment_ID"]==0
+          assert s["verified_independent_original_experiments"]==0
+          assert s["verified_source_population_georeferenced_studies_in_Hargreaves_original"]==0
+          assert s["fitness_response_values_read"]==0
+          assert len(a["studies"])==35
+          assert sum(x["candidate_same_garden_cells_with_complete_garden_coordinate"] for x in a["studies"])==165
+          assert sum(x["candidate_same_garden_cells_missing_or_ambiguous_garden_coordinate"] for x in a["studies"])==2
+          assert a["fitness_values_or_effects_indexed"] is False
+          assert a["Bontrager_44_of_50_frozen_stop_unchanged"] is True
+          assert a["Hargreaves_35_labels_not_promoted_to_independent_studies"] is True
+          print("VERIFIED_HARGREAVES35_SOURCE_ONLY_RECEIPT",35,30,167,"SOURCE_GEO_UNAVAILABLE")
+          PY
+      - name: Keep original-study aggregate only on development branch
+        run: |
+          mkdir -p research/prospective/source_registry
+          cp _ttf_source_only/hargreaves35_study_geometry_v01.json research/prospective/source_registry/hargreaves35_study_geometry_v01.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/prospective/source_registry/hargreaves35_study_geometry_v01.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Freeze original Hargreaves35 source-only geometry and no-coordinate qualification"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi

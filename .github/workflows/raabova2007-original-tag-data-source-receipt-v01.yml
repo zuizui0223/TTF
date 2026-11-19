@@ -1,0 +1,27 @@
+name: Raabova 2007 source access truthful no-tag-ID gate
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/raabova2007_individual_tag_source_access_receipt_v01.json'
+      - 'research/prospective/test_raabova2007_individual_tag_source_access_receipt_v01.py'
+      - '.github/workflows/raabova2007-original-tag-data-source-receipt-v01.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/raabova2007_individual_tag_source_access_receipt_v01.json'
+      - 'research/prospective/test_raabova2007_individual_tag_source_access_receipt_v01.py'
+      - '.github/workflows/raabova2007-original-tag-data-source-receipt-v01.yml'
+jobs:
+  verified-source-only-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check retrieval errors never imply dataset absence or crosspaper individual overlap
+        run: python -m unittest discover -s research/prospective -p test_raabova2007_individual_tag_source_access_receipt_v01.py -v

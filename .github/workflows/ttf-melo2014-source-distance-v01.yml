@@ -1,0 +1,36 @@
+name: Melo 2014 original coordinate-distance qualification
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - '.github/workflows/ttf-melo2014-source-distance-v01.yml'
+      - 'research/prospective/melo2014_original_coordinate_distance_gate_v01.py'
+      - 'research/prospective/test_melo2014_original_coordinate_distance_gate_v01.py'
+      - 'research/prospective/hargreaves35_primary_article_recovery_shortlist_v01.json'
+  pull_request:
+    paths:
+      - '.github/workflows/ttf-melo2014-source-distance-v01.yml'
+      - 'research/prospective/melo2014_original_coordinate_distance_gate_v01.py'
+      - 'research/prospective/test_melo2014_original_coordinate_distance_gate_v01.py'
+      - 'research/prospective/hargreaves35_primary_article_recovery_shortlist_v01.json'
+jobs:
+  original-published-geography:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fourteen original source-only geographic audit tests
+        run: python -m unittest discover -s research/prospective -p test_melo2014_original_coordinate_distance_gate_v01.py -v
+      - name: Reproduce original-coordinate distance discrepancy
+        run: python research/prospective/melo2014_original_coordinate_distance_gate_v01.py --output _source_only/melo2014_original_coordinate_distance_gate_v01.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-melo2014-original-source-distance-v01
+          path: _source_only/melo2014_original_coordinate_distance_gate_v01.json
+          retention-days: 30

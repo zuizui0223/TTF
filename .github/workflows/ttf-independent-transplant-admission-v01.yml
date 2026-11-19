@@ -1,0 +1,36 @@
+name: TTF independent transplant source-only admission
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - '.github/workflows/ttf-independent-transplant-admission-v01.yml'
+      - 'research/prospective/independent_original_transplant_admission_v01.py'
+      - 'research/prospective/test_independent_original_transplant_admission_v01.py'
+      - 'research/prospective/hargreaves35_primary_article_recovery_shortlist_v01.json'
+  pull_request:
+    paths:
+      - '.github/workflows/ttf-independent-transplant-admission-v01.yml'
+      - 'research/prospective/independent_original_transplant_admission_v01.py'
+      - 'research/prospective/test_independent_original_transplant_admission_v01.py'
+      - 'research/prospective/hargreaves35_primary_article_recovery_shortlist_v01.json'
+jobs:
+  original-source-admission:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run seven source-only admission tests
+        run: python -m unittest discover -s research/prospective -p test_independent_original_transplant_admission_v01.py -v
+      - name: Generate source-only admission artifact
+        run: python research/prospective/independent_original_transplant_admission_v01.py --output _source_only/independent_transplant_admission_v01.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-independent-transplant-admission-source-only-v01
+          path: _source_only/independent_transplant_admission_v01.json
+          retention-days: 30

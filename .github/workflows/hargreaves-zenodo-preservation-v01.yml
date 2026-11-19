@@ -1,0 +1,56 @@
+name: Hargreaves official Zenodo Dryad preservation preflight
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/hargreaves_zenodo_preservation_index_v01.py'
+      - 'research/prospective/test_hargreaves_zenodo_preservation_index_v01.py'
+      - 'research/prospective/hargreaves_zenodo_header_source_only_v01.py'
+      - 'research/prospective/test_hargreaves_zenodo_header_source_only_v01.py'
+      - 'research/prospective/hargreaves_zenodo_study_overlap_source_only_v01.py'
+      - 'research/prospective/test_hargreaves_zenodo_study_overlap_source_only_v01.py'
+      - 'research/prospective/hargreaves_zenodo_study_overlap_contract_v01.json'
+      - '.github/workflows/hargreaves-zenodo-preservation-v01.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/hargreaves_zenodo_preservation_index_v01.py'
+      - 'research/prospective/test_hargreaves_zenodo_preservation_index_v01.py'
+      - 'research/prospective/hargreaves_zenodo_header_source_only_v01.py'
+      - 'research/prospective/test_hargreaves_zenodo_header_source_only_v01.py'
+      - 'research/prospective/hargreaves_zenodo_study_overlap_source_only_v01.py'
+      - 'research/prospective/test_hargreaves_zenodo_study_overlap_source_only_v01.py'
+      - 'research/prospective/hargreaves_zenodo_study_overlap_contract_v01.json'
+      - '.github/workflows/hargreaves-zenodo-preservation-v01.yml'
+
+jobs:
+  preservation-index-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exact-DOI preservation matching and denied-access tests (synthetic only)
+        run: python -m unittest discover -s research/prospective -p test_hargreaves_zenodo_preservation_index_v01.py -v
+      - name: Public Zenodo preservation-record metadata probe (no original CSV)
+        run: python research/prospective/hargreaves_zenodo_preservation_index_v01.py
+      - name: Validate first-line-only original CSV access safeguards
+        run: python -m unittest discover -s research/prospective -p test_hargreaves_zenodo_header_source_only_v01.py -v
+      - name: Probe official preserved original CSV header only (no data rows)
+        run: python research/prospective/hargreaves_zenodo_header_source_only_v01.py
+      - name: Fixed source-only original study-label overlap tests (no genetic/fitness outcomes)
+        run: python -m unittest discover -s research/prospective -p test_hargreaves_zenodo_study_overlap_source_only_v01.py -v
+      - name: SHA-verified original Zenodo CSV metadata-only study-label overlap
+        run: python research/prospective/hargreaves_zenodo_study_overlap_source_only_v01.py --output _ttf_source_only/hargreaves_bontrager_original_study_overlap_v01.json
+      - name: Archive only original study-label provenance and aggregate overlap
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-hargreaves-bontrager-study-overlap-source-only-v01
+          path: _ttf_source_only/hargreaves_bontrager_original_study_overlap_v01.json
+          retention-days: 30
+          if-no-files-found: error

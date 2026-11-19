@@ -1,0 +1,51 @@
+{
+  "baseline_zero_restored_arms": "NONESTIMABLE",
+  "by_restored_arm_count": {
+    "1": {
+      "max_variance_factor": 5.111111111111111,
+      "median_variance_factor": 5.111111111111111,
+      "min_variance_factor": 5.111111111111111,
+      "subsets": 6
+    },
+    "2": {
+      "max_variance_factor": 2.6666666666666665,
+      "median_variance_factor": 2.4444444444444446,
+      "min_variance_factor": 2,
+      "subsets": 15
+    },
+    "3": {
+      "max_variance_factor": 1.75,
+      "median_variance_factor": 1.436241610738255,
+      "min_variance_factor": 1.436241610738255,
+      "subsets": 20
+    },
+    "4": {
+      "max_variance_factor": 1.1428571428571428,
+      "median_variance_factor": 1.096774193548387,
+      "min_variance_factor": 1,
+      "subsets": 15
+    },
+    "5": {
+      "max_variance_factor": 0.8354430379746836,
+      "median_variance_factor": 0.8354430379746836,
+      "min_variance_factor": 0.8354430379746836,
+      "subsets": 6
+    },
+    "6": {
+      "max_variance_factor": 0.6666666666666666,
+      "median_variance_factor": 0.6666666666666666,
+      "min_variance_factor": 0.6666666666666666,
+      "subsets": 1
+    }
+  },
+  "contrast": "source_quartz_minus_garden_quartz",
+  "frozen_endpoints_unchanged": true,
+  "independent_replicate_or_causal_precision_claim": false,
+  "missing_arm_subsets_exhausted": 63,
+  "one_arm_vs_all_six_variance_factor_ratio": 7.666666666666667,
+  "original_fitness_genetics_GPS_LGM_outcomes_opened": false,
+  "schema": "ttf_Ellis2007_source_only_quartz_precision_v01",
+  "source_receipt_sha256": "28cea27d59affd846c9ee490f20daedd36220e6e75041f429663a208dcd239ce",
+  "status": "DESIGN_ONLY_WORKING_MODEL_VARIANCE_NOT_EMPIRICAL_PRECISION",
+  "working_assumption": "independent homoscedastic errors with common variance sigma_squared; variance_factor multiplies sigma_squared"
+}

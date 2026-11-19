@@ -1,0 +1,57 @@
+{
+  "schema": "ttf_Raabova2007_Sudova2010_primary_poplocalities_crosspaper_predata_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_BEFORE_HARGREAVES_SOURCE_AS_GARDEN_CROSSPAPER_SITE_CHECK",
+  "target_study_label": "Raabovaetal_BiolConservation_2007",
+  "taxon": "aster amellus",
+  "original_transplant_study_doi": "10.1016/j.biocon.2007.07.007",
+  "external_primary_source_doi": "10.3732/ajb.1000114",
+  "external_source_title": "Ploidy-specific interactions of three host plants with arbuscular mycorrhizal fungi: Does genome copy number matter?",
+  "external_evidence": "Sudova et al. (2010) American Journal of Botany, Table 1. Its first four Aster amellus rows correspond explicitly to Raabova et al. 2007 original locality numbers 3, 1, 5, and 6 in that order. Exact field DMS coordinates are independently published source metadata.",
+  "source_as_garden_original": {
+    "original_dryad_doi": "10.5061/dryad.0vt4b8gv1",
+    "exact_source_SHA256": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+    "prior_source_as_garden_receipt": "research/prospective/source_registry/hargreaves_source_as_garden_georecovery_v01.json",
+    "prior_receipt_SHA256": "944344d90b3bb0189c11d57c3a4ba561944453bcef8c42a3e01ea38f911e786d",
+    "expected_study_recovered_unique_source_sites": 6
+  },
+  "original_external_localities": [
+    {
+      "source_site_locality_number_in_Raabova_2007": 3,
+      "locality_name": "Encovany",
+      "latitude_dms": "50:31:45N",
+      "longitude_dms": "14:15:32E"
+    },
+    {
+      "source_site_locality_number_in_Raabova_2007": 1,
+      "locality_name": "Malic",
+      "latitude_dms": "50:32:25N",
+      "longitude_dms": "14:05:06E"
+    },
+    {
+      "source_site_locality_number_in_Raabova_2007": 5,
+      "locality_name": "Svareniče-Na Bausce",
+      "latitude_dms": "50:29:36N",
+      "longitude_dms": "14:18:41E"
+    },
+    {
+      "source_site_locality_number_in_Raabova_2007": 6,
+      "locality_name": "Sovice hill",
+      "latitude_dms": "50:27:56N",
+      "longitude_dms": "14:18:24E"
+    }
+  ],
+  "prespecified_distance_rule": {
+    "metric": "WGS84 haversine km",
+    "nearest_hargreaves_site_population": "Distinct exact source-as-garden (study,taxon,ID) Hargreaves proxy site locations only; never choose any other study or species.",
+    "maximum_distance_for_cross_paper_corroboration_km": 1,
+    "minimum_nearest_second_best_separation_km": 1,
+    "each_hargreaves_site_can_match_at_most_one_external_site": true,
+    "original_Raabova_source_site_ID_not_inferred_from_nearest_distance_alone": true,
+    "no_raw_coordinates_or_source_IDs_exported": true,
+    "no_climate_resampling_or_adaptation_response_opened": true,
+    "if_unmatched_or_ambiguous": "REPORT_UNRESOLVED_SITES_NO_FUZZY_REMAP"
+  },
+  "interpretive_boundary": "Cross-paper spatial co-location provides location evidence, not independent raw GPS replication or confirmation that Hargreaves experiment source IDs map to original primary labels. Bontrager/Hargreaves and primary literature may reuse the same site georeferencing. Do not claim genetic adaptation, LGM history effect or a recovered macro panel.",
+  "all_prior_terminal_results_unchanged": true
+}

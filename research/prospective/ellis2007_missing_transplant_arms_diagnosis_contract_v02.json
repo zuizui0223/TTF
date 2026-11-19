@@ -1,0 +1,61 @@
+{
+  "schema": "ttf_Ellis2007_original_meta_analysis_source_garden_missing_arm_diagnosis_v02",
+  "date": "2026-11-16",
+  "status": "FROZEN_AFTER_ORIGINAL_SOURCE_ONLY_18_OF_24_DESIGN_DISCOVERY_BEFORE_CATEGORY_BREAKDOWN",
+  "motivation": "Ellis original 2007 article Methods specify 6 original gardens, four source populations each = 24 directed source-garden combinations. Response-blind Hargreaves original source metadata returned 18 source-garden pairs (three per garden). Quantify which original experimental arms are absent without opening fitness and without relabeling source populations after results.",
+  "previous_sha_verified_geometry": {
+    "original_first_run_id": 43889172121,
+    "previous_source_only_result_sha256": "9f637d2be1272e9d406d55864ed8726598efa0a2e6cb26a841f3b2e03396ad35",
+    "previous_anonymous_original_site_geometry_path": "research/prospective/source_registry/ellis2007_six_original_populations_geometry_v01.json",
+    "source_original_hargreaves_sha256": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+    "study_label": "Ellisetal_NewPhytol_2007",
+    "species": "argyroderma pearsonii",
+    "observed_study_source_population_IDs": 6,
+    "observed_source_gardens": 6,
+    "observed_origin_destination_pairs": 18,
+    "observed_per_garden_origin_ID_count": 3,
+    "published_original_sites_and_habitats": "Ariz/Sout/QK × dense/sparse quartz"
+  },
+  "predeclared_primary_article_transplant_topology": {
+    "DOI": "10.1111/j.1469-8137.2007.02043.x",
+    "original_article_location": "https://nph.onlinelibrary.wiley.com/doi/10.1111/j.1469-8137.2007.02043.x",
+    "original_sample_year": 2000,
+    "original_measurement_end_year": 2003,
+    "expected_local_same_site_pairs": 6,
+    "expected_same_basin_different_quartz_pairs": 6,
+    "expected_other_basin_same_quartz_pairs": 12,
+    "expected_other_basin_different_quartz_pairs": 0,
+    "expected_total_pair_edges": 24,
+    "sources_per_garden": 4,
+    "classify_edges_using_literal_basin_and_quartz_habitat_source_ID_codes_only": true,
+    "prohibit_source_garden_geo_proximity_label_assignment": true
+  },
+  "source_metadata": {
+    "original_hargreaves_archive_contract": "research/prospective/bontrager_hargreaves_finegrain_overlap_contract_v01.json",
+    "read_metadata_helper_contract": "research/prospective/hargreaves_source_as_garden_georecovery_contract_v01.json",
+    "source_only_fields": [
+      "study",
+      "functional_group",
+      "taxon",
+      "source",
+      "site",
+      "experiment",
+      "fitness_type",
+      "lat_site",
+      "long_site"
+    ],
+    "output_per_basin_within_pair_distance_km_as_named_basin_aggregate_allowed": true,
+    "output_edge_class_count_differences_not_raw_source_or_garden_IDs": true,
+    "missing_edge_cause_not_inferred_from_absence": true,
+    "raw_response_columns_not_read": true,
+    "exclude_ancestral_climate_historical_21ka_LGM_inference": true
+  },
+  "null_vs_source_condition": {
+    "missing_arms_are_not_nonexistent_original_experiments": true,
+    "missing_arms_may_be_meta_analysis_extraction_or_coding_or_source_loss": true,
+    "do_not_present_18_available_edges_as_full_24_primary_experiment_design": true,
+    "source_study_GPS_independently_verified": false,
+    "original_44_of_50_terminal_stop_unchanged": true,
+    "PR155_stays_draft": true
+  }
+}

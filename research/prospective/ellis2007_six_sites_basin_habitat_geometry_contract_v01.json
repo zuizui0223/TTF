@@ -1,0 +1,100 @@
+{
+  "schema": "ttf_Ellis2007_three_basins_two_quartz_habitats_original_geometry_predata_v01",
+  "date": "2026-11-16",
+  "status": "FROZEN_BEFORE_ELLIS2007_ORIGINAL_HARGREAVES_GEOMETRY_AUDIT",
+  "study": {
+    "original_doi": "10.1111/j.1469-8137.2007.02043.x",
+    "original_title": "Spatial scale of local adaptation and population genetic structure in a miniature succulent, Argyroderma pearsonii",
+    "year": 2007,
+    "original_journal": "New Phytologist",
+    "original_organism": "argyroderma pearsonii",
+    "Hargreaves_original_study_label": "Ellisetal_NewPhytol_2007",
+    "authors": [
+      "Allan G. Ellis",
+      "Arthur E. Weis",
+      "Brandon S. Gaut"
+    ],
+    "published_full_text": "https://nph.onlinelibrary.wiley.com/doi/10.1111/j.1469-8137.2007.02043.x",
+    "published_original_methods": {
+      "focal_drainage_basins": [
+        "Ariz",
+        "Sout",
+        "QK"
+      ],
+      "quartz_habitat_groups": [
+        "dense",
+        "sparse"
+      ],
+      "original_population_design": "One dense and one sparse quartz habitat population within each of three drainage basins (3 x 2 = 6 original source populations).",
+      "pairwise_within_basin_distance_km_range_approx": [
+        0.4,
+        1.2
+      ],
+      "basin_spacing_km_approx": [
+        5,
+        10
+      ],
+      "sampling_historical_time": "Adult transplants collected July 2000; observed annually November 2001-2003.",
+      "physical_experiment": "72 adult plant individuals collected from each population; each destination garden 18 from each of four origin populations; cross-basin same quartz habitat and within-basin other quartz habitat comparisons.",
+      "design_exclusions": "No transplants between dense and sparse quartz habitats in DIFFERENT drainage basins. Thus each garden does not include all six populations.",
+      "paper_map_precision": "Figure 1 shows six sample populations but paper text does not supply six independent georeferenced WGS84 population coordinates with explicit table keys."
+    }
+  },
+  "source": {
+    "original_Hargreaves_DOI": "10.5061/dryad.0vt4b8gv1",
+    "original_Hargreaves_SHA256": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+    "original_dataset_contract": "research/prospective/bontrager_hargreaves_finegrain_overlap_contract_v01.json",
+    "original_Hargreaves_source_only_parser_contract": "research/prospective/hargreaves_source_as_garden_georecovery_contract_v01.json",
+    "qualified_Bontrager_exclusion_registry": "research/prospective/source_registry/hargreaves35_independent_source_firstwave_eligibility_v01.json",
+    "expected_original_source_population_ID_keys": 6,
+    "expected_unique_source_as_garden_proxy_points": 6,
+    "expected_same_garden_multi_source_design_cells": 18
+  },
+  "method": {
+    "allowed_original_csv_fields": [
+      "study",
+      "functional_group",
+      "taxon",
+      "source",
+      "site",
+      "experiment",
+      "fitness_type",
+      "lat_site",
+      "long_site"
+    ],
+    "qualifier": "strict original same-study × strict binomial taxon × source-ID exactly equals destination garden-ID; no source WGS84 in Hargreaves original",
+    "raw_original_plant_IDs_and_site_coordinates_never_exported": true,
+    "original_species_strict_match_required": true,
+    "compute_all_unordered_pairwise_km_15_pairs": true,
+    "distance_bins_km": [
+      0.4,
+      1.2,
+      2,
+      5,
+      10,
+      20
+    ],
+    "report_haversine_km_min_median_max_and_binned_pair_distribution": true,
+    "attempt_source_ID_basin_and_habitat_lexical_matching_only_if_exact_unambiguous_name_in_ID": true,
+    "never_auto_assign_basin_or_habitat_from_nearest_geography": true,
+    "if_basin_or_habitat_uncodable": "NO_BASIN_HABITAT_PAIRS_CERTIFIED",
+    "original_figure_georeferencing_not_performed": true,
+    "no_new_historical_21ka_0BP_raster_sampling": true,
+    "no_fitness_growth_reproduction_survival_response_columns_used": true,
+    "do_not_label_basin_structure_as_LGM_climate_driver": true,
+    "no_post_result_new_coordinate_tolerance_or_species_matching": true
+  },
+  "independence": {
+    "physical_adult_transplant_2000_one_experiment_not_15_independent_historical_site_pairs": true,
+    "published_2006_Ellis_same_region_same_drainage_basins_is_not_auto_separate_adult_cohort": true,
+    "confirmed_unique_primary_2000_transplant_cohort_across_other_papers": false,
+    "replicate_intervention_units_not_study_DOIs": true
+  },
+  "stop": {
+    "source_GPS_independently_verified": false,
+    "no_environmental_historical_adaptation_fitness_analysis": true,
+    "old_Bontrager_44of50_source_gate_unchanged": true,
+    "PR155_stays_draft": true,
+    "main_not_modified": true
+  }
+}

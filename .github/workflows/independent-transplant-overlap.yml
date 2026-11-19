@@ -1,0 +1,35 @@
+name: Independent transplant source overlap gate
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/primary_study_overlap_gate.py'
+      - 'research/prospective/test_primary_study_overlap_gate.py'
+      - 'research/prospective/hargreaves_header_access_probe_v01.py'
+      - 'research/prospective/test_hargreaves_header_access_probe_v01.py'
+      - '.github/workflows/independent-transplant-overlap.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/primary_study_overlap_gate.py'
+      - 'research/prospective/test_primary_study_overlap_gate.py'
+      - '.github/workflows/independent-transplant-overlap.yml'
+
+jobs:
+  source-only:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Strict synthetic overlap tests (no external data or outcome access)
+        run: |
+          python -m compileall -q research/prospective/primary_study_overlap_gate.py
+          python -m unittest discover -s research/prospective -p test_primary_study_overlap_gate.py -v
+          python -m unittest discover -s research/prospective -p test_hargreaves_header_access_probe_v01.py -v
+      - name: Dryad public header source access decision (no response rows)
+        run: python research/prospective/hargreaves_header_access_probe_v01.py

@@ -1,0 +1,1804 @@
+{
+  "Hargreaves_overlap_checked": false,
+  "catalog": [
+    {
+      "candidate_year_from_label_NOT_verified": "2007",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "abdala robertsandmarquis oecologia 2007",
+      "original_study_label": "Abdala-RobertsandMarquis_Oecologia_2007",
+      "original_study_label_sha256": "91e6296ac82ae2dfbeb3f117ae71d54de11dee7192fa46fff442733689bad2df",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Chamaecrista fasciculata"
+      ],
+      "qualified_same_garden_cells": 9,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2007"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2016",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "adleretal amjbot 2016",
+      "original_study_label": "Adleretal_AmJBot_2016",
+      "original_study_label_sha256": "fed20fe6fe1f63b90a1adcfc01119be06ea5807c3a17d0aad2a658c0be59cf30",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Gelsemium sempervirens"
+      ],
+      "qualified_same_garden_cells": 2,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2016"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2014",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "afkhamietal ecollett 2014",
+      "original_study_label": "Afkhamietal_EcolLett_2014",
+      "original_study_label_sha256": "0fd34949c7a0bf0dc66a1c5d84812894688b593ae4d970f5a1cd4053ebe4078b",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Bromus laevipes"
+      ],
+      "qualified_same_garden_cells": 10,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2014"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2012",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "agrenandschemske newphytol 2012",
+      "original_study_label": "AgrenandSchemske_NewPhytol_2012",
+      "original_study_label_sha256": "e05b3f853448d859378dcaf65d56426a105043afa5c6d66afbf1ecf2f723e651",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Arabidopsis thaliana"
+      ],
+      "qualified_same_garden_cells": 10,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2012"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2010",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "alexander jbiogeography 2010",
+      "original_study_label": "Alexander_JBiogeography_2010",
+      "original_study_label_sha256": "8f81be5e9713a011ffa43a538350018cbfbb40715f4d96913e0abc07577f34fc",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Lactuca serriola"
+      ],
+      "qualified_same_garden_cells": 5,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2010"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2012",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "alexanderetal jecol 2012",
+      "original_study_label": "Alexanderetal_JEcol_2012",
+      "original_study_label_sha256": "c798f7498e5975280d8d2f9f5745cd7d63d8315f4140120a3a24fc4b7bb5ca07",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Plantago lanceolata"
+      ],
+      "qualified_same_garden_cells": 12,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2012"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2008",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "andersenetal forestecolmanag 2008",
+      "original_study_label": "Andersenetal_ForestEcolManag_2008",
+      "original_study_label_sha256": "13e8498c5c7066667fa74dcd4b81df08dc1a3cee4cca81ba044e4eb7765aee5f",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Abies guatemalensis"
+      ],
+      "qualified_same_garden_cells": 2,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2008"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2015",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "andersonetal amnat 2015",
+      "original_study_label": "Andersonetal_AmNat_2015",
+      "original_study_label_sha256": "b5de5440473ad6a29d100ecef135d20f0ba4170be39da391e1694ea6b96dbf65",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Boechera stricta"
+      ],
+      "qualified_same_garden_cells": 13,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2015"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2013",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "andersonetal evolution 2013",
+      "original_study_label": "Andersonetal_Evolution_2013",
+      "original_study_label_sha256": "07f059fa65aadef390d292358194fd2dcd43216ebe762e3785be47cd630bcf61",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Boechera stricta"
+      ],
+      "qualified_same_garden_cells": 4,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2013"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2005",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "angertandschemske evolution 2005",
+      "original_study_label": "AngertandSchemske_Evolution_2005",
+      "original_study_label_sha256": "ecbb5ff133269554374bd9e59864582dd96b838138c17074c678e2f71e7a768f",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Mimulus cardinalis",
+        "Mimulus lewisii"
+      ],
+      "qualified_same_garden_cells": 5,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2005"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2012",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "aparicioetal treegenetgenomes 2012",
+      "original_study_label": "Aparicioetal_TreeGenetGenomes_2012",
+      "original_study_label_sha256": "62a823dca8171e6fa63e464ba75e0db76cc8b757fcdacb1c6479c045e56f9e5d",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Austrocedrus chilensis"
+      ],
+      "qualified_same_garden_cells": 2,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2012"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2011",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "arizaandtielborger functecol 2011",
+      "original_study_label": "ArizaandTielborger_FunctEcol_2011",
+      "original_study_label_sha256": "3ddb2b2faca709e722359f5ab0931fc0c73d7bb44e1fdce42193308a428adfc9",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Biscutella didyma",
+        "Hymenocarpos circinnatus"
+      ],
+      "qualified_same_garden_cells": 7,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2011"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": null,
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": true,
+      "normalized_study_label": "benningtonetal jecol 2012 mcgrawetal globalchangebiol 2015",
+      "original_study_label": "Benningtonetal_JEcol_2012_McGrawetal_GlobalChangeBiol_2015",
+      "original_study_label_sha256": "3a1e18c4e89b092ac58e5a3663cdc0540e90550b1a289760e2918839cbe544fb",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Eriophorum vaginatum"
+      ],
+      "qualified_same_garden_cells": 12,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2012",
+        "2015"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2006",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "bischoffetal jecol 2006",
+      "original_study_label": "Bischoffetal_JEcol_2006",
+      "original_study_label_sha256": "68180e85a0335e4bbd66c92a1a95ad892801df1d96d5497e36e9be607a0129d6",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Holcus lanatus",
+        "Lotus corniculatus",
+        "Plantago lanceolata"
+      ],
+      "qualified_same_garden_cells": 9,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2006"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2010",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "bischoffetal restorationecol 2010",
+      "original_study_label": "Bischoffetal_RestorationEcol_2010",
+      "original_study_label_sha256": "bb43b81566187f77dcc5931cdf1179ce9baf8a7ad463fb929e29126ff6edbaed",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Cichorium intybus",
+        "Echium vulgare",
+        "Origanum vulgare"
+      ],
+      "qualified_same_garden_cells": 3,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2010"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2014",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "breedetal plosone 2014",
+      "original_study_label": "Breedetal_PLoSOne_2014",
+      "original_study_label_sha256": "5a49650cb2d6b85d5d7d6a7412cccceefdba9a706c6403c2cded1f40eb6b9006",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Eucalyptus gracilis"
+      ],
+      "qualified_same_garden_cells": 3,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2014"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "1994",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "bresnanetal sylvaegenetica 1994",
+      "original_study_label": "Bresnanetal_SylvaeGenetica_1994",
+      "original_study_label_sha256": "67c46ccda9c29cbf2e89119e7fc0309f789d289f83f7413784df7c07ecd768d9",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Juglans nigra"
+      ],
+      "qualified_same_garden_cells": 7,
+      "source_year_tokens_not_primary_publication_verification": [
+        "1994"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2016",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "bucharovaetal japplecol 2016",
+      "original_study_label": "Bucharovaetal_JApplEcol_2016",
+      "original_study_label_sha256": "2e6ed1a9d8d06ff85ac223a892931fa1b8c8fb1dcbdd43d522b0d5dc86ab5cae",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Arrhenatherum elatius",
+        "Daucus carota",
+        "Galium album",
+        "Knautia arvensis"
+      ],
+      "qualified_same_garden_cells": 48,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2016"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2007",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "byarsetal evolution 2007",
+      "original_study_label": "Byarsetal_Evolution_2007",
+      "original_study_label_sha256": "38c8a37264ad1b3c2a656b74d0d840fc56cdc33bf6bc402772ab79afa0e0c363",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Poa hiemata"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2007"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2012",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "carterandblair ecosphere 2012",
+      "original_study_label": "CarterandBlair_Ecosphere_2012",
+      "original_study_label_sha256": "be7b24991f73ace1a050e8b4adc1132a24ca27f916493d65665a8fcb1f3ba42d",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Elymus canadensis",
+        "Oligoneuron rigidum",
+        "Sorghastrum nutans"
+      ],
+      "qualified_same_garden_cells": 9,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2012"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2013",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "castanhaetal plantecoldivers 2013",
+      "original_study_label": "Castanhaetal_PlantEcolDivers_2013",
+      "original_study_label_sha256": "0fb0dca90e1326ffd6af5a5bb4813d69c74d37a9bde1b4c0a83f49811c02d804",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Picea engelmannii",
+        "Pinus flexilis"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2013"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2015",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "castellanosacuna ecosphere 2015",
+      "original_study_label": "CastellanosAcuna_Ecosphere_2015",
+      "original_study_label_sha256": "a6229a0b52bd5315577fce5ff99229912a4578731f54f915735e11140ffe84e0",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Pinus devoniana",
+        "Pinus pseudostrobus"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2015"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2016",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "centeretal amjbot 2016",
+      "original_study_label": "Centeretal_AmJBot_2016",
+      "original_study_label_sha256": "979f40e088fb6d56207236068f966cb5d50cc596658ea83447a34d48d2892e0d",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Quercus oleoides"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2016"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2016",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "chambersandemery amjbot 2016",
+      "original_study_label": "ChambersandEmery_AmJBot_2016",
+      "original_study_label_sha256": "d4c7e0206f8eb0b60b82eec796c4ad4da05e4083c2b27ec0bb8e493a3e016d63",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Vittaria appalachiana"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2016"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2010",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "correiaetal annforestsci 2010",
+      "original_study_label": "Correiaetal_AnnForestSci_2010",
+      "original_study_label_sha256": "9c17aaac245f402198a26f68dfda096b8f1f609ec203b3c668b10c33e9270cce",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Pinus pinaster"
+      ],
+      "qualified_same_garden_cells": 5,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2010"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2010",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "cremieuxetal amjbot 2010",
+      "original_study_label": "Cremieuxetal_AmJBot_2010",
+      "original_study_label_sha256": "e4130dee97a85f480924e3d38fc6aaa6bd0af38825f087d6319026482e4450d9",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Plantago lanceolata"
+      ],
+      "qualified_same_garden_cells": 1,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2010"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2015",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "deaconandcavenderbares plosone 2015",
+      "original_study_label": "DeaconandCavenderBares_PLoSOne_2015",
+      "original_study_label_sha256": "355e84b0fdd9dcee6d87e3c350fc7ff591a92ce77e97893d00c2332b565bb89d",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Quercus oleoides"
+      ],
+      "qualified_same_garden_cells": 2,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2015"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "1994",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "dunlapetal canjforestres 1994",
+      "original_study_label": "Dunlapetal_CanJForestRes_1994",
+      "original_study_label_sha256": "f7aa69b093e21e9e12c239b8738d5aa5040a3d9d0876687278003901b35a71bd",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Populus trichocarpa"
+      ],
+      "qualified_same_garden_cells": 2,
+      "source_year_tokens_not_primary_publication_verification": [
+        "1994"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2010",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "erfmeierandbruelheide biolinvasions 2010",
+      "original_study_label": "ErfmeierandBruelheide_BiolInvasions_2010",
+      "original_study_label_sha256": "b3c9e958196abced9fcb70ffa5f944d0c6e86d3abb4e4a3c6bbb36dfd1ac6615",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Rhododendron ponticum"
+      ],
+      "qualified_same_garden_cells": 2,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2010"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2004",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "etterson evolution 2004",
+      "original_study_label": "Etterson_Evolution_2004",
+      "original_study_label_sha256": "d70cd2aaf2cdb6ceecdcaf21953aa19c73b4b9119aca3f7af17398f40329e9d2",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Chamaecrista fasciculata"
+      ],
+      "qualified_same_garden_cells": 3,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2004"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2000",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "fetcheretal biotropica 2000",
+      "original_study_label": "Fetcheretal_Biotropica_2000",
+      "original_study_label_sha256": "b60201699a66905ddbeced439626ef2b2fe7b0e11fbf955f26c9297c1e133f5e",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Clibadium erosum",
+        "Psychotria berteriana"
+      ],
+      "qualified_same_garden_cells": 4,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2000"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "1991",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "galenetal evolution 1991",
+      "original_study_label": "Galenetal_Evolution_1991",
+      "original_study_label_sha256": "2b3bae8930fed910627187de8fb75d6c97fd0435876875b822699aa513a832a9",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Polemonium viscosum"
+      ],
+      "qualified_same_garden_cells": 2,
+      "source_year_tokens_not_primary_publication_verification": [
+        "1991"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2000",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "gallowayandfenster evolution 2000",
+      "original_study_label": "GallowayandFenster_Evolution_2000",
+      "original_study_label_sha256": "b16fe9341ee270726708fea80a3a2599c97c00308ac2c063119b0c66bafa5f5a",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Chamaecrista fasciculata"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2000"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2012",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "garridoetal plantecol 2012",
+      "original_study_label": "Garridoetal_PlantEcol_2012",
+      "original_study_label_sha256": "042817af6610195790d0a2d03a2c2830a6f20ffd21718facf7decdf47bcd9f11",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Helleborus foetidus"
+      ],
+      "qualified_same_garden_cells": 9,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2012"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2013",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "gibsonetal jtorreybotsoc 2013",
+      "original_study_label": "Gibsonetal_JTorreyBotSoc_2013",
+      "original_study_label_sha256": "9a42debc74ad795ba061504d991e6a9fbbf3e56b941c5f2db8c68b5a1dc4f18c",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Andropogon gerardii"
+      ],
+      "qualified_same_garden_cells": 1,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2013"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2007",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "gimenez benavidesetal annbot 2007",
+      "original_study_label": "Gimenez-Benavidesetal_AnnBot_2007",
+      "original_study_label_sha256": "8bf63a31525a22ef907d04dad37f69c0b2e0bb7c5d3572742be2815ec2fc8227",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Silene ciliata"
+      ],
+      "qualified_same_garden_cells": 9,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2007"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2012",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "gomoryetal eurjforestres 2012",
+      "original_study_label": "Gomoryetal_EurJForestRes_2012",
+      "original_study_label_sha256": "51f14d05c7be1fc6d28dfb4a48de47ac5f2100ca279fcb1df30a64208d5f9b35",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Picea abies"
+      ],
+      "qualified_same_garden_cells": 4,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2012"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "1998",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "gordonandrice restorationecol 1998",
+      "original_study_label": "GordonandRice_RestorationEcol_1998",
+      "original_study_label_sha256": "86a71bc66305bc57e6913b86e8e37c6f96be02b77fc8308d65c71be9ddbc7a65",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Aristida beyrichiana"
+      ],
+      "qualified_same_garden_cells": 3,
+      "source_year_tokens_not_primary_publication_verification": [
+        "1998"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2014",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "grasseinetal globalchangebiol 2014",
+      "original_study_label": "Grasseinetal_GlobalChangeBiol_2014",
+      "original_study_label_sha256": "4d3b2054dc0311ef26428cd0746264e040173e11fe09b036cd56c0c88e2d2979",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Bromus erectus",
+        "Dactylis glomerata",
+        "Festuca paniculata",
+        "Sesleria caerulea"
+      ],
+      "qualified_same_garden_cells": 8,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2014"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2005",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "griffithandwatson jevolbiol 2005",
+      "original_study_label": "GriffithandWatson_JEvolBiol_2005",
+      "original_study_label_sha256": "f000e6d07a7c83fe5e6e28519b39e4276efb12e655f7e4d54dc5bc07a251b6b8",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Xanthium strumarium"
+      ],
+      "qualified_same_garden_cells": 3,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2005"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2011",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "haggertyandgalloway jecol 2011",
+      "original_study_label": "HaggertyandGalloway_JEcol_2011",
+      "original_study_label_sha256": "a9b9bd259926ebb3a8e0edf6385864b644573447474756be6440766264ffc8da",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Campanulastrum americanum"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2011"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2015",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "halbritteretal jevolbiol 2015",
+      "original_study_label": "Halbritteretal_JEvolBiol_2015",
+      "original_study_label_sha256": "b6af38ec51458b6f13ffa5a4a0e9ecf1f9fcd4789d2933fa7311bcc495315da6",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Plantago lanceolata",
+        "Plantago major"
+      ],
+      "qualified_same_garden_cells": 8,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2015"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2000",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "hamannetal forestecolmanag 2000",
+      "original_study_label": "Hamannetal_ForestEcolManag_2000",
+      "original_study_label_sha256": "72a0421db4ff1cdd86433c3323f457e70d538643a7ba61c5b8d8ac56c39debd4",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Alnus rubra"
+      ],
+      "qualified_same_garden_cells": 4,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2000"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2016",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "hamannetal jecol 2016",
+      "original_study_label": "Hamannetal_JEcol_2016",
+      "original_study_label_sha256": "bfcfb57e0b700d378443dc9f2ec33287068693c246d9bc230040b92e619d3d18",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Poa alpina"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2016"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2013",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "hancocketal restorationecol 2013",
+      "original_study_label": "Hancocketal_RestorationEcol_2013",
+      "original_study_label_sha256": "e03e2fda7801762116e92376d4af09482ebb6630a06f51a3927f82d87a5998fc",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Acacia falcata",
+        "Bursaria spinosa",
+        "Hardenbergia violacea",
+        "Themeda australis"
+      ],
+      "qualified_same_garden_cells": 12,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2013"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "1997",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "harwoodetal newforest 1997",
+      "original_study_label": "Harwoodetal_NewForest_1997",
+      "original_study_label_sha256": "ab82d8ac98445c7b2f1f2d324f023950f45f50887e91c24cfeece5dc80a1da32",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Eucalyptus pellita"
+      ],
+      "qualified_same_garden_cells": 3,
+      "source_year_tokens_not_primary_publication_verification": [
+        "1997"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2009",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "hautieretal jplantecol 2009",
+      "original_study_label": "Hautieretal_JPlantEcol_2009",
+      "original_study_label_sha256": "abd649e057ecce54910675ba6dd9a58a4f9348dd5541d0499b0889b5d31c1caf",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Poa alpina"
+      ],
+      "qualified_same_garden_cells": 5,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2009"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2008",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "herefordandwinn newphytol 2008",
+      "original_study_label": "HerefordandWinn_NewPhytol_2008",
+      "original_study_label_sha256": "9535b95ff4cf70e6a6e5f7586c15768ce73978bddfa817cd5e568756c0b3eb6a",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Diodia teres"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2008"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2012",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "ishizukaandgoto evolappl 2012",
+      "original_study_label": "IshizukaandGoto_EvolAppl_2012",
+      "original_study_label_sha256": "2f35164be3f181fcba10ff1a0428cdbbb990183465fe2b1c9e5ca30c94db04ed",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Abies sachalinensis"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2012"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2005",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "jakobssonanddinnetz evolecol 2005",
+      "original_study_label": "JakobssonandDinnetz_EvolEcol_2005",
+      "original_study_label_sha256": "6e493f303ef1d46a1c6ef8f281054cab70a59731dabd902b70d3af647413f9ee",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Carlina vulgaris"
+      ],
+      "qualified_same_garden_cells": 60,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2005"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "1992",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "jordan amnat 1992",
+      "original_study_label": "Jordan_AmNat_1992",
+      "original_study_label_sha256": "38e115fae2823f01ee50f3529a43a5e8212c59780ab71a6e57458df706895891",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Diodia teres"
+      ],
+      "qualified_same_garden_cells": 4,
+      "source_year_tokens_not_primary_publication_verification": [
+        "1992"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2001",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "joshietal ecollett 2001",
+      "original_study_label": "Joshietal_EcolLett_2001",
+      "original_study_label_sha256": "846dc3a642d2a3f4c36c0b9f8d12e1a929a1aebd0d43b870e906704043cacd51",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Dactylis glomerata",
+        "Plantago lanceolata",
+        "Trifolium pratense"
+      ],
+      "qualified_same_garden_cells": 18,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2001"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2013",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "kimanddonohue jecol 2013",
+      "original_study_label": "KimandDonohue_JEcol_2013",
+      "original_study_label_sha256": "6bb20e5bccab99f05310346426bebe6a67cc09e47ed603a8ea4f133cdda2baff",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Erysimum capitatum"
+      ],
+      "qualified_same_garden_cells": 18,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2013"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2013",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "kouteckaandleps botany 2013",
+      "original_study_label": "KouteckaandLeps_Botany_2013",
+      "original_study_label_sha256": "99242b981702c75182f23a685143c37b607f4e780ef107441cba6f8b42812c4b",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Myosotis nemorosa"
+      ],
+      "qualified_same_garden_cells": 5,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2013"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2014",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "kreylingetal ecolevol 2014",
+      "original_study_label": "Kreylingetal_EcolEvol_2014",
+      "original_study_label_sha256": "fc183010b14725db1f39a836356034467d5f7c086464fb77d038e43d5d6c2eda",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Fagus sylvatica"
+      ],
+      "qualified_same_garden_cells": 1,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2014"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2011",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "lawrenceandkaye restorationecol 2011",
+      "original_study_label": "LawrenceandKaye_RestorationEcol_2011",
+      "original_study_label_sha256": "187aa3e89fc06f98b1bd815f4dc103e29f7a0896a61befa66fac02b49c5f2b58",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Castilleja levisecta"
+      ],
+      "qualified_same_garden_cells": 9,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2011"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2009",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "liancourtandtielborger functecol 2009",
+      "original_study_label": "LiancourtandTielborger_FunctEcol_2009",
+      "original_study_label_sha256": "19d543b83775f08ec654a9255f0ac6b2e74b7aebef2267529c48725a84d58739",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Brachypodium distachyon",
+        "Bromus fasciculatus"
+      ],
+      "qualified_same_garden_cells": 8,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2009"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2007",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "lopezetal austjbot 2007",
+      "original_study_label": "Lopezetal_AustJBot_2007",
+      "original_study_label_sha256": "22fcad884da47e5e7999b16345cdbdc91f9e72c60f9d8fb00a1dded5d9bc6fe5",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Pinus canariensis"
+      ],
+      "qualified_same_garden_cells": 4,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2007"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2008",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "lowryetal evolution 2008",
+      "original_study_label": "Lowryetal_Evolution_2008",
+      "original_study_label_sha256": "cd373f77654738a4ba6660a1416550a9c90d97fc9f544bef9b98f509ba0ed3ee",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Mimulus guttatus"
+      ],
+      "qualified_same_garden_cells": 7,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2008"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2014",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "luetal ecolevol 2014",
+      "original_study_label": "Luetal_EcolEvol_2014",
+      "original_study_label_sha256": "6aea7c679c9336564f880ae2e2236fe1612dd626d84468cfe412fe8355c8c927",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Picea glauca"
+      ],
+      "qualified_same_garden_cells": 16,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2014"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2007",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "maceletal ecology 2007",
+      "original_study_label": "Maceletal_Ecology_2007",
+      "original_study_label_sha256": "c4c44abe6176b105eca6a2c12e48581caba31dcd1286e99005b929f7c2751c58",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Holcus lanatus",
+        "Lotus corniculatus"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2007"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2014",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "maesetal plantecol 2014",
+      "original_study_label": "Maesetal_PlantEcol_2014",
+      "original_study_label_sha256": "274505902454f8ba8bde091a45ae38982b63bcf71b3962ad254d031aad7bc405",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Milium effusum"
+      ],
+      "qualified_same_garden_cells": 2,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2014"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2013",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "martinandhusband evolution 2013",
+      "original_study_label": "MartinandHusband_Evolution_2013",
+      "original_study_label_sha256": "8393fdaaea526021eb9e5f2d1d0d2e3b6154de0034db9d4dcb7e540a4ef9fb6e",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Chamerion angustifolium"
+      ],
+      "qualified_same_garden_cells": 9,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2013"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2011",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "mccarragheretal physgeog 2011",
+      "original_study_label": "McCarragheretal_PhysGeog_2011",
+      "original_study_label_sha256": "9e7b71a54bd756336eb3627c50404ba58ba0a3701594d549ddf7b1ae00885e56",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Acer saccharum"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2011"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2012",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "mclaneandaitken ecolappl 2012",
+      "original_study_label": "McLaneandAitken_EcolAppl_2012",
+      "original_study_label_sha256": "65b88565698c2aa23b00c8a8923a8bae482d527793744661f7605172c8625adb",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Pinus albicaulis"
+      ],
+      "qualified_same_garden_cells": 12,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2012"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2009",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "millaetal annbot 2009",
+      "original_study_label": "Millaetal_AnnBot_2009",
+      "original_study_label_sha256": "73aab1b8b1b5a24421fd3ffd7524ab779d83ae9b9af7366e270e4df5b9d7c3e0",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Lupinus angustifolius"
+      ],
+      "qualified_same_garden_cells": 3,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2009"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2000",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "montalvoandellstrand conservbiol 2000",
+      "original_study_label": "MontalvoandEllstrand_ConservBiol_2000",
+      "original_study_label_sha256": "0e25639a3a802c2a581e2b5f8d8c61b74f734caf41fcbe8046c822078db7f6fd",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Lotus scoparius"
+      ],
+      "qualified_same_garden_cells": 2,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2000"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2005",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "mylecraineetal forestecolmanag 2005",
+      "original_study_label": "Mylecraineetal_ForestEcolManag_2005",
+      "original_study_label_sha256": "45c54ac78a431bfc5a1a9c60f428a4dcfc7b2ea655051562853cd380a4c3088d",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Chamaecyparis thyoides"
+      ],
+      "qualified_same_garden_cells": 3,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2005"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2015",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "nagamitsuetal treegenetgenomes 2015",
+      "original_study_label": "Nagamitsuetal_TreeGenetGenomes_2015",
+      "original_study_label_sha256": "9f10bbe0d45d0a5b0a83b99355fe23bc627fab3025283da7f79e96cd1f2ddbd7",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Pinus densiflora"
+      ],
+      "qualified_same_garden_cells": 2,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2015"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2016",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "petersonetal newphytol 2016",
+      "original_study_label": "Petersonetal_NewPhytol_2016",
+      "original_study_label_sha256": "904b01fa624422beb7e64e8891a764df7c401c123c585dee194eb98c20cf6f01",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Mimulus guttatus"
+      ],
+      "qualified_same_garden_cells": 1,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2016"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2016",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "postmaandagren pnas 2016",
+      "original_study_label": "PostmaandAgren_PNAS_2016",
+      "original_study_label_sha256": "d00ceec8c3fd4bbffa72c7a56bc7b34b4c6d0bbce94a441918476cbef9703375",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Arabidopsis thaliana"
+      ],
+      "qualified_same_garden_cells": 9,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2016"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2017",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "putnamandreich ecolmonograph 2017",
+      "original_study_label": "PutnamandReich_EcolMonograph_2017",
+      "original_study_label_sha256": "fd73d3e04ffdeeeea60d070a0c40d40d121df4750340b60e7ef76922487ec769",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Acer saccharum"
+      ],
+      "qualified_same_garden_cells": 7,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2017"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2011",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "raabovaetal basicapplecol 2011",
+      "original_study_label": "Raabovaetal_BasicApplEcol_2011",
+      "original_study_label_sha256": "45203b8b62c7ed6b530de127540bbb66243533f11a28c98dfaf570d7ca70fcc6",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Inula hirta"
+      ],
+      "qualified_same_garden_cells": 18,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2011"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2009",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "ramirez valienteetal forestecolmanag 2009",
+      "original_study_label": "Ramirez-Valienteetal_ForestEcolManag_2009",
+      "original_study_label_sha256": "feb313c4d99780a49dd07cd518712381b2f2142b67e339fb54adf2c43dc9e2f5",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Quercus suber"
+      ],
+      "qualified_same_garden_cells": 1,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2009"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2014",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "reevesandrichards intjplantsci 2014",
+      "original_study_label": "ReevesandRichards_IntJPlantSci_2014",
+      "original_study_label_sha256": "dae5e1903117906285021ff67378dd3a803f2f5fafd85d0e34b4d68f09e4c13e",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Helianthus pumilus"
+      ],
+      "qualified_same_garden_cells": 1,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2014"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2008",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "riceandknapp restorationecol 2008",
+      "original_study_label": "RiceandKnapp_RestorationEcol_2008",
+      "original_study_label_sha256": "a10ff334bef09a1bec8445c1fd02b9f744dd0d59ffc5e3ab73abc7bd9f2a05fa",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Elymus glaucus",
+        "Nassella pulchra"
+      ],
+      "qualified_same_garden_cells": 8,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2008"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "1997",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "riceetal procsympoakwoodl 1997",
+      "original_study_label": "Riceetal_ProcSympOakWoodl_1997",
+      "original_study_label_sha256": "a40bc0784e7e5dada731c4ec87bd137d402ce388abad422ff925d28354b8dc49",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Quercus douglasii"
+      ],
+      "qualified_same_garden_cells": 2,
+      "source_year_tokens_not_primary_publication_verification": [
+        "1997"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2016",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "richardsetal evolution 2016",
+      "original_study_label": "Richardsetal_Evolution_2016",
+      "original_study_label_sha256": "38e5e93bc23639229400c152072ec2bf008741ef915c15fff2add235cfc5a3d5",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Senecio lautus"
+      ],
+      "qualified_same_garden_cells": 5,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2016"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2012",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "richteretal oecologia 2012",
+      "original_study_label": "Richteretal_Oecologia_2012",
+      "original_study_label_sha256": "3d26923fd9d760956b3464803f2502a21f00cd7e29570d1cf7919d7398e0c160",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Pinus sylvestris"
+      ],
+      "qualified_same_garden_cells": 2,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2012"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2016",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "rysavyetal jvegsci 2016",
+      "original_study_label": "Rysavyetal_JVegSci_2016",
+      "original_study_label_sha256": "e4be2055fb51a6d2482829a94fa09e38226826c0bd7be2ebacc65fb3573d38d0",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Sarcopoterium spinosum"
+      ],
+      "qualified_same_garden_cells": 4,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2016"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2006",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "sambattiandrice evolution 2006",
+      "original_study_label": "SambattiandRice_Evolution_2006",
+      "original_study_label_sha256": "bfb6b6b6d9181621a6347512252b724a01393bf9499066b32ef4550606fef1a2",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Helianthus exilis"
+      ],
+      "qualified_same_garden_cells": 8,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2006"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2016",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "samisetal evolution 2016",
+      "original_study_label": "Samisetal_Evolution_2016",
+      "original_study_label_sha256": "34ff7ea800c5cee97b191bc00470b332134bad53f1ad98a07471560045d3973f",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Camissoniopsis cheiranthifolia"
+      ],
+      "qualified_same_garden_cells": 4,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2016"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "1991",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "santelmann ecology 1991",
+      "original_study_label": "Santelmann_Ecology_1991",
+      "original_study_label_sha256": "611aa2aed2d089bef51773414b691a3c98eed8f681a11f82aa4e8d7a50615720",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Carex exilis"
+      ],
+      "qualified_same_garden_cells": 4,
+      "source_year_tokens_not_primary_publication_verification": [
+        "1991"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2013",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "scheepensandstocklin oecologia 2013",
+      "original_study_label": "ScheepensandStocklin_Oecologia_2013",
+      "original_study_label_sha256": "6adaa47cd1cb0bd69e77f1adb8eb46e51dcf70b52e1a308288b2fb608544188b",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Campanula thyrsoides"
+      ],
+      "qualified_same_garden_cells": 1,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2013"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2013",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "schreiberetal japplecol 2013",
+      "original_study_label": "Schreiberetal_JApplEcol_2013",
+      "original_study_label_sha256": "a2745000a742c134cd2d9ccc6c7107f27a389d913b4b060a95f0ddfec6652f7d",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Populus tremuloides"
+      ],
+      "qualified_same_garden_cells": 5,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2013"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2011",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "sextonetal pnas 2011",
+      "original_study_label": "Sextonetal_PNAS_2011",
+      "original_study_label_sha256": "dc26170eaf6b2a574e1f4819e921b64066180e119a9976eae44203933896dd7d",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Mimulus laciniatus"
+      ],
+      "qualified_same_garden_cells": 1,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2011"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2005",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "smithetal biolcons 2005",
+      "original_study_label": "Smithetal_BiolCons_2005",
+      "original_study_label_sha256": "0ad9646f1c98bc58bda08a471538740b6ee9b6759bfe6e99b5f1e8724827faa7",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Lotus corniculatus"
+      ],
+      "qualified_same_garden_cells": 1,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2005"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2012",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "stanton geddesetal ecology 2012",
+      "original_study_label": "Stanton-Geddesetal_Ecology_2012",
+      "original_study_label_sha256": "abb46bc2358c851d570a3f9f94aa9d7e727342de34bf1425b6ab2b6ef198266f",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Chamaecrista fasciculata"
+      ],
+      "qualified_same_garden_cells": 9,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2012"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2012",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "stanton geddesetal plosone 2012",
+      "original_study_label": "Stanton-Geddesetal_PLoSOne_2012",
+      "original_study_label_sha256": "24ce04326ee184344ed183b88bb1cd1790d8ee010b402347b415d59af0dc500a",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Chamaecrista fasciculata"
+      ],
+      "qualified_same_garden_cells": 12,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2012"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2007",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "streisfeldandkohn jevolbiol 2007",
+      "original_study_label": "StreisfeldandKohn_JEvolBiol_2007",
+      "original_study_label_sha256": "9d9238b6de75d0d43c74167589bdf08d57271c45483a28da1ceffffba426e412",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Mimulus aurantiacus"
+      ],
+      "qualified_same_garden_cells": 2,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2007"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2015",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "torangeetal newphytol 2015",
+      "original_study_label": "Torangeetal_NewPhytol_2015",
+      "original_study_label_sha256": "a9fd13eae6785e1abfb6c2ab20ed3e51909f9b0a63f66b8cd48c9d2fa9a96b9b",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Arabis alpina"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2015"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2010",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "travisandgrace ecolappl 2010",
+      "original_study_label": "TravisandGrace_EcolAppl_2010",
+      "original_study_label_sha256": "d8c9095254b34ca34717663ca15408396146553280b461070017f97fa3bd16a7",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Spartina alterniflora"
+      ],
+      "qualified_same_garden_cells": 3,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2010"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2004",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "verhoevenetal evolution 2004",
+      "original_study_label": "Verhoevenetal_Evolution_2004",
+      "original_study_label_sha256": "1598d25ceb9a1087ac4f0160c1fe1eda6025015021434029da5f8d3fbcfc95a9",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Hordeum spontaneum"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2004"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2014",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "vizcaino palomaretal plosone 2014",
+      "original_study_label": "Vizcaino-Palomaretal_PLoSOne_2014",
+      "original_study_label_sha256": "b80e4268fe394581c1c35c13770c47f0ebda39d8201c62a88afb4ea6a1056fb8",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Pinus pinaster"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2014"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2009",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "volis israeljplantsci 2009",
+      "original_study_label": "Volis_IsraelJPlantSci_2009",
+      "original_study_label_sha256": "8013f8aa693b6736ab159fce4f44ab7f30a8072e26ef1bb6ad8b50abc7d9652d",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Avena sterilis"
+      ],
+      "qualified_same_garden_cells": 19,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2009"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2002",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "volisetal bioljlinneansoc 2002",
+      "original_study_label": "Volisetal_BiolJLinneanSoc_2002",
+      "original_study_label_sha256": "ac25b19e1e0584faa77227dc07775ddf3e1141b339f8d71f9262ba4a7f940159",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Hordeum spontaneum"
+      ],
+      "qualified_same_garden_cells": 19,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2002"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2016",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "walteretal evolution 2016",
+      "original_study_label": "Walteretal_Evolution_2016",
+      "original_study_label_sha256": "c7d26572b8354392965589125deb98daffd53b264e8086746510c5f65fed78e3",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Senecio pinnatifolius"
+      ],
+      "qualified_same_garden_cells": 4,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2016"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2014",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "wilczeketal pnas 2014",
+      "original_study_label": "Wilczeketal_PNAS_2014",
+      "original_study_label_sha256": "d478afad6507a9f8610d9a70eda45e75f9ca9c46ec3b021a48f8a90397bfcae3",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Arabidopsis thaliana"
+      ],
+      "qualified_same_garden_cells": 4,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2014"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "1996",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "young canjbot 1996",
+      "original_study_label": "Young_CanJBot_1996",
+      "original_study_label_sha256": "5ce894d80300584840faf3810e481cd739ced8814d5f334849ee8b050619c31b",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Iris douglasiana",
+        "Iris innominata"
+      ],
+      "qualified_same_garden_cells": 8,
+      "source_year_tokens_not_primary_publication_verification": [
+        "1996"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2008",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "zeiterandstampfli jvegsci 2008",
+      "original_study_label": "ZeiterandStampfli_JVegSci_2008",
+      "original_study_label_sha256": "9e5a4a9eaef95ca60bc35dfd4f5af64192da53f2d4093a60861f1849f0d87a99",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Bromus erectus"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2008"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2013",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "zhouetal jecol 2013",
+      "original_study_label": "Zhouetal_JEcol_2013",
+      "original_study_label_sha256": "5bbdf1d09116f5ab8cc347319b2098f1c9fc4a0cee3527b8b5222c2f484565bc",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Oryza rufipogon"
+      ],
+      "qualified_same_garden_cells": 1,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2013"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "2011",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "defrenneetal globalchangebiol 2011",
+      "original_study_label": "deFrenneetal_GlobalChangeBiol_2011",
+      "original_study_label_sha256": "dd90ef2fce5c6811bf567a18276f4c6c1dd7bfbdfe6e426077de35c744c19c05",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Anemone nemorosa",
+        "Milium effusum"
+      ],
+      "qualified_same_garden_cells": 6,
+      "source_year_tokens_not_primary_publication_verification": [
+        "2011"
+      ]
+    },
+    {
+      "candidate_year_from_label_NOT_verified": "1996",
+      "independent_original_experiment_certified": false,
+      "multiple_years_in_one_original_study_label_require_paper_mapping": false,
+      "normalized_study_label": "vanniejenhuisandparker canjforestres 1996",
+      "original_study_label": "vanNiejenhuisandParker_CanJForestRes_1996",
+      "original_study_label_sha256": "11ee20b8497ee42a4f9f05054660712c2d5e603d90d45763e8af368877c3ae31",
+      "primary_paper_doi": null,
+      "primary_paper_title": null,
+      "qualified_plant_species": [
+        "Pinus banksiana"
+      ],
+      "qualified_same_garden_cells": 1,
+      "source_year_tokens_not_primary_publication_verification": [
+        "1996"
+      ]
+    }
+  ],
+  "certified_independent_additional_studies": 0,
+  "distinct_qualified_original_study_labels": 103,
+  "distinct_qualified_plant_species": 107,
+  "fitness_rows_fitted": 0,
+  "labels_array_sha256": "83a80a48be293a3ca2b91ebafcea6e4860ba5c7100c7d11447e3aa71c107fa85",
+  "original_csv_physical_rows": 7544,
+  "original_labels_with_multiple_year_tokens": 1,
+  "original_labels_without_year_token": 0,
+  "original_zip_MD5_verified": "2de98c1bb2cd2ddffcb090eb65a74d9f",
+  "original_zip_SHA256_verified": "2995d0f165b27ccf2f38f3d0b286845c107762a0c2b02df2290e9a5df6b396f0",
+  "outcome_columns_selected": [],
+  "qualified_study_species_garden_fitness_type_cells": 711,
+  "schema": "ttf_bontrager_primary_study_reference_labels_SOURCE_ONLY_v01",
+  "source_dataset_doi": "10.5061/dryad.pnvx0k6mc",
+  "source_mirror_dataset_doi": "10.5683/SP2/DU3ZTQ",
+  "source_original_member": "dryad/data/fitness_for_analysis.csv",
+  "status": "REFERENCE_CATALOG_PREPARED_NOT_STUDY_OVERLAP_MEASURED",
+  "study_labels_are_not_one_to_one_with_primary_papers": true,
+  "unresolved_original_primary_paper_dois": 103
+}

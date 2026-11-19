@@ -1,0 +1,20 @@
+# Historical workflow archived because the comparison is scientifically invalid:
+# Sudova 2010 Table 1 refers to Raabova 2008 (Oecologia), NOT 2007 (Biol Conserv).
+# Previous SHA-pinned data/receipt remain in Git history. Do not re-run as validation.
+name: Archived invalid Raabova 2007 vs Sudova 2010 crosspaper reference
+
+on:
+  workflow_dispatch:
+
+jobs:
+  invalid-referent-hard-stop:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Refuse invalid original-paper site co-location validation
+        run: |
+          echo "::error::INVALID PRIMARY REFERENCE: Sudova (2010) Table 1 footnote #50 = Raabova (2008) Oecologia, not Raabova (2007) Biological Conservation."
+          echo "::error::The historical 1-of-4 receipt remains auditable but is NOT a geographical accuracy test."
+          echo "See research/prospective/raabova_2007_2008_wrong_primary_reference_erratum_v01.json"
+          exit 1

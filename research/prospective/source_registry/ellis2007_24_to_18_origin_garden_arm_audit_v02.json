@@ -1,0 +1,57 @@
+{
+  "Hargreaves_original_SHA256_verified": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+  "Hargreaves_original_study_label": "Ellisetal_NewPhytol_2007",
+  "coordinate_discrepancy_cause_certified": false,
+  "no_LGM_21ka_0BP_climate_effect_estimated": true,
+  "no_fitness_growth_survival_reproduction_or_AFLP_response_rows_read": true,
+  "observed_Hargreaves_distinct_directed_source_garden_pairs": 18,
+  "observed_secondary_source_IDs_per_target_garden": 3,
+  "old_Bontrager_44of50_terminal_stop_unchanged": true,
+  "original_basin_label_same_quartz_source_pair_verified_from_ID": true,
+  "original_paper_doi": "10.1111/j.1469-8137.2007.02043.x",
+  "original_primary_expected_directed_source_garden_pairs": 24,
+  "published_origin_site_pairs_by_class": [
+    {
+      "class": "local_same_source_and_garden",
+      "not_represented_in_secondary_original": 0,
+      "original_Hargreaves_extract_observed": 6,
+      "paper_expected": 6
+    },
+    {
+      "class": "same_basin_other_quartz",
+      "not_represented_in_secondary_original": 6,
+      "original_Hargreaves_extract_observed": 0,
+      "paper_expected": 6
+    },
+    {
+      "class": "other_basin_same_quartz",
+      "not_represented_in_secondary_original": 0,
+      "original_Hargreaves_extract_observed": 12,
+      "paper_expected": 12
+    },
+    {
+      "class": "other_basin_other_quartz_not_in_paper_design",
+      "not_represented_in_secondary_original": 0,
+      "original_Hargreaves_extract_observed": 0,
+      "paper_expected": 0
+    }
+  ],
+  "published_source_population_IDs_per_target_garden": 4,
+  "publisher_within_basin_approximate_distance_claim_km": [
+    0.4,
+    1.2
+  ],
+  "raw_original_location_or_plant_ID_values_exported": false,
+  "same_2000_original_adult_transplant_six_populations": 6,
+  "schema": "ttf_Ellis2007_primary_24_source_garden_vs_Hargreaves_18_source_only_edges_diagnosis_v02",
+  "source_garden_pairs_absent_from_Hargreaves_extract": 6,
+  "source_pair_absence_is_not_original_2000_intervention_absence": true,
+  "source_pair_absence_may_be_downstream_meta_analysis_extraction": true,
+  "status": "PRIMARY_ORIGINAL_24_SOURCE_GARDEN_DESIGN_VS_SECONDARY_EXTRACT_18_WITH_SOURCE_ARM_MISSINGNESS",
+  "within_basin_dense_sparse_pair_distance_km": {
+    "Ariz": 0.37811,
+    "QK": 3.12968,
+    "Sout": 0.91993
+  },
+  "within_basin_pairs_beyond_1p2km": 1
+}

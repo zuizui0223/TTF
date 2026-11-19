@@ -1,0 +1,40 @@
+name: Ellis 2007 source-garden 24-original versus 18-secondary arm missingness
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/ellis2007_missing_transplant_arms_diagnosis_contract_v02.json'
+      - 'research/prospective/ellis2007_source_garden_arm_missingness_v02.py'
+      - 'research/prospective/test_ellis2007_source_garden_arm_missingness_v02.py'
+      - '.github/workflows/ttf-ellis2007-24-to-18-arms-source-only-v02.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/ellis2007_missing_transplant_arms_diagnosis_contract_v02.json'
+      - 'research/prospective/ellis2007_source_garden_arm_missingness_v02.py'
+      - 'research/prospective/test_ellis2007_source_garden_arm_missingness_v02.py'
+      - '.github/workflows/ttf-ellis2007-24-to-18-arms-source-only-v02.yml'
+jobs:
+  source-only-original-experiment-curation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Original field cohort directed-pair design missingness tests
+        run: python -m unittest discover -s research/prospective -p test_ellis2007_source_garden_arm_missingness_v02.py -v
+      - name: Original source DOI SHA and literal basin/quartz category edge-audit
+        run: |
+          python research/prospective/ellis2007_source_garden_arm_missingness_v02.py \
+            --output _source_only/ellis2007_24_to_18_origin_garden_arm_audit_v02.json
+      - name: Archive only 4 original experimental arm category counts not fitness
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttf-ellis2007-original-vs-curated-arm-classes-v02
+          path: _source_only/ellis2007_24_to_18_origin_garden_arm_audit_v02.json
+          if-no-files-found: error
+          retention-days: 30

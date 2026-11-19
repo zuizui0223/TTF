@@ -1,0 +1,43 @@
+{
+  "schema": "ttf_pankova2014_original_2014_XLS_explanation_only_first12_text_cells_predata_v01",
+  "date": "2026-11-15",
+  "status": "FROZEN_BEFORE_EXPLANATION_SHEET_TEXT_ROWS_REVEALED",
+  "source": {
+    "paper_doi": "10.1371/journal.pone.0093967",
+    "published_supplement": "pone.0093967.s001.xls",
+    "published_original_xls_sha256": "7a8de0c203aec2b2edf0a7b6bceea649663a17095471a475fdb8a0abd69665c5",
+    "original_xls_bytes": 147456,
+    "first_source_schema_run": 43720257112,
+    "known_sheets": [
+      "survival",
+      "performance",
+      "explanation"
+    ],
+    "known_header_columns_common": [
+      "nohelp",
+      "mark",
+      "block",
+      "Rt",
+      "Ro",
+      "St",
+      "So"
+    ]
+  },
+  "selection": {
+    "only_text_cells_from_exact_sheet_named_explanation": true,
+    "only_first_12_rows": true,
+    "numeric_cell_values_decoded": false,
+    "no_survival_or_performance_response_values": true,
+    "output_every_nonempty_explanation_text_field_in_first_12_rows": true,
+    "do_not_infer_unique_individual_identifier_from_word_mark_alone": true,
+    "do_not_open_2014_numeric_ID_values_yet": true,
+    "crosspaper_2007_2014_row_ID_match_not_authorized": true
+  },
+  "science": {
+    "author_confirmed_2004_adult_transplant_shared": true,
+    "same_physical_adult_experiment_counts_as_one": true,
+    "distinct_2003_and_2004_seed_sowing_components_remain_separate": true,
+    "old_Bontrager_44_of_50_stop_unchanged": true,
+    "no_adaptation_LGM_genetic_plasticity_speciation_effect_opened": true
+  }
+}

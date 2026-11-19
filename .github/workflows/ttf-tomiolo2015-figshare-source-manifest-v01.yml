@@ -1,0 +1,33 @@
+name: Tomiolo 2015 publisher-linked Figshare source-only manifest
+
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - 'research/prospective/tomiolo2015_source_geo_figshare_manifest_contract_v01.json'
+      - 'research/prospective/tomiolo2015_figshare_original_manifest_v01.py'
+      - 'research/prospective/test_tomiolo2015_figshare_original_manifest_v01.py'
+      - '.github/workflows/ttf-tomiolo2015-figshare-source-manifest-v01.yml'
+  pull_request:
+    paths:
+      - 'research/prospective/tomiolo2015_source_geo_figshare_manifest_contract_v01.json'
+      - 'research/prospective/tomiolo2015_figshare_original_manifest_v01.py'
+      - 'research/prospective/test_tomiolo2015_figshare_original_manifest_v01.py'
+      - '.github/workflows/ttf-tomiolo2015-figshare-source-manifest-v01.yml'
+
+jobs:
+  original-figshare-metadata-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Frozen exact-DOI and no-data-file synthetic tests
+        run: python -m unittest discover -s research/prospective -p test_tomiolo2015_figshare_original_manifest_v01.py -v
+      - name: Published Figshare original collection/files metadata only
+        run: python research/prospective/tomiolo2015_figshare_original_manifest_v01.py

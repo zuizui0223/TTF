@@ -1,0 +1,94 @@
+{
+  "schema": "ttf_Tomiolo2015_publisher_original_Figshare_sites_and_Hargreaves_source_geography_receipt_v01",
+  "date": "2026-11-16",
+  "status": "TWO_PUBLISHED_FIELD_SITES_GEOCODED_AGREE_NOT_INDEPENDENT_ORIGINAL_GPS_OR_EXPERIMENT_CERTIFICATION",
+  "original_paper": {
+    "doi": "10.1890/14-1445.1",
+    "published_figshare_collection_doi": "10.6084/m9.figshare.c.3307653.v1",
+    "official_collection_id": 3307653,
+    "original_Figshare_articles": [
+      {
+        "id": 3562074,
+        "doi": "10.6084/m9.figshare.3562074.v1",
+        "name": "appendix-A.htm",
+        "bytes": 134278,
+        "md5": "f2dc5a3c1715a72d297112434dac8f45",
+        "purpose": "Original study sites and experimental setup"
+      },
+      {
+        "id": 3562071,
+        "doi": "10.6084/m9.figshare.3562071.v1",
+        "name": "appendix-B.htm",
+        "bytes": 7084,
+        "md5": "0ce0bda49e0302403728f6671f91aea0",
+        "downloaded": false
+      },
+      {
+        "id": 3562068,
+        "doi": "10.6084/m9.figshare.3562068.v1",
+        "name": "appendix-C.htm",
+        "bytes": 104739,
+        "md5": "7c7833b99b318782deaa3036bc12603c",
+        "downloaded": false
+      }
+    ],
+    "appendix_A_SHA256_verified": "3d9f27e87755c0d0c28f2e7d4798e73df20ad8bb70dc9236fb0302c7e4348447",
+    "original_site_climate_table_in_Appendix_A": [
+      "M",
+      "SA",
+      "A"
+    ],
+    "field_origin_site_names": [
+      "M",
+      "SA"
+    ],
+    "appendix_gradient_context_only_site": "A",
+    "site_coordinates_rounded_to_whole_arcminutes": true,
+    "author_2013_dissertation_precedes_published_2015_study": true,
+    "independent_additional_experiment_from_dissertation_not_certified": true
+  },
+  "reference_full_original": {
+    "Hargreaves_SHA256": "f00eec59e5388da5a2243d391c4e639dc77eda8d98abbf9a8a6846b14da7bb71",
+    "Hargreaves_study_label": "Tomioloetal_Ecology_2015",
+    "published_figshare_Appendix_A_source_only_run_id": 43882985831,
+    "Figshare_original_manifest_run_id": 43882113357,
+    "original_Hargreaves_site_geo_run_id": 43883825212,
+    "original_geo_artifact_SHA256": "78f1096d0e3ba985a6bfc55f2d7f2911f8b8187322b57ef0243fa2c35bf8e98c",
+    "source_registry_matrix_path": "research/prospective/source_registry/tomiolo2015_geo_proxy_matrix_v01.json",
+    "population_ID_keys": 6,
+    "distinct_source_derived_garden_proxy_locations": 2,
+    "strict_binomial_species_labels": 3,
+    "species_with_two_proxy_locations": 3,
+    "source_design_comparison_cells": 12,
+    "same_original_study_origin_GPS_independently_confirmed": 0
+  },
+  "descriptive_geo_distance": {
+    "site_proxies_to_published_sites_km": {
+      "anonymous_proxy_point_1": {
+        "SA": 0.0004,
+        "M": 37.9732,
+        "A": 58.8356
+      },
+      "anonymous_proxy_point_2": {
+        "SA": 37.9728,
+        "M": 0,
+        "A": 96.4949
+      }
+    },
+    "M_SA_geographic_separation_km_approx": 37.97,
+    "this_is_NOT_independent_original_field_GPS_measurement": true,
+    "possible_same_published_rounded_coordinate_reuse": true,
+    "cannot_validate_individual_source_population_ID_and_climate_location_via_proximity": true
+  },
+  "qualifications": {
+    "original_paper_appendix_has_nonresponse_source_site_details": true,
+    "original_Appendix_A_source_context_contained_qualitative_mortality_language_in_initial_excerpt": true,
+    "original_appendix_site_snippet_redaction_was_technically_expanded_to_exclude_qualitative_mortality_without_changing_geo_gates": true,
+    "no_numerical_fitness_response_data_modeled": true,
+    "no_LGM_21ka_0BP_raster_sampled": true,
+    "no_fresh_independent_primary_experiment_holdout_authorized": true,
+    "Bontrager_previous_44of50_gate_unchanged": true,
+    "prior_TTF_genetic_Q_PROCEED_stops_unchanged": true,
+    "PR155_remains_draft": true
+  }
+}
