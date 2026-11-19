@@ -37,3 +37,21 @@ A future source-recovery attempt must first verify the official repository versi
 If authorized repository web access, institutional download or the authors supply verifiable genuine data bytes, re-run this same **source-only** audit on that exact original rather than inventing source rows from abstracts. A separate prospective hypothesis, held-out design, power calculation and family-wise correction must be frozen **before any fitness, genetics or adaptation response fitting**.
 
 **Status:** `PUBLIC_ORIGINAL_DATASETS_IDENTIFIED__ORIGINAL_BYTES_ACCESS_BLOCKED__NO_LGM_PANEL_CERTIFIED`. Existing negative/predictor-only historical climate conclusions remain unchanged; no PR #155 science files or main changes.
+
+
+## 2026-11-19 second-wave: official Dryad metadata authenticity PASS
+
+The public Dryad `GET /api/v2/datasets/{encoded DOI}/versions` and `GET /api/v2/versions/{id}/files` API worked from GitHub Actions even though the raw file download endpoints returned 401/403. The HAL version and file IDs were parsed from official `_links.self.href` and `_links.stash:download.href` rather than expecting nonexistent inline `id` fields. **First verified run:** [Actions #44540122635](https://github.com/zuizui0223/TTF/actions/runs/44540122635), API-only and 12 preflight tests success; expanded HAL-link test run [#44540180211](https://github.com/zuizui0223/TTF/actions/runs/44540180211), **15 tests PASS**.
+
+| Original dataset DOI | Frozen official version ID | Exact official original file | Official file ID | Official size | Repository-declared SHA256 |
+|---|---:|---|---:|---:|---|
+| `10.5061/dryad.bk3j9kdqk` | **394175** | Albano Experiment_Data.csv (full original filename in JSON receipt) | 4337649 | 421805 | `b3796db37145dd32ab148f5c2105ca0646923feab153d8857d4f90a5539f080c` |
+| `10.5061/dryad.tb2rbp0h6` | **435125** | `latlongs.csv` | 4692223 | 375 | `2f874477d3d0b50db9817af47c92b2b3b4d46a7ab60e2a6f86f55b0271d09c01` |
+| `10.5061/dryad.tb2rbp0h6` | **435125** | `tplantlatlongs.csv` | 4692224 | 157 | `bf84ee8116386da56415c095c743a9320a28559ac8807912d84c49a7da5a3892` |
+| `10.5061/dryad.f1vhhmh24` | **337849** | `Clarkia-LTREB-transplant-archive-R2.zip` | 3766673 | 7139083 | `de625d972c5f7bb2ad01709c1b0660099521d986b60b0a344a779c7ec5fcddaa` |
+
+**These SHA256 values are given by the ORIGINAL REPOSITORY'S API and have NOT been recomputed by hashing downloaded file bytes.** They certify the published file manifest identity, **not** the original GPS coordinates or biological outcomes. The exact identity table is permanently stored in `source_registry/fresh_dryad_original_file_identity_v01.json`. A new fail-closed verifier `verify_frozen_official_dryad_identity_v01.py` and twelve known-truth tests reject DOI/version/file-size/SHA/ID drift on every subsequent official metadata run.
+
+**Result:** four pinned original files in three archived studies have authoritative immutable identities; actual contents still inaccessible via tried authenticated/public file download endpoints. This is a substantive source-provenance advance, but NOT a new LGM/adaptation confirmation. New independent original source-GPS certified **0**, new original independently verified experiment cohorts **0**, 21ka historical contrasts tested **0**.
+
+**Next operational dependency:** obtain original dataset bytes via an authorized download supported by Dryad or a valid repository/author mirror, verify the downloaded SHA256 against these frozen original-manifest digests, and select only source ID, coordinate, garden and cohort columns. Never infer raw values from an article map or substitute the related Zenodo *analysis code* for original CSV records.
