@@ -67,6 +67,31 @@ class MeloOriginalSourceTests(unittest.TestCase):
             with self.assertRaisesRegex(AssertionError,"discrepancy drift"):
                 audit.evaluate(self.d)
 
+    def test_companion_thesis_separates_cabarita_and_hastings(self):
+        r = audit.evaluate(self.d)
+        x = r["published_site_name_and_seconds_concordance"]
+        self.assertEqual(x["Dune"]["thesis_place_name"], "Cabarita Beach")
+        self.assertEqual(x["Dune"]["thesis_population_code"], "SD03")
+        self.assertEqual(x["Headland"]["thesis_place_name"], "Hastings Point")
+        self.assertEqual(x["Headland"]["thesis_population_code"], "RH02")
+
+    def test_crosspaper_DMS_within_one_arcsecond_not_same_cohort(self):
+        r = audit.evaluate(self.d)
+        x = r["published_site_name_and_seconds_concordance"]
+        self.assertAlmostEqual(x["Dune"]["latitude_difference_arcsec"],0.66,places=5)
+        self.assertAlmostEqual(x["Dune"]["longitude_difference_arcsec"],0.04,places=5)
+        self.assertAlmostEqual(x["Headland"]["latitude_difference_arcsec"],0.07,places=5)
+        self.assertAlmostEqual(x["Headland"]["longitude_difference_arcsec"],0.82,places=5)
+        self.assertFalse(r["same_original_transplant_individuals_crosspaper_verified"])
+        self.assertTrue(r["crosspaper_site_name_match_is_not_independent_original_GPS"])
+
+    def test_companion_thesis_site_coordinate_drift_fails_closed(self):
+        changed=copy.deepcopy(audit.THESIS_SITE_REFERENCE)
+        changed["Headland"]["latitude"]="28°20′45″S"
+        with patch.dict(audit.THESIS_SITE_REFERENCE,changed,clear=True):
+            with self.assertRaisesRegex(ValueError,"no longer concordant"):
+                audit.evaluate(self.d)
+
     def test_haversine_identity(self):
         self.assertEqual(audit.haversine((0,0),(0,0)),0)
 
