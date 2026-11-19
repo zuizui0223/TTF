@@ -5,7 +5,7 @@ source/fitness/phenotype/genotype content. Pinned selection is fixed before
 response/model inspection. Errors are recorded as access gates, not absence.
 """
 from __future__ import annotations
-import argparse,json
+import argparse,json,re
 from pathlib import Path
 from urllib.error import HTTPError,URLError
 from urllib.parse import quote,urlparse
@@ -43,6 +43,22 @@ def flatten_api_records(payload,hint):
         if isinstance(payload.get(key),list):return payload[key]
     raise ValueError("Unknown Dryad version/file response schema")
 
+def linked_record_id(record,kind):
+    """Published Dryad HAL records often expose ID only in _links, not id."""
+    if isinstance(record.get("id"),int):
+        return record["id"]
+    patterns={
+        "versions":r"/api/v2/versions/(\\d+)(?:/|$)",
+        "files":r"/api/v2/files/(\\d+)(?:/|$)",
+    }
+    if kind not in patterns:raise ValueError("Unknown HAL identity kind")
+    for link in (record.get("_links") or {}).values():
+        href=link.get("href") if isinstance(link,dict) else None
+        if not isinstance(href,str):continue
+        match=re.search(patterns[kind],href)
+        if match:return int(match.group(1))
+    return None
+
 def get_access(url,fetcher):
     try:
         return {"status":"PUBLIC_METADATA_AVAILABLE","body":fetcher(url)}
@@ -74,10 +90,11 @@ def check_study(study,fetcher=public_get):
             records=flatten_api_records(versions["body"],"version")
             # Prefer exact latest available number (no response-dependent tuning).
             ranked=sorted((v for v in records if isinstance(v,dict) and
-                           isinstance(v.get("id"),int)),key=lambda v:
-                           (int(v.get("versionNumber",0)),int(v["id"])),reverse=True)
-            if not ranked:raise ValueError("No public version ID")
-            version_id=ranked[0]["id"]
+                           linked_record_id(v,"versions") is not None),key=lambda v:
+                           (int(v.get("versionNumber",0)),
+                            linked_record_id(v,"versions")),reverse=True)
+            if not ranked:raise ValueError("No public version ID or HAL self link")
+            version_id=linked_record_id(ranked[0],"versions")
             files_url=API+f"versions/{version_id}/files?per_page=100"
             files=get_access(files_url,fetcher)
             if files["status"]=="PUBLIC_METADATA_AVAILABLE":
@@ -90,7 +107,7 @@ def check_study(study,fetcher=public_get):
                                         "status":"ORIGINAL_FILE_NAME_NOT_UNIQUELY_REGISTERED"})
                         continue
                     m=matches[0]
-                    actual_id=m.get("id")
+                    actual_id=linked_record_id(m,"files")
                     match=pinned_id is None or actual_id==pinned_id
                     results.append({
                       "expected_original_path":path,
