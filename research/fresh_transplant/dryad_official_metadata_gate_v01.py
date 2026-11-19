@@ -53,7 +53,7 @@ def get_access(url,fetcher):
 
 def check_study(study,fetcher=public_get):
     doi=study["doi"]
-    if not doi.startswith("10.5061/dryad.") or "/" in doi:
+    if not doi.startswith("10.5061/dryad.") or doi.count("/") != 1:
         raise ValueError("DOI outside frozen Dryad scope")
     version_url=API+"datasets/"+quote("doi:"+doi,safe="")+"/versions?per_page=100"
     try:
