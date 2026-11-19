@@ -27,3 +27,21 @@ WGS84の緯度・経度として解釈し、平均地球半径6,371.0088kmのhav
 `melo2014_original_coordinate_distance_gate_v01.py` は、正確な原著掲載DMS文字列から緯度経度変換、大円距離・原著本文との不一致をsource-onlyで再計算する。source registryのMelo研究ラベル・2原産・2庭・10セル・未認証状態を照合。**11件の合成テスト**と専用GitHub Actionsが同じ設計診断を再実行する。
 
 判定 **PRIMARY_PUBLISHED_COORDINATES_CONFLICT_WITH_DESCRIBED_DISTANCE_HOLD**。位置の独立照合と出典に基づく元集団IDが確認できるまで、現代／21kaラスタ抽出・局所適応・可塑性・種分化の新規確認的応答解析に昇格しない。既存Bontrager 44/50の停止、TTF-Q、211種TTFなどの事前凍結結果は不変。**mainへのマージは実施していない。**
+
+
+## 2. 二次文献による場所コード照合（同じ移植コホートとは限らない）
+
+関連するS. lautus形質・集団遺伝研究の博士論文：Diana Bernal-Franco (2014), *Evolutionary and ecological functional genomics of Senecio lautus leaf shape natural variation*, University of Queensland, Chapter III Table 1（印刷頁122）。公開PDF https://files01.core.ac.uk/download/pdf/43363386.pdf 。
+
+| Melo (2014) 原著の2集団 | Bernal-Franco論文中の原産地コード | 別研究の原産地名 | 博士論文の公開DMS |
+|---|---|---|---|
+| Dune | SD03 (D03) | **Cabarita Beach** | 28°19′54″ S; 153°34′17″ E |
+| Headland | RH02 (H02) | **Hastings Point** | 28°21′45″ S; 153°34′46″ E |
+
+原著Meloの掲載位置に対し、各軸の差はDuneで緯度**0.66秒**・経度**0.04秒**、Headlandで緯度**0.07秒**・経度**0.82秒**。したがって**元の2地点は別研究の同名生態型サイトと秒単位で整合**する。本文の「Cabarita BeachのDune/Headland一対」という広域呼称と、別の形質研究における**Hastings PointとCabarita Beach**という地点名粒度が異なる可能性がある。
+
+**これは原著GPSの誤植や800m文言の誤記を証明したわけではない。** Bernal-Francoの論文は異なるサンプリング・形質研究であり、Meloの**2009年採種母本・2010年原野移植の個体コホートが同一という原データ照合は行われていない**。共同研究者・研究室で地域コードや地点代表座標を再利用した可能性も残るため、博士論文の公開座標一致を「独立GPS認証2地点」や「独立実験2本」へ昇格させない。
+
+関連図表PDFのテキスト抽出ではTable 1のコードと地点名・秒単位DMSが確認できた。ただしPDFページ画像の取得はアクセス制約で失敗し、**画像としての表構造の独立目視検証までは未完**。これを含めてsource geographyは**HOLD**であり、21ka気候抽出は未実施。
+
+実装では`melo2014_original_coordinate_distance_gate_v01.py`に別研究のサイト照合（1秒以内）の固定検査を追加し、**元の11テスト→14テスト**へ拡張。原著の3.505km対約0.8kmという観測事実は維持し、原因未判定・元コホート未認証という科学的留保も維持する。
