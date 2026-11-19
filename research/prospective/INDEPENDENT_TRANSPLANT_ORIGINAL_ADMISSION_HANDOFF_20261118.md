@@ -33,3 +33,12 @@ Ellis 2007の実験配置は、元24アームと二次抽出18アームの差、
 - **Brancalion 2018**：原著Methodsによれば3森林原産集団×各10母樹＝30母樹、同じ採種ロットを共通圃場・種子移植・苗移植の3方式に使う。3方式を3独立母樹コホートとして計数しない。Hargreaves由来の8比較セルも独立試験8件ではない。コード `brancalion2018_maternal_cohort_gate_v01.py`、記録 `BRANCALION2018_SHARED_MATERNAL_COHORT_HANDOFF_20261119.md`。
 
 対象候補10件の合否状態は変わらず、**独立原産地GPS認証0、独立実験認証0、歴史気候対比資格0**。この0は無存在の証明ではなく資格認定の保留。凍結済みLGM・適応・TTFの科学的応答は未開封・未変更。
+
+
+## 2026-11-19 原著source-only追加監査
+
+**Brancalion 2018**：原著Table S1取得をGitHub Actions上の公式WileyとPMCの4経路で実行したが、403/404/404/404で真正DOCXの内容は未取得。3原産集団・30母樹、24ブロック、72プロット、各苗／種子移植計2,160配置の実験設計を確認。植物の配置数は原産地の独立気候曝露数を増やさず、**3原産地だけでは切片＋現代気候2項＋LGM1項の4列モデルは必ずランク不足**。詳細は`BRANCALION2018_ORIGINAL_TABLE_S1_SOURCE_RANK_STOP_20261119.md`、テストとActionsはPASS。単独の新規LGM効果パネルへは昇格しない。
+
+**Baack & Stanton 2005**：原著Table 1（2000年の苗移植）は3時期それぞれ4原産×4庭の異なる組合せを使用。**48 round-specific arms、時期を畳むと38 unique directed source→garden pairs、6原産・8庭、10 local comparisons**。Hargreavesの8候補セルとは集計粒度が違うため、差分を「欠損40」と呼ばない。元の原産集団GPSは依然未認証。倍数性（2倍体/4倍体）、融雪季節、地理的集団の混同を防ぐ設計判定を`BAACK2005_ORIGINAL_ROUND_STRATA_HANDOFF_20261119.md`に記録した。
+
+**資格判定を維持**：真正の独立原産地GPSをもつ候補研究0、独立原著実験の資格認定0、historical contrast資格0。これは実験が無いことや結果が否定されたことではない。旧Bontrager 44/50と既存科学的結果の再調整・事後救済はしない。
