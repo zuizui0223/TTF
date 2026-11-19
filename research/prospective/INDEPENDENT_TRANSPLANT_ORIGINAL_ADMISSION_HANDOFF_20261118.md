@@ -25,3 +25,11 @@ Ellis 2007の実験配置は、元24アームと二次抽出18アームの差、
 ## 科学的判定
 
 **NO_NEW_INDEPENDENT_HISTORICAL_FITNESS_PANEL_QUALIFIED**。Bontrager 44/50停止を事後救済しない。既存TTF-Q、GenDivRange He、CaliPopGen Fst、Jensen break-location、211種TTFの凍結結論も変更しない。PR #155はDraft、mainは変更しない。
+
+
+## 2026-11-19 source-only追記（新しい独立パネルの合格ではない）
+
+- **Kalske 2012**：原著の4原産集団DMSは、厳密構文で3/4不正。構文のみ正常なUtöも通常変換で66.498333°N、15.357778°Eとなり、論文が指定する南西フィンランド群島と地理的に矛盾する。4/4原産地座標をQUARANTINE。自動繰り上げ・他論文の同名集団GPSの流用を禁止する。コード `kalske2012_dms_geographic_quarantine_v02.py`、記録 `KALSKE2012_DMS_GEOGRAPHIC_QUARANTINE_V02_20261119.md`。
+- **Brancalion 2018**：原著Methodsによれば3森林原産集団×各10母樹＝30母樹、同じ採種ロットを共通圃場・種子移植・苗移植の3方式に使う。3方式を3独立母樹コホートとして計数しない。Hargreaves由来の8比較セルも独立試験8件ではない。コード `brancalion2018_maternal_cohort_gate_v01.py`、記録 `BRANCALION2018_SHARED_MATERNAL_COHORT_HANDOFF_20261119.md`。
+
+対象候補10件の合否状態は変わらず、**独立原産地GPS認証0、独立実験認証0、歴史気候対比資格0**。この0は無存在の証明ではなく資格認定の保留。凍結済みLGM・適応・TTFの科学的応答は未開封・未変更。
