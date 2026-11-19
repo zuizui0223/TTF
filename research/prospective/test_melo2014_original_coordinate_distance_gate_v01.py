@@ -64,7 +64,8 @@ class MeloOriginalSourceTests(unittest.TestCase):
         bad = copy.deepcopy(audit.ORIGINAL_METHOD_COORDINATES)
         bad["Dune"]["latitude"] = "28°21′19.66″S"
         with patch.dict(audit.ORIGINAL_METHOD_COORDINATES,bad,clear=True):
-            with self.assertRaisesRegex(AssertionError,"discrepancy drift"):
+            # Primary-vs-thesis agreement is checked before the distance ratio.
+            with self.assertRaisesRegex(ValueError,"Cross-paper published coordinates no longer concordant"):
                 audit.evaluate(self.d)
 
     def test_companion_thesis_separates_cabarita_and_hastings(self):
