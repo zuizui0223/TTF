@@ -53,3 +53,12 @@ Ellis 2007の実験配置は、元24アームと二次抽出18アームの差、
 KalskeはDMS不正3地点＋地理不一致1地点、Brancalionは3原産地点のsource-level design ceiling、Baackは3時期で異なるsource×garden比較、Meloは公開座標と本文距離の不一致。それぞれ**異なる資料品質・識別の失敗モード**であり、同じ研究を形式上の研究数や座標数で水増ししない。10原著候補のうち一次位置・実験ID・歴史気候対比まで認証された新規独立検証パネルは引き続き0。
 
 **後続の主目的は、原産地GPSと実験コホートの真正記録が回復できる研究を得ること**。既存のBontrager 44/50停止を後付け再解析で救済しない。元の表現型・遺伝・局所適応・可塑性・種分化・LGM効果は新たに推定していない。
+
+
+## 2026-11-19 Arany 2009 source/garden実験単位の追加検証
+
+**Mosleh Arany et al. (2009), *Plant Ecology*, DOI 10.1007/s11258-008-9530-y** のオープンアクセス原著Methodsを照合。原産5集団（Meijendel砂丘3、Leiden/Noordwijk内陸2）、各集団10母植物、実験庭2（砂丘、Leidenの代替庭）、母植物×庭ごとの苗8、総配置**800苗**。原著は「元の内陸採種地点にはenclosureを設置できなかった」と明記し、Leidenの庭を実験代替として使った。砂丘原産2集団は**5m**間隔。したがってHargreavesの5原産ラベル、2庭ラベル、6比較セルは独立した原産地気候5点のGPSが認証されたことを意味せず、gardenをsource GPSに代用しない。
+
+実装：`arany2009_original_source_garden_grain_v01.py`、9テスト、`ttf-arany2009-original-grain-v01.yml`。原著設計の内容を `ARANY2009_ORIGINAL_SOURCE_GARDEN_GRAIN_20261119.md` に固定した。**新たに原産地GPS認証0・独立歴史気候対比資格0を維持**。同研究の既刊生態学的適応結果を否定しない。
+
+既に検証済みMeloの原著座標と著者関連博士論文の地点照合を14テスト版へ修正し、GitHub Actions Push run [#44482122147](https://github.com/zuizui0223/TTF/actions/runs/44482122147)でPASS。関連研究の同じ地点座標を新しい独立個体コホートと誤計数しない。
