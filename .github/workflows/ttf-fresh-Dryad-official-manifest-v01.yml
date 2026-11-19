@@ -8,6 +8,9 @@ on:
       - 'research/fresh_transplant/dryad_official_metadata_gate_v01.py'
       - 'research/fresh_transplant/test_dryad_official_metadata_gate_v01.py'
       - 'research/fresh_transplant/source_only_original_dataset_contract_v01.json'
+      - 'research/fresh_transplant/verify_frozen_official_dryad_identity_v01.py'
+      - 'research/fresh_transplant/test_verify_frozen_official_dryad_identity_v01.py'
+      - 'research/fresh_transplant/source_registry/fresh_dryad_original_file_identity_v01.json'
 jobs:
   official-source-metadata:
     runs-on: ubuntu-24.04
@@ -23,6 +26,10 @@ jobs:
         run: python -m unittest discover -s research/fresh_transplant -p 'test_dryad_official_metadata_gate_v01.py' -v
       - name: Query original Dryad DOI version and file metadata (no response bytes)
         run: python research/fresh_transplant/dryad_official_metadata_gate_v01.py --output _source_only/dryad_official_metadata_gate_v01.json
+      - name: Twelve immutable original file identity regression tests
+        run: python -m unittest discover -s research/fresh_transplant -p 'test_verify_frozen_official_dryad_identity_v01.py' -v
+      - name: Match official DOI version and SHA256 manifest to frozen first-shot receipt
+        run: python research/fresh_transplant/verify_frozen_official_dryad_identity_v01.py --observed _source_only/dryad_official_metadata_gate_v01.json
       - uses: actions/upload-artifact@v4
         with:
           name: ttf-fresh-original-Dryad-official-manifest-v01
