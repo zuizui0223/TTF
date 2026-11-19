@@ -42,3 +42,14 @@ Ellis 2007の実験配置は、元24アームと二次抽出18アームの差、
 **Baack & Stanton 2005**：原著Table 1（2000年の苗移植）は3時期それぞれ4原産×4庭の異なる組合せを使用。**48 round-specific arms、時期を畳むと38 unique directed source→garden pairs、6原産・8庭、10 local comparisons**。Hargreavesの8候補セルとは集計粒度が違うため、差分を「欠損40」と呼ばない。元の原産集団GPSは依然未認証。倍数性（2倍体/4倍体）、融雪季節、地理的集団の混同を防ぐ設計判定を`BAACK2005_ORIGINAL_ROUND_STRATA_HANDOFF_20261119.md`に記録した。
 
 **資格判定を維持**：真正の独立原産地GPSをもつ候補研究0、独立原著実験の資格認定0、historical contrast資格0。これは実験が無いことや結果が否定されたことではない。旧Bontrager 44/50と既存科学的結果の再調整・事後救済はしない。
+
+
+## 2026-11-19 Melo 2014 original-source geography gate
+
+**Melo et al. 2014** は、元論文 `The system` のCabarita Beachの2原産集団（Dune/Headland）のDMS記載が構文上有効である一方、両点の直線距離**3.505057 km**は原著の定性的説明**約0.8 km**と整合しない（差2.705 km、約4.38倍）。元位置点が採集時GPSか代表点か未認証で、出版誤記の原因も同定していない。原著DMSを上書き・推定修復せず **SOURCE-GEO HOLD**。Hargreavesの原産2ラベル・庭2ラベル・10候補セルをそのまま認証済み独立研究数としない。詳細は `MELO2014_ORIGINAL_COORDINATE_DISTANCE_CONFLICT_20261119.md`、再現コード `melo2014_original_coordinate_distance_gate_v01.py` と11件の専用テストを追加。元独立GPS認証0、LGM応答・新規遺伝・適応データ未開封。
+
+### source-only資格プログラムの現在判定
+
+KalskeはDMS不正3地点＋地理不一致1地点、Brancalionは3原産地点のsource-level design ceiling、Baackは3時期で異なるsource×garden比較、Meloは公開座標と本文距離の不一致。それぞれ**異なる資料品質・識別の失敗モード**であり、同じ研究を形式上の研究数や座標数で水増ししない。10原著候補のうち一次位置・実験ID・歴史気候対比まで認証された新規独立検証パネルは引き続き0。
+
+**後続の主目的は、原産地GPSと実験コホートの真正記録が回復できる研究を得ること**。既存のBontrager 44/50停止を後付け再解析で救済しない。元の表現型・遺伝・局所適応・可塑性・種分化・LGM効果は新たに推定していない。
