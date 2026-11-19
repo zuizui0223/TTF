@@ -14,7 +14,7 @@ from kalske2012_publisher_dms_quarantine_v01 import PUBLISHED
 # A deliberately generous bounding screen, NOT a polygon or verified site GPS.
 FINLAND_SCREEN = {"lat_min": 59.0, "lat_max": 71.0,
                   "lon_min": 19.0, "lon_max": 32.0}
-DMS = re.compile(r"^(\\d+)°\\s*(\\d+)′\\s*(\\d+)″\\s*([NSEW])$")
+DMS = re.compile(r"^(\d+)°\s*(\d+)′\s*(\d+)″\s*([NSEW])$")
 
 
 def parse_strict_dms(text: str, axis: str):
@@ -97,7 +97,7 @@ def main():
     result = evaluate()
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, sort_keys=True,
-                                      indent=2) + "\\n", encoding="utf-8")
+                                      indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: result[k] for k in (
         "site_count", "syntax_invalid_count",
         "syntax_valid_but_geographically_inconsistent_count",
