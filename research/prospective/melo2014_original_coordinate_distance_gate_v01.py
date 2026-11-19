@@ -19,6 +19,16 @@ ORIGINAL_METHOD_COORDINATES = {
     "Dune": {"latitude": '28°19′54.66″S', "longitude": '153°34′17.04″E'},
     "Headland": {"latitude": '28°21′45.07″S', "longitude": '153°34′46.82″E'},
 }
+# Bernal-Franco 2014, University of Queensland PhD thesis, Chapter III Table 1
+# (printed p. 122); rounded site locations, a different research sample.
+# https://files01.core.ac.uk/download/pdf/43363386.pdf
+THESIS_SITE_REFERENCE = {
+    "Dune": {"population_code": "SD03", "place_name": "Cabarita Beach",
+             "latitude": '28°19′54″S', "longitude": '153°34′17″E'},
+    "Headland": {"population_code": "RH02", "place_name": "Hastings Point",
+                 "latitude": '28°21′45″S', "longitude": '153°34′46″E'},
+}
+THESIS_SOURCE = "Bernal-Franco 2014 University of Queensland PhD, Chapter III Table 1"
 PUBLISHED_APPROX_SEPARATION_KM = 0.8
 RADIUS_KM = 6371.0088
 DMS_RE = re.compile(r"^(\d+)°(\d+)′(\d+(?:\.\d+)?)″([NSEW])$")
@@ -72,6 +82,26 @@ def evaluate(shortlist):
     pts = {label: [parse_dms(d["latitude"], "latitude"),
                    parse_dms(d["longitude"], "longitude")]
            for label, d in ORIGINAL_METHOD_COORDINATES.items()}
+    thesis_site_concordance = {}
+    if set(THESIS_SITE_REFERENCE) != {"Dune", "Headland"}:
+        raise ValueError("Companion thesis pair changed")
+    for label, point in pts.items():
+        reference = THESIS_SITE_REFERENCE[label]
+        secondary = [parse_dms(reference["latitude"], "latitude"),
+                     parse_dms(reference["longitude"], "longitude")]
+        delta = [round(abs(p-q)*3600.0, 6) for p,q in zip(point,secondary)]
+        if any(x > 1.000001 for x in delta):
+            raise ValueError("Cross-paper published coordinates no longer concordant")
+        thesis_site_concordance[label] = {
+            "thesis_population_code": reference["population_code"],
+            "thesis_place_name": reference["place_name"],
+            "thesis_latitude": reference["latitude"],
+            "thesis_longitude": reference["longitude"],
+            "latitude_difference_arcsec": delta[0],
+            "longitude_difference_arcsec": delta[1],
+            "matches_original_published_DMS_within_one_arcsecond": True,
+            "same_2009_seed_harvest_or_2010_transplant_cohort_certified": False,
+        }
     d_km = haversine(pts["Dune"], pts["Headland"])
     ratio = d_km / PUBLISHED_APPROX_SEPARATION_KM
     if not (3.4 < d_km < 3.6 and 4 < ratio < 4.6):
@@ -87,6 +117,12 @@ def evaluate(shortlist):
         "source_populations_for_focal_field_transplant": 2,
         "original_DMS_verbatim": ORIGINAL_METHOD_COORDINATES,
         "publisher_coordinates_DMS_syntax_valid": True,
+        "companion_thesis_site_reference": THESIS_SOURCE,
+        "companion_thesis_source_url": "https://files01.core.ac.uk/download/pdf/43363386.pdf",
+        "published_site_name_and_seconds_concordance": thesis_site_concordance,
+        "companion_thesis_labels_headland_as_Hastings_Point": True,
+        "same_original_transplant_individuals_crosspaper_verified": False,
+        "crosspaper_site_name_match_is_not_independent_original_GPS": True,
         "calculated_coordinate_points_wgs84_decimal_degrees": pts,
         "great_circle_distance_km_spherical": round(d_km, 6),
         "text_approx_separation_km": PUBLISHED_APPROX_SEPARATION_KM,
