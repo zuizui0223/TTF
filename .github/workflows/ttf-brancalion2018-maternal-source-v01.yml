@@ -1,0 +1,36 @@
+name: Brancalion 2018 original maternal cohort source gate
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - '.github/workflows/ttf-brancalion2018-maternal-source-v01.yml'
+      - 'research/prospective/brancalion2018_maternal_cohort_gate_v01.py'
+      - 'research/prospective/test_brancalion2018_maternal_cohort_gate_v01.py'
+      - 'research/prospective/hargreaves35_primary_article_recovery_shortlist_v01.json'
+  pull_request:
+    paths:
+      - '.github/workflows/ttf-brancalion2018-maternal-source-v01.yml'
+      - 'research/prospective/brancalion2018_maternal_cohort_gate_v01.py'
+      - 'research/prospective/test_brancalion2018_maternal_cohort_gate_v01.py'
+      - 'research/prospective/hargreaves35_primary_article_recovery_shortlist_v01.json'
+jobs:
+  maternal-source-identity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Eight original seed-source identity tests
+        run: python -m unittest discover -s research/prospective -p test_brancalion2018_maternal_cohort_gate_v01.py -v
+      - name: Emit provenance-only audit
+        run: python research/prospective/brancalion2018_maternal_cohort_gate_v01.py --output _source_only/brancalion2018_maternal_source_gate_v01.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-brancalion2018-shared-maternal-source-only
+          path: _source_only/brancalion2018_maternal_source_gate_v01.json
+          retention-days: 30
