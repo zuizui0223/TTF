@@ -1,0 +1,58 @@
+{
+  "actions_url": "https://github.com/zuizui0223/TTF/actions/runs/44540122635",
+  "datasets": [
+    {
+      "doi": "10.5061/dryad.bk3j9kdqk",
+      "files": [
+        {
+          "id": 4337649,
+          "path": "Albano_et_al_2025_EM_Experiment_Data.csv",
+          "sha256_from_repository_metadata": "b3796db37145dd32ab148f5c2105ca0646923feab153d8857d4f90a5539f080c",
+          "size_bytes": 421805
+        }
+      ],
+      "study_id": "Albano2025_Trifolium_repens",
+      "version_id": 394175
+    },
+    {
+      "doi": "10.5061/dryad.tb2rbp0h6",
+      "files": [
+        {
+          "id": 4692223,
+          "path": "latlongs.csv",
+          "sha256_from_repository_metadata": "2f874477d3d0b50db9817af47c92b2b3b4d46a7ab60e2a6f86f55b0271d09c01",
+          "size_bytes": 375
+        },
+        {
+          "id": 4692224,
+          "path": "tplantlatlongs.csv",
+          "sha256_from_repository_metadata": "bf84ee8116386da56415c095c743a9320a28559ac8807912d84c49a7da5a3892",
+          "size_bytes": 157
+        }
+      ],
+      "study_id": "CrossEckert2026_Camissoniopsis_cheiranthifolia",
+      "version_id": 435125
+    },
+    {
+      "doi": "10.5061/dryad.f1vhhmh24",
+      "files": [
+        {
+          "id": 3766673,
+          "path": "Clarkia-LTREB-transplant-archive-R2.zip",
+          "sha256_from_repository_metadata": "de625d972c5f7bb2ad01709c1b0660099521d986b60b0a344a779c7ec5fcddaa",
+          "size_bytes": 7139083
+        }
+      ],
+      "study_id": "Carley2025_Clarkia_demographic",
+      "version_id": 337849
+    }
+  ],
+  "history_21ka_contrast_tested": false,
+  "original_fitness_or_genetic_responses_read": false,
+  "provenance_kind": "OFFICIAL_PUBLIC_DRYAD_API_METADATA_NOT_LOCALLY_HASHED_FILE_BYTES",
+  "schema": "ttf_fresh_Dryad_official_original_file_identity_frozen_v01",
+  "source_GPS_rows_downloaded_or_verified": 0,
+  "stopped_bontrager_44of50_unchanged": true,
+  "verified_by_actions_run": 44540122635,
+  "verified_on": "2026-11-19"
+}
