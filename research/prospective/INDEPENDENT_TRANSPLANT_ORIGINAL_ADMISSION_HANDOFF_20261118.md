@@ -62,3 +62,15 @@ KalskeはDMS不正3地点＋地理不一致1地点、Brancalionは3原産地点�
 実装：`arany2009_original_source_garden_grain_v01.py`、9テスト、`ttf-arany2009-original-grain-v01.yml`。原著設計の内容を `ARANY2009_ORIGINAL_SOURCE_GARDEN_GRAIN_20261119.md` に固定した。**新たに原産地GPS認証0・独立歴史気候対比資格0を維持**。同研究の既刊生態学的適応結果を否定しない。
 
 既に検証済みMeloの原著座標と著者関連博士論文の地点照合を14テスト版へ修正し、GitHub Actions Push run [#44482122147](https://github.com/zuizui0223/TTF/actions/runs/44482122147)でPASS。関連研究の同じ地点座標を新しい独立個体コホートと誤計数しない。
+
+
+## 2026-11-19 初回10候補のsource-only設計審査を完了（新規独立パネル資格は不合格）
+
+初回候補の残り2件を資料ベースで確認：
+
+- **Volis et al. 2002**（`10.1007/s00442-002-0999-0`）：原著著者の大学サーバー掲載PDFで、Beit Guvrin地中海型MとNegev wadi砂漠型Dの**原産集団各1＝計2**、移植庭2、植生除去条件の各環境3母植物由来の混合種子プール、植生保持実験の各環境10母植物由来苗を確認。同研究者の別Evolution 2002論文の10集団を元のOecologia相互移植2集団に加算しない。原産GPS認証0。
+- **Kindell et al. 1996**（`10.2307/2261336`）：確認できた公開抄録では原産2集団×移植先2現地×植生2処理×苗齢3段階。原著Methodsの完全な移植アーム表は未取得であり、Hargreavesのgarden ID6個を元の独立地理庭6地点とはみなさない。元GPS認証0。
+
+`VOLIS_KINDELL_TEN_SOURCE_SHORTLIST_SCOPE_CLOSURE_20261119.md`、`volis_kindell_original_study_scope_closure_v01.py` と10テストを追加し、元shortlistに基づく初回10研究のsource-only設計情報を揃えた。
+
+**現在地：10研究の初回資料審査済み、独立な元原産集団GPS認証0、独立原著コホート資格0、独立歴史気候対比資格0。** これは10研究が生態学的に無効という意味ではなく、今回の特定の「現在気候・地理の影響を超えるLGMの新規独立寄与」については現行条件の資格を満たしていないという意味。**既存10候補の繰り返し配置解析で主張を強くせず、次段の主線は別データ原著コホートの真正GPS獲得に移す。** Bontrager 44/50停止は解除しない。
