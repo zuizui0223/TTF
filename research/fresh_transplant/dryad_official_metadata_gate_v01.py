@@ -112,7 +112,16 @@ def check_study(study,fetcher=public_get):
                                 "file_list_error_type":files.get("error_type")})
         except (ValueError,TypeError,KeyError) as e:
             status="OFFICIAL_VERSION_SCHEMA_NOT_VALIDATED"
-            results.append({"schema_error_type":type(e).__name__})
+            body=versions.get("body")
+            results.append({"schema_error_type":type(e).__name__,
+                            "schema_error_message":str(e)[:180],
+                            "public_version_top_level_keys":
+                                sorted(body.keys()) if isinstance(body,dict) else [],
+                            "public_version_embedded_keys":
+                                sorted(body.get("_embedded",{}).keys())
+                                if isinstance(body,dict) and isinstance(body.get("_embedded"),dict)
+                                else [],
+                            "public_version_root_type":type(body).__name__})
     return {
       "study_id":study["study_id"],"dataset_doi":doi,
       "latest_public_version_id":version_id,
