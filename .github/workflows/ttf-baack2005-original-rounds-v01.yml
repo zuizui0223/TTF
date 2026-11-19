@@ -1,0 +1,36 @@
+name: Baack 2005 original round-stratified transplant design audit
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - '.github/workflows/ttf-baack2005-original-rounds-v01.yml'
+      - 'research/prospective/baack2005_round_stratified_original_design_v01.py'
+      - 'research/prospective/test_baack2005_round_stratified_original_design_v01.py'
+      - 'research/prospective/hargreaves35_primary_article_recovery_shortlist_v01.json'
+  pull_request:
+    paths:
+      - '.github/workflows/ttf-baack2005-original-rounds-v01.yml'
+      - 'research/prospective/baack2005_round_stratified_original_design_v01.py'
+      - 'research/prospective/test_baack2005_round_stratified_original_design_v01.py'
+      - 'research/prospective/hargreaves35_primary_article_recovery_shortlist_v01.json'
+jobs:
+  original-round-strata:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Nine frozen source-only design tests
+        run: python -m unittest discover -s research/prospective -p test_baack2005_round_stratified_original_design_v01.py -v
+      - name: Reconstruct original 3-round design
+        run: python research/prospective/baack2005_round_stratified_original_design_v01.py --output _source_only/baack2005_original_round_design_v01.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-baack2005-original-round-specific-source-only
+          path: _source_only/baack2005_original_round_design_v01.json
+          retention-days: 30
