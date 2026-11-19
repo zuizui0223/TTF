@@ -1,0 +1,36 @@
+name: Kalske 2012 source-only DMS plus geography v02
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - '.github/workflows/ttf-kalske2012-dms-geo-v02.yml'
+      - 'research/prospective/kalske2012_dms_geographic_quarantine_v02.py'
+      - 'research/prospective/test_kalske2012_dms_geographic_quarantine_v02.py'
+      - 'research/prospective/kalske2012_publisher_dms_quarantine_v01.py'
+  pull_request:
+    paths:
+      - '.github/workflows/ttf-kalske2012-dms-geo-v02.yml'
+      - 'research/prospective/kalske2012_dms_geographic_quarantine_v02.py'
+      - 'research/prospective/test_kalske2012_dms_geographic_quarantine_v02.py'
+      - 'research/prospective/kalske2012_publisher_dms_quarantine_v01.py'
+jobs:
+  syntax-geography:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Eight fail-closed source-only tests
+        run: python -m unittest discover -s research/prospective -p test_kalske2012_dms_geographic_quarantine_v02.py -v
+      - name: Emit quarantined source-only artifact
+        run: python research/prospective/kalske2012_dms_geographic_quarantine_v02.py --output _source_only/kalske2012_dms_geographic_quarantine_v02.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-kalske2012-source-geography-v02
+          path: _source_only/kalske2012_dms_geographic_quarantine_v02.json
+          retention-days: 30
