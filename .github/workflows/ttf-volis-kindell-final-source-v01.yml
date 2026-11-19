@@ -1,0 +1,36 @@
+name: Volis Kindell 10-shortlist original scope closure
+on:
+  push:
+    branches:
+      - 'prospective/independent-transplant-overlap-20261115'
+    paths:
+      - '.github/workflows/ttf-volis-kindell-final-source-v01.yml'
+      - 'research/prospective/volis_kindell_original_study_scope_closure_v01.py'
+      - 'research/prospective/test_volis_kindell_original_study_scope_closure_v01.py'
+      - 'research/prospective/hargreaves35_primary_article_recovery_shortlist_v01.json'
+  pull_request:
+    paths:
+      - '.github/workflows/ttf-volis-kindell-final-source-v01.yml'
+      - 'research/prospective/volis_kindell_original_study_scope_closure_v01.py'
+      - 'research/prospective/test_volis_kindell_original_study_scope_closure_v01.py'
+      - 'research/prospective/hargreaves35_primary_article_recovery_shortlist_v01.json'
+jobs:
+  final-two-study-source-scope:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Ten source-only admission tests
+        run: python -m unittest discover -s research/prospective -p test_volis_kindell_original_study_scope_closure_v01.py -v
+      - name: Emit final original source-scope closure
+        run: python research/prospective/volis_kindell_original_study_scope_closure_v01.py --output _source_only/volis_kindell_original_scope_closure_v01.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-volis-kindell-original-source-scope-closure
+          path: _source_only/volis_kindell_original_scope_closure_v01.json
+          retention-days: 30
