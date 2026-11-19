@@ -14,6 +14,12 @@ from kalske2012_publisher_dms_quarantine_v01 import PUBLISHED
 # A deliberately generous bounding screen, NOT a polygon or verified site GPS.
 FINLAND_SCREEN = {"lat_min": 59.0, "lat_max": 71.0,
                   "lon_min": 19.0, "lon_max": 32.0}
+EXPECTED_SOURCE_TEXT = {
+    "Ruissalo": ("67° 02′ 57″ N", "15° 63′ 73″ E"),
+    "Lammasluoto": ("66° 80′ 66″ N", "15° 52′ 62″ E"),
+    "Ånskär": ("66° 76′ 06″ N", "15° 38′ 90″ E"),
+    "Utö": ("66° 29′ 54″ N", "15° 21′ 28″ E"),
+}
 DMS = re.compile(r"^(\d+)°\s*(\d+)′\s*(\d+)″\s*([NSEW])$")
 
 
@@ -28,7 +34,8 @@ def parse_strict_dms(text: str, axis: str):
         problems.append("MINUTES_OUT_OF_RANGE")
     if seconds >= 60:
         problems.append("SECONDS_OUT_OF_RANGE")
-    if degrees > (90 if axis == "latitude" else 180):
+    maximum = 90 if axis == "latitude" else 180
+    if degrees > maximum or (degrees == maximum and (minutes or seconds)):
         problems.append("DEGREES_OUT_OF_RANGE")
     allowed = "NS" if axis == "latitude" else "EW"
     if hemisphere not in allowed:
@@ -62,8 +69,8 @@ def assess_site(name: str, lat_text: str, lon_text: str):
 
 
 def evaluate():
-    if set(PUBLISHED) != {"Ruissalo", "Lammasluoto", "Ånskär", "Utö"}:
-        raise ValueError("source study population set changed")
+    if PUBLISHED != EXPECTED_SOURCE_TEXT:
+        raise ValueError("original publisher coordinate strings changed: re-audit needed")
     entries = [assess_site(name, *coords) for name, coords in PUBLISHED.items()]
     if sum(x["syntax_valid"] for x in entries) != 1:
         raise AssertionError("publisher coordinate syntax status changed")
