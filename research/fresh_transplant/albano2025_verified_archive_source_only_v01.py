@@ -66,6 +66,10 @@ def audit_zip(path:Path, verify_pinned:bool=True):
     if any(n!=1 for n in individual_keys.values()):
         raise ValueError("Garden+Position not a unique original individual key")
     rep_keys=collections.Counter((r["Garden"],r["Population"],r["Rep"]) for r in rows)
+    garden_regions=collections.defaultdict(set)
+    for r in rows:garden_regions[r["Garden"]].add(r["ContGarden"])
+    if any(len(regions)!=1 for regions in garden_regions.values()):
+        raise ValueError("Garden-to-continent provenance drift")
     by_population=collections.defaultdict(list)
     for r in rows:by_population[r["Population"]].append(r)
     site_rows=[]
@@ -85,8 +89,9 @@ def audit_zip(path:Path, verify_pinned:bool=True):
     near_distances=[haversine(locations[i],locations[j])
                     for i in range(len(locations)) for j in range(i+1,len(locations))
                     if site_rows[i]["origin"]==site_rows[j]["origin"]]
-    site_rows.sort(key=lambda s:(s["origin"],int(s["population_id_verbatim"])
-                                 if s["population_id_verbatim"].isdigit()
+    site_rows.sort(key=lambda s:(s["origin"],
+                                 0 if s["population_id_verbatim"].isdigit() else 1,
+                                 int(s["population_id_verbatim"]) if s["population_id_verbatim"].isdigit()
                                  else s["population_id_verbatim"]))
     coverage=collections.Counter(len(s["gardens_observed"]) for s in site_rows)
     observed_pairs=sum(coverage[k]*k for k in coverage)
@@ -122,7 +127,8 @@ def audit_zip(path:Path, verify_pinned:bool=True):
         "Garden_Population_Rep_not_unique":duplicate_rep_groups>0,
         "Garden_Population_Rep_colliding_key_groups":duplicate_rep_groups,
         "Garden_Population_Rep_excess_rows_on_colliding_keys":excess_rep_rows,
-        "unique_site_coordinates_nearest_pair_km":round(min(near_distances),6),
+        "same_continent_nearest_source_pair_km":round(min(near_distances),6)
+            if near_distances else None,
         "same_continent_site_pairs_under_1km":site_pair_within_1km,
         "actual_independently_surveyed_source_GPS_provenance_verified":False,
         "source_id_to_reported_coordinate_mapping_verified_in_genuine_file":verify_pinned,
