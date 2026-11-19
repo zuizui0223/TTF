@@ -1,0 +1,30 @@
+name: TTF fresh original Dryad dataset version and file manifest gate
+on:
+  push:
+    branches:
+      - 'prospective/original-gps-transplant-panel-20261119'
+    paths:
+      - '.github/workflows/ttf-fresh-Dryad-official-manifest-v01.yml'
+      - 'research/fresh_transplant/dryad_official_metadata_gate_v01.py'
+      - 'research/fresh_transplant/test_dryad_official_metadata_gate_v01.py'
+      - 'research/fresh_transplant/source_only_original_dataset_contract_v01.json'
+jobs:
+  official-source-metadata:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Twelve offline official-source manifest regression tests
+        run: python -m unittest discover -s research/fresh_transplant -p 'test_dryad_official_metadata_gate_v01.py' -v
+      - name: Query original Dryad DOI version and file metadata (no response bytes)
+        run: python research/fresh_transplant/dryad_official_metadata_gate_v01.py --output _source_only/dryad_official_metadata_gate_v01.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-fresh-original-Dryad-official-manifest-v01
+          path: _source_only/dryad_official_metadata_gate_v01.json
+          retention-days: 90
