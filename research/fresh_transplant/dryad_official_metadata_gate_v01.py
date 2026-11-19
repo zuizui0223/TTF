@@ -48,8 +48,8 @@ def linked_record_id(record,kind):
     if isinstance(record.get("id"),int):
         return record["id"]
     patterns={
-        "versions":r"/api/v2/versions/(\\d+)(?:/|$)",
-        "files":r"/api/v2/files/(\\d+)(?:/|$)",
+        "versions":r"/api/v2/versions/(\d+)(?:/|$)",
+        "files":r"/api/v2/files/(\d+)(?:/|$)",
     }
     if kind not in patterns:raise ValueError("Unknown HAL identity kind")
     for link in (record.get("_links") or {}).values():
