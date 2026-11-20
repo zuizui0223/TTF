@@ -1,0 +1,56 @@
+{
+  "GCM_models": [
+    "CCSM4",
+    "MIROC-ESM",
+    "MPI-ESM-P"
+  ],
+  "LGM_snapshot_period": "about 22000 years BP, not exactly 21000 BP",
+  "actual_source_GPS_records_submitted_to_CI": false,
+  "any_LGM_or_current_bioclim_raster_values_extracted": false,
+  "any_original_climate_zip_fully_downloaded": false,
+  "biological_response_opened_or_tested": false,
+  "matched_baseline_period": "1960-1990",
+  "resolution_arcmin": 2.5,
+  "responses": {
+    "CCSM4": {
+      "content_range_header": "bytes 0-511/219610901",
+      "content_type": "application/zip",
+      "first_bytes_read": 512,
+      "http_status": 206,
+      "prefix_sha256": "428f14b1a03514035be20422577ba85c5bf0c4fc0211e8ae5aa806dabd664cd5",
+      "source_head_classification": "ZIP_LOCAL_HEADER_OBSERVED_NOT_FULL_FILE_VERIFIED",
+      "status": "OFFICIAL_ZIP_HEADER_PRESENT"
+    },
+    "MIROC-ESM": {
+      "content_range_header": "bytes 0-511/219831681",
+      "content_type": "application/zip",
+      "first_bytes_read": 512,
+      "http_status": 206,
+      "prefix_sha256": "f292e48eb3d0acb86507f6dd6f5e7cd0efc2b97ca331da7957228e66ad135db3",
+      "source_head_classification": "ZIP_LOCAL_HEADER_OBSERVED_NOT_FULL_FILE_VERIFIED",
+      "status": "OFFICIAL_ZIP_HEADER_PRESENT"
+    },
+    "MPI-ESM-P": {
+      "content_range_header": "bytes 0-511/223064411",
+      "content_type": "application/zip",
+      "first_bytes_read": 512,
+      "http_status": 206,
+      "prefix_sha256": "fae3960182ecc66ee62acc2378234c7796d1f906000fa83f59b694d7fe94f392",
+      "source_head_classification": "ZIP_LOCAL_HEADER_OBSERVED_NOT_FULL_FILE_VERIFIED",
+      "status": "OFFICIAL_ZIP_HEADER_PRESENT"
+    },
+    "WC1.4_MODERN": {
+      "content_range_header": "bytes 0-511/129319755",
+      "content_type": "application/zip",
+      "first_bytes_read": 512,
+      "http_status": 206,
+      "prefix_sha256": "4217a8ced54874af04390a109b9a5735a78cbad68be74c009e2b5bda8734e2e4",
+      "source_head_classification": "ZIP_LOCAL_HEADER_OBSERVED_NOT_FULL_FILE_VERIFIED",
+      "status": "OFFICIAL_ZIP_HEADER_PRESENT"
+    }
+  },
+  "schema": "ttf_Albano2025_WorldClim_1_4_paired_LGM_source_transport_v01",
+  "status": "FOUR_OFFICIAL_ARCHIVE_PREFIXES_AVAILABLE_NO_VALUES_EXTRACTED",
+  "verified_by_actions_run": 44747950778,
+  "verified_on": "2026-11-20"
+}

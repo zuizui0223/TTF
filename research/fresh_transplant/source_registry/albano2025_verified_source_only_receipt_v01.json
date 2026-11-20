@@ -1,0 +1,65 @@
+{
+  "Garden_Population_Rep_colliding_key_groups": 107,
+  "Garden_Population_Rep_excess_rows_on_colliding_keys": 131,
+  "Garden_Population_Rep_not_unique": true,
+  "actual_independently_surveyed_source_GPS_provenance_verified": false,
+  "all_96_sources_occupy_independent_21ka_climate_cells_proven": false,
+  "distinct_exact_coordinate_pairs": 96,
+  "four_gardens_full_population_factorial": false,
+  "gardens": [
+    "Lafayette",
+    "Mississauga",
+    "Montpellier",
+    "Uppsala"
+  ],
+  "historical_21ka_exposure_obtained": false,
+  "independent_LGM_fitness_effect_tested": false,
+  "individual_Garden_Position_unique": true,
+  "individual_rows_by_garden": {
+    "Lafayette": 465,
+    "Mississauga": 465,
+    "Montpellier": 470,
+    "Uppsala": 458
+  },
+  "official_Dryad_version_id": 394175,
+  "official_original_file_id": 4337649,
+  "official_repository_sha256_MATCHED": true,
+  "old_bontrager_44of50_stop_unchanged": true,
+  "original_csv_bytes": 421805,
+  "original_csv_columns_total": 35,
+  "original_csv_path": "Albano_et_al_2025_EM_Experiment_Data.csv",
+  "original_source_population_IDs": 96,
+  "phenotype_fitness_genotype_or_LGM_values_modeled": false,
+  "population_garden_coverage_frequency": {
+    "1": 2,
+    "2": 3,
+    "4": 91
+  },
+  "population_garden_pairs_absent_from_original_rows": 12,
+  "population_garden_pairs_full_cross_possible": 384,
+  "population_garden_pairs_observed": 372,
+  "repository_doi": "10.5061/dryad.bk3j9kdqk",
+  "rows_original_experiment": 1858,
+  "same_continent_nearest_source_pair_km": 0.388079,
+  "same_continent_site_pairs_under_1km": 1,
+  "schema": "ttf_Albano2025_SHA_pinned_original_source_only_audit_v01",
+  "sha256_computed_from_uploaded_original_CSV": "b3796db37145dd32ab148f5c2105ca0646923feab153d8857d4f90a5539f080c",
+  "source_geographic_provenance_columns_verified": [
+    "Garden",
+    "Position",
+    "Population",
+    "Rep",
+    "ContOrigin",
+    "ContGarden",
+    "Latitude",
+    "Longitude"
+  ],
+  "source_id_to_reported_coordinate_mapping_verified_in_genuine_file": true,
+  "source_population_continent_conflicts": 0,
+  "source_population_coordinate_conflicts": 0,
+  "source_populations_by_continent": {
+    "EUR": 49,
+    "NAM": 47
+  },
+  "status": "ORIGINAL_SOURCE_ID_COORDINATES_AUTHENTICATED_GPS_FIELD_ORIGIN_UNCERTIFIED_LGM_NOT_TESTED"
+}

@@ -1,0 +1,33 @@
+name: Albano source-only historical climate novelty MPI 95-cell spatial CV
+on:
+  push:
+    branches:
+      - 'prospective/original-gps-transplant-panel-20261119'
+    paths:
+      - '.github/workflows/ttf-albano-historical-predictor-MPI-v01.yml'
+      - 'research/fresh_transplant/albano2025_source_only_MPIO_GCM_historical_innovation_v01.py'
+      - 'research/fresh_transplant/test_albano2025_source_only_MPIO_GCM_historical_innovation_v01.py'
+      - 'research/fresh_transplant/source_registry/albano2025_MPI_LGM_BIO1_BIO12_unlabeled_cells_v01.json'
+      - 'research/fresh_transplant/source_registry/albano2025_WC14_modern_BIO1_BIO12_unlabeled_cells_v01.json'
+jobs:
+  source-only-MPI-history-innovation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numeric linear algebra
+        run: python -m pip install --quiet 'numpy>=1.26,<3'
+      - name: Nine synthetic response-blind CV and fail-closed tests
+        run: python -m unittest discover -s research/fresh_transplant -p test_albano2025_source_only_MPIO_GCM_historical_innovation_v01.py -v
+      - name: Evaluate LGM-minus-baseline predictor novelty with 10 continent-latitude holdouts
+        run: python research/fresh_transplant/albano2025_source_only_MPIO_GCM_historical_innovation_v01.py --output _source_only/albano2025_MPI_history_innovation_95cells_v01.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-albano-95sourcecells-MPI-response-blind-history-novelty
+          path: _source_only/albano2025_MPI_history_innovation_95cells_v01.json
+          retention-days: 90

@@ -1,0 +1,29 @@
+name: Albano CCSM4 primary LGM archive source ZIP index retry
+on:
+  push:
+    branches:
+      - 'prospective/original-gps-transplant-panel-20261119'
+    paths:
+      - '.github/workflows/ttf-albano-ccsm4-primary-index-v01.yml'
+      - 'research/fresh_transplant/worldclim_CCSM4_primary_archive_index_retry_v01.py'
+      - 'research/fresh_transplant/test_worldclim_CCSM4_primary_archive_index_retry_v01.py'
+jobs:
+  precommitted-primary-ccsm4-index:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Three primary-GCM source-only guards
+        run: python -m unittest discover -s research/fresh_transplant -p test_worldclim_CCSM4_primary_archive_index_retry_v01.py -v
+      - name: Three attempts to index official original CCSM4 ~22ka ZIP
+        run: python research/fresh_transplant/worldclim_CCSM4_primary_archive_index_retry_v01.py --output _source_only/ccsm4_primary_zip_index_v01.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-albano-frozen-primary-ccsm4-lgm-source-index-v01
+          path: _source_only/ccsm4_primary_zip_index_v01.json
+          retention-days: 90

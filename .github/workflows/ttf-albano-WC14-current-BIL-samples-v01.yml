@@ -1,0 +1,33 @@
+name: Albano WorldClim1.4 matched baseline BIO1 BIO12 source cell samples
+on:
+  push:
+    branches:
+      - 'prospective/original-gps-transplant-panel-20261119'
+    paths:
+      - '.github/workflows/ttf-albano-WC14-current-BIL-samples-v01.yml'
+      - 'research/fresh_transplant/albano2025_WC14_paired_baseline_BIO1_BIO12_unlabeled_v01.py'
+      - 'research/fresh_transplant/test_albano2025_WC14_paired_baseline_BIO1_BIO12_unlabeled_v01.py'
+      - 'research/fresh_transplant/source_registry/worldclim_14_current_bio1_bio12_BIL_member_index_v01.json'
+      - 'research/fresh_transplant/source_registry/albano2025_unlabeled_worldclim_2_5m_cells_v01.json'
+jobs:
+  original-paired-current-BIL:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 17
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Eight source-only CRC and original-BIL fail-closed tests
+        run: python -m unittest discover -s research/fresh_transplant -p test_albano2025_WC14_paired_baseline_BIO1_BIO12_unlabeled_v01.py -v
+      - name: Install original GeoRaster reader
+        run: python -m pip install --quiet 'rasterio>=1.4,<2'
+      - name: Download only two current 1960-1990 BIL HDR pairs from original ZIP
+        run: python research/fresh_transplant/albano2025_WC14_paired_baseline_BIO1_BIO12_unlabeled_v01.py --output _source_only/wc14_1960_1990_bio1_bio12_95cells_v01.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-albano-worldclim-current-1960-90-95-grid-cells-v01
+          path: _source_only/wc14_1960_1990_bio1_bio12_95cells_v01.json
+          retention-days: 90

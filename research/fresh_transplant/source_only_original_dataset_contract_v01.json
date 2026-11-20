@@ -1,0 +1,98 @@
+{
+  "LGM_fitness_or_genetic_response_opened": false,
+  "branch_origin": "main",
+  "branch_origin_commit": "a3a70eafaf315d66246862a3a41513a2be5553cf",
+  "candidates": [
+    {
+      "doi": "10.5061/dryad.bk3j9kdqk",
+      "file": "Albano_et_al_2025_EM_Experiment_Data.csv",
+      "lGM21ka_source_contrast_status": "NOT_TESTED",
+      "original_cohort_independence_status": "NOT_CERTIFIED",
+      "primary_readme_claims": {
+        "common_gardens": 4,
+        "individuals": 1858,
+        "populations": 96,
+        "source_fields": [
+          "Garden",
+          "Population",
+          "Rep",
+          "ContOrigin",
+          "Latitude",
+          "Longitude",
+          "Position"
+        ]
+      },
+      "public_file_stream_id_from_Dryad_page": 4337649,
+      "published_dataset_version_date": "2025-09-05",
+      "rank_for_source_access": 1,
+      "source_location_linkage_status": "README_ONLY_UNCONFIRMED_IN_ORIGINAL_BYTES",
+      "species": "Trifolium repens",
+      "study_id": "Albano2025_Trifolium_repens",
+      "why": "Primary individuals and georeferenced population ID in one deposited CSV; broad Europe and North America; years/continent confounding must be guarded"
+    },
+    {
+      "doi": "10.5061/dryad.tb2rbp0h6",
+      "lGM21ka_source_contrast_status": "NOT_TESTED",
+      "original_cohort_independence_status": "NOT_CERTIFIED",
+      "original_experiment_year_labels": [
+        2005,
+        2018
+      ],
+      "primary_readme_claims": {
+        "source_location_csv_separate_from_outcome": true,
+        "transplant_location_csv_separate_from_outcome": true
+      },
+      "published_dataset_version_date": "2026-04-06",
+      "rank_for_source_access": 2,
+      "source_location_file": "latlongs.csv",
+      "source_location_file_stream_id_from_Dryad_page": 4692223,
+      "source_location_linkage_status": "README_ONLY_UNCONFIRMED_IN_ORIGINAL_BYTES",
+      "species": "Camissoniopsis cheiranthifolia",
+      "study_id": "CrossEckert2026_Camissoniopsis_cheiranthifolia",
+      "transplant_location_file": "tplantlatlongs.csv",
+      "transplant_location_file_stream_id_from_Dryad_page": 4692224,
+      "why": "Independent spatial provenance files avoid touching any outcome CSV; must verify year and cohort joins before pooling"
+    },
+    {
+      "archive": "Clarkia-LTREB-transplant-archive-R2.zip",
+      "doi": "10.5061/dryad.f1vhhmh24",
+      "lGM21ka_source_contrast_status": "NOT_TESTED",
+      "original_cohort_independence_status": "NOT_CERTIFIED",
+      "primary_readme_claims": {
+        "experimental_cohorts": 2,
+        "populations": 10,
+        "source_population_id_and_UTM_NAD27_coordinates": true
+      },
+      "published_dataset_version_date": "2025-01-06",
+      "rank_for_source_access": 3,
+      "source_location_linkage_status": "README_ONLY_UNCONFIRMED_IN_ORIGINAL_BYTES",
+      "species": "Clarkia (annual plant; species identity to verify in primary paper)",
+      "study_id": "Carley2025_Clarkia_demographic",
+      "why": "Original population UTM NAD27 and source/garden and cohort tables; different datum requires explicit transform"
+    }
+  ],
+  "certified_independent_original_source_GPS_populations": 0,
+  "certified_original_experiment_cohorts": 0,
+  "frozen_at": "2026-11-19",
+  "initial_status": "THREE_PUBLIC_REPOSITORY_LEADS_NOT_YET_NEW_LGM_PANEL",
+  "old_bontrager_44_of_50_terminal_stop_unchanged": true,
+  "prohibitions": [
+    "No fitness/survival/growth/seed production or genetic response opened in this first-shot file-provenance audit",
+    "No automatic qualification based on README claims or article abstract",
+    "No 1970–2000 'historical' observational climate classified as LGM 21ka",
+    "No counting multiple years, clones, plants, gardens, continents as independent species",
+    "No post-hoc addition to Bontrager 44/50 stopped panel, old slots or frozen TTF endpoints",
+    "No confirmatory effect estimates before a new power and holdout protocol is frozen"
+  ],
+  "schema": "ttf_fresh_source_only_original_transplant_discovery_v01",
+  "scope": "new primary-source cohorts, not retrospective rescue of PR 154/155 or pre-existing 211 species TTF",
+  "source_qualification_gates": [
+    "Primary repository DOI, original version and original file identity authenticated",
+    "Individual source population ID and original population-level latitude/longitude explicitly linked",
+    "Coordinates verifiable as actual source population site rather than garden/country/region proxy",
+    "Original experimental cohort or garden/plant replicate identifiers reconciled without double counting",
+    "Current climate and geography/biogeographic barrier controls defined before any historical or fitness response",
+    "Distinct 21ka climate variation and holdout identifiability tested response blind before frozen statistical test"
+  ],
+  "study_set_selected_before_any_response_reanalysis": true
+}

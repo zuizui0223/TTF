@@ -1,0 +1,88 @@
+{
+  "GCM": "CCSM4",
+  "LGM_period": "approx_22ka",
+  "climate_metrics": {
+    "BIO1": {
+      "OOF_residual_variance_over_original_change_variance": 0.20092722308202884,
+      "blocked_OOF_R2": 0.7857747510195607,
+      "blocked_OOF_RMSE": 3.7472580138236884,
+      "blocked_OOF_residual_sd": 3.6483419409085927,
+      "continent_summaries": {
+        "EUR": {
+          "blocked_OOF_residual_sd": 4.644333367338317,
+          "change_sd": 5.0217664519442105,
+          "mean_change": -8.4375,
+          "n": 48
+        },
+        "NAM": {
+          "blocked_OOF_residual_sd": 2.084640823594506,
+          "change_sd": 8.180807733417149,
+          "mean_change": -17.529787234042555,
+          "n": 47
+        }
+      },
+      "mean_historical_change_LGM_minus_modern": -12.93578947368421,
+      "sd_historical_change": 8.139095508709064,
+      "units": "degrees_C"
+    },
+    "BIO12": {
+      "OOF_residual_variance_over_original_change_variance": 1.8769773326522532,
+      "blocked_OOF_R2": -0.914975752161407,
+      "blocked_OOF_RMSE": 212.67776385187778,
+      "blocked_OOF_residual_sd": 211.67415539862748,
+      "continent_summaries": {
+        "EUR": {
+          "blocked_OOF_residual_sd": 116.56465118845483,
+          "change_sd": 102.17394950498297,
+          "mean_change": 20.375,
+          "n": 48
+        },
+        "NAM": {
+          "blocked_OOF_residual_sd": 272.1785303840817,
+          "change_sd": 180.15429454425504,
+          "mean_change": -84.31914893617021,
+          "n": 47
+        }
+      },
+      "mean_historical_change_LGM_minus_modern": -31.42105263157895,
+      "sd_historical_change": 154.50349985345085,
+      "units": "mm"
+    }
+  },
+  "current_environmental_and_geographical_controls": [
+    "intercept",
+    "continent",
+    "latitude",
+    "longitude",
+    "modern_BIO1",
+    "modern_BIO12"
+  ],
+  "fitness_genotype_trait_response_tested": false,
+  "historical_predictor_exploratory_after_GCM_source_availability": false,
+  "independent_LGM_effect_on_fitness_tested": false,
+  "modern_period": "1960-1990",
+  "primary_CCSM4_raster_not_yet_tested": false,
+  "schema": "ttf_Albano2025_CCSM4_primary_source_only_95grid_historical_innovation_v01",
+  "source_actions_run": 44756276808,
+  "source_actions_url": "https://github.com/zuizui0223/TTF/actions/runs/44756276808",
+  "source_continent_cell_counts": {
+    "EUR": 48,
+    "NAM": 47
+  },
+  "source_data_only": true,
+  "source_grid_count": 95,
+  "source_individual_population_count": 96,
+  "spatial_holdout_folds": {
+    "0": 10,
+    "1": 10,
+    "2": 9,
+    "3": 9,
+    "4": 9,
+    "5": 10,
+    "6": 10,
+    "7": 10,
+    "8": 9,
+    "9": 9
+  },
+  "status": "PRIMARY_GCM_SOURCE_ONLY_HISTORY_PREDICTOR_DIAGNOSTIC_NOT_BIOLOGICAL_EFFECT"
+}

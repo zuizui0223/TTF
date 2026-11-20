@@ -1,0 +1,30 @@
+name: Albano official WorldClim 1.4 matched current baseline ZIP index
+on:
+  push:
+    branches:
+      - 'prospective/original-gps-transplant-panel-20261119'
+    paths:
+      - '.github/workflows/ttf-albano-wc14-current-range-index-v01.yml'
+      - 'research/fresh_transplant/worldclim_lgm_remote_zip_directory_v01.py'
+      - 'research/fresh_transplant/worldclim_matched_baseline_index_retry_v01.py'
+      - 'research/fresh_transplant/test_worldclim_matched_baseline_index_retry_v01.py'
+jobs:
+  official-current-baseline-index:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline current baseline source-only tests
+        run: python -m unittest discover -s research/fresh_transplant -p test_worldclim_matched_baseline_index_retry_v01.py -v
+      - name: Retrieve current 1960-1990 ZIP central index, three attempts
+        run: python research/fresh_transplant/worldclim_matched_baseline_index_retry_v01.py --output _source_only/wc14_modern_bio_2_5m_BIL_archive_index.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-albano-WC14-current-bio-BIL-index-v01
+          path: _source_only/wc14_modern_bio_2_5m_BIL_archive_index.json
+          retention-days: 45

@@ -1,0 +1,29 @@
+name: TTF fresh original transplant source-only Dryad accession preflight
+on:
+  push:
+    branches:
+      - 'prospective/original-gps-transplant-panel-20261119'
+    paths:
+      - '.github/workflows/ttf-fresh-original-dryad-source-v01.yml'
+      - 'research/fresh_transplant/**'
+jobs:
+  source-only-data-access:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify 12 fail-closed source-only tests offline
+        run: python -m unittest discover -s research/fresh_transplant -p 'test_dryad_original_source_access_preflight_v01.py' -v
+      - name: First-shot actual Dryad original source file access (no biological response rows)
+        run: |
+          python research/fresh_transplant/dryad_original_source_access_preflight_v01.py --output _source_only/dryad_original_source_access_preflight_v01.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-fresh-dryad-original-source-only-firstshot-v01
+          path: _source_only/dryad_original_source_access_preflight_v01.json
+          retention-days: 90

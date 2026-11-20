@@ -1,0 +1,32 @@
+name: TTF Albano 2025 authenticated archive source-only receipt
+on:
+  push:
+    branches:
+      - 'prospective/original-gps-transplant-panel-20261119'
+    paths:
+      - '.github/workflows/ttf-albano2025-authenticated-source-v01.yml'
+      - 'research/fresh_transplant/albano2025_verified_archive_source_only_v01.py'
+      - 'research/fresh_transplant/test_albano2025_verified_archive_source_only_v01.py'
+      - 'research/fresh_transplant/test_albano2025_frozen_source_receipt_v01.py'
+      - 'research/fresh_transplant/source_registry/albano2025_verified_source_only_receipt_v01.json'
+      - 'research/fresh_transplant/source_registry/fresh_dryad_original_file_identity_v01.json'
+jobs:
+  authenticated-original-source-provenance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Thirteen synthetic SHA/source/geography/individual-key fail-closed checks
+        run: python -m unittest discover -s research/fresh_transplant -p 'test_albano2025_verified_archive_source_only_v01.py' -v
+      - name: Eleven frozen original SHA-linked source receipt checks
+        run: python -m unittest discover -s research/fresh_transplant -p 'test_albano2025_frozen_source_receipt_v01.py' -v
+      - name: Ensure no original raw data accidentally committed
+        shell: bash
+        run: |
+          test ! -f research/fresh_transplant/Albano_et_al_2025_EM_Experiment_Data.csv
+          test ! -f research/fresh_transplant/doi_10_5061_dryad_bk3j9kdqk__v20250905.zip

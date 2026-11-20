@@ -1,0 +1,32 @@
+name: Albano MPI LGM BIO1 BIO12 CRC-pinned 95-cell source-only extraction
+on:
+  push:
+    branches:
+      - 'prospective/original-gps-transplant-panel-20261119'
+    paths:
+      - '.github/workflows/ttf-albano-mpi-lgm-unlabeled-v01.yml'
+      - 'research/fresh_transplant/albano2025_MPI_LGM_raster_values_unlabeled_v01.py'
+      - 'research/fresh_transplant/test_albano2025_MPI_LGM_raster_values_unlabeled_v01.py'
+      - 'research/fresh_transplant/source_registry/albano2025_unlabeled_worldclim_2_5m_cells_v01.json'
+jobs:
+  source-only-MPI-geotiff:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 17
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Ten known-truth ZIP CRC and source-only query tests
+        run: python -m unittest discover -s research/fresh_transplant -p test_albano2025_MPI_LGM_raster_values_unlabeled_v01.py -v
+      - name: Install GeoTIFF reader
+        run: python -m pip install --quiet 'rasterio>=1.4,<2'
+      - name: Download only two original MPI GeoTIFF members using verified byte ranges
+        run: python research/fresh_transplant/albano2025_MPI_LGM_raster_values_unlabeled_v01.py --output _source_only/mpi_lgm_bio1_bio12_unlabeled_95cells_v01.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-albano-source-only-MPI-LGM-unlabeled-95-cells-v01
+          path: _source_only/mpi_lgm_bio1_bio12_unlabeled_95cells_v01.json
+          retention-days: 90

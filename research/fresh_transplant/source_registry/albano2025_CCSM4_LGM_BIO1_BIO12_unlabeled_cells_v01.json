@@ -1,0 +1,631 @@
+{
+  "GCM": "CCSM4",
+  "GCM_role": "primary_precommitted",
+  "LGM_independent_predictor_gain_tested": false,
+  "actions_run_id": 44755765645,
+  "actions_url": "https://github.com/zuizui0223/TTF/actions/runs/44755765645",
+  "cell_profiles": [
+    {
+      "BIO12_raw": 315,
+      "BIO1_raw": -242,
+      "col": 4807,
+      "row": 627
+    },
+    {
+      "BIO12_raw": 650,
+      "BIO1_raw": -195,
+      "col": 4753,
+      "row": 735
+    },
+    {
+      "BIO12_raw": 788,
+      "BIO1_raw": -118,
+      "col": 4556,
+      "row": 793
+    },
+    {
+      "BIO12_raw": 788,
+      "BIO1_raw": -116,
+      "col": 4563,
+      "row": 808
+    },
+    {
+      "BIO12_raw": 704,
+      "BIO1_raw": -17,
+      "col": 4476,
+      "row": 882
+    },
+    {
+      "BIO12_raw": 721,
+      "BIO1_raw": -34,
+      "col": 4548,
+      "row": 883
+    },
+    {
+      "BIO12_raw": 704,
+      "BIO1_raw": -13,
+      "col": 4464,
+      "row": 887
+    },
+    {
+      "BIO12_raw": 523,
+      "BIO1_raw": -84,
+      "col": 4719,
+      "row": 909
+    },
+    {
+      "BIO12_raw": 736,
+      "BIO1_raw": 11,
+      "col": 4434,
+      "row": 922
+    },
+    {
+      "BIO12_raw": 265,
+      "BIO1_raw": -316,
+      "col": 2384,
+      "row": 929
+    },
+    {
+      "BIO12_raw": 265,
+      "BIO1_raw": -316,
+      "col": 2385,
+      "row": 929
+    },
+    {
+      "BIO12_raw": 730,
+      "BIO1_raw": 22,
+      "col": 4423,
+      "row": 935
+    },
+    {
+      "BIO12_raw": 708,
+      "BIO1_raw": 16,
+      "col": 4486,
+      "row": 937
+    },
+    {
+      "BIO12_raw": 740,
+      "BIO1_raw": 8,
+      "col": 4495,
+      "row": 937
+    },
+    {
+      "BIO12_raw": 760,
+      "BIO1_raw": 23,
+      "col": 4424,
+      "row": 940
+    },
+    {
+      "BIO12_raw": 893,
+      "BIO1_raw": 10,
+      "col": 4457,
+      "row": 944
+    },
+    {
+      "BIO12_raw": 637,
+      "BIO1_raw": 10,
+      "col": 4528,
+      "row": 945
+    },
+    {
+      "BIO12_raw": 616,
+      "BIO1_raw": 19,
+      "col": 4527,
+      "row": 956
+    },
+    {
+      "BIO12_raw": 486,
+      "BIO1_raw": 0,
+      "col": 4667,
+      "row": 958
+    },
+    {
+      "BIO12_raw": 854,
+      "BIO1_raw": 46,
+      "col": 4284,
+      "row": 972
+    },
+    {
+      "BIO12_raw": 615,
+      "BIO1_raw": 38,
+      "col": 4384,
+      "row": 977
+    },
+    {
+      "BIO12_raw": 620,
+      "BIO1_raw": 36,
+      "col": 4417,
+      "row": 977
+    },
+    {
+      "BIO12_raw": 319,
+      "BIO1_raw": -299,
+      "col": 2375,
+      "row": 982
+    },
+    {
+      "BIO12_raw": 631,
+      "BIO1_raw": 41,
+      "col": 4381,
+      "row": 982
+    },
+    {
+      "BIO12_raw": 726,
+      "BIO1_raw": 6,
+      "col": 4621,
+      "row": 986
+    },
+    {
+      "BIO12_raw": 713,
+      "BIO1_raw": 15,
+      "col": 4541,
+      "row": 990
+    },
+    {
+      "BIO12_raw": 308,
+      "BIO1_raw": -294,
+      "col": 2392,
+      "row": 997
+    },
+    {
+      "BIO12_raw": 669,
+      "BIO1_raw": 40,
+      "col": 4419,
+      "row": 998
+    },
+    {
+      "BIO12_raw": 964,
+      "BIO1_raw": 44,
+      "col": 4244,
+      "row": 1000
+    },
+    {
+      "BIO12_raw": 733,
+      "BIO1_raw": 8,
+      "col": 4688,
+      "row": 1002
+    },
+    {
+      "BIO12_raw": 1224,
+      "BIO1_raw": 49,
+      "col": 4223,
+      "row": 1004
+    },
+    {
+      "BIO12_raw": 748,
+      "BIO1_raw": 8,
+      "col": 4686,
+      "row": 1004
+    },
+    {
+      "BIO12_raw": 1216,
+      "BIO1_raw": 55,
+      "col": 4222,
+      "row": 1008
+    },
+    {
+      "BIO12_raw": 660,
+      "BIO1_raw": 51,
+      "col": 4406,
+      "row": 1011
+    },
+    {
+      "BIO12_raw": 638,
+      "BIO1_raw": 10,
+      "col": 4734,
+      "row": 1011
+    },
+    {
+      "BIO12_raw": 378,
+      "BIO1_raw": -279,
+      "col": 2404,
+      "row": 1014
+    },
+    {
+      "BIO12_raw": 836,
+      "BIO1_raw": 39,
+      "col": 4433,
+      "row": 1026
+    },
+    {
+      "BIO12_raw": 1133,
+      "BIO1_raw": 16,
+      "col": 4549,
+      "row": 1026
+    },
+    {
+      "BIO12_raw": 779,
+      "BIO1_raw": 48,
+      "col": 4394,
+      "row": 1029
+    },
+    {
+      "BIO12_raw": 454,
+      "BIO1_raw": -260,
+      "col": 2405,
+      "row": 1030
+    },
+    {
+      "BIO12_raw": 759,
+      "BIO1_raw": 50,
+      "col": 4437,
+      "row": 1030
+    },
+    {
+      "BIO12_raw": 830,
+      "BIO1_raw": 42,
+      "col": 4423,
+      "row": 1033
+    },
+    {
+      "BIO12_raw": 1145,
+      "BIO1_raw": 10,
+      "col": 4481,
+      "row": 1043
+    },
+    {
+      "BIO12_raw": 525,
+      "BIO1_raw": -235,
+      "col": 2415,
+      "row": 1050
+    },
+    {
+      "BIO12_raw": 913,
+      "BIO1_raw": 67,
+      "col": 4292,
+      "row": 1052
+    },
+    {
+      "BIO12_raw": 1372,
+      "BIO1_raw": 51,
+      "col": 4633,
+      "row": 1052
+    },
+    {
+      "BIO12_raw": 739,
+      "BIO1_raw": 58,
+      "col": 4433,
+      "row": 1058
+    },
+    {
+      "BIO12_raw": 640,
+      "BIO1_raw": 51,
+      "col": 4395,
+      "row": 1064
+    },
+    {
+      "BIO12_raw": 635,
+      "BIO1_raw": -231,
+      "col": 2416,
+      "row": 1067
+    },
+    {
+      "BIO12_raw": 712,
+      "BIO1_raw": -213,
+      "col": 2414,
+      "row": 1087
+    },
+    {
+      "BIO12_raw": 702,
+      "BIO1_raw": -198,
+      "col": 2410,
+      "row": 1103
+    },
+    {
+      "BIO12_raw": 851,
+      "BIO1_raw": -192,
+      "col": 2399,
+      "row": 1112
+    },
+    {
+      "BIO12_raw": 1449,
+      "BIO1_raw": 101,
+      "col": 4118,
+      "row": 1119
+    },
+    {
+      "BIO12_raw": 1484,
+      "BIO1_raw": 97,
+      "col": 4273,
+      "row": 1120
+    },
+    {
+      "BIO12_raw": 966,
+      "BIO1_raw": -163,
+      "col": 2401,
+      "row": 1126
+    },
+    {
+      "BIO12_raw": 1077,
+      "BIO1_raw": -155,
+      "col": 2419,
+      "row": 1130
+    },
+    {
+      "BIO12_raw": 1269,
+      "BIO1_raw": -144,
+      "col": 2419,
+      "row": 1140
+    },
+    {
+      "BIO12_raw": 1281,
+      "BIO1_raw": -134,
+      "col": 2403,
+      "row": 1147
+    },
+    {
+      "BIO12_raw": 700,
+      "BIO1_raw": 105,
+      "col": 4387,
+      "row": 1152
+    },
+    {
+      "BIO12_raw": 1090,
+      "BIO1_raw": -129,
+      "col": 2383,
+      "row": 1154
+    },
+    {
+      "BIO12_raw": 1077,
+      "BIO1_raw": -129,
+      "col": 2372,
+      "row": 1164
+    },
+    {
+      "BIO12_raw": 542,
+      "BIO1_raw": 122,
+      "col": 4372,
+      "row": 1166
+    },
+    {
+      "BIO12_raw": 955,
+      "BIO1_raw": -119,
+      "col": 2367,
+      "row": 1175
+    },
+    {
+      "BIO12_raw": 487,
+      "BIO1_raw": 74,
+      "col": 4183,
+      "row": 1176
+    },
+    {
+      "BIO12_raw": 969,
+      "BIO1_raw": -111,
+      "col": 2363,
+      "row": 1185
+    },
+    {
+      "BIO12_raw": 1015,
+      "BIO1_raw": -100,
+      "col": 2354,
+      "row": 1195
+    },
+    {
+      "BIO12_raw": 1058,
+      "BIO1_raw": -97,
+      "col": 2342,
+      "row": 1201
+    },
+    {
+      "BIO12_raw": 933,
+      "BIO1_raw": -89,
+      "col": 2326,
+      "row": 1204
+    },
+    {
+      "BIO12_raw": 957,
+      "BIO1_raw": -86,
+      "col": 2310,
+      "row": 1210
+    },
+    {
+      "BIO12_raw": 1015,
+      "BIO1_raw": -71,
+      "col": 2295,
+      "row": 1220
+    },
+    {
+      "BIO12_raw": 1086,
+      "BIO1_raw": -50,
+      "col": 2290,
+      "row": 1232
+    },
+    {
+      "BIO12_raw": 1150,
+      "BIO1_raw": -22,
+      "col": 2287,
+      "row": 1244
+    },
+    {
+      "BIO12_raw": 1222,
+      "BIO1_raw": -5,
+      "col": 2271,
+      "row": 1253
+    },
+    {
+      "BIO12_raw": 1249,
+      "BIO1_raw": 6,
+      "col": 2258,
+      "row": 1262
+    },
+    {
+      "BIO12_raw": 609,
+      "BIO1_raw": 108,
+      "col": 4233,
+      "row": 1267
+    },
+    {
+      "BIO12_raw": 599,
+      "BIO1_raw": 109,
+      "col": 4233,
+      "row": 1268
+    },
+    {
+      "BIO12_raw": 1212,
+      "BIO1_raw": 17,
+      "col": 2247,
+      "row": 1274
+    },
+    {
+      "BIO12_raw": 1204,
+      "BIO1_raw": 19,
+      "col": 2239,
+      "row": 1284
+    },
+    {
+      "BIO12_raw": 1293,
+      "BIO1_raw": 32,
+      "col": 2237,
+      "row": 1300
+    },
+    {
+      "BIO12_raw": 1418,
+      "BIO1_raw": 40,
+      "col": 2235,
+      "row": 1311
+    },
+    {
+      "BIO12_raw": 1465,
+      "BIO1_raw": 49,
+      "col": 2233,
+      "row": 1321
+    },
+    {
+      "BIO12_raw": 1458,
+      "BIO1_raw": 62,
+      "col": 2234,
+      "row": 1335
+    },
+    {
+      "BIO12_raw": 1418,
+      "BIO1_raw": 75,
+      "col": 2236,
+      "row": 1348
+    },
+    {
+      "BIO12_raw": 1442,
+      "BIO1_raw": 79,
+      "col": 2228,
+      "row": 1357
+    },
+    {
+      "BIO12_raw": 1375,
+      "BIO1_raw": 86,
+      "col": 2215,
+      "row": 1365
+    },
+    {
+      "BIO12_raw": 1367,
+      "BIO1_raw": 88,
+      "col": 2207,
+      "row": 1373
+    },
+    {
+      "BIO12_raw": 1422,
+      "BIO1_raw": 89,
+      "col": 2195,
+      "row": 1381
+    },
+    {
+      "BIO12_raw": 1416,
+      "BIO1_raw": 93,
+      "col": 2186,
+      "row": 1390
+    },
+    {
+      "BIO12_raw": 1514,
+      "BIO1_raw": 104,
+      "col": 2176,
+      "row": 1410
+    },
+    {
+      "BIO12_raw": 1511,
+      "BIO1_raw": 110,
+      "col": 2170,
+      "row": 1419
+    },
+    {
+      "BIO12_raw": 1450,
+      "BIO1_raw": 113,
+      "col": 2165,
+      "row": 1430
+    },
+    {
+      "BIO12_raw": 1450,
+      "BIO1_raw": 114,
+      "col": 2111,
+      "row": 1432
+    },
+    {
+      "BIO12_raw": 1472,
+      "BIO1_raw": 115,
+      "col": 2110,
+      "row": 1437
+    },
+    {
+      "BIO12_raw": 1468,
+      "BIO1_raw": 115,
+      "col": 2114,
+      "row": 1437
+    },
+    {
+      "BIO12_raw": 1495,
+      "BIO1_raw": 115,
+      "col": 2108,
+      "row": 1438
+    }
+  ],
+  "climate_age": "Last Glacial Maximum about 22 ka, not exactly 21 ka",
+  "fitness_genetics_adaptation_responses_opened": false,
+  "geotiff_provenance": {
+    "BIO1": {
+      "original_tiff_sha256": "30b5c582ee3782cdb91acce7b91405c5127c5e6613b94d912c51bad66f45483c",
+      "original_tiff_size": 12201558,
+      "raster": {
+        "raster_crs": "EPSG:4326",
+        "raster_dtype": "int16",
+        "raster_height": 3600,
+        "raster_nodata": -32768,
+        "raster_resolution": [
+          0.041666666666666664,
+          0.041666666666666664
+        ],
+        "raster_width": 8640,
+        "sampled_nominal_cells": 95,
+        "valid_cells": 95
+      }
+    },
+    "BIO12": {
+      "original_tiff_sha256": "65f69ab0b00333d1f77e4eef8cb6c6f557a66cb5b6e2b66cbdd3f31454d30466",
+      "original_tiff_size": 18779919,
+      "raster": {
+        "raster_crs": "EPSG:4326",
+        "raster_dtype": "int16",
+        "raster_height": 3600,
+        "raster_nodata": -32768,
+        "raster_resolution": [
+          0.041666666666666664,
+          0.041666666666666664
+        ],
+        "raster_width": 8640,
+        "sampled_nominal_cells": 95,
+        "valid_cells": 95
+      }
+    }
+  },
+  "grid_coordinate_system": "WorldClim 1.4 global 2.5 arcmin cell row/col, center-point lookup",
+  "modern_matched_baseline_rasters_extracted": false,
+  "official_source_URL": "https://geodata.ucdavis.edu/climate/cmip5/lgm/cclgmbi_2-5m.zip",
+  "original_exact_GPS_coordinates_or_population_IDs_exposed": false,
+  "schema": "ttf_Albano2025_CCSM4_PRIMARY_source_only_2_5m_LGM_cells_v01",
+  "source_Dryad_original_hash": "b3796db37145dd32ab148f5c2105ca0646923feab153d8857d4f90a5539f080c",
+  "source_manifest_reference": "source_registry/albano2025_CCSM4_primary_LGM_tiff_members_v01.json",
+  "source_population_count": 96,
+  "status": "FROZEN_PRIMARY_CCSM4_LGM_RASTER_SAMPLED_NOT_BIOLOGICAL_EFFECT",
+  "unlabeled_grid_cell_count": 95,
+  "variable_units": {
+    "BIO1": "degrees C times 10",
+    "BIO12": "precipitation mm"
+  }
+}

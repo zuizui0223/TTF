@@ -1,0 +1,33 @@
+name: Albano MIROC sensitivity original LGM GeoTIFF 95 cell samples
+on:
+  push:
+    branches:
+      - 'prospective/original-gps-transplant-panel-20261119'
+    paths:
+      - '.github/workflows/ttf-albano-miroc-sensitivity-95cells-v01.yml'
+      - 'research/fresh_transplant/albano2025_MIROC_sensitivity_LGM_raster_unlabeled_v01.py'
+      - 'research/fresh_transplant/test_albano2025_MIROC_sensitivity_LGM_raster_unlabeled_v01.py'
+      - 'research/fresh_transplant/albano2025_MPI_LGM_raster_values_unlabeled_v01.py'
+      - 'research/fresh_transplant/worldclim_lgm_remote_zip_directory_v01.py'
+jobs:
+  frozen-sensitivity-original:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 19
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Four frozen MIROC source-only integrity tests
+        run: python -m unittest discover -s research/fresh_transplant -p test_albano2025_MIROC_sensitivity_LGM_raster_unlabeled_v01.py -v
+      - name: Install original GeoTIFF reader
+        run: python -m pip install --quiet 'rasterio>=1.4,<2'
+      - name: Original MIROC 2.5 arcmin source ZIP index and two GeoTIFF samples
+        run: python research/fresh_transplant/albano2025_MIROC_sensitivity_LGM_raster_unlabeled_v01.py --output _source_only/miroc_22ka_bio1_bio12_95cells_v01.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-albano-miroc-sensitivity-original-source-only-95cells-v01
+          path: _source_only/miroc_22ka_bio1_bio12_95cells_v01.json
+          retention-days: 90
