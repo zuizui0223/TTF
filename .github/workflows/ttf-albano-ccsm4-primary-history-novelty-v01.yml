@@ -1,0 +1,34 @@
+name: Albano frozen CCSM4 PRIMARY source-only history innovation 95 cells
+on:
+  push:
+    branches:
+      - 'prospective/original-gps-transplant-panel-20261119'
+    paths:
+      - '.github/workflows/ttf-albano-ccsm4-primary-history-novelty-v01.yml'
+      - 'research/fresh_transplant/source_registry/albano2025_CCSM4_LGM_BIO1_BIO12_unlabeled_cells_v01.json'
+      - 'research/fresh_transplant/source_registry/albano2025_WC14_modern_BIO1_BIO12_unlabeled_cells_v01.json'
+      - 'research/fresh_transplant/albano2025_source_only_MPIO_GCM_historical_innovation_v01.py'
+      - 'research/fresh_transplant/test_albano2025_source_only_MPIO_GCM_historical_innovation_v01.py'
+jobs:
+  frozen-primary-climate-innovation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install fixed numeric OLS dependency
+        run: python -m pip install --quiet 'numpy>=1.26,<3'
+      - name: Ten source-only historical climate CV tests including precommitted primary GCM
+        run: python -m unittest discover -s research/fresh_transplant -p test_albano2025_source_only_MPIO_GCM_historical_innovation_v01.py -v
+      - name: Actual primary CCSM4 10-fold continent latitude CV (climate only)
+        run: |
+          python research/fresh_transplant/albano2025_source_only_MPIO_GCM_historical_innovation_v01.py             --lgm research/fresh_transplant/source_registry/albano2025_CCSM4_LGM_BIO1_BIO12_unlabeled_cells_v01.json             --output _source_only/albano2025_CCSM4_primary_95grid_historical_novelty_v01.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-albano-frozen-primary-CCSM4-climate-history-CV-v01
+          path: _source_only/albano2025_CCSM4_primary_95grid_historical_novelty_v01.json
+          retention-days: 90
