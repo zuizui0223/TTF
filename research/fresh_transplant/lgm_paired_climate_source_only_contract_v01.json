@@ -1,0 +1,83 @@
+{
+  "baseline_source_official_page": "https://worldclim.org/data/v1.4/worldclim14.html",
+  "baseline_url": "https://geodata.ucdavis.edu/climate/worldclim/1_4/grid/cur/bio_2-5m_bil.zip",
+  "created_before_any_LGM_raster_values_extracted": true,
+  "current_climate_covariate_controls": [
+    "BIO1",
+    "BIO12",
+    "latitude",
+    "longitude",
+    "continent"
+  ],
+  "data_quality_metric_only": true,
+  "historical_product": "WorldClim v1.4 CMIP5 LGM ~22,000 years before present (not exactly dated 21,000 BP)",
+  "historical_source_official_page": "https://worldclim.org/data/v1.4/paleo1.4.html",
+  "independent_history_information_metric": "Response-blind out-of-fold squared residual of GCM LGM BIO1/BIO12 after current climate and geography; report absolute residual standard deviation and fraction relative to LGM variance, by continent and GCM",
+  "matched_baseline_product": "WorldClim v1.4 bioclimatic 1960-1990 (paired calibration baseline; obsolete and for sensitivity within this historical product only)",
+  "models": [
+    {
+      "code": "CCSM4",
+      "official_url": "https://geodata.ucdavis.edu/climate/cmip5/lgm/cclgmbi_2-5m.zip",
+      "published_file": "cclgmbi_2-5m.zip",
+      "role": "primary"
+    },
+    {
+      "code": "MIROC-ESM",
+      "official_url": "https://geodata.ucdavis.edu/climate/cmip5/lgm/mrlgmbi_2-5m.zip",
+      "published_file": "mrlgmbi_2-5m.zip",
+      "role": "sensitivity"
+    },
+    {
+      "code": "MPI-ESM-P",
+      "official_url": "https://geodata.ucdavis.edu/climate/cmip5/lgm/melgmbi_2-5m.zip",
+      "published_file": "melgmbi_2-5m.zip",
+      "role": "sensitivity"
+    }
+  ],
+  "no_confirmatory_biological_effect_tested": true,
+  "nominal_unique_land_grid_cells_at_2_5_arcminutes": 95,
+  "original_csv_sha256": "b3796db37145dd32ab148f5c2105ca0646923feab153d8857d4f90a5539f080c",
+  "original_fitness_genotype_reproductive_responses_opened": false,
+  "original_modern_climate_product": "WorldClim v2.1 1970-2000 at 30 arc seconds; original file is z standardized and not directly paired with v1.4 downscaled paleoclimate",
+  "other_four_features_sensitivity_only": [
+    "BIO5",
+    "BIO6",
+    "BIO13",
+    "BIO14"
+  ],
+  "positive_diagnostic_requires": [
+    "Read and verify original GCM file bytes, integrity and raster CRS, six variable units and nodata; access success is not climatic signal",
+    "Extract six LGM and matching baseline variables at original 96 source IDs; report missingness and count distinct raster cell IDs",
+    "Exclude any source location without both paired present and LGM values; do not replace source by garden or nearest site",
+    "Report within continent source-level historical change versus contemporary climate and geographic polynomial controls",
+    "Spatial block folds must be defined before opening LGM response; no fitness response in qualification",
+    "Compare CCSM4 primary conclusion with MIROC-ESM and MPI-ESM-P sensitivities; do not cherry pick models",
+    "Decide whether a new fitness confirmation is feasible only after additional independent cohort and frozen holdout/power"
+  ],
+  "preselected_features": [
+    "BIO1",
+    "BIO5",
+    "BIO6",
+    "BIO12",
+    "BIO13",
+    "BIO14"
+  ],
+  "primary_features": [
+    "BIO1",
+    "BIO12"
+  ],
+  "prior_bontrager_44_of_50_terminal_stop_unchanged": true,
+  "projection": "WGS84 latitude/longitude with source-population locations, not garden proxies",
+  "resolution": "2.5 arcminutes (global raster 2.5m)",
+  "schema": "ttf_Albano2025_pre_response_LGM_climate_exposure_contract_v01",
+  "source_continent_counts": {
+    "EUR": 49,
+    "NAM": 47
+  },
+  "source_coordinates_precise_GPS_field_survey_certified": false,
+  "source_only_stop_if_rasters_unavailable": true,
+  "source_original_dataset_doi": "10.5061/dryad.bk3j9kdqk",
+  "source_population_count": 96,
+  "spatial_block_design": "Within each continent five source-latitude quintile bands (10 prespecified blocks), no random split of individual garden rows",
+  "status": "LGM_SOURCE_ACCESS_AND_PRE_RESPONSE_CONTRACT_FROZEN_NO_RASTER_VALUES_YET"
+}
