@@ -53,6 +53,7 @@
   "original_pca_sha256": "d5866d9f217f762b9f22c8d19b8ce94ab95dd07cbf06bd7c799e6c002f58d132",
   "schema": "ttf_Albano2025_modern_climate_predictor_integrity_combined_v01",
   "source_coordinates_locally_verified_from_original": true,
+  "source_doi": "10.5061/dryad.bk3j9kdqk",
   "source_populations": 96,
   "source_rows_independently_matched_via_other_gardens": 94,
   "status": "SOURCE_ONLY_MODERN_DIFF_ERROR_WHILE_WEIGHTEDCD_AUTHENTICATED",
