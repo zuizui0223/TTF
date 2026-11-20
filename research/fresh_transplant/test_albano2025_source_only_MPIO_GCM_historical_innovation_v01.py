@@ -73,6 +73,16 @@ class ClimateInnovationTests(unittest.TestCase):
         self.assertFalse(out["independent_LGM_effect_on_fitness_tested"])
         self.assertEqual(self.past["schema"],old_schema)
 
+    def test_MIROC_sensitivity_uses_same_response_blind_history_model(self):
+        past=copy.deepcopy(self.past)
+        past["schema"]="ttf_Albano2025_MIROC_ESM_sensitivity_LGM_2_5m_cells_v01"
+        out=a.evaluate(self.now,past)
+        self.assertEqual(out["GCM"],"MIROC-ESM")
+        self.assertTrue(out["historical_predictor_exploratory_after_GCM_source_availability"])
+        self.assertTrue(out["primary_CCSM4_raster_not_yet_tested"])
+        self.assertEqual(set(out["climate_metrics"]),{"BIO1","BIO12"})
+        self.assertFalse(out["independent_LGM_effect_on_fitness_tested"])
+
     def test_historical_response_not_observed_fitness(self):
         d=a.evaluate(self.now,self.past)
         self.assertIn("history_predictor_diagnostic",str(d["status"]).lower())
