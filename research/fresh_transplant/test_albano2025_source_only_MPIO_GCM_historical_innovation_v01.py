@@ -63,6 +63,6 @@ class ClimateInnovationTests(unittest.TestCase):
             a.prepare(modern,self.past)
     def test_historical_response_not_observed_fitness(self):
         d=a.evaluate(self.now,self.past)
-        self.assertIn("climate",str(d["status"]).lower())
+        self.assertIn("history_predictor_diagnostic",str(d["status"]).lower())
         self.assertFalse(d["independent_LGM_effect_on_fitness_tested"])
 if __name__=="__main__":unittest.main()
