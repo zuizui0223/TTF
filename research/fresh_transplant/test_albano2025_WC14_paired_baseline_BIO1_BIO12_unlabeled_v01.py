@@ -47,7 +47,7 @@ class SourceBaselineTests(unittest.TestCase):
   m=copy.deepcopy(self.m);m["members"]=entries
   def fetch(url,start,end):return compressed[start]
   def sample(bil,hdr,points):
-   v=1.0 if bil.startswith(b"bio1") else 12.0
+   v=1.0 if bil.startswith(b"bio1.bil") else 12.0
    return [v]*len(points),{"valid_values":len(points)}
   r=a.evaluate(self.g,m,fetcher=fetch,sampler=sample)
   self.assertEqual(len(r["cells"]),95)
