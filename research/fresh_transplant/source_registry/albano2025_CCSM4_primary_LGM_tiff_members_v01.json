@@ -1,0 +1,28 @@
+{
+  "fitness_genetic_responses_opened": false,
+  "members": [
+    {
+      "CRC32_hex": "51b70e63",
+      "compressed_bytes": 11316382,
+      "filename": "cclgmbi1.tif",
+      "local_header_offset": 0,
+      "method": 8,
+      "uncompressed_bytes": 12201558
+    },
+    {
+      "CRC32_hex": "7d838cc2",
+      "compressed_bytes": 16640162,
+      "filename": "cclgmbi12.tif",
+      "local_header_offset": 35288372,
+      "method": 8,
+      "uncompressed_bytes": 18779919
+    }
+  ],
+  "original_archive_member_count": 19,
+  "original_archive_total_bytes": 219610901,
+  "original_archive_url": "https://geodata.ucdavis.edu/climate/cmip5/lgm/cclgmbi_2-5m.zip",
+  "original_source_run": 44755277981,
+  "real_climate_values_extracted_at_this_stage": false,
+  "schema": "ttf_Albano2025_CCSM4_primary_original_ZIP_two_GeoTIFF_member_index_v01",
+  "source_log_url": "https://github.com/zuizui0223/TTF/actions/runs/44755277981"
+}
