@@ -1,0 +1,44 @@
+{
+  "does_not_include_climate_raster_values": true,
+  "does_not_use_fitness_or_genotype_values": true,
+  "members": [
+    {
+      "CRC32_hex": "1c61c1c4",
+      "compressed_bytes": 6741389,
+      "filename": "bio1.bil",
+      "local_header_offset": 0,
+      "method": 8,
+      "uncompressed_bytes": 62208000
+    },
+    {
+      "CRC32_hex": "7e218b2e",
+      "compressed_bytes": 312,
+      "filename": "bio1.hdr",
+      "local_header_offset": 6741427,
+      "method": 8,
+      "uncompressed_bytes": 618
+    },
+    {
+      "CRC32_hex": "30ff782c",
+      "compressed_bytes": 11178935,
+      "filename": "bio12.bil",
+      "local_header_offset": 20533363,
+      "method": 8,
+      "uncompressed_bytes": 62208000
+    },
+    {
+      "CRC32_hex": "9b083737",
+      "compressed_bytes": 308,
+      "filename": "bio12.hdr",
+      "local_header_offset": 31712337,
+      "method": 8,
+      "uncompressed_bytes": 615
+    }
+  ],
+  "original_archive_member_count": 38,
+  "original_archive_total_bytes": 129319755,
+  "original_archive_url": "https://geodata.ucdavis.edu/climate/worldclim/1_4/grid/cur/bio_2-5m_bil.zip",
+  "schema": "ttf_Albano2025_WC14_modern_1960_1990_BIL_frozen_member_manifest_v01",
+  "source_run": 44753304929,
+  "source_url": "https://github.com/zuizui0223/TTF/actions/runs/44753304929"
+}
