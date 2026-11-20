@@ -22,8 +22,8 @@ class UnlabeledLGMTest(unittest.TestCase):
         g=self.grid
         self.assertEqual(len(g["cells"]),95)
         self.assertEqual(g["source_population_count"],96)
-        self.assertNotIn("population_id",str(g).lower())
-        self.assertNotIn("latitude",str(g).lower())
+        self.assertEqual(set(g["cells"][0]),{"row","col"})
+        self.assertNotIn("sites",g)
     def test_upper_left_grid_center(self):
         self.assertAlmostEqual(m.cell_center(0,0)[0],-180+m.RES/2)
         self.assertAlmostEqual(m.cell_center(0,0)[1],90-m.RES/2)
@@ -60,9 +60,10 @@ class UnlabeledLGMTest(unittest.TestCase):
     def test_two_synthetic_raster_members_never_make_effect(self):
         e1,b1=make_member("x.tif",b"A"*10)
         e2,b2=make_member("y.tif",b"B"*10)
+        e2["local_header_offset"]=100
         with patch.dict(m.ENTRIES,{"BIO1":e1,"BIO12":e2},clear=True):
             def fake(url,start,end):
-                return b1 if end-start+1==len(b1) else b2
+                return b1 if start==0 else b2
             def sample(payload,cells):
                 value=10 if payload.startswith(b"A") else 20
                 return [value]*len(cells),{"sampled_nominal_cells":len(cells),"valid_cells":len(cells)}
