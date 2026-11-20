@@ -1,0 +1,36 @@
+name: Albano response-blind WorldClim 1.4 paired LGM source preflight
+on:
+  push:
+    branches:
+      - 'prospective/original-gps-transplant-panel-20261119'
+    paths:
+      - '.github/workflows/ttf-albano-worldclim-lgm-source-v01.yml'
+      - 'research/fresh_transplant/lgm_paired_climate_source_only_contract_v01.json'
+      - 'research/fresh_transplant/worldclim_lgm_source_transport_preflight_v01.py'
+      - 'research/fresh_transplant/test_worldclim_lgm_source_transport_preflight_v01.py'
+  pull_request:
+    paths:
+      - '.github/workflows/ttf-albano-worldclim-lgm-source-v01.yml'
+      - 'research/fresh_transplant/lgm_paired_climate_source_only_contract_v01.json'
+      - 'research/fresh_transplant/worldclim_lgm_source_transport_preflight_v01.py'
+      - 'research/fresh_transplant/test_worldclim_lgm_source_transport_preflight_v01.py'
+jobs:
+  official-paired-climate-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Ten frozen source-only matched climate provenance tests
+        run: python -m unittest discover -s research/fresh_transplant -p 'test_worldclim_lgm_source_transport_preflight_v01.py' -v
+      - name: Probe only official WorldClim current and LGM ZIP first 512 bytes
+        run: python research/fresh_transplant/worldclim_lgm_source_transport_preflight_v01.py --output _source_only/worldclim_1_4_2_5m_lgm_source_access_v01.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-albano-worldclim-original-source-only-v01
+          path: _source_only/worldclim_1_4_2_5m_lgm_source_access_v01.json
+          retention-days: 45
