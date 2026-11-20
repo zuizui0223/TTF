@@ -1,0 +1,30 @@
+name: Albano source-only WorldClim ZIP archive central-index audit
+on:
+  push:
+    branches:
+      - 'prospective/original-gps-transplant-panel-20261119'
+    paths:
+      - '.github/workflows/ttf-albano-worldclim-range-zip-index-v01.yml'
+      - 'research/fresh_transplant/lgm_paired_climate_source_only_contract_v01.json'
+      - 'research/fresh_transplant/worldclim_lgm_remote_zip_directory_v01.py'
+      - 'research/fresh_transplant/test_worldclim_lgm_remote_zip_directory_v01.py'
+jobs:
+  zip-central-index:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Ten offline ZIP central directory and fail-closed tests
+        run: python -m unittest discover -s research/fresh_transplant -p test_worldclim_lgm_remote_zip_directory_v01.py -v
+      - name: Fetch only official ZIP EOCD and central index using Range requests
+        run: python research/fresh_transplant/worldclim_lgm_remote_zip_directory_v01.py --output _source_only/worldclim_lgm_zip_central_index_v01.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttf-albano-worldclim-lgm-zip-index-source-only-v01
+          path: _source_only/worldclim_lgm_zip_central_index_v01.json
+          retention-days: 60
