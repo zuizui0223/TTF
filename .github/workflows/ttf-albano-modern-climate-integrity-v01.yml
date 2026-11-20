@@ -1,0 +1,34 @@
+name: Albano 2025 modern climate source-only integrity audit
+on:
+  push:
+    branches:
+      - 'prospective/original-gps-transplant-panel-20261119'
+    paths:
+      - '.github/workflows/ttf-albano-modern-climate-integrity-v01.yml'
+      - 'research/fresh_transplant/albano2025_modern_climate_difference_integrity_v01.py'
+      - 'research/fresh_transplant/test_albano2025_modern_climate_difference_integrity_v01.py'
+      - 'research/fresh_transplant/source_registry/albano2025_modern_climate_integrity_combined_v01.json'
+      - 'research/fresh_transplant/source_registry/fresh_dryad_original_file_identity_v01.json'
+  pull_request:
+    paths:
+      - '.github/workflows/ttf-albano-modern-climate-integrity-v01.yml'
+      - 'research/fresh_transplant/albano2025_modern_climate_difference_integrity_v01.py'
+      - 'research/fresh_transplant/test_albano2025_modern_climate_difference_integrity_v01.py'
+      - 'research/fresh_transplant/source_registry/albano2025_modern_climate_integrity_combined_v01.json'
+jobs:
+  response-blind-original-modern-climate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test fourteen synthetic and frozen source-only climate data guards
+        run: python -m unittest discover -s research/fresh_transplant -p test_albano2025_modern_climate_difference_integrity_v01.py -v
+      - name: Confirm uploaded original ZIP and individual data are NOT in repository
+        run: |
+          test ! -e research/fresh_transplant/Albano_et_al_2025_EM_Experiment_Data.csv
+          test ! -e research/fresh_transplant/doi_10_5061_dryad_bk3j9kdqk__v20250905.zip
