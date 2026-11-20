@@ -61,6 +61,18 @@ class ClimateInnovationTests(unittest.TestCase):
         modern["baseline_period"]="1970-2000"
         with self.assertRaisesRegex(ValueError,"period/cell"):
             a.prepare(modern,self.past)
+    def test_prespecified_primary_CC_GCM_uses_unchanged_model(self):
+        old_schema=self.past["schema"]
+        past=copy.deepcopy(self.past)
+        past["schema"]="ttf_Albano2025_CCSM4_PRIMARY_source_only_2_5m_LGM_cells_v01"
+        out=a.evaluate(self.now,past)
+        self.assertEqual(out["GCM"],"CCSM4")
+        self.assertFalse(out["primary_CCSM4_raster_not_yet_tested"])
+        self.assertFalse(out["historical_predictor_exploratory_after_GCM_source_availability"])
+        self.assertEqual(set(out["climate_metrics"]),{"BIO1","BIO12"})
+        self.assertFalse(out["independent_LGM_effect_on_fitness_tested"])
+        self.assertEqual(self.past["schema"],old_schema)
+
     def test_historical_response_not_observed_fitness(self):
         d=a.evaluate(self.now,self.past)
         self.assertIn("history_predictor_diagnostic",str(d["status"]).lower())
