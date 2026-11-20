@@ -61,7 +61,6 @@ def prepare(current,lgm):
 
 def rank_and_prediction(data,fold,target):
     import numpy as np
-    fields=("continent_EUR","latitude","longitude","modern_bio1","modern_bio12")
     rows=np.array([[float(x["origin"]=="EUR"),x["lat"],x["lon"],
                      x["modern_bio1"],x["modern_bio12"]] for x in data],dtype=float)
     y=np.array([x[target] for x in data],dtype=float)
@@ -93,7 +92,7 @@ def evaluate(current,lgm):
          "fitness_genotype_trait_response_tested":False,
          "independent_LGM_effect_on_fitness_tested":False,
          "historical_predictor_exploratory_after_GCM_source_availability":True,
-         "outcome_metrics":{}}
+         "climate_metrics":{}}
     for label,target,units in [("BIO1","delta_bio1","degrees_C"),("BIO12","delta_bio12","mm")]:
         y=np.array([x[target] for x in rows])
         prediction=np.full(len(rows),np.nan)
@@ -124,7 +123,7 @@ def evaluate(current,lgm):
                  "change_sd":float(y[idx].std(ddof=1)),
                  "blocked_OOF_residual_sd":float(residual[idx].std(ddof=1)),
             }
-        out["outcome_metrics"][label]=metrics
+        out["climate_metrics"][label]=metrics
     return out
 
 def main():
