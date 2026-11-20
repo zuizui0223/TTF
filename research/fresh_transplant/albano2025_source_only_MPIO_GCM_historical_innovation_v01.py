@@ -24,6 +24,7 @@ def prepare(current,lgm):
     valid_lgm_schemas={
        "ttf_Albano2025_MPI_ESM_P_source_only_2_5m_LGM_cells_v01":"MPI-ESM-P",
        "ttf_Albano2025_CCSM4_PRIMARY_source_only_2_5m_LGM_cells_v01":"CCSM4",
+       "ttf_Albano2025_MIROC_ESM_sensitivity_LGM_2_5m_cells_v01":"MIROC-ESM",
     }
     if (current.get("schema")!="ttf_Albano2025_WorldClim14_modern_1960_1990_actual_cells_v01"
         or lgm.get("schema") not in valid_lgm_schemas):
@@ -79,20 +80,29 @@ def rank_and_prediction(data,fold,target):
     coef=np.linalg.lstsq(xtrain,y[train],rcond=None)[0]
     return y[test],xtest@coef
 
+def valid_model_name(lgm):
+    return {
+      "ttf_Albano2025_MPI_ESM_P_source_only_2_5m_LGM_cells_v01":"MPI-ESM-P",
+      "ttf_Albano2025_CCSM4_PRIMARY_source_only_2_5m_LGM_cells_v01":"CCSM4",
+      "ttf_Albano2025_MIROC_ESM_sensitivity_LGM_2_5m_cells_v01":"MIROC-ESM",
+    }[lgm["schema"]]
+
 def evaluate(current,lgm):
     import numpy as np
     rows=prepare(current,lgm)
     primary=(lgm["schema"]=="ttf_Albano2025_CCSM4_PRIMARY_source_only_2_5m_LGM_cells_v01")
     folds={str(i):sum(x["fold"]==i for x in rows) for i in range(10)}
     out={"schema":"ttf_Albano2025_CCSM4_primary_source_only_95grid_historical_innovation_v01"
-                  if primary else "ttf_Albano2025_MPI_source_only_95grid_historical_innovation_v01",
+                  if primary else ("ttf_Albano2025_MIROC_sensitivity_source_only_95grid_historical_innovation_v01"
+                  if lgm["schema"]=="ttf_Albano2025_MIROC_ESM_sensitivity_LGM_2_5m_cells_v01"
+                  else "ttf_Albano2025_MPI_source_only_95grid_historical_innovation_v01"),
          "status":"PRIMARY_GCM_SOURCE_ONLY_HISTORY_PREDICTOR_DIAGNOSTIC_NOT_BIOLOGICAL_EFFECT"
                    if primary else "SINGLE_SENSITIVITY_GCM_HISTORY_PREDICTOR_DIAGNOSTIC_NOT_BIOLOGICAL_EFFECT",
          "source_grid_count":95,
          "source_individual_population_count":96,
          "source_continent_cell_counts":{"NAM":47,"EUR":48},
          "modern_period":"1960-1990","LGM_period":"approx_22ka",
-         "GCM":"CCSM4" if primary else "MPI-ESM-P",
+         "GCM":valid_model_name(lgm),
          "primary_CCSM4_raster_not_yet_tested":not primary,
          "current_environmental_and_geographical_controls":["intercept","continent","latitude","longitude","modern_BIO1","modern_BIO12"],
          "spatial_holdout_folds":folds,
