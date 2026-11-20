@@ -82,3 +82,13 @@ Official source pages:
 **Now confirmed:** Original Albano CSV authentic; 96 population-specific reported coordinates, 1,858 original plants, 4 gardens, **Montpellier 470-row × 6-column covariate offset**, **WeightedCD intact**, and actual WorldClim matched source endpoints accessible on CI. Reproduction code in `albano2025_modern_climate_difference_integrity_v01.py` and regression tests; original local source-only correction output in the user session. GitHub records only aggregate receipts and source code, **never raw individual source coordinates or the original outcome CSV**.
 
 **Still HOLD:** independent historical climate residual after modern climate/geography/continent, model disagreement at ~22ka, source GPS surveying provenance, and historical-climate-to-fitness effects. Biological result remains undetermined. PR #161 is Draft and `main` unmodified.
+
+
+## 7. Additional local source-only numerical check of Q4 polynomial design invariance
+
+With the **same 470 Montpellier rows** and each of the six published BIO-difference predictors separately, we built two 470×3 design matrices:
+`[1, raw_diff, raw_diff²]` and `[1, corrected_diff, corrected_diff²]`.
+
+All 12 matrices had rank **3**. The maximum absolute elementwise difference between the orthogonal projection matrices onto the two column spaces, calculated by QR decomposition, was at most **9.93×10^-16** across six BIO variables. Therefore the **fixed-effect polynomial design subspaces are numerically identical**. For the published Q4 models, which include an implicit intercept, the constant shift is exactly a reparameterization of the linear coefficient and intercept, not a change in fitted response *provided every model term otherwise remains identical*. This numerical check uses no observed fitness values and does not replicate `glmmTMB` optimization or original ANOVA tables.
+
+Consequently the strongest qualified result in this new program is **an original predictor annotation/centering inconsistency with intact WeightedCD and polynomial prediction space**, not proof that the original paper's phenotypic findings are false. Distinguish individual coefficient meanings and any zero-distance threshold from global model fit.
