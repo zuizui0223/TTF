@@ -21,9 +21,13 @@ def cell_lon_lat(row,col):
     return -180+(col+0.5)*RES,90-(row+0.5)*RES
 
 def prepare(current,lgm):
+    valid_lgm_schemas={
+       "ttf_Albano2025_MPI_ESM_P_source_only_2_5m_LGM_cells_v01":"MPI-ESM-P",
+       "ttf_Albano2025_CCSM4_PRIMARY_source_only_2_5m_LGM_cells_v01":"CCSM4",
+    }
     if (current.get("schema")!="ttf_Albano2025_WorldClim14_modern_1960_1990_actual_cells_v01"
-        or lgm.get("schema")!="ttf_Albano2025_MPI_ESM_P_source_only_2_5m_LGM_cells_v01"):
-        raise ValueError("Original matched-modern versus MPI-LGM receipt schemas missing")
+        or lgm.get("schema") not in valid_lgm_schemas):
+        raise ValueError("Original matched-modern versus frozen LGM receipt schemas missing")
     if current.get("baseline_period")!="1960-1990" or lgm.get("unlabeled_grid_cell_count")!=95:
         raise ValueError("Original climate period/cell-family mismatch")
     if current["phenotype_fitness_genetic_responses_used"] or lgm["fitness_genetics_adaptation_responses_opened"]:
@@ -78,20 +82,23 @@ def rank_and_prediction(data,fold,target):
 def evaluate(current,lgm):
     import numpy as np
     rows=prepare(current,lgm)
+    primary=(lgm["schema"]=="ttf_Albano2025_CCSM4_PRIMARY_source_only_2_5m_LGM_cells_v01")
     folds={str(i):sum(x["fold"]==i for x in rows) for i in range(10)}
     out={"schema":"ttf_Albano2025_MPI_source_only_95grid_historical_innovation_v01",
-         "status":"SINGLE_SENSITIVITY_GCM_HISTORY_PREDICTOR_DIAGNOSTIC_NOT_BIOLOGICAL_EFFECT",
+         "status":"PRIMARY_GCM_SOURCE_ONLY_HISTORY_PREDICTOR_DIAGNOSTIC_NOT_BIOLOGICAL_EFFECT"
+                   if primary else "SINGLE_SENSITIVITY_GCM_HISTORY_PREDICTOR_DIAGNOSTIC_NOT_BIOLOGICAL_EFFECT",
          "source_grid_count":95,
          "source_individual_population_count":96,
          "source_continent_cell_counts":{"NAM":47,"EUR":48},
          "modern_period":"1960-1990","LGM_period":"approx_22ka",
-         "GCM":"MPI-ESM-P","primary_CCSM4_raster_not_yet_tested":True,
+         "GCM":"CCSM4" if primary else "MPI-ESM-P",
+         "primary_CCSM4_raster_not_yet_tested":not primary,
          "current_environmental_and_geographical_controls":["intercept","continent","latitude","longitude","modern_BIO1","modern_BIO12"],
          "spatial_holdout_folds":folds,
          "source_data_only":True,
          "fitness_genotype_trait_response_tested":False,
          "independent_LGM_effect_on_fitness_tested":False,
-         "historical_predictor_exploratory_after_GCM_source_availability":True,
+         "historical_predictor_exploratory_after_GCM_source_availability":not primary,
          "climate_metrics":{}}
     for label,target,units in [("BIO1","delta_bio1","degrees_C"),("BIO12","delta_bio12","mm")]:
         y=np.array([x[target] for x in rows])
