@@ -1,0 +1,61 @@
+{
+  "Montpellier_bioclim_values_affected": 2820,
+  "Montpellier_omitted_garden_z_vector": {
+    "BIO1": 0.811598694,
+    "BIO12": -0.954782152,
+    "BIO13": -0.306477819,
+    "BIO14": -1.447067214,
+    "BIO5": 0.505914571,
+    "BIO6": 0.917345957
+  },
+  "Montpellier_only_source_rows_supported_by_readme_order": 2,
+  "Montpellier_rows_with_missing_garden_subtraction": 470,
+  "WeightedCD_max_abs_error": 1.005e-9,
+  "WeightedCD_pc_explained_weight_sum": 0.970009806,
+  "WeightedCD_pc_weights": {
+    "Dim.1": 0.6578950731,
+    "Dim.2": 0.2207720341,
+    "Dim.3": 0.0913426988
+  },
+  "WeightedCD_reproduced_rows": 1858,
+  "actual_LGM_climate_values_extracted": false,
+  "fitness_genetics_or_biological_response_modeled": false,
+  "garden_rows_and_diff_integrity": {
+    "Lafayette": {
+      "correct": true,
+      "max_abs_error": 0,
+      "rows": 465
+    },
+    "Mississauga": {
+      "correct": true,
+      "max_abs_error": 0,
+      "rows": 465
+    },
+    "Montpellier": {
+      "correct": false,
+      "max_abs_error": 1.447067214,
+      "rows": 470
+    },
+    "Uppsala": {
+      "correct": true,
+      "max_abs_error": 0,
+      "rows": 458
+    }
+  },
+  "history_incremental_predictor_tested": false,
+  "modern_worldclim_sha256": "5adec5e8fb84b60f8070be7e20a8036e087694a1a5d1341947dcc40266945b0d",
+  "new_confirmatory_LGM_effect_asserted": false,
+  "nominal_worldclim_2_5m_cells_from_geometry": 95,
+  "nominal_worldclim_2_5m_duplicate_cell_groups": 1,
+  "non_Montpellier_rows_with_correct_6_signed_diff_fields": 1388,
+  "official_LGM_rasters_downloaded": false,
+  "original_csv_sha256": "b3796db37145dd32ab148f5c2105ca0646923feab153d8857d4f90a5539f080c",
+  "original_pca_sha256": "d5866d9f217f762b9f22c8d19b8ce94ab95dd07cbf06bd7c799e6c002f58d132",
+  "schema": "ttf_Albano2025_modern_climate_predictor_integrity_combined_v01",
+  "source_coordinates_locally_verified_from_original": true,
+  "source_populations": 96,
+  "source_rows_independently_matched_via_other_gardens": 94,
+  "status": "SOURCE_ONLY_MODERN_DIFF_ERROR_WHILE_WEIGHTEDCD_AUTHENTICATED",
+  "stopped_44of50_Bontrager_unchanged": true,
+  "total_individuals": 1858
+}
