@@ -1,0 +1,653 @@
+{
+  "GCM": "MIROC-ESM",
+  "GCM_role": "sensitivity_precommitted",
+  "LGM_independent_predictor_gain_tested": false,
+  "cell_profiles": [
+    {
+      "BIO12_raw": 277,
+      "BIO1_raw": -249,
+      "col": 4807,
+      "row": 627
+    },
+    {
+      "BIO12_raw": 563,
+      "BIO1_raw": -205,
+      "col": 4753,
+      "row": 735
+    },
+    {
+      "BIO12_raw": 921,
+      "BIO1_raw": -158,
+      "col": 4556,
+      "row": 793
+    },
+    {
+      "BIO12_raw": 846,
+      "BIO1_raw": -152,
+      "col": 4563,
+      "row": 808
+    },
+    {
+      "BIO12_raw": 773,
+      "BIO1_raw": -71,
+      "col": 4476,
+      "row": 882
+    },
+    {
+      "BIO12_raw": 711,
+      "BIO1_raw": -82,
+      "col": 4548,
+      "row": 883
+    },
+    {
+      "BIO12_raw": 746,
+      "BIO1_raw": -64,
+      "col": 4464,
+      "row": 887
+    },
+    {
+      "BIO12_raw": 395,
+      "BIO1_raw": -103,
+      "col": 4719,
+      "row": 909
+    },
+    {
+      "BIO12_raw": 669,
+      "BIO1_raw": -27,
+      "col": 4434,
+      "row": 922
+    },
+    {
+      "BIO12_raw": 183,
+      "BIO1_raw": -381,
+      "col": 2384,
+      "row": 929
+    },
+    {
+      "BIO12_raw": 182,
+      "BIO1_raw": -381,
+      "col": 2385,
+      "row": 929
+    },
+    {
+      "BIO12_raw": 670,
+      "BIO1_raw": -15,
+      "col": 4423,
+      "row": 935
+    },
+    {
+      "BIO12_raw": 607,
+      "BIO1_raw": -11,
+      "col": 4486,
+      "row": 937
+    },
+    {
+      "BIO12_raw": 641,
+      "BIO1_raw": -20,
+      "col": 4495,
+      "row": 937
+    },
+    {
+      "BIO12_raw": 698,
+      "BIO1_raw": -12,
+      "col": 4424,
+      "row": 940
+    },
+    {
+      "BIO12_raw": 769,
+      "BIO1_raw": -16,
+      "col": 4457,
+      "row": 944
+    },
+    {
+      "BIO12_raw": 531,
+      "BIO1_raw": -19,
+      "col": 4528,
+      "row": 945
+    },
+    {
+      "BIO12_raw": 506,
+      "BIO1_raw": -5,
+      "col": 4527,
+      "row": 956
+    },
+    {
+      "BIO12_raw": 342,
+      "BIO1_raw": -41,
+      "col": 4667,
+      "row": 958
+    },
+    {
+      "BIO12_raw": 781,
+      "BIO1_raw": 25,
+      "col": 4284,
+      "row": 972
+    },
+    {
+      "BIO12_raw": 606,
+      "BIO1_raw": 12,
+      "col": 4384,
+      "row": 977
+    },
+    {
+      "BIO12_raw": 566,
+      "BIO1_raw": 11,
+      "col": 4417,
+      "row": 977
+    },
+    {
+      "BIO12_raw": 257,
+      "BIO1_raw": -349,
+      "col": 2375,
+      "row": 982
+    },
+    {
+      "BIO12_raw": 620,
+      "BIO1_raw": 18,
+      "col": 4381,
+      "row": 982
+    },
+    {
+      "BIO12_raw": 616,
+      "BIO1_raw": -18,
+      "col": 4621,
+      "row": 986
+    },
+    {
+      "BIO12_raw": 618,
+      "BIO1_raw": 0,
+      "col": 4541,
+      "row": 990
+    },
+    {
+      "BIO12_raw": 253,
+      "BIO1_raw": -339,
+      "col": 2392,
+      "row": 997
+    },
+    {
+      "BIO12_raw": 608,
+      "BIO1_raw": 23,
+      "col": 4419,
+      "row": 998
+    },
+    {
+      "BIO12_raw": 878,
+      "BIO1_raw": 35,
+      "col": 4244,
+      "row": 1000
+    },
+    {
+      "BIO12_raw": 639,
+      "BIO1_raw": -13,
+      "col": 4688,
+      "row": 1002
+    },
+    {
+      "BIO12_raw": 1072,
+      "BIO1_raw": 41,
+      "col": 4223,
+      "row": 1004
+    },
+    {
+      "BIO12_raw": 667,
+      "BIO1_raw": -13,
+      "col": 4686,
+      "row": 1004
+    },
+    {
+      "BIO12_raw": 1057,
+      "BIO1_raw": 48,
+      "col": 4222,
+      "row": 1008
+    },
+    {
+      "BIO12_raw": 612,
+      "BIO1_raw": 37,
+      "col": 4406,
+      "row": 1011
+    },
+    {
+      "BIO12_raw": 518,
+      "BIO1_raw": -2,
+      "col": 4734,
+      "row": 1011
+    },
+    {
+      "BIO12_raw": 282,
+      "BIO1_raw": -316,
+      "col": 2404,
+      "row": 1014
+    },
+    {
+      "BIO12_raw": 780,
+      "BIO1_raw": 30,
+      "col": 4433,
+      "row": 1026
+    },
+    {
+      "BIO12_raw": 989,
+      "BIO1_raw": 9,
+      "col": 4549,
+      "row": 1026
+    },
+    {
+      "BIO12_raw": 715,
+      "BIO1_raw": 39,
+      "col": 4394,
+      "row": 1029
+    },
+    {
+      "BIO12_raw": 349,
+      "BIO1_raw": -299,
+      "col": 2405,
+      "row": 1030
+    },
+    {
+      "BIO12_raw": 714,
+      "BIO1_raw": 42,
+      "col": 4437,
+      "row": 1030
+    },
+    {
+      "BIO12_raw": 776,
+      "BIO1_raw": 34,
+      "col": 4423,
+      "row": 1033
+    },
+    {
+      "BIO12_raw": 962,
+      "BIO1_raw": 11,
+      "col": 4481,
+      "row": 1043
+    },
+    {
+      "BIO12_raw": 435,
+      "BIO1_raw": -276,
+      "col": 2415,
+      "row": 1050
+    },
+    {
+      "BIO12_raw": 740,
+      "BIO1_raw": 68,
+      "col": 4292,
+      "row": 1052
+    },
+    {
+      "BIO12_raw": 1428,
+      "BIO1_raw": 31,
+      "col": 4633,
+      "row": 1052
+    },
+    {
+      "BIO12_raw": 690,
+      "BIO1_raw": 56,
+      "col": 4433,
+      "row": 1058
+    },
+    {
+      "BIO12_raw": 562,
+      "BIO1_raw": 52,
+      "col": 4395,
+      "row": 1064
+    },
+    {
+      "BIO12_raw": 543,
+      "BIO1_raw": -267,
+      "col": 2416,
+      "row": 1067
+    },
+    {
+      "BIO12_raw": 602,
+      "BIO1_raw": -246,
+      "col": 2414,
+      "row": 1087
+    },
+    {
+      "BIO12_raw": 602,
+      "BIO1_raw": -232,
+      "col": 2410,
+      "row": 1103
+    },
+    {
+      "BIO12_raw": 715,
+      "BIO1_raw": -230,
+      "col": 2399,
+      "row": 1112
+    },
+    {
+      "BIO12_raw": 1150,
+      "BIO1_raw": 105,
+      "col": 4118,
+      "row": 1119
+    },
+    {
+      "BIO12_raw": 1300,
+      "BIO1_raw": 99,
+      "col": 4273,
+      "row": 1120
+    },
+    {
+      "BIO12_raw": 772,
+      "BIO1_raw": -210,
+      "col": 2401,
+      "row": 1126
+    },
+    {
+      "BIO12_raw": 844,
+      "BIO1_raw": -205,
+      "col": 2419,
+      "row": 1130
+    },
+    {
+      "BIO12_raw": 993,
+      "BIO1_raw": -201,
+      "col": 2419,
+      "row": 1140
+    },
+    {
+      "BIO12_raw": 1046,
+      "BIO1_raw": -195,
+      "col": 2403,
+      "row": 1147
+    },
+    {
+      "BIO12_raw": 603,
+      "BIO1_raw": 114,
+      "col": 4387,
+      "row": 1152
+    },
+    {
+      "BIO12_raw": 969,
+      "BIO1_raw": -186,
+      "col": 2383,
+      "row": 1154
+    },
+    {
+      "BIO12_raw": 1005,
+      "BIO1_raw": -181,
+      "col": 2372,
+      "row": 1164
+    },
+    {
+      "BIO12_raw": 494,
+      "BIO1_raw": 124,
+      "col": 4372,
+      "row": 1166
+    },
+    {
+      "BIO12_raw": 905,
+      "BIO1_raw": -165,
+      "col": 2367,
+      "row": 1175
+    },
+    {
+      "BIO12_raw": 421,
+      "BIO1_raw": 73,
+      "col": 4183,
+      "row": 1176
+    },
+    {
+      "BIO12_raw": 895,
+      "BIO1_raw": -152,
+      "col": 2363,
+      "row": 1185
+    },
+    {
+      "BIO12_raw": 913,
+      "BIO1_raw": -136,
+      "col": 2354,
+      "row": 1195
+    },
+    {
+      "BIO12_raw": 948,
+      "BIO1_raw": -129,
+      "col": 2342,
+      "row": 1201
+    },
+    {
+      "BIO12_raw": 872,
+      "BIO1_raw": -115,
+      "col": 2326,
+      "row": 1204
+    },
+    {
+      "BIO12_raw": 933,
+      "BIO1_raw": -107,
+      "col": 2310,
+      "row": 1210
+    },
+    {
+      "BIO12_raw": 978,
+      "BIO1_raw": -88,
+      "col": 2295,
+      "row": 1220
+    },
+    {
+      "BIO12_raw": 1020,
+      "BIO1_raw": -73,
+      "col": 2290,
+      "row": 1232
+    },
+    {
+      "BIO12_raw": 1048,
+      "BIO1_raw": -53,
+      "col": 2287,
+      "row": 1244
+    },
+    {
+      "BIO12_raw": 1143,
+      "BIO1_raw": -39,
+      "col": 2271,
+      "row": 1253
+    },
+    {
+      "BIO12_raw": 1222,
+      "BIO1_raw": -27,
+      "col": 2258,
+      "row": 1262
+    },
+    {
+      "BIO12_raw": 500,
+      "BIO1_raw": 103,
+      "col": 4233,
+      "row": 1267
+    },
+    {
+      "BIO12_raw": 490,
+      "BIO1_raw": 104,
+      "col": 4233,
+      "row": 1268
+    },
+    {
+      "BIO12_raw": 1243,
+      "BIO1_raw": -10,
+      "col": 2247,
+      "row": 1274
+    },
+    {
+      "BIO12_raw": 1262,
+      "BIO1_raw": -3,
+      "col": 2239,
+      "row": 1284
+    },
+    {
+      "BIO12_raw": 1353,
+      "BIO1_raw": 17,
+      "col": 2237,
+      "row": 1300
+    },
+    {
+      "BIO12_raw": 1460,
+      "BIO1_raw": 28,
+      "col": 2235,
+      "row": 1311
+    },
+    {
+      "BIO12_raw": 1506,
+      "BIO1_raw": 41,
+      "col": 2233,
+      "row": 1321
+    },
+    {
+      "BIO12_raw": 1502,
+      "BIO1_raw": 56,
+      "col": 2234,
+      "row": 1335
+    },
+    {
+      "BIO12_raw": 1486,
+      "BIO1_raw": 72,
+      "col": 2236,
+      "row": 1348
+    },
+    {
+      "BIO12_raw": 1561,
+      "BIO1_raw": 78,
+      "col": 2228,
+      "row": 1357
+    },
+    {
+      "BIO12_raw": 1523,
+      "BIO1_raw": 85,
+      "col": 2215,
+      "row": 1365
+    },
+    {
+      "BIO12_raw": 1523,
+      "BIO1_raw": 88,
+      "col": 2207,
+      "row": 1373
+    },
+    {
+      "BIO12_raw": 1616,
+      "BIO1_raw": 90,
+      "col": 2195,
+      "row": 1381
+    },
+    {
+      "BIO12_raw": 1604,
+      "BIO1_raw": 92,
+      "col": 2186,
+      "row": 1390
+    },
+    {
+      "BIO12_raw": 1724,
+      "BIO1_raw": 106,
+      "col": 2176,
+      "row": 1410
+    },
+    {
+      "BIO12_raw": 1740,
+      "BIO1_raw": 112,
+      "col": 2170,
+      "row": 1419
+    },
+    {
+      "BIO12_raw": 1633,
+      "BIO1_raw": 119,
+      "col": 2165,
+      "row": 1430
+    },
+    {
+      "BIO12_raw": 1837,
+      "BIO1_raw": 106,
+      "col": 2111,
+      "row": 1432
+    },
+    {
+      "BIO12_raw": 1875,
+      "BIO1_raw": 110,
+      "col": 2110,
+      "row": 1437
+    },
+    {
+      "BIO12_raw": 1859,
+      "BIO1_raw": 111,
+      "col": 2114,
+      "row": 1437
+    },
+    {
+      "BIO12_raw": 1893,
+      "BIO1_raw": 110,
+      "col": 2108,
+      "row": 1438
+    }
+  ],
+  "climate_age": "Last Glacial Maximum about 22 ka, not exactly 21 ka",
+  "fitness_genetics_adaptation_responses_opened": false,
+  "geotiff_provenance": {
+    "BIO1": {
+      "original_tiff_sha256": "558cad39c2a709966a756e7c31a3bc099ad10ca52416f675c1d632c492138e6c",
+      "original_tiff_size": 12480465,
+      "raster": {
+        "raster_crs": "EPSG:4326",
+        "raster_dtype": "int16",
+        "raster_height": 3600,
+        "raster_nodata": -32768,
+        "raster_resolution": [
+          0.041666666666666664,
+          0.041666666666666664
+        ],
+        "raster_width": 8640,
+        "sampled_nominal_cells": 95,
+        "valid_cells": 95
+      }
+    },
+    "BIO12": {
+      "original_tiff_sha256": "c248ab2094d350ba1465b287626d16d28ba0d9145e771895d21d3e0b437cccce",
+      "original_tiff_size": 18670988,
+      "raster": {
+        "raster_crs": "EPSG:4326",
+        "raster_dtype": "int16",
+        "raster_height": 3600,
+        "raster_nodata": -32768,
+        "raster_resolution": [
+          0.041666666666666664,
+          0.041666666666666664
+        ],
+        "raster_width": 8640,
+        "sampled_nominal_cells": 95,
+        "valid_cells": 95
+      }
+    }
+  },
+  "grid_coordinate_system": "WorldClim 1.4 global 2.5 arcmin cell row/col, center-point lookup",
+  "modern_matched_baseline_rasters_extracted": false,
+  "official_original_zip_archive_bytes": 219831681,
+  "official_source_URL": "https://geodata.ucdavis.edu/climate/cmip5/lgm/mrlgmbi_2-5m.zip",
+  "original_PINNED_zip_member_metadata": {
+    "BIO1": {
+      "compressed_bytes": 11554905,
+      "crc32": "836cb395",
+      "local_header_offset": 0,
+      "name": "mrlgmbi1.tif",
+      "uncompressed_bytes": 12480465
+    },
+    "BIO12": {
+      "compressed_bytes": 16515044,
+      "crc32": "48520664",
+      "local_header_offset": 35869945,
+      "name": "mrlgmbi12.tif",
+      "uncompressed_bytes": 18670988
+    }
+  },
+  "original_exact_GPS_coordinates_or_population_IDs_exposed": false,
+  "schema": "ttf_Albano2025_MIROC_ESM_sensitivity_LGM_2_5m_cells_v01",
+  "source_Dryad_original_hash": "b3796db37145dd32ab148f5c2105ca0646923feab153d8857d4f90a5539f080c",
+  "source_events": [
+    {
+      "attempt": 1,
+      "status": "OFFICIAL_ZIP_INDEX_ACQUIRED"
+    }
+  ],
+  "source_population_count": 96,
+  "source_run": 44756631825,
+  "source_url": "https://github.com/zuizui0223/TTF/actions/runs/44756631825",
+  "status": "FROZEN_MIROC_SENSITIVITY_LGM_RASTER_SAMPLED_NOT_BIOLOGICAL_EFFECT",
+  "unlabeled_grid_cell_count": 95,
+  "variable_units": {
+    "BIO1": "degrees C times 10",
+    "BIO12": "precipitation mm"
+  }
+}
